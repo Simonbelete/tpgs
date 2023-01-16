@@ -24,6 +24,6 @@ def load_config(app: Flask) -> None:
     app.config.from_object(config_by_name[os.getenv('ENV', 'dev')])
 
 def init_database(app: Flask) -> None:
-    from .database import init
+    from .db import init
     
     init(app)
