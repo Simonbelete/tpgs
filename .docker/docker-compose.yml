@@ -6,7 +6,7 @@ networks:
 
 services:
   postgresql:
-    image: odoo_modules/postgresql
+    image: ilri_pfm/postgresql
     container_name: odoo_modules_postgresql
     build:
       context: .
