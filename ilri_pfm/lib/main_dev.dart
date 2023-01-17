@@ -7,9 +7,9 @@ import 'package:ilri_pfm/screens/home_screen.dart';
 import 'package:ilri_pfm/screens/login_screen.dart';
 
 void main() async {
-  runApp(const AppDev());
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  runApp(const AppDev());
 }
 
 class AppDev extends StatelessWidget {
@@ -17,7 +17,9 @@ class AppDev extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final FirebaseAuth _auth = FirebaseAuth.instance;
     return MaterialApp(
+        debugShowCheckedModeBanner: false,
         title: 'ILRI PFM Development',
         home: MultiBlocProvider(
           providers: [],
