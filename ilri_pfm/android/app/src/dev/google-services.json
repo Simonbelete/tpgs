@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "308699072347",
+    "project_id": "ilri-pfm",
+    "storage_bucket": "ilri-pfm.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:308699072347:android:8276f569fc7b056ce67c7e",
+        "android_client_info": {
+          "package_name": "com.ilri.ilri_pfm.dev"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "308699072347-n29aq3tr9gijk8gm38scum7v8jskjmm1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDlV5qQnniO8z9-DSe-HGqTl69yHpRu9hI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "308699072347-n29aq3tr9gijk8gm38scum7v8jskjmm1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
