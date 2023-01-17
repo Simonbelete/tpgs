@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:ilri_pfm/router.dart';
 import 'package:ilri_pfm/screens/home_screen.dart';
 import 'package:ilri_pfm/screens/login_screen.dart';
 
@@ -29,6 +30,7 @@ class AppDev extends StatelessWidget {
               },
             ),
           ),
-        ));
+        ),
+        onGenerateRoute: (settings) => generateRoute(settings));
   }
 }
