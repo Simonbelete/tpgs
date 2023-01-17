@@ -7,6 +7,42 @@
   "client": [
     {
       "client_info": {
+        "mobilesdk_app_id": "1:308699072347:android:01adfc2c236d89c0e67c7e",
+        "android_client_info": {
+          "package_name": "com.ilri.ilri_pfm"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "308699072347-n29aq3tr9gijk8gm38scum7v8jskjmm1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDlV5qQnniO8z9-DSe-HGqTl69yHpRu9hI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "308699072347-n29aq3tr9gijk8gm38scum7v8jskjmm1.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "308699072347-rtm618llhs8j3n4dfcqo3umlhivqg4fq.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.ilriPfm"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
         "mobilesdk_app_id": "1:308699072347:android:8276f569fc7b056ce67c7e",
         "android_client_info": {
           "package_name": "com.ilri.ilri_pfm.dev"
@@ -29,6 +65,13 @@
             {
               "client_id": "308699072347-n29aq3tr9gijk8gm38scum7v8jskjmm1.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "308699072347-rtm618llhs8j3n4dfcqo3umlhivqg4fq.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.ilriPfm"
+              }
             }
           ]
         }
