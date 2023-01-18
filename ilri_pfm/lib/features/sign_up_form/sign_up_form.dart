@@ -21,6 +21,7 @@ class _SignUpFormState extends State<SignUpForm> {
         const Center(
           child: Text('Sign Up Form'),
         ),
+        _buildForm(),
         SignInWithGoogleForm()
       ],
     );
@@ -30,11 +31,16 @@ class _SignUpFormState extends State<SignUpForm> {
     return Form(
       key: widget.formKey,
       child: Column(children: [
+        Visibility(
+            visible: widget.displayErrorMessage,
+            child: Container(
+              child: Text('Error Login'),
+            )),
         _emailField(),
         _passwordField(),
         Button(
           child: Text('Sign up'),
-          onPressed: () => widget.onSignUp,
+          onPressed: () => widget.onSignUp(),
         )
       ]),
     );
