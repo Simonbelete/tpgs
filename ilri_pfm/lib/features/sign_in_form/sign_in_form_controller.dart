@@ -5,13 +5,16 @@ mixin $SignInFormController on StatefulWidget {
   final AuthenticationRepository _repository = AuthenticationRepository();
 
   final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
   final GlobalKey formKey = GlobalKey<FormState>();
 
   void onSignIn() {
-    print(emailController.text);
+    _repository.signInWithEmailAndPassword(
+        email: emailController.text, password: passwordController.text);
   }
 
   void disposeForms() {
     emailController.dispose();
+    passwordController.dispose();
   }
 }

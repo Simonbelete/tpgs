@@ -12,7 +12,8 @@ class AuthenticationBloc
     on<SignInWithEmailAndPassword>((event, emit) async {
       emit(AuthenticationLoading());
       try {
-        await repository.signIn(email: '', password: 'password');
+        await repository.signInWithEmailAndPassword(
+            email: '', password: 'password');
       } catch (e) {
         emit(AuthenticationError(e.toString()));
         // emit(UnAuthenticated());

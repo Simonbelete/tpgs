@@ -5,7 +5,8 @@ import 'package:ilri_pfm/repository/repository.dart';
 class AuthenticationRepository extends Repository {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
-  Future<void> signIn({required String email, required String password}) async {
+  Future<void> signInWithEmailAndPassword(
+      {required String email, required String password}) async {
     try {
       await _auth.signInWithEmailAndPassword(email: email, password: password);
     } on FirebaseAuthException catch (e) {

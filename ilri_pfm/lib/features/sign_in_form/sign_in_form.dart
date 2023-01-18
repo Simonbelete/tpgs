@@ -17,7 +17,6 @@ class SignInForm extends StatefulWidget with $SignInFormController {
 
 class _SignInFormState extends State<SignInForm> {
   @override
-  @override
   void dispose() {
     widget.disposeForms();
     super.dispose();
@@ -60,6 +59,8 @@ class _SignInFormState extends State<SignInForm> {
   }
 
   Widget _passwordField() {
-    return EmailField();
+    return EmailField(
+      controller: widget.passwordController,
+    );
   }
 }
