@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:ilri_pfm/blocs/auth/bloc.dart';
 import 'package:ilri_pfm/router.dart';
 import 'package:ilri_pfm/screens/home_screen.dart';
 import 'package:ilri_pfm/screens/login_screen.dart';
@@ -18,21 +19,19 @@ class AppDev extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final FirebaseAuth _auth = FirebaseAuth.instance;
-    return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'ILRI PFM Development',
-        home: MultiBlocProvider(
-          providers: [],
-          child: MaterialApp(
-            home: StreamBuilder<User?>(
-              stream: FirebaseAuth.instance.authStateChanges(),
-              builder: (context, snapshot) {
-                if (snapshot.hasData) return const HomeScreen();
-                return const LoginScreen();
-              },
-            ),
+    return MultiBlocProvider(
+      providers: [BlocProvider(create: ((context) => AuthenticationBloc()))],
+      child: MaterialApp(
+          debugShowCheckedModeBanner: false,
+          title: 'ILRI PFM Development',
+          home: StreamBuilder<User?>(
+            stream: FirebaseAuth.instance.authStateChanges(),
+            builder: (context, snapshot) {
+              if (snapshot.hasData) return const HomeScreen();
+              return const LoginScreen();
+            },
           ),
-        ),
-        onGenerateRoute: (settings) => generateRoute(settings));
+          onGenerateRoute: (settings) => generateRoute(settings)),
+    );
   }
 }

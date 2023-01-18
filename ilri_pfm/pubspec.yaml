@@ -39,6 +39,9 @@ dependencies:
   firebase_auth: ^4.2.5
   firebase_core: ^2.4.1
   flutter_bloc: ^8.1.1
+  google_sign_in: ^5.4.3
+  email_validator: '^2.1.16'
+  equatable: ^2.0.5
 
 dev_dependencies:
   flutter_test:
