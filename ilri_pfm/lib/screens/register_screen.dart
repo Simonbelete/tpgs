@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ilri_pfm/features/sign_in_form/sign_in_form.dart';
 
 class RegisterScreen extends StatelessWidget {
   static const String routeName = '/register';
@@ -11,7 +12,7 @@ class RegisterScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text('Sign Up Form'),
       ),
-      body: Column(children: []),
+      body: Column(children: [SignInForm()]),
     );
   }
 }

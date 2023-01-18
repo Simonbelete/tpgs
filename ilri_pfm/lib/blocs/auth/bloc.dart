@@ -3,7 +3,6 @@ import 'package:ilri_pfm/blocs/auth/events.dart';
 import 'package:ilri_pfm/blocs/auth/states.dart';
 import 'package:ilri_pfm/repository/authentication_repository.dart';
 import 'package:ilri_pfm/repository/repository.dart';
-import 'package:ilri_pfm/repository/user_repository.dart';
 
 class AuthenticationBloc
     extends Bloc<AuthenticationEvent, AuthenticationState> {
