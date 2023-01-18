@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ilri_pfm/features/sign_in_form/sign_in_form.dart';
 import 'package:ilri_pfm/screens/register_screen.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -9,14 +10,10 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
-      body: Column(children: [
-        TextButton(
-            onPressed: () {
-              Navigator.pushNamed(context, RegisterScreen.routeName);
-            },
-            child: const Text('Sign up '))
-      ]),
+      appBar: AppBar(
+        title: const Text('Sign In'),
+      ),
+      body: Column(children: [SignInForm()]),
     );
   }
 }
