@@ -49,7 +49,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'pfm_api'
+    'pfm_api',
+    'rest_framework'
 ]
 
 MIDDLEWARE = [
