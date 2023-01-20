@@ -66,4 +66,8 @@ class AuthenticationRepository extends Repository {
     // Once signed in, return the UserCredential
     return await FirebaseAuth.instance.signInWithCredential(credential);
   }
+
+  Future<void> signOut() async {
+    await _auth.signOut();
+  }
 }

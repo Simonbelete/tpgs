@@ -12,3 +12,5 @@ class ChickenList(Resource):
         limit = int(request.args.get('limit', self._LIMIT))
         page = int(request.args.get('page', 1 ))
         offset = (page - 1) * limit
+
+        chikens = db.session()
