@@ -142,3 +142,5 @@ REST_FRAMEWORK = {
         'pfm_api.authentication.FirebaseAuthentication',
     ),
 }
+
+API_KEY_SECRET = environ('API_KEY_SECRET')
