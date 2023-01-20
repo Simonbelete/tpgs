@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:ilri_pfm/features/sign_in_form/sign_in_form.dart';
 import 'package:ilri_pfm/screens/register_screen.dart';
 
@@ -11,9 +12,17 @@ class LoginScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Sign In'),
+        elevation: 0,
+        backgroundColor: Colors.white,
+        systemOverlayStyle: const SystemUiOverlayStyle(
+          statusBarColor: Colors.white, // <-- SEE HERE
+          statusBarIconBrightness:
+              Brightness.dark, //<-- For Android SEE HERE (dark icons)
+          statusBarBrightness:
+              Brightness.light, //<-- For iOS SEE HERE (dark icons)
+        ),
       ),
-      body: Column(children: [SignInForm()]),
+      body: SafeArea(child: Column(children: [SignInForm()])),
     );
   }
 }
