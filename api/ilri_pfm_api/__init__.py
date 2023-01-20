@@ -6,7 +6,7 @@ from .config import config_by_name
 from .routes import *
 
 # Routes
-from .routes import test
+from .routes import test, chicken
 
 def create_app() -> Flask:
     app = Flask(__name__)
