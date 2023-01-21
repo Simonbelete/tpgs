@@ -1,7 +1,7 @@
 from rest_framework import serializers
-from pfm_api.models import UserProfile
 from rest_framework import exceptions
 from django.contrib.auth.models import User
+from pfm_api.models import UserProfile, Farm
 
 class UserProfileSerializer(serializers.ModelSerializer):
     bio = serializers.CharField(max_length=200)
@@ -32,3 +32,11 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ['last_name','first_name','userprofile']
+
+class FarmSerializer(serializers.ModelSerializer):
+    name = serializers.CharField()
+    code = serializers.CharField()
+
+    class Meta:
+        model = Farm
+        fields = '__all__'

@@ -2,6 +2,7 @@ from django.contrib.auth.models import User, Group
 from rest_framework import viewsets
 from rest_framework import permissions
 from django.http import HttpResponse
+from pfm_api.models import Farm
 
 def index(request):
     return HttpResponse("Hello, world. You're at the polls index.")
@@ -19,3 +20,5 @@ class GroupViewSet(viewsets.ModelViewSet):
     """
     queryset = Group.objects.all()
     
+class FarmViewSet(viewsets.ModelViewSet):
+    queryset = Farm.objects.all()
