@@ -44,8 +44,9 @@ class OnBoardingSlide extends StatelessWidget {
                 width: 20,
               ),
               Button(
+                outlined: true,
                 child: const Text(
-                  'Sing Up',
+                  'Sing In',
                 ),
                 onPressed: () {
                   Navigator.pushNamed(context, RegisterScreen.routeName);
