@@ -54,6 +54,8 @@ INSTALLED_APPS = [
     'simple_history'
 ]
 
+AUTH_USER_MODEL = 'pfm_api.User'
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',

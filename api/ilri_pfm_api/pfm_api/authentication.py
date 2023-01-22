@@ -2,8 +2,8 @@
 import os
 
 import firebase_admin
+from django.contrib.auth import get_user_model
 from django.conf import settings
-from django.contrib.auth.models import User
 from django.utils import timezone
 from firebase_admin import auth
 from firebase_admin import credentials
@@ -13,6 +13,8 @@ from rest_framework import exceptions
 from .exceptions import FirebaseError
 from .exceptions import InvalidAuthToken
 from .exceptions import NoAuthToken
+
+User = get_user_model()
 default_app = firebase_admin.initialize_app()
 
 class FirebaseAuthentication(authentication.BaseAuthentication):
