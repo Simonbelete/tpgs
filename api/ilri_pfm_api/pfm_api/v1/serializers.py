@@ -4,9 +4,9 @@ from rest_framework import exceptions
 from pfm_api.models import User
 
 class UserSerializer(serializers.ModelSerializer):
-    name = serializers.CharField()
+    # name = serializers.CharField()
     email = serializers.CharField()
-    is_admin = serializers.BooleanField()
+    # is_admin = serializers.BooleanField()
     is_farmer = serializers.BooleanField()
 
     class Meta:

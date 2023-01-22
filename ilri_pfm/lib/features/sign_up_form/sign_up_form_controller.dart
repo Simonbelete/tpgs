@@ -6,6 +6,7 @@ import 'package:ilri_pfm/repository/authentication_repository.dart';
 mixin $SignInFormController on StatefulWidget {
   final AuthenticationRepository _repository = AuthenticationRepository();
 
+  final TextEditingController nameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final GlobalKey formKey = GlobalKey<FormState>();
@@ -28,6 +29,7 @@ mixin $SignInFormController on StatefulWidget {
   }
 
   void disposeForms() {
+    nameController.dispose();
     emailController.dispose();
     passwordController.dispose();
   }

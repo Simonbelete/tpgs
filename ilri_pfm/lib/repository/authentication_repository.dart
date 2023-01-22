@@ -4,9 +4,11 @@ import 'package:ilri_pfm/exceptions/email_exists_exception.dart';
 import 'package:ilri_pfm/exceptions/unknown_exception.dart';
 import 'package:ilri_pfm/repository/repository.dart';
 import 'package:ilri_pfm/exceptions/weak_password_exception.dart';
+import 'package:ilri_pfm/services/user_service.dart';
 
 class AuthenticationRepository extends Repository {
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  final UserService _service = UserService();
 
   Future<void> signInWithEmailAndPassword(
       {required String email, required String password}) async {
@@ -24,6 +26,8 @@ class AuthenticationRepository extends Repository {
         email: email,
         password: password,
       );
+      final response = _service.post(email = email);
+      print(response);
     } on FirebaseAuthException catch (e) {
       print(e.toString());
       if (e.code == 'weak-password') {
@@ -33,6 +37,8 @@ class AuthenticationRepository extends Repository {
       }
       throw (UnknownException());
     } catch (e) {
+      // Logout
+      signOut();
       print(e.toString());
       throw (UnknownException(message: e.toString()));
     }

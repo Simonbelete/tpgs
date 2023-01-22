@@ -53,7 +53,7 @@ class _SignUpFormState extends State<SignUpForm> {
 
   Widget _nameField() {
     return NameField(
-      controller: widget.emailController,
+      controller: widget.nameController,
     );
   }
 
