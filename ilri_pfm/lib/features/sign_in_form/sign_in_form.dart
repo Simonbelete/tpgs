@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:ilri_pfm/common_widgets/button.dart';
 import 'package:ilri_pfm/common_widgets/email_field.dart';
+import 'package:ilri_pfm/common_widgets/password_field.dart';
 import 'package:ilri_pfm/features/sing_in_with_google_form/sing_in_with_google_form.dart';
 import 'package:ilri_pfm/screens/register_screen.dart';
 
@@ -25,20 +26,18 @@ class _SignInFormState extends State<SignInForm> {
   @override
   Widget build(BuildContext context) {
     return Container(
+        padding: const EdgeInsets.symmetric(horizontal: 30.0),
         child: Column(
-      children: [
-        const Center(
-          child: Text('Sign In Form'),
-        ),
-        _buildForm(),
-        TextButton(
-            onPressed: () {
-              Navigator.pushNamed(context, RegisterScreen.routeName);
-            },
-            child: const Text('Already have account Sign up ')),
-        SignInWithGoogleForm()
-      ],
-    ));
+          children: [
+            _buildForm(),
+            TextButton(
+                onPressed: () {
+                  Navigator.pushNamed(context, RegisterScreen.routeName);
+                },
+                child: const Text('Already have account Sign up ')),
+            SignInWithGoogleForm()
+          ],
+        ));
   }
 
   Widget _buildForm() {
@@ -46,7 +45,13 @@ class _SignInFormState extends State<SignInForm> {
       key: widget.formKey,
       child: Column(children: [
         _emailField(),
+        const SizedBox(
+          height: 20,
+        ),
         _passwordField(),
+        const SizedBox(
+          height: 20,
+        ),
         Button(onPressed: () => widget.onSignIn(), child: Text('Sign in'))
       ]),
     );
@@ -59,7 +64,7 @@ class _SignInFormState extends State<SignInForm> {
   }
 
   Widget _passwordField() {
-    return EmailField(
+    return PasswordField(
       controller: widget.passwordController,
     );
   }

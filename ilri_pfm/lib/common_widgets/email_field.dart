@@ -10,6 +10,7 @@ class EmailField extends StatelessWidget {
   Widget build(BuildContext context) {
     return FormTextBox(
       controller: controller,
+      hintText: 'Email',
     );
   }
 }

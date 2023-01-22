@@ -20,5 +20,3 @@ class GroupViewSet(viewsets.ModelViewSet):
     """
     queryset = Group.objects.all()
     
-class FarmViewSet(viewsets.ModelViewSet):
-    queryset = Farm.objects.all()
