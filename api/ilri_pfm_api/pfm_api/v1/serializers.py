@@ -9,7 +9,6 @@ class UserProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserProfile
         fields = '__all__'
-
 class UserSerializer(serializers.ModelSerializer):    
     userprofile = UserProfileSerializer()
     def update(self, instance,validated_data):

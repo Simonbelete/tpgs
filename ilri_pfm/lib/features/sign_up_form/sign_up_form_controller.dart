@@ -15,7 +15,6 @@ mixin $SignInFormController on StatefulWidget {
   bool displayErrorMessage = false;
 
   void onSignUp() {
-    print('selected');
     try {
       _repository.createUserWithEmailAndPassword(
           email: emailController.text, password: passwordController.text);
@@ -25,7 +24,6 @@ mixin $SignInFormController on StatefulWidget {
       displayErrorMessage = true;
     } catch (e) {
       displayErrorMessage = true;
-      print(e.toString());
     }
   }
 

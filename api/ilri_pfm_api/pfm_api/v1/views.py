@@ -8,6 +8,7 @@ from pfm_api.permissions import CheckApiKey
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
+    lookup_field = 'username'
 
 class UserProfileViewSet(viewsets.ModelViewSet):
     permission_classes = [CheckApiKey]
