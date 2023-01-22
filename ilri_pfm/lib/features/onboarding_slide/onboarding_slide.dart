@@ -37,7 +37,7 @@ class OnBoardingSlide extends StatelessWidget {
                   'Sing Up',
                 ),
                 onPressed: () {
-                  Navigator.pushNamed(context, LoginScreen.routeName);
+                  Navigator.pushNamed(context, RegisterScreen.routeName);
                 },
               ),
               const SizedBox(
@@ -49,7 +49,7 @@ class OnBoardingSlide extends StatelessWidget {
                   'Sing In',
                 ),
                 onPressed: () {
-                  Navigator.pushNamed(context, RegisterScreen.routeName);
+                  Navigator.pushNamed(context, LoginScreen.routeName);
                 },
               )
             ],

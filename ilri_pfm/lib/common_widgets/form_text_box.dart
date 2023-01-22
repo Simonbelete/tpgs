@@ -15,7 +15,10 @@ class FormTextBox extends StatelessWidget {
       controller: controller,
       validator: validator,
       decoration: InputDecoration(
-        border: const OutlineInputBorder(
+        filled: true,
+        fillColor: ColorSet.igray,
+        border: InputBorder.none,
+        focusedBorder: const OutlineInputBorder(
             borderSide: BorderSide(color: ColorSet.iPrimaryColor)),
         hintText: hintText,
         contentPadding: const EdgeInsets.all(8),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ilri_pfm/common_widgets/button.dart';
 import 'package:ilri_pfm/common_widgets/email_field.dart';
+import 'package:ilri_pfm/common_widgets/name_field.dart';
 import 'package:ilri_pfm/common_widgets/password_field.dart';
 import 'package:ilri_pfm/features/sing_in_with_google_form/sing_in_with_google_form.dart';
 
@@ -17,13 +18,7 @@ class _SignUpFormState extends State<SignUpForm> {
   @override
   Widget build(BuildContext context) {
     return Column(
-      children: [
-        const Center(
-          child: Text('Sign Up Form'),
-        ),
-        _buildForm(),
-        SignInWithGoogleForm()
-      ],
+      children: [_buildForm(), SignInWithGoogleForm()],
     );
   }
 
@@ -36,13 +31,29 @@ class _SignUpFormState extends State<SignUpForm> {
             child: Container(
               child: Text('Error Login'),
             )),
+        _nameField(),
+        const SizedBox(
+          height: 20,
+        ),
         _emailField(),
+        const SizedBox(
+          height: 20,
+        ),
         _passwordField(),
+        const SizedBox(
+          height: 20,
+        ),
         Button(
           child: Text('Sign up'),
           onPressed: () => widget.onSignUp(),
         )
       ]),
+    );
+  }
+
+  Widget _nameField() {
+    return NameField(
+      controller: widget.emailController,
     );
   }
 
