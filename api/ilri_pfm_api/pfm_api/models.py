@@ -27,7 +27,7 @@ class UserManager(BaseUserManager):
         extra_fields.setdefault("is_admin", False)
         extra_fields.setdefault("is_farmer", True)
         extra_fields.setdefault("is_superuser", False)
-        extra_fields.setdefault("is_active", False)
+        extra_fields.setdefault("is_active", True)
 
         # if extra_fields.get("is_farmer") is not True:
         #     raise ValueError(_("Superuser must have is_farmer=True."))
