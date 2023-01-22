@@ -50,7 +50,7 @@ class UserManager(BaseUserManager):
 class User(AbstractUser):
     objects = UserManager()
 
-    # username = models.CharField("username", max_length=150, unique=False, null=True, blank=True)
+    username = models.CharField("username", max_length=150, unique=False, null=True, blank=True)
     email = models.EmailField(
         verbose_name='email address',
         max_length=255,
