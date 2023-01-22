@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'pfm_api',
+    'rest_framework'
 ]
 
 AUTH_USER_MODEL = 'pfm_api.User'

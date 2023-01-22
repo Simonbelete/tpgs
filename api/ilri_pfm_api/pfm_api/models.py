@@ -26,8 +26,8 @@ class UserManager(BaseUserManager):
         """
         extra_fields.setdefault("is_admin", False)
         extra_fields.setdefault("is_superuser", True)
+        extra_fields.setdefault("is_staff", True)
         extra_fields.setdefault("is_farmer", True)
-        extra_fields.setdefault("is_superuser", False)
         extra_fields.setdefault("is_active", True)
 
         # if extra_fields.get("is_farmer") is not True:
@@ -50,15 +50,18 @@ class UserManager(BaseUserManager):
 class User(AbstractUser):
     objects = UserManager()
 
+    # username = models.CharField("username", max_length=150, unique=False, null=True, blank=True)
     email = models.EmailField(
         verbose_name='email address',
         max_length=255,
         unique=True,
     )
+    name = models.CharField(max_length=250, null=True, blank=True)
+    uid = models.CharField(max_length=250, null=True, blank=True)
     is_active = models.BooleanField(default=False)
     is_admin = models.BooleanField(default=False)
     is_farmer = models.BooleanField(default=True)
-    ate_joined = models.DateTimeField(default=timezone.now)
+    date_joined = models.DateTimeField(default=timezone.now)
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
