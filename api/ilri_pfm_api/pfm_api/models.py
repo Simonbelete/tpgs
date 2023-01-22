@@ -25,6 +25,7 @@ class UserManager(BaseUserManager):
         Create and save a SuperUser with the given email and password.
         """
         extra_fields.setdefault("is_admin", False)
+        extra_fields.setdefault("is_superuser", True)
         extra_fields.setdefault("is_farmer", True)
         extra_fields.setdefault("is_superuser", False)
         extra_fields.setdefault("is_active", True)
