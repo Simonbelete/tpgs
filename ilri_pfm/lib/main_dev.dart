@@ -8,9 +8,11 @@ import 'package:ilri_pfm/router.dart';
 import 'package:ilri_pfm/screens/activation_screen.dart';
 import 'package:ilri_pfm/screens/onboarding_screen.dart';
 import 'package:device_preview/device_preview.dart';
+import 'package:ilri_pfm/util/bloc_observer.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  Bloc.observer = AppBlocObserver();
   await Firebase.initializeApp();
   runApp(DevicePreview(
     enabled: false,
