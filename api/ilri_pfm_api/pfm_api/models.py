@@ -72,4 +72,4 @@ class User(AbstractUser):
 class Device(models.Model):
     token = models.CharField(max_length=250)
     is_active = models.BooleanField(default=True)
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='devices_rel')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='devices')
