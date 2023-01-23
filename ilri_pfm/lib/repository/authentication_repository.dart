@@ -1,8 +1,10 @@
+import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:ilri_pfm/exceptions/email_exists_exception.dart';
 import 'package:ilri_pfm/exceptions/unknown_exception.dart';
 import 'package:ilri_pfm/models/device_model.dart';
+import 'package:ilri_pfm/models/user_model.dart';
 import 'package:ilri_pfm/repository/messaging_repository.dart';
 import 'package:ilri_pfm/repository/repository.dart';
 import 'package:ilri_pfm/exceptions/weak_password_exception.dart';
@@ -30,10 +32,11 @@ class AuthenticationRepository extends Repository {
         email: email,
         password: password,
       );
-      print('========================================myd');
-      print(devices);
-      final response = _service.post(email: email, devices: devices);
-      print(response);
+      UserModel user = UserModel(
+        email: email,
+        uid: credential.user?.uid,
+      );
+      final response = _service.post(user: user, devices: devices);
     } on FirebaseAuthException catch (e) {
       print(e.toString());
       if (e.code == 'weak-password') {
@@ -42,6 +45,18 @@ class AuthenticationRepository extends Repository {
         throw (EmailExistsException);
       }
       throw (UnknownException());
+    } on DioError catch (e) {
+      // The request was made and the server responded with a status code
+      // that falls out of the range of 2xx and is also not 304.
+      if (e.response != null) {
+        print(e.response?.data);
+        print(e.response?.headers);
+        print(e.response?.requestOptions);
+      } else {
+        // Something happened in setting up or sending the request that triggered an Error
+        print(e.requestOptions);
+        print(e.message);
+      }
     } catch (e) {
       // Logout
       signOut();

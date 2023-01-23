@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:dio/dio.dart';
 import 'package:ilri_pfm/models/device_model.dart';
+import 'package:ilri_pfm/models/user_model.dart';
 import 'package:ilri_pfm/services/service.dart';
 import 'package:ilri_pfm/util/dio_client.dart';
 
@@ -28,12 +29,13 @@ class UserService {
   }
 
   Future<Response> post(
-      {required String email, required Device devices}) async {
+      {required UserModel user, required Device devices}) async {
+    print('======================================');
+    print(user.toJson());
     try {
       final response = await _dio.post(_url,
           data: jsonEncode({
-            'email': email,
-            'is_farmer': true,
+            ...user.toJson(),
             'devices': [devices.toJson()]
           }));
       return response;
