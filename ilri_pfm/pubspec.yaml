@@ -43,11 +43,13 @@ dependencies:
   email_validator: '^2.1.16'
   equatable: ^2.0.5
   dio: ^4.0.6
+  firebase_messaging: ^14.2.1
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_launcher_icons: "^0.11.0"
+  device_preview: ^1.1.0
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is

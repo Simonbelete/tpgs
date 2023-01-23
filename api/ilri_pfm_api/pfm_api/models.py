@@ -58,6 +58,7 @@ class User(AbstractUser):
     )
     name = models.CharField(max_length=250, null=True, blank=True)
     uid = models.CharField(max_length=250, null=True, blank=True)
+    device_token = models.CharField(max_length=250, null=True, blank=True)
     is_active = models.BooleanField(default=False)
     is_admin = models.BooleanField(default=False)
     is_farmer = models.BooleanField(default=True)
