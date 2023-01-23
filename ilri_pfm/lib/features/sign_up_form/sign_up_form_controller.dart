@@ -4,6 +4,7 @@ import 'package:ilri_pfm/exceptions/weak_password_exception.dart';
 import 'package:ilri_pfm/models/device_model.dart';
 import 'package:ilri_pfm/repository/authentication_repository.dart';
 import 'package:ilri_pfm/repository/messaging_repository.dart';
+import 'package:ilri_pfm/screens/activation_screen.dart';
 
 mixin $SignInFormController on StatefulWidget {
   final AuthenticationRepository _repository = AuthenticationRepository();
@@ -18,13 +19,15 @@ mixin $SignInFormController on StatefulWidget {
   final String errorMessage = '';
   bool displayErrorMessage = false;
 
-  void onSignUp() async {
+  void onSignUp(BuildContext context) async {
     try {
       String? deviceToken = await _messagingRepository.getDeviceToken();
-      _repository.createUserWithEmailAndPassword(
+      await _repository.createUserWithEmailAndPassword(
           email: emailController.text,
           password: passwordController.text,
           devices: Device(token: deviceToken ?? ''));
+      // ignore: use_build_context_synchronously
+      Navigator.pushReplacementNamed(context, ActivationScreen.routeName);
     } on WeakPasswordException {
       displayErrorMessage = true;
     } on EmailExistsException {

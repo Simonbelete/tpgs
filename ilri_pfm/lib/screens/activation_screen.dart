@@ -6,6 +6,8 @@ import 'package:ilri_pfm/features/authorization/authorization_controller.dart';
 /// store it in bloc
 
 class ActivationScreen extends StatelessWidget {
+  static const String routeName = '/activation';
+
   const ActivationScreen({super.key});
 
   @override

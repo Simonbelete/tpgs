@@ -45,7 +45,7 @@ class _SignUpFormState extends State<SignUpForm> {
         ),
         Button(
           child: Text('Sign up'),
-          onPressed: () => widget.onSignUp(),
+          onPressed: () => widget.onSignUp(context),
         )
       ]),
     );
