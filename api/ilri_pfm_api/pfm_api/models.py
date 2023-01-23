@@ -58,7 +58,6 @@ class User(AbstractUser):
     )
     name = models.CharField(max_length=250, null=True, blank=True)
     uid = models.CharField(max_length=250, null=True, blank=True)
-    device_token = models.CharField(max_length=250, null=True, blank=True)
     is_active = models.BooleanField(default=False)
     is_admin = models.BooleanField(default=False)
     is_farmer = models.BooleanField(default=True)
@@ -69,3 +68,8 @@ class User(AbstractUser):
 
     def __str__(self):
         return self.email
+
+class Device(models.Model):
+    token = models.CharField(max_length=250)
+    is_active = models.BooleanField(default=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='devices_rel')
