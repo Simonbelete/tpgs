@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ilri_pfm/features/sign_out.dart/sign_out.dart';
 
 import './authorization_controller.dart';
 
@@ -19,7 +20,11 @@ class _AuthorizationState extends State<Authorization> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Text('Authorization Screen'),
-    );
+        child: Column(
+      children: [
+        const Text('Authroization Screen'),
+        SignOut(),
+      ],
+    ));
   }
 }
