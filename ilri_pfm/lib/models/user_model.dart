@@ -14,3 +14,5 @@ class UserModel {
       this.age,
       this.isVerified});
 }
+
+class UserDto {}

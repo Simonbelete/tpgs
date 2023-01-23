@@ -2,6 +2,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:ilri_pfm/exceptions/email_exists_exception.dart';
 import 'package:ilri_pfm/exceptions/unknown_exception.dart';
+import 'package:ilri_pfm/models/device_model.dart';
+import 'package:ilri_pfm/repository/messaging_repository.dart';
 import 'package:ilri_pfm/repository/repository.dart';
 import 'package:ilri_pfm/exceptions/weak_password_exception.dart';
 import 'package:ilri_pfm/services/user_service.dart';
@@ -20,13 +22,17 @@ class AuthenticationRepository extends Repository {
   }
 
   Future<void> createUserWithEmailAndPassword(
-      {required String email, required String password}) async {
+      {required String email,
+      required String password,
+      required Device devices}) async {
     try {
       final credential = await _auth.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
-      final response = _service.post(email = email);
+      print('========================================myd');
+      print(devices);
+      final response = _service.post(email: email, devices: devices);
       print(response);
     } on FirebaseAuthException catch (e) {
       print(e.toString());
