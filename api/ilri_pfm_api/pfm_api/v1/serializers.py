@@ -17,13 +17,14 @@ class UserSerializer(serializers.ModelSerializer):
     #     slug_field='devices'
     # )
     devices = DeviceSerializer(many=True)
+    uid = serializers.CharField()
     email = serializers.CharField()
     # is_admin = serializers.BooleanField()
     is_farmer = serializers.BooleanField()
 
     class Meta:
         model = User
-        fields = ['name', 'email', 'is_admin', 'is_admin', 'is_staff', 'is_farmer', 'devices']
+        fields = ['name', 'email', 'uid', 'is_admin', 'is_admin', 'is_staff', 'is_farmer', 'devices']
 
     def create(self, validated_data):
         device_data = validated_data.pop('devices')
