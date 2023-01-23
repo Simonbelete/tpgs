@@ -13,7 +13,7 @@ class Authorization extends StatefulWidget with $AuthorizationController {
 class _AuthorizationState extends State<Authorization> {
   @override
   void initState() {
-    widget.initUser();
+    widget.initUser(context);
     super.initState();
   }
 
