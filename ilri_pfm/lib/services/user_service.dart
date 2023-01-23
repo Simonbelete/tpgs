@@ -7,7 +7,16 @@ import 'package:ilri_pfm/util/dio_client.dart';
 
 class UserService {
   final String _url = '/users/';
+  final String _uidUrl = '/users/uid';
   final Dio _dio = dioClient;
+
+  Future<Response> getByUid(String uid) async {
+    try {
+      return await _dio.get('$_uidUrl/$uid/');
+    } catch (e) {
+      rethrow;
+    }
+  }
 
   Future<Response> get() async {
     try {

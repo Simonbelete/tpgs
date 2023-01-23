@@ -1,4 +1,5 @@
 class UserModel {
+  String? name;
   String? uid;
   bool? isVerified;
   final String? email;
@@ -13,6 +14,8 @@ class UserModel {
       this.displayName,
       this.age,
       this.isVerified});
-}
 
-class UserDto {}
+  factory UserModel.fromJson(Map<String, dynamic> data) {
+    return UserModel(uid: data['uid']);
+  }
+}

@@ -5,6 +5,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:ilri_pfm/app/theme.dart';
 import 'package:ilri_pfm/blocs/auth/bloc.dart';
 import 'package:ilri_pfm/router.dart';
+import 'package:ilri_pfm/screens/activation_screen.dart';
 import 'package:ilri_pfm/screens/home_screen.dart';
 import 'package:ilri_pfm/screens/onboarding_screen.dart';
 import 'package:device_preview/device_preview.dart';
@@ -36,7 +37,7 @@ class AppDev extends StatelessWidget {
           home: StreamBuilder<User?>(
             stream: FirebaseAuth.instance.authStateChanges(),
             builder: (context, snapshot) {
-              if (snapshot.hasData) return const HomeScreen();
+              if (snapshot.hasData) return const ActivationScreen();
               return const OnBoardingScreen();
             },
           ),
