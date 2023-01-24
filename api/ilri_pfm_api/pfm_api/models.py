@@ -26,6 +26,7 @@ class UserManager(BaseUserManager):
         """
         extra_fields.setdefault("is_admin", False)
         extra_fields.setdefault("is_superuser", True)
+        extra_fields.setdefault("is_approved", True)
         extra_fields.setdefault("is_staff", True)
         extra_fields.setdefault("is_farmer", True)
         extra_fields.setdefault("is_active", True)
@@ -41,6 +42,7 @@ class UserManager(BaseUserManager):
         Create and save a SuperUser with the given email and password.
         """
         extra_fields.setdefault("is_admin", True)
+        extra_fields.setdefault("is_approved", True)
         extra_fields.setdefault("is_farmer", True)
         extra_fields.setdefault("is_superuser", False)
         extra_fields.setdefault("is_active", True)
@@ -58,6 +60,7 @@ class User(AbstractUser):
     )
     name = models.CharField(max_length=250, null=True, blank=True)
     uid = models.CharField(max_length=250, null=True, blank=True)
+    is_approved = models.BooleanField(default=False)
     is_active = models.BooleanField(default=False)
     is_admin = models.BooleanField(default=False)
     is_farmer = models.BooleanField(default=True)
