@@ -4,8 +4,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:ilri_pfm/app/theme.dart';
 import 'package:ilri_pfm/blocs/user/bloc.dart';
+import 'package:ilri_pfm/blocs/user/events.dart';
+import 'package:ilri_pfm/blocs/user/states.dart';
+import 'package:ilri_pfm/common_widgets/loading.dart';
+import 'package:ilri_pfm/models/user_model.dart';
+import 'package:ilri_pfm/repository/user_repository.dart';
 import 'package:ilri_pfm/router.dart';
 import 'package:ilri_pfm/screens/activation_screen.dart';
+import 'package:ilri_pfm/screens/home_screen.dart';
 import 'package:ilri_pfm/screens/onboarding_screen.dart';
 import 'package:device_preview/device_preview.dart';
 import 'package:ilri_pfm/util/bloc_observer.dart';
@@ -38,11 +44,48 @@ class AppDev extends StatelessWidget {
           home: StreamBuilder<User?>(
             stream: FirebaseAuth.instance.authStateChanges(),
             builder: (context, snapshot) {
-              if (snapshot.hasData) return const ActivationScreen();
+              if (snapshot.hasData) {
+                return UserSync();
+              }
               return const OnBoardingScreen();
             },
           ),
           onGenerateRoute: (settings) => generateRoute(settings)),
+    );
+  }
+}
+
+class UserSync extends StatefulWidget {
+  const UserSync({super.key});
+
+  @override
+  State<UserSync> createState() => _UserSyncState();
+}
+
+class _UserSyncState extends State<UserSync> {
+  bool loading = true;
+
+  @override
+  void initState() {
+    _syncUser();
+    super.initState();
+  }
+
+  void _syncUser() async {
+    UserModel? user = await UserRepository().getByUid();
+    if (user != null) {
+      context.read<UserBloc>().add(UserInit(user));
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<UserBloc, UserState>(
+      builder: (context, state) {
+        return state.user?.is_approved == true
+            ? const HomeScreen()
+            : const ActivationScreen();
+      },
     );
   }
 }

@@ -13,7 +13,7 @@ class ActivationScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(child: Authorization()),
+      body: SafeArea(child: Text('activation')),
     );
   }
 }
