@@ -3,6 +3,7 @@ import 'package:ilri_pfm/screens/activation_screen.dart';
 import 'package:ilri_pfm/screens/home_screen.dart';
 import 'package:ilri_pfm/screens/login_screen.dart';
 import 'package:ilri_pfm/screens/register_screen.dart';
+import 'package:ilri_pfm/screens/users_screen.dart';
 
 Route<dynamic> generateRoute(RouteSettings routeSettings) {
   print(routeSettings.name);
@@ -19,6 +20,9 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
     case ActivationScreen.routeName:
       return MaterialPageRoute(
           settings: routeSettings, builder: (_) => const ActivationScreen());
+    case UsersScreen.routeName:
+      return MaterialPageRoute(
+          settings: routeSettings, builder: (_) => const UsersScreen());
     default:
       return MaterialPageRoute(
           settings: routeSettings,
