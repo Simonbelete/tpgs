@@ -10,6 +10,7 @@ mixin $AuthorizationController on StatefulWidget {
 
   void initUser(BuildContext context) async {
     UserModel? user = await _repository.getByUid();
+    print(user?.toJson());
     if (user != null) {
       context.read<UserBloc>().add(UserInit(user));
     }

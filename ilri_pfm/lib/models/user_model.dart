@@ -24,8 +24,9 @@ class UserModel {
     return UserModel(
         email: data['email'],
         uid: data['uid'],
-        is_approved: data['uid'],
-        devices: data['devices'].map((e) => Device.fromJson(e)));
+        is_approved: data['is_approved'],
+        devices:
+            data['devices'].map<Device>((e) => Device.fromJson(e)).toList());
   }
 
   Map<String, dynamic> toJson() => {
