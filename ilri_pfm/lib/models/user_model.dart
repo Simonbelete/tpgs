@@ -25,6 +25,8 @@ class UserModel {
         email: data['email'],
         uid: data['uid'],
         is_approved: data['is_approved'],
+        is_admin: data['is_admin'],
+        is_farmer: data['is_farmer'],
         devices:
             data['devices'].map<Device>((e) => Device.fromJson(e)).toList());
   }

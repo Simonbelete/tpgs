@@ -19,9 +19,9 @@ class UserService {
     }
   }
 
-  Future<Response> get() async {
+  Future<Response> get({Map<String, dynamic>? query}) async {
     try {
-      final response = await _dio.get(_url);
+      final response = await _dio.get(_url, queryParameters: query ?? {});
       return response;
     } catch (e) {
       rethrow;

@@ -8,6 +8,18 @@ class UserRepository extends Repository {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final UserService _service = UserService();
 
+  Future<List<UserModel>>? get({Map<String, dynamic>? query}) async {
+    try {
+      final Response response = await UserService().get(query: query);
+      return response.data['results']
+          .map<UserModel>((e) => UserModel.fromJson(e))
+          .toList();
+    } catch (e) {
+      print(e.toString());
+      return [];
+    }
+  }
+
   Future<UserModel?> getByUid() async {
     try {
       final User? user = _auth.currentUser;
