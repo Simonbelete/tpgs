@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:ilri_pfm/app/color_set.dart';
 
 class FormTextBox extends StatelessWidget {
   final TextEditingController? controller;
@@ -29,7 +30,7 @@ class FormTextBox extends StatelessWidget {
           controller: controller,
           validator: validator,
           style: const TextStyle(
-              fontWeight: FontWeight.normal, fontSize: 14, color: Colors.white),
+              fontWeight: FontWeight.normal, fontSize: 14, color: kTextColor),
           decoration: InputDecoration(
             enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(6.0),
