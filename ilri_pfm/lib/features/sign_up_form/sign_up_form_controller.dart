@@ -6,7 +6,7 @@ import 'package:ilri_pfm/repository/authentication_repository.dart';
 import 'package:ilri_pfm/repository/messaging_repository.dart';
 import 'package:ilri_pfm/screens/activation_screen.dart';
 
-mixin $SignInFormController on StatefulWidget {
+mixin $SignUpFormController on StatelessWidget {
   final AuthenticationRepository _repository = AuthenticationRepository();
   final MessagingRepository _messagingRepository = MessagingRepository();
 

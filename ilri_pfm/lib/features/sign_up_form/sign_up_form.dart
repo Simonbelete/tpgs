@@ -12,20 +12,86 @@ import 'package:ilri_pfm/features/sing_in_with_google_form/sing_in_with_google_f
 
 import './sign_up_form_controller.dart';
 
-class SignUpForm extends StatefulWidget with $SignInFormController {
+class SignUpForm extends StatelessWidget with $SignUpFormController {
   SignUpForm({super.key});
 
-  @override
-  State<SignUpForm> createState() => _SignUpFormState();
-}
-
-class _SignUpFormState extends State<SignUpForm> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Column(
       children: [
-        _buildForm(size),
+        Form(
+          key: formKey,
+          child:
+              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            const HeaderText(
+              text: 'Create Account',
+              fontWeight: FontWeight.normal,
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            const SubTitleText(
+                text: 'Enter your Name, Email and Password \nfor sign up.'),
+            const SizedBox(
+              height: 10,
+            ),
+            const HaveAccount(),
+            const SizedBox(
+              height: 30,
+            ),
+            Visibility(
+                visible: displayErrorMessage,
+                child: Container(
+                  child: Text('Error Login'),
+                )),
+            NameField(
+              controller: nameController,
+            ),
+            const SizedBox(
+              height: 25,
+            ),
+            EmailField(
+              controller: emailController,
+            ),
+            const SizedBox(
+              height: 25,
+            ),
+            PasswordField(
+              controller: passwordController,
+            ),
+            const SizedBox(
+              height: 25,
+            ),
+            Container(
+              alignment: Alignment.centerRight,
+              child: const SubTitleText(text: 'Forget Password?'),
+            ),
+            const SizedBox(
+              height: 12,
+            ),
+            Container(
+              width: size.width,
+              child: Center(
+                child: SizedBox(
+                  width: size.width * 0.8,
+                  child: Button(
+                    backgroundColor: kPrimaryColor,
+                    color: Colors.white,
+                    child: const Text(
+                      'Sing Up',
+                    ),
+                    onPressed: () {},
+                  ),
+                ),
+              ),
+            ),
+            // Button(
+            //   child: Text('Sign up'),
+            //   onPressed: () => widget.onSignUp(context),
+            // )
+          ]),
+        ),
         const SizedBox(
           height: 15,
         ),
@@ -39,92 +105,6 @@ class _SignUpFormState extends State<SignUpForm> {
         ),
         SizedBox(width: size.width, child: const HaveAccount())
       ],
-    );
-  }
-
-  Widget _buildForm(Size size) {
-    return Form(
-      key: widget.formKey,
-      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        const HeaderText(
-          text: 'Create Account',
-          fontWeight: FontWeight.normal,
-        ),
-        const SizedBox(
-          height: 10,
-        ),
-        const SubTitleText(
-            text: 'Enter your Name, Email and Password \nfor sign up.'),
-        const SizedBox(
-          height: 10,
-        ),
-        HaveAccount(),
-        const SizedBox(
-          height: 30,
-        ),
-        Visibility(
-            visible: widget.displayErrorMessage,
-            child: Container(
-              child: Text('Error Login'),
-            )),
-        _nameField(),
-        const SizedBox(
-          height: 25,
-        ),
-        _emailField(),
-        const SizedBox(
-          height: 25,
-        ),
-        _passwordField(),
-        const SizedBox(
-          height: 25,
-        ),
-        Container(
-          alignment: Alignment.centerRight,
-          child: const SubTitleText(text: 'Forget Password?'),
-        ),
-        const SizedBox(
-          height: 12,
-        ),
-        Container(
-          width: size.width,
-          child: Center(
-            child: SizedBox(
-              width: size.width * 0.8,
-              child: Button(
-                backgroundColor: kPrimaryColor,
-                color: Colors.white,
-                child: const Text(
-                  'Sing Up',
-                ),
-                onPressed: () {},
-              ),
-            ),
-          ),
-        ),
-        // Button(
-        //   child: Text('Sign up'),
-        //   onPressed: () => widget.onSignUp(context),
-        // )
-      ]),
-    );
-  }
-
-  Widget _nameField() {
-    return NameField(
-      controller: widget.nameController,
-    );
-  }
-
-  Widget _emailField() {
-    return EmailField(
-      controller: widget.emailController,
-    );
-  }
-
-  Widget _passwordField() {
-    return PasswordField(
-      controller: widget.passwordController,
     );
   }
 }
