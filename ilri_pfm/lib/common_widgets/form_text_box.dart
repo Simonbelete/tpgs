@@ -29,6 +29,8 @@ class FormTextBox extends StatelessWidget {
         TextFormField(
           controller: controller,
           validator: validator,
+          style: TextStyle(
+              fontWeight: FontWeight.normal, fontSize: 14, color: Colors.white),
           decoration: InputDecoration(
             enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(6.0),

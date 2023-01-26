@@ -7,6 +7,7 @@ import 'package:ilri_pfm/common_widgets/header_text.dart';
 import 'package:ilri_pfm/common_widgets/name_field.dart';
 import 'package:ilri_pfm/common_widgets/password_field.dart';
 import 'package:ilri_pfm/common_widgets/sub_title_text.dart';
+import 'package:ilri_pfm/features/have_account/have_account.dart';
 import 'package:ilri_pfm/features/sing_in_with_google_form/sing_in_with_google_form.dart';
 
 import './sign_up_form_controller.dart';
@@ -22,14 +23,21 @@ class _SignUpFormState extends State<SignUpForm> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-
     return Column(
       children: [
         _buildForm(size),
         const SizedBox(
-          height: 40,
+          height: 15,
         ),
-        SignInWithGoogleForm()
+        const SubTitleText(text: 'Or Sing up with'),
+        const SizedBox(
+          height: 15,
+        ),
+        SignInWithGoogleForm(),
+        const SizedBox(
+          height: 20,
+        ),
+        SizedBox(width: size.width, child: const HaveAccount())
       ],
     );
   }
@@ -48,7 +56,11 @@ class _SignUpFormState extends State<SignUpForm> {
         const SubTitleText(
             text: 'Enter your Name, Email and Password \nfor sign up.'),
         const SizedBox(
-          height: 40,
+          height: 10,
+        ),
+        HaveAccount(),
+        const SizedBox(
+          height: 30,
         ),
         Visibility(
             visible: widget.displayErrorMessage,
@@ -69,7 +81,7 @@ class _SignUpFormState extends State<SignUpForm> {
         ),
         Container(
           alignment: Alignment.centerRight,
-          child: SubTitleText(text: 'Forget Password?'),
+          child: const SubTitleText(text: 'Forget Password?'),
         ),
         const SizedBox(
           height: 12,
