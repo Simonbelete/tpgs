@@ -5,7 +5,16 @@ class Button extends StatelessWidget {
   final bool? outlined;
   final VoidCallback? onPressed;
   final Widget child;
-  const Button({super.key, this.onPressed, required this.child, this.outlined});
+  final Color? color;
+  final Color? backgroundColor;
+  const Button({
+    super.key,
+    this.onPressed,
+    required this.child,
+    this.outlined,
+    this.color = Colors.white,
+    this.backgroundColor = kPrimaryColor,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -13,21 +22,22 @@ class Button extends StatelessWidget {
       return OutlinedButton(
         onPressed: onPressed,
         style: OutlinedButton.styleFrom(
-            foregroundColor: ColorSet.iPrimaryColor,
+            foregroundColor: backgroundColor,
             padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 12),
-            textStyle: Theme.of(context).textTheme.button,
+            textStyle: Theme.of(context).textTheme.button?.apply(color: color),
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10.0)),
-            side: const BorderSide(color: ColorSet.iPrimaryColor)),
+            side: BorderSide(color: backgroundColor ?? kPrimaryColor)),
         child: child,
       );
     } else {
       return ElevatedButton(
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(
-          backgroundColor: ColorSet.iPrimaryColor,
+          foregroundColor: color,
+          backgroundColor: backgroundColor,
           textStyle: Theme.of(context).textTheme.button,
-          padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 12),
+          padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
         ),

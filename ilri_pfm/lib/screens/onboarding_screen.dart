@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:ilri_pfm/app/color_set.dart';
 import 'package:ilri_pfm/features/onboarding_slide/onboarding_slide.dart';
 
 class OnBoardingScreen extends StatelessWidget {
@@ -7,19 +8,12 @@ class OnBoardingScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        elevation: 0,
-        backgroundColor: Colors.white,
-        systemOverlayStyle: const SystemUiOverlayStyle(
-          statusBarColor: Colors.white, // <-- SEE HERE
-          statusBarIconBrightness:
-              Brightness.dark, //<-- For Android SEE HERE (dark icons)
-          statusBarBrightness:
-              Brightness.light, //<-- For iOS SEE HERE (dark icons)
-        ),
-      ),
-      body: const SafeArea(child: OnBoardingSlide()),
+    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+      statusBarColor: kPrimaryColor,
+    ));
+    return const Scaffold(
+      backgroundColor: kPrimaryColor,
+      body: SafeArea(child: OnBoardingSlide()),
     );
   }
 }
