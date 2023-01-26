@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:ilri_pfm/app/color_set.dart';
 
 class FormTextBox extends StatelessWidget {
@@ -11,19 +12,37 @@ class FormTextBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextFormField(
-      controller: controller,
-      validator: validator,
-      decoration: InputDecoration(
-        filled: true,
-        fillColor: ColorSet.igray,
-        border: const OutlineInputBorder(
-            borderSide: BorderSide(color: Colors.white70)),
-        focusedBorder: const OutlineInputBorder(
-            borderSide: BorderSide(color: ColorSet.iPrimaryColor)),
-        hintText: hintText,
-        contentPadding: const EdgeInsets.all(8),
-      ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(left: 4),
+          child: Text(
+            hintText ?? '',
+            style:
+                GoogleFonts.roboto(fontWeight: FontWeight.bold, fontSize: 13.0),
+          ),
+        ),
+        const SizedBox(
+          height: 5,
+        ),
+        TextFormField(
+          controller: controller,
+          validator: validator,
+          decoration: InputDecoration(
+            enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(6.0),
+                borderSide: const BorderSide(
+                    color: Color.fromARGB(255, 224, 225, 228))),
+            focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10.0),
+                borderSide: const BorderSide(color: Color(0xffE4E3E8))),
+            hintText: hintText,
+            contentPadding:
+                const EdgeInsets.symmetric(horizontal: 15, vertical: 0),
+          ),
+        ),
+      ],
     );
   }
 }

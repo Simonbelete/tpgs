@@ -15,16 +15,15 @@ class RegisterScreen extends StatelessWidget {
         elevation: 0,
         backgroundColor: Colors.white,
         systemOverlayStyle: const SystemUiOverlayStyle(
-          statusBarColor: Colors.white, // <-- SEE HERE
-          statusBarIconBrightness:
-              Brightness.dark, //<-- For Android SEE HERE (dark icons)
-          statusBarBrightness:
-              Brightness.light, //<-- For iOS SEE HERE (dark icons)
+          statusBarColor: Colors.white,
+          statusBarIconBrightness: Brightness.dark,
+          statusBarBrightness: Brightness.light,
         ),
       ),
-      body: Center(
-        child: Container(
-            width: size.width * 0.8, child: Column(children: [SignUpForm()])),
+      body: SingleChildScrollView(
+        child: Center(
+          child: Container(width: size.width * 0.8, child: SignUpForm()),
+        ),
       ),
     );
   }

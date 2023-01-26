@@ -49,7 +49,8 @@ class OnBoardingSlide extends StatelessWidget {
                   const Padding(
                     padding: EdgeInsets.symmetric(horizontal: 25.0),
                     child: BodyText(
-                      text: 'Find all your poultry data in one place',
+                      text: 'Find all your poultry data in one \nplace',
+                      color: kTextColor,
                     ),
                   ),
                   const SizedBox(
