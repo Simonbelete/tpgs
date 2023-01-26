@@ -28,6 +28,10 @@ class UserSerializer(serializers.ModelSerializer):
         for device in device_data:
             Device.objects.create(user=user, **device)
 
-        FirebaseMessaging().send_message(token="ceWL0nrTQ8eBuq5llju_Sk:APA91bGAdKfNOdgXSGj5baCFSM6bzUIq9rG7A1IY1JgNMaCQ61P7-oFywezDw4xvJ4WqrsPgrl7GvhRGY5X9wAJO-dVBCrplqDh3rY8vowo7atz-SznQNd6-uyzUqZWfZ1LPbLXz9L9l", title="Title", body="body")
+        admin_user = User.objects.filter(is_admin=True)
+        for a in admin_user:
+            admin_devices = Device.objects.filter(user=a.id)
+            for device in admin_devices:
+                FirebaseMessaging().send_message(token=device.token, title="Title", body="body")
 
         return user
