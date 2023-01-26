@@ -2,6 +2,7 @@ from rest_framework import serializers
 from rest_framework import exceptions
 
 from pfm_api.models import User, Device
+from pfm_api.firebase_messageing import FirebaseMessaging
 
 class DeviceSerializer(serializers.ModelSerializer):
     token = serializers.CharField()
@@ -11,15 +12,9 @@ class DeviceSerializer(serializers.ModelSerializer):
         fields = ['token', 'is_active']
 
 class UserSerializer(serializers.ModelSerializer):
-    # name = serializers.CharField()
-    # devices =  serializers.SlugRelatedField(
-    #     many=True,
-    #     slug_field='devices'
-    # )
     devices = DeviceSerializer(many=True)
     uid = serializers.CharField()
     email = serializers.CharField()
-    # is_admin = serializers.BooleanField()
     is_farmer = serializers.BooleanField()
 
     class Meta:
@@ -32,5 +27,7 @@ class UserSerializer(serializers.ModelSerializer):
 
         for device in device_data:
             Device.objects.create(user=user, **device)
+
+        FirebaseMessaging.send_message()
 
         return user
