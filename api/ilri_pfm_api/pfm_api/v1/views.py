@@ -1,10 +1,11 @@
 from django.contrib.auth import get_user_model
 from rest_framework import viewsets
-from pfm_api.v1.serializers import UserSerializer, DeviceSerializer
-from pfm_api.models import Device
 from rest_framework.response import Response
 from rest_framework import status
 from django.http import Http404
+
+from pfm_api.v1.serializers import UserSerializer, DeviceSerializer, FarmSerializer
+from pfm_api.models import Device, Farm
 
 User = get_user_model()
 
@@ -27,3 +28,7 @@ class UserUidViewSet(viewsets.ModelViewSet):
 class DeviceViewSet(viewsets.ModelViewSet):
     queryset = Device.objects.all()
     serializer_class = DeviceSerializer
+
+class FarmViewSet(viewsets.ModelViewSet):
+    queryset = Farm.objects.all()
+    serializer_class = FarmSerializer

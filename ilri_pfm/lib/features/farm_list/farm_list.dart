@@ -31,6 +31,7 @@ class _FarmListState extends State<FarmList> {
       final List<Farm>? newItems = await FarmRepository()
           .get(query: {'limit': _pageSize, 'offset': _pageSize * pageKey});
       final isLastPage = (newItems?.length ?? 0) < _pageSize;
+      print(newItems);
       if (isLastPage) {
         _pagingController.appendLastPage(newItems ?? []);
       } else {
@@ -45,15 +46,21 @@ class _FarmListState extends State<FarmList> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    return Container(
-        height: size.height,
-        padding: const EdgeInsets.symmetric(horizontal: 20.0),
-        child: PagedListView<int, Farm>(
-          pagingController: _pagingController,
-          builderDelegate: PagedChildBuilderDelegate<Farm>(
-            itemBuilder: (context, item, index) => DataTile(),
-          ),
-        ));
+    return RefreshIndicator(
+      onRefresh: () async {
+        _pagingController.refresh();
+      },
+      child: Container(
+          width: size.width,
+          height: size.height,
+          padding: const EdgeInsets.symmetric(horizontal: 20.0),
+          child: PagedListView<int, Farm>(
+            pagingController: _pagingController,
+            builderDelegate: PagedChildBuilderDelegate<Farm>(
+              itemBuilder: (context, item, index) => DataTile(),
+            ),
+          )),
+    );
   }
 }
 

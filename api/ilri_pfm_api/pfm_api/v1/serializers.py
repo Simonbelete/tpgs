@@ -35,3 +35,10 @@ class UserSerializer(serializers.ModelSerializer):
                 FirebaseMessaging().send_message(token=device.token, title="Title", body="body")
 
         return user
+
+class FarmSerializer(serializers.ModelSerializer):
+    name = serializers.CharField()
+
+    class Meta:
+        model = Device
+        fields = ['name', 'is_active']
