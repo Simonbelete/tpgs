@@ -2,6 +2,8 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.contrib.auth.base_user import BaseUserManager
 from django.utils import timezone
+from simple_history.models import HistoricalRecords
+from django.conf import settings
 
 class UserManager(BaseUserManager):
     """
@@ -72,7 +74,34 @@ class User(AbstractUser):
     def __str__(self):
         return self.email
 
+## Abstract Models
+class HistoryModel(models.Model):
+    created_by = models.ForeignKey(settings.AUTH_USER_MODEL,
+            on_delete=models.CASCADE)
+
+    class Meta:
+        abstract = True
+
+class BaseModel(models.Model):
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    created_by = models.ForeignKey(settings.AUTH_USER_MODEL,
+      on_delete=models.CASCADE)
+    history = HistoricalRecords(
+       bases=[HistoryModel]
+    )
+
+    class Meta:
+        abstract = True
+
 class Device(models.Model):
     token = models.CharField(max_length=250)
     is_active = models.BooleanField(default=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='devices')
+
+class Farm(BaseModel):
+    name = models.CharField(max_length=250)
+    is_active = models.BooleanField(default=True)
+
+    def __str__(self):
+        return self.name
