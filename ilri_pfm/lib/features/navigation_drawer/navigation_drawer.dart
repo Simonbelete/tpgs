@@ -3,6 +3,7 @@ import 'package:ilri_pfm/blocs/user/bloc.dart';
 import 'package:ilri_pfm/models/user_model.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ilri_pfm/repository/authentication_repository.dart';
+import 'package:ilri_pfm/screens/farm_screen.dart';
 import 'package:ilri_pfm/screens/users_screen.dart';
 
 class NavigationDrawer extends StatelessWidget {
@@ -33,6 +34,13 @@ class NavigationDrawer extends StatelessWidget {
                 Navigator.pushNamed(context, UsersScreen.routeName);
               },
             ),
+          ),
+          ListTile(
+            title: const Text('Farms'),
+            onTap: () {
+              Navigator.pop(context);
+              Navigator.pushNamed(context, FarmScreen.routeName);
+            },
           ),
           ListTile(
             title: const Text('loginout'),

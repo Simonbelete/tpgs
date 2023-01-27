@@ -16,7 +16,7 @@ class _UsersListState extends State<UsersList> {
   static const _pageSize = 20;
 
   final PagingController<int, UserModel> _pagingController =
-      PagingController(firstPageKey: 1);
+      PagingController(firstPageKey: 0);
 
   @override
   void initState() {
@@ -28,10 +28,11 @@ class _UsersListState extends State<UsersList> {
 
   Future<void> _fetchPage(int pageKey) async {
     try {
-      final List<UserModel>? newItems =
-          await UserRepository().get(query: {'page': pageKey});
+      final List<UserModel>? newItems = await UserRepository()
+          .get(query: {'limit': _pageSize, 'offset': _pageSize * pageKey});
       print('----------------------');
-      print(newItems);
+      print(_pageSize);
+      print(pageKey);
       final isLastPage = (newItems?.length ?? 0) < _pageSize;
       if (isLastPage) {
         _pagingController.appendLastPage(newItems ?? []);

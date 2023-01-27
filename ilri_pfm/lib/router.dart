@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:ilri_pfm/screens/activation_screen.dart';
+import 'package:ilri_pfm/screens/farm_screen.dart';
 import 'package:ilri_pfm/screens/home_screen.dart';
 import 'package:ilri_pfm/screens/login_screen.dart';
 import 'package:ilri_pfm/screens/register_screen.dart';
 import 'package:ilri_pfm/screens/users_screen.dart';
 
 Route<dynamic> generateRoute(RouteSettings routeSettings) {
-  print(routeSettings.name);
   switch (routeSettings.name) {
     case HomeScreen.routeName:
       return MaterialPageRoute(
@@ -23,6 +23,9 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
     case UsersScreen.routeName:
       return MaterialPageRoute(
           settings: routeSettings, builder: (_) => const UsersScreen());
+    case FarmScreen.routeName:
+      return MaterialPageRoute(
+          settings: routeSettings, builder: (_) => const FarmScreen());
     default:
       return MaterialPageRoute(
           settings: routeSettings,
