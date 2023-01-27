@@ -6,7 +6,7 @@ import 'package:ilri_pfm/repository/authentication_repository.dart';
 import 'package:ilri_pfm/repository/messaging_repository.dart';
 import 'package:ilri_pfm/screens/activation_screen.dart';
 
-mixin $SignUpFormController on StatelessWidget {
+mixin $SignUpFormController on StatefulWidget {
   final AuthenticationRepository _repository = AuthenticationRepository();
   final MessagingRepository _messagingRepository = MessagingRepository();
 
@@ -17,7 +17,7 @@ mixin $SignUpFormController on StatelessWidget {
 
   // Form Feedback
   final String errorMessage = '';
-  bool displayErrorMessage = false;
+  final bool displayErrorMessage = false;
 
   void onSignUp(BuildContext context) async {
     try {
@@ -29,11 +29,11 @@ mixin $SignUpFormController on StatelessWidget {
       // ignore: use_build_context_synchronously
       Navigator.pushReplacementNamed(context, ActivationScreen.routeName);
     } on WeakPasswordException {
-      displayErrorMessage = true;
+      // displayErrorMessage = true;
     } on EmailExistsException {
-      displayErrorMessage = true;
+      // displayErrorMessage = true;
     } catch (e) {
-      displayErrorMessage = true;
+      // displayErrorMessage = true;
     }
   }
 
