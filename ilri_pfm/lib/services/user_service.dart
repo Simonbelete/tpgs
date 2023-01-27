@@ -30,8 +30,6 @@ class UserService {
 
   Future<Response> post(
       {required UserModel user, required Device devices}) async {
-    print('======================================');
-    print(user.toJson());
     try {
       final response = await _dio.post(_url,
           data: jsonEncode({
