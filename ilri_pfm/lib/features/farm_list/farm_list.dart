@@ -57,22 +57,15 @@ class _FarmListState extends State<FarmList> {
           child: PagedListView<int, Farm>(
             pagingController: _pagingController,
             builderDelegate: PagedChildBuilderDelegate<Farm>(
-              itemBuilder: (context, item, index) => DataTile(),
+              itemBuilder: (context, item, index) => Container(
+                padding: const EdgeInsets.symmetric(vertical: 20),
+                child: DataTile(
+                  onTab: () {},
+                  title: item.name,
+                ),
+              ),
             ),
           )),
     );
   }
 }
-
-
-// const [
-//         TitleText(text: 'Farms'),
-//         SizedBox(
-//           height: 20,
-//         ),
-//         DataTile(),
-//         SizedBox(
-//           height: 20,
-//         ),
-//         DataTile()
-//       ]),

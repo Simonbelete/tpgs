@@ -73,35 +73,18 @@ class User(AbstractUser):
 
     def __str__(self):
         return self.email
-
-## Abstract Models
-class HistoryModel(models.Model):
-    created_by = models.ForeignKey(settings.AUTH_USER_MODEL,
-            on_delete=models.CASCADE)
-
-    class Meta:
-        abstract = True
-
-class BaseModel(models.Model):
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-    created_by = models.ForeignKey(settings.AUTH_USER_MODEL,
-      on_delete=models.CASCADE)
-    history = HistoricalRecords(
-       bases=[HistoryModel]
-    )
-
-    class Meta:
-        abstract = True
-
 class Device(models.Model):
     token = models.CharField(max_length=250)
     is_active = models.BooleanField(default=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='devices')
 
-class Farm(BaseModel):
+class Farm(models.Model):
     name = models.CharField(max_length=250)
     is_active = models.BooleanField(default=True)
+
+    created_at = models.DateTimeField(auto_now_add=True)
+    created_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.PROTECT)
+    history = HistoricalRecords()
 
     def __str__(self):
         return self.name

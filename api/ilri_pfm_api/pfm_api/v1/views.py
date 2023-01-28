@@ -32,3 +32,8 @@ class DeviceViewSet(viewsets.ModelViewSet):
 class FarmViewSet(viewsets.ModelViewSet):
     queryset = Farm.objects.all()
     serializer_class = FarmSerializer
+
+    def perform_create(self, serializer):
+        print('----------------------------------')
+        print(self.request.user)
+        serializer.save(created_by=self.request.user)

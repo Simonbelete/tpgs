@@ -13,8 +13,12 @@ from rest_framework import exceptions
 from .exceptions import FirebaseError
 from .exceptions import InvalidAuthToken
 from .exceptions import NoAuthToken
+import firebase_admin
+
 
 User = get_user_model()
+
+
 default_app = firebase_admin.initialize_app()
 
 class FirebaseAuthentication(authentication.BaseAuthentication):

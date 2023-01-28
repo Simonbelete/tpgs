@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from rest_framework import exceptions
 
-from pfm_api.models import User, Device
+from pfm_api.models import User, Device, Farm
 from pfm_api.firebase_messageing import FirebaseMessaging
 
 class DeviceSerializer(serializers.ModelSerializer):
@@ -38,7 +38,18 @@ class UserSerializer(serializers.ModelSerializer):
 
 class FarmSerializer(serializers.ModelSerializer):
     name = serializers.CharField()
+    is_active = serializers.BooleanField(default=True)
+    create_by = serializers.ReadOnlyField(source='created_by.id')
 
     class Meta:
-        model = Device
-        fields = ['name', 'is_active']
+        model = Farm
+        fields = ['name', 'is_active', 'create_by']
+
+# class PollSerializer(serializers.ModelSerializer):
+#     question = serializers.CharField()
+#     pub_date = serializers.DateTimeField()
+#     owner = serializers.ReadOnlyField(source='owner.id')
+
+#     class Meta:
+#         model = Poll
+#         fields = ['question', 'pub_date', 'owner']

@@ -13,7 +13,7 @@ class TitleText extends StatelessWidget {
     return Text(
       text,
       style: GoogleFonts.roboto(
-          fontSize: 20.0, color: color, fontWeight: FontWeight.bold),
+          fontSize: 15.0, color: color, fontWeight: FontWeight.bold),
     );
   }
 }

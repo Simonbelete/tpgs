@@ -1,7 +1,4 @@
 from firebase_admin import messaging, credentials
-import firebase_admin
-
-default_app = firebase_admin.initialize_app()
 
 class FirebaseMessaging:
     def send_message(self, token, title, body, data=None):
