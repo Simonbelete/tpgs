@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ilri_pfm/main_dev.dart';
 import 'package:ilri_pfm/screens/activation_screen.dart';
 import 'package:ilri_pfm/screens/farm_screen.dart';
 import 'package:ilri_pfm/screens/home_screen.dart';
@@ -8,6 +9,12 @@ import 'package:ilri_pfm/screens/users_screen.dart';
 
 Route<dynamic> generateRoute(RouteSettings routeSettings) {
   switch (routeSettings.name) {
+    case App.routeName:
+      return MaterialPageRoute(
+          settings: routeSettings, builder: (_) => const App());
+    case UserSync.routeName:
+      return MaterialPageRoute(
+          settings: routeSettings, builder: (_) => const UserSync());
     case HomeScreen.routeName:
       return MaterialPageRoute(
           settings: routeSettings, builder: (_) => const HomeScreen());

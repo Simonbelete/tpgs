@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:dio/dio.dart';
 import 'package:ilri_pfm/models/device_model.dart';
 import 'package:ilri_pfm/models/user_model.dart';
@@ -10,10 +11,19 @@ class UserService {
   final String _url = '/users/';
   final String _uidUrl = '/users/uid';
   final Dio _dio = dioClient;
+  final FirebaseAuth _auth = FirebaseAuth.instance;
 
   Future<Response> getByUid(String uid) async {
     try {
-      return await _dio.get('$_uidUrl/$uid/');
+      return await _dio.get(
+        '$_uidUrl/$uid/',
+        options: Options(
+          headers: {
+            Headers.wwwAuthenticateHeader:
+                await _auth.currentUser?.getIdToken(), // set content-length
+          },
+        ),
+      );
     } catch (e) {
       rethrow;
     }

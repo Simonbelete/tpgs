@@ -34,13 +34,15 @@ void main() async {
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
   runApp(DevicePreview(
     enabled: false,
-    builder: (context) => const AppDev(), // Wrap your app
+    builder: (context) => const App(), // Wrap your app
   ));
   // runApp(const AppDev());
 }
 
-class AppDev extends StatelessWidget {
-  const AppDev({super.key});
+class App extends StatelessWidget {
+  static const String routeName = '/';
+
+  const App({super.key});
   @override
   Widget build(BuildContext context) {
     final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -68,6 +70,8 @@ class AppDev extends StatelessWidget {
 }
 
 class UserSync extends StatefulWidget {
+  static const String routeName = '/user-sync';
+
   const UserSync({super.key});
 
   @override
