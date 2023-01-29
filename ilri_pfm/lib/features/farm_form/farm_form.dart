@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:ilri_pfm/app/color_set.dart';
 import 'package:ilri_pfm/common_widgets/button.dart';
 import 'package:ilri_pfm/common_widgets/container_card.dart';
+import 'package:ilri_pfm/common_widgets/custom_switch.dart';
 import 'package:ilri_pfm/common_widgets/form_text_box.dart';
 import 'package:ilri_pfm/models/farm_model.dart';
 
@@ -23,6 +24,10 @@ class _FarmFormState extends State<FarmForm> {
         child: Column(
       children: [
         FormTextBox(hintText: 'Name', initialValue: widget.farm.name),
+        const SizedBox(
+          height: 10,
+        ),
+        CustomSwitch(text: 'Active', onChanged: (bool value) {}),
         const SizedBox(
           height: 20,
         ),
