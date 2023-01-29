@@ -89,12 +89,20 @@ class Farm(models.Model):
     def __str__(self):
         return self.name
 
+class ChickenParent(models.Model):
+    mother = models.ForeignKey('Chicken', on_delete=models.CASCADE, related_name='mother')
+    father = models.ForeignKey('Chicken', on_delete=models.CASCADE, related_name='father')
+
+    is_active = models.BooleanField(default=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    created_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.PROTECT)
+    history = HistoricalRecords()
+
 ## Chicken/Animal
 class Chicken(models.Model):
     # Wing Tag
     tag = models.CharField(max_length=250)
-    sire =  models.ForeignKey('self', on_delete=models.SET_NULL, null=True)
-    dam =  models.ForeignKey('self', on_delete=models.SET_NULL, null=True)
+    parent = models.OneToOneField(ChickenParent, on_delete=models.SET_NULL, null=True)
     house_no = models.IntegerField()
     pen_no = models.IntegerField()
 
@@ -136,7 +144,7 @@ class Egg(models.Model):
     week = models.IntegerField()
     is_double_yolk = models.BooleanField(default=False)
     date_of_hatch = models.DateField()
-    weight = models.DecimalField()
+    weight = models.DecimalField(max_digits = 6, decimal_places = 3)
 
     is_active = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)

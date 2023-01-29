@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from rest_framework import exceptions
 
-from pfm_api.models import User, Device, Farm
+from pfm_api.models import User, Device, Farm, Chicken, ChickenParent, BreedType, ChickenStage, Egg, LayedPlace
 from pfm_api.firebase_messageing import FirebaseMessaging
 
 class DeviceSerializer(serializers.ModelSerializer):
@@ -44,6 +44,48 @@ class FarmSerializer(serializers.ModelSerializer):
     class Meta:
         model = Farm
         fields = ['name', 'is_active', 'create_by']
+
+class ChickenSerializer(serializers.ModelSerializer):
+    tag = serializers.CharField()
+
+    class Meta:
+        model = Chicken
+        fields = '__all__'
+
+class ChickenParentSerializer(serializers.ModelSerializer):
+    is_active = serializers.BooleanField()
+
+    class Meta:
+        model = ChickenParent
+        fields = '__all__'
+
+class BreedTypeSerializer(serializers.ModelSerializer):
+    name = serializers.CharField()
+
+    class Meta:
+        model = BreedType
+        fields = '__all__'
+
+class ChickenStageSerializer(serializers.ModelSerializer):
+    name = serializers.CharField()
+
+    class Meta:
+        model = ChickenStage
+        fields = '__all__'
+
+class EggSerializer(serializers.ModelSerializer):
+    week = serializers.IntegerField()
+
+    class Meta:
+        model = Egg
+        fields = '__all__'
+
+class LayedPlaceSerializer(serializers.ModelSerializer):
+    name = serializers.CharField()
+
+    class Meta:
+        model = LayedPlace
+        fields = '__all__'
 
 # class PollSerializer(serializers.ModelSerializer):
 #     question = serializers.CharField()
