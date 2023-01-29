@@ -31,7 +31,16 @@ class UserService {
 
   Future<Response> get({Map<String, dynamic>? query}) async {
     try {
-      final response = await _dio.get(_url, queryParameters: query ?? {});
+      final response = await _dio.get(
+        _url,
+        queryParameters: query ?? {},
+        options: Options(
+          headers: {
+            Headers.wwwAuthenticateHeader:
+                await _auth.currentUser?.getIdToken(), // set content-length
+          },
+        ),
+      );
       return response;
     } catch (e) {
       rethrow;

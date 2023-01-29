@@ -3,6 +3,7 @@ import 'package:ilri_pfm/common_widgets/data_tile.dart';
 import 'package:ilri_pfm/common_widgets/title_text.dart';
 import 'package:ilri_pfm/models/farm_model.dart';
 import 'package:ilri_pfm/repository/farm_repository.dart';
+import 'package:ilri_pfm/screens/farm_form_screen.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
 class FarmList extends StatefulWidget {
@@ -58,9 +59,12 @@ class _FarmListState extends State<FarmList> {
             pagingController: _pagingController,
             builderDelegate: PagedChildBuilderDelegate<Farm>(
               itemBuilder: (context, item, index) => Container(
-                padding: const EdgeInsets.symmetric(vertical: 20),
+                padding: const EdgeInsets.symmetric(vertical: 10),
                 child: DataTile(
-                  onTab: () {},
+                  onTab: () {
+                    Navigator.pushNamed(context, FarmFormScreen.routeName,
+                        arguments: item);
+                  },
                   title: item.name,
                 ),
               ),

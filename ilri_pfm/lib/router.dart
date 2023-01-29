@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:ilri_pfm/main_dev.dart';
+import 'package:ilri_pfm/models/farm_model.dart';
 import 'package:ilri_pfm/screens/activation_screen.dart';
+import 'package:ilri_pfm/screens/farm_form_screen.dart';
 import 'package:ilri_pfm/screens/farm_screen.dart';
 import 'package:ilri_pfm/screens/home_screen.dart';
 import 'package:ilri_pfm/screens/login_screen.dart';
@@ -33,6 +35,10 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
     case FarmScreen.routeName:
       return MaterialPageRoute(
           settings: routeSettings, builder: (_) => const FarmScreen());
+    case FarmFormScreen.routeName:
+      Farm farm = routeSettings.arguments as Farm;
+      return MaterialPageRoute(
+          settings: routeSettings, builder: (_) => FarmFormScreen(farm: farm));
     default:
       return MaterialPageRoute(
           settings: routeSettings,

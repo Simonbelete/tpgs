@@ -5,10 +5,15 @@ import 'package:ilri_pfm/app/color_set.dart';
 class FormTextBox extends StatelessWidget {
   final TextEditingController? controller;
   final String? hintText;
+  final String? initialValue;
   final String Function(String?)? validator;
 
   const FormTextBox(
-      {super.key, this.controller, this.hintText, this.validator});
+      {super.key,
+      this.controller,
+      this.hintText,
+      this.validator,
+      this.initialValue});
 
   @override
   Widget build(BuildContext context) {
@@ -27,6 +32,7 @@ class FormTextBox extends StatelessWidget {
           height: 5,
         ),
         TextFormField(
+          initialValue: initialValue,
           controller: controller,
           validator: validator,
           style: const TextStyle(
@@ -39,7 +45,7 @@ class FormTextBox extends StatelessWidget {
             focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(10.0),
                 borderSide: const BorderSide(color: Color(0xffE4E3E8))),
-            hintText: hintText,
+            hintText: 'Enter $hintText',
             contentPadding:
                 const EdgeInsets.symmetric(horizontal: 15, vertical: 0),
           ),
