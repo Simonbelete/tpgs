@@ -4,6 +4,7 @@ import 'package:ilri_pfm/main_dev.dart';
 import 'package:ilri_pfm/models/farm_model.dart';
 import 'package:ilri_pfm/screens/activation_screen.dart';
 import 'package:ilri_pfm/screens/breed_type_screen.dart';
+import 'package:ilri_pfm/screens/chicken_stage.dart';
 import 'package:ilri_pfm/screens/farm_form_screen.dart';
 import 'package:ilri_pfm/screens/farm_screen.dart';
 import 'package:ilri_pfm/screens/home_screen.dart';
@@ -44,6 +45,9 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
     case BreedTypeScreen.routeName:
       return MaterialPageRoute(
           settings: routeSettings, builder: (_) => const BreedTypeScreen());
+    case ChickenStageScreen.routeName:
+      return MaterialPageRoute(
+          settings: routeSettings, builder: (_) => const ChickenStageScreen());
     default:
       return MaterialPageRoute(
           settings: routeSettings,

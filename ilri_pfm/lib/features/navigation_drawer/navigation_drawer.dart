@@ -6,6 +6,7 @@ import 'package:ilri_pfm/models/user_model.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ilri_pfm/repository/authentication_repository.dart';
 import 'package:ilri_pfm/screens/breed_type_screen.dart';
+import 'package:ilri_pfm/screens/chicken_stage.dart';
 import 'package:ilri_pfm/screens/farm_screen.dart';
 import 'package:ilri_pfm/screens/users_screen.dart';
 
@@ -50,6 +51,13 @@ class NavigationDrawer extends StatelessWidget {
             onTap: () {
               Navigator.pop(context);
               Navigator.pushNamed(context, BreedTypeScreen.routeName);
+            },
+          ),
+          ListTile(
+            title: const Text('Chicken Stage'),
+            onTap: () {
+              Navigator.pop(context);
+              Navigator.pushNamed(context, ChickenStageScreen.routeName);
             },
           ),
           ListTile(
