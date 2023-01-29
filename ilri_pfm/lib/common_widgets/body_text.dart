@@ -12,7 +12,7 @@ class BodyText extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       text,
-      style: GoogleFonts.roboto(fontSize: 14.0, color: color),
+      style: GoogleFonts.roboto(fontSize: 15.0, color: color),
     );
   }
 }
