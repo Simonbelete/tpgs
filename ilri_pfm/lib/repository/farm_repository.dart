@@ -7,7 +7,6 @@ class FarmRepository extends Repository {
   Future<List<Farm>>? get({Map<String, dynamic>? query}) async {
     try {
       final Response response = await FarmService().get(query: query);
-      print(response);
       return response.data['results']
           .map<Farm>((e) => Farm.fromJson(e))
           .toList();

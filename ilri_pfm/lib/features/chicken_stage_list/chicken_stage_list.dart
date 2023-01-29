@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:ilri_pfm/common_widgets/data_tile.dart';
 import 'package:ilri_pfm/models/breed_type.dart';
-import 'package:ilri_pfm/repository/breed_type_repository.dart';
+import 'package:ilri_pfm/models/chicken_stage.dart';
+import 'package:ilri_pfm/repository/chicken_stage_repository.dart';
 import 'package:ilri_pfm/screens/farm_form_screen.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
@@ -15,7 +16,7 @@ class ChickenStageList extends StatefulWidget {
 class ChickenStageListState extends State<ChickenStageList> {
   static const _pageSize = 20;
 
-  final PagingController<int, BreedType> _pagingController =
+  final PagingController<int, ChickenStage> _pagingController =
       PagingController(firstPageKey: 0);
 
   @override
@@ -28,7 +29,7 @@ class ChickenStageListState extends State<ChickenStageList> {
 
   Future<void> _fetchPage(int pageKey) async {
     try {
-      final List<BreedType>? newItems = await BreedTypeRepository()
+      final List<ChickenStage>? newItems = await ChickenStageRepository()
           .get(query: {'limit': _pageSize, 'offset': _pageSize * pageKey});
       final isLastPage = (newItems?.length ?? 0) < _pageSize;
       if (isLastPage) {
@@ -53,9 +54,9 @@ class ChickenStageListState extends State<ChickenStageList> {
           width: size.width,
           height: size.height,
           padding: const EdgeInsets.symmetric(horizontal: 20.0),
-          child: PagedListView<int, BreedType>(
+          child: PagedListView<int, ChickenStage>(
             pagingController: _pagingController,
-            builderDelegate: PagedChildBuilderDelegate<BreedType>(
+            builderDelegate: PagedChildBuilderDelegate<ChickenStage>(
               itemBuilder: (context, item, index) => Container(
                 padding: const EdgeInsets.symmetric(vertical: 10),
                 child: DataTile(
