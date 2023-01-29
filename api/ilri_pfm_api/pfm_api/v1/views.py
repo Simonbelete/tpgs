@@ -34,6 +34,4 @@ class FarmViewSet(viewsets.ModelViewSet):
     serializer_class = FarmSerializer
 
     def perform_create(self, serializer):
-        print('----------------------------------')
-        print(self.request.user)
         serializer.save(created_by=self.request.user)
