@@ -15,7 +15,9 @@ class BreedTypeScreen extends StatelessWidget {
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(children: const [
-            CustomAppBar(),
+            CustomAppBar(
+              title: 'Breed Type',
+            ),
             SizedBox(
               height: 25,
             ),
@@ -24,7 +26,7 @@ class BreedTypeScreen extends StatelessWidget {
         ),
       ),
       drawer: const NavigationDrawer(),
-      floatingActionButton: FloatingActionButton(
+      floatingActionButton: FloatingActionButton.small(
         onPressed: () {},
         backgroundColor: kPrimaryColor,
         child: Icon(Icons.add),

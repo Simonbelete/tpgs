@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ilri_pfm/common_widgets/data_tile.dart';
-import 'package:ilri_pfm/common_widgets/title_text.dart';
-import 'package:ilri_pfm/models/farm_model.dart';
-import 'package:ilri_pfm/repository/farm_repository.dart';
+import 'package:ilri_pfm/models/breed_type.dart';
+import 'package:ilri_pfm/repository/breed_type_repository.dart';
 import 'package:ilri_pfm/screens/farm_form_screen.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
@@ -16,7 +15,7 @@ class BreedTypeList extends StatefulWidget {
 class BreedTypeListState extends State<BreedTypeList> {
   static const _pageSize = 20;
 
-  final PagingController<int, Farm> _pagingController =
+  final PagingController<int, BreedType> _pagingController =
       PagingController(firstPageKey: 0);
 
   @override
@@ -29,7 +28,7 @@ class BreedTypeListState extends State<BreedTypeList> {
 
   Future<void> _fetchPage(int pageKey) async {
     try {
-      final List<Farm>? newItems = await FarmRepository()
+      final List<BreedType>? newItems = await BreedTypeRepository()
           .get(query: {'limit': _pageSize, 'offset': _pageSize * pageKey});
       final isLastPage = (newItems?.length ?? 0) < _pageSize;
       if (isLastPage) {
@@ -54,9 +53,9 @@ class BreedTypeListState extends State<BreedTypeList> {
           width: size.width,
           height: size.height,
           padding: const EdgeInsets.symmetric(horizontal: 20.0),
-          child: PagedListView<int, Farm>(
+          child: PagedListView<int, BreedType>(
             pagingController: _pagingController,
-            builderDelegate: PagedChildBuilderDelegate<Farm>(
+            builderDelegate: PagedChildBuilderDelegate<BreedType>(
               itemBuilder: (context, item, index) => Container(
                 padding: const EdgeInsets.symmetric(vertical: 10),
                 child: DataTile(
