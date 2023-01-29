@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:ilri_pfm/features/breed_type_list/breed_type_list.dart';
 import 'package:ilri_pfm/main_dev.dart';
 import 'package:ilri_pfm/models/farm_model.dart';
 import 'package:ilri_pfm/screens/activation_screen.dart';
+import 'package:ilri_pfm/screens/breed_type_screen.dart';
 import 'package:ilri_pfm/screens/farm_form_screen.dart';
 import 'package:ilri_pfm/screens/farm_screen.dart';
 import 'package:ilri_pfm/screens/home_screen.dart';
@@ -39,6 +41,9 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
       Farm farm = routeSettings.arguments as Farm;
       return MaterialPageRoute(
           settings: routeSettings, builder: (_) => FarmFormScreen(farm: farm));
+    case BreedTypeScreen.routeName:
+      return MaterialPageRoute(
+          settings: routeSettings, builder: (_) => const BreedTypeScreen());
     default:
       return MaterialPageRoute(
           settings: routeSettings,

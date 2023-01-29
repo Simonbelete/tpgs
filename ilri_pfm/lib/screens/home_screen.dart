@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:ilri_pfm/common_widgets/custom_appbar.dart';
 import 'package:ilri_pfm/features/navigation_drawer/navigation_drawer.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -9,12 +9,19 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-      statusBarColor: Colors.white,
-    ));
     return Scaffold(
-        appBar: AppBar(),
-        body: Column(children: []),
-        drawer: NavigationDrawer());
+        body: SafeArea(
+          child: SingleChildScrollView(
+            child: Column(children: const [
+              CustomAppBar(
+                title: 'Dashboard',
+              ),
+              SizedBox(
+                height: 25,
+              ),
+            ]),
+          ),
+        ),
+        drawer: const NavigationDrawer());
   }
 }
