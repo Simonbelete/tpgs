@@ -32,11 +32,6 @@ class FarmFormScreen extends StatelessWidget {
         ),
       ),
       drawer: const NavigationDrawer(),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {},
-        backgroundColor: kPrimaryColor,
-        child: Icon(Icons.add),
-      ),
     );
   }
 }
