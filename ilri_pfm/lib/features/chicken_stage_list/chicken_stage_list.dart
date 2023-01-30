@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:ilri_pfm/common_widgets/data_tile.dart';
-import 'package:ilri_pfm/models/breed_type.dart';
 import 'package:ilri_pfm/models/chicken_stage.dart';
 import 'package:ilri_pfm/repository/chicken_stage_repository.dart';
-import 'package:ilri_pfm/screens/farm_form_screen.dart';
+import 'package:ilri_pfm/screens/chicken_stage_form_screen.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
 class ChickenStageList extends StatefulWidget {
@@ -61,7 +60,8 @@ class ChickenStageListState extends State<ChickenStageList> {
                 padding: const EdgeInsets.symmetric(vertical: 10),
                 child: DataTile(
                   onTab: () {
-                    Navigator.pushNamed(context, FarmFormScreen.routeName,
+                    Navigator.pushNamed(
+                        context, ChickenStageFormScreen.routeName,
                         arguments: item);
                   },
                   title: item.name,

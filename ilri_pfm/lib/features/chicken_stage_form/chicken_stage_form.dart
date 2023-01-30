@@ -8,9 +8,9 @@ import 'package:ilri_pfm/models/chicken_stage.dart';
 import 'package:ilri_pfm/models/farm_model.dart';
 
 class ChickenStageForm extends StatefulWidget {
-  final ChickenStage chickenStage;
+  final ChickenStage? chickenStage;
 
-  const ChickenStageForm({super.key, required this.chickenStage});
+  const ChickenStageForm({super.key, this.chickenStage});
 
   @override
   State<ChickenStageForm> createState() => _ChickenStageFormState();
@@ -24,7 +24,7 @@ class _ChickenStageFormState extends State<ChickenStageForm> {
     return ContainerCard(
         child: Column(
       children: [
-        FormTextBox(hintText: 'Name', initialValue: widget.chickenStage.name),
+        FormTextBox(hintText: 'Name', initialValue: widget.chickenStage?.name),
         const SizedBox(
           height: 10,
         ),
@@ -43,7 +43,12 @@ class _ChickenStageFormState extends State<ChickenStageForm> {
                 child: const Text(
                   'Save',
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  if (widget.chickenStage == null)
+                    create();
+                  else
+                    patch();
+                },
               ),
             ),
           ),
@@ -51,4 +56,8 @@ class _ChickenStageFormState extends State<ChickenStageForm> {
       ],
     ));
   }
+
+  void create() {}
+
+  void patch() {}
 }
