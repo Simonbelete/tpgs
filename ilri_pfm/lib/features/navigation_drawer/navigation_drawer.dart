@@ -12,6 +12,7 @@ import 'package:ilri_pfm/repository/authentication_repository.dart';
 import 'package:ilri_pfm/screens/breed_type_screen.dart';
 import 'package:ilri_pfm/screens/chicken_screen.dart';
 import 'package:ilri_pfm/screens/chicken_stage.dart';
+import 'package:ilri_pfm/screens/egg_screen.dart';
 import 'package:ilri_pfm/screens/farm_screen.dart';
 import 'package:ilri_pfm/screens/layed_place_screen.dart';
 import 'package:ilri_pfm/screens/users_screen.dart';
@@ -95,6 +96,13 @@ class NavigationDrawer extends StatelessWidget {
             onTap: () {
               Navigator.pop(context);
               Navigator.pushNamed(context, LayedPlaceScreen.routeName);
+            },
+          ),
+          ListTile(
+            title: const Text('Eggs'),
+            onTap: () {
+              Navigator.pop(context);
+              Navigator.pushNamed(context, EggScreen.routeName);
             },
           ),
           ListTile(
