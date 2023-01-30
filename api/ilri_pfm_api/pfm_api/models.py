@@ -98,6 +98,15 @@ class ChickenParent(models.Model):
     created_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.PROTECT)
     history = HistoricalRecords()
 
+## Chicken Stage (Chicken Life Cycle)
+class ChickenStage(models.Model):
+    name = models.CharField(max_length=250)
+
+    is_active = models.BooleanField(default=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    created_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.PROTECT)
+    history = HistoricalRecords()
+
 ## Chicken/Animal
 class Chicken(models.Model):
     # Wing Tag
@@ -105,6 +114,7 @@ class Chicken(models.Model):
     parent = models.OneToOneField(ChickenParent, on_delete=models.SET_NULL, null=True)
     house_no = models.IntegerField()
     pen_no = models.IntegerField()
+    chicken_stage = models.ForeignKey(ChickenStage, on_delete=models.SET_NULL, null=True)
 
     is_active = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -125,16 +135,6 @@ class BreedType(models.Model):
 
     def __str__(self):
         return self.name
-
-## Chicken Stage (Chicken Life Cycle)
-class ChickenStage(models.Model):
-    name = models.CharField(max_length=250)
-    chicken = models.ForeignKey(Chicken, on_delete=models.SET_NULL, null=True, related_name='chicken_stage')
-
-    is_active = models.BooleanField(default=True)
-    created_at = models.DateTimeField(auto_now_add=True)
-    created_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.PROTECT)
-    history = HistoricalRecords()
 
 ## egg production
 class Egg(models.Model):

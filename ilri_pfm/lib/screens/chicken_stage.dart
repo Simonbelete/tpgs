@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ilri_pfm/app/color_set.dart';
 import 'package:ilri_pfm/common_widgets/custom_appbar.dart';
+import 'package:ilri_pfm/features/chicken_stage_list/chicken_stage_list.dart';
 import 'package:ilri_pfm/features/farm_list/farm_list.dart';
 import 'package:ilri_pfm/features/navigation_drawer/navigation_drawer.dart';
 
@@ -21,7 +22,7 @@ class ChickenStageScreen extends StatelessWidget {
             SizedBox(
               height: 25,
             ),
-            FarmList(),
+            ChickenStageList()
           ]),
         ),
       ),
