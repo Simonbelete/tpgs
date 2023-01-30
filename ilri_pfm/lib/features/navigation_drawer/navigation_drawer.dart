@@ -4,6 +4,7 @@ import 'package:ilri_pfm/app/color_set.dart';
 import 'package:ilri_pfm/blocs/user/bloc.dart';
 import 'package:ilri_pfm/common_widgets/body_text.dart';
 import 'package:ilri_pfm/common_widgets/title_text.dart';
+import 'package:ilri_pfm/features/farm_selection_modal/farm_selection_modal.dart';
 import 'package:ilri_pfm/models/user_model.dart';
 import 'package:ilri_pfm/repository/authentication_repository.dart';
 import 'package:ilri_pfm/screens/about_screen.dart';
@@ -61,7 +62,14 @@ class NavigationDrawer extends StatelessWidget {
               onTap: () {},
             ),
             arrowColor: Colors.white,
-            onDetailsPressed: () {},
+            onDetailsPressed: () {
+              showModalBottomSheet(
+                context: context,
+                builder: (context) {
+                  return FarmSelectionModal();
+                },
+              );
+            },
           ),
           ListTile(
             leading: const Icon(
