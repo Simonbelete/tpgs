@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:ilri_pfm/features/breed_type_list/breed_type_list.dart';
 import 'package:ilri_pfm/main_dev.dart';
 import 'package:ilri_pfm/models/chicken.dart';
 import 'package:ilri_pfm/models/chicken_stage.dart';
 import 'package:ilri_pfm/models/egg.dart';
 import 'package:ilri_pfm/models/farm_model.dart';
 import 'package:ilri_pfm/models/layed_place.dart';
+import 'package:ilri_pfm/screens/about_screen.dart';
 import 'package:ilri_pfm/screens/activation_screen.dart';
 import 'package:ilri_pfm/screens/breed_type_screen.dart';
 import 'package:ilri_pfm/screens/chicken_form_screen.dart';
@@ -21,6 +21,7 @@ import 'package:ilri_pfm/screens/layed_place_form_screen.dart';
 import 'package:ilri_pfm/screens/layed_place_screen.dart';
 import 'package:ilri_pfm/screens/login_screen.dart';
 import 'package:ilri_pfm/screens/register_screen.dart';
+import 'package:ilri_pfm/screens/setting_screen.dart';
 import 'package:ilri_pfm/screens/users_screen.dart';
 
 Route<dynamic> generateRoute(RouteSettings routeSettings) {
@@ -28,6 +29,12 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
     case App.routeName:
       return MaterialPageRoute(
           settings: routeSettings, builder: (_) => const App());
+    case SettingScreen.routeName:
+      return MaterialPageRoute(
+          settings: routeSettings, builder: (_) => const SettingScreen());
+    case AboutScreen.routeName:
+      return MaterialPageRoute(
+          settings: routeSettings, builder: (_) => const AboutScreen());
     case UserSync.routeName:
       return MaterialPageRoute(
           settings: routeSettings, builder: (_) => const UserSync());

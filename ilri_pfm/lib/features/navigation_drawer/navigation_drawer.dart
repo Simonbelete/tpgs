@@ -1,22 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ilri_pfm/app/color_set.dart';
-import 'package:ilri_pfm/blocs/farm/bloc.dart';
 import 'package:ilri_pfm/blocs/user/bloc.dart';
 import 'package:ilri_pfm/common_widgets/body_text.dart';
-import 'package:ilri_pfm/common_widgets/sub_title_text.dart';
 import 'package:ilri_pfm/common_widgets/title_text.dart';
 import 'package:ilri_pfm/models/user_model.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ilri_pfm/repository/authentication_repository.dart';
+import 'package:ilri_pfm/screens/about_screen.dart';
 import 'package:ilri_pfm/screens/breed_type_screen.dart';
 import 'package:ilri_pfm/screens/chicken_screen.dart';
 import 'package:ilri_pfm/screens/chicken_stage.dart';
 import 'package:ilri_pfm/screens/egg_screen.dart';
 import 'package:ilri_pfm/screens/farm_screen.dart';
 import 'package:ilri_pfm/screens/layed_place_screen.dart';
+import 'package:ilri_pfm/screens/setting_screen.dart';
 import 'package:ilri_pfm/screens/users_screen.dart';
 import 'package:colorize_text_avatar/colorize_text_avatar.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class NavigationDrawer extends StatelessWidget {
   const NavigationDrawer({super.key});
@@ -26,6 +26,7 @@ class NavigationDrawer extends StatelessWidget {
     UserModel? user = context.read<UserBloc>().state.user;
     return Drawer(
       child: ListView(
+        padding: EdgeInsets.zero,
         children: [
           UserAccountsDrawerHeader(
             decoration: BoxDecoration(color: kPrimaryColor),
@@ -40,7 +41,7 @@ class NavigationDrawer extends StatelessWidget {
                     text: context.read<UserBloc>().state.user?.email ?? '',
                     color: Colors.white,
                   ),
-                  BodyText(
+                  const BodyText(
                     text: 'Farm 1',
                     color: Colors.white,
                   )
@@ -60,14 +61,26 @@ class NavigationDrawer extends StatelessWidget {
               onTap: () {},
             ),
             arrowColor: Colors.white,
-            onDetailsPressed: () {
-              print('hello');
+            onDetailsPressed: () {},
+          ),
+          ListTile(
+            leading: const Icon(
+              Icons.dashboard,
+              color: kIconcolor,
+            ),
+            title: const Text('Dashboard'),
+            onTap: () {
+              Navigator.pop(context);
+              Navigator.popAndPushNamed(context, FarmScreen.routeName);
             },
           ),
           Visibility(
             visible: user?.is_admin ?? false,
             child: ListTile(
-              leading: Icon(Icons.person),
+              leading: const Icon(
+                Icons.person,
+                color: kIconcolor,
+              ),
               title: const Text('Users'),
               onTap: () {
                 Navigator.pop(context);
@@ -76,6 +89,8 @@ class NavigationDrawer extends StatelessWidget {
             ),
           ),
           ListTile(
+            leading:
+                SvgPicture.asset('assets/icons/farm.svg', color: kIconcolor),
             title: const Text('Farms'),
             onTap: () {
               Navigator.pop(context);
@@ -83,20 +98,11 @@ class NavigationDrawer extends StatelessWidget {
             },
           ),
           ListTile(
-            title: const Text('Breed Types'),
-            onTap: () {
-              Navigator.pop(context);
-              Navigator.popAndPushNamed(context, BreedTypeScreen.routeName);
-            },
-          ),
-          ListTile(
-            title: const Text('Chicken Stage'),
-            onTap: () {
-              Navigator.pop(context);
-              Navigator.popAndPushNamed(context, ChickenStageScreen.routeName);
-            },
-          ),
-          ListTile(
+            leading: SvgPicture.asset(
+              height: 25,
+              'assets/icons/chicken.svg',
+              color: kIconcolor,
+            ),
             title: const Text('Chickens'),
             onTap: () {
               Navigator.pop(context);
@@ -104,13 +110,11 @@ class NavigationDrawer extends StatelessWidget {
             },
           ),
           ListTile(
-            title: const Text('Lay Place'),
-            onTap: () {
-              Navigator.pop(context);
-              Navigator.popAndPushNamed(context, LayedPlaceScreen.routeName);
-            },
-          ),
-          ListTile(
+            leading: SvgPicture.asset(
+              height: 25,
+              'assets/icons/chicken_easter.svg',
+              color: kIconcolor,
+            ),
             title: const Text('Eggs'),
             onTap: () {
               Navigator.pop(context);
@@ -118,11 +122,82 @@ class NavigationDrawer extends StatelessWidget {
             },
           ),
           ListTile(
+            leading: SvgPicture.asset(
+              height: 25,
+              'assets/icons/helix.svg',
+              color: kIconcolor,
+            ),
+            title: const Text('Breed Types'),
+            onTap: () {
+              Navigator.pop(context);
+              Navigator.popAndPushNamed(context, BreedTypeScreen.routeName);
+            },
+          ),
+          ListTile(
+            leading: SvgPicture.asset(
+              height: 25,
+              'assets/icons/cycle.svg',
+              color: kIconcolor,
+            ),
+            title: const Text('Chicken Stage'),
+            onTap: () {
+              Navigator.pop(context);
+              Navigator.popAndPushNamed(context, ChickenStageScreen.routeName);
+            },
+          ),
+          ListTile(
+            leading: SvgPicture.asset(
+              height: 25,
+              'assets/icons/map.svg',
+              color: kIconcolor,
+            ),
+            title: const Text('Lay Place'),
+            onTap: () {
+              Navigator.pop(context);
+              Navigator.popAndPushNamed(context, LayedPlaceScreen.routeName);
+            },
+          ),
+          Divider(),
+          ListTile(
+            leading: const Icon(Icons.manage_accounts),
+            title: const Text('Account Setting'),
+            onTap: () {
+              AuthenticationRepository().signOut();
+            },
+          ),
+          ListTile(
+            leading: const Icon(
+              Icons.logout,
+              color: kIconcolor,
+            ),
             title: const Text('Sing out'),
             onTap: () {
               AuthenticationRepository().signOut();
             },
-          )
+          ),
+          const Divider(),
+          ListTile(
+            leading: const Icon(
+              Icons.settings,
+              color: kIconcolor,
+            ),
+            title: const Text('Setting'),
+            onTap: () {
+              Navigator.pop(context);
+              Navigator.popAndPushNamed(context, SettingScreen.routeName);
+            },
+          ),
+          ListTile(
+            leading: const Icon(
+              Icons.info,
+              color: kIconcolor,
+            ),
+            title: const Text('About'),
+            onTap: () {
+              Navigator.pop(context);
+              Navigator.popAndPushNamed(context, AboutScreen.routeName);
+            },
+          ),
         ],
       ),
     );
