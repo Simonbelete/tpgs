@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:ilri_pfm/features/breed_type_list/breed_type_list.dart';
 import 'package:ilri_pfm/main_dev.dart';
+import 'package:ilri_pfm/models/chicken.dart';
 import 'package:ilri_pfm/models/chicken_stage.dart';
 import 'package:ilri_pfm/models/farm_model.dart';
 import 'package:ilri_pfm/screens/activation_screen.dart';
 import 'package:ilri_pfm/screens/breed_type_screen.dart';
+import 'package:ilri_pfm/screens/chicken_form_screen.dart';
+import 'package:ilri_pfm/screens/chicken_screen.dart';
 import 'package:ilri_pfm/screens/chicken_stage.dart';
 import 'package:ilri_pfm/screens/chicken_stage_form_screen.dart';
 import 'package:ilri_pfm/screens/farm_form_screen.dart';
@@ -56,6 +59,16 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
           settings: routeSettings,
           builder: (_) => ChickenStageFormScreen(
                 chickenStage: chickenStage,
+              ));
+    case ChickenScreen.routeName:
+      return MaterialPageRoute(
+          settings: routeSettings, builder: (_) => const ChickenScreen());
+    case ChickenFormScreen.routeName:
+      Chicken chicken = routeSettings.arguments as Chicken;
+      return MaterialPageRoute(
+          settings: routeSettings,
+          builder: (_) => ChickenFormScreen(
+                chicken: chicken,
               ));
     default:
       return MaterialPageRoute(
