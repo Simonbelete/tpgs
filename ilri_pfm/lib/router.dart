@@ -5,6 +5,7 @@ import 'package:ilri_pfm/models/chicken_stage.dart';
 import 'package:ilri_pfm/models/egg.dart';
 import 'package:ilri_pfm/models/farm_model.dart';
 import 'package:ilri_pfm/models/layed_place.dart';
+import 'package:ilri_pfm/models/user_model.dart';
 import 'package:ilri_pfm/screens/about_screen.dart';
 import 'package:ilri_pfm/screens/activation_screen.dart';
 import 'package:ilri_pfm/screens/breed_type_screen.dart';
@@ -22,6 +23,7 @@ import 'package:ilri_pfm/screens/layed_place_screen.dart';
 import 'package:ilri_pfm/screens/login_screen.dart';
 import 'package:ilri_pfm/screens/register_screen.dart';
 import 'package:ilri_pfm/screens/setting_screen.dart';
+import 'package:ilri_pfm/screens/users_form_screen.dart';
 import 'package:ilri_pfm/screens/users_screen.dart';
 
 Route<dynamic> generateRoute(RouteSettings routeSettings) {
@@ -53,6 +55,13 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
     case UsersScreen.routeName:
       return MaterialPageRoute(
           settings: routeSettings, builder: (_) => const UsersScreen());
+    case UsersFormScreen.routeName:
+      UserModel user = routeSettings.arguments as UserModel;
+      return MaterialPageRoute(
+          settings: routeSettings,
+          builder: (_) => UsersFormScreen(
+                user: user,
+              ));
     case FarmScreen.routeName:
       return MaterialPageRoute(
           settings: routeSettings, builder: (_) => const FarmScreen());

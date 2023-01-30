@@ -11,19 +11,33 @@ class UsersScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: SafeArea(
-          child: SingleChildScrollView(
-            child: Column(children: const [
-              CustomAppBar(
-                title: 'Users',
-              ),
-              SizedBox(
-                height: 25,
-              ),
-              UsersList()
-            ]),
-          ),
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Column(children: const [
+            CustomAppBar(),
+            SizedBox(
+              height: 25,
+            ),
+            UsersList(),
+          ]),
         ),
-        drawer: const NavigationDrawer());
+      ),
+      drawer: const NavigationDrawer(),
+    );
+    // return Scaffold(
+    //     body: SafeArea(
+    //       child: SingleChildScrollView(
+    //         child: Column(children: const [
+    //           CustomAppBar(
+    //             title: 'Users',
+    //           ),
+    //           SizedBox(
+    //             height: 25,
+    //           ),
+    //           UsersList()
+    //         ]),
+    //       ),
+    //     ),
+    //     drawer: const NavigationDrawer());
   }
 }
