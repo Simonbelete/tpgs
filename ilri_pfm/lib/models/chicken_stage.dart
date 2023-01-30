@@ -8,7 +8,5 @@ class ChickenStage {
     return ChickenStage(name: data['name'], is_active: data['is_active']);
   }
 
-  Map<String, dynamic> toJson() => {
-        'name': name,
-      };
+  Map<String, dynamic> toJson() => {'name': name, 'is_active': is_active};
 }

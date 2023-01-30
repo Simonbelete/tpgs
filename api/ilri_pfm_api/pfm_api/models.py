@@ -107,6 +107,9 @@ class ChickenStage(models.Model):
     created_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.PROTECT)
     history = HistoricalRecords()
 
+    def __str__(self):
+        return self.name
+
 ## Chicken/Animal
 class Chicken(models.Model):
     # Wing Tag
