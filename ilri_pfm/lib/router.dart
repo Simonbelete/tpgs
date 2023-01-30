@@ -4,6 +4,7 @@ import 'package:ilri_pfm/main_dev.dart';
 import 'package:ilri_pfm/models/chicken.dart';
 import 'package:ilri_pfm/models/chicken_stage.dart';
 import 'package:ilri_pfm/models/farm_model.dart';
+import 'package:ilri_pfm/models/layed_place.dart';
 import 'package:ilri_pfm/screens/activation_screen.dart';
 import 'package:ilri_pfm/screens/breed_type_screen.dart';
 import 'package:ilri_pfm/screens/chicken_form_screen.dart';
@@ -13,6 +14,8 @@ import 'package:ilri_pfm/screens/chicken_stage_form_screen.dart';
 import 'package:ilri_pfm/screens/farm_form_screen.dart';
 import 'package:ilri_pfm/screens/farm_screen.dart';
 import 'package:ilri_pfm/screens/home_screen.dart';
+import 'package:ilri_pfm/screens/layed_place_form_screen.dart';
+import 'package:ilri_pfm/screens/layed_place_screen.dart';
 import 'package:ilri_pfm/screens/login_screen.dart';
 import 'package:ilri_pfm/screens/register_screen.dart';
 import 'package:ilri_pfm/screens/users_screen.dart';
@@ -69,6 +72,16 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
           settings: routeSettings,
           builder: (_) => ChickenFormScreen(
                 chicken: chicken,
+              ));
+    case LayedPlaceScreen.routeName:
+      return MaterialPageRoute(
+          settings: routeSettings, builder: (_) => const LayedPlaceScreen());
+    case LayedPlaceFormScreen.routeName:
+      LayedPlace layedPlace = routeSettings.arguments as LayedPlace;
+      return MaterialPageRoute(
+          settings: routeSettings,
+          builder: (_) => LayedPlaceFormScreen(
+                layedPlace: layedPlace,
               ));
     default:
       return MaterialPageRoute(

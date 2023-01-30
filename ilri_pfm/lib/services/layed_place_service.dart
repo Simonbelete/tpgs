@@ -2,7 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:ilri_pfm/util/dio_client.dart';
 
-class LayedPlaceStageService {
+class LayedPlaceService {
   final String _url = '/layed-places';
   final Dio _dio = dioClient;
   final FirebaseAuth _auth = FirebaseAuth.instance;

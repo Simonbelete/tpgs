@@ -4,18 +4,18 @@ import 'package:ilri_pfm/common_widgets/button.dart';
 import 'package:ilri_pfm/common_widgets/container_card.dart';
 import 'package:ilri_pfm/common_widgets/custom_switch.dart';
 import 'package:ilri_pfm/common_widgets/form_text_box.dart';
-import 'package:ilri_pfm/models/chicken_stage.dart';
+import 'package:ilri_pfm/models/layed_place.dart';
 
-class ChickenStageForm extends StatefulWidget {
-  final ChickenStage? chickenStage;
+class LayedPlaceForm extends StatefulWidget {
+  final LayedPlace? layedPlace;
 
-  const ChickenStageForm({super.key, this.chickenStage});
+  const LayedPlaceForm({super.key, this.layedPlace});
 
   @override
-  State<ChickenStageForm> createState() => _ChickenStageFormState();
+  State<LayedPlaceForm> createState() => _LayedPlaceFormState();
 }
 
-class _ChickenStageFormState extends State<ChickenStageForm> {
+class _LayedPlaceFormState extends State<LayedPlaceForm> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -23,7 +23,7 @@ class _ChickenStageFormState extends State<ChickenStageForm> {
     return ContainerCard(
         child: Column(
       children: [
-        FormTextBox(hintText: 'Name', initialValue: widget.chickenStage?.name),
+        FormTextBox(hintText: 'Name', initialValue: widget.layedPlace?.name),
         const SizedBox(
           height: 10,
         ),
@@ -43,7 +43,7 @@ class _ChickenStageFormState extends State<ChickenStageForm> {
                   'Save',
                 ),
                 onPressed: () {
-                  if (widget.chickenStage == null)
+                  if (widget.layedPlace == null)
                     create();
                   else
                     patch();
