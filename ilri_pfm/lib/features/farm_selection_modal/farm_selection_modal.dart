@@ -1,75 +1,75 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:ilri_pfm/blocs/farm/bloc.dart';
-import 'package:ilri_pfm/blocs/farm/states.dart';
+import 'package:ilri_pfm/common_widgets/body_text.dart';
 import 'package:ilri_pfm/models/farm_model.dart';
+import 'package:ilri_pfm/repository/farm_repository.dart';
+import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
-class FarmSelectionModal extends StatelessWidget {
+class FarmSelectionModal extends StatefulWidget {
   const FarmSelectionModal({super.key});
 
   @override
+  State<FarmSelectionModal> createState() => _FarmSelectionModalState();
+}
+
+class _FarmSelectionModalState extends State<FarmSelectionModal> {
+  static const _pageSize = 20;
+  int? _farmId;
+
+  final PagingController<int, Farm> _pagingController =
+      PagingController(firstPageKey: 0);
+
+  @override
+  void initState() {
+    _pagingController.addPageRequestListener((pageKey) {
+      _fetchPage(pageKey);
+    });
+    super.initState();
+  }
+
+  Future<void> _fetchPage(int pageKey) async {
+    try {
+      final List<Farm>? newItems = await FarmRepository()
+          .get(query: {'limit': _pageSize, 'offset': _pageSize * pageKey});
+      final isLastPage = (newItems?.length ?? 0) < _pageSize;
+      print(newItems);
+      if (isLastPage) {
+        _pagingController.appendLastPage(newItems ?? []);
+      } else {
+        final nextPageKey = pageKey + (newItems?.length ?? 0);
+        _pagingController.appendPage(newItems ?? [], nextPageKey);
+      }
+    } catch (error) {
+      _pagingController.error = error;
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return Container(
-      color: Colors.red,
-      height: 200,
+      color: Colors.transparent,
+      height: size.height * 0.8,
       child: Center(
-          child: Column(
-        children: [Text('Hellow Modal')],
+          child: PagedListView<int, Farm>(
+        pagingController: _pagingController,
+        builderDelegate: PagedChildBuilderDelegate<Farm>(
+          itemBuilder: (context, item, index) => Container(
+            padding: const EdgeInsets.symmetric(vertical: 10),
+            child: ListTile(
+              title: BodyText(text: item.name),
+              leading: Radio<int>(
+                groupValue: _farmId,
+                value: item.id ?? 0,
+                onChanged: (int? value) {
+                  setState(() {
+                    _farmId = value;
+                  });
+                },
+              ),
+            ),
+          ),
+        ),
       )),
-    );
-  }
-}
-
-class FarmSelectionInit extends StatefulWidget {
-  const FarmSelectionInit({super.key});
-
-  @override
-  State<FarmSelectionInit> createState() => _FarmSelectionInitState();
-}
-
-class _FarmSelectionInitState extends State<FarmSelectionInit> {
-  @override
-  Widget build(BuildContext context) {
-    return BlocListener<FarmBloc, FarmState>(
-      listener: (context, state) {
-        _dialogBuilder(context);
-      },
-      child: Container(),
-    );
-  }
-
-  Future<void> _dialogBuilder(BuildContext context) {
-    return showDialog<void>(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text('Basic dialog title'),
-          content: const Text('A dialog is a type of modal window that\n'
-              'appears in front of app content to\n'
-              'provide critical information, or prompt\n'
-              'for a decision to be made.'),
-          actions: <Widget>[
-            TextButton(
-              style: TextButton.styleFrom(
-                textStyle: Theme.of(context).textTheme.labelLarge,
-              ),
-              child: const Text('Disable'),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-            TextButton(
-              style: TextButton.styleFrom(
-                textStyle: Theme.of(context).textTheme.labelLarge,
-              ),
-              child: const Text('Enable'),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
-        );
-      },
     );
   }
 }
