@@ -16,6 +16,7 @@ import 'package:ilri_pfm/screens/egg_screen.dart';
 import 'package:ilri_pfm/screens/farm_screen.dart';
 import 'package:ilri_pfm/screens/layed_place_screen.dart';
 import 'package:ilri_pfm/screens/users_screen.dart';
+import 'package:colorize_text_avatar/colorize_text_avatar.dart';
 
 class NavigationDrawer extends StatelessWidget {
   const NavigationDrawer({super.key});
@@ -45,7 +46,17 @@ class NavigationDrawer extends StatelessWidget {
                   )
                 ]),
             currentAccountPicture: InkWell(
-              child: CircleAvatar(backgroundColor: kSecondaryColor),
+              child: TextAvatar(
+                shape: Shape.Circular,
+                size: 35,
+                textColor: Colors.white,
+                fontSize: 20,
+                fontWeight: FontWeight.w600,
+                upperCase: true,
+                backgroundColor: Colors.black,
+                numberLetters: 2,
+                text: context.read<UserBloc>().state.user?.email ?? '',
+              ),
               onTap: () {},
             ),
             arrowColor: Colors.white,
@@ -56,10 +67,11 @@ class NavigationDrawer extends StatelessWidget {
           Visibility(
             visible: user?.is_admin ?? false,
             child: ListTile(
+              leading: Icon(Icons.person),
               title: const Text('Users'),
               onTap: () {
                 Navigator.pop(context);
-                Navigator.pushNamed(context, UsersScreen.routeName);
+                Navigator.popAndPushNamed(context, UsersScreen.routeName);
               },
             ),
           ),
@@ -67,42 +79,42 @@ class NavigationDrawer extends StatelessWidget {
             title: const Text('Farms'),
             onTap: () {
               Navigator.pop(context);
-              Navigator.pushNamed(context, FarmScreen.routeName);
+              Navigator.popAndPushNamed(context, FarmScreen.routeName);
             },
           ),
           ListTile(
             title: const Text('Breed Types'),
             onTap: () {
               Navigator.pop(context);
-              Navigator.pushNamed(context, BreedTypeScreen.routeName);
+              Navigator.popAndPushNamed(context, BreedTypeScreen.routeName);
             },
           ),
           ListTile(
             title: const Text('Chicken Stage'),
             onTap: () {
               Navigator.pop(context);
-              Navigator.pushNamed(context, ChickenStageScreen.routeName);
+              Navigator.popAndPushNamed(context, ChickenStageScreen.routeName);
             },
           ),
           ListTile(
             title: const Text('Chickens'),
             onTap: () {
               Navigator.pop(context);
-              Navigator.pushNamed(context, ChickenScreen.routeName);
+              Navigator.popAndPushNamed(context, ChickenScreen.routeName);
             },
           ),
           ListTile(
             title: const Text('Lay Place'),
             onTap: () {
               Navigator.pop(context);
-              Navigator.pushNamed(context, LayedPlaceScreen.routeName);
+              Navigator.popAndPushNamed(context, LayedPlaceScreen.routeName);
             },
           ),
           ListTile(
             title: const Text('Eggs'),
             onTap: () {
               Navigator.pop(context);
-              Navigator.pushNamed(context, EggScreen.routeName);
+              Navigator.popAndPushNamed(context, EggScreen.routeName);
             },
           ),
           ListTile(
