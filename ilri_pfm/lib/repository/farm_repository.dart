@@ -35,4 +35,13 @@ class FarmRepository extends Repository {
       rethrow;
     }
   }
+
+  Future<Farm?> updateState({required int id, bool state = false}) async {
+    try {
+      final response = await _service.patch(id: id, data: {'is_active': state});
+      return Farm.fromJson(response.data);
+    } catch (e) {
+      rethrow;
+    }
+  }
 }

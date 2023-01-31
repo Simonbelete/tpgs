@@ -15,3 +15,4 @@ const Color kSecondaryColor = Color(0xffAE0315);
 const Color kTextColor = Color(0xff343434);
 const Color kSubtitleColor = Color(0xff8A8B8A);
 const Color kIconcolor = Color(0xff71717A);
+const Color kSucessColor = Color(0xff28A25D);

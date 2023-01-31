@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:ilri_pfm/app/color_set.dart';
+import 'package:ilri_pfm/common_widgets/activate_icon.dart';
 import 'package:ilri_pfm/common_widgets/button.dart';
 import 'package:ilri_pfm/common_widgets/container_card.dart';
 import 'package:ilri_pfm/common_widgets/custom_switch.dart';
+import 'package:ilri_pfm/common_widgets/deactivate_icon.dart';
+import 'package:ilri_pfm/common_widgets/delete_icon.dart';
 import 'package:ilri_pfm/common_widgets/form_text_box.dart';
 import 'package:ilri_pfm/models/farm_model.dart';
 import 'package:ilri_pfm/repository/farm_repository.dart';
@@ -36,59 +39,102 @@ class _FarmFormState extends State<FarmForm> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
 
-    return ContainerCard(
-        child: Form(
-      key: _formKey,
-      child: Column(
-        children: [
-          FormTextBox(
-            controller: _nameController,
-            validator: (String? value) {
-              return value?.isEmpty == true
-                  ? 'Please enter a valid data'
-                  : null;
-            },
-            hintText: 'Name',
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          CustomSwitch(
-              text: 'Active',
-              value: widget.farm != null ? widget.farm?.is_active : true,
-              onChanged: (bool value) {
-                setState(() {
-                  _isActive = value;
-                });
-              }),
-          const SizedBox(
-            height: 20,
-          ),
-          Container(
-            width: size.width,
-            child: Center(
-              child: SizedBox(
-                width: size.width * 0.8,
-                child: Button(
-                  backgroundColor: kPrimaryColor,
-                  color: Colors.white,
-                  child: Text(
-                    widget.farm == null ? 'Create' : 'Save',
+    return Column(
+      children: [
+        ContainerCard(
+            child: Form(
+          key: _formKey,
+          child: Column(
+            children: [
+              FormTextBox(
+                controller: _nameController,
+                validator: (String? value) {
+                  return value?.isEmpty == true
+                      ? 'Please enter a valid data'
+                      : null;
+                },
+                hintText: 'Name',
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              CustomSwitch(
+                  text: 'Active',
+                  value: widget.farm != null ? widget.farm?.is_active : true,
+                  onChanged: (bool value) {
+                    setState(() {
+                      _isActive = value;
+                    });
+                  }),
+              const SizedBox(
+                height: 20,
+              ),
+              Container(
+                width: size.width,
+                child: Center(
+                  child: SizedBox(
+                    width: size.width * 0.8,
+                    child: Button(
+                      backgroundColor: kPrimaryColor,
+                      color: Colors.white,
+                      child: Text(
+                        widget.farm == null ? 'Create' : 'Save',
+                      ),
+                      onPressed: () {
+                        if (widget.farm == null) {
+                          create();
+                        } else {
+                          patch();
+                        }
+                      },
+                    ),
                   ),
-                  onPressed: () {
-                    if (widget.farm == null) {
-                      create();
-                    } else {
-                      patch();
-                    }
-                  },
                 ),
               ),
-            ),
+            ],
           ),
-        ],
-      ),
-    ));
+        )),
+        const SizedBox(
+          height: 20,
+        ),
+        ContainerCard(
+            child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            widget.farm?.is_active == true
+                ? DeactivateIcon(
+                    onPressed: activate,
+                  )
+                : ActivateIcon(
+                    onPressed: deActivate,
+                  ),
+            DeleteIcon(
+              onPressed: () {},
+            )
+          ],
+        ))
+      ],
+    );
+  }
+
+  void activate() async {
+    try {
+      final Farm? farm =
+          await _repository.updateState(id: widget.farm?.id ?? 0, state: true);
+      _responseMessage(farm);
+    } catch (e) {
+      _errorMessage();
+    }
+  }
+
+  void deActivate() async {
+    try {
+      final Farm? farm =
+          await _repository.updateState(id: widget.farm?.id ?? 0, state: false);
+      _responseMessage(farm);
+    } catch (e) {
+      _errorMessage();
+    }
   }
 
   void create() async {
@@ -96,18 +142,9 @@ class _FarmFormState extends State<FarmForm> {
       try {
         final Farm? farm = await _repository
             .create(Farm(name: _nameController.text, is_active: _isActive));
-        if (farm != null) {
-          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-            backgroundColor: kPrimaryColor,
-            content: Text('Successfully created farm!'),
-          ));
-          Navigator.popAndPushNamed(context, FarmScreen.routeName);
-        }
+        _responseMessage(farm);
       } catch (e) {
-        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-          backgroundColor: kSecondaryColor,
-          content: Text('Error occurred Please try again!'),
-        ));
+        _errorMessage();
       }
     }
   }
@@ -127,22 +164,35 @@ class _FarmFormState extends State<FarmForm> {
         try {
           final Farm? farm = await _repository.patch(
               id: widget.farm?.id ?? 0, data: patchData);
-          if (farm != null) {
-            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-              backgroundColor: kPrimaryColor,
-              content: Text('Successfully Updated farm!'),
-            ));
-            Navigator.popAndPushNamed(context, FarmScreen.routeName);
-          }
+          _responseMessage(farm);
         } catch (e) {
-          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-            backgroundColor: kSecondaryColor,
-            content: Text('Error occurred Please try again!'),
-          ));
+          _errorMessage();
         }
       } else {
         Navigator.popAndPushNamed(context, FarmScreen.routeName);
       }
     }
+  }
+
+  void _responseMessage(Farm? farm) {
+    if (farm != null) {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        backgroundColor: kPrimaryColor,
+        content: Text('Operation Successfully Completed'),
+      ));
+      Navigator.popAndPushNamed(context, FarmScreen.routeName);
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        backgroundColor: kSecondaryColor,
+        content: Text('Unknown Error occurred Please try again!'),
+      ));
+    }
+  }
+
+  void _errorMessage() {
+    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+      backgroundColor: kSecondaryColor,
+      content: Text('Error occurred Please try again!'),
+    ));
   }
 }
