@@ -96,7 +96,7 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
       return MaterialPageRoute(
           settings: routeSettings, builder: (_) => const LayedPlaceScreen());
     case LayedPlaceFormScreen.routeName:
-      LayedPlace layedPlace = routeSettings.arguments as LayedPlace;
+      LayedPlace? layedPlace = routeSettings.arguments as LayedPlace?;
       return MaterialPageRoute(
           settings: routeSettings,
           builder: (_) => LayedPlaceFormScreen(

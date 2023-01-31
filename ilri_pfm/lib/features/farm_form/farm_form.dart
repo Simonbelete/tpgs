@@ -97,22 +97,25 @@ class _FarmFormState extends State<FarmForm> {
         const SizedBox(
           height: 20,
         ),
-        ContainerCard(
-            child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            widget.farm?.is_active == true
-                ? DeactivateIcon(
-                    onPressed: deActivate,
-                  )
-                : ActivateIcon(
-                    onPressed: activate,
-                  ),
-            DeleteIcon(
-              onPressed: () {},
-            )
-          ],
-        ))
+        Visibility(
+          visible: widget.farm != null ? true : false,
+          child: ContainerCard(
+              child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              widget.farm?.is_active == true
+                  ? DeactivateIcon(
+                      onPressed: deActivate,
+                    )
+                  : ActivateIcon(
+                      onPressed: activate,
+                    ),
+              DeleteIcon(
+                onPressed: () {},
+              )
+            ],
+          )),
+        )
       ],
     );
   }

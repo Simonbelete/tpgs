@@ -46,19 +46,34 @@ class ChickenViewSet(viewsets.ModelViewSet):
 class ChickenParentViewSet(viewsets.ModelViewSet):
     queryset = ChickenParent.objects.all()
     serializer_class = ChickenParentSerializer
+    
+    def perform_create(self, serializer):
+        serializer.save(created_by=self.request.user)
 
 class BreedTypeParentViewSet(viewsets.ModelViewSet):
     queryset = BreedType.objects.all()
     serializer_class = BreedTypeSerializer
 
+    def perform_create(self, serializer):
+        serializer.save(created_by=self.request.user)
+
 class ChickenStageParentViewSet(viewsets.ModelViewSet):
     queryset = ChickenStage.objects.all()
     serializer_class = ChickenStageSerializer
+
+    def perform_create(self, serializer):
+        serializer.save(created_by=self.request.user)
 
 class EggParentViewSet(viewsets.ModelViewSet):
     queryset = Egg.objects.all()
     serializer_class = EggSerializer
 
+    def perform_create(self, serializer):
+        serializer.save(created_by=self.request.user)
+
 class LayedPlaceViewSet(viewsets.ModelViewSet):
     queryset = LayedPlace.objects.all()
     serializer_class = LayedPlaceSerializer
+
+    def perform_create(self, serializer):
+        serializer.save(created_by=self.request.user)

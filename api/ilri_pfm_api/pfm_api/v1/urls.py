@@ -13,7 +13,7 @@ router.register(r'chickens/parents', ChickenParentViewSet)
 router.register(r'breed-types', BreedTypeParentViewSet)
 router.register(r'chicken-stages', ChickenStageParentViewSet)
 router.register(r'eggs', EggParentViewSet)
-router.register(r'layed-place', LayedPlaceViewSet)
+router.register(r'layed-places', LayedPlaceViewSet)
 
 urlpatterns = [
     path('', include(router.urls)),

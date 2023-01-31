@@ -87,7 +87,7 @@ class LayedPlaceSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = LayedPlace
-        fields = '__all__'
+        fields = ['id', 'name', 'is_active']
 
 # class PollSerializer(serializers.ModelSerializer):
 #     question = serializers.CharField()

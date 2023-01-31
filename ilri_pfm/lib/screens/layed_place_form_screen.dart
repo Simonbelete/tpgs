@@ -5,10 +5,10 @@ import 'package:ilri_pfm/features/navigation_drawer/navigation_drawer.dart';
 import 'package:ilri_pfm/models/layed_place.dart';
 
 class LayedPlaceFormScreen extends StatelessWidget {
-  static const String routeName = '/chicken-form';
-  final LayedPlace layedPlace;
+  static const String routeName = '/layed-place-form';
+  final LayedPlace? layedPlace;
 
-  const LayedPlaceFormScreen({super.key, required this.layedPlace});
+  const LayedPlaceFormScreen({super.key, this.layedPlace});
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +17,11 @@ class LayedPlaceFormScreen extends StatelessWidget {
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(children: [
-            const CustomAppBar(),
+            CustomAppBar(
+              title: layedPlace == null
+                  ? 'Create new Lay Place'
+                  : 'Lay Place - ${layedPlace?.name}',
+            ),
             const SizedBox(
               height: 25,
             ),
