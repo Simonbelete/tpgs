@@ -103,10 +103,10 @@ class _FarmFormState extends State<FarmForm> {
           children: [
             widget.farm?.is_active == true
                 ? DeactivateIcon(
-                    onPressed: activate,
+                    onPressed: deActivate,
                   )
                 : ActivateIcon(
-                    onPressed: deActivate,
+                    onPressed: activate,
                   ),
             DeleteIcon(
               onPressed: () {},
