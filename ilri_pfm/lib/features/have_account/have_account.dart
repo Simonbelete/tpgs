@@ -10,7 +10,7 @@ class HaveAccount extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Navigator.pushNamed(context, LoginScreen.routeName);
+        Navigator.popAndPushNamed(context, LoginScreen.routeName);
       },
       child: Row(
         children: const [

@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:ilri_pfm/app/color_set.dart';
 import 'package:ilri_pfm/common_widgets/button.dart';
@@ -9,11 +7,10 @@ import 'package:ilri_pfm/common_widgets/password_field.dart';
 import 'package:ilri_pfm/common_widgets/sub_title_text.dart';
 import 'package:ilri_pfm/features/have_no_account/have_no_account.dart';
 import 'package:ilri_pfm/features/sing_in_with_google_form/sing_in_with_google_form.dart';
-import 'package:ilri_pfm/screens/register_screen.dart';
+import 'package:ilri_pfm/repository/authentication_repository.dart';
+import 'package:ilri_pfm/screens/home_screen.dart';
 
-import './sign_in_form_controller.dart';
-
-class SignInForm extends StatefulWidget with $SignInFormController {
+class SignInForm extends StatefulWidget {
   SignInForm({super.key});
 
   @override
@@ -21,9 +18,22 @@ class SignInForm extends StatefulWidget with $SignInFormController {
 }
 
 class _SignInFormState extends State<SignInForm> {
+  final AuthenticationRepository _repository = AuthenticationRepository();
+
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+  final GlobalKey formKey = GlobalKey<FormState>();
+
+  void onSignIn() {
+    _repository.signInWithEmailAndPassword(
+        email: emailController.text, password: passwordController.text);
+    Navigator.popAndPushNamed(context, HomeScreen.routeName);
+  }
+
   @override
   void dispose() {
-    widget.disposeForms();
+    emailController.dispose();
+    passwordController.dispose();
     super.dispose();
   }
 
@@ -53,7 +63,7 @@ class _SignInFormState extends State<SignInForm> {
 
   Widget _buildForm(Size size) {
     return Form(
-      key: widget.formKey,
+      key: formKey,
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         const HeaderText(
           text: 'Welcome',
@@ -90,7 +100,7 @@ class _SignInFormState extends State<SignInForm> {
                   'Sign in',
                 ),
                 onPressed: () {
-                  widget.onSignIn();
+                  onSignIn();
                 },
               ),
             ),
@@ -102,13 +112,13 @@ class _SignInFormState extends State<SignInForm> {
 
   Widget _emailField() {
     return EmailField(
-      controller: widget.emailController,
+      controller: emailController,
     );
   }
 
   Widget _passwordField() {
     return PasswordField(
-      controller: widget.passwordController,
+      controller: passwordController,
     );
   }
 }

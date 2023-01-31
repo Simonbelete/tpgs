@@ -10,7 +10,7 @@ class HaveNoAccount extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Navigator.pushNamed(context, RegisterScreen.routeName);
+        Navigator.popAndPushNamed(context, RegisterScreen.routeName);
       },
       child: Row(
         children: const [
