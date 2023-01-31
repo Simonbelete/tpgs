@@ -43,7 +43,7 @@ class FarmSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Farm
-        fields = ['name', 'is_active', 'create_by']
+        fields = ['id', 'name', 'is_active', 'create_by']
 
 class EggSerializer(serializers.ModelSerializer):
     week = serializers.IntegerField()

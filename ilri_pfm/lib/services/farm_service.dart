@@ -37,4 +37,18 @@ class FarmService {
       ),
     );
   }
+
+  Future<Response> patch(
+      {required int id, required Map<String, dynamic> data}) async {
+    return await _dio.patch(
+      '$_url/$id/',
+      data: data,
+      options: Options(
+        headers: {
+          Headers.wwwAuthenticateHeader:
+              await _auth.currentUser?.getIdToken(), // set content-length
+        },
+      ),
+    );
+  }
 }

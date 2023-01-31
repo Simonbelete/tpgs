@@ -6,7 +6,8 @@ class Farm {
   Farm({this.id, required this.name, this.is_active = false});
 
   factory Farm.fromJson(Map<String, dynamic> data) {
-    return Farm(name: data['name'], is_active: data['is_active']);
+    return Farm(
+        id: data['id'], name: data['name'], is_active: data['is_active']);
   }
 
   Map<String, dynamic> toJson() => {

@@ -25,6 +25,14 @@ class _FarmFormState extends State<FarmForm> {
   bool _isActive = false;
 
   @override
+  void initState() {
+    setState(() {
+      _nameController.text = widget.farm?.name ?? '';
+    });
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
 
@@ -34,14 +42,14 @@ class _FarmFormState extends State<FarmForm> {
       child: Column(
         children: [
           FormTextBox(
-              controller: _nameController,
-              validator: (String? value) {
-                return value?.isEmpty == true
-                    ? 'Please enter a valid data'
-                    : null;
-              },
-              hintText: 'Name',
-              initialValue: widget.farm?.name),
+            controller: _nameController,
+            validator: (String? value) {
+              return value?.isEmpty == true
+                  ? 'Please enter a valid data'
+                  : null;
+            },
+            hintText: 'Name',
+          ),
           const SizedBox(
             height: 10,
           ),
@@ -96,7 +104,6 @@ class _FarmFormState extends State<FarmForm> {
           Navigator.popAndPushNamed(context, FarmScreen.routeName);
         }
       } catch (e) {
-        print('error');
         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
           backgroundColor: kSecondaryColor,
           content: Text('Error occurred Please try again!'),
@@ -105,7 +112,37 @@ class _FarmFormState extends State<FarmForm> {
     }
   }
 
-  void patch() {
-    print('patch');
+  void patch() async {
+    if (_formKey.currentState!.validate()) {
+      Map<String, dynamic> patchData = {};
+
+      if (_nameController.text != widget.farm?.name) {
+        patchData['name'] = _nameController.text;
+      }
+      if (_isActive != widget.farm?.is_active) {
+        patchData['is_active'] = _isActive;
+      }
+
+      if (patchData.isEmpty != true) {
+        try {
+          final Farm? farm = await _repository.patch(
+              id: widget.farm?.id ?? 0, data: patchData);
+          if (farm != null) {
+            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+              backgroundColor: kPrimaryColor,
+              content: Text('Successfully Updated farm!'),
+            ));
+            Navigator.popAndPushNamed(context, FarmScreen.routeName);
+          }
+        } catch (e) {
+          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+            backgroundColor: kSecondaryColor,
+            content: Text('Error occurred Please try again!'),
+          ));
+        }
+      } else {
+        Navigator.popAndPushNamed(context, FarmScreen.routeName);
+      }
+    }
   }
 }

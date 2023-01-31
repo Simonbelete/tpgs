@@ -25,4 +25,14 @@ class FarmRepository extends Repository {
       rethrow;
     }
   }
+
+  Future<Farm?> patch(
+      {required int id, required Map<String, dynamic> data}) async {
+    try {
+      final response = await _service.patch(id: id, data: data);
+      return Farm.fromJson(response.data);
+    } catch (e) {
+      rethrow;
+    }
+  }
 }
