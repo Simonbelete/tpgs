@@ -10,7 +10,7 @@ class SignOut extends StatelessWidget with $SignOut {
   Widget build(BuildContext context) {
     return Button(
       child: const Text('Sign Out'),
-      onPressed: () => singOut(),
+      onPressed: () => singOut(context),
     );
   }
 }

@@ -40,6 +40,9 @@ class ChickenViewSet(viewsets.ModelViewSet):
     queryset = Chicken.objects.all()
     serializer_class = ChickenSerializer
 
+    def perform_create(self, serializer):
+        serializer.save(created_by=self.request.user)
+
 class ChickenParentViewSet(viewsets.ModelViewSet):
     queryset = ChickenParent.objects.all()
     serializer_class = ChickenParentSerializer

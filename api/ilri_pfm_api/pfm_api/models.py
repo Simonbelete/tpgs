@@ -110,27 +110,38 @@ class ChickenStage(models.Model):
     def __str__(self):
         return self.name
 
+## Breed Type
+class BreedType(models.Model):
+    name = models.CharField(max_length=250)
+    
+    is_active = models.BooleanField(default=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    created_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.PROTECT)
+    history = HistoricalRecords()
+
+    def __str__(self):
+        return self.name
+
 ## Chicken/Animal
 class Chicken(models.Model):
     # Wing Tag
     tag = models.CharField(max_length=250)
-    parent = models.OneToOneField(ChickenParent, on_delete=models.SET_NULL, null=True)
-    house_no = models.IntegerField()
-    pen_no = models.IntegerField()
+    parent = models.OneToOneField(ChickenParent, on_delete=models.SET_NULL, null=True, blank=True)
+    house_no = models.IntegerField(null=True, blank=True)
+    pen_no = models.IntegerField(null=True, blank=True)
     chicken_stage = models.ForeignKey(ChickenStage, on_delete=models.SET_NULL, null=True)
+    breed_type = models.ForeignKey(BreedType, on_delete=models.SET_NULL, null=True)
+    farm = models.ForeignKey(Farm, on_delete=models.SET_NULL, null=True)
 
     is_active = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
     created_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.PROTECT)
     history = HistoricalRecords()
 
-## Breed Type
-class BreedType(models.Model):
+## Layed Place
+class LayedPlace(models.Model):
     name = models.CharField(max_length=250)
     is_active = models.BooleanField(default=True)
-
-    ## Refs
-    chicken = models.ForeignKey(Chicken, on_delete=models.SET_NULL, null=True, related_name='breed_type')
 
     created_at = models.DateTimeField(auto_now_add=True)
     created_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.PROTECT)
@@ -143,29 +154,14 @@ class BreedType(models.Model):
 class Egg(models.Model):
     # Self chicken details
     chicken = models.OneToOneField(Chicken, on_delete=models.CASCADE, primary_key=True)
-    mother = models.ForeignKey(Chicken, on_delete=models.SET_NULL, null=True, related_name='childrens')
+    mother = models.ForeignKey(Chicken, on_delete=models.SET_NULL, null=True, related_name='children')
     week = models.IntegerField()
     is_double_yolk = models.BooleanField(default=False)
     date_of_hatch = models.DateField()
     weight = models.DecimalField(max_digits = 6, decimal_places = 3)
+    layed_place = models.ForeignKey(LayedPlace, on_delete=models.SET_NULL, null=True)
 
     is_active = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
     created_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.PROTECT)
     history = HistoricalRecords()
-    
-
-## Layed Place
-class LayedPlace(models.Model):
-    name = models.CharField(max_length=250)
-    is_active = models.BooleanField(default=True)
-
-    ## Refs
-    egg = models.ForeignKey(Egg, on_delete=models.SET_NULL, null=True, related_name='layed_place')
-
-    created_at = models.DateTimeField(auto_now_add=True)
-    created_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.PROTECT)
-    history = HistoricalRecords()
-
-    def __str__(self):
-        return self.name

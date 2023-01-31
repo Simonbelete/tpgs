@@ -45,19 +45,13 @@ class FarmSerializer(serializers.ModelSerializer):
         model = Farm
         fields = ['name', 'is_active', 'create_by']
 
-class ChickenSerializer(serializers.ModelSerializer):
-    tag = serializers.CharField()
+class EggSerializer(serializers.ModelSerializer):
+    week = serializers.IntegerField()
 
     class Meta:
-        model = Chicken
+        model = Egg
         fields = '__all__'
 
-class ChickenParentSerializer(serializers.ModelSerializer):
-    is_active = serializers.BooleanField()
-
-    class Meta:
-        model = ChickenParent
-        fields = '__all__'
 
 class BreedTypeSerializer(serializers.ModelSerializer):
     name = serializers.CharField()
@@ -66,20 +60,28 @@ class BreedTypeSerializer(serializers.ModelSerializer):
         model = BreedType
         fields = '__all__'
 
+class ChickenSerializer(serializers.ModelSerializer):
+    # children = EggSerializer(many=True) 
+    tag = serializers.CharField()
+    breed_type = serializers.PrimaryKeyRelatedField(read_only=False, queryset=BreedType.objects.all())
+
+    class Meta:
+        model = Chicken
+        fields = ['tag',  'breed_type']
+
+class ChickenParentSerializer(serializers.ModelSerializer):
+    is_active = serializers.BooleanField()
+
+    class Meta:
+        model = ChickenParent
+        fields = '__all__'
+
 class ChickenStageSerializer(serializers.ModelSerializer):
     name = serializers.CharField()
 
     class Meta:
         model = ChickenStage
         fields = '__all__'
-
-class EggSerializer(serializers.ModelSerializer):
-    week = serializers.IntegerField()
-
-    class Meta:
-        model = Egg
-        fields = '__all__'
-
 class LayedPlaceSerializer(serializers.ModelSerializer):
     name = serializers.CharField()
 
