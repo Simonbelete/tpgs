@@ -51,6 +51,9 @@ class _PasswordFieldState extends State<PasswordField> {
           style: const TextStyle(
               fontWeight: FontWeight.normal, fontSize: 14, color: kTextColor),
           decoration: InputDecoration(
+            focusedErrorBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(6.0),
+                borderSide: const BorderSide(color: kSecondaryColor)),
             errorBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(6.0),
                 borderSide: const BorderSide(color: kSecondaryColor)),
