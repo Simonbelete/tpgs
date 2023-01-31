@@ -5,7 +5,6 @@ import 'package:ilri_pfm/exceptions/email_exists_exception.dart';
 import 'package:ilri_pfm/exceptions/unknown_exception.dart';
 import 'package:ilri_pfm/models/device_model.dart';
 import 'package:ilri_pfm/models/user_model.dart';
-import 'package:ilri_pfm/repository/messaging_repository.dart';
 import 'package:ilri_pfm/repository/repository.dart';
 import 'package:ilri_pfm/exceptions/weak_password_exception.dart';
 import 'package:ilri_pfm/services/user_service.dart';

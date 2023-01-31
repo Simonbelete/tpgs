@@ -27,7 +27,10 @@ class _FarmFormState extends State<FarmForm> {
         const SizedBox(
           height: 10,
         ),
-        CustomSwitch(text: 'Active', onChanged: (bool value) {}),
+        CustomSwitch(
+            text: 'Active',
+            value: widget.farm != null ? widget.farm?.is_active : true,
+            onChanged: (bool value) {}),
         const SizedBox(
           height: 20,
         ),

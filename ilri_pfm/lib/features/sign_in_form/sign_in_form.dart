@@ -9,6 +9,7 @@ import 'package:ilri_pfm/features/have_no_account/have_no_account.dart';
 import 'package:ilri_pfm/features/sing_in_with_google_form/sing_in_with_google_form.dart';
 import 'package:ilri_pfm/repository/authentication_repository.dart';
 import 'package:ilri_pfm/screens/home_screen.dart';
+import 'package:email_validator/email_validator.dart';
 
 class SignInForm extends StatefulWidget {
   SignInForm({super.key});
@@ -22,12 +23,16 @@ class _SignInFormState extends State<SignInForm> {
 
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
-  final GlobalKey formKey = GlobalKey<FormState>();
+  final _formKey = GlobalKey<FormState>();
 
   void onSignIn() {
-    _repository.signInWithEmailAndPassword(
-        email: emailController.text, password: passwordController.text);
-    Navigator.popAndPushNamed(context, HomeScreen.routeName);
+    if (_formKey.currentState!.validate()) {
+      try {
+        _repository.signInWithEmailAndPassword(
+            email: emailController.text, password: passwordController.text);
+        Navigator.popAndPushNamed(context, HomeScreen.routeName);
+      } catch (e) {}
+    }
   }
 
   @override
@@ -63,7 +68,7 @@ class _SignInFormState extends State<SignInForm> {
 
   Widget _buildForm(Size size) {
     return Form(
-      key: formKey,
+      key: _formKey,
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         const HeaderText(
           text: 'Welcome',
@@ -80,11 +85,20 @@ class _SignInFormState extends State<SignInForm> {
         const SizedBox(
           height: 30,
         ),
-        _emailField(),
+        EmailField(
+          controller: emailController,
+          validator: (String? value) {
+            return EmailValidator.validate(value ?? '')
+                ? null
+                : 'Please enter a valid Email Address';
+          },
+        ),
         const SizedBox(
           height: 20,
         ),
-        _passwordField(),
+        PasswordField(
+          controller: passwordController,
+        ),
         const SizedBox(
           height: 20,
         ),
@@ -107,18 +121,6 @@ class _SignInFormState extends State<SignInForm> {
           ),
         ),
       ]),
-    );
-  }
-
-  Widget _emailField() {
-    return EmailField(
-      controller: emailController,
-    );
-  }
-
-  Widget _passwordField() {
-    return PasswordField(
-      controller: passwordController,
     );
   }
 }

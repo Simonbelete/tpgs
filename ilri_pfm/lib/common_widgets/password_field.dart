@@ -35,7 +35,17 @@ class _PasswordFieldState extends State<PasswordField> {
           enableSuggestions: false,
           autocorrect: false,
           controller: widget.controller,
-          validator: (String? value) {},
+          validator: (String? value) {
+            if (value != null) {
+              if (value.length < 3) {
+                return 'Password must be at least 6 characters long';
+              } else {
+                return null;
+              }
+            } else {
+              return 'Password cannot be empty';
+            }
+          },
           keyboardType: TextInputType.visiblePassword,
           textInputAction: TextInputAction.done,
           style: const TextStyle(

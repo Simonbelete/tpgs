@@ -6,7 +6,7 @@ class FormTextBox extends StatelessWidget {
   final TextEditingController? controller;
   final String? hintText;
   final String? initialValue;
-  final String Function(String?)? validator;
+  final String? Function(String?)? validator;
 
   const FormTextBox(
       {super.key,
@@ -38,6 +38,9 @@ class FormTextBox extends StatelessWidget {
           style: const TextStyle(
               fontWeight: FontWeight.normal, fontSize: 14, color: kTextColor),
           decoration: InputDecoration(
+            errorBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(6.0),
+                borderSide: const BorderSide(color: kSecondaryColor)),
             enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(6.0),
                 borderSide: const BorderSide(
