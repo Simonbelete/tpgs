@@ -7,9 +7,9 @@ import 'package:ilri_pfm/models/farm_model.dart';
 
 class FarmFormScreen extends StatelessWidget {
   static const String routeName = '/farm-form';
-  final Farm farm;
+  final Farm? farm;
 
-  const FarmFormScreen({super.key, required this.farm});
+  const FarmFormScreen({super.key, this.farm});
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +18,9 @@ class FarmFormScreen extends StatelessWidget {
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(children: [
-            const CustomAppBar(),
+            CustomAppBar(
+              title: farm == null ? 'Create new Farm' : 'Farm - ${farm?.name}',
+            ),
             const SizedBox(
               height: 25,
             ),

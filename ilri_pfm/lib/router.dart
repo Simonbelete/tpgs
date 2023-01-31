@@ -66,7 +66,7 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
       return MaterialPageRoute(
           settings: routeSettings, builder: (_) => const FarmScreen());
     case FarmFormScreen.routeName:
-      Farm farm = routeSettings.arguments as Farm;
+      Farm? farm = routeSettings.arguments as Farm?;
       return MaterialPageRoute(
           settings: routeSettings, builder: (_) => FarmFormScreen(farm: farm));
     case BreedTypeScreen.routeName:

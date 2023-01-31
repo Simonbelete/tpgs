@@ -3,6 +3,7 @@ import 'package:ilri_pfm/app/color_set.dart';
 import 'package:ilri_pfm/common_widgets/custom_appbar.dart';
 import 'package:ilri_pfm/features/farm_list/farm_list.dart';
 import 'package:ilri_pfm/features/navigation_drawer/navigation_drawer.dart';
+import 'package:ilri_pfm/screens/farm_form_screen.dart';
 
 class FarmScreen extends StatelessWidget {
   static const String routeName = '/farm';
@@ -15,7 +16,9 @@ class FarmScreen extends StatelessWidget {
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(children: const [
-            CustomAppBar(),
+            CustomAppBar(
+              title: 'Farms',
+            ),
             SizedBox(
               height: 25,
             ),
@@ -25,9 +28,11 @@ class FarmScreen extends StatelessWidget {
       ),
       drawer: const NavigationDrawer(),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          Navigator.popAndPushNamed(context, FarmFormScreen.routeName);
+        },
         backgroundColor: kPrimaryColor,
-        child: Icon(Icons.add),
+        child: const Icon(Icons.add),
       ),
     );
   }
