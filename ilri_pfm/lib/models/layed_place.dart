@@ -6,10 +6,12 @@ class LayedPlace {
   LayedPlace({this.id, required this.name, this.is_active});
 
   factory LayedPlace.fromJson(Map<String, dynamic> data) {
-    return LayedPlace(name: data['name'], is_active: data['is_active']);
+    return LayedPlace(
+        id: data['id'], name: data['name'], is_active: data['is_active']);
   }
 
   Map<String, dynamic> toJson() => {
         'name': name,
+        'is_active': is_active,
       };
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ilri_pfm/main_dev.dart';
+import 'package:ilri_pfm/models/breed_type.dart';
 import 'package:ilri_pfm/models/chicken.dart';
 import 'package:ilri_pfm/models/chicken_stage.dart';
 import 'package:ilri_pfm/models/egg.dart';
@@ -8,6 +9,7 @@ import 'package:ilri_pfm/models/layed_place.dart';
 import 'package:ilri_pfm/models/user_model.dart';
 import 'package:ilri_pfm/screens/about_screen.dart';
 import 'package:ilri_pfm/screens/activation_screen.dart';
+import 'package:ilri_pfm/screens/breed_type_form_screen.dart';
 import 'package:ilri_pfm/screens/breed_type_screen.dart';
 import 'package:ilri_pfm/screens/chicken_form_screen.dart';
 import 'package:ilri_pfm/screens/chicken_screen.dart';
@@ -72,6 +74,13 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
     case BreedTypeScreen.routeName:
       return MaterialPageRoute(
           settings: routeSettings, builder: (_) => const BreedTypeScreen());
+    case BreedTypeFormScreen.routeName:
+      BreedType? breedType = routeSettings.arguments as BreedType?;
+      return MaterialPageRoute(
+          settings: routeSettings,
+          builder: (_) => BreedTypeFormScreen(
+                breedType: breedType,
+              ));
     case ChickenStageScreen.routeName:
       return MaterialPageRoute(
           settings: routeSettings, builder: (_) => const ChickenStageScreen());

@@ -55,10 +55,11 @@ class EggSerializer(serializers.ModelSerializer):
 
 class BreedTypeSerializer(serializers.ModelSerializer):
     name = serializers.CharField()
+    is_active = serializers.BooleanField()
 
     class Meta:
         model = BreedType
-        fields = '__all__'
+        fields = ['id', 'name', 'is_active']
 
 class ChickenSerializer(serializers.ModelSerializer):
     # children = EggSerializer(many=True) 

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:ilri_pfm/common_widgets/data_tile.dart';
 import 'package:ilri_pfm/models/breed_type.dart';
 import 'package:ilri_pfm/repository/breed_type_repository.dart';
+import 'package:ilri_pfm/screens/breed_type_form_screen.dart';
 import 'package:ilri_pfm/screens/farm_form_screen.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
@@ -60,7 +61,7 @@ class BreedTypeListState extends State<BreedTypeList> {
                 padding: const EdgeInsets.symmetric(vertical: 10),
                 child: DataTile(
                   onTab: () {
-                    Navigator.pushNamed(context, FarmFormScreen.routeName,
+                    Navigator.pushNamed(context, BreedTypeFormScreen.routeName,
                         arguments: item);
                   },
                   title: item.name,

@@ -57,7 +57,7 @@ class NavigationDrawer extends StatelessWidget {
                 upperCase: true,
                 backgroundColor: Colors.black,
                 numberLetters: 2,
-                text: context.read<UserBloc>().state.user?.email ?? '',
+                text: context.read<UserBloc>().state.user?.email ?? 'User',
               ),
               onTap: () {},
             ),
