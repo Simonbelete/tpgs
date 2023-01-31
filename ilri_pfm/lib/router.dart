@@ -76,7 +76,7 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
       return MaterialPageRoute(
           settings: routeSettings, builder: (_) => const ChickenStageScreen());
     case ChickenStageFormScreen.routeName:
-      ChickenStage chickenStage = routeSettings.arguments as ChickenStage;
+      ChickenStage? chickenStage = routeSettings.arguments as ChickenStage?;
       return MaterialPageRoute(
           settings: routeSettings,
           builder: (_) => ChickenStageFormScreen(

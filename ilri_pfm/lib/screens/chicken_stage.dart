@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:ilri_pfm/app/color_set.dart';
 import 'package:ilri_pfm/common_widgets/custom_appbar.dart';
 import 'package:ilri_pfm/features/chicken_stage_list/chicken_stage_list.dart';
-import 'package:ilri_pfm/features/farm_list/farm_list.dart';
 import 'package:ilri_pfm/features/navigation_drawer/navigation_drawer.dart';
+import 'package:ilri_pfm/screens/chicken_stage_form_screen.dart';
 
 class ChickenStageScreen extends StatelessWidget {
   static const String routeName = '/chicken-stage';
@@ -28,9 +28,11 @@ class ChickenStageScreen extends StatelessWidget {
       ),
       drawer: const NavigationDrawer(),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          Navigator.popAndPushNamed(context, ChickenStageFormScreen.routeName);
+        },
         backgroundColor: kPrimaryColor,
-        child: Icon(Icons.add),
+        child: const Icon(Icons.add),
       ),
     );
   }

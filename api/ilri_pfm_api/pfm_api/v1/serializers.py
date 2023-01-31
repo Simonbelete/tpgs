@@ -78,12 +78,15 @@ class ChickenParentSerializer(serializers.ModelSerializer):
 
 class ChickenStageSerializer(serializers.ModelSerializer):
     name = serializers.CharField()
+    is_active = serializers.BooleanField()
 
     class Meta:
         model = ChickenStage
-        fields = '__all__'
+        fields = ['id', 'name', 'is_active']
+
 class LayedPlaceSerializer(serializers.ModelSerializer):
     name = serializers.CharField()
+    is_active = serializers.BooleanField()
 
     class Meta:
         model = LayedPlace

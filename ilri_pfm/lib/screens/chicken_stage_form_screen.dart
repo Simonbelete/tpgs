@@ -7,9 +7,9 @@ import 'package:ilri_pfm/models/chicken_stage.dart';
 
 class ChickenStageFormScreen extends StatelessWidget {
   static const String routeName = '/chicken-stage-form';
-  final ChickenStage chickenStage;
+  final ChickenStage? chickenStage;
 
-  const ChickenStageFormScreen({super.key, required this.chickenStage});
+  const ChickenStageFormScreen({super.key, this.chickenStage});
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +18,11 @@ class ChickenStageFormScreen extends StatelessWidget {
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(children: [
-            const CustomAppBar(),
+            CustomAppBar(
+              title: chickenStage == null
+                  ? 'Create Chicken Stages'
+                  : 'Stages - ${chickenStage?.name}',
+            ),
             const SizedBox(
               height: 25,
             ),
