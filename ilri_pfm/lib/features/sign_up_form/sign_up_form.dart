@@ -2,13 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:ilri_pfm/app/color_set.dart';
 import 'package:ilri_pfm/common_widgets/button.dart';
 import 'package:ilri_pfm/common_widgets/email_field.dart';
-import 'package:ilri_pfm/common_widgets/form_text_box.dart';
 import 'package:ilri_pfm/common_widgets/header_text.dart';
 import 'package:ilri_pfm/common_widgets/name_field.dart';
 import 'package:ilri_pfm/common_widgets/password_field.dart';
 import 'package:ilri_pfm/common_widgets/sub_title_text.dart';
 import 'package:ilri_pfm/features/have_account/have_account.dart';
-import 'package:ilri_pfm/features/sign_in_form/sign_in_form_controller.dart';
 import 'package:ilri_pfm/features/sing_in_with_google_form/sing_in_with_google_form.dart';
 import 'package:ilri_pfm/exceptions/email_exists_exception.dart';
 import 'package:ilri_pfm/exceptions/weak_password_exception.dart';
@@ -31,27 +29,29 @@ class _SignUpFormState extends State<SignUpForm> {
   final TextEditingController nameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
-  final GlobalKey formKey = GlobalKey<FormState>();
+  final _formKey = GlobalKey<FormState>();
 
   // Form Feedback
   final String errorMessage = '';
   final bool displayErrorMessage = false;
 
   void onSignUp(BuildContext context) async {
-    try {
-      String? deviceToken = await _messagingRepository.getDeviceToken();
-      await _repository.createUserWithEmailAndPassword(
-          email: emailController.text,
-          password: passwordController.text,
-          devices: Device(token: deviceToken ?? ''));
-      // ignore: use_build_context_synchronously
-      Navigator.pushReplacementNamed(context, ActivationScreen.routeName);
-    } on WeakPasswordException {
-      // displayErrorMessage = true;
-    } on EmailExistsException {
-      // displayErrorMessage = true;
-    } catch (e) {
-      // displayErrorMessage = true;
+    if (_formKey.currentState!.validate()) {
+      try {
+        String? deviceToken = await _messagingRepository.getDeviceToken();
+        await _repository.createUserWithEmailAndPassword(
+            email: emailController.text,
+            password: passwordController.text,
+            devices: Device(token: deviceToken ?? ''));
+        // ignore: use_build_context_synchronously
+        Navigator.pushReplacementNamed(context, ActivationScreen.routeName);
+      } on WeakPasswordException {
+        // displayErrorMessage = true;
+      } on EmailExistsException {
+        // displayErrorMessage = true;
+      } catch (e) {
+        // displayErrorMessage = true;
+      }
     }
   }
 
@@ -91,7 +91,7 @@ class _SignUpFormState extends State<SignUpForm> {
 
   Widget _buildForm(Size size) {
     return Form(
-      key: formKey,
+      key: _formKey,
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         const HeaderText(
           text: 'Create Account',
