@@ -6,6 +6,7 @@ import 'package:ilri_pfm/common_widgets/custom_switch.dart';
 import 'package:ilri_pfm/common_widgets/form_text_box.dart';
 import 'package:ilri_pfm/models/farm_model.dart';
 import 'package:ilri_pfm/repository/farm_repository.dart';
+import 'package:ilri_pfm/screens/farm_screen.dart';
 
 class FarmForm extends StatefulWidget {
   final Farm? farm;
@@ -85,8 +86,15 @@ class _FarmFormState extends State<FarmForm> {
   void create() async {
     if (_formKey.currentState!.validate()) {
       try {
-        final farm = await _repository
+        final Farm? farm = await _repository
             .create(Farm(name: _nameController.text, is_active: _isActive));
+        if (farm != null) {
+          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+            backgroundColor: kPrimaryColor,
+            content: Text('Successfully created farm!'),
+          ));
+          Navigator.popAndPushNamed(context, FarmScreen.routeName);
+        }
       } catch (e) {
         print('error');
         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(

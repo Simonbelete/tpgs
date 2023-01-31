@@ -29,6 +29,12 @@ class FarmService {
     return await _dio.post(
       '$_url/',
       data: data,
+      options: Options(
+        headers: {
+          Headers.wwwAuthenticateHeader:
+              await _auth.currentUser?.getIdToken(), // set content-length
+        },
+      ),
     );
   }
 }
