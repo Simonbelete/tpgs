@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:ilri_pfm/features/sign_up_form/sign_up_form.dart';
 
 class RegisterScreen extends StatelessWidget {
@@ -14,11 +13,6 @@ class RegisterScreen extends StatelessWidget {
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.white,
-        systemOverlayStyle: const SystemUiOverlayStyle(
-          statusBarColor: Colors.white,
-          statusBarIconBrightness: Brightness.dark,
-          statusBarBrightness: Brightness.light,
-        ),
       ),
       body: SingleChildScrollView(
         child: Center(
