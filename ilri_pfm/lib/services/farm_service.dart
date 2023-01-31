@@ -24,4 +24,11 @@ class FarmService {
       rethrow;
     }
   }
+
+  Future<Response> post(Map<String, dynamic> data) async {
+    return await _dio.post(
+      '$_url/',
+      data: data,
+    );
+  }
 }
