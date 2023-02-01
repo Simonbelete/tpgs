@@ -3,7 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:ilri_pfm/util/dio_client.dart';
 
 class ChickenService {
-  final String _url = '/chicken-stages';
+  final String _url = '/chickens';
   final Dio _dio = dioClient;
   final FirebaseAuth _auth = FirebaseAuth.instance;
 

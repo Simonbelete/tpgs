@@ -12,6 +12,7 @@ import 'package:ilri_pfm/screens/activation_screen.dart';
 import 'package:ilri_pfm/screens/breed_type_form_screen.dart';
 import 'package:ilri_pfm/screens/breed_type_screen.dart';
 import 'package:ilri_pfm/screens/chicken_form_screen.dart';
+import 'package:ilri_pfm/screens/chicken_panel.dart';
 import 'package:ilri_pfm/screens/chicken_screen.dart';
 import 'package:ilri_pfm/screens/chicken_stage.dart';
 import 'package:ilri_pfm/screens/chicken_stage_form_screen.dart';
@@ -99,6 +100,13 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
       return MaterialPageRoute(
           settings: routeSettings,
           builder: (_) => ChickenFormScreen(
+                chicken: chicken,
+              ));
+    case ChickenPanelScreen.routeName:
+      Chicken chicken = routeSettings.arguments as Chicken;
+      return MaterialPageRoute(
+          settings: routeSettings,
+          builder: (_) => ChickenPanelScreen(
                 chicken: chicken,
               ));
     case LayedPlaceScreen.routeName:

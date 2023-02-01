@@ -5,6 +5,7 @@ import 'package:ilri_pfm/models/chicken.dart';
 import 'package:ilri_pfm/models/chicken_stage.dart';
 import 'package:ilri_pfm/repository/chicken_repository.dart';
 import 'package:ilri_pfm/screens/chicken_form_screen.dart';
+import 'package:ilri_pfm/screens/chicken_panel.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
 class ChickenList extends StatefulWidget {
@@ -32,6 +33,7 @@ class ChickenListListState extends State<ChickenList> {
     try {
       final List<Chicken>? newItems = await ChickenRepository()
           .get(query: {'limit': _pageSize, 'offset': _pageSize * pageKey});
+      print(newItems);
       final isLastPage = (newItems?.length ?? 0) < _pageSize;
       if (isLastPage) {
         _pagingController.appendLastPage(newItems ?? []);
@@ -62,10 +64,10 @@ class ChickenListListState extends State<ChickenList> {
                 padding: const EdgeInsets.symmetric(vertical: 10),
                 child: DataTile(
                   onTab: () {
-                    Navigator.pushNamed(context, ChickenFormScreen.routeName,
+                    Navigator.pushNamed(context, ChickenPanelScreen.routeName,
                         arguments: item);
                   },
-                  title: item.name,
+                  title: item.tag,
                 ),
               ),
             ),

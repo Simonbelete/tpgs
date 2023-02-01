@@ -23,7 +23,7 @@ class _ChickenFormState extends State<ChickenForm> {
     return ContainerCard(
         child: Column(
       children: [
-        FormTextBox(hintText: 'Name', initialValue: widget.chicken.name),
+        FormTextBox(hintText: 'Name', initialValue: widget.chicken.tag),
         const SizedBox(
           height: 10,
         ),
