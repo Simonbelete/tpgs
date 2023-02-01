@@ -3,6 +3,7 @@ import 'package:ilri_pfm/common_widgets/header_text.dart';
 import 'package:ilri_pfm/common_widgets/panel_card.dart';
 import 'package:ilri_pfm/common_widgets/title_text.dart';
 import 'package:ilri_pfm/models/chicken.dart';
+import 'package:ilri_pfm/screens/weight_screen.dart';
 
 class ChickenPanel extends StatelessWidget {
   final Chicken chicken;
@@ -19,7 +20,7 @@ class ChickenPanel extends StatelessWidget {
           children: [TitleText(text: chicken.tag)],
         ),
         const SizedBox(
-          height: 50,
+          height: 30,
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -47,7 +48,10 @@ class ChickenPanel extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             InkWell(
-              onTap: () {},
+              onTap: () {
+                Navigator.pushNamed(context, WeightScreen.routeName,
+                    arguments: chicken);
+              },
               child: const PanelCard(
                 icon: 'assets/icons/scale.svg',
                 text: 'Weight Record',

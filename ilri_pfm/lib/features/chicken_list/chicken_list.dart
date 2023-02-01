@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ilri_pfm/common_widgets/data_tile.dart';
-import 'package:ilri_pfm/features/chicken_form/chicken_form.dart';
 import 'package:ilri_pfm/models/chicken.dart';
-import 'package:ilri_pfm/models/chicken_stage.dart';
 import 'package:ilri_pfm/repository/chicken_repository.dart';
-import 'package:ilri_pfm/screens/chicken_form_screen.dart';
 import 'package:ilri_pfm/screens/chicken_panel.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
@@ -33,7 +30,6 @@ class ChickenListListState extends State<ChickenList> {
     try {
       final List<Chicken>? newItems = await ChickenRepository()
           .get(query: {'limit': _pageSize, 'offset': _pageSize * pageKey});
-      print(newItems);
       final isLastPage = (newItems?.length ?? 0) < _pageSize;
       if (isLastPage) {
         _pagingController.appendLastPage(newItems ?? []);
