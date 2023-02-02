@@ -104,67 +104,27 @@ class _BreedTypePieChartState extends State {
   }
 
   List<PieChartSectionData> showingSections() {
-    return List.generate(4, (i) {
-      final isTouched = i == touchedIndex;
-      final fontSize = isTouched ? 25.0 : 16.0;
-      final radius = isTouched ? 60.0 : 50.0;
-      const shadows = [Shadow(color: Colors.black, blurRadius: 2)];
-      switch (i) {
-        case 0:
-          return PieChartSectionData(
-            color: Colors.blue,
-            value: 40,
-            title: '40%',
-            radius: radius,
-            titleStyle: TextStyle(
-              fontSize: fontSize,
-              fontWeight: FontWeight.bold,
-              color: kTextColor,
-              shadows: shadows,
-            ),
-          );
-        case 1:
-          return PieChartSectionData(
-            color: Colors.yellow,
-            value: 30,
-            title: '30%',
-            radius: radius,
-            titleStyle: TextStyle(
-              fontSize: fontSize,
-              fontWeight: FontWeight.bold,
-              color: kTextColor,
-              shadows: shadows,
-            ),
-          );
-        case 2:
-          return PieChartSectionData(
-            color: Colors.black,
-            value: 15,
-            title: '15%',
-            radius: radius,
-            titleStyle: TextStyle(
-              fontSize: fontSize,
-              fontWeight: FontWeight.bold,
-              color: kTextColor,
-              shadows: shadows,
-            ),
-          );
-        case 3:
-          return PieChartSectionData(
-            color: Colors.red,
-            value: 15,
-            title: '15%',
-            radius: radius,
-            titleStyle: TextStyle(
-              fontSize: fontSize,
-              fontWeight: FontWeight.bold,
-              color: kTextColor,
-              shadows: shadows,
-            ),
-          );
-        default:
-          throw Error();
-      }
-    });
+    return List.generate(
+        breedTypes?.length ?? 0,
+        (index) => PieChartSectionData(
+              color: breedTypes?[index].color == null
+                  ? generateRandomColor(breedTypes?[index].id)
+                  : breedTypes?[index].color?.toColor(),
+              value:
+                  _toPercentage(breedTypes?[index].chicken_count ?? 0, count),
+              title:
+                  '${_toPercentage(breedTypes?[index].chicken_count ?? 0, count)}%',
+              radius: index == touchedIndex ? 60.0 : 50.0,
+              titleStyle: TextStyle(
+                fontSize: index == touchedIndex ? 25.0 : 16.0,
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
+                shadows: [Shadow(color: Colors.black, blurRadius: 2)],
+              ),
+            ));
+  }
+
+  double _toPercentage(int x, int y) {
+    return double.parse(((x / y) * 100).toStringAsFixed(2));
   }
 }
