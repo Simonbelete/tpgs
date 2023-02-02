@@ -122,21 +122,6 @@ class BreedType(models.Model):
     def __str__(self):
         return self.name
 
-## Chicken/Animal
-class Chicken(models.Model):
-    # Wing Tag
-    tag = models.CharField(max_length=250)
-    parent = models.OneToOneField(ChickenParent, on_delete=models.SET_NULL, null=True, blank=True)
-    house_no = models.IntegerField(null=True, blank=True)
-    pen_no = models.IntegerField(null=True, blank=True)
-    chicken_stage = models.ForeignKey(ChickenStage, on_delete=models.SET_NULL, null=True)
-    breed_type = models.ForeignKey(BreedType, on_delete=models.SET_NULL, null=True)
-    farm = models.ForeignKey(Farm, on_delete=models.SET_NULL, null=True)
-
-    is_active = models.BooleanField(default=True)
-    created_at = models.DateTimeField(auto_now_add=True)
-    created_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.PROTECT)
-    history = HistoricalRecords()
 
 ## Layed Place
 class LayedPlace(models.Model):
@@ -149,6 +134,50 @@ class LayedPlace(models.Model):
 
     def __str__(self):
         return self.name
+
+## Chicken/Animal
+class Chicken(models.Model):
+    SEX_CHOICES = (
+        ('F', 'Female',),
+        ('M', 'Male',),
+    )
+    # Wing Tag
+    tag = models.CharField(max_length=250)
+    sex = models.CharField(max_length=1, choices=SEX_CHOICES, default='M')
+    house_no = models.IntegerField(null=True, blank=True)
+    pen_no = models.IntegerField(null=True, blank=True)
+    chicken_stage = models.ForeignKey(ChickenStage, on_delete=models.SET_NULL, null=True)
+    breed_type = models.ForeignKey(BreedType, on_delete=models.SET_NULL, null=True)
+    farm = models.ForeignKey(Farm, on_delete=models.SET_NULL, null=True)
+    is_double_yolk = models.BooleanField(default=False)
+    # date_of_hatch = models.DateField()
+    layed_place = models.ForeignKey(LayedPlace, on_delete=models.SET_NULL, null=True)
+    # eggs = models.ForeignKey('ChickenProgress', on_delete=models.SET_NULL, null=True, blank=True, '')
+
+    parent = models.OneToOneField(ChickenParent, on_delete=models.SET_NULL, null=True, blank=True)
+   
+    is_active = models.BooleanField(default=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    created_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.PROTECT)
+    history = HistoricalRecords()
+
+class ChickenGrowth(models.Model):
+    date = models.DateField()
+    # In grams
+    weight = models.DecimalField(max_digits = 6, decimal_places = 3, default=0)
+    chicken = models.ForeignKey(Chicken, on_delete=models.SET_NULL, null=True, related_name='growth')
+    # Compute Field
+    week = models.IntegerField(default=0)
+
+class ChickenProgress(models.Model):
+    week = models.IntegerField(default=1)
+    chicken = models.ForeignKey(Chicken, on_delete=models.CASCADE, related_name='progress')
+    weight = models.DecimalField(max_digits = 6, decimal_places = 3, default=0)
+    layed_eggs = models.ForeignKey(Chicken, on_delete=models.SET_NULL, null=True)
+
+class EggProduction(models.Model):
+    date = models.DateField()
+    chicken = models.ForeignKey(Chicken, on_delete=models.SET_NULL, null=True)
 
 ## egg production
 class Egg(models.Model):

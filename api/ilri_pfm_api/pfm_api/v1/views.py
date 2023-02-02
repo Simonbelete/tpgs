@@ -4,8 +4,8 @@ from rest_framework.response import Response
 from rest_framework import status
 from django.http import Http404
 
-from pfm_api.v1.serializers import UserSerializer, DeviceSerializer, FarmSerializer, ChickenSerializer, ChickenParentSerializer, ChickenStageSerializer, EggSerializer, LayedPlaceSerializer, BreedTypeSerializer
-from pfm_api.models import Device, Farm, Chicken, ChickenParent, BreedType, ChickenStage, Egg, LayedPlace
+from pfm_api.v1.serializers import UserSerializer, DeviceSerializer, FarmSerializer, ChickenSerializer, ChickenParentSerializer, ChickenStageSerializer, EggSerializer, LayedPlaceSerializer, BreedTypeSerializer, ChickenGrowthSerializer
+from pfm_api.models import Device, Farm, Chicken, ChickenParent, BreedType, ChickenStage, Egg, LayedPlace, ChickenGrowth
 
 User = get_user_model()
 
@@ -42,6 +42,10 @@ class ChickenViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         serializer.save(created_by=self.request.user)
+
+class ChickenGrowthViewSet(viewsets.ModelViewSet):
+    queryset = ChickenGrowth.objects.all()
+    serializer_class = ChickenGrowthSerializer
 
 class ChickenParentViewSet(viewsets.ModelViewSet):
     queryset = ChickenParent.objects.all()
