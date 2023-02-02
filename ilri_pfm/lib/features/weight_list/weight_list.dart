@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:ilri_pfm/features/weight_form/weight_form.dart';
+import 'package:ilri_pfm/screens/weight_form_screen.dart';
 import 'package:intl/intl.dart';
 import 'package:ilri_pfm/common_widgets/body_text.dart';
 import 'package:ilri_pfm/common_widgets/title_text.dart';
@@ -73,14 +75,21 @@ class _WeightListState extends State<WeightList> {
                   builderDelegate: PagedChildBuilderDelegate<Weight>(
                     itemBuilder: (context, item, index) => Container(
                         padding: const EdgeInsets.symmetric(vertical: 10),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            BodyText(
-                                text:
-                                    DateFormat('yyyy-MM-dd').format(item.date)),
-                            BodyText(text: item.weight.toString())
-                          ],
+                        child: InkWell(
+                          onTap: () {
+                            Navigator.pushNamed(
+                                context, WeightFormScreen.routeName,
+                                arguments: item);
+                          },
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              BodyText(
+                                  text: DateFormat('yyyy-MM-dd')
+                                      .format(item.date)),
+                              BodyText(text: item.weight.toString())
+                            ],
+                          ),
                         )),
                   ),
                 ),

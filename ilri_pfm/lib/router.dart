@@ -7,6 +7,7 @@ import 'package:ilri_pfm/models/egg.dart';
 import 'package:ilri_pfm/models/farm_model.dart';
 import 'package:ilri_pfm/models/layed_place.dart';
 import 'package:ilri_pfm/models/user_model.dart';
+import 'package:ilri_pfm/models/weight_model.dart';
 import 'package:ilri_pfm/screens/about_screen.dart';
 import 'package:ilri_pfm/screens/activation_screen.dart';
 import 'package:ilri_pfm/screens/breed_type_form_screen.dart';
@@ -28,6 +29,7 @@ import 'package:ilri_pfm/screens/register_screen.dart';
 import 'package:ilri_pfm/screens/setting_screen.dart';
 import 'package:ilri_pfm/screens/users_form_screen.dart';
 import 'package:ilri_pfm/screens/users_screen.dart';
+import 'package:ilri_pfm/screens/weight_form_screen.dart';
 import 'package:ilri_pfm/screens/weight_screen.dart';
 
 Route<dynamic> generateRoute(RouteSettings routeSettings) {
@@ -109,6 +111,13 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
           settings: routeSettings,
           builder: (_) => WeightScreen(
                 chicken: chicken,
+              ));
+    case WeightFormScreen.routeName:
+      Weight? weight = routeSettings.arguments as Weight?;
+      return MaterialPageRoute(
+          settings: routeSettings,
+          builder: (_) => WeightFormScreen(
+                weight: weight,
               ));
     case ChickenPanelScreen.routeName:
       Chicken chicken = routeSettings.arguments as Chicken;

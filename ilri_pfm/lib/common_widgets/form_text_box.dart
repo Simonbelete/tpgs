@@ -7,13 +7,15 @@ class FormTextBox extends StatelessWidget {
   final String? hintText;
   final String? initialValue;
   final String? Function(String?)? validator;
+  final TextInputType? textInputType;
 
   const FormTextBox(
       {super.key,
       this.controller,
       this.hintText,
       this.validator,
-      this.initialValue});
+      this.initialValue,
+      this.textInputType});
 
   @override
   Widget build(BuildContext context) {
@@ -32,6 +34,7 @@ class FormTextBox extends StatelessWidget {
           height: 5,
         ),
         TextFormField(
+          keyboardType: textInputType,
           initialValue: initialValue,
           controller: controller,
           validator: validator,
