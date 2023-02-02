@@ -13,6 +13,7 @@ import 'package:ilri_pfm/screens/chicken_screen.dart';
 import 'package:ilri_pfm/screens/chicken_stage.dart';
 import 'package:ilri_pfm/screens/egg_screen.dart';
 import 'package:ilri_pfm/screens/farm_screen.dart';
+import 'package:ilri_pfm/screens/home_screen.dart';
 import 'package:ilri_pfm/screens/layed_place_screen.dart';
 import 'package:ilri_pfm/screens/setting_screen.dart';
 import 'package:ilri_pfm/screens/users_screen.dart';
@@ -79,7 +80,7 @@ class NavigationDrawer extends StatelessWidget {
             title: const Text('Dashboard'),
             onTap: () {
               Navigator.pop(context);
-              Navigator.popAndPushNamed(context, FarmScreen.routeName);
+              Navigator.pushNamed(context, HomeScreen.routeName);
             },
           ),
           Visibility(
