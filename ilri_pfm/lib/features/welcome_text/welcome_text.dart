@@ -9,7 +9,7 @@ class WelcomeText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String? name = context.read<UserBloc>().state.user.name;
+    String? name = context.read<UserBloc>().state.user?.name;
     return Row(
       children: [TitleText(text: 'Welcome'), BodyText(text: name ?? '')],
     );

@@ -30,6 +30,7 @@ import 'package:ilri_pfm/screens/setting_screen.dart';
 import 'package:ilri_pfm/screens/users_form_screen.dart';
 import 'package:ilri_pfm/screens/users_screen.dart';
 import 'package:ilri_pfm/screens/weight_form_screen.dart';
+import 'package:ilri_pfm/screens/weight_report_screen.dart';
 import 'package:ilri_pfm/screens/weight_screen.dart';
 
 Route<dynamic> generateRoute(RouteSettings routeSettings) {
@@ -118,6 +119,13 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
           settings: routeSettings,
           builder: (_) => WeightFormScreen(
                 weight: weight,
+              ));
+    case WeightReportScreen.routeName:
+      int id = int.parse(routeSettings.arguments.toString());
+      return MaterialPageRoute(
+          settings: routeSettings,
+          builder: (_) => WeightReportScreen(
+                id: id,
               ));
     case ChickenPanelScreen.routeName:
       Chicken chicken = routeSettings.arguments as Chicken;
