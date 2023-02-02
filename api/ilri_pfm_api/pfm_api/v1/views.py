@@ -46,6 +46,26 @@ class ChickenViewSet(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         serializer.save(created_by=self.request.user)
 
+class AllChickenGrowthViewSet(viewsets.ModelViewSet):
+    queryset = ChickenGrowth.objects.all()
+    serializer_class = ChickenGrowthSerializer
+    pagination_class = None
+
+    def list(self, request, *args, **kwargs):
+        try:
+            chicken_pk = self.kwargs['chicken_pk']
+            instance = self.get_queryset().filter(chicken=chicken_pk)
+            return Response({
+                'count': len(instance),
+                'results': self.serializer_class(instance, many=True).data},
+                            status=status.HTTP_200_OK)
+        except self.queryset.model.DoesNotExist:
+            raise Http404()
+
+    # def get_queryset(self):
+    #     chicken_pk = self.kwargs['chicken_pk']
+    #     return self.queryset.filter(chicken=chicken_pk)
+
 class ChickenGrowthViewSet(viewsets.ModelViewSet):
     queryset = ChickenGrowth.objects.all()
     serializer_class = ChickenGrowthSerializer
@@ -69,10 +89,6 @@ class BreedTypeChickenPercentageViewSet(viewsets.ModelViewSet):
     queryset = BreedType.objects.annotate(chicken_count = Count('chicken'))
     serializer_class = V1Serializer.BreedTypeReportPercentageSerializer
     pagination_class = None
-
-    # def retrieve(self, request, *args, **kwargs):
-    #     # ret = super(StoryViewSet, self).retrieve(request)
-    #     return Response({'key': 'single value'})
 
     def list(self, request, *args, **kwargs):
         try:
