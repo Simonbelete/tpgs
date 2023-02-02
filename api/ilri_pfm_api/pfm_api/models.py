@@ -113,6 +113,7 @@ class ChickenStage(models.Model):
 ## Breed Type
 class BreedType(models.Model):
     name = models.CharField(max_length=250)
+    color = models.CharField(max_length=10, null=True)
     
     is_active = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)

@@ -3,8 +3,11 @@ from rest_framework import viewsets
 from rest_framework.response import Response
 from rest_framework import status
 from django.http import Http404
+from django.db.models import Count
+from rest_framework import generics
 
 from pfm_api.v1.serializers import UserSerializer, DeviceSerializer, FarmSerializer, ChickenSerializer, ChickenParentSerializer, ChickenStageSerializer, EggSerializer, LayedPlaceSerializer, BreedTypeSerializer, ChickenGrowthSerializer
+import pfm_api.v1.serializers as V1Serializer
 from pfm_api.models import Device, Farm, Chicken, ChickenParent, BreedType, ChickenStage, Egg, LayedPlace, ChickenGrowth
 
 User = get_user_model()
@@ -59,7 +62,28 @@ class BreedTypeParentViewSet(viewsets.ModelViewSet):
     serializer_class = BreedTypeSerializer
 
     def perform_create(self, serializer):
+  
         serializer.save(created_by=self.request.user)
+
+class BreedTypeChickenPercentageViewSet(viewsets.ModelViewSet):
+    queryset = BreedType.objects.annotate(chicken_count = Count('chicken'))
+    serializer_class = V1Serializer.BreedTypeReportPercentageSerializer
+    pagination_class = None
+
+    # def retrieve(self, request, *args, **kwargs):
+    #     # ret = super(StoryViewSet, self).retrieve(request)
+    #     return Response({'key': 'single value'})
+
+    def list(self, request, *args, **kwargs):
+        try:
+            instance = self.get_queryset()
+            return Response({
+                'count': len(instance),
+                'chicken_count': Chicken.objects.count(),
+                'results': V1Serializer.BreedTypeReportPercentageSerializer(instance, many=True).data},
+                            status=status.HTTP_200_OK)
+        except self.queryset.model.DoesNotExist:
+            raise Http404()
 
 class ChickenStageParentViewSet(viewsets.ModelViewSet):
     queryset = ChickenStage.objects.all()

@@ -15,19 +15,22 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
         body: SafeArea(
           child: SingleChildScrollView(
-            child: Column(children: [
-              const CustomAppBar(
-                title: 'Dashboard',
-              ),
-              const SizedBox(
-                height: 25,
-              ),
-              const WelcomeText(),
-              const SizedBox(
-                height: 10,
-              ),
-              BreedTypePieChart(),
-            ]),
+            child: RefreshIndicator(
+              onRefresh: () async {},
+              child: Column(children: const [
+                CustomAppBar(
+                  title: 'Dashboard',
+                ),
+                SizedBox(
+                  height: 25,
+                ),
+                WelcomeText(),
+                SizedBox(
+                  height: 10,
+                ),
+                BreedTypePieChart(),
+              ]),
+            ),
           ),
         ),
         drawer: const NavigationDrawer());

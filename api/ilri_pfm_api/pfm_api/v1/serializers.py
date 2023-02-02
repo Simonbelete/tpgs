@@ -128,3 +128,11 @@ class LayedPlaceSerializer(serializers.ModelSerializer):
 #     class Meta:
 #         model = Poll
 #         fields = ['question', 'pub_date', 'owner']
+
+## Reports
+class BreedTypeReportPercentageSerializer(serializers.ModelSerializer):
+    chicken_count = serializers.IntegerField(read_only=True)
+    
+    class Meta:
+        model = BreedType
+        fields = '__all__'

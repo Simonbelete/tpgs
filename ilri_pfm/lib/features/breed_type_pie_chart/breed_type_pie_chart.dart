@@ -2,7 +2,10 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:ilri_pfm/app/color_set.dart';
 import 'package:ilri_pfm/common_widgets/indicator.dart';
-import 'package:ilri_pfm/common_widgets/panel_card.dart';
+import 'package:ilri_pfm/models/breed_type.dart';
+import 'package:ilri_pfm/repository/breed_type_report_repository.dart';
+import 'package:ilri_pfm/util/color_generator.dart';
+import 'package:ilri_pfm/util/extentions.dart';
 
 class BreedTypePieChart extends StatefulWidget {
   const BreedTypePieChart({super.key});
@@ -13,8 +16,25 @@ class BreedTypePieChart extends StatefulWidget {
 
 class _BreedTypePieChartState extends State {
   int touchedIndex = -1;
+  List<BreedType>? breedTypes = [];
+  int count = 0;
 
   List<Color> chartColors = [];
+
+  @override
+  void initState() {
+    _fetchData();
+    super.initState();
+  }
+
+  void _fetchData() async {
+    final result = await BreedTypeReportRepository().getPercentage();
+    setState(() {
+      print(result);
+      breedTypes = result?['data'];
+      count = result?['count'];
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -60,33 +80,25 @@ class _BreedTypePieChartState extends State {
                   height: 30,
                 ),
                 Container(
-                  padding: EdgeInsets.symmetric(horizontal: 20.0),
-                  child: Column(
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Indicator(
-                              color: Colors.blue,
-                              text: 'First',
-                              isSquare: true),
-                          Indicator(
-                              color: Colors.blue,
-                              text: 'First',
-                              isSquare: true),
-                          Indicator(
-                              color: Colors.blue,
-                              text: 'First',
-                              isSquare: true),
-                          Indicator(
-                              color: Colors.blue,
-                              text: 'First',
-                              isSquare: true),
-                        ],
-                      )
-                    ],
-                  ),
-                )
+                    // width: size.width * 0.5,
+                    padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                    child: SingleChildScrollView(
+                        physics: const BouncingScrollPhysics(),
+                        scrollDirection: Axis.horizontal,
+                        child: Row(
+                          children: breedTypes
+                                  ?.map((e) => Padding(
+                                        padding: EdgeInsets.only(right: 10),
+                                        child: Indicator(
+                                            color: e.color == null
+                                                ? generateRandomColor(e.id)
+                                                : e.color?.toColor(),
+                                            text: e.name,
+                                            isSquare: true),
+                                      ))
+                                  .toList() ??
+                              [],
+                        )))
               ],
             )));
   }
