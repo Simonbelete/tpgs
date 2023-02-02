@@ -51,4 +51,24 @@ class ChickenService {
       ),
     );
   }
+
+  // Growth
+  Future<Response> getGrowthAll(
+      {required int id, Map<String, dynamic>? query}) async {
+    try {
+      final response = await _dio.get(
+        '$_url/$id/growth/all',
+        queryParameters: query ?? {},
+        options: Options(
+          headers: {
+            Headers.wwwAuthenticateHeader:
+                await _auth.currentUser?.getIdToken(), // set content-length
+          },
+        ),
+      );
+      return response;
+    } catch (e) {
+      rethrow;
+    }
+  }
 }

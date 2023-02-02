@@ -1,6 +1,7 @@
 import 'package:ilri_pfm/models/chicken_parent.dart';
 
 class Chicken {
+  final int? id;
   final String tag;
   final ChickenParent? parent;
   final String? house_no;
@@ -8,6 +9,7 @@ class Chicken {
   final bool? is_active;
 
   Chicken({
+    this.id,
     required this.tag,
     this.parent,
     this.house_no,
@@ -17,6 +19,7 @@ class Chicken {
 
   factory Chicken.fromJson(Map<String, dynamic> data) {
     return Chicken(
+      id: data['id'],
       tag: data['tag'],
       // parent: data['parent']
       //     .map<ChickenParent>((e) => ChickenParent.fromJson(e))
