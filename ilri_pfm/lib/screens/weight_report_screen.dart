@@ -30,13 +30,6 @@ class WeightReportScreen extends StatelessWidget {
         ),
       ),
       drawer: const NavigationDrawer(),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.pushNamed(context, WeightFormScreen.routeName);
-        },
-        backgroundColor: kPrimaryColor,
-        child: const Icon(Icons.add),
-      ),
     );
   }
 }

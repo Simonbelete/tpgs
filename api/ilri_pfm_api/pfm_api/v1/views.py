@@ -8,7 +8,7 @@ from rest_framework import generics
 
 from pfm_api.v1.serializers import UserSerializer, DeviceSerializer, FarmSerializer, ChickenSerializer, ChickenParentSerializer, ChickenStageSerializer, EggSerializer, LayedPlaceSerializer, BreedTypeSerializer, ChickenGrowthSerializer
 import pfm_api.v1.serializers as V1Serializer
-from pfm_api.models import Device, Farm, Chicken, ChickenParent, BreedType, ChickenStage, Egg, LayedPlace, ChickenGrowth
+from pfm_api.models import Device, Farm, Chicken, ChickenParent, BreedType, ChickenStage, Egg, LayedPlace, ChickenGrowth, EggProduction
 
 User = get_user_model()
 
@@ -53,7 +53,7 @@ class AllChickenGrowthViewSet(viewsets.ModelViewSet):
 
     def list(self, request, *args, **kwargs):
         try:
-            chicken_pk = self.kwargs['chicken_pk']
+            chicken_pk = seflf.kwargs['chicken_pk']
             instance = self.get_queryset().filter(chicken=chicken_pk)
             return Response({
                 'count': len(instance),
@@ -121,3 +121,7 @@ class LayedPlaceViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         serializer.save(created_by=self.request.user)
+
+class EggProductionViewSet(viewsets.ModelViewSet):
+    queryset = EggProduction.objects.all()
+    serializer_class = V1Serializer.EggProductionSerializer

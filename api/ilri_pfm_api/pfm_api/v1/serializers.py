@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from rest_framework import exceptions
 
-from pfm_api.models import User, Device, Farm, Chicken, ChickenParent, BreedType, ChickenStage, ChickenProgress, Egg, LayedPlace, ChickenGrowth
+from pfm_api.models import User, Device, Farm, Chicken, ChickenParent, BreedType, ChickenStage, ChickenProgress, Egg, LayedPlace, ChickenGrowth, EggProduction
 from pfm_api.firebase_messageing import FirebaseMessaging
 
 class DeviceSerializer(serializers.ModelSerializer):
@@ -119,6 +119,15 @@ class LayedPlaceSerializer(serializers.ModelSerializer):
     class Meta:
         model = LayedPlace
         fields = ['id', 'name', 'is_active']
+
+class EggProductionSerializer(serializers.ModelSerializer):
+    chicken = ChickenSerializer(many=True)
+    date = serializers.DateField()
+
+    class Meta:
+        model = EggProduction
+        fields = ['id', 'date', 'chicken']
+
 
 # class PollSerializer(serializers.ModelSerializer):
 #     question = serializers.CharField()
