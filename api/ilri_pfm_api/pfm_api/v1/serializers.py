@@ -128,16 +128,6 @@ class EggProductionSerializer(serializers.ModelSerializer):
         model = EggProduction
         fields = ['id', 'date', 'chicken']
 
-
-# class PollSerializer(serializers.ModelSerializer):
-#     question = serializers.CharField()
-#     pub_date = serializers.DateTimeField()
-#     owner = serializers.ReadOnlyField(source='owner.id')
-
-#     class Meta:
-#         model = Poll
-#         fields = ['question', 'pub_date', 'owner']
-
 ## Reports
 class BreedTypeReportPercentageSerializer(serializers.ModelSerializer):
     chicken_count = serializers.IntegerField(read_only=True)
