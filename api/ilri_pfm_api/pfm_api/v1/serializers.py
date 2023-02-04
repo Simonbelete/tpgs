@@ -82,21 +82,21 @@ class ChickenGrowthSerializer(serializers.ModelSerializer):
 
 class ChickenSerializer(serializers.ModelSerializer):
     tag = serializers.CharField()
-    breed_type = serializers.PrimaryKeyRelatedField(read_only=False, queryset=BreedType.objects.all())
+    breed_type_id = serializers.PrimaryKeyRelatedField(read_only=False, queryset=BreedType.objects.all())
+    breed_type = BreedTypeSerializer()
     progress = ChickenProgressSerializer(many=True, read_only=True)
 
     class Meta:
         model = Chicken
-        fields = ['tag',  'breed_type', 'progress']
+        fields = ['tag',  'breed_type', 'breed_type_id', 'progress']
 
-    # def create(self, validated_data):
-    #     data = validated_data.pop('progress')
-    #     chicken = Chicken.objects.create(**validated_data)
-
-    #     for row in data:
-    #         ChickenProgress.objects.create(chicken=chicken, **row)
-
-    #     return chicken
+    def create(self, validated_data):
+        breed_type_data = validated_data.pop('breed_type', None)
+        breed_type = validated_data.pop('breed_type_id', None)
+        if breed_type_data is not None:
+            breed_type = BreedType.objects.create(**breed_type_data)
+        chicken = Chicken.objects.create(**validated_data, breed_type=breed_type)
+        return chicken
 
 class ChickenParentSerializer(serializers.ModelSerializer):
     is_active = serializers.BooleanField()
