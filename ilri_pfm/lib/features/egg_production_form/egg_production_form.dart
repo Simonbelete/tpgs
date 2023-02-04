@@ -8,6 +8,7 @@ import 'package:ilri_pfm/common_widgets/deactivate_icon.dart';
 import 'package:ilri_pfm/common_widgets/delete_icon.dart';
 import 'package:ilri_pfm/common_widgets/form_text_box.dart';
 import 'package:ilri_pfm/common_widgets/title_text.dart';
+import 'package:ilri_pfm/features/dropdown_searches/breed_type_dropdown_search.dart';
 import 'package:ilri_pfm/features/dropdown_searches/chicken_dropdown_search.dart';
 import 'package:ilri_pfm/models/chicken.dart';
 import 'package:ilri_pfm/models/egg.dart';
@@ -90,24 +91,31 @@ class _EggProductionFormState extends State<EggProductionForm>
                     height: 30,
                   ),
                   Container(
-                      height: 100,
+                      height: 150,
                       child: TabBarView(
                         controller: _tabController,
-                        children: const [
-                          FormTextBox(
-                            hintText: 'Tag',
+                        children: [
+                          Column(
+                            children: [
+                              FormTextBox(
+                                hintText: 'Tag',
+                              ),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              BreedTypeDropdownSearch(
+                                onChange: (data) {
+                                  print(data?.name);
+                                },
+                              ),
+                            ],
                           ),
                           // Drop down select
-                          ChickenDropdownSearch()
+                          ChickenDropdownSearch(
+                            onChange: (data) {},
+                          )
                         ],
                       ))
-                  // TabBar(controller: _tabController, tabs: const [
-                  //   Tab(
-                  //     icon: Icon(Icons.add),
-                  //   )
-                  // ]),
-                  // TabBarView(
-                  //     controller: _tabController, children: [FormTextBox()])
                 ],
               ),
               const SizedBox(

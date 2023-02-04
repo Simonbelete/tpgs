@@ -4,7 +4,9 @@ import 'package:ilri_pfm/models/chicken.dart';
 import 'package:ilri_pfm/repository/chicken_repository.dart';
 
 class ChickenDropdownSearch extends StatelessWidget {
-  const ChickenDropdownSearch({super.key});
+  final Function(Chicken? data) onChange;
+
+  const ChickenDropdownSearch({super.key, required this.onChange});
 
   @override
   Widget build(BuildContext context) {
@@ -19,11 +21,10 @@ class ChickenDropdownSearch extends StatelessWidget {
         ),
       ),
       asyncItems: (String filter) async {
-        print(filter);
         return await ChickenRepository().get(query: {'tag': filter}) ?? [];
       },
       itemAsString: (Chicken u) => u.tag,
-      onChanged: (Chicken? data) => print(data),
+      onChanged: onChange,
     );
   }
 }
