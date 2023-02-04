@@ -49,7 +49,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'pfm_api',
     'rest_framework',
-    'simple_history'
+    'simple_history',
+    'django_filters'
 ]
 
 AUTH_USER_MODEL = 'pfm_api.User'
@@ -148,5 +149,8 @@ REST_FRAMEWORK = {
      'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.SessionAuthentication',
         'pfm_api.authentication.FirebaseAuthentication',
+    ),
+    'DEFAULT_FILTER_BACKENDS': (
+        'django_filters.rest_framework.DjangoFilterBackend',
     ),
 }

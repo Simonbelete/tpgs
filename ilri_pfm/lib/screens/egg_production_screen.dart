@@ -5,6 +5,7 @@ import 'package:ilri_pfm/features/egg_production_list/egg_production_list.dart';
 import 'package:ilri_pfm/features/navigation_drawer/navigation_drawer.dart';
 import 'package:ilri_pfm/features/weight_list/weight_list.dart';
 import 'package:ilri_pfm/models/chicken.dart';
+import 'package:ilri_pfm/screens/egg_production_form_screen.dart';
 import 'package:ilri_pfm/screens/weight_form_screen.dart';
 
 class EggProductionScreen extends StatelessWidget {
@@ -34,7 +35,7 @@ class EggProductionScreen extends StatelessWidget {
       drawer: const NavigationDrawer(),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.pushNamed(context, WeightFormScreen.routeName);
+          Navigator.pushNamed(context, EggProductionFormScreen.routeName);
         },
         backgroundColor: kPrimaryColor,
         child: const Icon(Icons.add),

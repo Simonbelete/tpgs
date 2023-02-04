@@ -5,6 +5,7 @@ from rest_framework import status
 from django.http import Http404
 from django.db.models import Count
 from rest_framework import generics
+from django_filters import rest_framework as filters
 
 from pfm_api.v1.serializers import UserSerializer, DeviceSerializer, FarmSerializer, ChickenSerializer, ChickenParentSerializer, ChickenStageSerializer, EggSerializer, LayedPlaceSerializer, BreedTypeSerializer, ChickenGrowthSerializer
 import pfm_api.v1.serializers as V1Serializer
@@ -39,9 +40,20 @@ class FarmViewSet(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         serializer.save(created_by=self.request.user)
 
+## Chicken View Set
+
+class ChickenFilter(filters.FilterSet):
+    tag = filters.CharFilter(field_name='tag',lookup_expr='contains')
+
+    class Meta:
+        model = Chicken
+        fields = ['tag']
+
 class ChickenViewSet(viewsets.ModelViewSet):
     queryset = Chicken.objects.all()
     serializer_class = ChickenSerializer
+    filter_backends = (filters.DjangoFilterBackend,)
+    filterset_class = ChickenFilter
 
     def perform_create(self, serializer):
         serializer.save(created_by=self.request.user)

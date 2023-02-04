@@ -7,10 +7,14 @@ import 'package:ilri_pfm/common_widgets/custom_switch.dart';
 import 'package:ilri_pfm/common_widgets/deactivate_icon.dart';
 import 'package:ilri_pfm/common_widgets/delete_icon.dart';
 import 'package:ilri_pfm/common_widgets/form_text_box.dart';
+import 'package:ilri_pfm/models/chicken.dart';
 import 'package:ilri_pfm/models/egg.dart';
 import 'package:ilri_pfm/models/layed_place.dart';
+import 'package:ilri_pfm/repository/chicken_repository.dart';
+import 'package:ilri_pfm/repository/egg_repository.dart';
 import 'package:ilri_pfm/repository/layed_place_repository.dart';
 import 'package:ilri_pfm/screens/layed_place_screen.dart';
+import 'package:dropdown_search/dropdown_search.dart';
 
 class EggProductionForm extends StatefulWidget {
   final Egg? egg;
@@ -55,6 +59,18 @@ class _EggProductionFormState extends State<EggProductionForm> {
                         : null;
                   },
                   hintText: 'Name'),
+              const SizedBox(
+                height: 10,
+              ),
+              DropdownSearch<Chicken>(
+                popupProps: PopupProps.bottomSheet(),
+                asyncItems: (String filter) async {
+                  print(filter);
+                  return await ChickenRepository().get(query: {}) ?? [];
+                },
+                itemAsString: (Chicken u) => u.tag,
+                onChanged: (Chicken? data) => print(data),
+              ),
               const SizedBox(
                 height: 10,
               ),

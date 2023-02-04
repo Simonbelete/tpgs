@@ -152,7 +152,7 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
                 chicken: chicken,
               ));
     case EggProductionFormScreen.routeName:
-      Egg egg = routeSettings.arguments as Egg;
+      Egg? egg = routeSettings.arguments as Egg?;
       return MaterialPageRoute(
           settings: routeSettings,
           builder: (_) => EggProductionFormScreen(
