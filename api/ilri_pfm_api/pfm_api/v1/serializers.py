@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from rest_framework import exceptions
 
-from pfm_api.models import User, Device, Farm, Chicken, ChickenParent, BreedType, ChickenStage, ChickenProgress, Egg, LayedPlace, ChickenGrowth, EggProduction
+from pfm_api.models import User, Device, Farm, Chicken, ChickenParent, BreedType, ChickenStage, ChickenProgress, Egg, LayedPlace, ChickenGrowth
 from pfm_api.firebase_messageing import FirebaseMessaging
 
 class DeviceSerializer(serializers.ModelSerializer):
@@ -54,11 +54,12 @@ class EggSerializer(serializers.ModelSerializer):
 
 class BreedTypeSerializer(serializers.ModelSerializer):
     name = serializers.CharField()
-    is_active = serializers.BooleanField()
+    color = serializers.CharField()
+    is_active = serializers.BooleanField(default=True)
 
     class Meta:
         model = BreedType
-        fields = ['id', 'name', 'is_active']
+        fields = ['id', 'name', 'color', 'is_active']
 
 class ChickenProgressSerializer(serializers.ModelSerializer):
     week = serializers.IntegerField()
@@ -82,20 +83,20 @@ class ChickenGrowthSerializer(serializers.ModelSerializer):
 class ChickenSerializer(serializers.ModelSerializer):
     tag = serializers.CharField()
     breed_type = serializers.PrimaryKeyRelatedField(read_only=False, queryset=BreedType.objects.all())
-    progress = ChickenProgressSerializer(many=True)
+    progress = ChickenProgressSerializer(many=True, read_only=True)
 
     class Meta:
         model = Chicken
         fields = ['tag',  'breed_type', 'progress']
 
-    def create(self, validated_data):
-        data = validated_data.pop('progress')
-        chicken = Chicken.objects.create(**validated_data)
+    # def create(self, validated_data):
+    #     data = validated_data.pop('progress')
+    #     chicken = Chicken.objects.create(**validated_data)
 
-        for row in data:
-            ChickenProgress.objects.create(chicken=chicken, **row)
+    #     for row in data:
+    #         ChickenProgress.objects.create(chicken=chicken, **row)
 
-        return chicken
+    #     return chicken
 
 class ChickenParentSerializer(serializers.ModelSerializer):
     is_active = serializers.BooleanField()
@@ -120,13 +121,13 @@ class LayedPlaceSerializer(serializers.ModelSerializer):
         model = LayedPlace
         fields = ['id', 'name', 'is_active']
 
-class EggProductionSerializer(serializers.ModelSerializer):
+class EggSerializer(serializers.ModelSerializer):
     chicken = ChickenSerializer(many=True)
     date = serializers.DateField()
 
     class Meta:
-        model = EggProduction
-        fields = ['id', 'date', 'chicken']
+        model = Egg
+        fields = '__all__'
 
 ## Reports
 class BreedTypeReportPercentageSerializer(serializers.ModelSerializer):

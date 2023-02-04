@@ -24,4 +24,17 @@ class EggService {
       rethrow;
     }
   }
+
+  Future<Response> post(Map<String, dynamic> data) async {
+    return await _dio.post(
+      '$_url/',
+      data: data,
+      options: Options(
+        headers: {
+          Headers.wwwAuthenticateHeader:
+              await _auth.currentUser?.getIdToken(), // set content-length
+        },
+      ),
+    );
+  }
 }

@@ -15,9 +15,9 @@ router.register(r'chickens/parents', V1ViewSets.ChickenParentViewSet)
 router.register(r'breed-types', V1ViewSets.BreedTypeParentViewSet)
 router.register(r'breed-types/report/chicken-percentage', V1ViewSets.BreedTypeChickenPercentageViewSet)
 router.register(r'chicken-stages', V1ViewSets.ChickenStageParentViewSet)
-router.register(r'eggs', V1ViewSets.EggParentViewSet)
+# router.register(r'eggs', V1ViewSets.EggParentViewSet)
 router.register(r'layed-places', V1ViewSets.LayedPlaceViewSet)
-router.register(r'egg-production', V1ViewSets.EggProductionViewSet)
+router.register(r'eggs', V1ViewSets.EggViewSet)
 
 urlpatterns = [
     path('', include(router.urls)),

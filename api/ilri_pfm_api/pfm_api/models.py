@@ -176,20 +176,12 @@ class ChickenProgress(models.Model):
     weight = models.DecimalField(max_digits = 6, decimal_places = 3, default=0)
     layed_eggs = models.ForeignKey(Chicken, on_delete=models.SET_NULL, null=True)
 
-class EggProduction(models.Model):
-    date = models.DateField()
-    chicken = models.ForeignKey(Chicken, on_delete=models.SET_NULL, null=True)
-
-## egg production
+## Egg production
 class Egg(models.Model):
-    # Self chicken details
+    date = models.DateField()
     chicken = models.OneToOneField(Chicken, on_delete=models.CASCADE, primary_key=True)
     mother = models.ForeignKey(Chicken, on_delete=models.SET_NULL, null=True, related_name='children')
-    week = models.IntegerField()
     is_double_yolk = models.BooleanField(default=False)
-    date_of_hatch = models.DateField()
-    weight = models.DecimalField(max_digits = 6, decimal_places = 3)
-    layed_place = models.ForeignKey(LayedPlace, on_delete=models.SET_NULL, null=True)
 
     is_active = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
