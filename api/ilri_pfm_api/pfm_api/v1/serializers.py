@@ -144,21 +144,22 @@ class EggSerializer(serializers.ModelSerializer):
         model = Egg
         fields = ['date', 'chicken']
 
-    # def create(self, validated_data):
-    #     chicken_data = validated_data.pop('chicken')
-    #     print('------------------------------------')
-    #     print(chicken_data)
-    #     # chicken = ChickenSerializer(data=chicken_data).create(validated_data=chicken_data)
-    #     chicken = ChickenSerializer(data=chicken_data)
-    #     chicken.is_valid(raise_exception=True)
-    #     chicken.save(created_by=self.context['request'].user)
-    #     egg = Egg.objects.create(**validated_data, chicken=chicken)
+    def create(self, validated_data):
+        chicken_data = validated_data.pop('chicken')
+        print('------------------------------------')
+        print(chicken_data)
+        # chicken = ChickenSerializer(data=chicken_data).create(validated_data=chicken_data)
+        # chicken = ChickenSerializer(data=chicken_data)
+        # chicken.is_valid(raise_exception=True)
+        # chicken.save(created_by=self.context['request'].user)
+        chicken = Chicken.objects.create(**chicken_data, created_by=self.context['request'].user)
+        egg = Egg.objects.create(**validated_data, chicken=chicken)
 
-    #     # chicken = Chicken.objects.create(**chicken_data)
-    #     # chicken = ChickenSerializer(data=chicken_data)
-    #     # chicken.is_valid(raise_exception=True)
-    #     # chicken.save()
-    #     return egg
+        # chicken = Chicken.objects.create(**chicken_data)
+        # chicken = ChickenSerializer(data=chicken_data)
+        # chicken.is_valid(raise_exception=True)
+        # chicken.save()
+        return egg
 
         # chicken_data = validated_data.pop('chicken', None)
         # chicken_pk = validated_data.pop('chicken_id', None)
