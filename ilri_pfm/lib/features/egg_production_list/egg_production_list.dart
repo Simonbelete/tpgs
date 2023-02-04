@@ -1,18 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:ilri_pfm/common_widgets/data_tile.dart';
+import 'package:ilri_pfm/features/weight_form/weight_form.dart';
 import 'package:ilri_pfm/models/egg.dart';
 import 'package:ilri_pfm/repository/egg_repository.dart';
-import 'package:ilri_pfm/screens/egg_form_screen.dart';
+import 'package:ilri_pfm/screens/egg_production_form_screen.dart';
+import 'package:ilri_pfm/screens/weight_form_screen.dart';
+import 'package:intl/intl.dart';
+import 'package:ilri_pfm/common_widgets/body_text.dart';
+import 'package:ilri_pfm/common_widgets/title_text.dart';
+import 'package:ilri_pfm/models/chicken.dart';
+import 'package:ilri_pfm/models/weight_model.dart';
+import 'package:ilri_pfm/repository/weight_repository.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
-class EggList extends StatefulWidget {
-  const EggList({super.key});
+class EggProductionList extends StatefulWidget {
+  final Chicken chicken;
+
+  const EggProductionList({super.key, required this.chicken});
 
   @override
-  State<EggList> createState() => _EggListState();
+  State<EggProductionList> createState() => _EggProductionListState();
 }
 
-class _EggListState extends State<EggList> {
+class _EggProductionListState extends State<EggProductionList> {
   static const _pageSize = 20;
 
   final PagingController<int, Egg> _pagingController =
@@ -60,10 +70,11 @@ class _EggListState extends State<EggList> {
                 padding: const EdgeInsets.symmetric(vertical: 10),
                 child: DataTile(
                   onTab: () {
-                    Navigator.pushNamed(context, EggFormScreen.routeName,
+                    Navigator.pushNamed(
+                        context, EggProductionFormScreen.routeName,
                         arguments: item);
                   },
-                  title: '',
+                  title: item.date.toString(),
                 ),
               ),
             ),

@@ -17,8 +17,8 @@ import 'package:ilri_pfm/screens/chicken_panel.dart';
 import 'package:ilri_pfm/screens/chicken_screen.dart';
 import 'package:ilri_pfm/screens/chicken_stage.dart';
 import 'package:ilri_pfm/screens/chicken_stage_form_screen.dart';
-import 'package:ilri_pfm/screens/egg_form_screen.dart';
-import 'package:ilri_pfm/screens/egg_screen.dart';
+import 'package:ilri_pfm/screens/egg_production_form_screen.dart';
+import 'package:ilri_pfm/screens/egg_production_screen.dart';
 import 'package:ilri_pfm/screens/farm_form_screen.dart';
 import 'package:ilri_pfm/screens/farm_screen.dart';
 import 'package:ilri_pfm/screens/home_screen.dart';
@@ -144,14 +144,18 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
           builder: (_) => LayedPlaceFormScreen(
                 layedPlace: layedPlace,
               ));
-    case EggScreen.routeName:
+    case EggProductionScreen.routeName:
+      Chicken chicken = routeSettings.arguments as Chicken;
       return MaterialPageRoute(
-          settings: routeSettings, builder: (_) => const EggScreen());
-    case EggFormScreen.routeName:
+          settings: routeSettings,
+          builder: (_) => EggProductionScreen(
+                chicken: chicken,
+              ));
+    case EggProductionFormScreen.routeName:
       Egg egg = routeSettings.arguments as Egg;
       return MaterialPageRoute(
           settings: routeSettings,
-          builder: (_) => EggFormScreen(
+          builder: (_) => EggProductionFormScreen(
                 egg: egg,
               ));
     default:

@@ -3,6 +3,7 @@ import 'package:ilri_pfm/common_widgets/header_text.dart';
 import 'package:ilri_pfm/common_widgets/panel_card.dart';
 import 'package:ilri_pfm/common_widgets/title_text.dart';
 import 'package:ilri_pfm/models/chicken.dart';
+import 'package:ilri_pfm/screens/egg_production_screen.dart';
 import 'package:ilri_pfm/screens/weight_report_screen.dart';
 import 'package:ilri_pfm/screens/weight_screen.dart';
 
@@ -34,7 +35,10 @@ class ChickenPanel extends StatelessWidget {
               ),
             ),
             InkWell(
-              onTap: () {},
+              onTap: () {
+                Navigator.pushNamed(context, EggProductionScreen.routeName,
+                    arguments: chicken);
+              },
               child: const PanelCard(
                 icon: 'assets/icons/chicken_easter.svg',
                 text: 'Egg Production',

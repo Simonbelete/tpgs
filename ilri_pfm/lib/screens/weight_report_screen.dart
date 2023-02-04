@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:ilri_pfm/app/color_set.dart';
 import 'package:ilri_pfm/common_widgets/custom_appbar.dart';
 import 'package:ilri_pfm/features/navigation_drawer/navigation_drawer.dart';
 import 'package:ilri_pfm/features/weight_linechart/weight_linechart.dart';
-import 'package:ilri_pfm/screens/weight_form_screen.dart';
 
 class WeightReportScreen extends StatelessWidget {
   static const String routeName = '/weight-report';

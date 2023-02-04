@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:ilri_pfm/common_widgets/custom_appbar.dart';
-import 'package:ilri_pfm/features/egg_form/egg_form.dart';
+import 'package:ilri_pfm/features/egg_production_form/egg_production_form.dart';
 import 'package:ilri_pfm/features/navigation_drawer/navigation_drawer.dart';
 import 'package:ilri_pfm/models/egg.dart';
 
-class EggFormScreen extends StatelessWidget {
-  static const String routeName = '/chicken-form';
-  final Egg egg;
+class EggProductionFormScreen extends StatelessWidget {
+  static const String routeName = '/egg-production-form';
+  final Egg? egg;
 
-  const EggFormScreen({super.key, required this.egg});
+  const EggProductionFormScreen({super.key, this.egg});
 
   @override
   Widget build(BuildContext context) {
@@ -17,13 +17,15 @@ class EggFormScreen extends StatelessWidget {
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(children: [
-            const CustomAppBar(),
+            CustomAppBar(
+              title: egg == null ? 'Create new Egg Production' : 'Egg -',
+            ),
             const SizedBox(
               height: 25,
             ),
             Container(
               width: size.width * 0.9,
-              child: EggForm(
+              child: EggProductionForm(
                 egg: egg,
               ),
             )

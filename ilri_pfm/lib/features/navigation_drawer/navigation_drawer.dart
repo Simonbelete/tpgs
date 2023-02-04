@@ -11,7 +11,6 @@ import 'package:ilri_pfm/screens/about_screen.dart';
 import 'package:ilri_pfm/screens/breed_type_screen.dart';
 import 'package:ilri_pfm/screens/chicken_screen.dart';
 import 'package:ilri_pfm/screens/chicken_stage.dart';
-import 'package:ilri_pfm/screens/egg_screen.dart';
 import 'package:ilri_pfm/screens/farm_screen.dart';
 import 'package:ilri_pfm/screens/home_screen.dart';
 import 'package:ilri_pfm/screens/layed_place_screen.dart';
@@ -118,18 +117,18 @@ class NavigationDrawer extends StatelessWidget {
               Navigator.popAndPushNamed(context, ChickenScreen.routeName);
             },
           ),
-          ListTile(
-            leading: SvgPicture.asset(
-              height: 25,
-              'assets/icons/chicken_easter.svg',
-              color: kIconcolor,
-            ),
-            title: const Text('Eggs'),
-            onTap: () {
-              Navigator.pop(context);
-              Navigator.popAndPushNamed(context, EggScreen.routeName);
-            },
-          ),
+          // ListTile(
+          //   leading: SvgPicture.asset(
+          //     height: 25,
+          //     'assets/icons/chicken_easter.svg',
+          //     color: kIconcolor,
+          //   ),
+          //   title: const Text('Eggs'),
+          //   onTap: () {
+          //     Navigator.pop(context);
+          //     Navigator.popAndPushNamed(context, .routeName);
+          //   },
+          // ),
           ListTile(
             leading: SvgPicture.asset(
               height: 25,
