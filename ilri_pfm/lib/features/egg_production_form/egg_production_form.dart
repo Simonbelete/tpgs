@@ -122,6 +122,7 @@ class _EggProductionFormState extends State<EggProductionForm>
                                 onChange: (data) {
                                   setState(() {
                                     _breedType = data;
+                                    print(data?.id);
                                   });
                                 },
                               ),
@@ -202,10 +203,11 @@ class _EggProductionFormState extends State<EggProductionForm>
   void create() async {
     if (_formKey.currentState!.validate()) {
       try {
+        print('****************');
+        print(_breedType?.id);
         final Egg? result = await _repository.create(Egg(
             date: DateTime.parse(_dateController.text),
-            chicken: Chicken(
-                tag: _tagController.text, breed_type_id: _breedType?.id),
+            chicken: Chicken(tag: _tagController.text, breed_type: _breedType),
             is_active: _isActive));
         _responseMessage(result);
       } on DioError catch (e) {

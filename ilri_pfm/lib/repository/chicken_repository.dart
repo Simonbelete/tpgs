@@ -8,13 +8,10 @@ class ChickenRepository extends Repository {
   Future<List<Chicken>>? get({Map<String, dynamic>? query}) async {
     try {
       final Response response = await ChickenService().get(query: query);
-      print('00');
-      print(response);
       return response.data['results']
           .map<Chicken>((e) => Chicken.fromJson(e))
           .toList();
     } catch (e) {
-      print(e.toString());
       return [];
     }
   }

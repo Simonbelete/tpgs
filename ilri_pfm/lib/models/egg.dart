@@ -4,7 +4,6 @@ import 'package:ilri_pfm/models/chicken.dart';
 class Egg {
   final int? id;
   final DateTime date;
-  final int? chicken_id;
   final Chicken? chicken;
   final Chicken? mother;
   final bool? is_double_yolk;
@@ -14,7 +13,6 @@ class Egg {
   Egg(
       {this.id,
       required this.date,
-      this.chicken_id,
       this.chicken,
       this.mother,
       this.is_double_yolk,
@@ -24,14 +22,12 @@ class Egg {
   factory Egg.fromJson(Map<String, dynamic> data) {
     return Egg(
         id: data['id'],
-        date: data['date'],
-        chicken: data['chicken'],
-        is_active: data['is_active']);
+        date: DateTime.parse(data['date']),
+        chicken: Chicken.fromJson(data['chicken']));
   }
 
   Map<String, dynamic> toJson() => {
         'date': DateFormat('yyyy-MM-dd').format(date),
-        'chicken_id': chicken_id,
         'chicken': chicken?.toJson(),
         'is_active': is_active
       };

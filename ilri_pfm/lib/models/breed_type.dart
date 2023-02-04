@@ -20,7 +20,7 @@ class BreedType {
         name: data['name'],
         color: data['color'],
         is_active: data['is_active'],
-        chicken_count: data['chicken_count']);
+        chicken_count: data['chicken_count'] ?? 0);
   }
 
   Map<String, dynamic> toJson() =>

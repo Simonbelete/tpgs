@@ -136,7 +136,7 @@ class EggPostSerializer(serializers.ModelSerializer):
 
 
 class EggSerializer(serializers.ModelSerializer):
-    chicken = ChickenSerializer()
+    chicken = ChickenSerializer_GET()
     # chicken_id = serializers.PrimaryKeyRelatedField(read_only=False, queryset=Chicken.objects.all(), allow_null=True)
     # chicken_id = serializers.IntegerField(source='chicken.id', allow_null=True)
     date = serializers.DateField()
