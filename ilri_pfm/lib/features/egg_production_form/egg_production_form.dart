@@ -63,10 +63,20 @@ class _EggProductionFormState extends State<EggProductionForm> {
                 height: 10,
               ),
               DropdownSearch<Chicken>(
-                popupProps: PopupProps.bottomSheet(),
+                popupProps: const PopupProps.modalBottomSheet(
+                  showSearchBox: true,
+                ),
+                dropdownDecoratorProps: const DropDownDecoratorProps(
+                  dropdownSearchDecoration: InputDecoration(
+                    labelText: "Chicken",
+                    hintText: "Select chicken",
+                  ),
+                ),
                 asyncItems: (String filter) async {
                   print(filter);
-                  return await ChickenRepository().get(query: {}) ?? [];
+                  return await ChickenRepository()
+                          .get(query: {'tag': filter}) ??
+                      [];
                 },
                 itemAsString: (Chicken u) => u.tag,
                 onChanged: (Chicken? data) => print(data),
