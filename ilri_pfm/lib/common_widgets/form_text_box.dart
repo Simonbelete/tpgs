@@ -8,6 +8,9 @@ class FormTextBox extends StatelessWidget {
   final String? initialValue;
   final String? Function(String?)? validator;
   final TextInputType? textInputType;
+  final Widget? icon;
+  final Color? iconColor;
+  final VoidCallback? onTab;
 
   const FormTextBox(
       {super.key,
@@ -15,7 +18,10 @@ class FormTextBox extends StatelessWidget {
       this.hintText,
       this.validator,
       this.initialValue,
-      this.textInputType});
+      this.textInputType,
+      this.icon,
+      this.iconColor,
+      this.onTab});
 
   @override
   Widget build(BuildContext context) {
@@ -34,6 +40,7 @@ class FormTextBox extends StatelessWidget {
           height: 5,
         ),
         TextFormField(
+          onTap: onTab,
           keyboardType: textInputType,
           initialValue: initialValue,
           controller: controller,
@@ -41,6 +48,8 @@ class FormTextBox extends StatelessWidget {
           style: const TextStyle(
               fontWeight: FontWeight.normal, fontSize: 14, color: kTextColor),
           decoration: InputDecoration(
+            icon: icon,
+            iconColor: iconColor,
             focusedErrorBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(6.0),
                 borderSide: const BorderSide(color: kSecondaryColor)),

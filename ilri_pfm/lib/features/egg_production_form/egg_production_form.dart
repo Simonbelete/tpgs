@@ -4,20 +4,17 @@ import 'package:ilri_pfm/common_widgets/activate_icon.dart';
 import 'package:ilri_pfm/common_widgets/button.dart';
 import 'package:ilri_pfm/common_widgets/container_card.dart';
 import 'package:ilri_pfm/common_widgets/custom_switch.dart';
+import 'package:ilri_pfm/common_widgets/date_picker.dart';
 import 'package:ilri_pfm/common_widgets/deactivate_icon.dart';
 import 'package:ilri_pfm/common_widgets/delete_icon.dart';
 import 'package:ilri_pfm/common_widgets/form_text_box.dart';
-import 'package:ilri_pfm/common_widgets/title_text.dart';
 import 'package:ilri_pfm/features/dropdown_searches/breed_type_dropdown_search.dart';
 import 'package:ilri_pfm/features/dropdown_searches/chicken_dropdown_search.dart';
 import 'package:ilri_pfm/models/chicken.dart';
 import 'package:ilri_pfm/models/egg.dart';
 import 'package:ilri_pfm/models/layed_place.dart';
-import 'package:ilri_pfm/repository/chicken_repository.dart';
 import 'package:ilri_pfm/repository/egg_repository.dart';
-import 'package:ilri_pfm/repository/layed_place_repository.dart';
 import 'package:ilri_pfm/screens/layed_place_screen.dart';
-import 'package:dropdown_search/dropdown_search.dart';
 
 class EggProductionForm extends StatefulWidget {
   final Egg? egg;
@@ -30,12 +27,14 @@ class EggProductionForm extends StatefulWidget {
 
 class _EggProductionFormState extends State<EggProductionForm>
     with TickerProviderStateMixin {
-  final LayedPlaceRepository _repository = LayedPlaceRepository();
+  final EggRepository _repository = EggRepository();
   final _formKey = GlobalKey<FormState>();
   late TabController _tabController;
 
-  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _dateController = TextEditingController();
   bool _isActive = false;
+  // Chicken
+  final TextEditingController _tagController = TextEditingController();
 
   @override
   void initState() {
@@ -44,6 +43,10 @@ class _EggProductionFormState extends State<EggProductionForm>
     });
     super.initState();
     _tabController = TabController(length: 2, vsync: this);
+  }
+
+  String? _commonTextValidator(String? value) {
+    return value?.isEmpty == true ? 'Please enter a valid data' : null;
   }
 
   @override
@@ -58,14 +61,9 @@ class _EggProductionFormState extends State<EggProductionForm>
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              FormTextBox(
-                  controller: _nameController,
-                  validator: (String? value) {
-                    return value?.isEmpty == true
-                        ? 'Please enter a valid data'
-                        : null;
-                  },
-                  hintText: 'Name'),
+              DatePicker(
+                controller: _dateController,
+              ),
               const SizedBox(
                 height: 20,
               ),
@@ -98,6 +96,8 @@ class _EggProductionFormState extends State<EggProductionForm>
                           Column(
                             children: [
                               FormTextBox(
+                                controller: _tagController,
+                                validator: _commonTextValidator,
                                 hintText: 'Tag',
                               ),
                               const SizedBox(
@@ -185,9 +185,11 @@ class _EggProductionFormState extends State<EggProductionForm>
   void create() async {
     if (_formKey.currentState!.validate()) {
       try {
-        final LayedPlace? farm = await _repository.create(
-            LayedPlace(name: _nameController.text, is_active: _isActive));
-        _responseMessage(farm);
+        final Egg? result = await _repository.create(Egg(
+            date: DateTime(2),
+            chicken: Chicken(tag: _tagController.text),
+            is_active: _isActive));
+        _responseMessage(result);
       } catch (e) {
         _errorMessage();
       }
@@ -207,9 +209,9 @@ class _EggProductionFormState extends State<EggProductionForm>
 
       if (patchData.isEmpty != true) {
         try {
-          final LayedPlace? farm =
-              await _repository.patch(id: widget.egg?.id ?? 0, data: patchData);
-          _responseMessage(farm);
+          // final Egg? farm =
+          //     await _repository.patch(id: widget.egg?.id ?? 0, data: patchData);
+          // _responseMessage(farm);
         } catch (e) {
           _errorMessage();
         }
@@ -221,9 +223,9 @@ class _EggProductionFormState extends State<EggProductionForm>
 
   void activate() async {
     try {
-      final LayedPlace? result =
-          await _repository.updateState(id: widget.egg?.id ?? 0, state: true);
-      _responseMessage(result);
+      // final Egg? result =
+      //     await _repository.updateState(id: widget.egg?.id ?? 0, state: true);
+      // _responseMessage(result);
     } catch (e) {
       _errorMessage();
     }
@@ -231,16 +233,16 @@ class _EggProductionFormState extends State<EggProductionForm>
 
   void deActivate() async {
     try {
-      final LayedPlace? result =
-          await _repository.updateState(id: widget.egg?.id ?? 0, state: false);
-      _responseMessage(result);
+      // final Egg? result =
+      //     await _repository.updateState(id: widget.egg?.id ?? 0, state: false);
+      // _responseMessage(result);
     } catch (e) {
       _errorMessage();
     }
   }
 
-  void _responseMessage(LayedPlace? farm) {
-    if (farm != null) {
+  void _responseMessage(Egg? data) {
+    if (data != null) {
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
         backgroundColor: kPrimaryColor,
         content: Text('Operation Successfully Completed'),

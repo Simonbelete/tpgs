@@ -26,5 +26,6 @@ class Egg {
         is_active: data['is_active']);
   }
 
-  Map<String, dynamic> toJson() => {'chicken': chicken, 'is_active': is_active};
+  Map<String, dynamic> toJson() =>
+      {'date': date, 'chicken': chicken.toJson(), 'is_active': is_active};
 }
