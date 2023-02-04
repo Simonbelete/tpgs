@@ -7,6 +7,8 @@ import 'package:ilri_pfm/common_widgets/custom_switch.dart';
 import 'package:ilri_pfm/common_widgets/deactivate_icon.dart';
 import 'package:ilri_pfm/common_widgets/delete_icon.dart';
 import 'package:ilri_pfm/common_widgets/form_text_box.dart';
+import 'package:ilri_pfm/common_widgets/title_text.dart';
+import 'package:ilri_pfm/features/dropdown_searches/chicken_dropdown_search.dart';
 import 'package:ilri_pfm/models/chicken.dart';
 import 'package:ilri_pfm/models/egg.dart';
 import 'package:ilri_pfm/models/layed_place.dart';
@@ -25,9 +27,11 @@ class EggProductionForm extends StatefulWidget {
   State<EggProductionForm> createState() => _EggProductionFormState();
 }
 
-class _EggProductionFormState extends State<EggProductionForm> {
+class _EggProductionFormState extends State<EggProductionForm>
+    with TickerProviderStateMixin {
   final LayedPlaceRepository _repository = LayedPlaceRepository();
   final _formKey = GlobalKey<FormState>();
+  late TabController _tabController;
 
   final TextEditingController _nameController = TextEditingController();
   bool _isActive = false;
@@ -38,6 +42,7 @@ class _EggProductionFormState extends State<EggProductionForm> {
       // _nameController.text = widget.egg?. ?? '';
     });
     super.initState();
+    _tabController = TabController(length: 2, vsync: this);
   }
 
   @override
@@ -50,6 +55,7 @@ class _EggProductionFormState extends State<EggProductionForm> {
             child: Form(
           key: _formKey,
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               FormTextBox(
                   controller: _nameController,
@@ -60,29 +66,52 @@ class _EggProductionFormState extends State<EggProductionForm> {
                   },
                   hintText: 'Name'),
               const SizedBox(
-                height: 10,
+                height: 20,
               ),
-              DropdownSearch<Chicken>(
-                popupProps: const PopupProps.modalBottomSheet(
-                  showSearchBox: true,
-                ),
-                dropdownDecoratorProps: const DropDownDecoratorProps(
-                  dropdownSearchDecoration: InputDecoration(
-                    labelText: "Chicken",
-                    hintText: "Select chicken",
+              Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Container(
+                    child: TabBar(
+                        labelColor: kSecondaryColor,
+                        controller: _tabController,
+                        tabs: const [
+                          Icon(
+                            Icons.add_box,
+                            color: kIconcolor,
+                          ),
+                          Icon(
+                            Icons.select_all,
+                            color: kIconcolor,
+                          )
+                        ]),
                   ),
-                ),
-                asyncItems: (String filter) async {
-                  print(filter);
-                  return await ChickenRepository()
-                          .get(query: {'tag': filter}) ??
-                      [];
-                },
-                itemAsString: (Chicken u) => u.tag,
-                onChanged: (Chicken? data) => print(data),
+                  const SizedBox(
+                    height: 30,
+                  ),
+                  Container(
+                      height: 100,
+                      child: TabBarView(
+                        controller: _tabController,
+                        children: const [
+                          FormTextBox(
+                            hintText: 'Tag',
+                          ),
+                          // Drop down select
+                          ChickenDropdownSearch()
+                        ],
+                      ))
+                  // TabBar(controller: _tabController, tabs: const [
+                  //   Tab(
+                  //     icon: Icon(Icons.add),
+                  //   )
+                  // ]),
+                  // TabBarView(
+                  //     controller: _tabController, children: [FormTextBox()])
+                ],
               ),
               const SizedBox(
-                height: 10,
+                height: 20,
               ),
               CustomSwitch(
                   text: 'Active',
