@@ -1,9 +1,11 @@
+import 'package:intl/intl.dart';
 import 'package:ilri_pfm/models/chicken.dart';
 
 class Egg {
   final int? id;
   final DateTime date;
-  final Chicken chicken;
+  final int? chicken_id;
+  final Chicken? chicken;
   final Chicken? mother;
   final bool? is_double_yolk;
   final double? weight;
@@ -12,7 +14,8 @@ class Egg {
   Egg(
       {this.id,
       required this.date,
-      required this.chicken,
+      this.chicken_id,
+      this.chicken,
       this.mother,
       this.is_double_yolk,
       this.weight,
@@ -26,6 +29,10 @@ class Egg {
         is_active: data['is_active']);
   }
 
-  Map<String, dynamic> toJson() =>
-      {'date': date, 'chicken': chicken.toJson(), 'is_active': is_active};
+  Map<String, dynamic> toJson() => {
+        'date': DateFormat('yyyy-MM-dd').format(date),
+        'chicken_id': chicken_id,
+        'chicken': chicken?.toJson(),
+        'is_active': is_active
+      };
 }

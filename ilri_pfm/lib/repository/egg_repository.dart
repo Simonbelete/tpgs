@@ -20,6 +20,8 @@ class EggRepository extends Repository {
 
   Future<Egg?> create(Egg egg) async {
     try {
+      print('---------------------------data--------------');
+      print(egg.toJson());
       final response = await _service.post(egg.toJson());
       return Egg.fromJson(response.data);
     } catch (e) {

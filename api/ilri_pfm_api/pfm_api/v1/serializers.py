@@ -80,23 +80,31 @@ class ChickenGrowthSerializer(serializers.ModelSerializer):
         fields = ['id', 'weight', 'date', 'chicken', 'week']
 
 
+class ChickenSerializer_GET(serializers.ModelSerializer):
+    class Meta:
+        model = Chicken
+        fields = '__all__'
+
 class ChickenSerializer(serializers.ModelSerializer):
     tag = serializers.CharField()
-    breed_type_id = serializers.PrimaryKeyRelatedField(read_only=False, queryset=BreedType.objects.all())
-    breed_type = BreedTypeSerializer()
+    breed_type = serializers.PrimaryKeyRelatedField(read_only=False, queryset=BreedType.objects.all())
+
     progress = ChickenProgressSerializer(many=True, read_only=True)
 
     class Meta:
         model = Chicken
-        fields = ['tag',  'breed_type', 'breed_type_id', 'progress']
+        fields = ['tag',  'breed_type', 'progress']
 
-    def create(self, validated_data):
-        breed_type_data = validated_data.pop('breed_type', None)
-        breed_type = validated_data.pop('breed_type_id', None)
-        if breed_type_data is not None:
-            breed_type = BreedType.objects.create(**breed_type_data)
-        chicken = Chicken.objects.create(**validated_data, breed_type=breed_type)
-        return chicken
+    # def create(self, validated_data):
+    #     breed_type_data = validated_data.pop('breed_type', None)
+    #     breed_type = validated_data.pop('breed_type_id', None)
+    #     if breed_type_data is not None:
+    #         breed_type = BreedType.objects.create(**breed_type_data)
+    #         breed_type = breed_type.id
+    #     print('--------------------------------------------------')
+    #     print(breed_type)
+    #     chicken = Chicken.objects.create(**validated_data, breed_type=breed_type)
+    #     return chicken
 
 class ChickenParentSerializer(serializers.ModelSerializer):
     is_active = serializers.BooleanField()
@@ -121,13 +129,50 @@ class LayedPlaceSerializer(serializers.ModelSerializer):
         model = LayedPlace
         fields = ['id', 'name', 'is_active']
 
+## Egg Serializer
+class EggPostSerializer(serializers.ModelSerializer):
+    chicken = ChickenSerializer()
+
+
 class EggSerializer(serializers.ModelSerializer):
-    chicken = ChickenSerializer(many=True)
+    chicken = ChickenSerializer()
+    # chicken_id = serializers.PrimaryKeyRelatedField(read_only=False, queryset=Chicken.objects.all(), allow_null=True)
+    # chicken_id = serializers.IntegerField(source='chicken.id', allow_null=True)
     date = serializers.DateField()
 
     class Meta:
         model = Egg
-        fields = '__all__'
+        fields = ['date', 'chicken']
+
+    # def create(self, validated_data):
+    #     chicken_data = validated_data.pop('chicken')
+    #     print('------------------------------------')
+    #     print(chicken_data)
+    #     # chicken = ChickenSerializer(data=chicken_data).create(validated_data=chicken_data)
+    #     chicken = ChickenSerializer(data=chicken_data)
+    #     chicken.is_valid(raise_exception=True)
+    #     chicken.save(created_by=self.context['request'].user)
+    #     egg = Egg.objects.create(**validated_data, chicken=chicken)
+
+    #     # chicken = Chicken.objects.create(**chicken_data)
+    #     # chicken = ChickenSerializer(data=chicken_data)
+    #     # chicken.is_valid(raise_exception=True)
+    #     # chicken.save()
+    #     return egg
+
+        # chicken_data = validated_data.pop('chicken', None)
+        # chicken_pk = validated_data.pop('chicken_id', None)
+        # print(chicken_data)
+        # if chicken_pk is None:
+        #     print('+++++++++++++++++++++++++++++')
+        #     chicken_data['breed_type_id'] = chicken_data['breed_type_id'].id
+        #     # print(chicken_data)
+        #     # chicken = ChickenSerializer(data=chicken_data)
+        #     # chicken.is_valid(raise_exception=True)
+        #     # chicken.save()
+        #     chicken = Chicken.objects.create(**chicken_data)
+        # egg = Egg.objects.create(**validated_data, chicken=chicken)
+        # return egg
 
 ## Reports
 class BreedTypeReportPercentageSerializer(serializers.ModelSerializer):

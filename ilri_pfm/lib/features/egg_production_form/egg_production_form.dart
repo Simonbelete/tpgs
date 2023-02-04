@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:ilri_pfm/app/color_set.dart';
 import 'package:ilri_pfm/common_widgets/activate_icon.dart';
@@ -10,6 +11,7 @@ import 'package:ilri_pfm/common_widgets/delete_icon.dart';
 import 'package:ilri_pfm/common_widgets/form_text_box.dart';
 import 'package:ilri_pfm/features/dropdown_searches/breed_type_dropdown_search.dart';
 import 'package:ilri_pfm/features/dropdown_searches/chicken_dropdown_search.dart';
+import 'package:ilri_pfm/models/breed_type.dart';
 import 'package:ilri_pfm/models/chicken.dart';
 import 'package:ilri_pfm/models/egg.dart';
 import 'package:ilri_pfm/models/layed_place.dart';
@@ -32,7 +34,8 @@ class _EggProductionFormState extends State<EggProductionForm>
   late TabController _tabController;
 
   final TextEditingController _dateController = TextEditingController();
-  late Chicken? _mother;
+  Chicken? _mother = null;
+  BreedType? _breedType = null;
   bool _isActive = false;
   // Chicken
   final TextEditingController _tagController = TextEditingController();
@@ -117,7 +120,9 @@ class _EggProductionFormState extends State<EggProductionForm>
                               ),
                               BreedTypeDropdownSearch(
                                 onChange: (data) {
-                                  print(data?.name);
+                                  setState(() {
+                                    _breedType = data;
+                                  });
                                 },
                               ),
                             ],
@@ -198,11 +203,24 @@ class _EggProductionFormState extends State<EggProductionForm>
     if (_formKey.currentState!.validate()) {
       try {
         final Egg? result = await _repository.create(Egg(
-            date: DateTime(2),
-            chicken: Chicken(tag: _tagController.text),
+            date: DateTime.parse(_dateController.text),
+            chicken: Chicken(
+                tag: _tagController.text, breed_type_id: _breedType?.id),
             is_active: _isActive));
         _responseMessage(result);
+      } on DioError catch (e) {
+        if (e.response != null) {
+          print(e.response?.data);
+          print(e.response?.headers);
+          print(e.response?.requestOptions);
+        } else {
+          // Something happened in setting up or sending the request that triggered an Error
+          print(e.requestOptions);
+          print(e.message);
+        }
+        _errorMessage();
       } catch (e) {
+        print(e.toString());
         _errorMessage();
       }
     }

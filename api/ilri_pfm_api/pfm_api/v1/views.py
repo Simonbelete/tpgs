@@ -58,6 +58,13 @@ class ChickenViewSet(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         serializer.save(created_by=self.request.user)
 
+    def get_serializer_class(self):
+        print('+++++++++++++++++++')
+        print(self.request.method)
+        if self.request.method == 'GET':
+            return V1Serializer.ChickenSerializer_GET
+        return V1Serializer.ChickenSerializer
+
 class AllChickenGrowthViewSet(viewsets.ModelViewSet):
     queryset = ChickenGrowth.objects.all()
     serializer_class = ChickenGrowthSerializer
@@ -137,3 +144,11 @@ class LayedPlaceViewSet(viewsets.ModelViewSet):
 class EggViewSet(viewsets.ModelViewSet):
     queryset = Egg.objects.all()
     serializer_class = V1Serializer.EggSerializer
+
+    def perform_create(self, serializer):
+        serializer.save(created_by=self.request.user)
+
+    # def get_serializer_class(self):
+    #     if not self.request.method in SAFE_METHODS:
+    #         return CustomerSerializer
+    #     return CustomerInfoSerializer
