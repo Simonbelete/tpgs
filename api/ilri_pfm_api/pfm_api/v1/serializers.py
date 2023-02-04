@@ -81,9 +81,10 @@ class ChickenGrowthSerializer(serializers.ModelSerializer):
 
 
 class ChickenSerializer_GET(serializers.ModelSerializer):
+    breed_type = BreedTypeSerializer()
     class Meta:
         model = Chicken
-        fields = '__all__'
+        fields = ['id', 'tag', 'breed_type']
 
 class ChickenSerializer(serializers.ModelSerializer):
     tag = serializers.CharField()

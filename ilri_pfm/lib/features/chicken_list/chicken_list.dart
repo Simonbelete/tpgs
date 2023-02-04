@@ -38,6 +38,7 @@ class ChickenListListState extends State<ChickenList> {
         _pagingController.appendPage(newItems ?? [], nextPageKey);
       }
     } catch (error) {
+      print(error.toString());
       _pagingController.error = error;
     }
   }
