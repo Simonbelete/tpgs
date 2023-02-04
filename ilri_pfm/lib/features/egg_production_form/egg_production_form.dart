@@ -32,6 +32,7 @@ class _EggProductionFormState extends State<EggProductionForm>
   late TabController _tabController;
 
   final TextEditingController _dateController = TextEditingController();
+  late Chicken? _mother;
   bool _isActive = false;
   // Chicken
   final TextEditingController _tagController = TextEditingController();
@@ -66,6 +67,17 @@ class _EggProductionFormState extends State<EggProductionForm>
               ),
               const SizedBox(
                 height: 20,
+              ),
+              ChickenDropdownSearch(
+                hintText: 'Mother',
+                labelText: 'Enter Egg Mother',
+                title: 'Mother',
+                onChange: (data) {
+                  _mother = data;
+                },
+              ),
+              const SizedBox(
+                height: 30,
               ),
               Column(
                 mainAxisSize: MainAxisSize.min,

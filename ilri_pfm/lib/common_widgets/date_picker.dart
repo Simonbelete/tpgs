@@ -19,6 +19,7 @@ class _DatePickerState extends State<DatePicker> {
       controller: widget.controller,
       icon: const Icon(Icons.calendar_today),
       iconColor: kPrimaryColor,
+      hintText: 'Date',
       onTab: () async {
         DateTime? pickedDate = await showDatePicker(
             context: context,
