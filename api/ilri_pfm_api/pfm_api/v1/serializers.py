@@ -217,3 +217,8 @@ class Feed_POST(serializers.ModelSerializer):
     class Meta:
         model = Model.Feed
         fields = ['chicken', 'date', 'weight']
+
+class ExportSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Model.ChickenGrowth
+        fields = '__all__'

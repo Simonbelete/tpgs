@@ -1,8 +1,9 @@
+import csv
 from django.contrib.auth import get_user_model
 from rest_framework import viewsets
 from rest_framework.response import Response
 from rest_framework import status
-from django.http import Http404
+from django.http import Http404, HttpResponse
 from django.db.models import Count
 from rest_framework import generics
 from django_filters import rest_framework as filters
@@ -11,7 +12,6 @@ from pfm_api.v1.serializers import UserSerializer, DeviceSerializer, FarmSeriali
 import pfm_api.v1.serializers as V1Serializer
 from pfm_api.models import Device, Farm, Chicken, ChickenParent, BreedType, ChickenStage, Egg, LayedPlace, ChickenGrowth
 import pfm_api.models as Model
-
 
 User = get_user_model()
 
@@ -204,3 +204,24 @@ class FeedViewSet(viewsets.ModelViewSet):
         if self.request.method == 'GET':
             return V1Serializer.Feed_GET
         return V1Serializer.Feed_POST
+
+# Exports
+class WeightExport_CSV(viewsets.ModelViewSet):
+    queryset = Model.ChickenGrowth.objects.all()
+    serializer_class = V1Serializer.ExportSerializer
+    def list(self, request, *args, **kwargs):
+        response = HttpResponse(content_type='text/csv')
+        response['Content-Disposition'] = 'attachment; filename="export.csv"'
+        
+        serializer = self.get_serializer(
+            Model.ChickenGrowth.objects.all(),
+            many=True
+        )
+        header = V1Serializer.ExportSerializer.Meta.fields
+        
+        writer = csv.DictWriter(response, fieldnames=header)
+        writer.writeheader()
+        for row in serializer.data:
+            writer.writerow(row)
+        
+        return response

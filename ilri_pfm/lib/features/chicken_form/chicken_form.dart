@@ -6,9 +6,11 @@ import 'package:ilri_pfm/common_widgets/custom_switch.dart';
 import 'package:ilri_pfm/common_widgets/form_text_box.dart';
 import 'package:ilri_pfm/features/dropdown_searches/breed_type_dropdown_search.dart';
 import 'package:ilri_pfm/features/dropdown_searches/chicken_stage_dropdown_search.dart';
+import 'package:ilri_pfm/features/dropdown_searches/farm_dropdown_search.dart';
 import 'package:ilri_pfm/models/breed_type.dart';
 import 'package:ilri_pfm/models/chicken.dart';
 import 'package:ilri_pfm/models/chicken_stage.dart';
+import 'package:ilri_pfm/models/farm_model.dart';
 
 class ChickenForm extends StatefulWidget {
   final Chicken? chicken;
@@ -23,6 +25,7 @@ class _ChickenFormState extends State<ChickenForm> {
   String _sex = 'M';
   ChickenStage? _chickenStage = null;
   BreedType? _breedType = null;
+  Farm? _farm = null;
   TextEditingController _tagController = TextEditingController();
   TextEditingController _houseNoController = TextEditingController();
   TextEditingController _penNoController = TextEditingController();
@@ -90,6 +93,18 @@ class _ChickenFormState extends State<ChickenForm> {
             onChange: (data) {
               setState(() {
                 _chickenStage = data;
+              });
+            }),
+        const SizedBox(
+          height: 20,
+        ),
+        FarmDropdownSearch(
+            hintText: 'Farm Location',
+            labelText: 'Enter Farm Location',
+            title: 'Farm Location',
+            onChange: (data) {
+              setState(() {
+                _farm = data;
               });
             }),
         const SizedBox(
