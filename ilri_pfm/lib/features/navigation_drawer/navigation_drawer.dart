@@ -11,6 +11,7 @@ import 'package:ilri_pfm/screens/about_screen.dart';
 import 'package:ilri_pfm/screens/breed_type_screen.dart';
 import 'package:ilri_pfm/screens/chicken_screen.dart';
 import 'package:ilri_pfm/screens/chicken_stage.dart';
+import 'package:ilri_pfm/screens/export_screen.dart';
 import 'package:ilri_pfm/screens/farm_screen.dart';
 import 'package:ilri_pfm/screens/feed_type_screen.dart';
 import 'package:ilri_pfm/screens/home_screen.dart';
@@ -176,6 +177,15 @@ class NavigationDrawer extends StatelessWidget {
             onTap: () {
               Navigator.pop(context);
               Navigator.popAndPushNamed(context, FeedTypeScreen.routeName);
+            },
+          ),
+          Divider(),
+          ListTile(
+            leading: const Icon(Icons.print),
+            title: const Text('Export Excel, Csv '),
+            onTap: () {
+              Navigator.pop(context);
+              Navigator.popAndPushNamed(context, ExportScreen.routeName);
             },
           ),
           Divider(),
