@@ -198,3 +198,17 @@ class FeedType_POST(serializers.ModelSerializer):
     class Meta:
         model = Model.FeedType
         fields = ['name', 'is_active']
+
+class Feed_GET(serializers.ModelSerializer):
+    class Meta:
+        model = Model.Feed
+        fields = '__all__'
+
+class Feed_POST(serializers.ModelSerializer):
+    chicken = serializers.PrimaryKeyRelatedField(read_only=False, queryset=Model.Chicken.objects.all())
+    date = serializers.DateField()
+    weight = serializers.DecimalField(max_digits = 6, decimal_places = 3)
+
+    class Meta:
+        model = Model.Feed
+        fields = ['chicken', 'date', 'weight']

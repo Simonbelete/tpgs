@@ -165,6 +165,18 @@ class NavigationDrawer extends StatelessWidget {
               Navigator.popAndPushNamed(context, LayedPlaceScreen.routeName);
             },
           ),
+          ListTile(
+            leading: SvgPicture.asset(
+              height: 25,
+              'assets/icons/flour_bag.svg',
+              color: kIconcolor,
+            ),
+            title: const Text('Feed Type'),
+            onTap: () {
+              Navigator.pop(context);
+              Navigator.popAndPushNamed(context, LayedPlaceScreen.routeName);
+            },
+          ),
           Divider(),
           ListTile(
             leading: const Icon(Icons.manage_accounts),

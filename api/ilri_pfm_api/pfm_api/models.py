@@ -195,3 +195,13 @@ class FeedType(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     created_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.PROTECT)
     history = HistoricalRecords()
+
+class Feed(models.Model):
+    chicken = models.ForeignKey(Chicken, on_delete=models.CASCADE, related_name='feeds')
+    date = models.DateField()
+    weight = weight = models.DecimalField(max_digits = 6, decimal_places = 3, default=0)
+
+    is_active = models.BooleanField(default=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    created_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.PROTECT)
+    history = HistoricalRecords()

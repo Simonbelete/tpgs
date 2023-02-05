@@ -148,11 +148,6 @@ class EggViewSet(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         serializer.save(created_by=self.request.user)
 
-    # def get_serializer_class(self):
-    #     if not self.request.method in SAFE_METHODS:
-    #         return CustomerSerializer
-    #     return CustomerInfoSerializer
-
 class FeedTypeViewSet(viewsets.ModelViewSet):
     queryset = Model.FeedType.objects.all()
     serializer_class = V1Serializer.FeedType_GET
@@ -164,3 +159,15 @@ class FeedTypeViewSet(viewsets.ModelViewSet):
         if self.request.method == 'GET':
             return V1Serializer.FeedType_GET
         return V1Serializer.FeedType_POST
+
+class FeedViewSet(viewsets.ModelViewSet):
+    queryset = Model.Feed.objects.all()
+    serializer_class = V1Serializer.Feed_GET
+
+    def perform_create(self, serializer):
+        serializer.save(created_by=self.request.user)
+
+    def get_serializer_class(self):
+        if self.request.method == 'GET':
+            return V1Serializer.Feed_GET
+        return V1Serializer.Feed_POST
