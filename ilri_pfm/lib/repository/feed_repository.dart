@@ -2,9 +2,10 @@ import 'package:dio/dio.dart';
 import 'package:ilri_pfm/models/feed.dart';
 import 'package:ilri_pfm/repository/repository.dart';
 import 'package:ilri_pfm/services/breed_type_service.dart';
+import 'package:ilri_pfm/services/feed_service.dart';
 
 class FeedRepository extends Repository {
-  final BreedTypeService _service = BreedTypeService();
+  final FeedService _service = FeedService();
 
   Future<List<Feed>>? get({Map<String, dynamic>? query}) async {
     try {

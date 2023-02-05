@@ -12,6 +12,7 @@ import 'package:ilri_pfm/screens/breed_type_screen.dart';
 import 'package:ilri_pfm/screens/chicken_screen.dart';
 import 'package:ilri_pfm/screens/chicken_stage.dart';
 import 'package:ilri_pfm/screens/farm_screen.dart';
+import 'package:ilri_pfm/screens/feed_type_screen.dart';
 import 'package:ilri_pfm/screens/home_screen.dart';
 import 'package:ilri_pfm/screens/layed_place_screen.dart';
 import 'package:ilri_pfm/screens/setting_screen.dart';
@@ -174,7 +175,7 @@ class NavigationDrawer extends StatelessWidget {
             title: const Text('Feed Type'),
             onTap: () {
               Navigator.pop(context);
-              Navigator.popAndPushNamed(context, LayedPlaceScreen.routeName);
+              Navigator.popAndPushNamed(context, FeedTypeScreen.routeName);
             },
           ),
           Divider(),

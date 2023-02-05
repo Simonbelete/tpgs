@@ -21,6 +21,7 @@ import 'package:ilri_pfm/screens/egg_production_form_screen.dart';
 import 'package:ilri_pfm/screens/egg_production_screen.dart';
 import 'package:ilri_pfm/screens/farm_form_screen.dart';
 import 'package:ilri_pfm/screens/farm_screen.dart';
+import 'package:ilri_pfm/screens/feed_type_screen.dart';
 import 'package:ilri_pfm/screens/home_screen.dart';
 import 'package:ilri_pfm/screens/layed_place_form_screen.dart';
 import 'package:ilri_pfm/screens/layed_place_screen.dart';
@@ -158,6 +159,9 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
           builder: (_) => EggProductionFormScreen(
                 egg: egg,
               ));
+    case FeedTypeScreen.routeName:
+      return MaterialPageRoute(
+          settings: routeSettings, builder: (_) => const FeedTypeScreen());
     default:
       return MaterialPageRoute(
           settings: routeSettings,

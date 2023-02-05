@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:ilri_pfm/app/color_set.dart';
 import 'package:ilri_pfm/common_widgets/custom_appbar.dart';
 import 'package:ilri_pfm/features/farm_list/farm_list.dart';
+import 'package:ilri_pfm/features/feed_type_list/feed_type_list.dart';
 import 'package:ilri_pfm/features/navigation_drawer/navigation_drawer.dart';
 import 'package:ilri_pfm/screens/farm_form_screen.dart';
 
@@ -17,12 +18,12 @@ class FeedTypeScreen extends StatelessWidget {
         child: SingleChildScrollView(
           child: Column(children: const [
             CustomAppBar(
-              title: 'Farms',
+              title: 'Feed Types',
             ),
             SizedBox(
               height: 25,
             ),
-            FarmList(),
+            FeedTypeList(),
           ]),
         ),
       ),
