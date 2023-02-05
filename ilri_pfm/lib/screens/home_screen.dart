@@ -3,6 +3,7 @@ import 'package:ilri_pfm/common_widgets/custom_appbar.dart';
 import 'package:ilri_pfm/features/breed_type_pie_chart/breed_type_pie_chart.dart';
 import 'package:ilri_pfm/features/farm_selection_modal/farm_selection_modal.dart';
 import 'package:ilri_pfm/features/navigation_drawer/navigation_drawer.dart';
+import 'package:ilri_pfm/features/scan_tag/scan_tag.dart';
 import 'package:ilri_pfm/features/user_count_card/user_count_card.dart';
 import 'package:ilri_pfm/features/welcome_text/welcome_text.dart';
 

@@ -7,7 +7,7 @@ import 'package:ilri_pfm/common_widgets/form_text_box.dart';
 import 'package:ilri_pfm/models/chicken.dart';
 
 class ChickenForm extends StatefulWidget {
-  final Chicken chicken;
+  final Chicken? chicken;
 
   const ChickenForm({super.key, required this.chicken});
 
@@ -16,14 +16,64 @@ class ChickenForm extends StatefulWidget {
 }
 
 class _ChickenFormState extends State<ChickenForm> {
+  String _sex = 'M';
+  TextEditingController _tagController = TextEditingController();
+  TextEditingController _houseNoController = TextEditingController();
+  TextEditingController _penNoController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
 
     return ContainerCard(
         child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        FormTextBox(hintText: 'Name', initialValue: widget.chicken.tag),
+        FormTextBox(
+            controller: _tagController,
+            hintText: 'Tag',
+            initialValue: widget.chicken?.tag),
+        const SizedBox(
+          height: 10,
+        ),
+        Container(
+          width: size.width,
+          child: DropdownButton<String>(
+              isExpanded: true,
+              value: _sex,
+              icon: const Icon(Icons.expand_more),
+              elevation: 16,
+              style: const TextStyle(color: kTextColor),
+              items: const [
+                DropdownMenuItem(
+                  value: 'M',
+                  child: Text('Male'),
+                ),
+                DropdownMenuItem(
+                  value: 'F',
+                  child: Text('Female'),
+                )
+              ],
+              onChanged: (String? value) {
+                setState(() {
+                  _sex = value ?? '';
+                });
+              }),
+        ),
+        const SizedBox(
+          height: 10,
+        ),
+        FormTextBox(
+          controller: _houseNoController,
+          hintText: 'House No',
+        ),
+        const SizedBox(
+          height: 10,
+        ),
+        FormTextBox(
+          controller: _houseNoController,
+          hintText: 'Pen No',
+        ),
         const SizedBox(
           height: 10,
         ),

@@ -6,7 +6,7 @@ import 'package:ilri_pfm/models/chicken.dart';
 
 class ChickenFormScreen extends StatelessWidget {
   static const String routeName = '/chicken-form';
-  final Chicken chicken;
+  final Chicken? chicken;
 
   const ChickenFormScreen({super.key, required this.chicken});
 

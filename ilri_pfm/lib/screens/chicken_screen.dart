@@ -5,6 +5,7 @@ import 'package:ilri_pfm/features/chicken_list/chicken_list.dart';
 import 'package:ilri_pfm/features/chicken_stage_list/chicken_stage_list.dart';
 import 'package:ilri_pfm/features/farm_list/farm_list.dart';
 import 'package:ilri_pfm/features/navigation_drawer/navigation_drawer.dart';
+import 'package:ilri_pfm/screens/chicken_form_screen.dart';
 
 class ChickenScreen extends StatelessWidget {
   static const String routeName = '/chicken';
@@ -18,7 +19,7 @@ class ChickenScreen extends StatelessWidget {
         child: SingleChildScrollView(
           child: Column(children: const [
             CustomAppBar(
-              title: 'Chicken Stage',
+              title: 'Chickens',
             ),
             SizedBox(
               height: 25,
@@ -29,9 +30,11 @@ class ChickenScreen extends StatelessWidget {
       ),
       drawer: const NavigationDrawer(),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          Navigator.pushNamed(context, ChickenFormScreen.routeName);
+        },
         backgroundColor: kPrimaryColor,
-        child: Icon(Icons.add),
+        child: const Icon(Icons.add),
       ),
     );
   }
