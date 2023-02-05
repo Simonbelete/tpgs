@@ -87,7 +87,7 @@ class AllChickenGrowthViewSet(viewsets.ModelViewSet):
 
     def list(self, request, *args, **kwargs):
         try:
-            chicken_pk = seflf.kwargs['chicken_pk']
+            chicken_pk = self.kwargs['chicken_pk']
             instance = self.get_queryset().filter(chicken=chicken_pk)
             return Response({
                 'count': len(instance),
@@ -135,9 +135,18 @@ class BreedTypeChickenPercentageViewSet(viewsets.ModelViewSet):
         except self.queryset.model.DoesNotExist:
             raise Http404()
 
-class ChickenStageParentViewSet(viewsets.ModelViewSet):
+class ChickenStageFilter(filters.FilterSet):
+    name = filters.CharFilter(field_name='name',lookup_expr='contains')
+
+    class Meta:
+        model = Model.ChickenStage
+        fields = ['name']
+
+class ChickenStageViewSet(viewsets.ModelViewSet):
     queryset = ChickenStage.objects.all()
     serializer_class = ChickenStageSerializer
+    filter_backends = (filters.DjangoFilterBackend,)
+    filterset_class = ChickenStageFilter
 
     def perform_create(self, serializer):
         serializer.save(created_by=self.request.user)
