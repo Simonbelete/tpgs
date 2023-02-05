@@ -45,7 +45,7 @@ dependencies:
   firebase_messaging: ^14.2.1
   infinite_scroll_pagination: ^3.2.0
   google_fonts: ^3.0.1
-  flutter_local_notifications: ^13.0.0
+  # flutter_local_notifications: ^13.0.0
   shared_preferences: ^2.0.15
   colorize_text_avatar: ^1.0.2
   flutter_svg: ^1.1.6
@@ -56,8 +56,8 @@ dependencies:
   path_provider: ^2.0.12
   open_file: ^3.2.1
 
-dependency_overrides:
-  ffi: ^2.0.1
+# dependency_overrides:
+#   ffi: ^2.0.1
 
 dev_dependencies:
   flutter_test:

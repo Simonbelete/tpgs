@@ -16,7 +16,7 @@ import 'package:ilri_pfm/screens/home_screen.dart';
 import 'package:ilri_pfm/screens/onboarding_screen.dart';
 import 'package:device_preview/device_preview.dart';
 import 'package:ilri_pfm/util/bloc_observer.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+// import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   await Firebase.initializeApp();

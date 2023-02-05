@@ -21,7 +21,10 @@ class _ExportDataState extends State<ExportData> {
     return Column(
       children: [
         ElevatedButton(
-            onPressed: () {}, child: const Text('Export Chicken Weight Csv')),
+            onPressed: () {
+              openFile('/export/weights/csv/', 'weight.csv');
+            },
+            child: const Text('Export Chicken Weight Csv')),
         ElevatedButton(
             onPressed: () {}, child: const Text('Export Chicken Weight Excel')),
       ],
@@ -32,12 +35,15 @@ class _ExportDataState extends State<ExportData> {
     final file = await downloadFile(url, name);
 
     if (file == null) return null;
-    OpenFile.open(file.path);
+    var filePath = file.path;
+
+    final _result = await OpenFile.open(filePath);
+    print(_result.message);
   }
 
   Future<File?> downloadFile(String url, String name) async {
     final storage = await getApplicationDocumentsDirectory();
-    final file = File('${storage}/$name');
+    final file = File('${storage.path}/$name');
 
     final response = await dioClient.get(
       url,
@@ -52,9 +58,7 @@ class _ExportDataState extends State<ExportData> {
       ),
     );
 
-    final raf = file.openSync(mode: FileMode.write);
-    raf.writeFromSync(response.data);
-    await raf.close();
+    file.writeAsBytesSync(response.data);
 
     return file;
   }
