@@ -5,6 +5,7 @@ import pfm_api.v1.views as V1ViewSets
 
 router = routers.DefaultRouter()
 router.register(r'users', V1ViewSets.UserViewSet)
+router.register(r'users/all/count', V1ViewSets.UserAllCountViewSet)
 router.register(r'users/uid', V1ViewSets.UserUidViewSet)
 router.register(r'users/devices', V1ViewSets.DeviceViewSet)
 router.register(r'farms', V1ViewSets.FarmViewSet)

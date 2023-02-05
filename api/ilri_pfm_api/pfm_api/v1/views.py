@@ -31,6 +31,21 @@ class UserUidViewSet(viewsets.ModelViewSet):
         except self.queryset.model.DoesNotExist:
             raise Http404()
 
+class UserAllCountViewSet(viewsets.ModelViewSet):
+    queryset = Model.User.objects.all()
+    serializer_class = V1Serializer.UserCountSerializer
+    pagination_class = None
+    
+    def list(self, request, *args, **kwargs):
+        try:
+            instance = Model.User.objects.count()
+            return Response({
+                'count': instance,
+                'results': {'count': instance}},
+                            status=status.HTTP_200_OK)
+        except self.queryset.model.DoesNotExist:
+            raise Http404()
+
 class DeviceViewSet(viewsets.ModelViewSet):
     queryset = Device.objects.all()
     serializer_class = DeviceSerializer

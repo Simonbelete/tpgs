@@ -37,6 +37,11 @@ class UserSerializer(serializers.ModelSerializer):
 
         return user
 
+class UserCountSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = '__all__'
+
 class FarmSerializer(serializers.ModelSerializer):
     name = serializers.CharField()
     is_active = serializers.BooleanField(default=True)

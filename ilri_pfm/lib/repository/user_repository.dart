@@ -10,12 +10,11 @@ class UserRepository extends Repository {
 
   Future<List<UserModel>>? get({Map<String, dynamic>? query}) async {
     try {
-      final Response response = await UserService().get(query: query);
+      final Response response = await _service.get(query: query);
       return response.data['results']
           .map<UserModel>((e) => UserModel.fromJson(e))
           .toList();
     } catch (e) {
-      print(e.toString());
       return [];
     }
   }
@@ -26,23 +25,17 @@ class UserRepository extends Repository {
       if (user == null) throw Exception('User not Loged In ');
       final Response response = await _service.getByUid(user.uid);
       return UserModel.fromJson(response.data);
-    } on DioError catch (e) {
-      // The request was made and the server responded with a status code
-      // that falls out of the range of 2xx and is also not 304.
-      if (e.response != null) {
-        print(e.response?.data);
-        print(e.response?.headers);
-        print(e.response?.requestOptions);
-      } else {
-        // Something happened in setting up or sending the request that triggered an Error
-        print(e.requestOptions);
-        print(e.message);
-      }
-      print(e.toString());
-      return null;
     } catch (e) {
-      print(e.toString());
       return null;
+    }
+  }
+
+  Future<int> count() async {
+    try {
+      final Response response = await _service.getAllCount();
+      return response.data['results']['count'];
+    } catch (e) {
+      return 0;
     }
   }
 }

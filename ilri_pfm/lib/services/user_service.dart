@@ -60,4 +60,21 @@ class UserService {
       rethrow;
     }
   }
+
+  Future<Response> getAllCount() async {
+    try {
+      final response = await _dio.get(
+        '$_url/all/count',
+        options: Options(
+          headers: {
+            Headers.wwwAuthenticateHeader:
+                await _auth.currentUser?.getIdToken(), // set content-length
+          },
+        ),
+      );
+      return response;
+    } catch (e) {
+      rethrow;
+    }
+  }
 }
