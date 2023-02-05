@@ -4,7 +4,9 @@ import 'package:ilri_pfm/common_widgets/button.dart';
 import 'package:ilri_pfm/common_widgets/container_card.dart';
 import 'package:ilri_pfm/common_widgets/custom_switch.dart';
 import 'package:ilri_pfm/common_widgets/form_text_box.dart';
+import 'package:ilri_pfm/features/dropdown_searches/chicken_stage_dropdown_search.dart';
 import 'package:ilri_pfm/models/chicken.dart';
+import 'package:ilri_pfm/models/chicken_stage.dart';
 
 class ChickenForm extends StatefulWidget {
   final Chicken? chicken;
@@ -17,6 +19,7 @@ class ChickenForm extends StatefulWidget {
 
 class _ChickenFormState extends State<ChickenForm> {
   String _sex = 'M';
+  ChickenStage? _chickenStage = null;
   TextEditingController _tagController = TextEditingController();
   TextEditingController _houseNoController = TextEditingController();
   TextEditingController _penNoController = TextEditingController();
@@ -68,12 +71,24 @@ class _ChickenFormState extends State<ChickenForm> {
           hintText: 'House No',
         ),
         const SizedBox(
-          height: 10,
+          height: 20,
         ),
         FormTextBox(
           controller: _houseNoController,
           hintText: 'Pen No',
         ),
+        const SizedBox(
+          height: 20,
+        ),
+        ChickenStageDropdownSearch(
+            hintText: 'Chicken Stage',
+            labelText: 'Enter Stage',
+            title: 'Chicken Stage',
+            onChange: (data) {
+              setState(() {
+                _chickenStage = data;
+              });
+            }),
         const SizedBox(
           height: 10,
         ),
