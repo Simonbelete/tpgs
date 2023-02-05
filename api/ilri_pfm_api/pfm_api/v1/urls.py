@@ -20,7 +20,8 @@ router.register(r'layed-places', V1ViewSets.LayedPlaceViewSet)
 router.register(r'eggs', V1ViewSets.EggViewSet)
 router.register(r'feed-types', V1ViewSets.FeedTypeViewSet)
 router.register(r'feeds', V1ViewSets.FeedViewSet)
-router.register(r'export/weights/csv', V1ViewSets.WeightExport_CSV)
+router.register(r'export/weights/csv', V1ViewSets.WeightExport_CSV, basename='export_weight_csv')
+router.register(r'export/weights/xlsx', V1ViewSets.WeightExport_XLSX,basename='export_weight_xlsx')
 
 urlpatterns = [
     path('', include(router.urls)),

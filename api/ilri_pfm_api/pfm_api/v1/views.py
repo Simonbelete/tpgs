@@ -1,4 +1,6 @@
+import io
 import csv
+import xlsxwriter
 from django.contrib.auth import get_user_model
 from rest_framework import viewsets
 from rest_framework.response import Response
@@ -230,4 +232,32 @@ class WeightExport_CSV(viewsets.ModelViewSet):
                 'weight': row['weight']
                 })
     
+        return response
+
+class WeightExport_XLSX(viewsets.ModelViewSet):
+    queryset = Model.ChickenGrowth.objects.all()
+    serializer_class = V1Serializer.ExportChickenGrowthSerializer
+    def list(self, request, *args, **kwargs):
+        response = HttpResponse(content_type='text/csv')
+
+        # Create an in-memory output file for the new workbook.
+        output = io.BytesIO()
+
+        workbook = xlsxwriter.Workbook(output)
+        worksheet = workbook.add_worksheet()
+
+        data = []
+        worksheet.write(0, 0, 'hello')
+        workbook.close()
+
+        # Rewind the buffer.
+        output.seek(0)
+
+        filename = 'report.xlsx'
+        response = HttpResponse(
+            output,
+            content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+        )
+        response['Content-Disposition'] = 'attachment; filename=%s' % filename
+
         return response
