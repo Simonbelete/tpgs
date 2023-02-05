@@ -4,7 +4,9 @@ import 'package:ilri_pfm/common_widgets/button.dart';
 import 'package:ilri_pfm/common_widgets/container_card.dart';
 import 'package:ilri_pfm/common_widgets/custom_switch.dart';
 import 'package:ilri_pfm/common_widgets/form_text_box.dart';
+import 'package:ilri_pfm/features/dropdown_searches/breed_type_dropdown_search.dart';
 import 'package:ilri_pfm/features/dropdown_searches/chicken_stage_dropdown_search.dart';
+import 'package:ilri_pfm/models/breed_type.dart';
 import 'package:ilri_pfm/models/chicken.dart';
 import 'package:ilri_pfm/models/chicken_stage.dart';
 
@@ -20,6 +22,7 @@ class ChickenForm extends StatefulWidget {
 class _ChickenFormState extends State<ChickenForm> {
   String _sex = 'M';
   ChickenStage? _chickenStage = null;
+  BreedType? _breedType = null;
   TextEditingController _tagController = TextEditingController();
   TextEditingController _houseNoController = TextEditingController();
   TextEditingController _penNoController = TextEditingController();
@@ -87,6 +90,18 @@ class _ChickenFormState extends State<ChickenForm> {
             onChange: (data) {
               setState(() {
                 _chickenStage = data;
+              });
+            }),
+        const SizedBox(
+          height: 20,
+        ),
+        BreedTypeDropdownSearch(
+            hintText: 'Breed type',
+            labelText: 'Enter Breed type',
+            title: 'Breed Type',
+            onChange: (data) {
+              setState(() {
+                _breedType = data;
               });
             }),
         const SizedBox(

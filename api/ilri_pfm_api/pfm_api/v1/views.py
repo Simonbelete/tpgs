@@ -50,9 +50,18 @@ class DeviceViewSet(viewsets.ModelViewSet):
     queryset = Device.objects.all()
     serializer_class = DeviceSerializer
 
+class FarmFilter(filters.FilterSet):
+    name = filters.CharFilter(field_name='name',lookup_expr='contains')
+
+    class Meta:
+        model = Model.Farm
+        fields = ['name']
+
 class FarmViewSet(viewsets.ModelViewSet):
     queryset = Farm.objects.all()
     serializer_class = FarmSerializer
+    filter_backends = (filters.DjangoFilterBackend,)
+    filterset_class = FarmFilter
 
     def perform_create(self, serializer):
         serializer.save(created_by=self.request.user)
