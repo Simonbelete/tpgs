@@ -218,7 +218,11 @@ class Feed_POST(serializers.ModelSerializer):
         model = Model.Feed
         fields = ['chicken', 'date', 'weight']
 
-class ExportSerializer(serializers.ModelSerializer):
+class ExportChickenGrowthSerializer(serializers.ModelSerializer):
+    chicken = ChickenSerializer()
+    date = serializers.DateField()
+    week = serializers.IntegerField()
+    weight = serializers.DecimalField(max_digits = 6, decimal_places = 3, default=0)
     class Meta:
         model = Model.ChickenGrowth
-        fields = '__all__'
+        fields = ['chicken', 'date', 'week', 'weight']

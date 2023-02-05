@@ -208,7 +208,7 @@ class FeedViewSet(viewsets.ModelViewSet):
 # Exports
 class WeightExport_CSV(viewsets.ModelViewSet):
     queryset = Model.ChickenGrowth.objects.all()
-    serializer_class = V1Serializer.ExportSerializer
+    serializer_class = V1Serializer.ExportChickenGrowthSerializer
     def list(self, request, *args, **kwargs):
         response = HttpResponse(content_type='text/csv')
         response['Content-Disposition'] = 'attachment; filename="export.csv"'
@@ -217,11 +217,17 @@ class WeightExport_CSV(viewsets.ModelViewSet):
             Model.ChickenGrowth.objects.all(),
             many=True
         )
-        header = V1Serializer.ExportSerializer.Meta.fields
+        data = Model.ChickenGrowth.objects.all(),
+        # header = V1Serializer.ExportChickenGrowthSerializer.Meta.fields
         
-        writer = csv.DictWriter(response, fieldnames=header)
+        writer = csv.DictWriter(response, fieldnames=('tag', 'week', 'date', 'weight'))
         writer.writeheader()
         for row in serializer.data:
-            writer.writerow(row)
-        
+            writer.writerow({
+                'tag': row['chicken']['tag'], 
+                'week': row['week'], 
+                'date': row['date'], 
+                'weight': row['weight']
+                })
+    
         return response
