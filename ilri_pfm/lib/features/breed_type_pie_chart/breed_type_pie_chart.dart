@@ -30,7 +30,6 @@ class _BreedTypePieChartState extends State {
   void _fetchData() async {
     final result = await BreedTypeReportRepository().getPercentage();
     setState(() {
-      print(result);
       breedTypes = result?['data'];
       count = result?['count'];
     });

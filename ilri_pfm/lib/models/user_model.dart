@@ -1,6 +1,7 @@
 import 'package:ilri_pfm/models/device_model.dart';
 
 class UserModel {
+  final int? id;
   final String? name;
   final String email;
   final String? uid;
@@ -11,7 +12,8 @@ class UserModel {
   final List<Device>? devices;
 
   UserModel(
-      {this.name,
+      {this.id,
+      this.name,
       required this.email,
       this.uid,
       this.is_admin = false,
@@ -22,6 +24,7 @@ class UserModel {
 
   factory UserModel.fromJson(Map<String, dynamic> data) {
     return UserModel(
+        id: data['id'],
         email: data['email'],
         uid: data['uid'],
         is_approved: data['is_approved'],

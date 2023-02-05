@@ -19,6 +19,16 @@ class UserRepository extends Repository {
     }
   }
 
+  Future<UserModel?> patch(
+      {required int id, required Map<String, dynamic> data}) async {
+    try {
+      final response = await _service.patch(id: id, data: data);
+      return UserModel.fromJson(response.data);
+    } catch (e) {
+      rethrow;
+    }
+  }
+
   Future<UserModel?> getByUid() async {
     try {
       final User? user = _auth.currentUser;

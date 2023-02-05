@@ -7,6 +7,8 @@ import 'package:ilri_pfm/common_widgets/form_text_box.dart';
 import 'package:ilri_pfm/common_widgets/header_text.dart';
 import 'package:ilri_pfm/models/layed_place.dart';
 import 'package:ilri_pfm/models/user_model.dart';
+import 'package:ilri_pfm/repository/user_repository.dart';
+import 'package:ilri_pfm/screens/users_screen.dart';
 
 class UserForm extends StatefulWidget {
   final UserModel? user;
@@ -18,6 +20,8 @@ class UserForm extends StatefulWidget {
 }
 
 class _UserFormState extends State<UserForm> {
+  final UserRepository _repository = UserRepository();
+
   final _formKey = GlobalKey<FormState>();
 
   bool _isActive = false;
@@ -28,7 +32,7 @@ class _UserFormState extends State<UserForm> {
   @override
   void initState() {
     setState(() {
-      _isActive = widget.user?.is_admin ?? false;
+      _isAdmin = widget.user?.is_admin ?? false;
       _isApproved = widget.user?.is_approved ?? false;
       _isFarmer = widget.user?.is_farmer ?? false;
     });
@@ -123,5 +127,42 @@ class _UserFormState extends State<UserForm> {
 
   void create() {}
 
-  void patch() {}
+  void patch() async {
+    if (_formKey.currentState!.validate()) {
+      try {
+        final UserModel? user = await _repository.patch(
+            id: widget.user?.id ?? 0,
+            data: {
+              'is_admin': _isAdmin,
+              'is_approved': _isApproved,
+              'is_farmer': _isFarmer
+            });
+        _responseMessage(user);
+      } catch (e) {
+        _errorMessage();
+      }
+    }
+  }
+
+  void _responseMessage(UserModel? data) {
+    if (data != null) {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        backgroundColor: kPrimaryColor,
+        content: Text('Operation Successfully Completed'),
+      ));
+      Navigator.popAndPushNamed(context, UsersScreen.routeName);
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        backgroundColor: kSecondaryColor,
+        content: Text('Unknown Error occurred Please try again!'),
+      ));
+    }
+  }
+
+  void _errorMessage() {
+    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+      backgroundColor: kSecondaryColor,
+      content: Text('Error occurred Please try again!'),
+    ));
+  }
 }
