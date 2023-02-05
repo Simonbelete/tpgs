@@ -16,7 +16,7 @@ class DataTile extends StatelessWidget {
       onTap: onTab,
       child: Container(
         width: size.width * 0.8,
-        padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
+        padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
         decoration: BoxDecoration(
             color: Colors.white,
             border: Border.all(
