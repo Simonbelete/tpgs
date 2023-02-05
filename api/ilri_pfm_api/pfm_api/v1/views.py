@@ -10,6 +10,8 @@ from django_filters import rest_framework as filters
 from pfm_api.v1.serializers import UserSerializer, DeviceSerializer, FarmSerializer, ChickenSerializer, ChickenParentSerializer, ChickenStageSerializer, EggSerializer, LayedPlaceSerializer, BreedTypeSerializer, ChickenGrowthSerializer
 import pfm_api.v1.serializers as V1Serializer
 from pfm_api.models import Device, Farm, Chicken, ChickenParent, BreedType, ChickenStage, Egg, LayedPlace, ChickenGrowth
+import pfm_api.models as Model
+
 
 User = get_user_model()
 
@@ -59,8 +61,6 @@ class ChickenViewSet(viewsets.ModelViewSet):
         serializer.save(created_by=self.request.user)
 
     def get_serializer_class(self):
-        print('+++++++++++++++++++')
-        print(self.request.method)
         if self.request.method == 'GET':
             return V1Serializer.ChickenSerializer_GET
         return V1Serializer.ChickenSerializer
@@ -152,3 +152,15 @@ class EggViewSet(viewsets.ModelViewSet):
     #     if not self.request.method in SAFE_METHODS:
     #         return CustomerSerializer
     #     return CustomerInfoSerializer
+
+class FeedTypeViewSet(viewsets.ModelViewSet):
+    queryset = Model.FeedType.objects.all()
+    serializer_class = V1Serializer.FeedType_GET
+
+    def perform_create(self, serializer):
+        serializer.save(created_by=self.request.user)
+
+    def get_serializer_class(self):
+        if self.request.method == 'GET':
+            return V1Serializer.FeedType_GET
+        return V1Serializer.FeedType_POST

@@ -2,6 +2,7 @@ from rest_framework import serializers
 from rest_framework import exceptions
 
 from pfm_api.models import User, Device, Farm, Chicken, ChickenParent, BreedType, ChickenStage, ChickenProgress, Egg, LayedPlace, ChickenGrowth
+import pfm_api.models as Model
 from pfm_api.firebase_messageing import FirebaseMessaging
 
 class DeviceSerializer(serializers.ModelSerializer):
@@ -183,3 +184,17 @@ class BreedTypeReportPercentageSerializer(serializers.ModelSerializer):
     class Meta:
         model = BreedType
         fields = '__all__'
+
+## Feed Type
+class FeedType_GET(serializers.ModelSerializer):
+    class Meta:
+        model = Model.FeedType
+        fields = '__all__'
+
+class FeedType_POST(serializers.ModelSerializer):
+    name = serializers.CharField()
+    is_active = serializers.BooleanField(default=True)
+
+    class Meta:
+        model = Model.FeedType
+        fields = ['name', 'is_active']

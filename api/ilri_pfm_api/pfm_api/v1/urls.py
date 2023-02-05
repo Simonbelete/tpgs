@@ -18,6 +18,7 @@ router.register(r'chicken-stages', V1ViewSets.ChickenStageParentViewSet)
 # router.register(r'eggs', V1ViewSets.EggParentViewSet)
 router.register(r'layed-places', V1ViewSets.LayedPlaceViewSet)
 router.register(r'eggs', V1ViewSets.EggViewSet)
+router.register(r'feed-types', V1ViewSets.FeedTypeViewSet)
 
 urlpatterns = [
     path('', include(router.urls)),
