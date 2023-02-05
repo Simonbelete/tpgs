@@ -9,7 +9,7 @@ class FeedTypeRepository extends Repository {
 
   Future<List<FeedType>>? get({Map<String, dynamic>? query}) async {
     try {
-      final Response response = await BreedTypeService().get(query: query);
+      final Response response = await _service.get(query: query);
       return response.data['results']
           .map<FeedType>((e) => FeedType.fromJson(e))
           .toList();
