@@ -16,6 +16,7 @@ import 'package:ilri_pfm/screens/farm_screen.dart';
 import 'package:ilri_pfm/screens/feed_type_screen.dart';
 import 'package:ilri_pfm/screens/home_screen.dart';
 import 'package:ilri_pfm/screens/layed_place_screen.dart';
+import 'package:ilri_pfm/screens/reports_screen.dart';
 import 'package:ilri_pfm/screens/setting_screen.dart';
 import 'package:ilri_pfm/screens/users_screen.dart';
 import 'package:colorize_text_avatar/colorize_text_avatar.dart';
@@ -186,6 +187,14 @@ class NavigationDrawer extends StatelessWidget {
             onTap: () {
               Navigator.pop(context);
               Navigator.popAndPushNamed(context, ExportScreen.routeName);
+            },
+          ),
+          ListTile(
+            leading: const Icon(Icons.content_paste),
+            title: const Text('Reports'),
+            onTap: () {
+              Navigator.pop(context);
+              Navigator.popAndPushNamed(context, ReportsScreen.routeName);
             },
           ),
           Divider(),

@@ -28,6 +28,8 @@ import 'package:ilri_pfm/screens/layed_place_form_screen.dart';
 import 'package:ilri_pfm/screens/layed_place_screen.dart';
 import 'package:ilri_pfm/screens/login_screen.dart';
 import 'package:ilri_pfm/screens/register_screen.dart';
+import 'package:ilri_pfm/screens/report_weight_screen.dart';
+import 'package:ilri_pfm/screens/reports_screen.dart';
 import 'package:ilri_pfm/screens/setting_screen.dart';
 import 'package:ilri_pfm/screens/users_form_screen.dart';
 import 'package:ilri_pfm/screens/users_screen.dart';
@@ -166,6 +168,12 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
     case ExportScreen.routeName:
       return MaterialPageRoute(
           settings: routeSettings, builder: (_) => const ExportScreen());
+    case ReportsScreen.routeName:
+      return MaterialPageRoute(
+          settings: routeSettings, builder: (_) => const ReportsScreen());
+    case ReportWeightScreen.routeName:
+      return MaterialPageRoute(
+          settings: routeSettings, builder: (_) => const ReportWeightScreen());
     default:
       return MaterialPageRoute(
           settings: routeSettings,
