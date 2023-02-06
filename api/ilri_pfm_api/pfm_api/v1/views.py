@@ -1,6 +1,8 @@
 import io
 import csv
 import xlsxwriter
+import numpy as np
+from decimal import Decimal
 import matplotlib.pyplot as plt
 from django.contrib.auth import get_user_model
 from rest_framework import viewsets
@@ -220,7 +222,6 @@ class WeightExport_CSV(viewsets.ModelViewSet):
             Model.ChickenGrowth.objects.all(),
             many=True
         )
-        data = Model.ChickenGrowth.objects.all(),
         # header = V1Serializer.ExportChickenGrowthSerializer.Meta.fields
         
         writer = csv.DictWriter(response, fieldnames=('tag', 'week', 'date', 'weight'))
@@ -263,13 +264,47 @@ class WeightExport_XLSX(viewsets.ModelViewSet):
 
 class ReportWeight_IMG(viewsets.ModelViewSet):
     queryset = Model.ChickenGrowth.objects.all()
-    serializer_class = V1Serializer.ReportWeightSerializer
+    serializer_class = V1Serializer.ReportWeightIMGSerializer
     def list(self, request, *args, **kwargs):
         output = io.BytesIO()
 
-        fig, ax = plt.subplots()
-        ax.plot([0, 1, 2], [5, 6, 7])
-        plt.savefig(output, format='png')
+        x_data = []
+        error = []
+
+        start_week = 0
+        end_week = 10
+        weeks = []
+
+        for week in range(start_week, end_week):
+            weeks.append(str(week))
+            serializer = self.get_serializer(
+                Model.ChickenGrowth.objects.all().filter(week=week),
+                many=True
+            )
+            weights = []
+            for row in serializer.data:
+                weights.append(Decimal(row['weight']))
+   
+            avg = np.average(weights)
+            std = np.std(weights)
+            x_data.append(avg)
+            error.append(std)
+            
+        x_pos = np.arange(len(weeks))
+        
+        fig, ax = plt.subplots(figsize=(20,10))
+        ax.bar(x_pos, x_data, yerr=error, align='center', alpha=0.5, ecolor='black', capsize=10)
+        ax.set_ylabel('Weight', fontsize=15)
+        ax.set_xlabel('Week', fontsize=15)
+        ax.tick_params(axis='x', which='major', labelsize=15)
+        ax.tick_params(axis='y', which='major', labelsize=15)
+        ax.set_xticks(x_pos)
+        ax.set_xticklabels(weeks)
+        ax.set_title('Growth Perfomance')
+        ax.yaxis.grid(True)
+        fig.tight_layout()
+
+        fig.savefig(output, format='png')
         
         output.seek(0)
 

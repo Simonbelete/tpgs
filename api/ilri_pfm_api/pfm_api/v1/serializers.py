@@ -232,3 +232,9 @@ class ReportWeightSerializer(serializers.ModelSerializer):
     class Meta:
         model = Model.ChickenGrowth
         fields = '__all__'
+
+class ReportWeightIMGSerializer(serializers.ModelSerializer):
+    weight =  weight = serializers.DecimalField(max_digits = 6, decimal_places = 3, default=0)
+    class Meta:
+        model = Model.ChickenGrowth
+        fields = ['weight']
