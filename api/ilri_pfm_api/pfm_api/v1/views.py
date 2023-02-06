@@ -1,6 +1,7 @@
 import io
 import csv
 import xlsxwriter
+import matplotlib.pyplot as plt
 from django.contrib.auth import get_user_model
 from rest_framework import viewsets
 from rest_framework.response import Response
@@ -238,8 +239,6 @@ class WeightExport_XLSX(viewsets.ModelViewSet):
     queryset = Model.ChickenGrowth.objects.all()
     serializer_class = V1Serializer.ExportChickenGrowthSerializer
     def list(self, request, *args, **kwargs):
-        response = HttpResponse(content_type='text/csv')
-
         # Create an in-memory output file for the new workbook.
         output = io.BytesIO()
 
@@ -259,5 +258,24 @@ class WeightExport_XLSX(viewsets.ModelViewSet):
             content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
         )
         response['Content-Disposition'] = 'attachment; filename=%s' % filename
+
+        return response
+
+class ReportWeight_IMG(viewsets.ModelViewSet):
+    queryset = Model.ChickenGrowth.objects.all()
+    serializer_class = V1Serializer.ReportWeightSerializer
+    def list(self, request, *args, **kwargs):
+        output = io.BytesIO()
+
+        fig, ax = plt.subplots()
+        ax.plot([0, 1, 2], [5, 6, 7])
+        plt.savefig(output, format='png')
+        
+        output.seek(0)
+
+        response = HttpResponse(
+            output,
+            content_type='image/png'
+        )
 
         return response

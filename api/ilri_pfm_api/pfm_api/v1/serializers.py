@@ -227,3 +227,8 @@ class ExportChickenGrowthSerializer(serializers.ModelSerializer):
     class Meta:
         model = Model.ChickenGrowth
         fields = ['chicken', 'date', 'week', 'weight']
+
+class ReportWeightSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Model.ChickenGrowth
+        fields = '__all__'
