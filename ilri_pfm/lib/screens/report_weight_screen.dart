@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:ilri_pfm/app/endpoints.dart';
 import 'package:ilri_pfm/common_widgets/custom_appbar.dart';
 import 'package:ilri_pfm/features/navigation_drawer/navigation_drawer.dart';
+import 'package:ilri_pfm/screens/image_screen.dart';
 
 class ReportWeightScreen extends StatefulWidget {
   static const String routeName = '/report-chicken-weight';
@@ -58,9 +59,15 @@ class _ReportWeightScreenState extends State<ReportWeightScreen> {
       return Container(
         height: size.height * 0.6,
         width: size.width,
-        child: Image.network(
-          '${Endpoints.baseUrl}/charts/weights/',
-          headers: {Headers.wwwAuthenticateHeader: token ?? ''},
+        child: InkWell(
+          onTap: () {
+            Navigator.pushNamed(context, ImageScreen.routeName,
+                arguments: '${Endpoints.baseUrl}/charts/weights/');
+          },
+          child: Image.network(
+            '${Endpoints.baseUrl}/charts/weights/',
+            headers: {Headers.wwwAuthenticateHeader: token ?? ''},
+          ),
         ),
       );
     } else

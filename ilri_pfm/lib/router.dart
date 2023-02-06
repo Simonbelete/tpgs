@@ -24,6 +24,7 @@ import 'package:ilri_pfm/screens/farm_form_screen.dart';
 import 'package:ilri_pfm/screens/farm_screen.dart';
 import 'package:ilri_pfm/screens/feed_type_screen.dart';
 import 'package:ilri_pfm/screens/home_screen.dart';
+import 'package:ilri_pfm/screens/image_screen.dart';
 import 'package:ilri_pfm/screens/layed_place_form_screen.dart';
 import 'package:ilri_pfm/screens/layed_place_screen.dart';
 import 'package:ilri_pfm/screens/login_screen.dart';
@@ -174,6 +175,10 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
     case ReportWeightScreen.routeName:
       return MaterialPageRoute(
           settings: routeSettings, builder: (_) => const ReportWeightScreen());
+    case ImageScreen.routeName:
+      String url = routeSettings.arguments as String;
+      return MaterialPageRoute(
+          settings: routeSettings, builder: (_) => ImageScreen(url: url));
     default:
       return MaterialPageRoute(
           settings: routeSettings,
