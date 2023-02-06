@@ -5,14 +5,25 @@ import 'package:ilri_pfm/repository/repository.dart';
 import 'package:ilri_pfm/services/chicken_service.dart';
 
 class ChickenRepository extends Repository {
+  final ChickenService _service = ChickenService();
+
   Future<List<Chicken>>? get({Map<String, dynamic>? query}) async {
     try {
-      final Response response = await ChickenService().get(query: query);
+      final Response response = await _service.get(query: query);
       return response.data['results']
           .map<Chicken>((e) => Chicken.fromJson(e))
           .toList();
     } catch (e) {
       return [];
+    }
+  }
+
+  Future<Chicken?> create(Chicken data) async {
+    try {
+      final response = await _service.post(data.toJson());
+      return Chicken.fromJson(response.data);
+    } catch (e) {
+      rethrow;
     }
   }
 

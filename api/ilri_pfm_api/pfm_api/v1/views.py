@@ -10,7 +10,7 @@ from django.db.models import Count
 from rest_framework import generics
 from django_filters import rest_framework as filters
 
-from pfm_api.v1.serializers import UserSerializer, DeviceSerializer, FarmSerializer, ChickenSerializer, ChickenParentSerializer, ChickenStageSerializer, EggSerializer, LayedPlaceSerializer, BreedTypeSerializer, ChickenGrowthSerializer
+from pfm_api.v1.serializers import UserSerializer, DeviceSerializer, FarmSerializer, ChickenParentSerializer, ChickenStageSerializer, EggSerializer, LayedPlaceSerializer, BreedTypeSerializer, ChickenGrowthSerializer
 import pfm_api.v1.serializers as V1Serializer
 from pfm_api.models import Device, Farm, Chicken, ChickenParent, BreedType, ChickenStage, Egg, LayedPlace, ChickenGrowth
 import pfm_api.models as Model
@@ -79,7 +79,7 @@ class ChickenFilter(filters.FilterSet):
 
 class ChickenViewSet(viewsets.ModelViewSet):
     queryset = Chicken.objects.all()
-    serializer_class = ChickenSerializer
+    serializer_class = V1Serializer.ChickenSerializer_GET
     filter_backends = (filters.DjangoFilterBackend,)
     filterset_class = ChickenFilter
 
@@ -89,7 +89,7 @@ class ChickenViewSet(viewsets.ModelViewSet):
     def get_serializer_class(self):
         if self.request.method == 'GET':
             return V1Serializer.ChickenSerializer_GET
-        return V1Serializer.ChickenSerializer
+        return V1Serializer.ChickenSerializer_POST
 
 class AllChickenGrowthViewSet(viewsets.ModelViewSet):
     queryset = ChickenGrowth.objects.all()

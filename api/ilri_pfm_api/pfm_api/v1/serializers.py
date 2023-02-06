@@ -92,15 +92,17 @@ class ChickenSerializer_GET(serializers.ModelSerializer):
         model = Chicken
         fields = ['id', 'tag', 'breed_type']
 
-class ChickenSerializer(serializers.ModelSerializer):
+class ChickenSerializer_POST(serializers.ModelSerializer):
     tag = serializers.CharField()
+    sex = serializers.CharField()
+    house_no = serializers.IntegerField()
+    pen_no = serializers.IntegerField()
     breed_type = serializers.PrimaryKeyRelatedField(read_only=False, queryset=BreedType.objects.all())
-
-    progress = ChickenProgressSerializer(many=True, read_only=True)
+    farm = serializers.PrimaryKeyRelatedField(read_only=False, queryset=Farm.objects.all())
 
     class Meta:
         model = Chicken
-        fields = ['tag',  'breed_type', 'progress']
+        fields = ['tag', 'sex', 'house_no', 'pen_no', 'breed_type', 'farm']
 
     # def create(self, validated_data):
     #     breed_type_data = validated_data.pop('breed_type', None)
@@ -138,8 +140,7 @@ class LayedPlaceSerializer(serializers.ModelSerializer):
 
 ## Egg Serializer
 class EggPostSerializer(serializers.ModelSerializer):
-    chicken = ChickenSerializer()
-
+    chicken = ChickenSerializer_POST()
 
 class EggSerializer(serializers.ModelSerializer):
     chicken = ChickenSerializer_GET()
@@ -219,7 +220,7 @@ class Feed_POST(serializers.ModelSerializer):
         fields = ['chicken', 'date', 'weight']
 
 class ExportChickenGrowthSerializer(serializers.ModelSerializer):
-    chicken = ChickenSerializer()
+    chicken = ChickenSerializer_POST()
     date = serializers.DateField()
     week = serializers.IntegerField()
     weight = serializers.DecimalField(max_digits = 6, decimal_places = 3, default=0)
