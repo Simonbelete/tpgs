@@ -5,4 +5,4 @@ from simple_history.admin import SimpleHistoryAdmin
 from api import models
 
 admin.site.register(models.User, UserAdmin)
-admin.site.register(models.Country, UserAdmin)
+admin.site.register(models.Country, SimpleHistoryAdmin)
