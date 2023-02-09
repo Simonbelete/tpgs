@@ -73,9 +73,17 @@ class City(models.Model):
         return f'{self.country.name} - {self.name}'
 
 
-# class Farm(models.Model):
-#     name = models.CharField(max_length=250)
-#     locations =
+class Farm(models.Model):
+    name = models.CharField(max_length=250)
+    city = models.ForeignKey(
+        City, on_delete=models.SET_NULL, null=True, related_name='farms')
+
+    class Meta:
+        ordering = ["name"]
+        verbose_name_plural = 'farms'
+
+    def __str__(self):
+        return self.name
 
 
 # class House(models.Model):
