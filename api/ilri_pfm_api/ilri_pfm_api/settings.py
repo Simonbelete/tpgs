@@ -93,10 +93,10 @@ WSGI_APPLICATION = 'ilri_pfm_api.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': env('DB_NAME'), 
-        'USER': env('DB_USER'), 
+        'NAME': env('DB_NAME'),
+        'USER': env('DB_USER'),
         'PASSWORD': env('DB_PASSWORD'),
-        'HOST': env('DB_HOST'), 
+        'HOST': env('DB_HOST'),
         'PORT': env('DB_PORT'),
     }
 }
@@ -146,7 +146,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
     'PAGE_SIZE': 10,
-     'DEFAULT_AUTHENTICATION_CLASSES': (
+    'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.SessionAuthentication',
         'pfm_api.authentication.FirebaseAuthentication',
     ),

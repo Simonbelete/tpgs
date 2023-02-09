@@ -47,3 +47,20 @@ class User(AbstractUser):
 
     def __str__(self):
         return self.email
+
+
+class Country(models.Model):
+    name = models.CharField(max_length=100)
+
+    class Meta:
+        ordering = ["name"]
+        verbose_name_plural = 'countries'
+
+
+# class Farm(models.Model):
+#     name = models.CharField(max_length=250)
+#     locations =
+
+
+# class House(models.Model):
+#     name = models.CharField(max_length=10)

@@ -1,0 +1,9 @@
+[
+    {
+        "model": "api.Country",
+        "pk": 1,
+        "fields": {
+            "name": "Ethiopia"
+        }
+    }
+]
