@@ -28,32 +28,19 @@
             </div>
             <!-- /.card-header -->
             <div class="card-body">
-              <table id="dataListTable" class="table table-bordered table-striped">
+              <table
+                id="dataListTable"
+                class="table table-bordered table-striped"
+              >
                 <thead>
                   <tr>
-                    <th>Rendering engine</th>
-                    <th>Browser</th>
-                    <th>Platform(s)</th>
-                    <th>Engine version</th>
-                    <th>CSS grade</th>
+                    <th>Name</th>
                   </tr>
                 </thead>
-                <tbody>
-                  <tr>
-                    <td>Trident</td>
-                    <td>Internet Explorer 4.0</td>
-                    <td>Win 95+</td>
-                    <td>4</td>
-                    <td>X</td>
-                  </tr>
-                </tbody>
+                <tbody></tbody>
                 <tfoot>
                   <tr>
-                    <th>Rendering engine</th>
-                    <th>Browser</th>
-                    <th>Platform(s)</th>
-                    <th>Engine version</th>
-                    <th>CSS grade</th>
+                    <th>Name</th>
                   </tr>
                 </tfoot>
               </table>
@@ -90,7 +77,18 @@
         lengthChange: false,
         autoWidth: false,
         buttons: ["copy", "csv", "excel", "pdf", "print", "colvis"],
-        ajax:  ''
+        processing: true,
+        serverSide: true,
+        ajax: {
+          url: "/api/v1/countries/",
+          dataSrc: "results",
+          data: function(d) {
+            console.log(d);
+            d.customValue = 'aaaaa';
+            d.name = d.search.value;
+          }
+        },
+        columns: [{ data: "name" }],
       })
       .buttons()
       .container()
