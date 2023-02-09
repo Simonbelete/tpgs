@@ -1,0 +1,10 @@
+[
+    {
+        "model": "api.City",
+        "pk": 1,
+        "fields": {
+            "name": "Addis Ababa",
+            "country": 1
+        }
+    }
+]

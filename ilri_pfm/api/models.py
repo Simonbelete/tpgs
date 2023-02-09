@@ -50,11 +50,27 @@ class User(AbstractUser):
 
 
 class Country(models.Model):
-    name = models.CharField(max_length=100)
+    name = models.CharField(max_length=100, unique=True)
 
     class Meta:
         ordering = ["name"]
         verbose_name_plural = 'countries'
+
+    def __str__(self):
+        return self.name
+
+
+class City(models.Model):
+    name = models.CharField(max_length=100, unique=True)
+    country = models.ForeignKey(
+        Country, on_delete=models.CASCADE, related_name='cities')
+
+    class Meta:
+        ordering = ["name"]
+        verbose_name_plural = 'cities'
+
+    def __str__(self):
+        return f'{self.country.name} - {self.name}'
 
 
 # class Farm(models.Model):

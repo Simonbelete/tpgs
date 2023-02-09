@@ -6,3 +6,4 @@ from api import models
 
 admin.site.register(models.User, UserAdmin)
 admin.site.register(models.Country, SimpleHistoryAdmin)
+admin.site.register(models.City, SimpleHistoryAdmin)
