@@ -4,7 +4,709 @@
         "pk": 1,
         "fields": {
             "name": "Addis Ababa",
-            "country": 1
+            "country": 1,
+            "created_at": "2023-02-10T06:48:32.271721Z",
+            "created_by": 1
+        }
+    },
+    {
+        "model": "api.City",
+        "pk": 2,
+        "fields": {
+            "name": "Dire Dawa",
+            "country": 1,
+            "created_at": "2023-02-10T06:48:32.271721Z",
+            "created_by": 1
+        }
+    },
+    {
+        "model": "api.City",
+        "pk": 3,
+        "fields": {
+            "name": "Mekelle",
+            "country": 1,
+            "created_at": "2023-02-10T06:48:32.271721Z",
+            "created_by": 1
+        }
+    },
+    {
+        "model": "api.City",
+        "pk": 4,
+        "fields": {
+            "name": "Adama",
+            "country": 1,
+            "created_at": "2023-02-10T06:48:32.271721Z",
+            "created_by": 1
+        }
+    },
+    {
+        "model": "api.City",
+        "pk": 5,
+        "fields": {
+            "name": "Awassa",
+            "country": 1,
+            "created_at": "2023-02-10T06:48:32.271721Z",
+            "created_by": 1
+        }
+    },
+    {
+        "model": "api.City",
+        "pk": 6,
+        "fields": {
+            "name": "Bahir Dar",
+            "country": 1,
+            "created_at": "2023-02-10T06:48:32.271721Z",
+            "created_by": 1
+        }
+    },
+    {
+        "model": "api.City",
+        "pk": 7,
+        "fields": {
+            "name": "Gonder",
+            "country": 1,
+            "created_at": "2023-02-10T06:48:32.271721Z",
+            "created_by": 1
+        }
+    },
+    {
+        "model": "api.City",
+        "pk": 8,
+        "fields": {
+            "name": "Dessie",
+            "country": 1,
+            "created_at": "2023-02-10T06:48:32.271721Z",
+            "created_by": 1
+        }
+    },
+    {
+        "model": "api.City",
+        "pk": 9,
+        "fields": {
+            "name": "Jimma",
+            "country": 1,
+            "created_at": "2023-02-10T06:48:32.271721Z",
+            "created_by": 1
+        }
+    },
+    {
+        "model": "api.City",
+        "pk": 10,
+        "fields": {
+            "name": "Jijiga",
+            "country": 1,
+            "created_at": "2023-02-10T06:48:32.271721Z",
+            "created_by": 1
+        }
+    },
+    {
+        "model": "api.City",
+        "pk": 11,
+        "fields": {
+            "name": "Shashamane",
+            "country": 1,
+            "created_at": "2023-02-10T06:48:32.271721Z",
+            "created_by": 1
+        }
+    },
+    {
+        "model": "api.City",
+        "pk": 12,
+        "fields": {
+            "name": "Bishoftu",
+            "country": 1,
+            "created_at": "2023-02-10T06:48:32.271721Z",
+            "created_by": 1
+        }
+    },
+    {
+        "model": "api.City",
+        "pk": 13,
+        "fields": {
+            "name": "Sodo",
+            "country": 1,
+            "created_at": "2023-02-10T06:48:32.271721Z",
+            "created_by": 1
+        }
+    },
+    {
+        "model": "api.City",
+        "pk": 14,
+        "fields": {
+            "name": "Arba Minch",
+            "country": 1,
+            "created_at": "2023-02-10T06:48:32.271721Z",
+            "created_by": 1
+        }
+    },
+    {
+        "model": "api.City",
+        "pk": 15,
+        "fields": {
+            "name": "Hosaena",
+            "country": 1,
+            "created_at": "2023-02-10T06:48:32.271721Z",
+            "created_by": 1
+        }
+    },
+    {
+        "model": "api.City",
+        "pk": 16,
+        "fields": {
+            "name": "Harar",
+            "country": 1,
+            "created_at": "2023-02-10T06:48:32.271721Z",
+            "created_by": 1
+        }
+    },
+    {
+        "model": "api.City",
+        "pk": 17,
+        "fields": {
+            "name": "Dilla",
+            "country": 1,
+            "created_at": "2023-02-10T06:48:32.271721Z",
+            "created_by": 1
+        }
+    },
+    {
+        "model": "api.City",
+        "pk": 18,
+        "fields": {
+            "name": "Nekemte",
+            "country": 1,
+            "created_at": "2023-02-10T06:48:32.271721Z",
+            "created_by": 1
+        }
+    },
+    {
+        "model": "api.City",
+        "pk": 19,
+        "fields": {
+            "name": "Debre Birhan",
+            "country": 1,
+            "created_at": "2023-02-10T06:48:32.271721Z",
+            "created_by": 1
+        }
+    },
+    {
+        "model": "api.City",
+        "pk": 20,
+        "fields": {
+            "name": "Asella",
+            "country": 1,
+            "created_at": "2023-02-10T06:48:32.271721Z",
+            "created_by": 1
+        }
+    },
+    {
+        "model": "api.City",
+        "pk": 21,
+        "fields": {
+            "name": "Debre Mark'os",
+            "country": 1,
+            "created_at": "2023-02-10T06:48:32.271721Z",
+            "created_by": 1
+        }
+    },
+    {
+        "model": "api.City",
+        "pk": 22,
+        "fields": {
+            "name": "Kombolcha",
+            "country": 1,
+            "created_at": "2023-02-10T06:48:32.271721Z",
+            "created_by": 1
+        }
+    },
+    {
+        "model": "api.City",
+        "pk": 23,
+        "fields": {
+            "name": "Debre Tabor",
+            "country": 1,
+            "created_at": "2023-02-10T06:48:32.271721Z",
+            "created_by": 1
+        }
+    },
+    {
+        "model": "api.City",
+        "pk": 24,
+        "fields": {
+            "name": "Adigrat",
+            "country": 1,
+            "created_at": "2023-02-10T06:48:32.271721Z",
+            "created_by": 1
+        }
+    },
+    {
+        "model": "api.City",
+        "pk": 25,
+        "fields": {
+            "name": "Areka",
+            "country": 1,
+            "created_at": "2023-02-10T06:48:32.271721Z",
+            "created_by": 1
+        }
+    },
+    {
+        "model": "api.City",
+        "pk": 26,
+        "fields": {
+            "name": "Weldiya",
+            "country": 1,
+            "created_at": "2023-02-10T06:48:32.271721Z",
+            "created_by": 1
+        }
+    },
+    {
+        "model": "api.City",
+        "pk": 27,
+        "fields": {
+            "name": "Sebeta",
+            "country": 1,
+            "created_at": "2023-02-10T06:48:32.271721Z",
+            "created_by": 1
+        }
+    },
+    {
+        "model": "api.City",
+        "pk": 28,
+        "fields": {
+            "name": "Burayu",
+            "country": 1,
+            "created_at": "2023-02-10T06:48:32.271721Z",
+            "created_by": 1
+        }
+    },
+    {
+        "model": "api.City",
+        "pk": 29,
+        "fields": {
+            "name": "Shire (Inda Selassie)",
+            "country": 1,
+            "created_at": "2023-02-10T06:48:32.271721Z",
+            "created_by": 1
+        }
+    },
+    {
+        "model": "api.City",
+        "pk": 30,
+        "fields": {
+            "name": "Ambo",
+            "country": 1,
+            "created_at": "2023-02-10T06:48:32.271721Z",
+            "created_by": 1
+        }
+    },
+    {
+        "model": "api.City",
+        "pk": 31,
+        "fields": {
+            "name": "Arsi Negele",
+            "country": 1,
+            "created_at": "2023-02-10T06:48:32.271721Z",
+            "created_by": 1
+        }
+    },
+    {
+        "model": "api.City",
+        "pk": 32,
+        "fields": {
+            "name": "Aksum",
+            "country": 1,
+            "created_at": "2023-02-10T06:48:32.271721Z",
+            "created_by": 1
+        }
+    },
+    {
+        "model": "api.City",
+        "pk": 33,
+        "fields": {
+            "name": "Gambela",
+            "country": 1,
+            "created_at": "2023-02-10T06:48:32.271721Z",
+            "created_by": 1
+        }
+    },
+    {
+        "model": "api.City",
+        "pk": 34,
+        "fields": {
+            "name": "Bale Robe",
+            "country": 1,
+            "created_at": "2023-02-10T06:48:32.271721Z",
+            "created_by": 1
+        }
+    },
+    {
+        "model": "api.City",
+        "pk": 35,
+        "fields": {
+            "name": "Butajira",
+            "country": 1,
+            "created_at": "2023-02-10T06:48:32.271721Z",
+            "created_by": 1
+        }
+    },
+    {
+        "model": "api.City",
+        "pk": 36,
+        "fields": {
+            "name": "Batu",
+            "country": 1,
+            "created_at": "2023-02-10T06:48:32.271721Z",
+            "created_by": 1
+        }
+    },
+    {
+        "model": "api.City",
+        "pk": 37,
+        "fields": {
+            "name": "Boditi",
+            "country": 1,
+            "created_at": "2023-02-10T06:48:32.271721Z",
+            "created_by": 1
+        }
+    },
+    {
+        "model": "api.City",
+        "pk": 38,
+        "fields": {
+            "name": "Adwa",
+            "country": 1,
+            "created_at": "2023-02-10T06:48:32.271721Z",
+            "created_by": 1
+        }
+    },
+    {
+        "model": "api.City",
+        "pk": 39,
+        "fields": {
+            "name": "Yirgalem",
+            "country": 1,
+            "created_at": "2023-02-10T06:48:32.271721Z",
+            "created_by": 1
+        }
+    },
+    {
+        "model": "api.City",
+        "pk": 40,
+        "fields": {
+            "name": "Waliso",
+            "country": 1,
+            "created_at": "2023-02-10T06:48:32.271721Z",
+            "created_by": 1
+        }
+    },
+    {
+        "model": "api.City",
+        "pk": 41,
+        "fields": {
+            "name": "Welkite",
+            "country": 1,
+            "created_at": "2023-02-10T06:48:32.271721Z",
+            "created_by": 1
+        }
+    },
+    {
+        "model": "api.City",
+        "pk": 42,
+        "fields": {
+            "name": "Gode",
+            "country": 1,
+            "created_at": "2023-02-10T06:48:32.271721Z",
+            "created_by": 1
+        }
+    },
+    {
+        "model": "api.City",
+        "pk": 43,
+        "fields": {
+            "name": "Meki",
+            "country": 1,
+            "created_at": "2023-02-10T06:48:32.271721Z",
+            "created_by": 1
+        }
+    },
+    {
+        "model": "api.City",
+        "pk": 44,
+        "fields": {
+            "name": "Negele Borana",
+            "country": 1,
+            "created_at": "2023-02-10T06:48:32.271721Z",
+            "created_by": 1
+        }
+    },
+    {
+        "model": "api.City",
+        "pk": 45,
+        "fields": {
+            "name": "Alaba Kulito",
+            "country": 1,
+            "created_at": "2023-02-10T06:48:32.271721Z",
+            "created_by": 1
+        }
+    },
+    {
+        "model": "api.City",
+        "pk": 46,
+        "fields": {
+            "name": "Alamata",
+            "country": 1,
+            "created_at": "2023-02-10T06:48:32.271721Z",
+            "created_by": 1
+        }
+    },
+    {
+        "model": "api.City",
+        "pk": 47,
+        "fields": {
+            "name": "Chiro",
+            "country": 1,
+            "created_at": "2023-02-10T06:48:32.271721Z",
+            "created_by": 1
+        }
+    },
+    {
+        "model": "api.City",
+        "pk": 48,
+        "fields": {
+            "name": "Tepi",
+            "country": 1,
+            "created_at": "2023-02-10T06:48:32.271721Z",
+            "created_by": 1
+        }
+    },
+    {
+        "model": "api.City",
+        "pk": 49,
+        "fields": {
+            "name": "Durame",
+            "country": 1,
+            "created_at": "2023-02-10T06:48:32.271721Z",
+            "created_by": 1
+        }
+    },
+    {
+        "model": "api.City",
+        "pk": 50,
+        "fields": {
+            "name": "Goba",
+            "country": 1,
+            "created_at": "2023-02-10T06:48:32.271721Z",
+            "created_by": 1
+        }
+    },
+    {
+        "model": "api.City",
+        "pk": 51,
+        "fields": {
+            "name": "Assosa",
+            "country": 1,
+            "created_at": "2023-02-10T06:48:32.271721Z",
+            "created_by": 1
+        }
+    },
+    {
+        "model": "api.City",
+        "pk": 52,
+        "fields": {
+            "name": "Gimbi",
+            "country": 1,
+            "created_at": "2023-02-10T06:48:32.271721Z",
+            "created_by": 1
+        }
+    },
+    {
+        "model": "api.City",
+        "pk": 53,
+        "fields": {
+            "name": "Wukro",
+            "country": 1,
+            "created_at": "2023-02-10T06:48:32.271721Z",
+            "created_by": 1
+        }
+    },
+    {
+        "model": "api.City",
+        "pk": 54,
+        "fields": {
+            "name": "Haramaya",
+            "country": 1,
+            "created_at": "2023-02-10T06:48:32.271721Z",
+            "created_by": 1
+        }
+    },
+    {
+        "model": "api.City",
+        "pk": 55,
+        "fields": {
+            "name": "Mizan Teferi",
+            "country": 1,
+            "created_at": "2023-02-10T06:48:32.271721Z",
+            "created_by": 1
+        }
+    },
+    {
+        "model": "api.City",
+        "pk": 56,
+        "fields": {
+            "name": "Sawla",
+            "country": 1,
+            "created_at": "2023-02-10T06:48:32.271721Z",
+            "created_by": 1
+        }
+    },
+    {
+        "model": "api.City",
+        "pk": 57,
+        "fields": {
+            "name": "Mojo",
+            "country": 1,
+            "created_at": "2023-02-10T06:48:32.271721Z",
+            "created_by": 1
+        }
+    },
+    {
+        "model": "api.City",
+        "pk": 58,
+        "fields": {
+            "name": "Dembi Dolo",
+            "country": 1,
+            "created_at": "2023-02-10T06:48:32.271721Z",
+            "created_by": 1
+        }
+    },
+    {
+        "model": "api.City",
+        "pk": 59,
+        "fields": {
+            "name": "Aleta Wendo",
+            "country": 1,
+            "created_at": "2023-02-10T06:48:32.271721Z",
+            "created_by": 1
+        }
+    },
+    {
+        "model": "api.City",
+        "pk": 60,
+        "fields": {
+            "name": "Metu",
+            "country": 1,
+            "created_at": "2023-02-10T06:48:32.271721Z",
+            "created_by": 1
+        }
+    },
+    {
+        "model": "api.City",
+        "pk": 61,
+        "fields": {
+            "name": "Mota",
+            "country": 1,
+            "created_at": "2023-02-10T06:48:32.271721Z",
+            "created_by": 1
+        }
+    },
+    {
+        "model": "api.City",
+        "pk": 62,
+        "fields": {
+            "name": "Fiche",
+            "country": 1,
+            "created_at": "2023-02-10T06:48:32.271721Z",
+            "created_by": 1
+        }
+    },
+    {
+        "model": "api.City",
+        "pk": 63,
+        "fields": {
+            "name": "Finote Selam",
+            "country": 1,
+            "created_at": "2023-02-10T06:48:32.271721Z",
+            "created_by": 1
+        }
+    },
+    {
+        "model": "api.City",
+        "pk": 64,
+        "fields": {
+            "name": "Bule Hora Town",
+            "country": 1,
+            "created_at": "2023-02-10T06:48:32.271721Z",
+            "created_by": 1
+        }
+    },
+    {
+        "model": "api.City",
+        "pk": 65,
+        "fields": {
+            "name": "Bonga",
+            "country": 1,
+            "created_at": "2023-02-10T06:48:32.271721Z",
+            "created_by": 1
+        }
+    },
+    {
+        "model": "api.City",
+        "pk": 66,
+        "fields": {
+            "name": "Kobo",
+            "country": 1,
+            "created_at": "2023-02-10T06:48:32.271721Z",
+            "created_by": 1
+        }
+    },
+    {
+        "model": "api.City",
+        "pk": 67,
+        "fields": {
+            "name": "Jinka",
+            "country": 1,
+            "created_at": "2023-02-10T06:48:32.271721Z",
+            "created_by": 1
+        }
+    },
+    {
+        "model": "api.City",
+        "pk": 68,
+        "fields": {
+            "name": "Dangila",
+            "country": 1,
+            "created_at": "2023-02-10T06:48:32.271721Z",
+            "created_by": 1
+        }
+    },
+    {
+        "model": "api.City",
+        "pk": 69,
+        "fields": {
+            "name": "Degehabur",
+            "country": 1,
+            "created_at": "2023-02-10T06:48:32.271721Z",
+            "created_by": 1
+        }
+    },
+    {
+        "model": "api.City",
+        "pk": 70,
+        "fields": {
+            "name": "Dimtu",
+            "country": 1,
+            "created_at": "2023-02-10T06:48:32.271721Z",
+            "created_by": 1
+        }
+    },
+    {
+        "model": "api.City",
+        "pk": 71,
+        "fields": {
+            "name": "Agaro",
+            "country": 1,
+            "created_at": "2023-02-10T06:48:32.271721Z",
+            "created_by": 1
         }
     }
 ]
