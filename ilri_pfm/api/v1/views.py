@@ -2,7 +2,7 @@ from django.shortcuts import render
 from rest_framework import viewsets
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework.filters import SearchFilter
+from rest_framework.filters import SearchFilter, OrderingFilter
 from django_filters import rest_framework as filters
 
 import api.models as models
@@ -20,9 +20,11 @@ class CountryFilter(filters.FilterSet):
 class CountryViewSet(viewsets.ModelViewSet):
     queryset = models.Country.objects.all()
     serializer_class = serializers.CountrySerializer_GET_V1
-    filter_backends = (filters.DjangoFilterBackend, SearchFilter)
+    filter_backends = (filters.DjangoFilterBackend,
+                       SearchFilter, OrderingFilter)
     filterset_class = CountryFilter
     search_fields = ['name']
+    ordering_fields = '__all__'
 
     def get_serializer_class(self):
         if self.request.version == 'v1':
