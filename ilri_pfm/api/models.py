@@ -1,6 +1,8 @@
 from django.db import models
+from django.conf import settings
 from django.utils import timezone
 from django.contrib.auth.models import AbstractUser
+from simple_history.models import HistoricalRecords
 from django.contrib.auth.base_user import BaseUserManager
 
 
@@ -52,6 +54,11 @@ class User(AbstractUser):
 class Country(models.Model):
     name = models.CharField(max_length=100, unique=True)
 
+    created_at = models.DateTimeField(auto_now_add=True)
+    created_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.PROTECT)
+    history = HistoricalRecords()
+
     class Meta:
         ordering = ["name"]
         verbose_name_plural = 'countries'
@@ -64,6 +71,11 @@ class City(models.Model):
     name = models.CharField(max_length=100, unique=True)
     country = models.ForeignKey(
         Country, on_delete=models.CASCADE, related_name='cities')
+
+    created_at = models.DateTimeField(auto_now_add=True)
+    created_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.PROTECT)
+    history = HistoricalRecords()
 
     class Meta:
         ordering = ["name"]

@@ -26,10 +26,13 @@ class CountryViewSet(viewsets.ModelViewSet):
     search_fields = ['name']
     ordering_fields = '__all__'
 
+    def perform_create(self, serializer):
+        serializer.save(created_by=self.request.user)
+
     def get_serializer_class(self):
-        if self.request.version == 'v1':
+        if self.request.method == 'GET':
             return serializers.CountrySerializer_GET_V1
-        return serializers.CountrySerializer_GET_V1
+        return serializers.CountrySerializer_POST_V1
 
 
 class ListUsers(APIView):
