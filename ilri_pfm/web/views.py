@@ -243,7 +243,7 @@ def farms(request):
         else:
             return HttpResponseRedirect('/home/farms')
     else:
-        return render(request, 'breed_types.html')
+        return render(request, 'farms.html')
 
 
 @login_required(login_url='/login')
@@ -263,4 +263,4 @@ def farm_edit(request, id=0):
             context['data'] = models.Farm.objects.get(pk=id)
         else:
             context['data'] = None
-        return render(request, 'breed_type_edit.html', context=context)
+        return render(request, 'farm_edit.html', context=context)

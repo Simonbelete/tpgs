@@ -1,0 +1,132 @@
+{% extends "sidebar.html" %} {% load static %} {% block body %}
+
+<!-- Content Header (Page header) -->
+<section class="content-header">
+  <div class="container-fluid">
+    <div class="row mb-2">
+      <div class="col-sm-6">
+        <h1>Feed Types</h1>
+        <a type="button" href="/home/farms-create" class"btn btn-block btn-success btn-lg mt-3">Create</a>
+      </div>
+      <div class="col-sm-6">
+        <ol class="breadcrumb float-sm-right">
+          <li class="breadcrumb-item"><a href="/">Home</a></li>
+          <li class="breadcrumb-item active">Farms</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+  <!-- /.container-fluid -->
+
+  <!-- Main content -->
+  <section class="content">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-12">
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title">List of all Feed types</h3>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body">
+              <table
+                id="dataListTable"
+                class="table table-bordered table-striped"
+              >
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Created At</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody></tbody>
+                <tfoot>
+                  <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Created At</th>
+                    <th></th>
+                  </tr>
+                </tfoot>
+              </table>
+            </div>
+            <!-- /.card-body -->
+          </div>
+          <!-- /.card -->
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- /.content -->
+</section>
+
+{% endblock %} {% block script %}
+<script src="{% static 'admin-LTE-v3.2.0/plugins/datatables/jquery.dataTables.min.js' %}"></script>
+<script src="{% static 'admin-LTE-v3.2.0/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js' %}"></script>
+<script src="{% static 'admin-LTE-v3.2.0/plugins/datatables-responsive/js/dataTables.responsive.min.js' %}"></script>
+<script src="{% static 'admin-LTE-v3.2.0/plugins/datatables-responsive/js/responsive.bootstrap4.min.js' %}"></script>
+<script src="{% static 'admin-LTE-v3.2.0/plugins/datatables-buttons/js/dataTables.buttons.min.js' %}"></script>
+<script src="{% static 'admin-LTE-v3.2.0/plugins/datatables-buttons/js/buttons.bootstrap4.min.js' %}"></script>
+<script src="{% static 'admin-LTE-v3.2.0/plugins/jszip/jszip.min.js' %}"></script>
+<script src="{% static 'admin-LTE-v3.2.0/plugins/pdfmake/pdfmake.min.js' %}"></script>
+<script src="{% static 'admin-LTE-v3.2.0/plugins/pdfmake/vfs_fonts.js' %}"></script>
+<script src="{% static 'admin-LTE-v3.2.0/plugins/datatables-buttons/js/buttons.html5.min.js' %}"></script>
+<script src="{% static 'admin-LTE-v3.2.0/plugins/datatables-buttons/js/buttons.print.min.js' %}"></script>
+<script src="{% static 'admin-LTE-v3.2.0/plugins/datatables-buttons/js/buttons.colVis.min.js' %}"></script>
+<script>
+  $(function () {
+    var columns = [
+      { data: "id" },
+      { data: "name" },
+      { data: "created_at" },
+      {
+        data: null,
+        className: "dt-center editor-edit",
+        defaultContent: '<i class="fas fa-pencil-alt"></i>',
+        orderable: false,
+      },
+    ];
+    var table = $("#dataListTable").DataTable({
+      responsive: true,
+      lengthChange: false,
+      autoWidth: false,
+      buttons: ["copy", "csv", "excel", "pdf", "print", "colvis"],
+      processing: true,
+      serverSide: true,
+      ajax: {
+        url: "/api/v1/farms/",
+        dataSrc: function (json) {
+          json["data"] = json["results"];
+          json["recordsTotal"] = json["count"];
+          json["recordsFiltered"] = json["count"];
+          return json.data;
+        },
+        data: function (d) {
+          d.search = d.search.value;
+          for (let i = 0; i < d.order.length; i++) {
+            var sign = d.order[i].dir == "asc" ? "+" : "-";
+            d.ordering = sign + columns[i].data;
+          }
+        },
+      },
+      columns: columns,
+    });
+
+    table
+      .buttons()
+      .container()
+      .appendTo("#dataListTable_wrapper .col-md-6:eq(0)");
+
+    // Edit record
+    $("#dataListTable").on("click", "td.editor-edit", function (e) {
+      e.preventDefault();
+      var data = table.row(this).data();
+      console.log(data);
+      window.location.href = "/home/farms/" + data.id;
+    });
+  });
+</script>
+{% endblock %}

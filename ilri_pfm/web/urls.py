@@ -27,4 +27,9 @@ urlpatterns = [
     path('home/breed-types/<id>', views.breed_type_edit, name='breed_type'),
     path('home/breed-types-create', views.breed_type_edit,
          name='breed_type_create'),
+
+    path('home/farms/', views.farms, name='farms'),
+    path('home/farms/<id>', views.farm_edit, name='farm'),
+    path('home/farms-create', views.farm_edit,
+         name='farm_create'),
 ]
