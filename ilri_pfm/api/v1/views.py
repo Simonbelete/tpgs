@@ -11,6 +11,35 @@ from api.v1 import serializers
 ############################ Country ############################
 
 
+class UserFilter(filters.FilterSet):
+    name = filters.CharFilter(field_name='name', lookup_expr='contains')
+
+    class Meta:
+        model = models.User
+        fields = ['name']
+
+
+class UserViewSet(viewsets.ModelViewSet):
+    queryset = models.User.objects.all()
+    serializer_class = serializers.UserSerializer_GET_V1
+    filter_backends = (filters.DjangoFilterBackend,
+                       SearchFilter, OrderingFilter)
+    filterset_class = UserFilter
+    search_fields = ['name']
+    ordering_fields = '__all__'
+
+    # def perform_create(self, serializer):
+    #     serializer.save(created_by=self.request.user)
+
+    def get_serializer_class(self):
+        if self.request.method == 'GET':
+            return serializers.UserSerializer_GET_V1
+        return serializers.UserSerializer_POST_V1
+
+
+############################ Country ############################
+
+
 class CountryFilter(filters.FilterSet):
     name = filters.CharFilter(field_name='name', lookup_expr='contains')
 

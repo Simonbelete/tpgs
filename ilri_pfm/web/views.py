@@ -58,3 +58,9 @@ def register(request):
 @require_http_methods(["GET", "POST"])
 def home(request):
     return render(request, 'home.html')
+
+
+@login_required(login_url='/login')
+@require_http_methods(["GET", "POST"])
+def users(request):
+    return render(request, 'users.html')

@@ -2,6 +2,21 @@ from rest_framework import serializers
 
 import api.models as models
 
+############################ Users ############################
+
+
+class UserSerializer_GET_V1(serializers.ModelSerializer):
+    class Meta:
+        model = models.User
+        fields = ['id', 'name', 'email']
+
+
+class UserSerializer_POST_V1(serializers.ModelSerializer):
+    class Meta:
+        model = models.User
+        fields = ['id', 'name', 'email']
+
+
 ############################ Country ############################
 
 
