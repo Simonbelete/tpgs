@@ -198,7 +198,7 @@ def stage_edit(request, id=0):
 @require_http_methods(["GET", "POST"])
 def breed_types(request):
     if request.method == 'POST':
-        form = forms.StageForm(request.POST)
+        form = forms.BreedTypeForm(request.POST)
         if form.is_valid():
             form = form.save(commit=False)
             form.created_by = request.user

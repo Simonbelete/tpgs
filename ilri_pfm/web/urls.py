@@ -22,4 +22,9 @@ urlpatterns = [
     path('home/stages/<id>', views.stage_edit, name='stage'),
     path('home/stages-create', views.stage_edit,
          name='stage_create'),
+
+    path('home/breed-types/', views.breed_types, name='breed_types'),
+    path('home/breed-types/<id>', views.breed_type_edit, name='breed_type'),
+    path('home/breed-types-create', views.breed_type_edit,
+         name='breed_type_create'),
 ]
