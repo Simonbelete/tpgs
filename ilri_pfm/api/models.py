@@ -149,17 +149,106 @@ class Stage(models.Model):
     history = HistoricalRecords()
 
 
-# class Chicken(models.Model):
-#     SEX_CHOICES = (
-#         ('F', 'Female',),
-#         ('M', 'Male',),
-#     )
+class LayedPlace(models.Model):
+    name = models.CharField(max_length=250)
+    is_active = models.BooleanField(default=True)
 
-#     tag = models.CharField(max_length=250)
-#     sex = models.CharField(max_length=1, choices=SEX_CHOICES, default='')
+    created_at = models.DateTimeField(auto_now_add=True)
+    created_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.PROTECT)
+    history = HistoricalRecords()
 
-#     is_active = models.BooleanField(default=True)
-#     created_at = models.DateTimeField(auto_now_add=True)
-#     created_by = models.ForeignKey(
-#         settings.AUTH_USER_MODEL, on_delete=models.PROTECT)
-#     history = HistoricalRecords()
+    def __str__(self):
+        return self.name
+
+
+class Chicken(models.Model):
+    SEX_CHOICES = (
+        ('F', 'Female',),
+        ('M', 'Male',),
+    )
+
+    tag = models.CharField(max_length=250)
+    sex = models.CharField(max_length=1, choices=SEX_CHOICES, default='')
+    farm = models.ForeignKey(
+        Farm, on_delete=models.SET_NULL, null=True, related_name='chickens')
+    house = models.ForeignKey(
+        House, on_delete=models.SET_NULL, null=True, related_name='chickens')
+    breed_type = models.ForeignKey(
+        BreedType, on_delete=models.SET_NULL, null=True, related_name='houses')
+    layed_place = models.ForeignKey(
+        LayedPlace, on_delete=models.SET_NULL, null=True)
+    layed_date = models.DateField()
+    is_double_yolk = models.BooleanField(default=False)
+
+    is_active = models.BooleanField(default=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    created_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.PROTECT)
+    history = HistoricalRecords()
+
+
+class BreedPair(models.Model):
+    father = models.ForeignKey(
+        Chicken, on_delete=models.SET_NULL, null=True, related_name='father')
+    mother = models.ForeignKey(
+        Chicken, on_delete=models.SET_NULL, null=True, related_name='mother')
+    date = models.DateField()
+    children = models.ForeignKey(
+        Chicken, on_delete=models.SET_NULL, null=True, related_name='parent')
+
+    is_active = models.BooleanField(default=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    created_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.PROTECT)
+    history = HistoricalRecords()
+
+
+class Weight(models.Model):
+    date = models.DateField()
+    weight = models.DecimalField(
+        max_digits=6, decimal_places=3, default=0)
+    chicken = models.ForeignKey(
+        Chicken, on_delete=models.CASCADE, null=True, related_name='weights')
+
+    is_active = models.BooleanField(default=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    created_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.PROTECT)
+    history = HistoricalRecords()
+
+
+class Egg(models.Model):
+    date = models.DateField()
+    chicken = models.ForeignKey(
+        Chicken, on_delete=models.CASCADE, related_name='eggs')
+
+    is_active = models.BooleanField(default=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    created_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.PROTECT)
+    history = HistoricalRecords()
+
+
+class FeedType(models.Model):
+    name = models.CharField(max_length=250, unique=True)
+
+    is_active = models.BooleanField(default=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    created_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.PROTECT)
+    history = HistoricalRecords()
+
+
+class Feed(models.Model):
+    date = models.DateField()
+    chicken = models.ForeignKey(
+        Chicken, on_delete=models.CASCADE, related_name='feeds')
+    feed_type = models.ForeignKey(
+        FeedType, on_delete=models.SET_NULL, null=True, related_name='feeds')
+
+    is_active = models.BooleanField(default=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    created_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.PROTECT)
+    history = HistoricalRecords()
