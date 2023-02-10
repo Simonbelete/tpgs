@@ -155,7 +155,7 @@ class ChickenSerializer_POST_V1(serializers.ModelSerializer):
     tag = serializers.CharField()
     sex = serializers.CharField()
     farm = serializers.PrimaryKeyRelatedField(
-        read_only=False, queryset=models.Chicken.objects.all())
+        read_only=False, queryset=models.Farm.objects.all())
     house = serializers.PrimaryKeyRelatedField(
         read_only=False, queryset=models.House.objects.all())
     breed_type = serializers.PrimaryKeyRelatedField(
