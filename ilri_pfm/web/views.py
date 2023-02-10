@@ -84,3 +84,26 @@ def user_edit(request, id):
         context = {}
         context['user'] = models.User.objects.get(pk=id)
         return render(request, 'user_edit.html', context=context)
+
+
+@login_required(login_url='/login')
+@require_http_methods(["GET", "POST"])
+def feed_types(request):
+    return render(request, 'feed_types.html')
+
+
+@login_required(login_url='/login')
+@require_http_methods(["GET", "POST"])
+def feed_type_edit(request, id):
+    if request.method == 'POST':
+        instance = models.FeedType.objects.get(pk=id)
+        form = forms.FeedTypeForm(request.POST, instance=instance)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect('/home/feed-types')
+        else:
+            return HttpResponseRedirect(f'/home/feed-types/%s' % id)
+    else:
+        context = {}
+        context['feed'] = models.FeedType.objects.get(pk=id)
+        return render(request, 'feed_type_edit.html', context=context)

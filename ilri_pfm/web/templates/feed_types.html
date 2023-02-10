@@ -36,7 +36,7 @@
                   <tr>
                     <th>ID</th>
                     <th>Name</th>
-                    <th>Email</th>
+                    <th>Created At</th>
                     <th></th>
                   </tr>
                 </thead>
@@ -45,7 +45,7 @@
                   <tr>
                     <th>ID</th>
                     <th>Name</th>
-                    <th>Email</th>
+                    <th>Created At</th>
                     <th></th>
                   </tr>
                 </tfoot>
@@ -80,7 +80,7 @@
     var columns = [
       { data: "id" },
       { data: "name" },
-      { data: "" },
+      { data: "created_at" },
       {
         data: null,
         className: "dt-center editor-edit",
@@ -124,7 +124,7 @@
       e.preventDefault();
       var data = table.row(this).data();
       console.log(data);
-      window.location.href = "/home/users/" + data.id;
+      window.location.href = "/home/feed-types/" + data.id;
     });
   });
 </script>

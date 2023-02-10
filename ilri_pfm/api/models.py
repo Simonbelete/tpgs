@@ -239,6 +239,9 @@ class FeedType(models.Model):
         settings.AUTH_USER_MODEL, on_delete=models.PROTECT)
     history = HistoricalRecords()
 
+    def __str__(self):
+        return self.name
+
 
 class Feed(models.Model):
     date = models.DateField()
