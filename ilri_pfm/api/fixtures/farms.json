@@ -1,0 +1,12 @@
+[
+    {
+        "model": "api.Farm",
+        "pk": 1,
+        "fields": {
+            "name": "Horro",
+            "city": 64,
+            "created_at": "2023-02-10T06:48:32.271721Z",
+            "created_by": 1
+        }
+    }
+]
