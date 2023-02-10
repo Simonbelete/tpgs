@@ -147,3 +147,31 @@ class BreedTypeViewSet(viewsets.ModelViewSet):
         if self.request.method == 'GET':
             return serializers.BreedTypeSerializer_GET_V1
         return serializers.BreedTypeSerializer_POST_V1
+
+
+############################ Stages ############################
+
+class StageFilter(filters.FilterSet):
+    name = filters.CharFilter(field_name='name', lookup_expr='contains')
+
+    class Meta:
+        model = models.Stage
+        fields = ['name']
+
+
+class StageViewSet(viewsets.ModelViewSet):
+    queryset = models.Stage.objects.all()
+    serializer_class = serializers.StageSerializer_GET_V1
+    filter_backends = (filters.DjangoFilterBackend,
+                       SearchFilter, OrderingFilter)
+    filterset_class = StageFilter
+    search_fields = ['name']
+    ordering_fields = '__all__'
+
+    def perform_create(self, serializer):
+        serializer.save(created_by=self.request.user)
+
+    def get_serializer_class(self):
+        if self.request.method == 'GET':
+            return serializers.StageSerializer_GET_V1
+        return serializers.StageSerializer_POST_V1

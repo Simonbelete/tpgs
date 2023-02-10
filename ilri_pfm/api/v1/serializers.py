@@ -91,3 +91,21 @@ class BreedTypeSerializer_POST_V1(serializers.ModelSerializer):
     class Meta:
         model = models.BreedType
         fields = ['name', 'color', 'is_active']
+
+############################ Breed Type ############################
+
+
+class StageSerializer_GET_V1(serializers.ModelSerializer):
+    class Meta:
+        model = models.Stage
+        fields = '__all__'
+
+
+class StageSerializer_POST_V1(serializers.ModelSerializer):
+    name = serializers.CharField()
+    min_week = serializers.IntegerField()
+    max_week = serializers.IntegerField()
+
+    class Meta:
+        model = models.Stage
+        fields = ['name', 'min_week', 'max_week']

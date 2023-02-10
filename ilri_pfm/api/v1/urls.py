@@ -9,6 +9,7 @@ router.register(r'cities', views.CityViewSet, basename='cities')
 router.register(r'farms', views.FarmViewSet, basename='farms')
 router.register(r'houses', views.HouseViewSet, basename='houses')
 router.register(r'breed-types', views.BreedTypeViewSet, basename='breed_types')
+router.register(r'stages', views.StageViewSet, basename='stages')
 
 urlpatterns = [
     path('', include(router.urls))

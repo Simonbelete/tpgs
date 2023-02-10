@@ -135,3 +135,31 @@ class BreedType(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Stage(models.Model):
+    name = models.CharField(max_length=250)
+    min_week = models.IntegerField()
+    max_week = models.IntegerField()
+
+    is_active = models.BooleanField(default=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    created_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.PROTECT)
+    history = HistoricalRecords()
+
+
+# class Chicken(models.Model):
+#     SEX_CHOICES = (
+#         ('F', 'Female',),
+#         ('M', 'Male',),
+#     )
+
+#     tag = models.CharField(max_length=250)
+#     sex = models.CharField(max_length=1, choices=SEX_CHOICES, default='')
+
+#     is_active = models.BooleanField(default=True)
+#     created_at = models.DateTimeField(auto_now_add=True)
+#     created_by = models.ForeignKey(
+#         settings.AUTH_USER_MODEL, on_delete=models.PROTECT)
+#     history = HistoricalRecords()
