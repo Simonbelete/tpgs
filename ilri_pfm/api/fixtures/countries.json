@@ -3,7 +3,81 @@
         "model": "api.Country",
         "pk": 1,
         "fields": {
-            "name": "Ethiopia"
+            "name": "Ethiopia",
+            "created_at": "2023-02-10T06:48:32.271721Z",
+            "created_by": 1
+        }
+    },
+    {
+        "model": "api.Country",
+        "pk": 2,
+        "fields": {
+            "name": "Nigeria",
+            "created_at": "2023-02-10T06:48:32.271721Z",
+            "created_by": 1
+        }
+    },
+    {
+        "model": "api.Country",
+        "pk": 3,
+        "fields": {
+            "name": "Egypt",
+            "created_at": "2023-02-10T06:48:32.271721Z",
+            "created_by": 1
+        }
+    },
+    {
+        "model": "api.Country",
+        "pk": 4,
+        "fields": {
+            "name": "Ethiopia",
+            "created_at": "2023-02-10T06:48:32.271721Z",
+            "created_by": 1
+        }
+    },
+    {
+        "model": "api.Country",
+        "pk": 5,
+        "fields": {
+            "name": "DR Congo",
+            "created_at": "2023-02-10T06:48:32.271721Z",
+            "created_by": 1
+        }
+    },
+    {
+        "model": "api.Country",
+        "pk": 6,
+        "fields": {
+            "name": "Tanzania",
+            "created_at": "2023-02-10T06:48:32.271721Z",
+            "created_by": 1
+        }
+    },
+    {
+        "model": "api.Country",
+        "pk": 7,
+        "fields": {
+            "name": "South Africa",
+            "created_at": "2023-02-10T06:48:32.271721Z",
+            "created_by": 1
+        }
+    },
+    {
+        "model": "api.Country",
+        "pk": 8,
+        "fields": {
+            "name": "Kenya",
+            "created_at": "2023-02-10T06:48:32.271721Z",
+            "created_by": 1
+        }
+    },
+    {
+        "model": "api.Country",
+        "pk": 9,
+        "fields": {
+            "name": "Uganda",
+            "created_at": "2023-02-10T06:48:32.271721Z",
+            "created_by": 1
         }
     }
 ]
