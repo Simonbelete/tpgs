@@ -121,3 +121,17 @@ class House(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class BreedType(models.Model):
+    name = models.CharField(max_length=250)
+    color = models.CharField(max_length=10, null=True)
+
+    is_active = models.BooleanField(default=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    created_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.PROTECT)
+    history = HistoricalRecords()
+
+    def __str__(self):
+        return self.name

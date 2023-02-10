@@ -73,3 +73,21 @@ class HouseSerializer_POST_V1(serializers.ModelSerializer):
     class Meta:
         model = models.House
         fields = ['name', 'farm', 'is_active']
+
+
+############################ Breed Type ############################
+
+class BreedTypeSerializer_GET_V1(serializers.ModelSerializer):
+    class Meta:
+        model = models.BreedType
+        fields = '__all__'
+
+
+class BreedTypeSerializer_POST_V1(serializers.ModelSerializer):
+    name = serializers.CharField()
+    color = serializers.CharField()
+    is_active = serializers.BooleanField(default=True)
+
+    class Meta:
+        model = models.BreedType
+        fields = ['name', 'color', 'is_active']

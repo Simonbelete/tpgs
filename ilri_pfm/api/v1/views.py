@@ -119,3 +119,31 @@ class HouseViewSet(viewsets.ModelViewSet):
         if self.request.method == 'GET':
             return serializers.HouseSerializer_GET_V1
         return serializers.HouseSerializer_POST_V1
+
+
+############################ Breed Type ############################
+
+class BreedTypeFilter(filters.FilterSet):
+    name = filters.CharFilter(field_name='name', lookup_expr='contains')
+
+    class Meta:
+        model = models.BreedType
+        fields = ['name']
+
+
+class BreedTypeViewSet(viewsets.ModelViewSet):
+    queryset = models.BreedType.objects.all()
+    serializer_class = serializers.BreedTypeSerializer_GET_V1
+    filter_backends = (filters.DjangoFilterBackend,
+                       SearchFilter, OrderingFilter)
+    filterset_class = BreedTypeFilter
+    search_fields = ['name']
+    ordering_fields = '__all__'
+
+    def perform_create(self, serializer):
+        serializer.save(created_by=self.request.user)
+
+    def get_serializer_class(self):
+        if self.request.method == 'GET':
+            return serializers.BreedTypeSerializer_GET_V1
+        return serializers.BreedTypeSerializer_POST_V1
