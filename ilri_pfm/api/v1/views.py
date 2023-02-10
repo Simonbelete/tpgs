@@ -221,7 +221,7 @@ class LayedPlaceViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.LayedPlaceSerializer_GET_V1
     filter_backends = (filters.DjangoFilterBackend,
                        SearchFilter, OrderingFilter)
-    filterset_class = StageFilter
+    filterset_class = LayedPlaceFilter
     search_fields = ['name']
     ordering_fields = '__all__'
 

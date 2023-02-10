@@ -130,7 +130,7 @@ class StageSerializer_POST_V1(serializers.ModelSerializer):
 
 class LayedPlaceSerializer_GET_V1(serializers.ModelSerializer):
     class Meta:
-        model = models.Stage
+        model = models.LayedPlace
         fields = '__all__'
 
 
