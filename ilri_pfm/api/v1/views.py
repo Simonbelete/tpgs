@@ -175,3 +175,195 @@ class StageViewSet(viewsets.ModelViewSet):
         if self.request.method == 'GET':
             return serializers.StageSerializer_GET_V1
         return serializers.StageSerializer_POST_V1
+
+
+############################ Layed Place ############################
+
+class LayedPlaceFilter(filters.FilterSet):
+    name = filters.CharFilter(field_name='name', lookup_expr='contains')
+
+    class Meta:
+        model = models.LayedPlace
+        fields = ['name']
+
+
+class LayedPlaceViewSet(viewsets.ModelViewSet):
+    queryset = models.LayedPlace.objects.all()
+    serializer_class = serializers.LayedPlaceSerializer_GET_V1
+    filter_backends = (filters.DjangoFilterBackend,
+                       SearchFilter, OrderingFilter)
+    filterset_class = StageFilter
+    search_fields = ['name']
+    ordering_fields = '__all__'
+
+    def perform_create(self, serializer):
+        serializer.save(created_by=self.request.user)
+
+    def get_serializer_class(self):
+        if self.request.method == 'GET':
+            return serializers.LayedPlaceSerializer_GET_V1
+        return serializers.LayedPlaceSerializer_POST_V1
+
+
+############################ Chicken ############################
+
+class ChickenFilter(filters.FilterSet):
+    name = filters.CharFilter(field_name='name', lookup_expr='contains')
+
+    class Meta:
+        model = models.Chicken
+        fields = ['tag']
+
+
+class ChickenViewSet(viewsets.ModelViewSet):
+    queryset = models.Chicken.objects.all()
+    serializer_class = serializers.ChickenSerializer_GET_V1
+    filter_backends = (filters.DjangoFilterBackend,
+                       SearchFilter, OrderingFilter)
+    filterset_class = ChickenFilter
+    search_fields = ['tag']
+    ordering_fields = '__all__'
+
+    def perform_create(self, serializer):
+        serializer.save(created_by=self.request.user)
+
+    def get_serializer_class(self):
+        if self.request.method == 'GET':
+            return serializers.ChickenSerializer_GET_V1
+        return serializers.ChickenSerializer_POST_V1
+
+
+############################ Breed Pair ############################
+
+class BreedPairFilter(filters.FilterSet):
+
+    class Meta:
+        model = models.BreedPair
+        fields = ''
+
+
+class BreedPairViewSet(viewsets.ModelViewSet):
+    queryset = models.BreedPair.objects.all()
+    serializer_class = serializers.BreedPairSerializer_GET_V1
+    filter_backends = (filters.DjangoFilterBackend,
+                       SearchFilter, OrderingFilter)
+    filterset_class = BreedPairFilter
+    search_fields = ['tag']
+    ordering_fields = '__all__'
+
+    def perform_create(self, serializer):
+        serializer.save(created_by=self.request.user)
+
+    def get_serializer_class(self):
+        if self.request.method == 'GET':
+            return serializers.BreedPairSerializer_GET_V1
+        return serializers.BreedPairSerializer_POST_V1
+
+
+############################ Weight ############################
+
+class WeightFilter(filters.FilterSet):
+
+    class Meta:
+        model = models.Weight
+        fields = ''
+
+
+class WeightViewSet(viewsets.ModelViewSet):
+    queryset = models.Weight.objects.all()
+    serializer_class = serializers.WeightSerializer_GET_V1
+    filter_backends = (filters.DjangoFilterBackend,
+                       SearchFilter, OrderingFilter)
+    filterset_class = WeightFilter
+    search_fields = ['date']
+    ordering_fields = '__all__'
+
+    def perform_create(self, serializer):
+        serializer.save(created_by=self.request.user)
+
+    def get_serializer_class(self):
+        if self.request.method == 'GET':
+            return serializers.WeightSerializer_GET_V1
+        return serializers.WeightSerializer_POST_V1
+
+
+############################ Egg ############################
+
+class EggFilter(filters.FilterSet):
+
+    class Meta:
+        model = models.Egg
+        fields = ''
+
+
+class EggViewSet(viewsets.ModelViewSet):
+    queryset = models.Egg.objects.all()
+    serializer_class = serializers.EggSerializer_GET_V1
+    filter_backends = (filters.DjangoFilterBackend,
+                       SearchFilter, OrderingFilter)
+    filterset_class = EggFilter
+    search_fields = ['date']
+    ordering_fields = '__all__'
+
+    def perform_create(self, serializer):
+        serializer.save(created_by=self.request.user)
+
+    def get_serializer_class(self):
+        if self.request.method == 'GET':
+            return serializers.EggSerializer_GET_V1
+        return serializers.EggSerializer_POST_V1
+
+
+############################ Feed Type ############################
+
+class BreedTypeFilter(filters.FilterSet):
+    name = filters.CharFilter(field_name='name', lookup_expr='contains')
+
+    class Meta:
+        model = models.FeedType
+        fields = ['name']
+
+
+class FeedTypeViewSet(viewsets.ModelViewSet):
+    queryset = models.FeedType.objects.all()
+    serializer_class = serializers.FeedTypeSerializer_GET_V1
+    filter_backends = (filters.DjangoFilterBackend,
+                       SearchFilter, OrderingFilter)
+    filterset_class = BreedTypeFilter
+    search_fields = ['name']
+    ordering_fields = '__all__'
+
+    def perform_create(self, serializer):
+        serializer.save(created_by=self.request.user)
+
+    def get_serializer_class(self):
+        if self.request.method == 'GET':
+            return serializers.FeedTypeSerializer_GET_V1
+        return serializers.FeedTypeSerializer_POST_V1
+
+
+############################ Feed ############################
+
+class FeedFilter(filters.FilterSet):
+
+    class Meta:
+        model = models.Feed
+        fields = ''
+
+
+class FeedViewSet(viewsets.ModelViewSet):
+    queryset = models.Feed.objects.all()
+    serializer_class = serializers.FeedSerializer_GET_V1
+    filter_backends = (filters.DjangoFilterBackend,
+                       SearchFilter, OrderingFilter)
+    filterset_class = FeedFilter
+    search_fields = ['date']
+    ordering_fields = '__all__'
+
+    def perform_create(self, serializer):
+        serializer.save(created_by=self.request.user)
+
+    def get_serializer_class(self):
+        if self.request.method == 'GET':
+            return serializers.FeedSerializer_GET_V1
+        return serializers.FeedSerializer_POST_V1

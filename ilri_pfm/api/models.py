@@ -168,7 +168,7 @@ class Chicken(models.Model):
         ('M', 'Male',),
     )
 
-    tag = models.CharField(max_length=250)
+    tag = models.CharField(max_length=250, unique=True)
     sex = models.CharField(max_length=1, choices=SEX_CHOICES, default='')
     farm = models.ForeignKey(
         Farm, on_delete=models.SET_NULL, null=True, related_name='chickens')
