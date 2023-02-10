@@ -32,4 +32,9 @@ urlpatterns = [
     path('home/farms/<id>', views.farm_edit, name='farm'),
     path('home/farms-create', views.farm_edit,
          name='farm_create'),
+
+    path('home/chickens/', views.chickens, name='chickens'),
+    path('home/chickens/<id>', views.chickens_edit, name='chicken'),
+    path('home/chickens-create', views.chickens_edit,
+         name='chicken_create'),
 ]

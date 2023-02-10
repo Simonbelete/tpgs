@@ -37,3 +37,10 @@ class FarmForm(forms.ModelForm):
     class Meta:
         model = models.Farm
         fields = ['name']
+
+
+class ChickenForm(forms.ModelForm):
+    class Meta:
+        model = models.Chicken
+        fields = ['tag', 'sex', 'farm', 'house',
+                  'breed_type', 'layed_place', 'is_double_yolk', 'is_active']

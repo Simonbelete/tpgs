@@ -147,7 +147,7 @@ class LayedPlaceSerializer_POST_V1(serializers.ModelSerializer):
 
 class ChickenSerializer_GET_V1(serializers.ModelSerializer):
     class Meta:
-        model = models.Stage
+        model = models.Chicken
         fields = '__all__'
 
 
@@ -166,7 +166,7 @@ class ChickenSerializer_POST_V1(serializers.ModelSerializer):
     is_double_yolk = serializers.BooleanField()
 
     class Meta:
-        model = models.Stage
+        model = models.Chicken
         fields = ['tag', 'sex', 'farm', 'house', 'breed_type',
                   'layed_place', 'layed_date', 'is_double_yolk']
 

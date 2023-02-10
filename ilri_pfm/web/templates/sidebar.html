@@ -315,7 +315,7 @@
             </li>
 
             <li class="nav-item">
-              <a href="/home/users" class="nav-link">
+              <a href="/home/users" class="nav-link {% if request.path == '/home/chickens/' %}active{% endif %}">
                 <img
                   class="nav-icon fas"
                   src="{% static 'icons/chicken.svg' %}"

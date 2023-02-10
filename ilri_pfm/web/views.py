@@ -264,3 +264,39 @@ def farm_edit(request, id=0):
         else:
             context['data'] = None
         return render(request, 'farm_edit.html', context=context)
+
+
+@login_required(login_url='/login')
+@require_http_methods(["GET", "POST"])
+def chickens(request):
+    if request.method == 'POST':
+        form = forms.ChickenForm(request.POST)
+        if form.is_valid():
+            form = form.save(commit=False)
+            form.created_by = request.user
+            form.save()
+            return HttpResponseRedirect('/home/farms/')
+        else:
+            return HttpResponseRedirect('/home/farms')
+    else:
+        return render(request, 'chickens.html')
+
+
+@login_required(login_url='/login')
+@require_http_methods(["GET", "POST"])
+def chickens_edit(request, id=0):
+    if request.method == 'POST':
+        instance = models.Chicken.objects.get(pk=id)
+        form = forms.ChickenForm(request.POST, instance=instance)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect('/home/farms')
+        else:
+            return HttpResponseRedirect(f'/home/farms/%s' % id)
+    else:
+        context = {}
+        if id != 0:
+            context['data'] = models.Chicken.objects.get(pk=id)
+        else:
+            context['data'] = None
+        return render(request, 'chicken.html', context=context)
