@@ -73,7 +73,6 @@ def users(request):
 @require_http_methods(["GET", "POST"])
 def user_edit(request, id):
     if request.method == 'POST':
-        print('-----------------------------------')
         instance = models.User.objects.get(pk=id)
         form = forms.UserForm(request.POST, instance=instance)
         if form.is_valid():
