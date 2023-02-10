@@ -1,0 +1,52 @@
+[
+    {
+        "model": "api.BreedType",
+        "pk": 1,
+        "fields": {
+            "name": "NHIL20",
+            "color": "#6050DC",
+            "created_at": "2023-02-10T06:48:32.271721Z",
+            "created_by": 1
+        }
+    },
+    {
+        "model": "api.BreedType",
+        "pk": 2,
+        "fields": {
+            "name": "Amber",
+            "color": "#D52DB7",
+            "created_at": "2023-02-10T06:48:32.271721Z",
+            "created_by": 1
+        }
+    },
+    {
+        "model": "api.BreedType",
+        "pk": 3,
+        "fields": {
+            "name": "Barred",
+            "color": "#FF2E7E",
+            "created_at": "2023-02-10T06:48:32.271721Z",
+            "created_by": 1
+        }
+    },
+    {
+        "model": "api.BreedType",
+        "pk": 4,
+        "fields": {
+            "name": "LIL20",
+            "color": "#FF6B45",
+            "created_at": "2023-02-10T06:48:32.271721Z",
+            "created_by": 1
+        }
+    },
+    {
+        "model": "api.BreedType",
+        "pk": 5,
+        "fields": {
+            "name": "WIL20",
+            "color": "#FFAB05",
+            "created_at": "2023-02-10T06:48:32.271721Z",
+            "created_by": 1
+        }
+    }
+]
