@@ -5,8 +5,10 @@ from django.views.decorators.http import require_http_methods
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.http import HttpResponseRedirect
 
 import api.models as models
+from web import forms
 
 MESSAGE_TAGS = {
     messages.DEBUG: 'alert-secondary',
@@ -70,6 +72,16 @@ def users(request):
 @login_required(login_url='/login')
 @require_http_methods(["GET", "POST"])
 def user_edit(request, id):
-    context = {}
-    context['user'] = models.User.objects.get(pk=id)
-    return render(request, 'user_edit.html', context=context)
+    if request.method == 'POST':
+        print('-----------------------------------')
+        instance = models.User.objects.get(pk=id)
+        form = forms.UserForm(request.POST, instance=instance)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect('/home/users')
+        else:
+            return HttpResponseRedirect(f'/home/users/%s' % id)
+    else:
+        context = {}
+        context['user'] = models.User.objects.get(pk=id)
+        return render(request, 'user_edit.html', context=context)
