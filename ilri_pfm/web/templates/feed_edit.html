@@ -1,4 +1,25 @@
-{% extends "sidebar.html" %} {% load static %} {% block body %}
+{% extends "sidebar.html" %} {% load static %} {% block stylesheet %}
+<link
+  rel="stylesheet"
+  href="{% static 'admin-LTE-v3.2.0/plugins/daterangepicker/daterangepicker.css' %}"
+/>
+<link
+  rel="stylesheet"
+  href="{% static 'admin-LTE-v3.2.0/plugins/select2/css/select2.min.css' %}"
+/>
+<link
+  rel="stylesheet"
+  href="{% static 'admin-LTE-v3.2.0/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css' %}"
+/>
+<link
+  rel="stylesheet"
+  href="{% static 'admin-LTE-v3.2.0/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css' %}"
+/>
+<link
+  rel="stylesheet"
+  href="{% static 'admin-LTE-v3.2.0/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css' %}"
+/>
+{% endblock %} {% block body %}
 
 <!-- Content Header (Page header) -->
 <section class="content-header">
@@ -24,30 +45,42 @@
         <div class="card-header">
           <h3 class="card-title">Edit User</h3>
         </div>
-        <form action="{% if feed != None %} {% else %} /home/feeds/ {% endif %}" method="POST">
+        <form
+          action="{% if feed != None %} {% else %} /home/feeds/ {% endif %}"
+          method="POST"
+        >
           {% csrf_token %}
           <div class="card-body">
             <div class="form-group">
-              <label for="name">Feed Name</label>
+              <label for="date">Date</label>
               <input
+                id="date"
                 type="text"
-                name="name"
-                value="{{ data.name }}"
+                name="date"
+                value="{{ data.date }}"
                 class="form-control"
-                id="name"
-                placeholder="Enter Feed Name"
+                placeholder="Enter Date"
               />
             </div>
-            <div class="form-check">
+            <div class="form-group">
+              <label for="weight">Feed Weight</label>
               <input
-                type="checkbox"
-                sele
-                class="form-check-input"
-                id="exampleCheck1"
+                type="number"
+                name="weight"
+                value="{{ data.weight }}"
+                class="form-control"
+                id="weight"
+                placeholder="Enter Feed Weight"
               />
-              <label class="form-check-label" for="exampleCheck1"
-                >Check me out</label
-              >
+            </div>
+            <div class="form-group">
+              <label for="name">Feed Type</label>
+              <select
+                id="feed_type_select"
+                name="name"
+                value="{{ data.feed_type }}"
+                class="form-control"
+              ></select>
             </div>
           </div>
           <!-- /.card-body -->
@@ -76,4 +109,57 @@
 <script src="{% static 'admin-LTE-v3.2.0/plugins/datatables-buttons/js/buttons.html5.min.js' %}"></script>
 <script src="{% static 'admin-LTE-v3.2.0/plugins/datatables-buttons/js/buttons.print.min.js' %}"></script>
 <script src="{% static 'admin-LTE-v3.2.0/plugins/datatables-buttons/js/buttons.colVis.min.js' %}"></script>
+<script src="{% static 'admin-LTE-v3.2.0/plugins/datatables-buttons/js/buttons.colVis.min.js' %}"></script>
+<script src="{% static 'admin-LTE-v3.2.0/plugins/moment/moment.min.js' %}"></script>
+<script src="{% static 'admin-LTE-v3.2.0/plugins/daterangepicker/daterangepicker.js' %}"></script>
+<script src="{% static 'admin-LTE-v3.2.0/plugins/select2/js/select2.full.min.js' %}"></script>
+<script>
+  $(function () {
+    $("#date").daterangepicker(
+      {
+        autoApply: true,
+        singleDatePicker: true,
+        showDropdowns: true,
+        minYear: 1901,
+        maxYear: parseInt(moment().format("YYYY"), 10),
+      },
+      function (start, end, label) {
+        var years = moment().diff(start, "years");
+      }
+    );
+
+    $("#feed_type_select").select2({
+      ajax: {
+        url: "/api/v1/feed-types",
+        data: function (params) {
+          var query = {
+            search: params.term,
+            page: params.page || 1,
+          };
+
+          return query;
+        },
+        processResults: function (data, params) {
+          params.page = params.page || 1;
+
+          console.log(data);
+
+          var transform = $.map(data.results, function (obj) {
+            obj.id = obj.id || obj.id;
+            obj.text = obj.text || obj.name;
+
+            return obj;
+          });
+
+          return {
+            results: transform,
+            pagination: {
+              more: params.page * 30 < data.count,
+            },
+          };
+        },
+      },
+    });
+  });
+</script>
 {% endblock %}
