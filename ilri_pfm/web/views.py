@@ -6,6 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 
+import api.models as models
 
 MESSAGE_TAGS = {
     messages.DEBUG: 'alert-secondary',
@@ -64,3 +65,11 @@ def home(request):
 @require_http_methods(["GET", "POST"])
 def users(request):
     return render(request, 'users.html')
+
+
+@login_required(login_url='/login')
+@require_http_methods(["GET", "POST"])
+def user_edit(request, id):
+    context = {}
+    context['user'] = models.User.objects.get(pk=id)
+    return render(request, 'user_edit.html', context=context)
