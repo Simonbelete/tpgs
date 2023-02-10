@@ -91,3 +91,31 @@ class FarmViewSet(viewsets.ModelViewSet):
         if self.request.method == 'GET':
             return serializers.FarmSerializer_GET_V1
         return serializers.FarmSerializer_POST_V1
+
+
+############################ House ############################
+
+class HouseFilter(filters.FilterSet):
+    name = filters.CharFilter(field_name='name', lookup_expr='contains')
+
+    class Meta:
+        model = models.House
+        fields = ['name']
+
+
+class HouseViewSet(viewsets.ModelViewSet):
+    queryset = models.House.objects.all()
+    serializer_class = serializers.HouseSerializer_GET_V1
+    filter_backends = (filters.DjangoFilterBackend,
+                       SearchFilter, OrderingFilter)
+    filterset_class = HouseFilter
+    search_fields = ['name', 'farm']
+    ordering_fields = '__all__'
+
+    def perform_create(self, serializer):
+        serializer.save(created_by=self.request.user)
+
+    def get_serializer_class(self):
+        if self.request.method == 'GET':
+            return serializers.HouseSerializer_GET_V1
+        return serializers.HouseSerializer_POST_V1

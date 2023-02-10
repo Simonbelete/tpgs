@@ -104,5 +104,20 @@ class Farm(models.Model):
         return self.name
 
 
-# class House(models.Model):
-#     name = models.CharField(max_length=10)
+class House(models.Model):
+    name = models.CharField(max_length=10)
+    farm = models.ForeignKey(
+        Farm, on_delete=models.SET_NULL, null=True, related_name='houses')
+
+    is_active = models.BooleanField(default=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    created_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.PROTECT)
+    history = HistoricalRecords()
+
+    class Meta:
+        ordering = ["name"]
+        verbose_name_plural = 'houses'
+
+    def __str__(self):
+        return self.name

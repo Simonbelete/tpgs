@@ -54,3 +54,22 @@ class FarmSerializer_POST_V1(serializers.ModelSerializer):
     class Meta:
         model = models.Farm
         fields = ['name', 'city', 'is_active']
+
+
+############################ House ############################
+
+class HouseSerializer_GET_V1(serializers.ModelSerializer):
+    class Meta:
+        model = models.House
+        fields = '__all__'
+
+
+class HouseSerializer_POST_V1(serializers.ModelSerializer):
+    name = serializers.CharField()
+    farm = serializers.PrimaryKeyRelatedField(
+        read_only=False, queryset=models.Farm.objects.all())
+    is_active = serializers.BooleanField()
+
+    class Meta:
+        model = models.House
+        fields = ['name', 'farm', 'is_active']
