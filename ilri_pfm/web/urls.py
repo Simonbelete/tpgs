@@ -17,4 +17,9 @@ urlpatterns = [
     path('home/layed-places/<id>', views.layed_place_edit, name='layed_place'),
     path('home/layed-places-create', views.layed_place_edit,
          name='layed_places_create'),
+
+    path('home/stages/', views.stages, name='stages'),
+    path('home/stages/<id>', views.stage_edit, name='stage'),
+    path('home/stages-create', views.stage_edit,
+         name='stage_create'),
 ]

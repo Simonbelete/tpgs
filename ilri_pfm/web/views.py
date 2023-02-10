@@ -188,7 +188,7 @@ def stage_edit(request, id=0):
     else:
         context = {}
         if id != 0:
-            context['data'] = models.LayedPlace.objects.get(pk=id)
+            context['data'] = models.Stage.objects.get(pk=id)
         else:
             context['data'] = None
         return render(request, 'stage_edit.html', context=context)
@@ -198,7 +198,7 @@ def stage_edit(request, id=0):
 @require_http_methods(["GET", "POST"])
 def breed_types(request):
     if request.method == 'POST':
-        form = forms.BreedTypeForm(request.POST)
+        form = forms.StageForm(request.POST)
         if form.is_valid():
             form = form.save(commit=False)
             form.created_by = request.user
