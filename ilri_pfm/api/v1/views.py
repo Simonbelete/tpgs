@@ -49,7 +49,7 @@ class CityFilter(filters.FilterSet):
 
 class CityViewSet(viewsets.ModelViewSet):
     queryset = models.City.objects.all()
-    serializer_class = serializers.CountrySerializer_GET_V1
+    serializer_class = serializers.CitySerializer_GET_V1
     filter_backends = (filters.DjangoFilterBackend,
                        SearchFilter, OrderingFilter)
     filterset_class = CityFilter
@@ -63,3 +63,31 @@ class CityViewSet(viewsets.ModelViewSet):
         if self.request.method == 'GET':
             return serializers.CitySerializer_GET_V1
         return serializers.CitySerializer_POST_V1
+
+
+############################ Farm ############################
+
+class FarmFilter(filters.FilterSet):
+    name = filters.CharFilter(field_name='name', lookup_expr='contains')
+
+    class Meta:
+        model = models.Farm
+        fields = ['name']
+
+
+class FarmViewSet(viewsets.ModelViewSet):
+    queryset = models.Farm.objects.all()
+    serializer_class = serializers.FarmSerializer_GET_V1
+    filter_backends = (filters.DjangoFilterBackend,
+                       SearchFilter, OrderingFilter)
+    filterset_class = FarmFilter
+    search_fields = ['name', 'city']
+    ordering_fields = '__all__'
+
+    def perform_create(self, serializer):
+        serializer.save(created_by=self.request.user)
+
+    def get_serializer_class(self):
+        if self.request.method == 'GET':
+            return serializers.FarmSerializer_GET_V1
+        return serializers.FarmSerializer_POST_V1

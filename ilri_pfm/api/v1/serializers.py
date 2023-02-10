@@ -35,3 +35,22 @@ class CitySerializer_POST_V1(serializers.ModelSerializer):
     class Meta:
         model = models.City
         fields = ['name', 'country']
+
+
+############################ Farm ############################
+
+class FarmSerializer_GET_V1(serializers.ModelSerializer):
+    class Meta:
+        model = models.Farm
+        fields = '__all__'
+
+
+class FarmSerializer_POST_V1(serializers.ModelSerializer):
+    name = serializers.CharField()
+    city = serializers.PrimaryKeyRelatedField(
+        read_only=False, queryset=models.City.objects.all())
+    is_active = serializers.BooleanField()
+
+    class Meta:
+        model = models.Farm
+        fields = ['name', 'city', 'is_active']
