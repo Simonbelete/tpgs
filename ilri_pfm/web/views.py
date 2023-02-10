@@ -116,7 +116,151 @@ def feed_type_edit(request, id=0):
     else:
         context = {}
         if id != 0:
-            context['feed'] = models.FeedType.objects.get(pk=id)
+            context['data'] = models.FeedType.objects.get(pk=id)
         else:
-            context['feed'] = None
+            context['data'] = None
         return render(request, 'feed_type_edit.html', context=context)
+
+
+@login_required(login_url='/login')
+@require_http_methods(["GET", "POST"])
+def layed_place(request):
+    if request.method == 'POST':
+        form = forms.LayedPlaceForm(request.POST)
+        if form.is_valid():
+            form = form.save(commit=False)
+            form.created_by = request.user
+            form.save()
+            return HttpResponseRedirect('/home/layed-places/')
+        else:
+            return HttpResponseRedirect('/home/layed-places')
+    else:
+        return render(request, 'layed_places.html')
+
+
+@login_required(login_url='/login')
+@require_http_methods(["GET", "POST"])
+def layed_place_edit(request, id=0):
+    if request.method == 'POST':
+        instance = models.LayedPlace.objects.get(pk=id)
+        form = forms.LayedPlaceForm(request.POST, instance=instance)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect('/home/layed-places')
+        else:
+            return HttpResponseRedirect(f'/home/layed-places/%s' % id)
+    else:
+        context = {}
+        if id != 0:
+            context['data'] = models.LayedPlace.objects.get(pk=id)
+        else:
+            context['data'] = None
+        return render(request, 'layed_place_edit.html', context=context)
+
+
+@login_required(login_url='/login')
+@require_http_methods(["GET", "POST"])
+def stages(request):
+    if request.method == 'POST':
+        form = forms.StageForm(request.POST)
+        if form.is_valid():
+            form = form.save(commit=False)
+            form.created_by = request.user
+            form.save()
+            return HttpResponseRedirect('/home/stages/')
+        else:
+            return HttpResponseRedirect('/home/stages')
+    else:
+        return render(request, 'stages.html')
+
+
+@login_required(login_url='/login')
+@require_http_methods(["GET", "POST"])
+def stage_edit(request, id=0):
+    if request.method == 'POST':
+        instance = models.Stage.objects.get(pk=id)
+        form = forms.StageForm(request.POST, instance=instance)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect('/home/stages')
+        else:
+            return HttpResponseRedirect(f'/home/stages/%s' % id)
+    else:
+        context = {}
+        if id != 0:
+            context['data'] = models.LayedPlace.objects.get(pk=id)
+        else:
+            context['data'] = None
+        return render(request, 'stage_edit.html', context=context)
+
+
+@login_required(login_url='/login')
+@require_http_methods(["GET", "POST"])
+def breed_types(request):
+    if request.method == 'POST':
+        form = forms.BreedTypeForm(request.POST)
+        if form.is_valid():
+            form = form.save(commit=False)
+            form.created_by = request.user
+            form.save()
+            return HttpResponseRedirect('/home/breed-types/')
+        else:
+            return HttpResponseRedirect('/home/breed-types')
+    else:
+        return render(request, 'breed_types.html')
+
+
+@login_required(login_url='/login')
+@require_http_methods(["GET", "POST"])
+def breed_type_edit(request, id=0):
+    if request.method == 'POST':
+        instance = models.BreedType.objects.get(pk=id)
+        form = forms.BreedTypeForm(request.POST, instance=instance)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect('/home/breed-types')
+        else:
+            return HttpResponseRedirect(f'/home/breed-types/%s' % id)
+    else:
+        context = {}
+        if id != 0:
+            context['data'] = models.BreedType.objects.get(pk=id)
+        else:
+            context['data'] = None
+        return render(request, 'breed_type_edit.html', context=context)
+
+
+@login_required(login_url='/login')
+@require_http_methods(["GET", "POST"])
+def farms(request):
+    if request.method == 'POST':
+        form = forms.FarmForm(request.POST)
+        if form.is_valid():
+            form = form.save(commit=False)
+            form.created_by = request.user
+            form.save()
+            return HttpResponseRedirect('/home/farms/')
+        else:
+            return HttpResponseRedirect('/home/farms')
+    else:
+        return render(request, 'breed_types.html')
+
+
+@login_required(login_url='/login')
+@require_http_methods(["GET", "POST"])
+def farm_edit(request, id=0):
+    if request.method == 'POST':
+        instance = models.Farm.objects.get(pk=id)
+        form = forms.FarmForm(request.POST, instance=instance)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect('/home/farms')
+        else:
+            return HttpResponseRedirect(f'/home/farms/%s' % id)
+    else:
+        context = {}
+        if id != 0:
+            context['data'] = models.Farm.objects.get(pk=id)
+        else:
+            context['data'] = None
+        return render(request, 'breed_type_edit.html', context=context)
