@@ -301,62 +301,101 @@
             </li>
 
             <li class="nav-item">
-              <a href="/home/users" class="nav-link {% if request.path == '/home/users' %}active{% endif %}">
+              <a
+                href="/home/users"
+                class="nav-link {% if request.path == '/home/users/' %}active{% endif %}"
+              >
                 <i class="nav-icon fas fa-users"></i>
                 <p>Users</p>
               </a>
             </li>
 
             <li class="nav-item">
-              <a href="/home/farms" class="nav-link {% if request.path == '/home/farms/' %}active{% endif %}">
+              <a
+                href="/home/farms"
+                class="nav-link {% if request.path == '/home/farms/' %}active{% endif %}"
+              >
                 <i class="nav-icon fas fa-industry"></i>
                 <p>Farms</p>
               </a>
             </li>
 
             <li class="nav-item">
-              <a href="/home/users" class="nav-link {% if request.path == '/home/chickens/' %}active{% endif %}">
-                <img
-                  class="nav-icon fas"
-                  src="{% static 'icons/chicken.svg' %}"
-                />
+              <a
+                href="/home/chickens"
+                class="nav-link {% if request.path == '/home/chickens/' %}active{% endif %}"
+              >
+                <i class="nav-icon fas fa-crow"></i>
                 <p>Chickens</p>
               </a>
             </li>
 
             <li class="nav-item">
-              <a href="/home/breed-types" class="nav-link {% if request.path == '/home/breed-types/' %}active{% endif %}">
-                <img
-                  class="nav-icon fas"
-                  src="{% static 'icons/helix.svg' %}"
-                />
+              <a
+                href="/home/weights"
+                class="nav-link {% if request.path == '/home/weights/' %}active{% endif %}"
+              >
+                <i class="nav-icon fas fa-weight"></i>
+                <p>Weight</p>
+              </a>
+            </li>
+
+            <li class="nav-item">
+              <a
+                href="/home/feeds"
+                class="nav-link {% if request.path == '/home/feeds/' %}active{% endif %}"
+              >
+                <i class="nav-icon fas fa-cookie-bite"></i>
+                <p>Feed</p>
+              </a>
+            </li>
+
+            <li class="nav-item">
+              <a
+                href="/home/users"
+                class="nav-link {% if request.path == '/home/eggs/' %}active{% endif %}"
+              >
+                <i class="nav-icon fas fa-egg"></i>
+                <p>Egg</p>
+              </a>
+            </li>
+
+            <li class="nav-item">
+              <a
+                href="/home/breed-types"
+                class="nav-link {% if request.path == '/home/breed-types/' %}active{% endif %}"
+              >
+                <i class="nav-icon fas fa-dna"></i>
                 <p>Breed Types</p>
               </a>
             </li>
 
             <li class="nav-item">
-              <a href="/home/stages" class="nav-link {% if request.path == '/home/stages' %}active{% endif %}">
-                <img
-                  class="nav-icon fas"
-                  src="{% static 'icons/cycle.svg' %}"
-                />
+              <a
+                href="/home/stages"
+                class="nav-link {% if request.path == '/home/stages' %}active{% endif %}"
+              >
+                <i class="nav-icon fas fa-recycle"></i>
                 <p>Chicken Stage</p>
               </a>
             </li>
 
             <li class="nav-item">
-              <a href="/home/layed-places" class="nav-link {% if request.path == '/home/layed-places' %}active{% endif %}">
-                <img class="nav-icon fas" src="{% static 'icons/map.svg' %}" />
+              <a
+                href="/home/layed-places"
+                class="nav-link {% if request.path == '/home/layed-places' %}active{% endif %}"
+              >
+                <i class="nav-icon fas fa-map-marker-alt"></i>
                 <p>Layed Place</p>
               </a>
             </li>
 
             <li class="nav-item">
-              <a href="/home/feed-types" class="nav-link {% if request.path == '/home/feed-types' %}active{% endif %}">
-                <img
-                  class="nav-icon fas"
-                  src="{% static 'icons/flour_bag.svg' %}"
-                />
+              <a
+                href="/home/feed-types"
+                class="nav-link {% if request.path == '/home/feed-types' %}active{% endif %}"
+              >
+                <i class="nav-icon fas fa-seedling"></i>
                 <p>Feed Type</p>
               </a>
             </li>
