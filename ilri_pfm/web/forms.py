@@ -44,3 +44,9 @@ class ChickenForm(forms.ModelForm):
         model = models.Chicken
         fields = ['tag', 'sex', 'farm', 'house',
                   'breed_type', 'layed_place', 'is_double_yolk', 'is_active']
+
+
+class FeedForm(forms.ModelForm):
+    class Meta:
+        model = models.Feed
+        fields = ['date', 'weight', 'feed_type']

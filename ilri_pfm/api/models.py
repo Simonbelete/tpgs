@@ -247,6 +247,8 @@ class Feed(models.Model):
     date = models.DateField()
     chicken = models.ForeignKey(
         Chicken, on_delete=models.CASCADE, related_name='feeds')
+    weight = models.DecimalField(
+        max_digits=6, decimal_places=3, default=0)
     feed_type = models.ForeignKey(
         FeedType, on_delete=models.SET_NULL, null=True, related_name='feeds')
 
