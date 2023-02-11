@@ -198,7 +198,7 @@ class BreedPairSerializer_POST_V1(serializers.ModelSerializer):
     date = serializers.DateField()
 
     class Meta:
-        model = models.Stage
+        model = models.BreedPair
         fields = ['father', 'mother', 'date']
 
 
@@ -206,7 +206,7 @@ class BreedPairSerializer_POST_V1(serializers.ModelSerializer):
 
 class WeightSerializer_GET_V1(serializers.ModelSerializer):
     class Meta:
-        model = models.Stage
+        model = models.Weight
         fields = '__all__'
 
 
@@ -217,7 +217,7 @@ class WeightSerializer_POST_V1(serializers.ModelSerializer):
         read_only=False, queryset=models.Chicken.objects.all())
 
     class Meta:
-        model = models.Chicken
+        model = models.Weight
         fields = ['week', 'weight', 'chicken']
 
 
@@ -225,7 +225,7 @@ class WeightSerializer_POST_V1(serializers.ModelSerializer):
 
 class EggSerializer_GET_V1(serializers.ModelSerializer):
     class Meta:
-        model = models.Stage
+        model = models.Egg
         fields = '__all__'
 
 
@@ -235,7 +235,7 @@ class EggSerializer_POST_V1(serializers.ModelSerializer):
         read_only=False, queryset=models.Chicken.objects.all())
 
     class Meta:
-        model = models.Stage
+        model = models.Egg
         fields = ['date', 'chicken']
 
 
