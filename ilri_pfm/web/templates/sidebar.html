@@ -199,20 +199,31 @@
             >
           </div>
         </li>
+        <li class="nav-item dropdown user-menu">
+          <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
+            <img src="{% static 'icons/user.png'  %}" class="user-image img-circle elevation-2" alt="User Image">
+            <span class="d-none d-md-inline">{{ user.email }}</span>
+          </a>
+          <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+            <!-- User image -->
+            <li class="user-header bg-primary">
+              <img src="{% static 'icons/user.png'  %}" class="img-circle elevation-2" alt="User Image">
+  
+              <p>
+                {{ user.name }} 
+                <small>-</small>
+              </p>
+            </li>
+            <!-- Menu Footer-->
+            <li class="user-footer">
+              <a href="#" class="btn btn-default btn-flat">Profile</a>
+              <a href="/logout/" class="btn btn-default btn-flat float-right">Sign out</a>
+            </li>
+          </ul>
+        </li>
         <li class="nav-item">
           <a class="nav-link" data-widget="fullscreen" href="#" role="button">
             <i class="fas fa-expand-arrows-alt"></i>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a
-            class="nav-link"
-            data-widget="control-sidebar"
-            data-slide="true"
-            href="#"
-            role="button"
-          >
-            <i class="fas fa-th-large"></i>
           </a>
         </li>
       </ul>
@@ -245,20 +256,6 @@
 
       <!-- Sidebar -->
       <div class="sidebar">
-        <!-- Sidebar user panel (optional) -->
-        <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-          <div class="image">
-            <img
-              src="dist/img/user2-160x160.jpg"
-              class="img-circle elevation-2"
-              alt="User Image"
-            />
-          </div>
-          <div class="info">
-            <a href="#" class="d-block">Alexander Pierce</a>
-          </div>
-        </div>
-
         <!-- SidebarSearch Form -->
         <div class="form-inline">
           <div class="input-group" data-widget="sidebar-search">
