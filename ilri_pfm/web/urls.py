@@ -52,4 +52,9 @@ urlpatterns = [
     path('home/flocks/<id>', views.flock_edit, name='flock'),
     path('home/flocks-create', views.flock_edit,
          name='flock_create'),
+
+    path('home/weights/', views.weights, name='weights'),
+    path('home/weights/<id>', views.weight_edit, name='weight'),
+    path('home/weights-create', views.weight_edit,
+         name='weight_create'),
 ]

@@ -130,6 +130,27 @@
       <!-- /.card-body -->
     </div>
     <!-- /.card -->
+
+    <!-- Breed Report -->
+    <div class="card">
+      <div class="card-header">
+        <h3 class="card-title">Report</h3>
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <div class="form-group">
+            <label for="hatch_date">Date</label>
+            <input
+              id="report_date_range"
+              type="text"
+              name="report_date_range"
+              class="form-control"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- /.Breed Report -->
   </section>
 
   <!-- /.content -->
@@ -153,6 +174,19 @@
 <script src="{% static 'admin-LTE-v3.2.0/plugins/select2/js/select2.full.min.js' %}"></script>
 <script>
   $(function () {
+    $("#report_date_range").daterangepicker(
+      {
+        showWeekNumbers: true,
+        autoApply: true,
+        showDropdowns: true,
+        minYear: 1901,
+        maxYear: parseInt(moment().format("YYYY"), 10),
+      },
+      function (start, end, label) {
+        var years = moment().diff(start, "years");
+      }
+    );
+
     $("#date").daterangepicker(
       {
         autoApply: true,

@@ -62,3 +62,9 @@ class FlockForm(forms.ModelForm):
     class Meta:
         model = models.Flock
         fields = ['hatch_date', 'farm', 'breed_type']
+
+
+class WeightForm(forms.ModelForm):
+    class Meta:
+        model = models.Weight
+        fields = ['date', 'weight', 'chicken']

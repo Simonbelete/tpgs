@@ -422,3 +422,39 @@ def flock_edit(request, id=0):
         else:
             context['data'] = None
         return render(request, 'flock_edit.html', context=context)
+
+
+@login_required(login_url='/login')
+@require_http_methods(["GET", "POST"])
+def weights(request):
+    if request.method == 'POST':
+        form = forms.WeightForm(request.POST)
+        if form.is_valid():
+            form = form.save(commit=False)
+            form.created_by = request.user
+            form.save()
+            return HttpResponseRedirect('/home/weights/')
+        else:
+            return HttpResponseRedirect('/home/weights?error=true')
+    else:
+        return render(request, 'weights.html')
+
+
+@login_required(login_url='/login')
+@require_http_methods(["GET", "POST"])
+def weight_edit(request, id=0):
+    if request.method == 'POST':
+        instance = models.Weight.objects.get(pk=id)
+        form = forms.WeightForm(request.POST, instance=instance)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect('/home/weights')
+        else:
+            return HttpResponseRedirect(f'/home/weights/%s' % id)
+    else:
+        context = {}
+        if id != 0:
+            context['data'] = models.Weight.objects.get(pk=id)
+        else:
+            context['data'] = None
+        return render(request, 'weight_edit.html', context=context)
