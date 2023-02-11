@@ -1,5 +1,4 @@
-{% extends "sidebar.html" %} {% load static %} 
-{% block stylesheet %}
+{% extends "sidebar.html" %} {% load static %} {% block stylesheet %}
 <link
   rel="stylesheet"
   href="{% static 'admin-LTE-v3.2.0/plugins/daterangepicker/daterangepicker.css' %}"
@@ -12,8 +11,7 @@
   rel="stylesheet"
   href="{% static 'admin-LTE-v3.2.0/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css' %}"
 />
-{% endblock %}
-{% block body %}
+{% endblock %} {% block body %}
 
 <!-- Content Header (Page header) -->
 <section class="content-header">
@@ -77,8 +75,10 @@
                 class="form-control select2"
                 style="width: 100%"
               >
-              <option value="{{ data.farm.id }}" selected="selected">{{ data.farm.name }}</option>
-            </select>
+                <option value="{{ data.farm.id }}" selected="selected">
+                  {{ data.farm.name }}
+                </option>
+              </select>
             </div>
           </div>
           <!-- /.card-body -->
@@ -90,49 +90,46 @@
       </div>
     </div>
     <div class="card">
-        <div class="card-header">
-          <h3 class="card-title">Chickens</h3>
-        </div>
-        <!-- /.card-header -->
-        <div class="card-body">
-          <table
-            id="dataListTable"
-            class="table table-bordered table-striped"
-          >
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>Tag</th>
-                <th>Sex</th>
-                <th>Farm</th>
-                <th>House</th>
-                <th>Breed Type</th>
-                <th>Layed Date</th>
-                <th>Is Double Yolk</th>
-                <th>Created At</th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody></tbody>
-            <tfoot>
-              <tr>
-                <th>ID</th>
-                <th>Tag</th>
-                <th>Sex</th>
-                <th>Farm</th>
-                <th>House</th>
-                <th>Breed Type</th>
-                <th>Layed Date</th>
-                <th>Is Double Yolk</th>
-                <th>Created At</th>
-                <th></th>
-              </tr>
-            </tfoot>
-          </table>
-        </div>
-        <!-- /.card-body -->
+      <div class="card-header">
+        <h3 class="card-title">Chickens</h3>
       </div>
-      <!-- /.card -->
+      <!-- /.card-header -->
+      <div class="card-body">
+        <table id="dataListTable" class="table table-bordered table-striped">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Tag</th>
+              <th>Sex</th>
+              <th>Farm</th>
+              <th>House</th>
+              <th>Breed Type</th>
+              <th>Layed Date</th>
+              <th>Is Double Yolk</th>
+              <th>Created At</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+          <tfoot>
+            <tr>
+              <th>ID</th>
+              <th>Tag</th>
+              <th>Sex</th>
+              <th>Farm</th>
+              <th>House</th>
+              <th>Breed Type</th>
+              <th>Layed Date</th>
+              <th>Is Double Yolk</th>
+              <th>Created At</th>
+              <th></th>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+      <!-- /.card-body -->
+    </div>
+    <!-- /.card -->
   </section>
 
   <!-- /.content -->
