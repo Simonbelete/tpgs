@@ -47,4 +47,9 @@ urlpatterns = [
     path('home/eggs/<id>', views.egg_edit, name='egg'),
     path('home/eggs-create', views.egg_edit,
          name='egg_create'),
+
+    path('home/flocks/', views.flocks, name='flocks'),
+    path('home/flocks/<id>', views.flock_edit, name='flock'),
+    path('home/flocks-create', views.flock_edit,
+         name='flock_create'),
 ]

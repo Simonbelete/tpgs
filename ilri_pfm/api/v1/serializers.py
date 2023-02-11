@@ -291,4 +291,4 @@ class FlockSerializer_POST_V1(serializers.ModelSerializer):
 
     class Meta:
         model = models.Feed
-        fields = ['date', 'chicken', 'farm']
+        fields = ['hatch_date', 'chicken', 'farm']

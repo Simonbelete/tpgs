@@ -372,3 +372,39 @@ def egg_edit(request, id=0):
         else:
             context['data'] = None
         return render(request, 'egg_edit.html', context=context)
+
+
+@login_required(login_url='/login')
+@require_http_methods(["GET", "POST"])
+def flocks(request):
+    if request.method == 'POST':
+        form = forms.FlockForm(request.POST)
+        if form.is_valid():
+            form = form.save(commit=False)
+            form.created_by = request.user
+            form.save()
+            return HttpResponseRedirect('/home/flocks/')
+        else:
+            return HttpResponseRedirect('/home/flocks?error=true')
+    else:
+        return render(request, 'flocks.html')
+
+
+@login_required(login_url='/login')
+@require_http_methods(["GET", "POST"])
+def flock_edit(request, id=0):
+    if request.method == 'POST':
+        instance = models.Flock.objects.get(pk=id)
+        form = forms.FlockForm(request.POST, instance=instance)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect('/home/flocks')
+        else:
+            return HttpResponseRedirect(f'/home/flocks/%s' % id)
+    else:
+        context = {}
+        if id != 0:
+            context['data'] = models.Flock.objects.get(pk=id)
+        else:
+            context['data'] = None
+        return render(request, 'flock_edit.html', context=context)
