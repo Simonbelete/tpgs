@@ -37,6 +37,9 @@
                   <tr>
                     <th>ID</th>
                     <th>Name</th>
+                    <th>Hatch Date</th>
+                    <th>Farm</th>
+                    <th>Chickens</th>
                     <th>Created At</th>
                     <th></th>
                   </tr>
@@ -46,6 +49,9 @@
                   <tr>
                     <th>ID</th>
                     <th>Name</th>
+                    <th>Hatch Date</th>
+                    <th>Farm</th>
+                    <th>Chickens</th>
                     <th>Created At</th>
                     <th></th>
                   </tr>
@@ -81,6 +87,9 @@
     var columns = [
       { data: "id" },
       { data: "name" },
+      { data: "hatch_date" },
+      { data: "farm.name" },
+      { data: 'chicken_count' },
       { data: "created_at" },
       {
         data: null,
@@ -100,6 +109,9 @@
         url: "/api/v1/flocks/",
         dataSrc: function (json) {
           json["data"] = json["results"];
+          for(let i = 0; i < json["results"].length; i++) {
+            json["results"][i]["chicken_count"] = json["results"][i]["chickens"].length;
+          }
           json["recordsTotal"] = json["count"];
           json["recordsFiltered"] = json["count"];
           return json.data;
@@ -125,7 +137,7 @@
       e.preventDefault();
       var data = table.row(this).data();
       console.log(data);
-      window.location.href = "/home/feed-types/" + data.id;
+      window.location.href = "/home/flocks/" + data.id;
     });
   });
 </script>
