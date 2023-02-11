@@ -49,4 +49,4 @@ class ChickenForm(forms.ModelForm):
 class FeedForm(forms.ModelForm):
     class Meta:
         model = models.Feed
-        fields = ['date', 'weight', 'feed_type']
+        fields = ['chicken', 'date', 'weight', 'feed_type']

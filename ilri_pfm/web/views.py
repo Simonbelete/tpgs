@@ -313,7 +313,7 @@ def feeds(request):
             form.save()
             return HttpResponseRedirect('/home/feeds/')
         else:
-            return HttpResponseRedirect('/home/feeds')
+            return HttpResponseRedirect('/home/feeds?error=true')
     else:
         return render(request, 'feeds.html')
 

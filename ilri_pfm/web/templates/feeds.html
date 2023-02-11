@@ -36,8 +36,10 @@
                 <thead>
                   <tr>
                     <th>ID</th>
-                    <th>Name</th>
                     <th>Date</th>
+                    <th>weight</th>
+                    <th>Chicken</th>
+                    <th>Feed Type</th>
                     <th>Created At</th>
                     <th></th>
                   </tr>
@@ -46,8 +48,10 @@
                 <tfoot>
                   <tr>
                     <th>ID</th>
-                    <th>Name</th>
                     <th>Date</th>
+                    <th>weight</th>
+                    <th>Chicken</th>
+                    <th>Feed Type</th>
                     <th>Created At</th>
                     <th></th>
                   </tr>
@@ -82,8 +86,10 @@
   $(function () {
     var columns = [
       { data: "id" },
-      { data: "name" },
       { data: "date" },
+      { data: "weight" },
+      { data: "chicken" },
+      { data: "feed_type" },
       { data: "created_at" },
       {
         data: null,
@@ -128,7 +134,7 @@
       e.preventDefault();
       var data = table.row(this).data();
       console.log(data);
-      window.location.href = "/home/feed-types/" + data.id;
+      window.location.href = "/home/feeds/" + data.id;
     });
   });
 </script>
