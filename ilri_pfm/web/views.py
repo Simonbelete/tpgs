@@ -299,7 +299,7 @@ def chickens_edit(request, id=0):
             context['data'] = models.Chicken.objects.get(pk=id)
         else:
             context['data'] = None
-        return render(request, 'chicken.html', context=context)
+        return render(request, 'chickens.html', context=context)
 
 
 @login_required(login_url='/login')
