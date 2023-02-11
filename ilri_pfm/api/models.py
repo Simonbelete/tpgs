@@ -244,7 +244,7 @@ class BreedPair(models.Model):
 
 
 class Weight(models.Model):
-    date = models.DateField()
+    week = models.IntegerField(default=0)
     weight = models.DecimalField(
         max_digits=6, decimal_places=3, default=0)
     chicken = models.ForeignKey(

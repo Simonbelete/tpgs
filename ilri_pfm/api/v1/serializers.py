@@ -211,14 +211,14 @@ class WeightSerializer_GET_V1(serializers.ModelSerializer):
 
 
 class WeightSerializer_POST_V1(serializers.ModelSerializer):
-    date = serializers.DateField()
+    week = serializers.IntegerField()
     weight = serializers.DecimalField(max_digits=6, decimal_places=3)
     chicken = serializers.PrimaryKeyRelatedField(
         read_only=False, queryset=models.Chicken.objects.all())
 
     class Meta:
         model = models.Chicken
-        fields = ['date', 'weight', 'chicken']
+        fields = ['week', 'weight', 'chicken']
 
 
 ############################ Egg ############################

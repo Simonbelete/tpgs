@@ -67,4 +67,4 @@ class FlockForm(forms.ModelForm):
 class WeightForm(forms.ModelForm):
     class Meta:
         model = models.Weight
-        fields = ['date', 'weight', 'chicken']
+        fields = ['week', 'weight', 'chicken']
