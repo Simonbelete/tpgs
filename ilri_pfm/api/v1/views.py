@@ -1,10 +1,14 @@
+import io
+import numpy as np
+from decimal import Decimal
+import matplotlib.pyplot as plt
 from django.shortcuts import render
 from rest_framework import viewsets, status
-from rest_framework.views import APIView
+from django.views.decorators.http import require_http_methods
 from rest_framework.response import Response
 from rest_framework.filters import SearchFilter, OrderingFilter
 from django_filters import rest_framework as filters
-from django.http import Http404
+from django.http import Http404, HttpResponse
 
 import api.models as models
 from api.v1 import serializers
@@ -449,3 +453,56 @@ class StaticsCount(viewsets.ModelViewSet):
             }, status=status.HTTP_200_OK)
         except self.queryset.model.DoesNotExist:
             raise Http404()
+
+
+@require_http_methods(["GET"])
+def get_weight_graph(request):
+    output = io.BytesIO()
+
+    x_data = []
+    error = []
+
+    start_week = 0
+    end_week = 10
+    weeks = []
+
+    for week in range(start_week, end_week):
+        weeks.append(str(week))
+        serializer = serializers.WeightSerializer_GET_V1(
+            models.Weight.objects.all().filter(week=week),
+            many=True
+        )
+        weights = []
+        for row in serializer.data:
+            weights.append(Decimal(row['weight']))
+
+        avg = np.average(weights)
+        std = np.std(weights)
+        x_data.append(avg)
+        error.append(std)
+
+    x_pos = np.arange(len(weeks))
+
+    fig, ax = plt.subplots(figsize=(20, 10))
+    ax.bar(x_pos, x_data, yerr=error, align='center',
+           alpha=0.5, ecolor='black', capsize=10)
+    ax.set_ylabel('Weight', fontsize=15)
+    ax.set_xlabel('Week', fontsize=15)
+    ax.tick_params(axis='x', which='major', labelsize=15)
+    ax.tick_params(axis='y', which='major', labelsize=15)
+    ax.set_xticks(x_pos)
+    ax.set_xticklabels(weeks)
+    ax.set_title('Growth Perfomance')
+    ax.yaxis.grid(True)
+    fig.tight_layout()
+
+    fig.savefig(output, format='png')
+
+    output.seek(0)
+
+    response = HttpResponse(
+        output,
+        content_type='image/png'
+    )
+
+    return response

@@ -133,21 +133,31 @@
 
     <!-- Breed Report -->
     <div class="card">
-      <div class="card-header">
+      <div class="card-header row">
         <h3 class="card-title">Report</h3>
-      </div>
-      <div class="card-body">
-        <div class="row">
+        <div class="row col-md-3">
           <div class="form-group">
-            <label for="hatch_date">Date</label>
             <input
-              id="report_date_range"
+              id="number"
               type="text"
-              name="report_date_range"
+              name="start_week"
               class="form-control"
+              placeholder="Start Week"
+            />
+          </div>
+          <div class="form-group">
+            <input
+              id="number"
+              type="text"
+              name="end_week"
+              class="form-control"
+              placeholder="Start Week"
             />
           </div>
         </div>
+      </div>
+      <div class="card-body">
+        <div class="row"></div>
       </div>
     </div>
     <!-- /.Breed Report -->

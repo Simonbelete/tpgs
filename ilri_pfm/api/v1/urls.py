@@ -22,7 +22,7 @@ router.register(r'feeds', views.FeedViewSet, basename='feeds')
 router.register(r'flocks', views.FlockViewSet, basename='flocks')
 router.register(r'statics/count', views.StaticsCount, basename='statics_count')
 
-
 urlpatterns = [
-    path('', include(router.urls))
+    path('', include(router.urls)),
+    path('reports/weight',  views.get_weight_graph, name='weights_report')
 ]
