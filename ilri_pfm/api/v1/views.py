@@ -1,9 +1,10 @@
 from django.shortcuts import render
-from rest_framework import viewsets
+from rest_framework import viewsets, status
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.filters import SearchFilter, OrderingFilter
 from django_filters import rest_framework as filters
+from django.http import Http404
 
 import api.models as models
 from api.v1 import serializers
@@ -425,3 +426,26 @@ class FlockViewSet(viewsets.ModelViewSet):
         if self.request.method == 'GET':
             return serializers.FlockSerializer_GET_V1
         return serializers.FlockSerializer_POST_V1
+
+
+class StaticsCount(viewsets.ModelViewSet):
+    queryset = models.User.objects.all()
+    serializer_class = serializers.UserSerializer_GET_V1
+    pagination_class = None
+
+    def list(self, request, *args, **kwargs):
+        try:
+            users_count = models.User.objects.count()
+            flocks_count = models.Flock.objects.count()
+            farms_count = models.Farm.objects.count()
+            chicken_count = models.Chicken.objects.count()
+            eggs_count = models.Egg.objects.count()
+            return Response({
+                'users_count': users_count,
+                'flocks_count': flocks_count,
+                'farms_count': farms_count,
+                'chicken_count': chicken_count,
+                'eggs_count': eggs_count
+            }, status=status.HTTP_200_OK)
+        except self.queryset.model.DoesNotExist:
+            raise Http404()

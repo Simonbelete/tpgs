@@ -20,6 +20,7 @@ router.register(r'eggs', views.EggViewSet, basename='eggs')
 router.register(r'feed-types', views.FeedTypeViewSet, basename='feed_types')
 router.register(r'feeds', views.FeedViewSet, basename='feeds')
 router.register(r'flocks', views.FlockViewSet, basename='flocks')
+router.register(r'statics/count', views.StaticsCount, basename='statics_count')
 
 
 urlpatterns = [

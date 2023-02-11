@@ -60,7 +60,21 @@ def register(request):
 @login_required(login_url='/login')
 @require_http_methods(["GET", "POST"])
 def home(request):
-    return render(request, 'home.html')
+    users_count = models.User.objects.count()
+    flocks_count = models.Flock.objects.count()
+    farms_count = models.Farm.objects.count()
+    chicken_count = models.Chicken.objects.count()
+    eggs_count = models.Egg.objects.count()
+    context = {
+        'statics_count': {
+            'users_count': users_count,
+            'flocks_count': flocks_count,
+            'farms_count': farms_count,
+            'chicken_count': chicken_count,
+            'eggs_count': eggs_count
+        }
+    }
+    return render(request, 'home.html', context=context)
 
 
 @login_required(login_url='/login')
