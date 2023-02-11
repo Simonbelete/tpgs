@@ -3,6 +3,11 @@ from django import forms
 import api.models as models
 
 
+class LoginForm(forms.Form):
+    email = forms.CharField()
+    password = forms.CharField()
+
+
 class UserForm(forms.ModelForm):
     class Meta:
         model = models.User

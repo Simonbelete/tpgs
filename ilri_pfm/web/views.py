@@ -6,6 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.http import HttpResponseRedirect
+from django.contrib.auth import login, authenticate
 
 import api.models as models
 from web import forms
@@ -33,7 +34,18 @@ def logout(request):
 
 
 @require_http_methods(["GET", "POST"])
-def login(request):
+def login_page(request):
+    if request.method == 'POST':
+        form = forms.LoginForm(request.POST)
+        if form.is_valid():
+            user = authenticate(
+                request, email=form.cleaned_data['email'], password=form.cleaned_data['password'],)
+            if user is not None:
+                login(request, user)
+                messages.success(request, ' welcome  !!')
+                return redirect('index')
+            else:
+                messages.info(request, f'No user found')
     return render(request, 'login.html')
 
 
