@@ -42,4 +42,9 @@ urlpatterns = [
     path('home/feeds/<id>', views.feed_edit, name='feed'),
     path('home/feeds-create', views.feed_edit,
          name='feed_create'),
+
+    path('home/eggs/', views.eggs, name='eggs'),
+    path('home/eggs/<id>', views.egg_edit, name='egg'),
+    path('home/eggs-create', views.egg_edit,
+         name='egg_create'),
 ]

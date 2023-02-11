@@ -162,12 +162,29 @@ class LayedPlace(models.Model):
         return self.name
 
 
+class Flock(models.Model):
+    name = models.CharField(max_length=250)
+    hatch_date = models.DateField()
+    breed_type = models.ForeignKey(
+        BreedType, on_delete=models.SET_NULL, null=True, related_name='flocks')
+    farm = models.ForeignKey(
+        Farm, on_delete=models.SET_NULL, null=True, related_name='flocks')
+
+    is_active = models.BooleanField(default=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    created_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.PROTECT)
+    history = HistoricalRecords()
+
+
 class Chicken(models.Model):
     SEX_CHOICES = (
         ('F', 'Female',),
         ('M', 'Male',),
     )
 
+    flock = models.ForeignKey(
+        Flock, on_delete=models.SET_NULL, null=True, related_name='chickens')
     tag = models.CharField(max_length=250, unique=True)
     sex = models.CharField(max_length=1, choices=SEX_CHOICES, default='')
     farm = models.ForeignKey(
@@ -186,6 +203,28 @@ class Chicken(models.Model):
     created_by = models.ForeignKey(
         settings.AUTH_USER_MODEL, on_delete=models.PROTECT)
     history = HistoricalRecords()
+
+    @property
+    def first_egg_lay_week(self):
+        min_egg_date = Egg.objects.get(pk=self.id).earliest('date')
+        return min_egg_date
+
+    @property
+    def first_egg_lay_date(self):
+        min_egg_date = Egg.objects.get(pk=self.id).earliest('date')
+        return min_egg_date
+
+    @property
+    def first_egg_lay_days(self):
+        try:
+            min_egg_date = Egg.objects.get(pk=self.id).earliest('date')
+        except Exception as ex:
+            print(ex)
+        return 0.0
+
+    @property
+    def days_in_production(self):
+        return 89.9
 
 
 class BreedPair(models.Model):

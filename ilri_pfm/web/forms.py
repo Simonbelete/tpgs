@@ -50,3 +50,9 @@ class FeedForm(forms.ModelForm):
     class Meta:
         model = models.Feed
         fields = ['chicken', 'date', 'weight', 'feed_type']
+
+
+class EggForm(forms.ModelForm):
+    class Meta:
+        model = models.Feed
+        fields = ['date', 'chicken']

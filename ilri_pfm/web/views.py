@@ -336,3 +336,39 @@ def feed_edit(request, id=0):
         else:
             context['data'] = None
         return render(request, 'feed_edit.html', context=context)
+
+
+@login_required(login_url='/login')
+@require_http_methods(["GET", "POST"])
+def eggs(request):
+    if request.method == 'POST':
+        form = forms.EggForm(request.POST)
+        if form.is_valid():
+            form = form.save(commit=False)
+            form.created_by = request.user
+            form.save()
+            return HttpResponseRedirect('/home/eggs/')
+        else:
+            return HttpResponseRedirect('/home/eggs?error=true')
+    else:
+        return render(request, 'eggs.html')
+
+
+@login_required(login_url='/login')
+@require_http_methods(["GET", "POST"])
+def egg_edit(request, id=0):
+    if request.method == 'POST':
+        instance = models.Egg.objects.get(pk=id)
+        form = forms.EggForm(request.POST, instance=instance)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect('/home/eggs')
+        else:
+            return HttpResponseRedirect(f'/home/eggs/%s' % id)
+    else:
+        context = {}
+        if id != 0:
+            context['data'] = models.Egg.objects.get(pk=id)
+        else:
+            context['data'] = None
+        return render(request, 'egg_edit.html', context=context)

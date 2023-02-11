@@ -146,9 +146,18 @@ class LayedPlaceSerializer_POST_V1(serializers.ModelSerializer):
 ############################ Chicken ############################
 
 class ChickenSerializer_GET_V1(serializers.ModelSerializer):
+    first_egg_lay_week = serializers.CharField()
+    first_egg_lay_date = serializers.DateField()
+    first_egg_lay_days = serializers.DecimalField(
+        max_digits=6, decimal_places=2)
+    days_in_production = serializers.DecimalField(
+        max_digits=6, decimal_places=2)
+
     class Meta:
         model = models.Chicken
-        fields = '__all__'
+        fields = ['id', 'tag', 'sex', 'layed_date', 'is_double_yolk',
+                  'is_active', 'created_at', 'farm', 'house', 'breed_type', 'layed_place',
+                  'first_egg_lay_week', 'first_egg_lay_date', 'first_egg_lay_days', 'days_in_production']
 
 
 class ChickenSerializer_POST_V1(serializers.ModelSerializer):
@@ -263,3 +272,23 @@ class FeedSerializer_POST_V1(serializers.ModelSerializer):
     class Meta:
         model = models.Feed
         fields = ['date', 'chicken', 'feed_type']
+
+
+############################ Feed Type ############################
+
+class FlockSerializer_GET_V1(serializers.ModelSerializer):
+    class Meta:
+        model = models.Flock
+        fields = '__all__'
+
+
+class FlockSerializer_POST_V1(serializers.ModelSerializer):
+    hatch_date = serializers.DateField()
+    chicken = serializers.PrimaryKeyRelatedField(
+        read_only=False, queryset=models.Chicken.objects.all())
+    farm = serializers.PrimaryKeyRelatedField(
+        read_only=False, queryset=models.Farm.objects.all())
+
+    class Meta:
+        model = models.Feed
+        fields = ['date', 'chicken', 'farm']

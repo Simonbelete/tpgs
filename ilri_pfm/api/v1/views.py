@@ -345,7 +345,7 @@ class EggViewSet(viewsets.ModelViewSet):
 
 ############################ Feed Type ############################
 
-class BreedTypeFilter(filters.FilterSet):
+class FeedTypeFilter(filters.FilterSet):
     name = filters.CharFilter(field_name='name', lookup_expr='contains')
 
     class Meta:
@@ -358,7 +358,7 @@ class FeedTypeViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.FeedTypeSerializer_GET_V1
     filter_backends = (filters.DjangoFilterBackend,
                        SearchFilter, OrderingFilter)
-    filterset_class = BreedTypeFilter
+    filterset_class = FeedTypeFilter
     search_fields = ['name']
     ordering_fields = '__all__'
 
@@ -376,7 +376,7 @@ class FeedTypeViewSet(viewsets.ModelViewSet):
 class FeedFilter(filters.FilterSet):
 
     class Meta:
-        model = models.Feed
+        model = models.FeedType
         fields = ''
 
 
@@ -386,7 +386,7 @@ class FeedViewSet(viewsets.ModelViewSet):
     filter_backends = (filters.DjangoFilterBackend,
                        SearchFilter, OrderingFilter)
     filterset_class = FeedFilter
-    search_fields = ['date']
+    search_fields = ['name']
     ordering_fields = '__all__'
 
     def perform_create(self, serializer):
@@ -396,3 +396,31 @@ class FeedViewSet(viewsets.ModelViewSet):
         if self.request.method == 'GET':
             return serializers.FeedSerializer_GET_V1
         return serializers.FeedSerializer_POST_V1
+
+
+############################ Flock ############################
+
+class FlockFilter(filters.FilterSet):
+    name = filters.CharFilter(field_name='name', lookup_expr='contains')
+
+    class Meta:
+        model = models.Flock
+        fields = ['name']
+
+
+class FlockViewSet(viewsets.ModelViewSet):
+    queryset = models.Flock.objects.all()
+    serializer_class = serializers.FlockSerializer_GET_V1
+    filter_backends = (filters.DjangoFilterBackend,
+                       SearchFilter, OrderingFilter)
+    filterset_class = FlockFilter
+    search_fields = ['name']
+    ordering_fields = '__all__'
+
+    def perform_create(self, serializer):
+        serializer.save(created_by=self.request.user)
+
+    def get_serializer_class(self):
+        if self.request.method == 'GET':
+            return serializers.FlockSerializer_GET_V1
+        return serializers.FlockSerializer_POST_V1

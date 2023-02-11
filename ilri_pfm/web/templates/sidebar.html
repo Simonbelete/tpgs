@@ -312,6 +312,16 @@
 
             <li class="nav-item">
               <a
+                href="/home/flocks"
+                class="nav-link {% if request.path == '/home/flocks/' %}active{% endif %}"
+              >
+                <i class="nav-icon fab fa-hive"></i>
+                <p>Flocks</p>
+              </a>
+            </li>
+
+            <li class="nav-item">
+              <a
                 href="/home/farms"
                 class="nav-link {% if request.path == '/home/farms/' %}active{% endif %}"
               >
@@ -352,7 +362,7 @@
 
             <li class="nav-item">
               <a
-                href="/home/users"
+                href="/home/eggs"
                 class="nav-link {% if request.path == '/home/eggs/' %}active{% endif %}"
               >
                 <i class="nav-icon fas fa-egg"></i>
