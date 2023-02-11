@@ -76,7 +76,9 @@
                 value="{{ data.farm.id }}"
                 class="form-control select2"
                 style="width: 100%"
-              ></select>
+              >
+              <option value="{{ data.farm.id }}" selected="selected">{{ data.farm.name }}</option>
+            </select>
             </div>
           </div>
           <!-- /.card-body -->
