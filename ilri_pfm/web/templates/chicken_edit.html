@@ -155,7 +155,6 @@
     </div>
 
     {% include "components/weight_piechart.html" %}
-
   </section>
 
   <!-- /.content -->
@@ -181,7 +180,18 @@
 <script src="{% static 'js/components/breed_multiselect.js' %}"></script>
 <script>
   $(function () {
-    breedMultipleSelect.init($('#breed-multiselect'));
+    breed_multiselect_input = breedMultipleSelect.init($("#breed-multiselect"));
+
+    breed_multiselect_input.on("select2:select", function (e) {
+      var data = e.params.data;
+      console.log($("#breed-multiselect").val());
+    });
+
+    $('#weight_piechart_apply').click(function () {
+      $('#weight_piechart_img').attr("src", '/api/v1/reports/weight');
+      $('#weight_piechart_download').attr("href", '/api/v1/reports/weight');
+    })
+    
 
     $("#layed_date").daterangepicker(
       {
@@ -303,8 +313,6 @@
         },
       },
     });
-
-
   });
 </script>
 {% endblock %}

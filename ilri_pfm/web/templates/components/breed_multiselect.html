@@ -1,10 +1,14 @@
-<div class="form-group">
-  <label>Breeds</label>
+<div class="{% block breed_multiselect_style %}{% endblock %}">
+  <!-- <label>Breeds</label> -->
+  {% block breed_multiselect_label %}{% endblock %}
   <select
     id="breed-multiselect"
     multiple="multiple"
     data-placeholder="Select Breeds"
     style="width: 100%"
   >
+  <option value="{{ data.breed_type.id }}" selected="selected">
+    {{ data.breed_type.name }}
+  </option>
   </select>
 </div>

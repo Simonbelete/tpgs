@@ -1,6 +1,7 @@
 var breedMultipleSelect = {
   init: (selector) => {
-    selector.select2({
+    return selector.select2({
+      theme: 'bootstrap4',
       ajax: {
         url: "/api/v1/breed-types",
         data: function (params) {
