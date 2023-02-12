@@ -459,7 +459,7 @@ class StaticsCount(viewsets.ModelViewSet):
 @require_http_methods(["GET"])
 def get_weight_graph(request):
     breed_type = request.GET.get('breed_type') or ""
-    breed_ids = np.array(breed_type.split(','))
+    breed_ids = breed_type.split(',') or []
 
     flock_id = request.GET.get('flock') or 0
 
@@ -491,6 +491,8 @@ def get_weight_graph(request):
 
     # Horizontal x data
     x_pos = np.array([*range(start_week, end_week + 1)])
+    x = np.arange(len(x_pos))
+    width = 0.35
 
     # for week in range(start_week, end_week + 1):
     #     y_data = []
@@ -545,6 +547,35 @@ def get_weight_graph(request):
             autolabel(rects=rec)
         except Exception as ex:
             print(ex)
+
+    elif len(breed_ids) != 0:
+        alt = True
+        for breed_id in breed_ids:
+            try:
+                breed = models.BreedType.objects.get(pk=breed_id)
+                breed_color = breed.color if breed.color != None else '#4472C4'
+                # Weights per week
+                week_weights = []
+                week_erros = []
+                for w in x_pos:
+                    current_week_weights = []
+                    weights = models.Weight.objects.all().filter(
+                        chicken__breed_type=breed_id, week=w)
+                    for row in weights.iterator():
+                        current_week_weights.append(Decimal(row.weight))
+                    avg = np.average(current_week_weights)
+                    std = np.std(current_week_weights)
+
+                    week_weights.append(avg)
+                    week_erros.append(std)
+                frm = x - width/2 if alt else x + width/2 + 0.06
+                rec = ax.bar(frm, week_weights, width=width, yerr=week_erros,
+                             label=breed.name, color=breed_color, capsize=10, zorder=3)
+                ax.bar_label(rec, padding=10)
+                # autolabel(rects=rec)
+                alt = not alt
+            except Exception as ex:
+                print(ex)
 
     ax.set_ylabel('Weight', fontsize=15)
     ax.set_xlabel('Week', fontsize=15)
