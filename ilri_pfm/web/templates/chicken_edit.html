@@ -153,6 +153,9 @@
         </form>
       </div>
     </div>
+
+    {% include "components/weight_piechart.html" %}
+
   </section>
 
   <!-- /.content -->
@@ -174,8 +177,12 @@
 <script src="{% static 'admin-LTE-v3.2.0/plugins/moment/moment.min.js' %}"></script>
 <script src="{% static 'admin-LTE-v3.2.0/plugins/daterangepicker/daterangepicker.js' %}"></script>
 <script src="{% static 'admin-LTE-v3.2.0/plugins/select2/js/select2.full.min.js' %}"></script>
+
+<script src="{% static 'js/components/breed_multiselect.js' %}"></script>
 <script>
   $(function () {
+    breedMultipleSelect.init($('#breed-multiselect'));
+
     $("#layed_date").daterangepicker(
       {
         autoApply: true,
