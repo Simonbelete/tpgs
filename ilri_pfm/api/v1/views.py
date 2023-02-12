@@ -463,25 +463,6 @@ def get_weight_graph(request):
 
     flock_id = request.GET.get('flock') or 0
 
-    def autolabel(rects, xpos='center'):
-        """
-        Attach a text label above each bar in *rects*, displaying its height.
-
-        *xpos* indicates which side to place the text w.r.t. the center of
-        the bar. It can be one of the following {'center', 'right', 'left'}.
-        """
-
-        ha = {'center': 'center', 'right': 'left', 'left': 'right'}
-        offset = {'center': 0, 'right': 1, 'left': -1}
-
-        for rect in rects:
-            height = rect.get_height()
-            ax.annotate('{}'.format(height),
-                        xy=(rect.get_x() + rect.get_width() / 2, height),
-                        xytext=(offset[xpos]*3, 3),  # use 3 points offset
-                        textcoords="offset points",  # in both directions
-                        ha=ha[xpos], va='bottom')
-
     output = io.BytesIO()
 
     start_week = request.GET.get('start_week') or 0
@@ -493,34 +474,6 @@ def get_weight_graph(request):
     x_pos = np.array([*range(start_week, end_week + 1)])
     x = np.arange(len(x_pos))
     width = 0.35
-
-    # for week in range(start_week, end_week + 1):
-    #     y_data = []
-    #     error = []
-    #     serializer = serializers.WeightSerializer_GET_V1(
-    #         models.Weight.objects.all().filter(week=week),
-    #         many=True
-    #     )
-    #     weights = []
-    #     for row in serializer.data:
-    #         weights.append(Decimal(row['weight']))
-
-    #     avg = np.average(weights)
-    #     std = np.std(weights)
-
-    #     y_data.append(avg)
-    #     error.append(std)
-
-    # for breed_id in breed_ids:
-    #     try:
-    #         breed = models.BreedType.objects.get(pk=int(breed_id))
-
-    #         rec1 = ax.bar(x_pos, y_data, yerr=error, align='center',
-    #                       alpha=0.5, color=breed.color, capsize=10)
-    #         autolabel(rects=rec1)
-    #     except:
-    #         # Log Error Here
-    #         print('Erro')
 
     fig, ax = plt.subplots(figsize=(20, 10))
 
@@ -544,7 +497,6 @@ def get_weight_graph(request):
                 week_erros.append(std)
             rec = ax.bar(x_pos, week_weights, yerr=week_erros, align='center',
                          alpha=1, color=flock_color, capsize=10, zorder=3)
-            autolabel(rects=rec)
         except Exception as ex:
             print(ex)
 
@@ -577,6 +529,7 @@ def get_weight_graph(request):
             except Exception as ex:
                 print(ex)
 
+    ax.legend(loc='best')
     ax.set_ylabel('Weight', fontsize=15)
     ax.set_xlabel('Week', fontsize=15)
     ax.tick_params(axis='x', which='major', labelsize=15)
