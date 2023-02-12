@@ -298,10 +298,11 @@ class BreedPairViewSet(viewsets.ModelViewSet):
 ############################ Weight ############################
 
 class WeightFilter(filters.FilterSet):
+    chicken = filters.CharFilter(field_name='chicken', lookup_expr='exact')
 
     class Meta:
         model = models.Weight
-        fields = ''
+        fields = ['chicken']
 
 
 class WeightViewSet(viewsets.ModelViewSet):
@@ -457,6 +458,25 @@ class StaticsCount(viewsets.ModelViewSet):
 
 @require_http_methods(["GET"])
 def get_weight_graph(request):
+    def autolabel(rects, xpos='center'):
+        """
+        Attach a text label above each bar in *rects*, displaying its height.
+
+        *xpos* indicates which side to place the text w.r.t. the center of
+        the bar. It can be one of the following {'center', 'right', 'left'}.
+        """
+
+        ha = {'center': 'center', 'right': 'left', 'left': 'right'}
+        offset = {'center': 0, 'right': 1, 'left': -1}
+
+        for rect in rects:
+            height = rect.get_height()
+            ax.annotate('{}'.format(height),
+                        xy=(rect.get_x() + rect.get_width() / 2, height),
+                        xytext=(offset[xpos]*3, 3),  # use 3 points offset
+                        textcoords="offset points",  # in both directions
+                        ha=ha[xpos], va='bottom')
+
     output = io.BytesIO()
 
     x_data = []
@@ -481,11 +501,18 @@ def get_weight_graph(request):
         x_data.append(avg)
         error.append(std)
 
+    print('-------------------')
+    print(x_data)
+    print(error)
+
     x_pos = np.arange(len(weeks))
 
     fig, ax = plt.subplots(figsize=(20, 10))
-    ax.bar(x_pos, x_data, yerr=error, align='center',
-           alpha=0.5, ecolor='black', capsize=10)
+    rec1 = ax.bar(x_pos, x_data, yerr=error, align='center',
+                  alpha=0.5, ecolor='black', capsize=10)
+
+    autolabel(rects=rec1)
+
     ax.set_ylabel('Weight', fontsize=15)
     ax.set_xlabel('Week', fontsize=15)
     ax.tick_params(axis='x', which='major', labelsize=15)

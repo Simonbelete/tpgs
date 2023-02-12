@@ -43,31 +43,6 @@
         >
           {% csrf_token %}
           <div class="card-body">
-
-            <div class="form-group">
-                <label for="week">Week</label>
-                <input
-                  type="number"
-                  name="week"
-                  value="{{ data.week }}"
-                  class="form-control"
-                  id="week"
-                  placeholder="Enter Week"
-                />
-              </div>
-
-            <div class="form-group">
-              <label for="weight">Weight</label>
-              <input
-                type="number"
-                name="weight"
-                value="{{ data.weight }}"
-                class="form-control"
-                id="weight"
-                placeholder="Enter Weight in gram"
-              />
-            </div>
-
             <div class="form-group">
               <label for="farm">Chicken</label>
               <select
@@ -82,6 +57,30 @@
                 </option>
               </select>
             </div>
+
+            <div class="form-group">
+              <label for="week">Week</label>
+              <input
+                type="number"
+                name="week"
+                value="{{ data.week }}"
+                class="form-control"
+                id="week"
+                placeholder="Enter Week"
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="weight">Weight</label>
+              <input
+                type="number"
+                name="weight"
+                value="{{ data.weight }}"
+                class="form-control"
+                id="weight"
+                placeholder="Enter Weight in gram"
+              />
+            </div>
           </div>
           <!-- /.card-body -->
 
@@ -90,6 +89,43 @@
           </div>
         </form>
       </div>
+    </div>
+
+    <!-- Table for Weight List -->
+    <div class="col-12">
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title">List of all Feed types</h3>
+        </div>
+        <!-- /.card-header -->
+        <div class="card-body">
+          <table id="dataListTable" class="table table-bordered table-striped">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Week</th>
+                <th>Weight</th>
+                <th>chicken</th>
+                <th>Created At</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+            <tfoot>
+              <tr>
+                <th>ID</th>
+                <th>Week</th>
+                <th>Weight</th>
+                <th>chicken</th>
+                <th>Created At</th>
+                <th></th>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+        <!-- /.card-body -->
+      </div>
+      <!-- /.card -->
     </div>
   </section>
 
@@ -140,6 +176,67 @@
         },
       },
     });
+
+    var columns = [
+      { data: "id" },
+      { data: "week" },
+      { data: "weight" },
+      { data: "chicken" },
+      { data: "created_at" },
+      {
+        data: null,
+        className: "dt-center editor-edit",
+        defaultContent: '<i class="fas fa-pencil-alt"></i>',
+        orderable: false,
+      },
+    ];
+    var table = $("#dataListTable").DataTable({
+      responsive: true,
+      lengthChange: false,
+      autoWidth: false,
+      buttons: ["copy", "csv", "excel", "pdf", "print", "colvis"],
+      processing: true,
+      serverSide: true,
+      ajax: {
+        url: "/api/v1/weights?chicken=0",
+        dataSrc: function (json) {
+          json["data"] = json["results"];
+          json["recordsTotal"] = json["count"];
+          json["recordsFiltered"] = json["count"];
+          return json.data;
+        },
+        data: function (d) {
+          d.search = d.search.value;
+          for (let i = 0; i < d.order.length; i++) {
+            var sign = d.order[i].dir == "asc" ? "+" : "-";
+            d.ordering = sign + columns[i].data;
+          }
+        },
+      },
+      columns: columns,
+    });
+
+    table
+      .buttons()
+      .container()
+      .appendTo("#dataListTable_wrapper .col-md-6:eq(0)");
+
+    // Edit record
+    $("#dataListTable").on("click", "td.editor-edit", function (e) {
+      e.preventDefault();
+      var data = table.row(this).data();
+      console.log(data);
+      window.location.href = "/home/weights/" + data.id;
+    });
+
+    $("#chicken").on("select2:select", function (e) {
+      var data = e.params.data;
+      loadChickenData(data.id);
+    });
+
+    function loadChickenData(id) {
+        table.ajax.url("/api/v1/weights?chicken=" + id).load();
+    }
   });
 </script>
 {% endblock %}
