@@ -483,10 +483,10 @@ def get_weight_graph(request):
     error = []
 
     start_week = 0
-    end_week = 10
+    end_week = 1
     weeks = []
 
-    for week in range(start_week, end_week):
+    for week in range(start_week, end_week + 1):
         weeks.append(str(week))
         serializer = serializers.WeightSerializer_GET_V1(
             models.Weight.objects.all().filter(week=week),
@@ -500,10 +500,6 @@ def get_weight_graph(request):
         std = np.std(weights)
         x_data.append(avg)
         error.append(std)
-
-    print('-------------------')
-    print(x_data)
-    print(error)
 
     x_pos = np.arange(len(weeks))
 
