@@ -458,6 +458,11 @@ class StaticsCount(viewsets.ModelViewSet):
 
 @require_http_methods(["GET"])
 def get_weight_graph(request):
+    breed_type = request.GET.get('breed_type') or ""
+    breed_ids = np.array(breed_type.split(','))
+
+    flock_id = request.GET.get('flock') or 0
+
     def autolabel(rects, xpos='center'):
         """
         Attach a text label above each bar in *rects*, displaying its height.
@@ -479,42 +484,74 @@ def get_weight_graph(request):
 
     output = io.BytesIO()
 
-    x_data = []
-    error = []
+    start_week = request.GET.get('start_week') or 0
+    start_week = int(start_week)
+    end_week = request.GET.get('end_week') or 10
+    end_week = int(end_week)
 
-    start_week = 0
-    end_week = 1
-    weeks = []
+    # Horizontal x data
+    x_pos = np.array([*range(start_week, end_week + 1)])
 
-    for week in range(start_week, end_week + 1):
-        weeks.append(str(week))
-        serializer = serializers.WeightSerializer_GET_V1(
-            models.Weight.objects.all().filter(week=week),
-            many=True
-        )
-        weights = []
-        for row in serializer.data:
-            weights.append(Decimal(row['weight']))
+    # for week in range(start_week, end_week + 1):
+    #     y_data = []
+    #     error = []
+    #     serializer = serializers.WeightSerializer_GET_V1(
+    #         models.Weight.objects.all().filter(week=week),
+    #         many=True
+    #     )
+    #     weights = []
+    #     for row in serializer.data:
+    #         weights.append(Decimal(row['weight']))
 
-        avg = np.average(weights)
-        std = np.std(weights)
-        x_data.append(avg)
-        error.append(std)
+    #     avg = np.average(weights)
+    #     std = np.std(weights)
 
-    x_pos = np.arange(len(weeks))
+    #     y_data.append(avg)
+    #     error.append(std)
+
+    # for breed_id in breed_ids:
+    #     try:
+    #         breed = models.BreedType.objects.get(pk=int(breed_id))
+
+    #         rec1 = ax.bar(x_pos, y_data, yerr=error, align='center',
+    #                       alpha=0.5, color=breed.color, capsize=10)
+    #         autolabel(rects=rec1)
+    #     except:
+    #         # Log Error Here
+    #         print('Erro')
 
     fig, ax = plt.subplots(figsize=(20, 10))
-    rec1 = ax.bar(x_pos, x_data, yerr=error, align='center',
-                  alpha=0.5, ecolor='black', capsize=10)
 
-    autolabel(rects=rec1)
+    # For Flock Weights
+    if (flock_id != 0):
+        try:
+            flock = models.Flock.objects.get(pk=flock_id)
+            flock_color = flock.breed_type.color if flock.breed_type != None else '#4472C4'
+            # Weights per week
+            week_weights = []
+            week_erros = []
+            for w in x_pos:
+                current_week_weights = []
+                weights = models.Weight.objects.all().filter(chicken__flock=flock_id, week=w)
+                for row in weights.iterator():
+                    current_week_weights.append(Decimal(row.weight))
+                avg = np.average(current_week_weights)
+                std = np.std(current_week_weights)
+
+                week_weights.append(avg)
+                week_erros.append(std)
+            rec = ax.bar(x_pos, week_weights, yerr=week_erros, align='center',
+                         alpha=1, color=flock_color, capsize=10, zorder=3)
+            autolabel(rects=rec)
+        except Exception as ex:
+            print(ex)
 
     ax.set_ylabel('Weight', fontsize=15)
     ax.set_xlabel('Week', fontsize=15)
     ax.tick_params(axis='x', which='major', labelsize=15)
     ax.tick_params(axis='y', which='major', labelsize=15)
     ax.set_xticks(x_pos)
-    ax.set_xticklabels(weeks)
+    ax.set_xticklabels(x_pos)
     ax.set_title('Growth Perfomance')
     ax.yaxis.grid(True)
     fig.tight_layout()

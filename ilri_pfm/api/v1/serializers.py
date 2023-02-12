@@ -283,10 +283,12 @@ class FlockSerializer_GET_V1(serializers.ModelSerializer):
     hatch_date = serializers.DateField()
     farm = FarmSerializer_GET_V1()
     chickens = ChickenSerializer_GET_V1(many=True)
+    breed_type = BreedTypeSerializer_GET_V1()
 
     class Meta:
         model = models.Flock
-        fields = ['id', 'name', 'hatch_date', 'farm', 'chickens', 'created_at']
+        fields = ['id', 'name', 'breed_type',
+                  'hatch_date', 'farm', 'chickens', 'created_at']
 
 
 class FlockSerializer_POST_V1(serializers.ModelSerializer):
