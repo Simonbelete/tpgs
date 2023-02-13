@@ -472,8 +472,9 @@ def get_weight_graph(request):
 
     # Horizontal x data
     x_pos = np.array([*range(start_week, end_week + 1)])
+    # x = np.array([i * len(breed_ids) for i in x_pos])
     x = np.arange(len(x_pos))
-    width = 0.35
+    width = 0.25
 
     fig, ax = plt.subplots(figsize=(20, 10))
 
@@ -501,7 +502,6 @@ def get_weight_graph(request):
             print(ex)
 
     elif len(breed_ids) != 0:
-        alt = True
         for breed_id in breed_ids:
             try:
                 breed = models.BreedType.objects.get(pk=breed_id)
@@ -520,21 +520,22 @@ def get_weight_graph(request):
 
                     week_weights.append(avg)
                     week_erros.append(std)
-                frm = x - width/2 if alt else x + width/2 + 0.06
-                rec = ax.bar(frm, week_weights, width=width, yerr=week_erros,
+                frm = [i + width for i in x]
+                print(frm)
+                rec = ax.bar(frm, week_weights, width=width, yerr=week_erros, align='center',
                              label=breed.name, color=breed_color, capsize=10, zorder=3)
                 ax.bar_label(rec, padding=10)
-                # autolabel(rects=rec)
-                alt = not alt
+                x = frm
             except Exception as ex:
                 print(ex)
 
     ax.legend(loc='best')
     ax.set_ylabel('Weight', fontsize=15)
     ax.set_xlabel('Week', fontsize=15)
-    ax.tick_params(axis='x', which='major', labelsize=15)
+    ax.tick_params(axis='x', which='major', labelsize=15, length=10)
     ax.tick_params(axis='y', which='major', labelsize=15)
-    ax.set_xticks(x_pos)
+    ax.set_xticks([r + width + len(breed_ids) * width * 0.25
+                   for r in range(len(x_pos))], x_pos)
     ax.set_xticklabels(x_pos)
     ax.set_title('Growth Perfomance')
     ax.yaxis.grid(True)
