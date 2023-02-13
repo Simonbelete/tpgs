@@ -2,19 +2,33 @@ import io
 import numpy as np
 from decimal import Decimal
 import matplotlib.pyplot as plt
-from django.shortcuts import render
+from collections import OrderedDict
 from rest_framework import viewsets, status
 from django.views.decorators.http import require_http_methods
 from rest_framework.response import Response
 from rest_framework.filters import SearchFilter, OrderingFilter
 from django_filters import rest_framework as filters
 from django.http import Http404, HttpResponse
+from rest_framework.pagination import PageNumberPagination
 
 import api.models as models
 from api.v1 import serializers
 
-############################ Country ############################
 
+class LimitPageNumberPagination(PageNumberPagination):
+    page_size_query_param = 'limit'
+
+    def get_paginated_response(self, data):
+        return Response(OrderedDict([
+            ('count', self.page.paginator.count),
+            ('limit', '1'),
+            ('next', self.get_next_link()),
+            ('previous', self.get_previous_link()),
+            ('results', data)
+        ]))
+
+
+############################ Country ############################
 
 class UserFilter(filters.FilterSet):
     name = filters.CharFilter(field_name='name', lookup_expr='contains')
@@ -59,6 +73,7 @@ class CountryViewSet(viewsets.ModelViewSet):
     filter_backends = (filters.DjangoFilterBackend,
                        SearchFilter, OrderingFilter)
     filterset_class = CountryFilter
+    pagination_class = LimitPageNumberPagination
     search_fields = ['name']
     ordering_fields = '__all__'
 

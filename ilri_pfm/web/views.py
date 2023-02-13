@@ -5,6 +5,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.http import HttpResponseRedirect
 from django.contrib.auth import login, authenticate, logout
+from rest_framework.pagination import PageNumberPagination
+
 
 import api.models as models
 from web import forms
@@ -95,7 +97,7 @@ def users(request):
 
 @login_required(login_url='/login')
 @require_http_methods(["GET", "POST"])
-def user_edit(request, id):
+def user_edit(request, id=0):
     if request.method == 'POST':
         instance = models.User.objects.get(pk=id)
         form = forms.UserForm(request.POST, instance=instance)
@@ -106,7 +108,10 @@ def user_edit(request, id):
             return HttpResponseRedirect(f'/home/users/%s' % id)
     else:
         context = {}
-        context['user'] = models.User.objects.get(pk=id)
+        if id != 0:
+            context['data'] = models.User.objects.get(pk=id)
+        else:
+            context['data'] = None
         return render(request, 'user_edit.html', context=context)
 
 
