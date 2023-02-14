@@ -595,3 +595,19 @@ def get_weight_graph(request):
     )
 
     return response
+
+
+class FlockHistoryViewSet(viewsets.ModelViewSet):
+    queryset = models.Flock.history.all()
+    serializer_class = serializers.FlockHistory
+
+    def list(self, request, *args, **kwargs):
+        try:
+            pk = self.kwargs['id']
+            instance = self.queryset
+            serializer = self.serializer_class(instance, many=True).data
+            return Response({
+                'results': serializer
+            }, status=status.HTTP_200_OK)
+        except Exception as ex:
+            raise Http404()

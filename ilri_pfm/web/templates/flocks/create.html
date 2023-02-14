@@ -28,7 +28,7 @@ Create Flock - ILRI Poultry Farm Management
         <ol class="breadcrumb float-sm-right">
           <li class="breadcrumb-item"><a href="/">Home</a></li>
           <li class="breadcrumb-item"><a href="/home/flocks/">Flocks</a></li>
-          <li class="breadcrumb-item active">{{ data.name }}</li>
+          <li class="breadcrumb-item active">Create New</li>
         </ol>
       </div>
     </div>
@@ -40,7 +40,7 @@ Create Flock - ILRI Poultry Farm Management
     <div class="col-md-6">
       <div class="card card-primary">
         <div class="card-header">
-          <h3 class="card-title">Edit</h3>
+          <h3 class="card-title">Create New Flock</h3>
         </div>
         <form
           action="{% if data != None %} {% else %} /home/flocks/ {% endif %}"
@@ -71,7 +71,7 @@ Create Flock - ILRI Poultry Farm Management
               />
             </div>
             <div class="form-group">
-              <label>Farm Type</label>
+              <label>Farm</label>
               <select
                 id="farm"
                 name="farm"

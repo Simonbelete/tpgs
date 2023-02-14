@@ -201,7 +201,7 @@ Flocks Edit - ILRI Poultry Farm Management
       }
     );
 
-    $("#date").daterangepicker(
+    $("#hatch_date").daterangepicker(
       {
         autoApply: true,
         singleDatePicker: true,
@@ -215,6 +215,7 @@ Flocks Edit - ILRI Poultry Farm Management
     );
 
     $("#farm").select2({
+      theme: 'bootstrap4',
       ajax: {
         url: "/api/v1/farms",
         data: function (params) {

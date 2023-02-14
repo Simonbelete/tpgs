@@ -24,6 +24,10 @@ router.register(r'statics/count', views.StaticsCount, basename='statics_count')
 router.register(r'statics/breed-types', views.StaticsBreedType,
                 basename='statics_breed_types')
 
+router.register(r'flocks/(?P<id>.+)/history',
+                views.FlockHistoryViewSet, basename='flocks_history')
+
+
 urlpatterns = [
     path('', include(router.urls)),
     path('reports/weight',  views.get_weight_graph, name='weights_report')
