@@ -71,7 +71,7 @@ Create Flock - ILRI Poultry Farm Management
               />
             </div>
             <div class="form-group">
-              <label for="farm">Farm Type</label>
+              <label>Farm Type</label>
               <select
                 id="farm"
                 name="farm"
@@ -143,6 +143,7 @@ Create Flock - ILRI Poultry Farm Management
     );
 
     $("#farm").select2({
+        theme: 'bootstrap4',
       ajax: {
         url: "/api/v1/farms",
         data: function (params) {
