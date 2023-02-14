@@ -32,10 +32,7 @@
       </div>
       <!-- /.col -->
       <div class="col-md-4">
-        <ul class="chart-legend clearfix">
-            {% for bt in breed_type.results %}
-                <li><i class="far fa-circle" style="color: {{ bt.color }}"></i> {{ bt.name }}</li>
-            {% endfor %}
+        <ul class="chart-legend clearfix" id="breed_type_piechart_list">
         </ul>
       </div>
       <!-- /.col -->
@@ -43,34 +40,9 @@
     <!-- /.row -->
   </div>
   <!-- /.card-body -->
-  <!--<div class="card-footer p-0">
-    <ul class="nav nav-pills flex-column">
-      <li class="nav-item">
-        <a href="#" class="nav-link">
-          United States of America
-          <span class="float-right text-danger">
-            <i class="fas fa-arrow-down text-sm"></i>
-            12%</span
-          >
-        </a>
-      </li>
-      <li class="nav-item">
-        <a href="#" class="nav-link">
-          India
-          <span class="float-right text-success">
-            <i class="fas fa-arrow-up text-sm"></i> 4%
-          </span>
-        </a>
-      </li>
-      <li class="nav-item">
-        <a href="#" class="nav-link">
-          China
-          <span class="float-right text-warning">
-            <i class="fas fa-arrow-left text-sm"></i> 0%
-          </span>
-        </a>
-      </li>
+  <div class="card-footer p-0">
+    <ul class="nav nav-pills flex-column" id="breed_type_piechart_detail_list">
     </ul>
-  </div> -->
+  </div>
   <!-- /.footer -->
 </div>

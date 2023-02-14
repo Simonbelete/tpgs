@@ -1,18 +1,16 @@
 var breedTypePiechart = {
   init: (selector) => {
+    function percentCalculation(a, b){
+      var c = a / b * 100;
+      return parseFloat(c);
+    }
+
     var pieData = {
-      labels: [
-        'Chrome',
-        'IE',
-        'FireFox',
-        'Safari',
-        'Opera',
-        'Navigator'
-      ],
+      labels: [],
       datasets: [
         {
-          data: [700, 500, 400, 600, 300, 100],
-          backgroundColor: ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#d2d6de']
+          data: [],
+          backgroundColor: []
         }
       ]
     }
@@ -27,15 +25,33 @@ var breedTypePiechart = {
       type: 'doughnut',
       data: pieData,
       options: pieOptions
-    })
-  },
-  ajax: () => {
+    });
+
     var data = data || {};
 
-    $.getJSON('/api/v1/', data).done(function(response) {
-        chart.data.labels = response.labels;
-        chart.data.datasets[0].data = response.data.quantity; // or you can iterate for multiple datasets
-        chart.update(); // finally update our chart
+    $.getJSON('/api/v1/statics/breed-types/', data).done(function(response) {
+        labels = []
+        datasets = {'data': [], 'backgroundColor': []}
+        for(var i = 0; i < response.results.length; i++) {
+          labels.push(response.results[i].name);
+          var percentage = percentCalculation(response.results[i].chicken_count, response.chicken_count)
+          datasets.data.push(percentage)
+          color = response.results[i].color == null ? '#d2d6de' : response.results[i].color
+          datasets.backgroundColor.push(color)
+          $('#breed_type_piechart_list').append("<li><i class=\"far fa-circle\" style=\"color:" + color + "\"></i>" + response.results[i].name +"</li>")
+          $('#breed_type_piechart_detail_list').append(
+            "<li class=\"nav-item\">" +
+              "<a href=\"/home/breed-types/" + response.results[i].id + "\" class=\"nav-link\">" + 
+                  response.results[i].name + 
+                "<span class=\"float-right \"" + "style=\"color:" + color +"\">" +
+                percentage  + "%</span>"+
+              "</a>" +
+            "</li>"
+          )
+        }
+        pieChart.data.labels = labels;
+        pieChart.data.datasets[0] = datasets
+        pieChart.update();
     });
   }
 }
