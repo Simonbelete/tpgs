@@ -166,7 +166,7 @@ class Flock(models.Model):
     name = models.CharField(max_length=250)
     hatch_date = models.DateField()
     breed_type = models.ForeignKey(
-        BreedType, on_delete=models.SET_NULL, null=True, related_name='chickens')
+        BreedType, on_delete=models.SET_NULL, null=True, related_name='flocks')
     farm = models.ForeignKey(
         Farm, on_delete=models.SET_NULL, null=True, related_name='flock')
 
@@ -192,7 +192,7 @@ class Chicken(models.Model):
     house = models.ForeignKey(
         House, on_delete=models.SET_NULL, null=True, related_name='chickens')
     breed_type = models.ForeignKey(
-        BreedType, on_delete=models.SET_NULL, null=True, related_name='houses')
+        BreedType, on_delete=models.SET_NULL, null=True, related_name='chickens')
     layed_place = models.ForeignKey(
         LayedPlace, on_delete=models.SET_NULL, null=True)
     layed_date = models.DateField()
