@@ -135,79 +135,49 @@ Flocks Edit - ILRI Poultry Farm Management
     </div>
     <!-- /.History -->
   
-
-    <div class="card col-12">
-      <div class="card-header">
-        <h3 class="card-title">Chickens</h3>
-      </div>
-      <!-- /.card-header -->
-      <div class="card-body">
-        <table id="dataListTable" class="table table-bordered table-striped">
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Tag</th>
-              <th>Sex</th>
-              <th>Farm</th>
-              <th>House</th>
-              <th>Breed Type</th>
-              <th>Layed Date</th>
-              <th>Is Double Yolk</th>
-              <th>Created At</th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody></tbody>
-          <tfoot>
-            <tr>
-              <th>ID</th>
-              <th>Tag</th>
-              <th>Sex</th>
-              <th>Farm</th>
-              <th>House</th>
-              <th>Breed Type</th>
-              <th>Layed Date</th>
-              <th>Is Double Yolk</th>
-              <th>Created At</th>
-              <th></th>
-            </tr>
-          </tfoot>
-        </table>
-      </div>
-      <!-- /.card-body -->
-    </div>
-    <!-- /.card -->
-
-    <!-- Breed Report -->
-    <div class="card">
-      <div class="card-header row">
-        <h3 class="card-title">Report</h3>
-        <div class="row col-md-3">
-          <div class="form-group">
-            <input
-              id="number"
-              type="text"
-              name="start_week"
-              class="form-control"
-              placeholder="Start Week"
-            />
-          </div>
-          <div class="form-group">
-            <input
-              id="number"
-              type="text"
-              name="end_week"
-              class="form-control"
-              placeholder="Start Week"
-            />
-          </div>
+    <div class="col-12">
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title">Chickens</h3>
         </div>
+        <!-- /.card-header -->
+        <div class="card-body">
+          <table id="dataListTable" class="table table-bordered table-striped">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Tag</th>
+                <th>Sex</th>
+                <th>Farm</th>
+                <th>House</th>
+                <th>Breed Type</th>
+                <th>Layed Date</th>
+                <th>Is Double Yolk</th>
+                <th>Created At</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+            <tfoot>
+              <tr>
+                <th>ID</th>
+                <th>Tag</th>
+                <th>Sex</th>
+                <th>Farm</th>
+                <th>House</th>
+                <th>Breed Type</th>
+                <th>Layed Date</th>
+                <th>Is Double Yolk</th>
+                <th>Created At</th>
+                <th></th>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+        <!-- /.card-body -->
       </div>
-      <div class="card-body">
-        <div class="row"></div>
-      </div>
+      <!-- /.card -->
     </div>
-    <!-- /.Breed Report -->
   </section>
 
   <!-- /.content -->
@@ -349,7 +319,14 @@ Flocks Edit - ILRI Poultry Farm Management
     });
 
     // History
-    var table = $("#history").DataTable({
+    var historyColumns = [
+      { data: 'history_user.name' },
+      { data: 'name' },
+      { data: 'hatch_date' },
+      { data: 'farm.name' },
+      { data: 'history_date' }
+    ]
+    var historyTable = $("#history").DataTable({
       responsive: true,
       lengthChange: false,
       autoWidth: false,
@@ -365,19 +342,11 @@ Flocks Edit - ILRI Poultry Farm Management
         },
         data: function (d) {
           d.search = d.search.value;
-          for (let i = 0; i < d.order.length; i++) {
-            var sign = d.order[i].dir == "asc" ? "+" : "-";
-            d.ordering = sign + columns[i].data;
-          }
+          var sign = d.order[0].dir == "asc" ? "+" : "-";
+          d.ordering = sign + historyColumns[d.order[0].column].data;
         },
       },
-      columns: [
-        { data: 'history_user.name' },
-        { data: 'name' },
-        { data: 'hatch_date' },
-        { data: 'farm.name' },
-        { data: 'history_date' }
-      ],
+      columns: historyColumns
     });
 
   });
