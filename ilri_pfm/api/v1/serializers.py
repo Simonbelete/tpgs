@@ -294,7 +294,7 @@ class FlockSerializer_GET_V1(serializers.ModelSerializer):
     class Meta:
         model = models.Flock
         fields = ['id', 'name', 'breed_type',
-                  'hatch_date', 'farm', 'chickens', 'created_at']
+                  'hatch_date', 'farm', 'chickens', 'created_at', 'is_active']
 
 
 class FlockSerializer_POST_V1(serializers.ModelSerializer):
