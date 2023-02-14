@@ -309,6 +309,9 @@ class FlockSerializer_POST_V1(serializers.ModelSerializer):
 
 
 class FlockHistory(serializers.ModelSerializer):
+    history_user = UserSerializer_GET_V1()
+    farm = FarmSerializer_GET_V1()
+    breed_type = BreedTypeSerializer_GET_V1()
 
     class Meta:
         model = models.Flock.history.__dict__['model']

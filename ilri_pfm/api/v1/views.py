@@ -22,7 +22,6 @@ class LimitPageNumberPagination(PageNumberPagination):
     def get_paginated_response(self, data):
         return Response(OrderedDict([
             ('count', self.page.paginator.count),
-            ('limit', '1'),
             ('next', self.get_next_link()),
             ('previous', self.get_previous_link()),
             ('results', data)
@@ -450,6 +449,18 @@ class FlockViewSet(viewsets.ModelViewSet):
         return serializers.FlockSerializer_POST_V1
 
 
+class FlockHistoryViewSet(viewsets.ModelViewSet):
+    queryset = models.Flock.history.all()
+    serializer_class = serializers.FlockHistory
+    filter_backends = (filters.DjangoFilterBackend,
+                       SearchFilter, OrderingFilter)
+    search_fields = ['name']
+    ordering_fields = '__all__'
+    pagination_class = LimitPageNumberPagination
+
+# ##########################33
+
+
 class StaticsCount(viewsets.ModelViewSet):
     queryset = models.User.objects.all()
     serializer_class = serializers.UserSerializer_GET_V1
@@ -595,19 +606,3 @@ def get_weight_graph(request):
     )
 
     return response
-
-
-class FlockHistoryViewSet(viewsets.ModelViewSet):
-    queryset = models.Flock.history.all()
-    serializer_class = serializers.FlockHistory
-
-    def list(self, request, *args, **kwargs):
-        try:
-            pk = self.kwargs['id']
-            instance = self.queryset
-            serializer = self.serializer_class(instance, many=True).data
-            return Response({
-                'results': serializer
-            }, status=status.HTTP_200_OK)
-        except Exception as ex:
-            raise Http404()

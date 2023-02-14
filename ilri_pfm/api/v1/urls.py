@@ -24,7 +24,7 @@ router.register(r'statics/count', views.StaticsCount, basename='statics_count')
 router.register(r'statics/breed-types', views.StaticsBreedType,
                 basename='statics_breed_types')
 
-router.register(r'flocks/(?P<id>.+)/history',
+router.register(r'flocks/(?P<id>.+)/histories',
                 views.FlockHistoryViewSet, basename='flocks_history')
 
 
