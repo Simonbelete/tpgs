@@ -10,6 +10,7 @@ from rest_framework.filters import SearchFilter, OrderingFilter
 from django_filters import rest_framework as filters
 from django.http import Http404, HttpResponse
 from rest_framework.pagination import PageNumberPagination
+from django.db.models import Count
 
 import api.models as models
 from api.v1 import serializers
@@ -469,6 +470,33 @@ class StaticsCount(viewsets.ModelViewSet):
             }, status=status.HTTP_200_OK)
         except self.queryset.model.DoesNotExist:
             raise Http404()
+
+
+class StaticsBreedType(viewsets.ModelViewSet):
+    queryset = models.BreedType.objects.annotate(
+        chicken_count=Count('chickens'))
+    serializer_class = serializers.BreedTypeSerializer_Statics
+    pagination_class = None
+
+    def list(self, request, *args, **kwargs):
+        try:
+            return Response({
+                'chicken_count': models.Chicken.objects.count(),
+                'results': self.get_serializer(self.queryset, many=True).data
+            }, status=status.HTTP_200_OK)
+        except self.queryset.model.DoesNotExist:
+            raise Http404()
+
+
+@require_http_methods(["GET"])
+def breed_type_statics(request):
+    # breed_types = models.BreedType.objects.annotate(
+    #     chicken_count=Count('chickens'))
+    # return Response({
+    #     'chicken_count': models.Chicken.objects.count(),
+    #     'results': serializers.BreedTypeSerializer_GET_V1(breed_types, many=True).data},
+    #     status=status.HTTP_200_OK)
+    return Response({}, status=status.HTTP_200_OK)
 
 
 @require_http_methods(["GET"])

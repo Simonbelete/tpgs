@@ -166,9 +166,9 @@ class Flock(models.Model):
     name = models.CharField(max_length=250)
     hatch_date = models.DateField()
     breed_type = models.ForeignKey(
-        BreedType, on_delete=models.SET_NULL, null=True, related_name='flocks')
+        BreedType, on_delete=models.SET_NULL, null=True, related_name='chickens')
     farm = models.ForeignKey(
-        Farm, on_delete=models.SET_NULL, null=True, related_name='flocks')
+        Farm, on_delete=models.SET_NULL, null=True, related_name='flock')
 
     is_active = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)

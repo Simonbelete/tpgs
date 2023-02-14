@@ -6,9 +6,10 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.http import HttpResponseRedirect
 from django.contrib.auth import login, authenticate, logout
 from rest_framework.pagination import PageNumberPagination
-
+from django.db.models import Count
 
 import api.models as models
+from api.v1 import serializers
 from web import forms
 
 MESSAGE_TAGS = {
@@ -77,6 +78,8 @@ def home(request):
     farms_count = models.Farm.objects.count()
     chicken_count = models.Chicken.objects.count()
     eggs_count = models.Egg.objects.count()
+    breed_types = models.BreedType.objects.annotate(
+        chicken_count=Count('chickens'))
     context = {
         'statics_count': {
             'users_count': users_count,
@@ -84,6 +87,10 @@ def home(request):
             'farms_count': farms_count,
             'chicken_count': chicken_count,
             'eggs_count': eggs_count
+        },
+        'breed_type': {
+            'chicken_count': models.Chicken.objects.count(),
+            'results': serializers.BreedTypeSerializer_GET_V1(breed_types, many=True).data
         }
     }
     return render(request, 'home.html', context=context)
@@ -92,7 +99,16 @@ def home(request):
 @login_required(login_url='/login')
 @require_http_methods(["GET", "POST"])
 def users(request):
-    return render(request, 'users.html')
+    if request.method == 'POST':
+        form = forms.UserForm(request.POST)
+        if form.is_valid():
+            user = models.User.objects.get_or_create(
+                name=form.cleaned_data['name'], email=form.cleaned_data['email'], password=form.cleaned_data['password'])
+            return HttpResponseRedirect('/home/users/')
+        else:
+            return HttpResponseRedirect('/home/users')
+    else:
+        return render(request, 'users.html')
 
 
 @login_required(login_url='/login')

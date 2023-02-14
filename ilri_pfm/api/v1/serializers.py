@@ -91,6 +91,13 @@ class HouseSerializer_POST_V1(serializers.ModelSerializer):
 
 
 ############################ Breed Type ############################
+class BreedTypeSerializer_Statics(serializers.ModelSerializer):
+    chicken_count = serializers.IntegerField(read_only=True)
+
+    class Meta:
+        model = models.BreedType
+        fields = '__all__'
+
 
 class BreedTypeSerializer_GET_V1(serializers.ModelSerializer):
     class Meta:

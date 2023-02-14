@@ -21,6 +21,8 @@ router.register(r'feed-types', views.FeedTypeViewSet, basename='feed_types')
 router.register(r'feeds', views.FeedViewSet, basename='feeds')
 router.register(r'flocks', views.FlockViewSet, basename='flocks')
 router.register(r'statics/count', views.StaticsCount, basename='statics_count')
+router.register(r'statics/breed-types', views.StaticsBreedType,
+                basename='statics_breed_types')
 
 urlpatterns = [
     path('', include(router.urls)),

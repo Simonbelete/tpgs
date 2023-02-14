@@ -11,7 +11,7 @@ class LoginForm(forms.Form):
 class UserForm(forms.ModelForm):
     class Meta:
         model = models.User
-        fields = ['name', 'email']
+        fields = ['name', 'email', 'password', 'is_active']
 
 
 class FeedTypeForm(forms.ModelForm):
