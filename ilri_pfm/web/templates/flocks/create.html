@@ -11,7 +11,11 @@
   rel="stylesheet"
   href="{% static 'admin-LTE-v3.2.0/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css' %}"
 />
-{% endblock %} {% block body %}
+{% endblock %}
+{% block title %}
+Create Flock - ILRI Poultry Farm Management 
+{% endblock%}
+{% block body %}
 
 <!-- Content Header (Page header) -->
 <section class="content-header">
@@ -67,7 +71,7 @@
               />
             </div>
             <div class="form-group">
-              <label for="farm">Feed Type</label>
+              <label for="farm">Farm Type</label>
               <select
                 id="farm"
                 name="farm"
@@ -89,78 +93,6 @@
         </form>
       </div>
     </div>
-    <div class="card">
-      <div class="card-header">
-        <h3 class="card-title">Chickens</h3>
-      </div>
-      <!-- /.card-header -->
-      <div class="card-body">
-        <table id="dataListTable" class="table table-bordered table-striped">
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Tag</th>
-              <th>Sex</th>
-              <th>Farm</th>
-              <th>House</th>
-              <th>Breed Type</th>
-              <th>Layed Date</th>
-              <th>Is Double Yolk</th>
-              <th>Created At</th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody></tbody>
-          <tfoot>
-            <tr>
-              <th>ID</th>
-              <th>Tag</th>
-              <th>Sex</th>
-              <th>Farm</th>
-              <th>House</th>
-              <th>Breed Type</th>
-              <th>Layed Date</th>
-              <th>Is Double Yolk</th>
-              <th>Created At</th>
-              <th></th>
-            </tr>
-          </tfoot>
-        </table>
-      </div>
-      <!-- /.card-body -->
-    </div>
-    <!-- /.card -->
-
-    <!-- Breed Report -->
-    <div class="card">
-      <div class="card-header row">
-        <h3 class="card-title">Report</h3>
-        <div class="row col-md-3">
-          <div class="form-group">
-            <input
-              id="number"
-              type="text"
-              name="start_week"
-              class="form-control"
-              placeholder="Start Week"
-            />
-          </div>
-          <div class="form-group">
-            <input
-              id="number"
-              type="text"
-              name="end_week"
-              class="form-control"
-              placeholder="Start Week"
-            />
-          </div>
-        </div>
-      </div>
-      <div class="card-body">
-        <div class="row"></div>
-      </div>
-    </div>
-    <!-- /.Breed Report -->
   </section>
 
   <!-- /.content -->
@@ -235,62 +167,6 @@
           };
         },
       },
-    });
-
-    var columns = [
-      { data: "id" },
-      { data: "tag" },
-      { data: "sex" },
-      { data: "farm" },
-      { data: "house" },
-      { data: "breed_type" },
-      { data: "layed_date" },
-      { data: "is_double_yolk" },
-      { data: "created_at" },
-      {
-        data: null,
-        className: "dt-center editor-edit",
-        defaultContent: '<i class="fas fa-pencil-alt"></i>',
-        orderable: false,
-      },
-    ];
-    var table = $("#dataListTable").DataTable({
-      responsive: true,
-      lengthChange: false,
-      autoWidth: false,
-      buttons: ["copy", "csv", "excel", "pdf", "print", "colvis"],
-      processing: true,
-      serverSide: true,
-      ajax: {
-        url: "/api/v1/chickens?flock=" + "{{ data..id }}",
-        dataSrc: function (json) {
-          json["data"] = json["results"];
-          json["recordsTotal"] = json["count"];
-          json["recordsFiltered"] = json["count"];
-          return json.data;
-        },
-        data: function (d) {
-          d.search = d.search.value;
-          for (let i = 0; i < d.order.length; i++) {
-            var sign = d.order[i].dir == "asc" ? "+" : "-";
-            d.ordering = sign + columns[i].data;
-          }
-        },
-      },
-      columns: columns,
-    });
-
-    table
-      .buttons()
-      .container()
-      .appendTo("#dataListTable_wrapper .col-md-6:eq(0)");
-
-    // Edit record
-    $("#dataListTable").on("click", "td.editor-edit", function (e) {
-      e.preventDefault();
-      var data = table.row(this).data();
-      console.log(data);
-      window.location.href = "/home/chickens/" + data.id;
     });
   });
 </script>

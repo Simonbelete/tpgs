@@ -414,7 +414,7 @@ def egg_edit(request, id=0):
 
 
 @login_required(login_url='/login')
-@require_http_methods(["GET", "POST"])
+@require_http_methods(["GET"])
 def flocks(request):
     if request.method == 'POST':
         form = forms.FlockForm(request.POST)
@@ -426,12 +426,12 @@ def flocks(request):
         else:
             return HttpResponseRedirect('/home/flocks?error=true')
     else:
-        return render(request, 'flocks.html')
+        return render(request, 'flocks/list.html')
 
 
 @login_required(login_url='/login')
 @require_http_methods(["GET", "POST"])
-def flock_edit(request, id=0):
+def flocks_edit(request, id=0):
     if request.method == 'POST':
         instance = models.Flock.objects.get(pk=id)
         form = forms.FlockForm(request.POST, instance=instance)
@@ -446,7 +446,23 @@ def flock_edit(request, id=0):
             context['data'] = models.Flock.objects.get(pk=id)
         else:
             context['data'] = None
-        return render(request, 'flock_edit.html', context=context)
+        return render(request, 'flocks/edit.html', context=context)
+
+
+@login_required(login_url='/login')
+@require_http_methods(["GET", "POST"])
+def flocks_create(request):
+    if request.method == 'POST':
+        form = forms.FlockForm(request.POST)
+        if form.is_valid():
+            form = form.save(commit=False)
+            form.created_by = request.user
+            form.save()
+            return HttpResponseRedirect('/home/flocks/')
+        else:
+            return HttpResponseRedirect('/home/flocks?error=true')
+    else:
+        return render(request, 'flocks/create.html')
 
 
 @login_required(login_url='/login')

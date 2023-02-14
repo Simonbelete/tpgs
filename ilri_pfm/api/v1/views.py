@@ -260,10 +260,11 @@ class LayedPlaceViewSet(viewsets.ModelViewSet):
 class ChickenFilter(filters.FilterSet):
     name = filters.CharFilter(field_name='name', lookup_expr='contains')
     farm = filters.CharFilter(field_name='farm', lookup_expr='exact')
+    flock = filters.CharFilter(field_name='flock', lookup_expr='exact')
 
     class Meta:
         model = models.Chicken
-        fields = ['tag', 'farm']
+        fields = ['tag', 'farm', 'flock']
 
 
 class ChickenViewSet(viewsets.ModelViewSet):

@@ -52,8 +52,8 @@ urlpatterns = [
          name='egg_create'),
 
     path('home/flocks/', views.flocks, name='flocks'),
-    path('home/flocks/<id>', views.flock_edit, name='flock'),
-    path('home/flocks-create', views.flock_edit,
+    path('home/flocks/<id>', views.flocks_edit, name='flock'),
+    path('home/flocks-create', views.flocks_create,
          name='flock_create'),
 
     path('home/weights/', views.weights, name='weights'),
