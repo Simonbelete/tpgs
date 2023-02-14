@@ -78,8 +78,6 @@ def home(request):
     farms_count = models.Farm.objects.count()
     chicken_count = models.Chicken.objects.count()
     eggs_count = models.Egg.objects.count()
-    breed_types = models.BreedType.objects.annotate(
-        chicken_count=Count('chickens'))
     context = {
         'statics_count': {
             'users_count': users_count,
@@ -88,10 +86,6 @@ def home(request):
             'chicken_count': chicken_count,
             'eggs_count': eggs_count
         },
-        'breed_type': {
-            'chicken_count': models.Chicken.objects.count(),
-            'results': serializers.BreedTypeSerializer_GET_V1(breed_types, many=True).data
-        }
     }
     return render(request, 'home.html', context=context)
 
