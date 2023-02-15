@@ -307,6 +307,15 @@ class ChickenFilter(filters.FilterSet):
         fields = ['tag', 'farm', 'flock', 'sex', 'breed_type']
 
 
+class WeightFilter(filters.FilterSet):
+    start_week = filters.CharFilter(field_name='week', lookup_expr='gte')
+    end_week = filters.CharFilter(field_name='week', lookup_expr='lte')
+
+    class Meta:
+        model = models.Weight
+        fields = ['start_week', 'end_week']
+
+
 class ChickenViewSet(viewsets.ModelViewSet):
     queryset = models.Chicken.objects.all()
     serializer_class = serializers.ChickenSerializer_GET_V1
@@ -361,6 +370,26 @@ class ChickenHistoryViewSet(viewsets.ModelViewSet):
     def list(self, request, *args, **kwargs):
         pk = self.kwargs['id']
         queryset = self.filter_queryset(self.get_queryset().filter(pk=pk))
+
+        page = self.paginate_queryset(queryset)
+        if page is not None:
+            serializer = self.get_serializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
+
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data)
+
+
+class ChickenWeightsViewSet(viewsets.ModelViewSet):
+    queryset = models.Weight.objects.all()
+    serializer_class = serializers.WeightSerializer_GET_V1
+    filter_backends = (filters.DjangoFilterBackend,
+                       SearchFilter, OrderingFilter)
+    filterset_class = WeightFilter
+
+    def list(self, request, *args, **kwargs):
+        pk = self.kwargs['id']
+        queryset = self.filter_queryset(self.get_queryset().filter(chicken=pk))
 
         page = self.paginate_queryset(queryset)
         if page is not None:
