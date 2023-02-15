@@ -201,7 +201,18 @@ class ChickenSerializer_POST_V1(serializers.ModelSerializer):
                   'layed_place', 'layed_date', 'is_double_yolk', 'flock']
 
 
+class ChickenHistory(serializers.ModelSerializer):
+    history_user = UserSerializer_GET_V1()
+    house = HouseSerializer_GET_V1()
+    farm = FarmSerializer_GET_V1()
+    breed_type = BreedTypeSerializer_GET_V1()
+
+    class Meta:
+        model = models.Chicken.history.__dict__['model']
+        fields = '__all__'
+
 ############################ Breed Pair ############################
+
 
 class BreedPairSerializer_GET_V1(serializers.ModelSerializer):
     class Meta:

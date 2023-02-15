@@ -349,6 +349,28 @@ class ChickenStaticsViewSet(viewsets.ModelViewSet):
         }, status=status.HTTP_200_OK)
 
 
+class ChickenHistoryViewSet(viewsets.ModelViewSet):
+    queryset = models.Chicken.history.all()
+    serializer_class = serializers.ChickenHistory
+    filter_backends = (filters.DjangoFilterBackend,
+                       SearchFilter, OrderingFilter)
+    search_fields = ['name']
+    ordering_fields = '__all__'
+    pagination_class = LimitPageNumberPagination
+
+    def list(self, request, *args, **kwargs):
+        pk = self.kwargs['id']
+        queryset = self.filter_queryset(self.get_queryset().filter(pk=pk))
+
+        page = self.paginate_queryset(queryset)
+        if page is not None:
+            serializer = self.get_serializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
+
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data)
+
+
 ############################ Breed Pair ############################
 
 class BreedPairFilter(filters.FilterSet):

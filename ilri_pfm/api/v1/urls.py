@@ -19,6 +19,8 @@ router.register(r'chickens', views.ChickenViewSet,
                 basename='chickens')
 router.register(r'chickens/(?P<id>.+)/statics',
                 views.ChickenStaticsViewSet, basename='chickens_statics')
+router.register(r'chickens/(?P<id>.+)/histories',
+                views.ChickenHistoryViewSet, basename='chickens_history')
 router.register(r'breed-pairs', views.BreedPairViewSet, basename='breed_pairs')
 router.register(r'weights', views.WeightViewSet, basename='weights')
 router.register(r'eggs', views.EggViewSet, basename='eggs')
