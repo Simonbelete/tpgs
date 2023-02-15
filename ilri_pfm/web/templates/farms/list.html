@@ -87,6 +87,10 @@
 <script src="{% static 'admin-LTE-v3.2.0/plugins/datatables-buttons/js/buttons.html5.min.js' %}"></script>
 <script src="{% static 'admin-LTE-v3.2.0/plugins/datatables-buttons/js/buttons.print.min.js' %}"></script>
 <script src="{% static 'admin-LTE-v3.2.0/plugins/datatables-buttons/js/buttons.colVis.min.js' %}"></script>
+<script src="{% static 'admin-LTE-v3.2.0/plugins/datatables-select/js/dataTables.select.min.js' %}"></script>
+<script src="{% static 'admin-LTE-v3.2.0/plugins/datatables-select/js/select.bootstrap4.min.js' %}"></script>
+<script src="{% static 'admin-LTE-v3.2.0/plugins/datatables-searchpanes/js/dataTables.searchPanes.min.js' %}"></script>
+<script src="{% static 'admin-LTE-v3.2.0/plugins/datatables-searchpanes/js/searchPanes.bootstrap4.min.js' %}"></script>
 <script>
   $(function () {
     var columns = [
@@ -96,7 +100,7 @@
       {
         data: null,
         className: "dt-center editor-edit",
-        defaultContent: '<i class="fas fa-pencil-alt"></i>',
+        defaultContent: '<div style="cursor: pointer;"> <i class="fas fa-eye"></i> / <i class="fas fa-pencil-alt"></i></div>',
         orderable: false,
       },
     ];
@@ -104,6 +108,7 @@
       responsive: true,
       lengthChange: false,
       autoWidth: false,
+      dom: "Bfrtip",
       buttons: [
         "copyHtml5", 
         "excelHtml5", 

@@ -270,9 +270,19 @@ def breed_type_edit(request, id=0):
 
 
 @login_required(login_url='/login')
-@require_http_methods(["GET"])
+@require_http_methods(["GET", "POST"])
 def farms(request):
-    return render(request, 'farms/list.html')
+    if request.method == 'POST':
+        form = forms.FarmForm(request.POST)
+        if form.is_valid():
+            form = form.save(commit=False)
+            form.created_by = request.user
+            form.save()
+            return HttpResponseRedirect('/home/farms/')
+        else:
+            return HttpResponseRedirect('/home/farms')
+    else:
+        return render(request, 'farms/list.html')
 
 
 @login_required(login_url='/login')
@@ -298,17 +308,7 @@ def farms_edit(request, id=0):
 @login_required(login_url='/login')
 @require_http_methods(["GET", "POST"])
 def farms_create(request):
-    if request.method == 'POST':
-        form = forms.FarmForm(request.POST)
-        if form.is_valid():
-            form = form.save(commit=False)
-            form.created_by = request.user
-            form.save()
-            return HttpResponseRedirect('/home/farms/')
-        else:
-            return HttpResponseRedirect('/home/farms')
-    else:
-        return render(request, 'farms/create.html')
+    return render(request, 'farms/create.html')
 
 
 @login_required(login_url='/login')
