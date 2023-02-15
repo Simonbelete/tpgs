@@ -11,7 +11,7 @@ from rest_framework.filters import SearchFilter, OrderingFilter
 from django_filters import rest_framework as filters
 from django.http import Http404, HttpResponse
 from rest_framework.pagination import PageNumberPagination
-from django.db.models import Count
+from django.db.models import Count, Sum
 
 import api.models as models
 from api.v1 import serializers
@@ -324,6 +324,29 @@ class ChickenViewSet(viewsets.ModelViewSet):
         if self.request.method == 'GET':
             return serializers.ChickenSerializer_GET_V1
         return serializers.ChickenSerializer_POST_V1
+
+
+class ChickenStaticsViewSet(viewsets.ModelViewSet):
+    queryset = models.Chicken.objects.all()
+    serializer_class = serializers.ChickenSerializer_GET_V1
+
+    def list(self, request, *args, **kwargs):
+        id = self.kwargs['id']
+        latest_weight = models.Weight.objects.all().filter(chicken=id).latest('week')
+        total_feed = models.Feed.objects.filter(
+            chicken=id).aggregate(feed_sum=Sum('weight'))
+        fcr = 0
+        feed = 0
+        if (latest_weight.weight and total_feed):
+            feed = total_feed['feed_sum']
+            fcr = latest_weight.weight/total_feed['feed_sum']
+            fcr = round(fcr, 2)
+        return Response({
+            'weight': serializers.WeightSerializer_GET_V1(latest_weight).data,
+            'total_egg': 0,
+            'fcr': fcr,
+            'total_feed': feed
+        }, status=status.HTTP_200_OK)
 
 
 ############################ Breed Pair ############################
