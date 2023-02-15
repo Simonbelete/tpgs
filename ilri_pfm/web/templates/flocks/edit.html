@@ -275,7 +275,7 @@ Flocks Edit - ILRI Poultry Farm Management
       {
         data: null,
         className: "dt-center editor-edit",
-        defaultContent: '<i class="fas fa-pencil-alt"></i>',
+        defaultContent: '<div style="cursor: pointer;"> <i class="fas fa-eye"></i> / <i class="fas fa-pencil-alt"></i></div>',
         orderable: false,
       },
     ];
@@ -287,7 +287,7 @@ Flocks Edit - ILRI Poultry Farm Management
       processing: true,
       serverSide: true,
       ajax: {
-        url: "/api/v1/chickens?flock=" + "{{ data..id }}",
+        url: "/api/v1/chickens?flock=" + "{{ data.id }}",
         dataSrc: function (json) {
           json["data"] = json["results"];
           json["recordsTotal"] = json["count"];
