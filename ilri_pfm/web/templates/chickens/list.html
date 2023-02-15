@@ -5,6 +5,9 @@
 <link rel="stylesheet" href="{% static 'admin-LTE-v3.2.0/plugins/datatables-responsive/css/responsive.bootstrap4.min.css' %}"/>
 <link rel="stylesheet" href="{% static 'admin-LTE-v3.2.0/plugins/datatables-buttons/css/buttons.bootstrap4.min.css' %}"/>
 <link rel="stylesheet" href="{% static 'admin-LTE-v3.2.0/plugins/datatables-select/css/select.bootstrap4.min.css' %}"/>
+<!-- Select2 -->
+<link rel="stylesheet" href="{% static 'admin-LTE-v3.2.0/plugins/select2/css/select2.min.css' %}" />
+<link rel="stylesheet" href="{% static 'admin-LTE-v3.2.0/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css' %}"/>
 {% endblock %}
 {% block title %}
 Chickens - ILRI Poultry Farm Management 
@@ -46,7 +49,7 @@ Chickens - ILRI Poultry Farm Management
               <!-- Filters -->
               <div class="row" style="align-items: end;">
                 <div class=" col-1">
-                  <label for="farm">Filter By Sex</label>
+                  <label for="filter_sex">Filter By Sex</label>
                   <select
                     id="filter_sex"
                     name="farm"
@@ -58,6 +61,32 @@ Chickens - ILRI Poultry Farm Management
                     </option>
                     <option value="M">Male</option>
                     <option value="F">Female</option>
+                  </select>
+                </div>
+                <div class=" col-2">
+                  <label for="filter_farm">Filter By Farm</label>
+                  <select
+                    id="filter_farm"
+                    name="farm"
+                    class="form-control select2"
+                    style="width: 100%"
+                  >
+                    <option value="" selected="selected">
+                    -
+                    </option>
+                  </select>
+                </div>
+                <div class=" col-2">
+                  <label for="filter_breed_type">Filter By Breed Type</label>
+                  <select
+                    id="filter_breed_type"
+                    name="breed_type"
+                    class="form-control select2"
+                    style="width: 100%"
+                  >
+                    <option value="" selected="selected">
+                    -
+                    </option>
                   </select>
                 </div>
                 <button type="button" id="apply_filter" style="height: 40px" class="btn btn-secondary">Apply</button>
@@ -126,6 +155,8 @@ Chickens - ILRI Poultry Farm Management
 <script src="{% static 'admin-LTE-v3.2.0/plugins/datatables-buttons/js/buttons.colVis.min.js' %}"></script>
 <script src="{% static 'admin-LTE-v3.2.0/plugins/datatables-select/js/dataTables.select.min.js' %}"></script>
 <script src="{% static 'admin-LTE-v3.2.0/plugins/datatables-select/js/select.bootstrap4.min.js' %}"></script>
+<!-- Select2 -->
+<script src="{% static 'admin-LTE-v3.2.0/plugins/select2/js/select2.full.min.js' %}"></script>
 <script>
   $(function () {
     var columns = [
@@ -177,12 +208,71 @@ Chickens - ILRI Poultry Farm Management
 
             // Filters
             d.sex = $('#filter_sex').val()
+            d.farm = $('#filter_farm').val()
+            d.breed_type = $('#filter_breed_type').val()
 
             d.columns = []
             d.order = []
         },
       },
       columns: columns,
+    });
+
+    // Filters
+    $("#filter_farm").select2({
+      theme: 'bootstrap4',
+      ajax: {
+        url: "/api/v1/farms",
+        data: function (params) {
+          var query = {
+            search: params.term,
+            page: params.page || 1,
+          };
+          return query;
+        },
+        processResults: function (data, params) {
+          params.page = params.page || 1;
+          var transform = $.map(data.results, function (obj) {
+            obj.id = obj.id || obj.id;
+            obj.text = obj.text || obj.name;
+            return obj;
+          });
+          return {
+            results: transform,
+            pagination: {
+              more: params.page * 30 < data.count,
+            },
+          };
+        },
+      },
+    });
+
+    $("#filter_breed_type").select2({
+      theme: 'bootstrap4',
+      ajax: {
+        url: "/api/v1/breed-types",
+        data: function (params) {
+          var query = {
+            search: params.term,
+            page: params.page || 1,
+          };
+          return query;
+        },
+        processResults: function (data, params) {
+          params.page = params.page || 1;
+          var transform = $.map(data.results, function (obj) {
+            obj.id = obj.id || obj.id;
+            obj.text = obj.text || obj.name;
+            return obj;
+          });
+          return {
+            results: transform,
+            pagination: {
+              more: params.page * 30 < data.count,
+            },
+          };
+        },
+      },
     });
 
     $('#apply_filter').click( function () {
