@@ -71,6 +71,15 @@ class FarmSerializer_POST_V1(serializers.ModelSerializer):
         fields = ['name', 'city', 'is_active']
 
 
+class FarmHistory(serializers.ModelSerializer):
+    history_user = UserSerializer_GET_V1()
+    name = serializers.CharField()
+
+    class Meta:
+        model = models.Farm.history.__dict__['model']
+        fields = '__all__'
+
+
 ############################ House ############################
 
 class HouseSerializer_GET_V1(serializers.ModelSerializer):

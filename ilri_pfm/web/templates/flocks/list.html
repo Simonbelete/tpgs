@@ -166,7 +166,13 @@ Flocks - ILRI Poultry Farm Management
       }]
     });
 
-  
+    // Mobile Click
+    if(window.matchMedia("(max-width: 767px)").matches){
+      $('#dataListTable tbody').on('click', 'tr', function () {
+        var data = table.row(this).data();
+        window.location.href = "/home/users/" + data.id;
+      });
+    }
 
     // Edit record
     $("#dataListTable").on("click", "td.editor-edit", function (e) {

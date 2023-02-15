@@ -142,6 +142,28 @@ class FarmViewSet(viewsets.ModelViewSet):
         return serializers.FarmSerializer_POST_V1
 
 
+class FarmHistoryViewSet(viewsets.ModelViewSet):
+    queryset = models.Farm.history.all()
+    serializer_class = serializers.FarmHistory
+    filter_backends = (filters.DjangoFilterBackend,
+                       SearchFilter, OrderingFilter)
+    search_fields = ['name']
+    ordering_fields = '__all__'
+    pagination_class = LimitPageNumberPagination
+
+    def list(self, request, *args, **kwargs):
+        pk = self.kwargs['id']
+        queryset = self.filter_queryset(self.get_queryset().filter(pk=pk))
+
+        page = self.paginate_queryset(queryset)
+        if page is not None:
+            serializer = self.get_serializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
+
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data)
+
+
 ############################ House ############################
 
 class HouseFilter(filters.FilterSet):
@@ -457,6 +479,18 @@ class FlockHistoryViewSet(viewsets.ModelViewSet):
     search_fields = ['name']
     ordering_fields = '__all__'
     pagination_class = LimitPageNumberPagination
+
+    def list(self, request, *args, **kwargs):
+        pk = self.kwargs['id']
+        queryset = self.filter_queryset(self.get_queryset().filter(pk=pk))
+
+        page = self.paginate_queryset(queryset)
+        if page is not None:
+            serializer = self.get_serializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
+
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data)
 
 # ##########################33
 

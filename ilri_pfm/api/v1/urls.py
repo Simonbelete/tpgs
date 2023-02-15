@@ -8,6 +8,8 @@ router.register(r'users', views.UserViewSet, basename='users')
 router.register(r'countries', views.CountryViewSet, basename='countries')
 router.register(r'cities', views.CityViewSet, basename='cities')
 router.register(r'farms', views.FarmViewSet, basename='farms')
+router.register(r'farms/(?P<id>.+)/histories',
+                views.FarmHistoryViewSet, basename='farms_history')
 router.register(r'houses', views.HouseViewSet, basename='houses')
 router.register(r'breed-types', views.BreedTypeViewSet, basename='breed_types')
 router.register(r'stages', views.StageViewSet, basename='stages')
@@ -20,12 +22,11 @@ router.register(r'eggs', views.EggViewSet, basename='eggs')
 router.register(r'feed-types', views.FeedTypeViewSet, basename='feed_types')
 router.register(r'feeds', views.FeedViewSet, basename='feeds')
 router.register(r'flocks', views.FlockViewSet, basename='flocks')
+router.register(r'flocks/(?P<id>.+)/histories',
+                views.FlockHistoryViewSet, basename='flocks_history')
 router.register(r'statics/count', views.StaticsCount, basename='statics_count')
 router.register(r'statics/breed-types', views.StaticsBreedType,
                 basename='statics_breed_types')
-
-router.register(r'flocks/(?P<id>.+)/histories',
-                views.FlockHistoryViewSet, basename='flocks_history')
 
 
 urlpatterns = [
