@@ -1,4 +1,5 @@
 import io
+import json
 import numpy as np
 from decimal import Decimal
 import matplotlib.pyplot as plt
@@ -16,6 +17,12 @@ import api.models as models
 from api.v1 import serializers
 
 
+from rest_framework_datatables.filters import DatatablesFilterBackend
+from rest_framework_datatables.pagination import DatatablesPageNumberPagination
+from rest_framework import renderers
+from rest_framework_datatables.renderers import DatatablesRenderer
+
+
 class LimitPageNumberPagination(PageNumberPagination):
     page_size_query_param = 'limit'
 
@@ -28,7 +35,22 @@ class LimitPageNumberPagination(PageNumberPagination):
         ]))
 
 
+class DataTablePageNumberPagination(PageNumberPagination):
+    page_size_query_param = 'limit'
+
+    def get_paginated_response(self, data, search):
+        return Response(OrderedDict([
+            ('recordsTotal', self.page.paginator.count),
+            ('recordsFiltered', self.page.paginator.count),
+
+            ('next', self.get_next_link()),
+            ('previous', self.get_previous_link()),
+            ('results', data),
+            ('searchPanes', search)
+        ]))
+
 ############################ Country ############################
+
 
 class UserFilter(filters.FilterSet):
     name = filters.CharFilter(field_name='name', lookup_expr='contains')
@@ -288,6 +310,64 @@ class ChickenFilter(filters.FilterSet):
         fields = ['tag', 'farm', 'flock']
 
 
+# class ChickenViewSet(viewsets.ModelViewSet):
+#     queryset = models.Chicken.objects.all()
+#     serializer_class = serializers.ChickenSerializer_GET_V1
+#     filter_backends = (filters.DjangoFilterBackend,
+#                        SearchFilter, OrderingFilter)
+#     filterset_class = ChickenFilter
+#     search_fields = ['tag']
+#     ordering_fields = '__all__'
+#     pagination_class = DataTablePageNumberPagination
+
+#     def perform_create(self, serializer):
+#         serializer.save(created_by=self.request.user)
+
+#     def get_serializer_class(self):
+#         if self.request.method == 'GET':
+#             return serializers.ChickenSerializer_GET_V1
+#         return serializers.ChickenSerializer_POST_V1
+
+    # def list(self, request, *args, **kwargs):
+    #     queryset = self.filter_queryset(self.get_queryset())
+
+    #     searchOptions = {
+    #         'options': {
+    #             'sex': [
+    #                 {
+    #                     'label': 'Male',
+    #                     'total': self.queryset.filter(sex='M').count(),
+    #                     'value': 'M',
+    #                     'count': self.queryset.filter(sex='M').count()
+    #                 },
+    #                 {
+    #                     'label': 'Female',
+    #                     'total': self.queryset.count(),
+    #                     'value': 'Female',
+    #                     'count': self.queryset.filter(sex='F').count()
+    #                 },
+    #                 {
+    #                     'label': 'Unknown',
+    #                     'total': self.queryset.count(),
+    #                     'value': 'Unknown',
+    #                     'count': self.queryset.exclude(sex='M').exclude(sex='F').count()
+    #                 }
+    #             ]
+    #         }
+    #     }
+
+    #     print('---------------------------------')
+    #     print(self.request)
+
+    #     page = self.paginate_queryset(queryset)
+    #     if page is not None:
+    #         serializer = self.get_serializer(page, many=True)
+    #         return self.paginator.get_paginated_response(serializer.data, searchOptions)
+
+    #     serializer = self.get_serializer(queryset, many=True)
+    #     return Response(serializer.data)
+
+
 class ChickenViewSet(viewsets.ModelViewSet):
     queryset = models.Chicken.objects.all()
     serializer_class = serializers.ChickenSerializer_GET_V1
@@ -296,6 +376,7 @@ class ChickenViewSet(viewsets.ModelViewSet):
     filterset_class = ChickenFilter
     search_fields = ['tag']
     ordering_fields = '__all__'
+    pagination_class = DataTablePageNumberPagination
 
     def perform_create(self, serializer):
         serializer.save(created_by=self.request.user)
@@ -304,6 +385,42 @@ class ChickenViewSet(viewsets.ModelViewSet):
         if self.request.method == 'GET':
             return serializers.ChickenSerializer_GET_V1
         return serializers.ChickenSerializer_POST_V1
+
+    def list(self, request, *args, **kwargs):
+        queryset = self.filter_queryset(self.get_queryset())
+
+        searchOptions = {
+            'options': {
+                'sex': [
+                    {
+                        'label': 'Male',
+                        'total': self.queryset.filter(sex='M').count(),
+                        'value': 'M',
+                        'count': self.queryset.filter(sex='M').count()
+                    },
+                    {
+                        'label': 'Female',
+                        'total': self.queryset.count(),
+                        'value': 'Female',
+                        'count': self.queryset.filter(sex='F').count()
+                    },
+                    {
+                        'label': 'Unknown',
+                        'total': self.queryset.count(),
+                        'value': 'Unknown',
+                        'count': self.queryset.exclude(sex='M').exclude(sex='F').count()
+                    }
+                ]
+            }
+        }
+
+        page = self.paginate_queryset(queryset)
+        if page is not None:
+            serializer = self.get_serializer(page, many=True)
+            return self.paginator.get_paginated_response(serializer.data, searchOptions)
+
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data)
 
 
 ############################ Breed Pair ############################

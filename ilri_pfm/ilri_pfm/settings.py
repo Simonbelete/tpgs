@@ -42,7 +42,8 @@ INSTALLED_APPS = [
     'web',
     'simple_history',
     'rest_framework',
-    'django_filters'
+    'django_filters',
+    'rest_framework_datatables'
 ]
 
 AUTH_USER_MODEL = 'api.User'

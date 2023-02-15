@@ -168,6 +168,9 @@ class ChickenSerializer_GET_V1(serializers.ModelSerializer):
         max_digits=6, decimal_places=2)
     days_in_production = serializers.DecimalField(
         max_digits=6, decimal_places=2)
+    farm = FarmSerializer_GET_V1()
+    house = HouseSerializer_GET_V1()
+    breed_type = BreedTypeSerializer_GET_V1()
 
     class Meta:
         model = models.Chicken

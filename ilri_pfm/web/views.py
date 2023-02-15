@@ -324,7 +324,7 @@ def chickens(request):
         else:
             return HttpResponseRedirect('/home/farms')
     else:
-        return render(request, 'chickens.html')
+        return render(request, 'chickens/list.html')
 
 
 @login_required(login_url='/login')
@@ -335,16 +335,22 @@ def chickens_edit(request, id=0):
         form = forms.ChickenForm(request.POST, instance=instance)
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect('/home/farms')
+            return HttpResponseRedirect('/home/chickens')
         else:
-            return HttpResponseRedirect(f'/home/farms/%s' % id)
+            return HttpResponseRedirect(f'/home/chickens/%s' % id)
     else:
         context = {}
         if id != 0:
             context['data'] = models.Chicken.objects.get(pk=id)
         else:
             context['data'] = None
-        return render(request, 'chicken_edit.html', context=context)
+        return render(request, 'chickens/edit.html', context=context)
+
+
+@login_required(login_url='/login')
+@require_http_methods(["GET"])
+def chickens_create(request, id=0):
+    return render(request, 'chickens/create.html')
 
 
 @login_required(login_url='/login')
