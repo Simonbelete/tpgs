@@ -304,10 +304,11 @@ class ChickenFilter(filters.FilterSet):
     name = filters.CharFilter(field_name='name', lookup_expr='contains')
     farm = filters.CharFilter(field_name='farm', lookup_expr='exact')
     flock = filters.CharFilter(field_name='flock', lookup_expr='exact')
+    sex = filters.CharFilter(field_name='sex', lookup_expr='exact')
 
     class Meta:
         model = models.Chicken
-        fields = ['tag', 'farm', 'flock']
+        fields = ['tag', 'farm', 'flock', 'sex']
 
 
 # class ChickenViewSet(viewsets.ModelViewSet):
@@ -376,7 +377,7 @@ class ChickenViewSet(viewsets.ModelViewSet):
     filterset_class = ChickenFilter
     search_fields = ['tag']
     ordering_fields = '__all__'
-    pagination_class = DataTablePageNumberPagination
+    pagination_class = LimitPageNumberPagination
 
     def perform_create(self, serializer):
         serializer.save(created_by=self.request.user)
@@ -385,42 +386,6 @@ class ChickenViewSet(viewsets.ModelViewSet):
         if self.request.method == 'GET':
             return serializers.ChickenSerializer_GET_V1
         return serializers.ChickenSerializer_POST_V1
-
-    def list(self, request, *args, **kwargs):
-        queryset = self.filter_queryset(self.get_queryset())
-
-        searchOptions = {
-            'options': {
-                'sex': [
-                    {
-                        'label': 'Male',
-                        'total': self.queryset.filter(sex='M').count(),
-                        'value': 'M',
-                        'count': self.queryset.filter(sex='M').count()
-                    },
-                    {
-                        'label': 'Female',
-                        'total': self.queryset.count(),
-                        'value': 'Female',
-                        'count': self.queryset.filter(sex='F').count()
-                    },
-                    {
-                        'label': 'Unknown',
-                        'total': self.queryset.count(),
-                        'value': 'Unknown',
-                        'count': self.queryset.exclude(sex='M').exclude(sex='F').count()
-                    }
-                ]
-            }
-        }
-
-        page = self.paginate_queryset(queryset)
-        if page is not None:
-            serializer = self.get_serializer(page, many=True)
-            return self.paginator.get_paginated_response(serializer.data, searchOptions)
-
-        serializer = self.get_serializer(queryset, many=True)
-        return Response(serializer.data)
 
 
 ############################ Breed Pair ############################
