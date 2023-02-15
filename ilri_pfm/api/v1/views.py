@@ -130,7 +130,7 @@ class FarmViewSet(viewsets.ModelViewSet):
     filter_backends = (filters.DjangoFilterBackend,
                        SearchFilter, OrderingFilter)
     filterset_class = FarmFilter
-    search_fields = ['name', 'city']
+    search_fields = ['name']
     ordering_fields = '__all__'
 
     def perform_create(self, serializer):

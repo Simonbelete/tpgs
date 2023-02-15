@@ -270,24 +270,14 @@ def breed_type_edit(request, id=0):
 
 
 @login_required(login_url='/login')
-@require_http_methods(["GET", "POST"])
+@require_http_methods(["GET"])
 def farms(request):
-    if request.method == 'POST':
-        form = forms.FarmForm(request.POST)
-        if form.is_valid():
-            form = form.save(commit=False)
-            form.created_by = request.user
-            form.save()
-            return HttpResponseRedirect('/home/farms/')
-        else:
-            return HttpResponseRedirect('/home/farms')
-    else:
-        return render(request, 'farms.html')
+    return render(request, 'farms/list.html')
 
 
 @login_required(login_url='/login')
 @require_http_methods(["GET", "POST"])
-def farm_edit(request, id=0):
+def farms_edit(request, id=0):
     if request.method == 'POST':
         instance = models.Farm.objects.get(pk=id)
         form = forms.FarmForm(request.POST, instance=instance)
@@ -302,7 +292,23 @@ def farm_edit(request, id=0):
             context['data'] = models.Farm.objects.get(pk=id)
         else:
             context['data'] = None
-        return render(request, 'farm_edit.html', context=context)
+        return render(request, 'farms/edit.html', context=context)
+
+
+@login_required(login_url='/login')
+@require_http_methods(["GET", "POST"])
+def farms_create(request):
+    if request.method == 'POST':
+        form = forms.FarmForm(request.POST)
+        if form.is_valid():
+            form = form.save(commit=False)
+            form.created_by = request.user
+            form.save()
+            return HttpResponseRedirect('/home/farms/')
+        else:
+            return HttpResponseRedirect('/home/farms')
+    else:
+        return render(request, 'farms/create.html')
 
 
 @login_required(login_url='/login')

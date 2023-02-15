@@ -32,8 +32,8 @@ urlpatterns = [
          name='breed_type_create'),
 
     path('home/farms/', views.farms, name='farms'),
-    path('home/farms/<id>', views.farm_edit, name='farm'),
-    path('home/farms-create', views.farm_edit,
+    path('home/farms/<id>', views.farms_edit, name='farm'),
+    path('home/farms-create', views.farms_create,
          name='farm_create'),
 
     path('home/chickens/', views.chickens, name='chickens'),
