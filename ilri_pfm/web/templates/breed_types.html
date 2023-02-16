@@ -1,17 +1,28 @@
-{% extends "sidebar.html" %} {% load static %} {% block body %}
+{% extends "sidebar.html" %} {% load static %} 
+{% block stylesheet %}
+<!-- DataTables -->
+<link rel="stylesheet" href="{% static 'admin-LTE-v3.2.0/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css' %}"/>
+<link rel="stylesheet" href="{% static 'admin-LTE-v3.2.0/plugins/datatables-responsive/css/responsive.bootstrap4.min.css' %}"/>
+<link rel="stylesheet" href="{% static 'admin-LTE-v3.2.0/plugins/datatables-buttons/css/buttons.bootstrap4.min.css' %}"/>
+<link rel="stylesheet" href="{% static 'admin-LTE-v3.2.0/plugins/datatables-searchpanes/css/searchPanes.bootstrap4.min.css' %}"/>
+<link rel="stylesheet" href="{% static 'admin-LTE-v3.2.0/plugins/datatables-select/css/select.bootstrap4.min.css' %}"/>
+{% endblock %}
+{% block title %}
+Breed Types - ILRI Poultry Farm Management 
+{% endblock%}
+{% block body %}
 
 <!-- Content Header (Page header) -->
 <section class="content-header">
   <div class="container-fluid">
     <div class="row mb-2">
       <div class="col-sm-6">
-        <h1>Feed Types</h1>
-        <a type="button" href="/home/breed-types-create" class"btn btn-block btn-success btn-lg mt-3">Create</a>
+        <h1>Breed Types</h1>
       </div>
       <div class="col-sm-6">
         <ol class="breadcrumb float-sm-right">
           <li class="breadcrumb-item"><a href="/">Home</a></li>
-          <li class="breadcrumb-item active">feed types</li>
+          <li class="breadcrumb-item active">Breed types</li>
         </ol>
       </div>
     </div>
@@ -24,8 +35,11 @@
       <div class="row">
         <div class="col-12">
           <div class="card">
-            <div class="card-header">
-              <h3 class="card-title">List of all Feed types</h3>
+            <div class="card-header row">
+              <h3 class="card-title col-10">List of all Breed Types</h3>
+              <div class="col-2">
+                <a href="/home/feed-types-create" role="button" type="button" class="btn btn-primary float-right"><i class="fas fa-plus"></i> Create Breed Type</a>
+              </div>
             </div>
             <!-- /.card-header -->
             <div class="card-body">
@@ -85,15 +99,21 @@
       {
         data: null,
         className: "dt-center editor-edit",
-        defaultContent: '<i class="fas fa-pencil-alt"></i>',
+        defaultContent: '<button type="button" class="btn btn-success">View / Edit</button>',
         orderable: false,
       },
     ];
     var table = $("#dataListTable").DataTable({
       responsive: true,
-      lengthChange: false,
+      lengthChange: true,
       autoWidth: false,
-      buttons: ["copy", "csv", "excel", "pdf", "print", "colvis"],
+      dom: "lBfrtip",
+      buttons: [
+        "copyHtml5", 
+        "excelHtml5", 
+        "pdfHtml5", 
+        "csvHtml5",
+      ],
       processing: true,
       serverSide: true,
       ajax: {
@@ -106,10 +126,11 @@
         },
         data: function (d) {
           d.search = d.search.value;
-          for (let i = 0; i < d.order.length; i++) {
-            var sign = d.order[i].dir == "asc" ? "+" : "-";
-            d.ordering = sign + columns[i].data;
-          }
+          d.limit = d.length
+          var sign = d.order[0].dir == "asc" ? "+" : "-";
+          d.ordering = sign + columns[d.order[0].column].data;
+          d.columns = []
+          d.order= []
         },
       },
       columns: columns,
@@ -124,7 +145,6 @@
     $("#dataListTable").on("click", "td.editor-edit", function (e) {
       e.preventDefault();
       var data = table.row(this).data();
-      console.log(data);
       window.location.href = "/home/breed-types/" + data.id;
     });
   });
