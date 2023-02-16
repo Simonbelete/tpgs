@@ -1,4 +1,16 @@
-{% extends "sidebar.html" %} {% load static %} {% block body %}
+{% extends "sidebar.html" %} {% load static %} 
+{% block stylesheet %}
+<!-- DataTables -->
+<link rel="stylesheet" href="{% static 'admin-LTE-v3.2.0/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css' %}"/>
+<link rel="stylesheet" href="{% static 'admin-LTE-v3.2.0/plugins/datatables-responsive/css/responsive.bootstrap4.min.css' %}"/>
+<link rel="stylesheet" href="{% static 'admin-LTE-v3.2.0/plugins/datatables-buttons/css/buttons.bootstrap4.min.css' %}"/>
+<link rel="stylesheet" href="{% static 'admin-LTE-v3.2.0/plugins/datatables-searchpanes/css/searchPanes.bootstrap4.min.css' %}"/>
+<link rel="stylesheet" href="{% static 'admin-LTE-v3.2.0/plugins/datatables-select/css/select.bootstrap4.min.css' %}"/>
+{% endblock %}
+{% block title %}
+Layed Place - ILRI Poultry Farm Management 
+{% endblock%}
+{% block body %}
 
 <!-- Content Header (Page header) -->
 <section class="content-header">
@@ -6,7 +18,6 @@
     <div class="row mb-2">
       <div class="col-sm-6">
         <h1>Layed Places</h1>
-        <a type="button" href="/home/layed-places-create" class"btn btn-block btn-success btn-lg mt-3">Create</a>
       </div>
       <div class="col-sm-6">
         <ol class="breadcrumb float-sm-right">
@@ -24,8 +35,11 @@
       <div class="row">
         <div class="col-12">
           <div class="card">
-            <div class="card-header">
-              <h3 class="card-title">List of all Layed Places</h3>
+            <div class="card-header row">
+              <h3 class="card-title col-10">List of all Layed Places</h3>
+              <div class="col-2">
+                <a href="/home/feed-types-create" role="button" type="button" class="btn btn-primary float-right"><i class="fas fa-plus"></i> Create Feed Type</a>
+              </div>
             </div>
             <!-- /.card-header -->
             <div class="card-body">
@@ -85,7 +99,7 @@
       {
         data: null,
         className: "dt-center editor-edit",
-        defaultContent: '<i class="fas fa-pencil-alt"></i>',
+        defaultContent: '<button type="button" class="btn btn-success">View / Edit</button>',
         orderable: false,
       },
     ];
@@ -93,7 +107,13 @@
       responsive: true,
       lengthChange: false,
       autoWidth: false,
-      buttons: ["copy", "csv", "excel", "pdf", "print", "colvis"],
+      dom: "lBfrtip",
+      buttons: [
+        "copyHtml5", 
+        "excelHtml5", 
+        "pdfHtml5", 
+        "csvHtml5",
+      ],
       processing: true,
       serverSide: true,
       ajax: {
