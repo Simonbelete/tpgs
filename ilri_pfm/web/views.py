@@ -523,3 +523,75 @@ def weights_create(request):
 @require_http_methods(["GET"])
 def growth_performance(request):
     return render(request, 'growth_performance.html')
+
+
+@login_required(login_url='/login')
+@require_http_methods(["GET", "POST"])
+def cities(request):
+    if request.method == 'POST':
+        form = forms.CityForm(request.POST)
+        if form.is_valid():
+            form = form.save(commit=False)
+            form.created_by = request.user
+            form.save()
+            return HttpResponseRedirect('/home/cities/')
+        else:
+            return HttpResponseRedirect('/home/cities')
+    else:
+        return render(request, 'cities.html')
+
+
+@login_required(login_url='/login')
+@require_http_methods(["GET", "POST"])
+def cities_edit(request, id=0):
+    if request.method == 'POST':
+        instance = models.City.objects.get(pk=id)
+        form = forms.CityForm(request.POST, instance=instance)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect('/home/cities')
+        else:
+            return HttpResponseRedirect(f'/home/cities/%s' % id)
+    else:
+        context = {}
+        if id != 0:
+            context['data'] = models.City.objects.get(pk=id)
+        else:
+            context['data'] = None
+        return render(request, 'cities_edit.html', context=context)
+
+
+@login_required(login_url='/login')
+@require_http_methods(["GET", "POST"])
+def countries(request):
+    if request.method == 'POST':
+        form = forms.CountryForm(request.POST)
+        if form.is_valid():
+            form = form.save(commit=False)
+            form.created_by = request.user
+            form.save()
+            return HttpResponseRedirect('/home/countries/')
+        else:
+            return HttpResponseRedirect('/home/countries')
+    else:
+        return render(request, 'countries.html')
+
+
+@login_required(login_url='/login')
+@require_http_methods(["GET", "POST"])
+def countries_edit(request, id=0):
+    if request.method == 'POST':
+        instance = models.Country.objects.get(pk=id)
+        form = forms.CountryForm(request.POST, instance=instance)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect('/home/countries')
+        else:
+            return HttpResponseRedirect(f'/home/countries/%s' % id)
+    else:
+        context = {}
+        if id != 0:
+            context['data'] = models.Country.objects.get(pk=id)
+        else:
+            context['data'] = None
+        return render(request, 'countries_edit.html', context=context)

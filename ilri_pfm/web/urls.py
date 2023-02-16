@@ -64,4 +64,13 @@ urlpatterns = [
     path('home/growth-performance/',
          views.growth_performance, name='growth_performance'),
 
+    path('home/cities/', views.cities, name='cities'),
+    path('home/cities/<id>', views.cities_edit, name='citie'),
+    path('home/cities-create', views.cities_edit,
+         name='cities_create'),
+
+    path('home/countries/', views.cities, name='countries'),
+    path('home/countries/<id>', views.cities_edit, name='country'),
+    path('home/countries-create', views.cities_edit,
+         name='countries_create'),
 ]

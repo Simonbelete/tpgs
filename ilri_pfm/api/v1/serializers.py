@@ -37,6 +37,8 @@ class CountrySerializer_POST_V1(serializers.ModelSerializer):
 ############################ City ############################
 
 class CitySerializer_GET_V1(serializers.ModelSerializer):
+    country = CountrySerializer_GET_V1()
+
     class Meta:
         model = models.City
         fields = '__all__'

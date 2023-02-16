@@ -120,6 +120,7 @@ class CityViewSet(viewsets.ModelViewSet):
     filterset_class = CityFilter
     search_fields = ['name']
     ordering_fields = '__all__'
+    pagination_class = LimitPageNumberPagination
 
     def perform_create(self, serializer):
         serializer.save(created_by=self.request.user)

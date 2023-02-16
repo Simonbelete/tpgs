@@ -20,6 +20,18 @@ class FeedTypeForm(forms.ModelForm):
         fields = ['name']
 
 
+class CityForm(forms.ModelForm):
+    class Meta:
+        model = models.City
+        fields = ['name', 'country']
+
+
+class CountryForm(forms.ModelForm):
+    class Meta:
+        model = models.Country
+        fields = ['name']
+
+
 class LayedPlaceForm(forms.ModelForm):
     class Meta:
         model = models.LayedPlace
