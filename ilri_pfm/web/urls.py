@@ -60,4 +60,8 @@ urlpatterns = [
     path('home/weights/<id>', views.weight_edit, name='weight'),
     path('home/weights-create', views.weight_edit,
          name='weight_create'),
+
+    path('home/growth-performance/',
+         views.growth_performance, name='growth_performance'),
+
 ]

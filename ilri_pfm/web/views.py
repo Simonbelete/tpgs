@@ -495,6 +495,12 @@ def weights(request):
 
 @login_required(login_url='/login')
 @require_http_methods(["GET", "POST"])
+def growth_performance(request):
+    return render(request, 'growth_performance.html')
+
+
+@login_required(login_url='/login')
+@require_http_methods(["GET", "POST"])
 def weight_edit(request, id=0):
     if request.method == 'POST':
         instance = models.Weight.objects.get(pk=id)
