@@ -253,7 +253,16 @@ class WeightSerializer_POST_V1(serializers.ModelSerializer):
         fields = ['week', 'weight', 'chicken']
 
 
+class WeightHistory(serializers.ModelSerializer):
+    history_user = UserSerializer_GET_V1()
+    chicken = ChickenSerializer_GET_V1()
+
+    class Meta:
+        model = models.Weight.history.__dict__['model']
+        fields = '__all__'
+
 ############################ Egg ############################
+
 
 class EggSerializer_GET_V1(serializers.ModelSerializer):
     class Meta:

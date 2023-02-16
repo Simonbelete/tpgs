@@ -32,14 +32,14 @@ Weight Edit - ILRI Poultry Farm Management
   <!-- /.container-fluid -->
 
   <!-- Main content -->
-  <section class="content">
+  <section class="content row">
     <div class="col-md-6">
       <div class="card card-primary">
         <div class="card-header">
           <h3 class="card-title">Edit Weight Record</h3>
         </div>
         <form
-          action="{% if feed != None %} {% else %} /home/weights/ {% endif %}"
+          action=""
           method="POST"
         >
           {% csrf_token %}
@@ -92,11 +92,47 @@ Weight Edit - ILRI Poultry Farm Management
       </div>
     </div>
 
+    <!-- History Card -->
+    <div class="col-md-6">
+        <div class="card card-secondary">
+          <div class="card-header">
+            <h3 class="card-title">History</h3>
+          </div>
+          <!-- /.card-header -->
+          <div class="card-body">
+            <table id="history" class="table table-bordered table-striped">
+              <thead>
+                <tr>
+                  <th>Changed By</th>
+                  <th>Week</th>
+                  <th>Weight</th>
+                  <th>chicken</th>
+                  <th>Date</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+              <tfoot>
+                <tr>
+                  <th>Changed By</th>
+                  <th>Week</th>
+                  <th>Weight</th>
+                  <th>chicken</th>
+                  <th>Date</th>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+          <!-- /.card-body -->
+        </div>
+        <!-- /.card -->
+    </div>
+    <!-- /.History -->
+
     <!-- Table for Weight List -->
     <div class="col-12">
       <div class="card">
         <div class="card-header">
-          <h3 class="card-title">List of all Feed types</h3>
+          <h3 class="card-title">All Weight Records</h3>
         </div>
         <!-- /.card-header -->
         <div class="card-body">
@@ -128,6 +164,7 @@ Weight Edit - ILRI Poultry Farm Management
       </div>
       <!-- /.card -->
     </div>
+
   </section>
 
   <!-- /.content -->
@@ -233,6 +270,37 @@ Weight Edit - ILRI Poultry Farm Management
     function loadChickenData(id) {
         table.ajax.url("/api/v1/weights?chicken=" + id).load();
     }
+
+     // History
+    var historyColumns = [
+        { data: 'history_user.name' },
+        { data: 'week' },
+        { data: 'weight' },
+        { data: 'chicken.tag' },
+        { data: 'history_date' }
+    ]
+   var historyTable = $("#history").DataTable({
+     responsive: true,
+     lengthChange: false,
+     autoWidth: false,
+     processing: true,
+     serverSide: true,
+     ajax: {
+       url: "/api/v1/weights/" + "{{ data.id }}/histories",
+       dataSrc: function (json) {
+         json["data"] = json["results"];
+         json["recordsTotal"] = json["count"];
+         json["recordsFiltered"] = json["count"];
+         return json.data;
+       },
+       data: function (d) {
+         d.search = d.search.value;
+         var sign = d.order[0].dir == "asc" ? "+" : "-";
+         d.ordering = sign + historyColumns[d.order[0].column].data;
+       },
+     },
+     columns: historyColumns
+   });
   });
 </script>
 {% endblock %}
