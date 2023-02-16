@@ -391,8 +391,9 @@ class ChickenStaticsViewSet(viewsets.ModelViewSet):
         fcr = 0
         feed = 0
         if (latest_weight.weight and total_feed):
-            feed = total_feed['feed_sum']
-            fcr = latest_weight.weight/total_feed['feed_sum']
+            if (total_feed['feed_sum'] != None):
+                feed = total_feed['feed_sum']
+            fcr = latest_weight.weight / (feed if feed != 0 else 1)
             fcr = round(fcr, 2)
         return Response({
             'weight': serializers.WeightSerializer_GET_V1(latest_weight).data,
