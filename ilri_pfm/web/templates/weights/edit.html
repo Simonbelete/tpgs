@@ -1,0 +1,238 @@
+{% extends "sidebar.html" %} {% load static %}
+{% block stylesheet %}
+<link rel="stylesheet" href="{% static 'admin-LTE-v3.2.0/plugins/daterangepicker/daterangepicker.css' %}" />
+<link rel="stylesheet" href="{% static 'admin-LTE-v3.2.0/plugins/daterangepicker/daterangepicker.css' %}" />
+<link rel="stylesheet" href="{% static 'admin-LTE-v3.2.0/plugins/select2/css/select2.min.css' %}" />
+<link rel="stylesheet" href="{% static 'admin-LTE-v3.2.0/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css' %}"/>
+<!-- DataTables -->
+<link rel="stylesheet" href="{% static 'admin-LTE-v3.2.0/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css' %}"/>
+<link rel="stylesheet" href="{% static 'admin-LTE-v3.2.0/plugins/datatables-responsive/css/responsive.bootstrap4.min.css' %}"/>
+<link rel="stylesheet" href="{% static 'admin-LTE-v3.2.0/plugins/datatables-buttons/css/buttons.bootstrap4.min.css' %}"/>
+{% endblock %}
+{% block title %}
+Weight Edit - ILRI Poultry Farm Management 
+{% endblock%}
+{% block body %}
+
+<!-- Content Header (Page header) -->
+<section class="content-header">
+  <div class="container-fluid">
+    <div class="row mb-2">
+      <div class="col-sm-6">
+        <h1>Weight</h1>
+      </div>
+      <div class="col-sm-6">
+        <ol class="breadcrumb float-sm-right">
+          <li class="breadcrumb-item"><a href="#">Home</a></li>
+          <li class="breadcrumb-item active">weights</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+  <!-- /.container-fluid -->
+
+  <!-- Main content -->
+  <section class="content">
+    <div class="col-md-6">
+      <div class="card card-primary">
+        <div class="card-header">
+          <h3 class="card-title">Edit Weight Record</h3>
+        </div>
+        <form
+          action="{% if feed != None %} {% else %} /home/weights/ {% endif %}"
+          method="POST"
+        >
+          {% csrf_token %}
+          <div class="card-body">
+            <div class="form-group">
+              <label for="farm">Chicken</label>
+              <select
+                id="chicken"
+                name="chicken"
+                value="{{ data.chicken.id }}"
+                class="form-control select2"
+                style="width: 100%"
+              >
+                <option value="{{ data.chicken.id }}" selected="selected">
+                  {{ data.chicken.tag }}
+                </option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="week">Week</label>
+              <input
+                type="number"
+                name="week"
+                value="{{ data.week }}"
+                class="form-control"
+                id="week"
+                placeholder="Enter Week"
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="weight">Weight</label>
+              <input
+                type="number"
+                name="weight"
+                value="{{ data.weight }}"
+                class="form-control"
+                id="weight"
+                placeholder="Enter Weight in gram"
+              />
+            </div>
+          </div>
+          <!-- /.card-body -->
+
+          <div class="card-footer">
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Table for Weight List -->
+    <div class="col-12">
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title">List of all Feed types</h3>
+        </div>
+        <!-- /.card-header -->
+        <div class="card-body">
+          <table id="dataListTable" class="table table-bordered table-striped">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Week</th>
+                <th>Weight</th>
+                <th>chicken</th>
+                <th>Created At</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+            <tfoot>
+              <tr>
+                <th>ID</th>
+                <th>Week</th>
+                <th>Weight</th>
+                <th>chicken</th>
+                <th>Created At</th>
+                <th></th>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+        <!-- /.card-body -->
+      </div>
+      <!-- /.card -->
+    </div>
+  </section>
+
+  <!-- /.content -->
+</section>
+
+{% endblock %} {% block script %}
+<script src="{% static 'admin-LTE-v3.2.0/plugins/datatables/jquery.dataTables.min.js' %}"></script>
+<script src="{% static 'admin-LTE-v3.2.0/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js' %}"></script>
+<script src="{% static 'admin-LTE-v3.2.0/plugins/datatables-responsive/js/dataTables.responsive.min.js' %}"></script>
+<script src="{% static 'admin-LTE-v3.2.0/plugins/datatables-responsive/js/responsive.bootstrap4.min.js' %}"></script>
+<script src="{% static 'admin-LTE-v3.2.0/plugins/datatables-buttons/js/dataTables.buttons.min.js' %}"></script>
+<script src="{% static 'admin-LTE-v3.2.0/plugins/datatables-buttons/js/buttons.bootstrap4.min.js' %}"></script>
+<script src="{% static 'admin-LTE-v3.2.0/plugins/jszip/jszip.min.js' %}"></script>
+<script src="{% static 'admin-LTE-v3.2.0/plugins/pdfmake/pdfmake.min.js' %}"></script>
+<script src="{% static 'admin-LTE-v3.2.0/plugins/pdfmake/vfs_fonts.js' %}"></script>
+<script src="{% static 'admin-LTE-v3.2.0/plugins/datatables-buttons/js/buttons.html5.min.js' %}"></script>
+<script src="{% static 'admin-LTE-v3.2.0/plugins/datatables-buttons/js/buttons.print.min.js' %}"></script>
+<script src="{% static 'admin-LTE-v3.2.0/plugins/datatables-buttons/js/buttons.colVis.min.js' %}"></script>
+<script src="{% static 'admin-LTE-v3.2.0/plugins/moment/moment.min.js' %}"></script>
+<script src="{% static 'admin-LTE-v3.2.0/plugins/daterangepicker/daterangepicker.js' %}"></script>
+<script src="{% static 'admin-LTE-v3.2.0/plugins/select2/js/select2.full.min.js' %}"></script>
+<script>
+  $(function () {
+    $("#chicken").select2({
+        theme: 'bootstrap4',
+      ajax: {
+        url: "/api/v1/chickens",
+        data: function (params) {
+          var query = {
+            search: params.term,
+            page: params.page || 1,
+          };
+          return query;
+        },
+        processResults: function (data, params) {
+          params.page = params.page || 1;
+          var transform = $.map(data.results, function (obj) {
+            obj.id = obj.id || obj.id;
+            obj.text = obj.text || obj.tag;
+            return obj;
+          });
+          return {
+            results: transform,
+            pagination: {
+              more: params.page * 30 < data.count,
+            },
+          };
+        },
+      },
+    });
+
+    var columns = [
+      { data: "id" },
+      { data: "week" },
+      { data: "weight" },
+      { data: "chicken.tag" },
+      { data: "created_at" },
+      {
+        data: null,
+        className: "dt-center editor-edit",
+        defaultContent: '<button type="button" class="btn btn-success">View / Edit</button>',
+        orderable: false,
+      },
+    ];
+    var table = $("#dataListTable").DataTable({
+      responsive: true,
+      lengthChange: false,
+      autoWidth: false,
+      processing: true,
+      serverSide: true,
+      ajax: {
+        url: "/api/v1/weights?chicken=" + "{{ data.chicken.id }}",
+        dataSrc: function (json) {
+          json["data"] = json["results"];
+          json["recordsTotal"] = json["count"];
+          json["recordsFiltered"] = json["count"];
+          return json.data;
+        },
+        data: function (d) {
+            d.search = d.search.value;
+            var sign = d.order[0].dir == "asc" ? "+" : "-";
+            d.ordering = sign + columns[d.order[0].column].data;
+            d.columns = []
+            d.order= []
+        },
+      },
+      columns: columns,
+    });
+
+    // Edit record
+    $("#dataListTable").on("click", "td.editor-edit", function (e) {
+      e.preventDefault();
+      var data = table.row(this).data();
+      console.log(data);
+      window.location.href = "/home/weights/" + data.id;
+    });
+
+    $("#chicken").on("select2:select", function (e) {
+      var data = e.params.data;
+      loadChickenData(data.id);
+    });
+
+    function loadChickenData(id) {
+        table.ajax.url("/api/v1/weights?chicken=" + id).load();
+    }
+  });
+</script>
+{% endblock %}
