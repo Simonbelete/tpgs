@@ -291,6 +291,37 @@ class LayedPlaceViewSet(viewsets.ModelViewSet):
             return serializers.LayedPlaceSerializer_GET_V1
         return serializers.LayedPlaceSerializer_POST_V1
 
+############################ Weight ############################
+
+
+class WeightFilter(filters.FilterSet):
+    start_week = filters.CharFilter(field_name='week', lookup_expr='gte')
+    end_week = filters.CharFilter(field_name='week', lookup_expr='lte')
+    chicken = filters.CharFilter(field_name='chicken', lookup_expr='exact')
+
+    class Meta:
+        model = models.Weight
+        fields = ['start_week', 'end_week', 'chicken']
+
+
+class WeightViewSet(viewsets.ModelViewSet):
+    queryset = models.Weight.objects.all()
+    serializer_class = serializers.WeightSerializer_GET_V1
+    filter_backends = (filters.DjangoFilterBackend,
+                       SearchFilter, OrderingFilter)
+    filterset_class = WeightFilter
+    search_fields = ['chicken__tag']
+    ordering_fields = '__all__'
+    pagination_class = LimitPageNumberPagination
+
+    def perform_create(self, serializer):
+        serializer.save(created_by=self.request.user)
+
+    def get_serializer_class(self):
+        if self.request.method == 'GET':
+            return serializers.WeightSerializer_GET_V1
+        return serializers.WeightSerializer_POST_V1
+
 
 ############################ Chicken ############################
 
@@ -305,15 +336,6 @@ class ChickenFilter(filters.FilterSet):
     class Meta:
         model = models.Chicken
         fields = ['tag', 'farm', 'flock', 'sex', 'breed_type']
-
-
-class WeightFilter(filters.FilterSet):
-    start_week = filters.CharFilter(field_name='week', lookup_expr='gte')
-    end_week = filters.CharFilter(field_name='week', lookup_expr='lte')
-
-    class Meta:
-        model = models.Weight
-        fields = ['start_week', 'end_week']
 
 
 class ChickenViewSet(viewsets.ModelViewSet):
@@ -425,34 +447,6 @@ class BreedPairViewSet(viewsets.ModelViewSet):
         if self.request.method == 'GET':
             return serializers.BreedPairSerializer_GET_V1
         return serializers.BreedPairSerializer_POST_V1
-
-
-############################ Weight ############################
-
-class WeightFilter(filters.FilterSet):
-    chicken = filters.CharFilter(field_name='chicken', lookup_expr='exact')
-
-    class Meta:
-        model = models.Weight
-        fields = ['chicken']
-
-
-class WeightViewSet(viewsets.ModelViewSet):
-    queryset = models.Weight.objects.all()
-    serializer_class = serializers.WeightSerializer_GET_V1
-    filter_backends = (filters.DjangoFilterBackend,
-                       SearchFilter, OrderingFilter)
-    filterset_class = WeightFilter
-    search_fields = ['date']
-    ordering_fields = '__all__'
-
-    def perform_create(self, serializer):
-        serializer.save(created_by=self.request.user)
-
-    def get_serializer_class(self):
-        if self.request.method == 'GET':
-            return serializers.WeightSerializer_GET_V1
-        return serializers.WeightSerializer_POST_V1
 
 
 ############################ Egg ############################

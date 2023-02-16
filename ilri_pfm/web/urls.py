@@ -57,8 +57,8 @@ urlpatterns = [
          name='flock_create'),
 
     path('home/weights/', views.weights, name='weights'),
-    path('home/weights/<id>', views.weight_edit, name='weight'),
-    path('home/weights-create', views.weight_edit,
+    path('home/weights/<id>', views.weights_edit, name='weight'),
+    path('home/weights-create', views.weights_create,
          name='weight_create'),
 
     path('home/growth-performance/',

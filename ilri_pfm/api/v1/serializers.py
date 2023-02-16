@@ -235,6 +235,8 @@ class BreedPairSerializer_POST_V1(serializers.ModelSerializer):
 ############################ Weight ############################
 
 class WeightSerializer_GET_V1(serializers.ModelSerializer):
+    chicken = ChickenSerializer_GET_V1()
+
     class Meta:
         model = models.Weight
         fields = '__all__'
