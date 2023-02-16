@@ -5,12 +5,13 @@
   <div class="container-fluid">
     <div class="row mb-2">
       <div class="col-sm-6">
-        <h1>Feed Type</h1>
+        <h1>Stages</h1>
       </div>
       <div class="col-sm-6">
         <ol class="breadcrumb float-sm-right">
           <li class="breadcrumb-item"><a href="#">Home</a></li>
-          <li class="breadcrumb-item active">Edit Feed Type</li>
+          <li class="breadcrumb-item">Chicken Stage</li>
+          <li class="breadcrumb-item active">{{ data.name }}</li>
         </ol>
       </div>
     </div>
@@ -22,7 +23,7 @@
     <div class="col-md-6">
       <div class="card card-primary">
         <div class="card-header">
-          <h3 class="card-title">Edit User</h3>
+          <h3 class="card-title">Edit</h3>
         </div>
         <form action="{% if feed != None %} {% else %} /home/stages/ {% endif %}" method="POST">
           {% csrf_token %}
@@ -38,16 +39,27 @@
                 placeholder="Enter Feed Name"
               />
             </div>
-            <div class="form-check">
+            <div class="form-group">
+              <label for="name">Min Week</label>
               <input
-                type="checkbox"
-                sele
-                class="form-check-input"
-                id="exampleCheck1"
+                type="text"
+                name="min_week"
+                value="{{ data.min_week }}"
+                class="form-control"
+                id="min_week"
+                placeholder="Min Week"
               />
-              <label class="form-check-label" for="exampleCheck1"
-                >Check me out</label
-              >
+            </div>
+            <div class="form-group">
+              <label for="name">Max Week</label>
+              <input
+                type="text"
+                name="max_week"
+                value="{{ data.max_week }}"
+                class="form-control"
+                id="max_week"
+                placeholder="Max Week"
+              />
             </div>
           </div>
           <!-- /.card-body -->
