@@ -169,7 +169,7 @@ class FarmHistoryViewSet(viewsets.ModelViewSet):
 
     def list(self, request, *args, **kwargs):
         pk = self.kwargs['id']
-        queryset = self.filter_queryset(self.get_queryset().filter(pk=pk))
+        queryset = self.filter_queryset(self.get_queryset().filter(id=pk))
 
         page = self.paginate_queryset(queryset)
         if page is not None:
@@ -334,7 +334,7 @@ class WeightHistoryViewSet(viewsets.ModelViewSet):
 
     def list(self, request, *args, **kwargs):
         pk = self.kwargs['id']
-        queryset = self.filter_queryset(self.get_queryset().filter(pk=pk))
+        queryset = self.filter_queryset(self.get_queryset().filter(id=pk))
 
         page = self.paginate_queryset(queryset)
         if page is not None:
@@ -413,7 +413,7 @@ class ChickenHistoryViewSet(viewsets.ModelViewSet):
 
     def list(self, request, *args, **kwargs):
         pk = self.kwargs['id']
-        queryset = self.filter_queryset(self.get_queryset().filter(pk=pk))
+        queryset = self.filter_queryset(self.get_queryset().filter(id=pk))
 
         page = self.paginate_queryset(queryset)
         if page is not None:
@@ -592,7 +592,7 @@ class FlockHistoryViewSet(viewsets.ModelViewSet):
 
     def list(self, request, *args, **kwargs):
         pk = self.kwargs['id']
-        queryset = self.filter_queryset(self.get_queryset().filter(pk=pk))
+        queryset = self.filter_queryset(self.get_queryset().filter(id=pk))
 
         page = self.paginate_queryset(queryset)
         if page is not None:
