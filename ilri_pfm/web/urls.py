@@ -69,8 +69,8 @@ urlpatterns = [
     path('home/cities-create', views.cities_edit,
          name='cities_create'),
 
-    path('home/countries/', views.cities, name='countries'),
-    path('home/countries/<id>', views.cities_edit, name='country'),
-    path('home/countries-create', views.cities_edit,
+    path('home/countries/', views.countries, name='countries'),
+    path('home/countries/<id>', views.countries_edit, name='country'),
+    path('home/countries-create', views.countries_edit,
          name='countries_create'),
 ]
