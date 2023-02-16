@@ -1,0 +1,270 @@
+{% extends "sidebar.html" %} {% load static %}
+{% block stylesheet %}
+<!-- DataTables -->
+<link rel="stylesheet" href="{% static 'admin-LTE-v3.2.0/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css' %}"/>
+<link rel="stylesheet" href="{% static 'admin-LTE-v3.2.0/plugins/datatables-responsive/css/responsive.bootstrap4.min.css' %}"/>
+<link rel="stylesheet" href="{% static 'admin-LTE-v3.2.0/plugins/datatables-buttons/css/buttons.bootstrap4.min.css' %}"/>
+<link rel="stylesheet" href="{% static 'admin-LTE-v3.2.0/plugins/datatables-searchpanes/css/searchPanes.bootstrap4.min.css' %}"/>
+<link rel="stylesheet" href="{% static 'admin-LTE-v3.2.0/plugins/datatables-select/css/select.bootstrap4.min.css' %}"/>
+{% endblock %}
+{% block title %}
+Feed - ILRI Poultry Farm Management 
+{% endblock%}
+{% block body %}
+
+<!-- Content Header (Page header) -->
+<section class="content-header">
+  <div class="container-fluid">
+    <div class="row mb-2">
+      <div class="col-sm-6">
+        <h1>Chicken Feeding</h1>
+      </div>
+      <div class="col-sm-6">
+        <ol class="breadcrumb float-sm-right">
+          <li class="breadcrumb-item"><a href="#">Home</a></li>
+          <li class="breadcrumb-item active">Feeding</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+  <!-- /.container-fluid -->
+
+  <!-- Main content -->
+  <section class="content row">
+    <div class="col-md-6">
+      <div class="card card-primary">
+        <div class="card-header">
+          <h3 class="card-title">Edit</h3>
+        </div>
+        <form
+          action="{% if feed != None %} {% else %} /home/feeds/ {% endif %}"
+          method="POST"
+        >
+          {% csrf_token %}
+          <div class="card-body">
+            <div class="form-group">
+                <label for="name">Chicken</label>
+                <select
+                  id="chicken_select"
+                  name="chicken"
+                  value="{{ data.chicken }}"
+                  class="form-control select2"
+                  style="width: 100%;"
+                >
+                <option value="{{ data.chicken.id }}" selected="selected">
+                    {{ data.chicken.tag }}
+                  </option>
+            </select>
+              </div>
+            <div class="form-group">
+              <label for="date">Date</label>
+              <input
+                id="date"
+                type="text"
+                name="date"
+                value="{{ data.date }}"
+                class="form-control"
+                placeholder="Enter Date"
+              />
+            </div>
+            <div class="form-group">
+              <label for="weight">Feed Weight</label>
+              <input
+                type="number"
+                name="weight"
+                value="{{ data.weight }}"
+                class="form-control"
+                id="weight"
+                placeholder="Enter Feed Weight"
+              />
+            </div>
+            <div class="form-group">
+              <label for="name">Feed Type</label>
+              <select
+                id="feed_type_select"
+                name="feed_type"
+                value="{{ data.feed_type }}"
+                class="form-control select2"
+                style="width: 100%;"
+              >
+              <option value="{{ data.feed_type.id }}" selected="selected">
+                {{ data.feed_type.name }}
+              </option>
+            </select>
+            </div>
+          </div>
+          <!-- /.card-body -->
+
+          <div class="card-footer">
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- History Card -->
+    <div class="col-md-6">
+        <div class="card card-secondary">
+          <div class="card-header">
+            <h3 class="card-title">History</h3>
+          </div>
+          <!-- /.card-header -->
+          <div class="card-body" style="overflow: scroll;">
+            <table id="history" class="table table-bordered table-striped">
+              <thead>
+                <tr>
+                  <th>Changed By</th>
+                  <th>Date</th>
+                  <th>weight</th>
+                  <th>Chicken</th>
+                  <th>Feed Type</th>
+                  <th>Date</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+          <!-- /.card-body -->
+        </div>
+        <!-- /.card -->
+      </div>
+      <!-- /.History -->
+  </section>
+
+  <!-- /.content -->
+</section>
+
+{% endblock %} {% block script %}
+<script src="{% static 'admin-LTE-v3.2.0/plugins/datatables/jquery.dataTables.min.js' %}"></script>
+<script src="{% static 'admin-LTE-v3.2.0/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js' %}"></script>
+<script src="{% static 'admin-LTE-v3.2.0/plugins/datatables-responsive/js/dataTables.responsive.min.js' %}"></script>
+<script src="{% static 'admin-LTE-v3.2.0/plugins/datatables-responsive/js/responsive.bootstrap4.min.js' %}"></script>
+<script src="{% static 'admin-LTE-v3.2.0/plugins/datatables-buttons/js/dataTables.buttons.min.js' %}"></script>
+<script src="{% static 'admin-LTE-v3.2.0/plugins/datatables-buttons/js/buttons.bootstrap4.min.js' %}"></script>
+<script src="{% static 'admin-LTE-v3.2.0/plugins/jszip/jszip.min.js' %}"></script>
+<script src="{% static 'admin-LTE-v3.2.0/plugins/pdfmake/pdfmake.min.js' %}"></script>
+<script src="{% static 'admin-LTE-v3.2.0/plugins/pdfmake/vfs_fonts.js' %}"></script>
+<script src="{% static 'admin-LTE-v3.2.0/plugins/datatables-buttons/js/buttons.html5.min.js' %}"></script>
+<script src="{% static 'admin-LTE-v3.2.0/plugins/datatables-buttons/js/buttons.print.min.js' %}"></script>
+<script src="{% static 'admin-LTE-v3.2.0/plugins/datatables-buttons/js/buttons.colVis.min.js' %}"></script>
+<script src="{% static 'admin-LTE-v3.2.0/plugins/datatables-buttons/js/buttons.colVis.min.js' %}"></script>
+<script src="{% static 'admin-LTE-v3.2.0/plugins/moment/moment.min.js' %}"></script>
+<script src="{% static 'admin-LTE-v3.2.0/plugins/daterangepicker/daterangepicker.js' %}"></script>
+<script src="{% static 'admin-LTE-v3.2.0/plugins/select2/js/select2.full.min.js' %}"></script>
+<script>
+  $(function () {
+    $("#date").daterangepicker(
+      {
+        autoApply: true,
+        singleDatePicker: true,
+        showDropdowns: true,
+        minYear: 1901,
+        maxYear: parseInt(moment().format("YYYY"), 10),
+      },
+      function (start, end, label) {
+        var years = moment().diff(start, "years");
+      }
+    );
+
+    $("#feed_type_select").select2({
+        theme: 'bootstrap4',
+      ajax: {
+        url: "/api/v1/feed-types",
+        data: function (params) {
+          var query = {
+            search: params.term,
+            page: params.page || 1,
+          };
+
+          return query;
+        },
+        processResults: function (data, params) {
+          params.page = params.page || 1;
+
+          console.log(data);
+
+          var transform = $.map(data.results, function (obj) {
+            obj.id = obj.id || obj.id;
+            obj.text = obj.text || obj.name;
+
+            return obj;
+          });
+
+          return {
+            results: transform,
+            pagination: {
+              more: params.page * 30 < data.count,
+            },
+          };
+        },
+      },
+    });
+
+    $("#chicken_select").select2({
+        theme: 'bootstrap4',
+        ajax: {
+          url: "/api/v1/chickens",
+          data: function (params) {
+            var query = {
+              search: params.term,
+              page: params.page || 1,
+            };
+  
+            return query;
+          },
+          processResults: function (data, params) {
+            params.page = params.page || 1;
+  
+            console.log(data);
+  
+            var transform = $.map(data.results, function (obj) {
+              obj.id = obj.id || obj.id;
+              obj.text = obj.text || obj.tag;
+  
+              return obj;
+            });
+  
+            return {
+              results: transform,
+              pagination: {
+                more: params.page * 30 < data.count,
+              },
+            };
+          },
+        },
+      });
+
+    // History
+    var historyColumns = [
+      { data: 'history_user.name' },
+      { data: 'date' },
+      { data: 'weight' },
+      { data: 'chicken.tag' },
+      { data: 'feed_type.name' },
+      { data: 'history_date' }
+    ]
+    var historyTable = $("#history").DataTable({
+      responsive: true,
+      lengthChange: false,
+      autoWidth: false,
+      processing: true,
+      serverSide: true,
+      ajax: {
+        url: "/api/v1/feeds/" + "{{ data.id }}/histories",
+        dataSrc: function (json) {
+          json["data"] = json["results"];
+          json["recordsTotal"] = json["count"];
+          json["recordsFiltered"] = json["count"];
+          return json.data;
+        },
+        data: function (d) {
+          d.search = d.search.value;
+          var sign = d.order[0].dir == "asc" ? "+" : "-";
+          d.ordering = sign + historyColumns[d.order[0].column].data;
+        },
+      },
+      columns: historyColumns
+    });
+  });
+</script>
+{% endblock %}

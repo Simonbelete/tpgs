@@ -30,6 +30,8 @@ router.register(r'weights/(?P<id>.+)/histories',
 router.register(r'eggs', views.EggViewSet, basename='eggs')
 router.register(r'feed-types', views.FeedTypeViewSet, basename='feed_types')
 router.register(r'feeds', views.FeedViewSet, basename='feeds')
+router.register(r'feeds/(?P<id>.+)/histories',
+                views.FeedHistoryViewSet, basename='feeds_history')
 router.register(r'flocks', views.FlockViewSet, basename='flocks')
 router.register(r'flocks/(?P<id>.+)/histories',
                 views.FlockHistoryViewSet, basename='flocks_history')

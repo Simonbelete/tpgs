@@ -319,6 +319,16 @@ class FeedSerializer_POST_V1(serializers.ModelSerializer):
         fields = ['date', 'chicken', 'feed_type']
 
 
+class FeedHistory(serializers.ModelSerializer):
+    history_user = UserSerializer_GET_V1()
+    chicken = ChickenSerializer_GET_V1()
+    feed_type = FeedTypeSerializer_GET_V1()
+
+    class Meta:
+        model = models.Feed.history.__dict__['model']
+        fields = '__all__'
+
+
 ############################ Flock Type ############################
 class FlockSerializer_GET_V1(serializers.ModelSerializer):
     name = serializers.CharField()

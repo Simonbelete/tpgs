@@ -366,12 +366,12 @@ def feeds(request):
         else:
             return HttpResponseRedirect('/home/feeds?error=true')
     else:
-        return render(request, 'feeds.html')
+        return render(request, 'feeds/list.html')
 
 
 @login_required(login_url='/login')
 @require_http_methods(["GET", "POST"])
-def feed_edit(request, id=0):
+def feeds_edit(request, id=0):
     if request.method == 'POST':
         instance = models.Feed.objects.get(pk=id)
         form = forms.FeedForm(request.POST, instance=instance)
@@ -386,7 +386,13 @@ def feed_edit(request, id=0):
             context['data'] = models.Feed.objects.get(pk=id)
         else:
             context['data'] = None
-        return render(request, 'feed_edit.html', context=context)
+        return render(request, 'feeds/edit.html', context=context)
+
+
+@login_required(login_url='/login')
+@require_http_methods(["GET"])
+def feeds_create(request):
+    return render(request, 'feeds/create.html')
 
 
 @login_required(login_url='/login')
