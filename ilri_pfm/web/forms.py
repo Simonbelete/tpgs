@@ -71,8 +71,8 @@ class FeedForm(forms.ModelForm):
 
 class EggForm(forms.ModelForm):
     class Meta:
-        model = models.Feed
-        fields = ['date', 'chicken']
+        model = models.Egg
+        fields = ['chicken', 'week', 'eggs']
 
 
 class FlockForm(forms.ModelForm):

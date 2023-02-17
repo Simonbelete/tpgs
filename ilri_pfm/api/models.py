@@ -259,8 +259,7 @@ class Weight(models.Model):
 
 class Egg(models.Model):
     week = models.IntegerField(default=0)
-    weight = models.DecimalField(
-        max_digits=10, decimal_places=3, default=0)
+    eggs = models.IntegerField()
     chicken = models.ForeignKey(
         Chicken, on_delete=models.CASCADE, related_name='eggs')
 
