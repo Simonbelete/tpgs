@@ -391,6 +391,8 @@ class ChickenStaticsViewSet(viewsets.ModelViewSet):
         latest_weight = models.Weight.objects.all().filter(chicken=id).latest('week')
         total_feed = models.Feed.objects.filter(
             chicken=id).aggregate(feed_sum=Sum('weight'))
+        total_egg = models.Egg.objects.filter(
+            chicken=id).aggregate(egg_sum=Sum('eggs'))
         fcr = 0
         feed = 0
         if (latest_weight.weight and total_feed):
@@ -400,7 +402,7 @@ class ChickenStaticsViewSet(viewsets.ModelViewSet):
             fcr = round(fcr, 2)
         return Response({
             'weight': serializers.WeightSerializer_GET_V1(latest_weight).data,
-            'total_egg': 0,
+            'total_egg': total_egg['egg_sum'] if total_egg else 0,
             'fcr': fcr,
             'total_feed': feed
         }, status=status.HTTP_200_OK)
