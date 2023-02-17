@@ -47,8 +47,8 @@ urlpatterns = [
          name='feed_create'),
 
     path('home/eggs/', views.eggs, name='eggs'),
-    path('home/eggs/<id>', views.egg_edit, name='egg'),
-    path('home/eggs-create', views.egg_edit,
+    path('home/eggs/<id>', views.eggs_edit, name='egg'),
+    path('home/eggs-create', views.eggs_create,
          name='egg_create'),
 
     path('home/flocks/', views.flocks, name='flocks'),

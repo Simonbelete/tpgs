@@ -273,7 +273,8 @@ class EggSerializer_GET_V1(serializers.ModelSerializer):
 
 
 class EggSerializer_POST_V1(serializers.ModelSerializer):
-    date = serializers.DateField()
+    week = serializers.IntegerField()
+    weight = serializers.DecimalField(max_digits=10, decimal_places=3)
     chicken = serializers.PrimaryKeyRelatedField(
         read_only=False, queryset=models.Chicken.objects.all())
 

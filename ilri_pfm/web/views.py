@@ -408,12 +408,12 @@ def eggs(request):
         else:
             return HttpResponseRedirect('/home/eggs?error=true')
     else:
-        return render(request, 'eggs.html')
+        return render(request, 'eggs/list.html')
 
 
 @login_required(login_url='/login')
 @require_http_methods(["GET", "POST"])
-def egg_edit(request, id=0):
+def eggs_edit(request, id=0):
     if request.method == 'POST':
         instance = models.Egg.objects.get(pk=id)
         form = forms.EggForm(request.POST, instance=instance)
@@ -428,7 +428,13 @@ def egg_edit(request, id=0):
             context['data'] = models.Egg.objects.get(pk=id)
         else:
             context['data'] = None
-        return render(request, 'egg_edit.html', context=context)
+        return render(request, 'eggs/edit.html', context=context)
+
+
+@login_required(login_url='/login')
+@require_http_methods(["GET"])
+def eggs_create(request):
+    return render(request, 'eggs/create.html')
 
 
 @login_required(login_url='/login')
