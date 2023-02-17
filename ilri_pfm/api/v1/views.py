@@ -816,14 +816,14 @@ class ImportWeightExcelViewset(viewsets.ViewSet):
         hatch_date = df_info.iloc[2][1]
         hatch_date = datetime.datetime.strptime(hatch_date, "%d/%m/%Y").date()
 
-        flock = models.Flock.objects.get_or_create(
+        flock, flock_created = models.Flock.objects.get_or_create(
             name=flock_name, hatch_date=hatch_date, created_by=self.request.user)
-        breed = models.BreedType.objects.get_or_create(
+        breed, breed_created = models.BreedType.objects.get_or_create(
             name=breed_name, created_by=self.request.user)
 
         for index, row in df.iterrows():
             chicken, created = models.Chicken.objects.get_or_create(
-                tag=row['id'], layed_date=hatch_date, sex=row['sex'], flock=flock, breed=breed, created_by=self.request.user)
+                tag=row['id'], layed_date=hatch_date, sex=row['sex'], flock=flock, breed_type=breed, created_by=self.request.user)
             for column in df.columns[2:]:
                 try:
                     if (math.isnan(float(row[column]))):
