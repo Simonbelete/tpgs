@@ -38,6 +38,8 @@ router.register(r'flocks/(?P<id>.+)/histories',
 router.register(r'statics/count', views.StaticsCount, basename='statics_count')
 router.register(r'statics/breed-types', views.StaticsBreedType,
                 basename='statics_breed_types')
+router.register(r'import/weights', views.ImportWeightExcelViewset,
+                basename='weights_import')
 
 
 urlpatterns = [

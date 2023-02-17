@@ -167,9 +167,9 @@ class ChickenSerializer_GET_V1(serializers.ModelSerializer):
     first_egg_lay_week = serializers.CharField()
     first_egg_lay_date = serializers.DateField()
     first_egg_lay_days = serializers.DecimalField(
-        max_digits=6, decimal_places=2)
+        max_digits=10, decimal_places=2)
     days_in_production = serializers.DecimalField(
-        max_digits=6, decimal_places=2)
+        max_digits=10, decimal_places=2)
     farm = FarmSerializer_GET_V1()
     house = HouseSerializer_GET_V1()
     breed_type = BreedTypeSerializer_GET_V1()
@@ -246,7 +246,7 @@ class WeightSerializer_GET_V1(serializers.ModelSerializer):
 
 class WeightSerializer_POST_V1(serializers.ModelSerializer):
     week = serializers.IntegerField()
-    weight = serializers.DecimalField(max_digits=6, decimal_places=3)
+    weight = serializers.DecimalField(max_digits=10, decimal_places=3)
     chicken = serializers.PrimaryKeyRelatedField(
         read_only=False, queryset=models.Chicken.objects.all())
 
@@ -362,3 +362,12 @@ class FlockHistory(serializers.ModelSerializer):
     class Meta:
         model = models.Flock.history.__dict__['model']
         fields = '__all__'
+
+
+############################ Import Weight Excel ############################
+
+class ImportWeightExcel(serializers.Serializer):
+    file_upload = serializers.FileField()
+
+    class Meta:
+        fields = ['file_upload']

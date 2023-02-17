@@ -124,7 +124,7 @@ class House(models.Model):
 
 
 class BreedType(models.Model):
-    name = models.CharField(max_length=250)
+    name = models.CharField(max_length=250, unique=True)
     color = models.CharField(max_length=10, null=True)
 
     is_active = models.BooleanField(default=True)
@@ -163,7 +163,7 @@ class LayedPlace(models.Model):
 
 
 class Flock(models.Model):
-    name = models.CharField(max_length=250)
+    name = models.CharField(max_length=250, unique=True)
     hatch_date = models.DateField()
     breed_type = models.ForeignKey(
         BreedType, on_delete=models.SET_NULL, null=True, related_name='flocks')
@@ -246,7 +246,7 @@ class BreedPair(models.Model):
 class Weight(models.Model):
     week = models.IntegerField(default=0)
     weight = models.DecimalField(
-        max_digits=6, decimal_places=3, default=0)
+        max_digits=10, decimal_places=3, default=0)
     chicken = models.ForeignKey(
         Chicken, on_delete=models.CASCADE, null=True, related_name='weights')
 
@@ -287,7 +287,7 @@ class Feed(models.Model):
     chicken = models.ForeignKey(
         Chicken, on_delete=models.CASCADE, related_name='feeds')
     weight = models.DecimalField(
-        max_digits=6, decimal_places=3, default=0)
+        max_digits=10, decimal_places=3, default=0)
     feed_type = models.ForeignKey(
         FeedType, on_delete=models.SET_NULL, null=True, related_name='feeds')
 
