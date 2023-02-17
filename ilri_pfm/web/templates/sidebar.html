@@ -1,33 +1,17 @@
 {% extends "base.html" %} {% load static %} {% block stylesheet %}
-<link
-  rel="stylesheet"
-  href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css"
-/>
-<link
-  rel="stylesheet"
-  href="{% static 'admin-LTE-v3.2.0/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css' %}"
-/>
-<link
-  rel="stylesheet"
-  href="{% static 'admin-LTE-v3.2.0/plugins/icheck-bootstrap/icheck-bootstrap.min.css' %}"
-/>
-<link
-  rel="stylesheet"
-  href="{% static 'admin-LTE-v3.2.0/plugins/jqvmap/jqvmap.min.css' %}"
-/>
-<link
-  rel="stylesheet"
-  href="{% static 'admin-LTE-v3.2.0/plugins/overlayScrollbars/css/OverlayScrollbars.min.css' %}"
-/>
-<link
-  rel="stylesheet"
-  href="{% static 'admin-LTE-v3.2.0/plugins/daterangepicker/daterangepicker.css' %}"
-/>
-<link
-  rel="stylesheet"
-  href="{% static 'admin-LTE-v3.2.0/plugins/summernote/summernote-bs4.min.css' %}"
-/>
-{% endblock %} {% block page_content %}
+<link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" />
+<link rel="stylesheet" href="{% static 'admin-LTE-v3.2.0/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css' %}" />
+<link rel="stylesheet" href="{% static 'admin-LTE-v3.2.0/plugins/icheck-bootstrap/icheck-bootstrap.min.css' %}"/>
+<link rel="stylesheet" href="{% static 'admin-LTE-v3.2.0/plugins/jqvmap/jqvmap.min.css' %}"/>
+<link rel="stylesheet" href="{% static 'admin-LTE-v3.2.0/plugins/overlayScrollbars/css/OverlayScrollbars.min.css' %}"/>
+<link rel="stylesheet" href="{% static 'admin-LTE-v3.2.0/plugins/daterangepicker/daterangepicker.css' %}" />
+<link rel="stylesheet" href="{% static 'admin-LTE-v3.2.0/plugins/summernote/summernote-bs4.min.css' %}"/>
+{% endblock %} 
+
+{% block page_content %}
+
+<!-- Import Modals -->
+{% include 'components/weight_import_modal.html' %}
 
 <body class="hold-transition sidebar-mini layout-fixed">
   <div class="wrapper">
@@ -300,7 +284,7 @@
               <a href="#" class="nav-link">
                 <i class="nav-icon fas fa-circle"></i>
                 <p>
-                  Weight Report
+                  Weight Record
                   <i class="right fas fa-angle-left"></i>
                 </p>
               </a>
@@ -312,7 +296,7 @@
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a href="#" class="nav-link">
+                  <a href="#" class="nav-link" data-toggle="modal" data-target="#weight_import_modal">
                     <i class="far fa-circle nav-icon"></i>
                     <p>Import Data</p>
                   </a>

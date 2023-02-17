@@ -16,6 +16,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <link rel="stylesheet" href="{% static 'admin-LTE-v3.2.0/plugins/fontawesome-free/css/all.min.css' %}">
   <!-- Theme style -->
   <link rel="stylesheet" href="{% static 'admin-LTE-v3.2.0/dist/css/adminlte.min.css' %}">
+  <!-- dropzonejs -->
+  <link rel="stylesheet" href="{% static 'admin-LTE-v3.2.0/plugins/dropzone/min/dropzone.min.css' %}"/>
 
   {% block stylesheet %}{% endblock %}
 </head>
@@ -31,7 +33,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <!-- AdminLTE App -->
 <script src="{% static 'admin-LTE-v3.2.0/dist/js/adminlte.min.js' %}"></script>
 <script src="{% static 'lodash-v4.17.15/core.min.js' %}"></script>
+<!-- Local Libs -->
 <script src="{% static 'js/compare_object.js' %}"></script>
+<script src="{% static 'js/get_cookie.js' %}"></script>
+<!-- Dropzone -->
+<script src="{% static 'admin-LTE-v3.2.0/plugins/dropzone/min/dropzone.min.js' %}"></script>
+<script src="{% static 'js/components/weight_record.js' %}"></script>
 {% block script %}{% endblock %}
 </body>
 </html>
