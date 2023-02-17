@@ -823,14 +823,14 @@ class ImportWeightExcelViewset(viewsets.ViewSet):
 
         for index, row in df.iterrows():
             chicken, created = models.Chicken.objects.get_or_create(
-                tag=row['id'], layed_date=hatch_date, sex=row['sex'], created_by=self.request.user)
+                tag=row['id'], layed_date=hatch_date, sex=row['sex'], flock=flock, breed=breed, created_by=self.request.user)
             for column in df.columns[2:]:
                 try:
                     if (math.isnan(float(row[column]))):
                         continue
                     week = Decimal(column.split()[1])
                     weight = models.Weight.objects.get_or_create(
-                        chicken=chicken, weight=Decimal(row[column]), week=week, flock=flock, breed=breed, created_by=self.request.user)
+                        chicken=chicken, weight=Decimal(row[column]), week=week, created_by=self.request.user)
                 except Exception as ex:
                     errors.append({'row': row, 'exception': ex})
 
