@@ -164,10 +164,6 @@ class LayedPlaceSerializer_POST_V1(serializers.ModelSerializer):
 ############################ Chicken ############################
 
 class ChickenSerializer_GET_V1(serializers.ModelSerializer):
-    first_egg_lay_week = serializers.CharField()
-    first_egg_lay_date = serializers.DateField()
-    first_egg_lay_days = serializers.DecimalField(
-        max_digits=10, decimal_places=2)
     days_in_production = serializers.DecimalField(
         max_digits=10, decimal_places=2)
     farm = FarmSerializer_GET_V1()
@@ -177,8 +173,7 @@ class ChickenSerializer_GET_V1(serializers.ModelSerializer):
     class Meta:
         model = models.Chicken
         fields = ['id', 'tag', 'sex', 'layed_date', 'is_double_yolk',
-                  'is_active', 'created_at', 'farm', 'house', 'breed_type', 'layed_place',
-                  'first_egg_lay_week', 'first_egg_lay_date', 'first_egg_lay_days', 'days_in_production']
+                  'is_active', 'created_at', 'farm', 'house', 'breed_type', 'layed_place', 'days_in_production']
 
 
 class ChickenSerializer_POST_V1(serializers.ModelSerializer):
@@ -267,6 +262,8 @@ class WeightHistory(serializers.ModelSerializer):
 
 
 class EggSerializer_GET_V1(serializers.ModelSerializer):
+    chicken = ChickenSerializer_GET_V1()
+
     class Meta:
         model = models.Egg
         fields = '__all__'

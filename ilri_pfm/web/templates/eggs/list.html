@@ -38,7 +38,7 @@ Eggs - ILRI Poultry Farm Management
             <div class="card-header row">
               <h3 class="card-title col-10">List of Egg production</h3>
               <div class="col-2">
-                <a href="/home/weights-create" role="button" type="button" class="btn btn-primary float-right"><i class="fas fa-plus"></i> Create Weight Record</a>
+                <a href="/home/eggs-create" role="button" type="button" class="btn btn-primary float-right"><i class="fas fa-plus"></i> Create Weight Record</a>
               </div>
             </div>
             <!-- /.card-header -->
@@ -98,7 +98,7 @@ Eggs - ILRI Poultry Farm Management
   $(function () {
     var columns = [
       { data: "id" },
-      { data: "chicken.name" },
+      { data: "chicken.tag", defaultContent: "" },
       { data: "week" },
       { data: "eggs" },
       { data: "created_at" },

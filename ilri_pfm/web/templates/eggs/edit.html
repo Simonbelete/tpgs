@@ -28,16 +28,46 @@
           {% csrf_token %}
           <div class="card-body">
             <div class="form-group">
-              <label for="name">Chicken</label>
-              <input
-                type="text"
-                name="name"
-                value="{{ data.weight }}"
-                class="form-control"
-                id="name"
-                placeholder="Enter Feed Name"
-              />
+                <label for="farm">Chicken</label>
+                <select
+                  id="chicken"
+                  name="chicken"
+                  value="{{ data.chicken.id }}"
+                  class="form-control select2"
+                  style="width: 100%"
+                >
+                  <option value="{{ data.chicken.id }}" selected="selected">
+                    {{ data.chicken.tag }}
+                  </option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="week">Week</label>
+                <input
+                  type="number"
+                  name="week"
+                  value="0"
+                  min="0"
+                  class="form-control"
+                  id="week"
+                  placeholder="Enter Week"
+                />
             </div>
+  
+              <div class="form-group">
+                <label for="eggs">Number of eggs</label>
+                <input
+                  type="number"
+                  name="eggs"
+                  value="0"
+                  min="1"
+                  class="form-control"
+                  id="eggs"
+                  placeholder="Enter weekly number of eggs"
+                />
+              </div>
+
           </div>
           <!-- /.card-body -->
 
@@ -60,7 +90,9 @@
               <thead>
                 <tr>
                   <th>Changed By</th>
-                  <th>Name</th>
+                  <th>Chicken</th>
+                  <th>Week</th>
+                  <th>Eggs</th>
                   <th>Date</th>
                 </tr>
               </thead>
@@ -68,7 +100,9 @@
               <tfoot>
                 <tr>
                   <th>Changed By</th>
-                  <th>Name</th>
+                  <th>Chicken</th>
+                  <th>Week</th>
+                  <th>Eggs</th>
                   <th>Date</th>
                 </tr>
               </tfoot>
@@ -97,12 +131,45 @@
 <script src="{% static 'admin-LTE-v3.2.0/plugins/datatables-buttons/js/buttons.html5.min.js' %}"></script>
 <script src="{% static 'admin-LTE-v3.2.0/plugins/datatables-buttons/js/buttons.print.min.js' %}"></script>
 <script src="{% static 'admin-LTE-v3.2.0/plugins/datatables-buttons/js/buttons.colVis.min.js' %}"></script>
+<script src="{% static 'admin-LTE-v3.2.0/plugins/moment/moment.min.js' %}"></script>
+<script src="{% static 'admin-LTE-v3.2.0/plugins/daterangepicker/daterangepicker.js' %}"></script>
+<script src="{% static 'admin-LTE-v3.2.0/plugins/select2/js/select2.full.min.js' %}"></script>
 <script>
     $(function() {
+        $("#chicken").select2({
+            theme: 'bootstrap4',
+          ajax: {
+            url: "/api/v1/chickens",
+            data: function (params) {
+              var query = {
+                search: params.term,
+                page: params.page || 1,
+              };
+              return query;
+            },
+            processResults: function (data, params) {
+              params.page = params.page || 1;
+              var transform = $.map(data.results, function (obj) {
+                obj.id = obj.id || obj.id;
+                obj.text = obj.text || obj.tag;
+                return obj;
+              });
+              return {
+                results: transform,
+                pagination: {
+                  more: params.page * 30 < data.count,
+                },
+              };
+            },
+          },
+        });
+
         // History
         var historyColumns = [
             { data: 'history_user.name' },
-            { data: 'name' },
+            { data: 'chicken.tag' },
+            { data: 'week' },
+            { data: 'eggs' },
             { data: 'history_date' }
         ]
         var historyTable = $("#history").DataTable({
@@ -112,7 +179,7 @@
             processing: true,
             serverSide: true,
             ajax: {
-            url: "/api/v1/farms/" + "{{ data.id }}/histories",
+            url: "/api/v1/eggs/" + "{{ data.id }}/histories",
             dataSrc: function (json) {
                 json["data"] = json["results"];
                 json["recordsTotal"] = json["count"];
