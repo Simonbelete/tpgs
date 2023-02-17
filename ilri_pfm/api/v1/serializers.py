@@ -283,6 +283,15 @@ class EggSerializer_POST_V1(serializers.ModelSerializer):
         fields = ['date', 'chicken']
 
 
+class EggHistory(serializers.ModelSerializer):
+    history_user = UserSerializer_GET_V1()
+    chicken = ChickenSerializer_GET_V1()
+
+    class Meta:
+        model = models.Egg.history.__dict__['model']
+        fields = '__all__'
+
+
 ############################ Feed Type ############################
 
 class FeedTypeSerializer_GET_V1(serializers.ModelSerializer):

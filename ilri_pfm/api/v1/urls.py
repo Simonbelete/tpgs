@@ -28,6 +28,8 @@ router.register(r'weights', views.WeightViewSet, basename='weights')
 router.register(r'weights/(?P<id>.+)/histories',
                 views.WeightHistoryViewSet, basename='weights_history')
 router.register(r'eggs', views.EggViewSet, basename='eggs')
+router.register(r'eggs/(?P<id>.+)/histories',
+                views.EggHistoryViewSet, basename='eggs_history')
 router.register(r'feed-types', views.FeedTypeViewSet, basename='feed_types')
 router.register(r'feeds', views.FeedViewSet, basename='feeds')
 router.register(r'feeds/(?P<id>.+)/histories',

@@ -490,8 +490,9 @@ class EggViewSet(viewsets.ModelViewSet):
     filter_backends = (filters.DjangoFilterBackend,
                        SearchFilter, OrderingFilter)
     filterset_class = EggFilter
-    search_fields = ['date']
+    search_fields = ['chicken']
     ordering_fields = '__all__'
+    pagination_class = LimitPageNumberPagination
 
     def perform_create(self, serializer):
         serializer.save(created_by=self.request.user)
@@ -500,6 +501,28 @@ class EggViewSet(viewsets.ModelViewSet):
         if self.request.method == 'GET':
             return serializers.EggSerializer_GET_V1
         return serializers.EggSerializer_POST_V1
+
+
+class EggHistoryViewSet(viewsets.ModelViewSet):
+    queryset = models.Egg.history.all()
+    serializer_class = serializers.EggHistory
+    filter_backends = (filters.DjangoFilterBackend,
+                       SearchFilter, OrderingFilter)
+    search_fields = ['name']
+    ordering_fields = '__all__'
+    pagination_class = LimitPageNumberPagination
+
+    def list(self, request, *args, **kwargs):
+        pk = self.kwargs['id']
+        queryset = self.filter_queryset(self.get_queryset().filter(id=pk))
+
+        page = self.paginate_queryset(queryset)
+        if page is not None:
+            serializer = self.get_serializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
+
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data)
 
 
 ############################ Feed Type ############################
@@ -807,8 +830,7 @@ class ImportWeightExcelViewset(viewsets.ViewSet):
                         continue
                     week = Decimal(column.split()[1])
                     weight = models.Weight.objects.get_or_create(
-                        chicken=chicken, weight=Decimal(row[column]), week=week, created_by=self.request.user)
-                    print(weight)
+                        chicken=chicken, weight=Decimal(row[column]), week=week, flock=flock, breed=breed, created_by=self.request.user)
                 except Exception as ex:
                     errors.append({'row': row, 'exception': ex})
 
