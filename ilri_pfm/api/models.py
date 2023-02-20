@@ -198,6 +198,9 @@ class Chicken(models.Model):
     layed_date = models.DateField()
     is_double_yolk = models.BooleanField(default=False)
 
+    is_dead = models.BooleanField(default=False)
+    dead_date = models.DateField()
+
     is_active = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
     created_by = models.ForeignKey(

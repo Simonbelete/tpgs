@@ -12,13 +12,7 @@ import api.models as models
 from api.v1 import serializers
 from web import forms
 
-MESSAGE_TAGS = {
-    messages.DEBUG: 'alert-secondary',
-    messages.INFO: 'alert-info',
-    messages.SUCCESS: 'alert-success',
-    messages.WARNING: 'alert-warning',
-    messages.ERROR: 'alert-danger',
-}
+GENERIC_ERROR_MESSAGE_CREATE = 'Error: Please check you inputs and try again!'
 
 
 @require_http_methods(["GET"])
@@ -448,7 +442,8 @@ def flocks(request):
             form.save()
             return HttpResponseRedirect('/home/flocks/')
         else:
-            return HttpResponseRedirect('/home/flocks?error=true')
+            messages.error(
+                request, 'Error: Please check your input and try again!')
     else:
         return render(request, 'flocks/list.html')
 
@@ -484,7 +479,9 @@ def flocks_create(request):
             form.save()
             return HttpResponseRedirect('/home/flocks/')
         else:
-            return HttpResponseRedirect('/home/flocks?error=true')
+            form.errors
+            messages.error(request, GENERIC_ERROR_MESSAGE_CREATE)
+            return render(request, 'flocks/create.html', context={'data': request.POST, 'form': form})
     else:
         return render(request, 'flocks/create.html')
 
