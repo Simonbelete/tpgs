@@ -203,8 +203,8 @@ class Chicken(models.Model):
     layed_place = models.ForeignKey(
         LayedPlace, on_delete=models.SET_NULL, null=True)
     is_double_yolk = models.BooleanField(default=False)
-    layed_date = models.DateField()
-    hatch_date = models.DateField()
+    layed_date = models.DateField(null=True, blank=True)
+    hatch_date = models.DateField(null=True, blank=True)
 
     is_dead = models.BooleanField(default=False)
     dead_date = models.DateField()
