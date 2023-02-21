@@ -17,6 +17,7 @@ from django.db.models import Count, Sum
 
 import api.models as models
 from api.v1 import serializers
+import api.filters as backend_filters
 
 
 class LimitPageNumberPagination(PageNumberPagination):
@@ -366,8 +367,7 @@ class ChickenFilter(filters.FilterSet):
 class ChickenViewSet(viewsets.ModelViewSet):
     queryset = models.Chicken.objects.all()
     serializer_class = serializers.ChickenSerializer_GET_V1
-    filter_backends = (filters.DjangoFilterBackend,
-                       SearchFilter, OrderingFilter)
+    filter_backends = (backend_filters.HaveFarmFilterBackend,)
     filterset_class = ChickenFilter
     search_fields = ['tag']
     ordering_fields = '__all__'

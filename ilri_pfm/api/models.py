@@ -207,7 +207,7 @@ class Chicken(models.Model):
     hatch_date = models.DateField(null=True, blank=True)
 
     is_dead = models.BooleanField(default=False)
-    dead_date = models.DateField()
+    dead_date = models.DateField(null=True, blank=True)
 
     is_active = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
