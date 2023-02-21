@@ -192,11 +192,12 @@ class ChickenSerializer_POST_V1(serializers.ModelSerializer):
     is_double_yolk = serializers.BooleanField()
     flock = serializers.PrimaryKeyRelatedField(
         read_only=False, allow_null=True, queryset=models.Flock.objects.all())
+    hatch_date = serializers.DateField()
 
     class Meta:
         model = models.Chicken
         fields = ['tag', 'sex', 'farm', 'house', 'breed_type',
-                  'layed_place', 'layed_date', 'is_double_yolk', 'flock']
+                  'layed_place', 'layed_date', 'is_double_yolk', 'flock', 'hatch_date']
 
 
 class ChickenHistory(serializers.ModelSerializer):
@@ -213,6 +214,9 @@ class ChickenHistory(serializers.ModelSerializer):
 
 
 class BreedPairSerializer_GET_V1(serializers.ModelSerializer):
+    sire = ChickenSerializer_GET_V1()
+    dam = ChickenSerializer_GET_V1()
+
     class Meta:
         model = models.BreedPair
         fields = '__all__'

@@ -610,7 +610,6 @@ def countries_edit(request, id=0):
 @require_http_methods(["GET", "POST"])
 def breeding_pairs(request):
     if request.method == 'POST':
-        print(request.POST)
         dams_ids = request.POST.getlist('dams') or []
         sire_id = request.POST.get('sire') or 0
         date = request.POST.get('date') or None
@@ -621,7 +620,7 @@ def breeding_pairs(request):
         for dam_id in dams_ids:
             dam = models.Chicken.objects.get(pk=dam_id)
             pair = models.BreedPair(
-                father=sire, mother=dam, date=None, created_by=request.user)
+                sire=sire, dam=dam, date=None, created_by=request.user)
             pair.save()
             pairs.append(pair)
 

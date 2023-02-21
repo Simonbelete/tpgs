@@ -2,7 +2,8 @@ import io
 import math
 import pandas as pd
 import numpy as np
-import datetime
+from datetime import date, timedelta, datetime
+from dateutil.rrule import rrule, DAILY
 from decimal import Decimal
 import matplotlib.pyplot as plt
 from collections import OrderedDict
@@ -14,6 +15,7 @@ from django_filters import rest_framework as filters
 from django.http import Http404, HttpResponse
 from rest_framework.pagination import PageNumberPagination
 from django.db.models import Count, Sum
+from rest_framework import generics
 
 import api.models as models
 from api.v1 import serializers
@@ -815,7 +817,7 @@ class ImportWeightExcelViewset(viewsets.ViewSet):
         flock_name = df_info.iloc[0][1]
         breed_name = df_info.iloc[1][1]
         hatch_date = df_info.iloc[2][1]
-        hatch_date = datetime.datetime.strptime(hatch_date, "%d/%m/%Y").date()
+        hatch_date = datetime.strptime(hatch_date, "%d/%m/%Y").date()
 
         flock, flock_created = models.Flock.objects.get_or_create(
             name=flock_name, hatch_date=hatch_date, created_by=self.request.user)
@@ -840,7 +842,8 @@ class ImportWeightExcelViewset(viewsets.ViewSet):
         })
 
 
-class FcrViewSet(viewsets.ViewSet):
+class FcrViewSet(viewsets.ModelViewSet):
+    queryset = models.Feed.objects.all()
     serializer_class = serializers.FcrSerializer
 
     def list(self, request, *args, **kwargs):
@@ -853,24 +856,61 @@ class FcrViewSet(viewsets.ViewSet):
         start_date = request.GET.get('start_date')
         end_date = request.GET.get('end_date')
 
-        if chicken_id == 0:
-            raise Http404()
+        start_date = datetime.strptime(start_date, "%Y-%m-%d").date()
+        end_date = datetime.strptime(end_date, "%Y-%m-%d").date()
+
+        if chicken_id == 0 or start_date == None or end_date == None:
+            return Response({'error': ['Please provide chicken id']},
+                            status=status.HTTP_400_BAD_REQUEST)
 
         chicken = models.Chicken.objects.get(pk=chicken_id)
         weeks = np.array([*range(start_week, end_week + 1)])
 
-        if (start_date < chicken.hatch_date):
-            return HttpResponse({'error': ['date cannot be less than hatch date']}, status=status.HTTP_400_BAD_REQUEST)
+        feed_fcr = []
+        current_date = start_date
+        delta = timedelta(days=1)
+        while current_date <= end_date:
+            feed = models.Feed.objects.all().filter(
+                chicken=chicken, date=current_date)
 
-        for w in weeks:
-            previous_week_weight = 0
-            current_week_weight = models.Weight.objects.get(
-                pk=chicken_id).filter(week=w)
+            feed_weight = feed[0].weight if feed.exists() else 0
+
+            week = models.Chicken.objects.get_week_from_date(
+                pk=chicken_id, date=current_date)
+            current_week_weight = models.Weight.objects.all().filter(
+                chicken=chicken_id, week=week)
+            previous_week_weight = models.Weight.objects.all().filter(
+                chicken=chicken_id, week=week - 1)
+
+            current_week_weight = current_week_weight[0].weight if current_week_weight.exists(
+            ) else 0
+            previous_week_weight = previous_week_weight[0].weight if previous_week_weight.exists(
+            ) else 0
 
             weight_gain = current_week_weight - previous_week_weight
             daily_weight_gain = weight_gain/7
-
             previous_week_weight = current_week_weight
+            fcr = feed_weight/weight_gain if weight_gain != 0 else 0
+            fcr_data = {
+                'chicken': {
+                    'id': chicken.id,
+                    'tag': chicken.tag,
+                    'hatch_date': chicken.hatch_date
+                },
+                'feed': {
+                    'weight': feed_weight
+                },
+                'fcr': float("{:.4f}".format(fcr)),
+                'day': current_date,
+                'week': week,
+                'weight': current_week_weight,
+                'current_week_weight': current_week_weight,
+                'previous_week_weight': previous_week_weight,
+                'daily_weight_gain': daily_weight_gain
+            }
+            feed_fcr.append(fcr_data)
+            current_date += delta
+        return Response(feed_fcr, status=status.HTTP_200_OK)
 
 
 @require_http_methods(["POST"])

@@ -1,3 +1,4 @@
+import math
 from django.db import models
 from django.conf import settings
 from django.utils import timezone
@@ -185,7 +186,15 @@ class Flock(models.Model):
     history = HistoricalRecords()
 
 
+class ChickenManager(models.Manager):
+    def get_week_from_date(self, pk, date):
+        date_diff = date - self.get(pk=pk).hatch_date
+        week = date_diff.days / 7
+        return math.floor(week)
+
+
 class Chicken(models.Model):
+    objects = ChickenManager()
     SEX_CHOICES = (
         ('F', 'Female',),
         ('M', 'Male',),

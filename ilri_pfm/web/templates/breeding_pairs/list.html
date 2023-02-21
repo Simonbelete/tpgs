@@ -99,9 +99,8 @@ Breeding Pairs - ILRI Poultry Farm Management
     var columns = [
       { data: "id" },
       { data: "date" },
-      { data: "weight" },
-      { data: "chicken" },
-      { data: "feed_type" },
+      { data: "sire.tag" },
+      { data: "dam.tag" },
       { data: "created_at" },
       {
         data: null,
@@ -124,7 +123,7 @@ Breeding Pairs - ILRI Poultry Farm Management
       processing: true,
       serverSide: true,
       ajax: {
-        url: "/api/v1/feeds/",
+        url: "/api/v1/breed-pairs/",
         dataSrc: function (json) {
           json["data"] = json["results"];
           json["recordsTotal"] = json["count"];

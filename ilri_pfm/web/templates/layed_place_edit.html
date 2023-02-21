@@ -24,7 +24,7 @@
         <div class="card-header">
           <h3 class="card-title">Edit Lay place</h3>
         </div>
-        <form action="{% if feed != None %} {% else %} /home/layed-places/ {% endif %}" method="POST">
+        <form action="/home/layed-places/" method="POST">
           {% csrf_token %}
           <div class="card-body">
             <div class="form-group">
