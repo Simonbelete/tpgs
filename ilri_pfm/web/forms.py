@@ -1,4 +1,5 @@
 from django import forms
+from rest_framework import serializers
 
 import api.models as models
 
@@ -85,3 +86,13 @@ class WeightForm(forms.ModelForm):
     class Meta:
         model = models.Weight
         fields = ['week', 'weight', 'chicken']
+
+
+class BreedingPairForm(forms.Form):
+    sir = forms.IntegerField()
+    dams = serializers.PrimaryKeyRelatedField(
+        read_only=False, queryset=models.Chicken.objects.all(), many=True)
+    date = serializers.DateField()
+
+    class Meta:
+        fields = []

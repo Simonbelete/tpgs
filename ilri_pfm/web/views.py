@@ -604,3 +604,54 @@ def countries_edit(request, id=0):
         else:
             context['data'] = None
         return render(request, 'countries_edit.html', context=context)
+
+
+@login_required(login_url='/login')
+@require_http_methods(["GET", "POST"])
+def breeding_pairs(request):
+    if request.method == 'POST':
+        print(request.POST)
+        dams_ids = request.POST.getlist('dams') or []
+        sire_id = request.POST.get('sire') or 0
+        date = request.POST.get('date') or None
+
+        sire = models.Chicken.objects.get(pk=sire_id)
+
+        pairs = []
+        for dam_id in dams_ids:
+            dam = models.Chicken.objects.get(pk=dam_id)
+            pair = models.BreedPair(
+                father=sire, mother=dam, date=None, created_by=request.user)
+            pair.save()
+            pairs.append(pair)
+
+        messages.error(request, GENERIC_ERROR_MESSAGE_CREATE)
+        return render(request, 'breeding_pairs/create.html', context={'data': request.POST})
+    else:
+        return render(request, 'breeding_pairs/list.html')
+
+
+@login_required(login_url='/login')
+@require_http_methods(["GET", "POST"])
+def breeding_pairs_edit(request, id=0):
+    if request.method == 'POST':
+        instance = models.BreedPair.objects.get(pk=id)
+        form = forms.BreedingPairForm(request.POST, instance=instance)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect('/home/chickens')
+        else:
+            return HttpResponseRedirect(f'/home/chickens/%s' % id)
+    else:
+        context = {}
+        if id != 0:
+            context['data'] = models.BreedPair.objects.get(pk=id)
+        else:
+            context['data'] = None
+        return render(request, 'breeding_pairs/edit.html', context=context)
+
+
+@login_required(login_url='/login')
+@require_http_methods(["GET"])
+def breeding_pairs_create(request, id=0):
+    return render(request, 'breeding_pairs/create.html')

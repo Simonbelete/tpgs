@@ -244,11 +244,13 @@ class Chicken(models.Model):
 
 
 class BreedPair(models.Model):
+    # Sire
     father = models.ForeignKey(
         Chicken, on_delete=models.SET_NULL, null=True, related_name='father')
+    # Dam
     mother = models.ForeignKey(
         Chicken, on_delete=models.SET_NULL, null=True, related_name='mother')
-    date = models.DateField()
+    date = models.DateField(null=True, blank=True)
     children = models.ForeignKey(
         Chicken, on_delete=models.SET_NULL, null=True, related_name='parent')
 

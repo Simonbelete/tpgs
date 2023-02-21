@@ -48,5 +48,6 @@ router.register(r'fcr', views.ImportWeightExcelViewset,
 
 urlpatterns = [
     path('', include(router.urls)),
-    path('reports/weight',  views.get_weight_graph, name='weights_report')
+    path('reports/weight',  views.get_weight_graph, name='weights_report'),
+    path('breed-pairs/batch',  views.breed_pair_batch, name='breed_pair_batch')
 ]

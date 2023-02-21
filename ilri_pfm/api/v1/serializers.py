@@ -214,7 +214,7 @@ class ChickenHistory(serializers.ModelSerializer):
 
 class BreedPairSerializer_GET_V1(serializers.ModelSerializer):
     class Meta:
-        model = models.Stage
+        model = models.BreedPair
         fields = '__all__'
 
 
@@ -228,6 +228,18 @@ class BreedPairSerializer_POST_V1(serializers.ModelSerializer):
     class Meta:
         model = models.BreedPair
         fields = ['father', 'mother', 'date']
+
+
+class BreedPairBatchSerializer(serializers.ModelSerializer):
+    sir = serializers.PrimaryKeyRelatedField(
+        read_only=False, queryset=models.Chicken.objects.all())
+    dams = serializers.PrimaryKeyRelatedField(
+        read_only=False, queryset=models.Chicken.objects.all(), many=True)
+    date = serializers.DateField()
+
+    class Meta:
+        model = models.BreedPair
+        fields = ['sir', 'dams', 'date']
 
 
 ############################ Weight ############################

@@ -367,7 +367,8 @@ class ChickenFilter(filters.FilterSet):
 class ChickenViewSet(viewsets.ModelViewSet):
     queryset = models.Chicken.objects.all()
     serializer_class = serializers.ChickenSerializer_GET_V1
-    filter_backends = (backend_filters.HaveFarmFilterBackend,)
+    filter_backends = (filters.DjangoFilterBackend, SearchFilter, OrderingFilter,
+                       backend_filters.IsActiveFilterBackend, backend_filters.HaveFarmFilterBackend)
     filterset_class = ChickenFilter
     search_fields = ['tag']
     ordering_fields = '__all__'
@@ -462,8 +463,6 @@ class BreedPairFilter(filters.FilterSet):
 class BreedPairViewSet(viewsets.ModelViewSet):
     queryset = models.BreedPair.objects.all()
     serializer_class = serializers.BreedPairSerializer_GET_V1
-    filter_backends = (filters.DjangoFilterBackend,
-                       SearchFilter, OrderingFilter)
     filterset_class = BreedPairFilter
     search_fields = ['tag']
     ordering_fields = '__all__'
@@ -872,3 +871,8 @@ class FcrViewSet(viewsets.ViewSet):
             daily_weight_gain = weight_gain/7
 
             previous_week_weight = current_week_weight
+
+
+@require_http_methods(["POST"])
+def breed_pair_batch(self, request):
+    return Response({}, status=status.HTTP_201_CREATED)

@@ -20,9 +20,11 @@ import pfm_api.models as Model
 
 User = get_user_model()
 
+
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
+
 
 class UserUidViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
@@ -36,31 +38,35 @@ class UserUidViewSet(viewsets.ModelViewSet):
         except self.queryset.model.DoesNotExist:
             raise Http404()
 
+
 class UserAllCountViewSet(viewsets.ModelViewSet):
     queryset = Model.User.objects.all()
     serializer_class = V1Serializer.UserCountSerializer
     pagination_class = None
-    
+
     def list(self, request, *args, **kwargs):
         try:
             instance = Model.User.objects.count()
             return Response({
                 'count': instance,
                 'results': {'count': instance}},
-                            status=status.HTTP_200_OK)
+                status=status.HTTP_200_OK)
         except self.queryset.model.DoesNotExist:
             raise Http404()
+
 
 class DeviceViewSet(viewsets.ModelViewSet):
     queryset = Device.objects.all()
     serializer_class = DeviceSerializer
 
+
 class FarmFilter(filters.FilterSet):
-    name = filters.CharFilter(field_name='name',lookup_expr='contains')
+    name = filters.CharFilter(field_name='name', lookup_expr='contains')
 
     class Meta:
         model = Model.Farm
         fields = ['name']
+
 
 class FarmViewSet(viewsets.ModelViewSet):
     queryset = Farm.objects.all()
@@ -71,14 +77,16 @@ class FarmViewSet(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         serializer.save(created_by=self.request.user)
 
-## Chicken View Set
+# Chicken View Set
+
 
 class ChickenFilter(filters.FilterSet):
-    tag = filters.CharFilter(field_name='tag',lookup_expr='contains')
+    tag = filters.CharFilter(field_name='tag', lookup_expr='contains')
 
     class Meta:
         model = Chicken
         fields = ['tag']
+
 
 class ChickenViewSet(viewsets.ModelViewSet):
     queryset = Chicken.objects.all()
@@ -94,6 +102,7 @@ class ChickenViewSet(viewsets.ModelViewSet):
             return V1Serializer.ChickenSerializer_GET
         return V1Serializer.ChickenSerializer_POST
 
+
 class AllChickenGrowthViewSet(viewsets.ModelViewSet):
     queryset = ChickenGrowth.objects.all()
     serializer_class = ChickenGrowthSerializer
@@ -106,7 +115,7 @@ class AllChickenGrowthViewSet(viewsets.ModelViewSet):
             return Response({
                 'count': len(instance),
                 'results': self.serializer_class(instance, many=True).data},
-                            status=status.HTTP_200_OK)
+                status=status.HTTP_200_OK)
         except self.queryset.model.DoesNotExist:
             raise Http404()
 
@@ -114,27 +123,31 @@ class AllChickenGrowthViewSet(viewsets.ModelViewSet):
     #     chicken_pk = self.kwargs['chicken_pk']
     #     return self.queryset.filter(chicken=chicken_pk)
 
+
 class ChickenGrowthViewSet(viewsets.ModelViewSet):
     queryset = ChickenGrowth.objects.all()
     serializer_class = ChickenGrowthSerializer
 
+
 class ChickenParentViewSet(viewsets.ModelViewSet):
     queryset = ChickenParent.objects.all()
     serializer_class = ChickenParentSerializer
-    
+
     def perform_create(self, serializer):
         serializer.save(created_by=self.request.user)
+
 
 class BreedTypeParentViewSet(viewsets.ModelViewSet):
     queryset = BreedType.objects.all()
     serializer_class = BreedTypeSerializer
 
     def perform_create(self, serializer):
-  
+
         serializer.save(created_by=self.request.user)
 
+
 class BreedTypeChickenPercentageViewSet(viewsets.ModelViewSet):
-    queryset = BreedType.objects.annotate(chicken_count = Count('chicken'))
+    queryset = BreedType.objects.annotate(chicken_count=Count('chicken'))
     serializer_class = V1Serializer.BreedTypeReportPercentageSerializer
     pagination_class = None
 
@@ -145,16 +158,18 @@ class BreedTypeChickenPercentageViewSet(viewsets.ModelViewSet):
                 'count': len(instance),
                 'chicken_count': Chicken.objects.count(),
                 'results': V1Serializer.BreedTypeReportPercentageSerializer(instance, many=True).data},
-                            status=status.HTTP_200_OK)
+                status=status.HTTP_200_OK)
         except self.queryset.model.DoesNotExist:
             raise Http404()
 
+
 class ChickenStageFilter(filters.FilterSet):
-    name = filters.CharFilter(field_name='name',lookup_expr='contains')
+    name = filters.CharFilter(field_name='name', lookup_expr='contains')
 
     class Meta:
         model = Model.ChickenStage
         fields = ['name']
+
 
 class ChickenStageViewSet(viewsets.ModelViewSet):
     queryset = ChickenStage.objects.all()
@@ -165,12 +180,14 @@ class ChickenStageViewSet(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         serializer.save(created_by=self.request.user)
 
+
 class EggParentViewSet(viewsets.ModelViewSet):
     queryset = Egg.objects.all()
     serializer_class = EggSerializer
 
     def perform_create(self, serializer):
         serializer.save(created_by=self.request.user)
+
 
 class LayedPlaceViewSet(viewsets.ModelViewSet):
     queryset = LayedPlace.objects.all()
@@ -179,12 +196,14 @@ class LayedPlaceViewSet(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         serializer.save(created_by=self.request.user)
 
+
 class EggViewSet(viewsets.ModelViewSet):
     queryset = Egg.objects.all()
     serializer_class = V1Serializer.EggSerializer
 
     def perform_create(self, serializer):
         serializer.save(created_by=self.request.user)
+
 
 class FeedTypeViewSet(viewsets.ModelViewSet):
     queryset = Model.FeedType.objects.all()
@@ -197,6 +216,7 @@ class FeedTypeViewSet(viewsets.ModelViewSet):
         if self.request.method == 'GET':
             return V1Serializer.FeedType_GET
         return V1Serializer.FeedType_POST
+
 
 class FeedViewSet(viewsets.ModelViewSet):
     queryset = Model.Feed.objects.all()
@@ -211,34 +231,40 @@ class FeedViewSet(viewsets.ModelViewSet):
         return V1Serializer.Feed_POST
 
 # Exports
+
+
 class WeightExport_CSV(viewsets.ModelViewSet):
     queryset = Model.ChickenGrowth.objects.all()
     serializer_class = V1Serializer.ExportChickenGrowthSerializer
+
     def list(self, request, *args, **kwargs):
         response = HttpResponse(content_type='text/csv')
         response['Content-Disposition'] = 'attachment; filename="export.csv"'
-        
+
         serializer = self.get_serializer(
             Model.ChickenGrowth.objects.all(),
             many=True
         )
         # header = V1Serializer.ExportChickenGrowthSerializer.Meta.fields
-        
-        writer = csv.DictWriter(response, fieldnames=('tag', 'week', 'date', 'weight'))
+
+        writer = csv.DictWriter(response, fieldnames=(
+            'tag', 'week', 'date', 'weight'))
         writer.writeheader()
         for row in serializer.data:
             writer.writerow({
-                'tag': row['chicken']['tag'], 
-                'week': row['week'], 
-                'date': row['date'], 
+                'tag': row['chicken']['tag'],
+                'week': row['week'],
+                'date': row['date'],
                 'weight': row['weight']
-                })
-    
+            })
+
         return response
+
 
 class WeightExport_XLSX(viewsets.ModelViewSet):
     queryset = Model.ChickenGrowth.objects.all()
     serializer_class = V1Serializer.ExportChickenGrowthSerializer
+
     def list(self, request, *args, **kwargs):
         # Create an in-memory output file for the new workbook.
         output = io.BytesIO()
@@ -262,9 +288,11 @@ class WeightExport_XLSX(viewsets.ModelViewSet):
 
         return response
 
+
 class ReportWeight_IMG(viewsets.ModelViewSet):
     queryset = Model.ChickenGrowth.objects.all()
     serializer_class = V1Serializer.ReportWeightIMGSerializer
+
     def list(self, request, *args, **kwargs):
         output = io.BytesIO()
 
@@ -284,16 +312,17 @@ class ReportWeight_IMG(viewsets.ModelViewSet):
             weights = []
             for row in serializer.data:
                 weights.append(Decimal(row['weight']))
-   
+
             avg = np.average(weights)
             std = np.std(weights)
             x_data.append(avg)
             error.append(std)
-            
+
         x_pos = np.arange(len(weeks))
-        
-        fig, ax = plt.subplots(figsize=(20,10))
-        ax.bar(x_pos, x_data, yerr=error, align='center', alpha=0.5, ecolor='black', capsize=10)
+
+        fig, ax = plt.subplots(figsize=(20, 10))
+        ax.bar(x_pos, x_data, yerr=error, align='center',
+               alpha=0.5, ecolor='black', capsize=10)
         ax.set_ylabel('Weight', fontsize=15)
         ax.set_xlabel('Week', fontsize=15)
         ax.tick_params(axis='x', which='major', labelsize=15)
@@ -305,7 +334,7 @@ class ReportWeight_IMG(viewsets.ModelViewSet):
         fig.tight_layout()
 
         fig.savefig(output, format='png')
-        
+
         output.seek(0)
 
         response = HttpResponse(

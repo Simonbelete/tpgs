@@ -73,4 +73,10 @@ urlpatterns = [
     path('home/countries/<id>', views.countries_edit, name='country'),
     path('home/countries-create', views.countries_edit,
          name='countries_create'),
+
+    path('home/breeding-pairs/', views.breeding_pairs, name='breeding_pairs'),
+    path('home/breeding-pairs/<id>',
+         views.breeding_pairs_edit, name='breeding_pair'),
+    path('home/breeding-pairs-create', views.breeding_pairs_create,
+         name='breeding_pairs_create'),
 ]
