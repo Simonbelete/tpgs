@@ -31,6 +31,7 @@ class UserManager(BaseUserManager):
         extra_fields.setdefault("is_superuser", True)
         extra_fields.setdefault("is_admin", True)
         extra_fields.setdefault("is_farmer", True)
+        extra_fields.setdefault("is_active", True)
         extra_fields.setdefault("is_staff", True)
 
         return self.create_user(email, password, **extra_fields)
@@ -49,7 +50,7 @@ class User(AbstractUser):
 
     is_admin = models.BooleanField(default=False)
     is_farmer = models.BooleanField(default=True)
-    is_active = models.BooleanField(default=False)
+    is_active = models.BooleanField(default=True)
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
