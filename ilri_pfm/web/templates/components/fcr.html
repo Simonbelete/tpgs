@@ -1,0 +1,60 @@
+<div class="col-12">
+    <div class="card">
+      <div class="card-header">
+        <h3 class="card-title col-4">Growth Preformance Chart</h3>
+        <div class="row col-8">
+          <div class="col-sm-1 col-md-1">
+            <input
+              type="number"
+              name="l_start_week"
+              value="0"
+              min="0"
+              class="form-control"
+              id="l_start_week"
+              placeholder="Start Week"
+            />
+          </div>
+          <div>to</div>
+          <div class="col-sm-1 col-md-1">
+            <input
+              type="number"
+              name="l_end_week"
+              value="10"
+              min="1"
+              class="form-control"
+              id="l_end_week"
+              placeholder="Start Week"
+            />
+          </div>
+          <div class="btn-group">
+            <button
+              type="button"
+              class="btn btn-primary"
+              id="weight_linechart_apply"
+            >
+              Apply
+            </button>
+            <button
+              type="button"
+              class="btn dropdown-toggle dropdown-icon btn-primary"
+              data-toggle="dropdown"
+              aria-expanded="false"
+            >
+              <span class="sr-only">Toggle Dropdown</span>
+            </button>
+            <div class="dropdown-menu" role="menu" style="">
+              <a class="dropdown-item" href="#" id="weight_piechart_download">Download</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- /.card-header -->
+      <div class="card-body">
+        <div class="container-fluid">
+            <canvas id="fcr_chart" style="min-height: 250px; height: 250px; max-height: 600px; max-width: 100%;"></canvas>
+        </div>
+      </div>
+      <!-- /.card-body -->
+    </div>
+    <!-- /.card -->
+  </div>

@@ -2,19 +2,25 @@ from rest_framework import serializers
 
 import api.models as models
 
-############################ Users ############################
+
+class FarmSerializer_GET_V1(serializers.ModelSerializer):
+    class Meta:
+        model = models.Farm
+        fields = '__all__'
 
 
 class UserSerializer_GET_V1(serializers.ModelSerializer):
+    farms = FarmSerializer_GET_V1(many=True)
+
     class Meta:
         model = models.User
-        fields = ['id', 'name', 'email']
+        fields = ['id', 'name', 'email', 'farms', 'is_active']
 
 
 class UserSerializer_POST_V1(serializers.ModelSerializer):
     class Meta:
         model = models.User
-        fields = ['id', 'name', 'email']
+        fields = ['id', 'name', 'email', 'farms', 'is_active']
 
 
 ############################ Country ############################
@@ -55,11 +61,6 @@ class CitySerializer_POST_V1(serializers.ModelSerializer):
 
 
 ############################ Farm ############################
-
-class FarmSerializer_GET_V1(serializers.ModelSerializer):
-    class Meta:
-        model = models.Farm
-        fields = '__all__'
 
 
 class FarmSerializer_POST_V1(serializers.ModelSerializer):
@@ -378,3 +379,8 @@ class ImportWeightExcel(serializers.Serializer):
 
     class Meta:
         fields = ['file_upload']
+
+
+class FcrSerializer(serializers.Serializer):
+    class Meta:
+        fields = ''

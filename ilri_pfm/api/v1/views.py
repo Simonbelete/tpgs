@@ -839,3 +839,36 @@ class ImportWeightExcelViewset(viewsets.ViewSet):
         return Response({
             'errors': errors,
         })
+
+
+class FcrViewSet(viewsets.ViewSet):
+    serializer_class = serializers.FcrSerializer
+
+    def list(self, request, *args, **kwargs):
+        chicken_id = request.GET.get('chicken') or 0
+        start_week = request.GET.get('start_week') or 0
+        start_week = int(start_week)
+        end_week = request.GET.get('end_week') or 10
+        end_week = int(end_week)
+
+        start_date = request.GET.get('start_date')
+        end_date = request.GET.get('end_date')
+
+        if chicken_id == 0:
+            raise Http404()
+
+        chicken = models.Chicken.objects.get(pk=chicken_id)
+        weeks = np.array([*range(start_week, end_week + 1)])
+
+        if (start_date < chicken.hatch_date):
+            return HttpResponse({'error': ['date cannot be less than hatch date']}, status=status.HTTP_400_BAD_REQUEST)
+
+        for w in weeks:
+            previous_week_weight = 0
+            current_week_weight = models.Weight.objects.get(
+                pk=chicken_id).filter(week=w)
+
+            weight_gain = current_week_weight - previous_week_weight
+            daily_weight_gain = weight_gain/7
+
+            previous_week_weight = current_week_weight

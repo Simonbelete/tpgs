@@ -1,0 +1,308 @@
+{% extends "sidebar.html" %} {% load static %} {% block stylesheet %}
+<link
+  rel="stylesheet"
+  href="{% static 'admin-LTE-v3.2.0/plugins/daterangepicker/daterangepicker.css' %}"
+/>
+<link
+  rel="stylesheet"
+  href="{% static 'admin-LTE-v3.2.0/plugins/select2/css/select2.min.css' %}"
+/>
+<link
+  rel="stylesheet"
+  href="{% static 'admin-LTE-v3.2.0/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css' %}"
+/>
+{% endblock %} {% block body %}
+
+<!-- Content Header (Page header) -->
+<section class="content-header">
+  <div class="container-fluid">
+    <div class="row mb-2">
+      <div class="col-sm-6">
+        <h1>Chicken</h1>
+      </div>
+      <div class="col-sm-6">
+        <ol class="breadcrumb float-sm-right">
+          <li class="breadcrumb-item"><a href="#">Home</a></li>
+          <li class="breadcrumb-item active">Chickens</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+  <!-- /.container-fluid -->
+
+  <!-- Main content -->
+  <section class="content">
+    <div class="col-md-6">
+      <div class="card card-primary">
+        <div class="card-header">
+          <h3 class="card-title">Chicken</h3>
+        </div>
+        <form
+          action="/home/chickens/"
+          method="POST"
+        >
+          {% csrf_token %}
+          <div class="card-body">
+            <div class="form-group">
+              <label for="tag">Tag</label>
+              <input
+                type="text"
+                name="tag"
+                value="{{ data.tag }}"
+                class="form-control"
+                id="tag"
+                placeholder="Enter Tag"
+              />
+            </div>
+            <div class="form-group">
+              <label for="sex">Sex</label>
+              <select
+                id="sex"
+                name="sex"
+                class="form-control select2"
+                style="width: 100%"
+              >
+                <option value="" selected="selected">-</option>
+                <option value="M">Male</option>
+                <option value="F">Female</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="layed_date">Layed Date</label>
+              <input
+                id="layed_date"
+                type="text"
+                name="layed_date"
+                value="{{ data.layed_date }}"
+                class="form-control"
+                placeholder="Enter Layed Date"
+              />
+            </div>
+            <div class="form-group">
+              <label for="farm">Farm</label>
+              <select
+                id="farm"
+                name="farm"
+                value="{{ data.farm.id }}"
+                class="form-control select2"
+                style="width: 100%"
+              >
+                <option value="{{ data.farm.id }}" selected="selected">
+                  {{ data.farm.name }}
+                </option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="house">House</label>
+              <select
+                id="house"
+                name="house"
+                value="{{ data.house.id }}"
+                class="form-control select2"
+                style="width: 100%"
+              >
+                <option value="{{ data.house.id }}" selected="selected">
+                  {{ data.house.name }}
+                </option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="breed_type">Breed Type</label>
+              <select
+                id="breed_type"
+                name="breed_type"
+                value="{{ data.breed_type.id }}"
+                class="form-control select2"
+                style="width: 100%"
+              >
+                <option value="{{ data.breed_type.id }}" selected="selected">
+                  {{ data.breed_type.name }}
+                </option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="layed_place">Layed Place</label>
+              <select
+                id="layed_place"
+                name="layed_place"
+                value="{{ data.layed_place.id }}"
+                class="form-control select2"
+                style="width: 100%"
+              >
+                <option value="{{ data.layed_place.id }}" selected="selected">
+                  {{ data.layed_place.name }}
+                </option>
+              </select>
+            </div>
+            <div class="form-check">
+              <input
+                type="checkbox"
+                sele
+                class="form-check-input"
+                id="is_double_yolk"
+              />
+              <label class="form-check-label" for="is_double_yolk"
+                >Double Yolk</label
+              >
+            </div>
+          </div>
+          <!-- /.card-body -->
+
+          <div class="card-footer">
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- /.content -->
+</section>
+
+{% endblock %} {% block script %}
+<script src="{% static 'admin-LTE-v3.2.0/plugins/datatables/jquery.dataTables.min.js' %}"></script>
+<script src="{% static 'admin-LTE-v3.2.0/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js' %}"></script>
+<script src="{% static 'admin-LTE-v3.2.0/plugins/datatables-responsive/js/dataTables.responsive.min.js' %}"></script>
+<script src="{% static 'admin-LTE-v3.2.0/plugins/datatables-responsive/js/responsive.bootstrap4.min.js' %}"></script>
+<script src="{% static 'admin-LTE-v3.2.0/plugins/datatables-buttons/js/dataTables.buttons.min.js' %}"></script>
+<script src="{% static 'admin-LTE-v3.2.0/plugins/datatables-buttons/js/buttons.bootstrap4.min.js' %}"></script>
+<script src="{% static 'admin-LTE-v3.2.0/plugins/jszip/jszip.min.js' %}"></script>
+<script src="{% static 'admin-LTE-v3.2.0/plugins/pdfmake/pdfmake.min.js' %}"></script>
+<script src="{% static 'admin-LTE-v3.2.0/plugins/pdfmake/vfs_fonts.js' %}"></script>
+<script src="{% static 'admin-LTE-v3.2.0/plugins/datatables-buttons/js/buttons.html5.min.js' %}"></script>
+<script src="{% static 'admin-LTE-v3.2.0/plugins/datatables-buttons/js/buttons.print.min.js' %}"></script>
+<script src="{% static 'admin-LTE-v3.2.0/plugins/datatables-buttons/js/buttons.colVis.min.js' %}"></script>
+<script src="{% static 'admin-LTE-v3.2.0/plugins/moment/moment.min.js' %}"></script>
+<script src="{% static 'admin-LTE-v3.2.0/plugins/daterangepicker/daterangepicker.js' %}"></script>
+<script src="{% static 'admin-LTE-v3.2.0/plugins/select2/js/select2.full.min.js' %}"></script>
+
+<script>
+  $(function () {
+    $("#layed_date").daterangepicker(
+      {
+        autoApply: true,
+        singleDatePicker: true,
+        showDropdowns: true,
+        minYear: 1901,
+        maxYear: parseInt(moment().format("YYYY"), 10),
+      },
+      function (start, end, label) {
+        var years = moment().diff(start, "years");
+      }
+    );
+
+    $("#farm").select2({
+        theme: 'bootstrap4',
+      ajax: {
+        url: "/api/v1/farms",
+        data: function (params) {
+          var query = {
+            search: params.term,
+            page: params.page || 1,
+          };
+          return query;
+        },
+        processResults: function (data, params) {
+          params.page = params.page || 1;
+          var transform = $.map(data.results, function (obj) {
+            obj.id = obj.id || obj.id;
+            obj.text = obj.text || obj.name;
+            return obj;
+          });
+          return {
+            results: transform,
+            pagination: {
+              more: params.page * 30 < data.count,
+            },
+          };
+        },
+      },
+    });
+
+    $("#house").select2({
+        theme: 'bootstrap4',
+      ajax: {
+        url: "/api/v1/houses",
+        data: function (params) {
+          var query = {
+            search: params.term,
+            page: params.page || 1,
+          };
+          return query;
+        },
+        processResults: function (data, params) {
+          params.page = params.page || 1;
+          var transform = $.map(data.results, function (obj) {
+            obj.id = obj.id || obj.id;
+            obj.text = obj.text || obj.name;
+            return obj;
+          });
+          return {
+            results: transform,
+            pagination: {
+              more: params.page * 30 < data.count,
+            },
+          };
+        },
+      },
+    });
+
+    $("#breed_type").select2({
+        theme: 'bootstrap4',
+      ajax: {
+        url: "/api/v1/breed-types",
+        data: function (params) {
+          var query = {
+            search: params.term,
+            page: params.page || 1,
+          };
+          return query;
+        },
+        processResults: function (data, params) {
+          params.page = params.page || 1;
+          var transform = $.map(data.results, function (obj) {
+            obj.id = obj.id || obj.id;
+            obj.text = obj.text || obj.name;
+            return obj;
+          });
+          return {
+            results: transform,
+            pagination: {
+              more: params.page * 30 < data.count,
+            },
+          };
+        },
+      },
+    });
+
+    $("#layed_place").select2({
+        theme: 'bootstrap4',
+      ajax: {
+        url: "/api/v1/layed-places",
+        data: function (params) {
+          var query = {
+            search: params.term,
+            page: params.page || 1,
+          };
+          return query;
+        },
+        processResults: function (data, params) {
+          params.page = params.page || 1;
+          var transform = $.map(data.results, function (obj) {
+            obj.id = obj.id || obj.id;
+            obj.text = obj.text || obj.name;
+            return obj;
+          });
+          return {
+            results: transform,
+            pagination: {
+              more: params.page * 30 < data.count,
+            },
+          };
+        },
+      },
+    });
+  });
+</script>
+{% endblock %}

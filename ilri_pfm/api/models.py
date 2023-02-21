@@ -43,6 +43,9 @@ class User(AbstractUser):
         verbose_name='email address', max_length=255, unique=True,)
     name = models.CharField(max_length=250, null=True, blank=True)
     date_joined = models.DateTimeField(default=timezone.now)
+    farms = models.ManyToManyField('Farm')
+
+    is_active = models.BooleanField(default=False)
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
@@ -195,8 +198,9 @@ class Chicken(models.Model):
         BreedType, on_delete=models.SET_NULL, null=True, related_name='chickens')
     layed_place = models.ForeignKey(
         LayedPlace, on_delete=models.SET_NULL, null=True)
-    layed_date = models.DateField()
     is_double_yolk = models.BooleanField(default=False)
+    layed_date = models.DateField()
+    hatch_date = models.DateField()
 
     is_dead = models.BooleanField(default=False)
     dead_date = models.DateField()
@@ -206,6 +210,11 @@ class Chicken(models.Model):
     created_by = models.ForeignKey(
         settings.AUTH_USER_MODEL, on_delete=models.PROTECT)
     history = HistoricalRecords()
+
+    @property
+    def hatch_weight(self):
+        """" Hatch Weight is computed from week 0 weight """
+        return Weight.objects.get(pk=self.id).earliest('week')
 
     @property
     def first_egg_lay_week(self):
