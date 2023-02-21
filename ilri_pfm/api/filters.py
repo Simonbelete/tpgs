@@ -8,4 +8,4 @@ class IsActiveFilterBackend(BaseFilterBackend):
 
 class HaveFarmFilterBackend(BaseFilterBackend):
     def filter_queryset(self, request, queryset, view):
-        return queryset.filter(owner=request.user)
+        return queryset.filter(farm__in=request.user.farms)

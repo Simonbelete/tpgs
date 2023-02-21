@@ -29,6 +29,8 @@ class UserManager(BaseUserManager):
         Create and save a SuperUser with the given email and password.
         """
         extra_fields.setdefault("is_superuser", True)
+        extra_fields.setdefault("is_admin", True)
+        extra_fields.setdefault("is_farmer", True)
         extra_fields.setdefault("is_staff", True)
 
         return self.create_user(email, password, **extra_fields)
@@ -45,6 +47,8 @@ class User(AbstractUser):
     date_joined = models.DateTimeField(default=timezone.now)
     farms = models.ManyToManyField('Farm')
 
+    is_admin = models.BooleanField(default=False)
+    is_farmer = models.BooleanField(default=True)
     is_active = models.BooleanField(default=False)
 
     USERNAME_FIELD = 'email'
