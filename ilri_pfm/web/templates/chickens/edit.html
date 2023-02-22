@@ -299,7 +299,6 @@ Chicken {{ data.tag }} - ILRI Poultry Farm Management
       
       <!-- /.Weights Report-->
 
-    {% include "components/weight_piechart.html" %}
     {% include "components/fcr.html" %}
   </section>
 
@@ -324,19 +323,11 @@ Chicken {{ data.tag }} - ILRI Poultry Farm Management
 <script src="{% static 'admin-LTE-v3.2.0/plugins/select2/js/select2.full.min.js' %}"></script>
 <script src="{% static 'admin-LTE-v3.2.0/plugins/chart.js/Chart.min.js' %}"></script>
 
-<script src="{% static 'js/components/breed_multiselect.js' %}"></script>
 <script src="{% static 'js/components/fcr.js' %}"></script>
 <script>
   $(function () {
-    breed_multiselect_input = breedMultipleSelect.init($("#breed-multiselect"));
-
-    breed_multiselect_input.on("select2:select", function (e) {
-      var data = e.params.data;
-      console.log($("#breed-multiselect").val());
-    });
-
     // Init fcr chart and data
-    fcr.init($('#fcr_chart'));
+    //fcr.init($('#fcr_chart'));
 
     $('#weight_piechart_apply').click(function () {
       $('#weight_piechart_img').attr("src", '/api/v1/reports/weight');
@@ -559,6 +550,61 @@ Chicken {{ data.tag }} - ILRI Poultry Farm Management
     $('#weight_linechart_apply').click(function() {
       getAndLoadWeights($('#l_start_week').val(), $('#l_end_week').val())
     })
+
+    //
+    // FCr
+    //
+    var cId = $('#fcr_chart').get(0).getContext('2d')
+
+    var fcrChart = new Chart(cId, {
+        type: 'line',
+        data: {
+          labels: [],
+          datasets: []
+        },
+        options: {
+          title: {
+            display: true,
+            text: 'Daily Feed conversation ratio'
+          }
+        }
+    });
+
+    $('#fcr_daterange').daterangepicker({}, function(start, end, label) {
+      loadData(start.format('YYYY-MM-DD'), end.format('YYYY-MM-DD'))
+    })
+
+    function loadData(start_date, end_date){
+      $.get("/api/v1/fcr/?chicken=" + "{{ data.id }}" + "&start_date=" + start_date + "&end_date=" + end_date, function(data, status){
+        labels = []
+        datasets = {
+          data: [],
+          label: "{{ data.tag }}",
+          borderColor: "#c45850",
+          fill: true
+        }
+        var startTime = new Date(start_date)
+        var endTime = new  Date(end_date)
+
+        loopDay = startTime
+        while (loopDay <= endTime) {
+          loopDayFormated = moment(loopDay).format('YYYY-MM-DD')
+          labels.push(loopDayFormated)
+          fcr_obj = data.results.find(o => o.date == loopDayFormated);
+          if(fcr_obj !== undefined) {
+            datasets.data.push(fcr_obj.fcr)
+          }else {
+            datasets.data.push(0)
+          }
+          let newDate = loopDay.setDate(loopDay.getDate() + 1);
+          loopDay = new Date(newDate);
+        }
+
+        fcrChart.data.labels = labels;
+        fcrChart.data.datasets[0] = datasets
+        fcrChart.update();
+      })
+    }
 
     
   });

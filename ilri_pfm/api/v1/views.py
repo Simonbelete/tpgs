@@ -901,7 +901,7 @@ class FcrViewSet(viewsets.ModelViewSet):
                     'weight': feed_weight
                 },
                 'fcr': float("{:.4f}".format(fcr)),
-                'day': current_date,
+                'date': current_date,
                 'week': week,
                 'weight': current_week_weight,
                 'current_week_weight': current_week_weight,
@@ -910,7 +910,7 @@ class FcrViewSet(viewsets.ModelViewSet):
             }
             feed_fcr.append(fcr_data)
             current_date += delta
-        return Response(feed_fcr, status=status.HTTP_200_OK)
+        return Response({'results': feed_fcr}, status=status.HTTP_200_OK)
 
 
 @require_http_methods(["POST"])
