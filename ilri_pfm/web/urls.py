@@ -40,6 +40,8 @@ urlpatterns = [
     path('home/chickens/<id>', views.chickens_edit, name='chicken'),
     path('home/chickens-create', views.chickens_create,
          name='chicken_create'),
+    path('home/chickens/<id>/state', views.chickens_state,
+         name='chicken_states'),
 
     path('home/feeds/', views.feeds, name='feeds'),
     path('home/feeds/<id>', views.feeds_edit, name='feed'),

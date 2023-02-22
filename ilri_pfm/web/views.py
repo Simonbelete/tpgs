@@ -348,6 +348,26 @@ def chickens_create(request, id=0):
 
 
 @login_required(login_url='/login')
+@require_http_methods(["POST"])
+def chickens_state(request, id=0):
+    if request.method == 'POST':
+        form = forms.ChickenState(request.POST)
+        if form.is_valid():
+            form = form.cleaned_data
+            print('----------------------------')
+            print(form)
+            chicken = models.Chicken.objects.get(pk=id)
+            chicken.is_dead = form['is_dead']
+            chicken.dead_date = form['dead_date']
+            chicken.save()
+            return HttpResponseRedirect('/home/chickens/%s' % id)
+        else:
+            return HttpResponseRedirect('/home/chickens?error=true')
+    else:
+        render(request, 'chickens/list.html')
+
+
+@login_required(login_url='/login')
 @require_http_methods(["GET", "POST"])
 def feeds(request):
     if request.method == 'POST':

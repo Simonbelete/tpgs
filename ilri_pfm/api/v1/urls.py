@@ -19,6 +19,8 @@ router.register(r'chickens', views.ChickenViewSet,
                 basename='chickens')
 router.register(r'chickens/(?P<id>.+)/statics',
                 views.ChickenStaticsViewSet, basename='chickens_statics')
+router.register(r'chickens/(?P<id>.+)/state',
+                views.ChickenStateViewSet, basename='chickens_state')
 router.register(r'chickens/(?P<id>.+)/weights',
                 views.ChickenWeightsViewSet, basename='chickens_weights')
 router.register(r'chickens/(?P<id>.+)/histories',
@@ -37,6 +39,8 @@ router.register(r'feeds/(?P<id>.+)/histories',
 router.register(r'flocks', views.FlockViewSet, basename='flocks')
 router.register(r'flocks/(?P<id>.+)/histories',
                 views.FlockHistoryViewSet, basename='flocks_history')
+router.register(r'flocks/(?P<id>.+)/mortality',
+                views.FlockMortality, basename='flocks_mortality')
 router.register(r'statics/count', views.StaticsCount, basename='statics_count')
 router.register(r'statics/breed-types', views.StaticsBreedType,
                 basename='statics_breed_types')

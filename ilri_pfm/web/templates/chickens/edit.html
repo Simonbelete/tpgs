@@ -19,6 +19,7 @@ Chicken {{ data.tag }} - ILRI Poultry Farm Management
     <div class="row mb-2">
       <div class="col-sm-6">
         <h1>Chicken</h1>
+        <h6>{% if data.is_dead == True %} Dead - {{ data.dead_date }} {% else %}  {% endif %}</h6>
       </div>
       <div class="col-sm-6">
         <ol class="breadcrumb float-sm-right">
@@ -199,6 +200,7 @@ Chicken {{ data.tag }} - ILRI Poultry Farm Management
           <!-- /.card-body -->
 
           <div class="card-footer">
+            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#dead_modal">Remove</button>
             <button type="submit" class="btn btn-primary">Submit</button>
           </div>
         </form>
@@ -300,6 +302,7 @@ Chicken {{ data.tag }} - ILRI Poultry Farm Management
       <!-- /.Weights Report-->
 
     {% include "components/fcr.html" %}
+    {% include "components/dead_modal.html" %}
   </section>
 
   <!-- /.content -->
@@ -606,6 +609,24 @@ Chicken {{ data.tag }} - ILRI Poultry Farm Management
       })
     }
 
+    ///
+    /// Dead Modal
+    ///
+    $("#dead_date").daterangepicker(
+      {
+        autoApply: true,
+        singleDatePicker: true,
+        showDropdowns: true,
+        minYear: 1901,
+        maxYear: parseInt(moment().format("YYYY"), 10),
+        locale: {
+          format: 'YYYY-MM-DD'
+        }
+      },
+      function (start, end, label) {
+        var years = moment().diff(start, "years");
+      }
+    );
     
   });
 </script>

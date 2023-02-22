@@ -173,7 +173,7 @@ class ChickenSerializer_GET_V1(serializers.ModelSerializer):
 
     class Meta:
         model = models.Chicken
-        fields = ['id', 'tag', 'sex', 'layed_date', 'is_double_yolk',
+        fields = ['id', 'tag', 'sex', 'layed_date', 'is_double_yolk', 'is_dead', 'dead_date',
                   'is_active', 'created_at', 'farm', 'house', 'breed_type', 'layed_place', 'days_in_production']
 
 
@@ -388,7 +388,12 @@ class FlockHistory(serializers.ModelSerializer):
         fields = '__all__'
 
 
+class FlockMortalitySerializer(serializers.Serializer):
+    class Meta:
+        fields = ''
+
 ############################ Import Weight Excel ############################
+
 
 class ImportWeightExcel(serializers.Serializer):
     file_upload = serializers.FileField()

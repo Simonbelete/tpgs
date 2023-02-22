@@ -181,6 +181,13 @@ class ChickenStageViewSet(viewsets.ModelViewSet):
         serializer.save(created_by=self.request.user)
 
 
+class ChickenStateViewSet(viewsets.ModelViewSet):
+    queryset = ChickenStage.objects.all()
+    serializer_class = ChickenStageSerializer
+    filter_backends = (filters.DjangoFilterBackend,)
+    filterset_class = ChickenStageFilter
+
+
 class EggParentViewSet(viewsets.ModelViewSet):
     queryset = Egg.objects.all()
     serializer_class = EggSerializer

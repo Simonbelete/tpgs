@@ -654,6 +654,25 @@ class FlockHistoryViewSet(viewsets.ModelViewSet):
         serializer = self.get_serializer(queryset, many=True)
         return Response(serializer.data)
 
+
+class FlockMortality(viewsets.ModelViewSet):
+    queryset = models.Flock.history.all()
+    serializer_class = serializers.FlockMortalitySerializer
+
+    def list(self, request, *args, **kwargs):
+        pk = self.kwargs['id']
+        flock = models.Flock.objects.get(pk=pk)
+        chickens = models.Chicken.objects.filter(flock=flock)
+        dead_chickens = chickens.filter(is_dead=True).count()
+        alive_chickens = chickens.filter(is_dead=False).count()
+
+        return Response({
+            'flock': serializers.FlockSerializer_GET_V1(flock),
+            'dead_chickens': dead_chickens,
+            'alive_chickens': alive_chickens
+        })
+
+
 # ##########################33
 
 
@@ -840,6 +859,24 @@ class ImportWeightExcelViewset(viewsets.ViewSet):
         return Response({
             'errors': errors,
         })
+
+
+class ChickenStateViewSet(viewsets.ViewSet):
+    serializer_class = serializers.ChickenSerializer_GET_V1
+
+    def create(self, request):
+        is_dead = request.POST.get('is_dead')
+        dead_date = request.POST.get('dead_date')
+
+        try:
+            pk = self.kwargs['id']
+            chicken = models.Chicken.objects.get(pk=pk)
+            chicken.is_dead = is_dead
+            chicken.dead_date = dead_date
+            chicken.save()
+            return Response(self.get_serializer(chicken), status=status.HTTP_200_OK)
+        except Exception as ex:
+            return Response({'errors': ['cannot find chicken']}, status=status.HTTP_400_BAD_REQUEST)
 
 
 class FcrViewSet(viewsets.ModelViewSet):

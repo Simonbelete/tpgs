@@ -1,0 +1,47 @@
+<div class="modal fade" id="dead_modal">
+    <div class="modal-dialog">
+    <form method="POST" action="/home/chickens/{{ data.id }}/state">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Remove Chicken</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+                {% csrf_token %}
+                <div class="form-check">
+                    <input
+                      type="checkbox"
+                      sele
+                      name="is_dead"
+                      class="form-check-input"
+                      id="is_dead"
+                      {% if data.is_dead == True %} checked {% else %}  {% endif %}
+                    />
+                    <label class="form-check-label" for="is_dead"
+                      >Dead</label
+                    >
+                </div>
+                <div class="form-group">
+                    <label for="dead_date">Dead Date - {{ data.dead_date }}</label>
+                    <input
+                      id="dead_date"
+                      type="text"
+                      name="dead_date"
+                      class="form-control"
+                      placeholder="Enter Date"
+                    />
+                  </div>
+            </form>
+        </div>
+        <div class="modal-footer justify-content-between">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+      </div>
+    </form>
+      <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>

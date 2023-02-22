@@ -70,6 +70,14 @@ class FeedForm(forms.ModelForm):
         fields = ['chicken', 'date', 'weight', 'feed_type']
 
 
+class ChickenState(forms.Form):
+    is_dead = forms.BooleanField()
+    dead_date = forms.DateField()
+
+    class Meta:
+        fields = ['is_dead', 'dead_date']
+
+
 class EggForm(forms.ModelForm):
     class Meta:
         model = models.Egg
