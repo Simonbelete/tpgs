@@ -950,6 +950,24 @@ class FcrViewSet(viewsets.ModelViewSet):
         return Response({'results': feed_fcr}, status=status.HTTP_200_OK)
 
 
+class HhepViewSet(viewsets.ModelViewSet):
+    queryset = models.Egg.objects.all()
+
+    def list(self, request, *args, **kwargs):
+        flock_id = request.GET.get('flock') or 0
+        start_week = request.GET.get('start_week') or 0
+        start_week = int(start_week)
+        end_week = request.GET.get('end_week') or 10
+        end_week = int(end_week)
+
+        weeks = np.array([*range(start_week, end_week + 1)])
+
+        print('--------------------------------------------')
+        print(models.Chicken.objects.all().filter(hatch_weight=0))
+
+        return super().list(request, *args, **kwargs)
+
+
 @require_http_methods(["POST"])
 def breed_pair_batch(self, request):
     return Response({}, status=status.HTTP_201_CREATED)

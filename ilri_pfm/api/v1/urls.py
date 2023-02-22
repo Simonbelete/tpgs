@@ -47,6 +47,7 @@ router.register(r'statics/breed-types', views.StaticsBreedType,
 router.register(r'import/weights', views.ImportWeightExcelViewset,
                 basename='weights_import')
 router.register(r'fcr', views.FcrViewSet, basename='fcr')
+router.register(r'hhep', views.HhepViewSet, basename='hhep')
 
 
 urlpatterns = [
