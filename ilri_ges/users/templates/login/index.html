@@ -3,15 +3,47 @@
 {% load widget_tweaks %}
 
 {% block page_content %}
-<form>
-    {{ form.non_field_errors }}
-    <div>
-        {{ form.email.errors }}
-        <label for="{{ form.email.id_for_label }}">Email subject:</label>
-        {{ form.email|add_class:"my-form" }}
-    </div>
-    <button type="submit">Submit</button>
-</form>
+<div class="hold-transition login-page">
+    <div class="login-box">
+        <div class="card card-outline card-primary">
+            <div class="card-header text-center">
+                <a href="/" class="h1">
+                  <img
+                    src="{% static 'images/ilri_cgiar.png' %}"
+                    style="height: 75px"
+                    alt="ILRI - CGIAR Logo"
+                  />
+                </a>
+            </div> <!-- /.card-header -->
+            <div class="card-body">
+                <p class="login-box-msg">Sign in to start your session</p>
+                <form method="POST">
+                    {% csrf_token %}
+                
+                    {{ form.non_field_errors }}
+                    <div class="input-group mb-3">
+                        {{ form.email.errors }}
+                        
+                        {% if form.email.errors != None %}
+                            {{ form.email|add_class:"form-control is-invalid" }}
+                            <span id="{{ form.email.id_for_label }}-error" class="error invalid-feedback">Please enter a valid email address</span>
+                        {% else %}
+                            {{ form.email|add_class:"form-control" }}
+                            <div class="input-group-append">
+                                <div class="input-group-text">
+                                  <span class="fas fa-envelope"></span>
+                                </div>
+                            </div> <!-- /.input-group-append -->
+                        {% endif %}
+
+                    </div> <!-- /.input-group -->
+                    <button type="submit">Submit</button>
+                </form>
+            </div> <!-- card-body -->
+        </div> <!-- /.card -->
+    </div> <!-- /.login-box -->
+</div>
+
 
 {% endblock %}
 
