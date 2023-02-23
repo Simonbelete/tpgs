@@ -2,6 +2,16 @@ from django.db import models
 from django.conf import settings
 
 
+class BaseDeleteManager(models.Manager):
+    def get_queryset(self):
+        return super().get_queryset().filter(is_active=True)
+
+
+class BaseAllDataManger(models.Manager):
+    def get_queryset(self):
+        return super().get_queryset().all()
+
+
 class BaseTimestampedModel(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -19,6 +29,10 @@ class BaseUserTrackedModel(models.Model):
 
 
 class BaseDeleteModel(models.Model):
+    objects = BaseDeleteManager()
+    all = BaseAllDataManger()
+    all_objects = models.Manager()
+
     is_active = models.BooleanField(default=True)
 
     def trash(self):

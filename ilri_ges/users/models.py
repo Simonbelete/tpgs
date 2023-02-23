@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils import timezone
+from django.contrib.auth.models import AbstractUser
 from django.contrib.auth.base_user import BaseUserManager
 
 from core.models import CoreModel
@@ -33,7 +34,7 @@ class UserManager(BaseUserManager):
         return self.create_user(email, password, **extra_fields)
 
 
-class User(CoreModel):
+class User(AbstractUser):
     objects = UserManager()
 
     username = models.CharField(
@@ -42,6 +43,8 @@ class User(CoreModel):
         verbose_name='email address', max_length=255, unique=True,)
     name = models.CharField(max_length=250, null=True, blank=True)
     date_joined = models.DateTimeField(default=timezone.now)
+
+    is_active = models.BooleanField(default=True)
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
