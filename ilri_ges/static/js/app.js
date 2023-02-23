@@ -1,3 +1,4 @@
+// Common modules for app
 "use strict";
 
 require.config({
@@ -19,5 +20,6 @@ require.config({
     jquery: "../../../static/js/lib/admin-LTE/plugins/jquery/jquery.min",
     underscore: "../../../static/js/lib/underscorejs/underscore-umd-min",
     backbone: "../../../static/js/lib/backbonejs/backbone-min",
+    bootstrap: "../../../static/js/lib/admin-LTE/plugins/jquery/jquery.min",
   },
 });

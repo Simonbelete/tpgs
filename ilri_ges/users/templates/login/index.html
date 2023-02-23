@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% load static %}
+{% load widget_tweaks %}
+
+{% block page_content %}
+<form>
+    {{ form.non_field_errors }}
+    <div>
+        {{ form.email.errors }}
+        <label for="{{ form.email.id_for_label }}">Email subject:</label>
+        {{ form.email|add_class:"my-form" }}
+    </div>
+    <button type="submit">Submit</button>
+</form>
+
+{% endblock %}
+
+{% block javascript %}
+<script src="{% static 'js/app.js' %}"></script>
+<script src="{% static 'js/login.js' %}"></script>
+{% endblock %}
