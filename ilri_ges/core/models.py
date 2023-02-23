@@ -16,3 +16,23 @@ class BaseUserTrackedModel(models.Model):
 
     class Meta:
         abstract = True
+
+
+class BaseDeleteModel(models.Model):
+    is_active = models.BooleanField(default=True)
+
+    def trash(self):
+        self.is_active = False
+        self.save()
+
+    def restore(self):
+        self.is_active = True
+        self.save()
+
+    class Meta:
+        abstract = True
+
+
+class CoreModel(BaseTimestampedModel, BaseUserTrackedModel, BaseDeleteModel):
+    class Meta:
+        abstract = True
