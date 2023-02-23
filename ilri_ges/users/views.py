@@ -24,6 +24,6 @@ class LoginView(View):
         return render(request, 'login/index.html', {'form': form})
 
 
-def index(request):
-    form = LoginForm()
-    return render(request, 'login/index.html', {'form': form})
+class UserView(View):
+    def get(self, request):
+        return render(request, 'users/index.html')

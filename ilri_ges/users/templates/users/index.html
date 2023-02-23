@@ -1,12 +1,6 @@
-{% extends "base.html" %}
+{% extends "sidebar.html" %}
 {% load static %}
 
-{% block javascript %}
-<script src="{% static 'js/main.js' %}"></script>
-<script>
-    requirejs(["backbone", "jquery", "views/eg_view"], function (a) {
-        console.log("a"); // OK
-        // new EgView();
-      });
-</script>
+{% block body %}
+    <h1>hellow</h1>
 {% endblock %}

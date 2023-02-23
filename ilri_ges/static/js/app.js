@@ -20,6 +20,8 @@ require.config({
     jquery: "../../../static/js/lib/admin-LTE/plugins/jquery/jquery.min",
     underscore: "../../../static/js/lib/underscorejs/underscore-umd-min",
     backbone: "../../../static/js/lib/backbonejs/backbone-min",
-    bootstrap: "../../../static/js/lib/admin-LTE/plugins/jquery/jquery.min",
+    bootstrap:
+      "../../../static/js/lib/admin-LTE/plugins/bootstrap/js/bootstrap.bundle.min",
+    adminLTE: "../../../static/js/lib/admin-LTE/dist/js/adminlte.min",
   },
 });
