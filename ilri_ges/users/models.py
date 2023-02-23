@@ -2,6 +2,8 @@ from django.db import models
 from django.utils import timezone
 from django.contrib.auth.base_user import BaseUserManager
 
+from core.models import CoreModel
+
 
 class UserManager(BaseUserManager):
     """
@@ -31,7 +33,7 @@ class UserManager(BaseUserManager):
         return self.create_user(email, password, **extra_fields)
 
 
-class User(models.Model):
+class User(CoreModel):
     objects = UserManager()
 
     username = models.CharField(
