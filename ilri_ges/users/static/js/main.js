@@ -21,8 +21,3 @@ require.config({
     backbone: "../../../static/js/lib/backbonejs/backbone-min",
   },
 });
-
-requirejs(["backbone", "jquery", "views/eg_view"], function (a) {
-  console.log("a"); // OK
-  // new EgView();
-});
