@@ -19,25 +19,41 @@
                 <p class="login-box-msg">Sign in to start your session</p>
                 <form method="POST">
                     {% csrf_token %}
-                
                     {{ form.non_field_errors }}
+
                     <div class="input-group mb-3">
                         {{ form.email.errors }}
-                        
-                        {% if form.email.errors != None %}
-                            {{ form.email|add_class:"form-control is-invalid" }}
+                        {{ form.email|add_class:"form-control"|add_error_class:"is-invalid"|attr:"placeholder: Email" }}
+                        {% if form.email.errors %}
                             <span id="{{ form.email.id_for_label }}-error" class="error invalid-feedback">Please enter a valid email address</span>
                         {% else %}
-                            {{ form.email|add_class:"form-control" }}
                             <div class="input-group-append">
                                 <div class="input-group-text">
                                   <span class="fas fa-envelope"></span>
                                 </div>
                             </div> <!-- /.input-group-append -->
                         {% endif %}
-
                     </div> <!-- /.input-group -->
-                    <button type="submit">Submit</button>
+
+                    <div class="input-group mb-3">
+                        {{ form.password.errors }}
+                        {{ form.password|add_class:"form-control"|add_error_class:"is-invalid"|attr:"type:password"|attr:"placeholder: Password" }}
+                        {% if form.password.errors %}
+                            <span id="{{ form.password.id_for_label }}-error" class="error invalid-feedback">Please enter a valid password</span>
+                        {% else %}
+                            <div class="input-group-append">
+                                <div class="input-group-text">
+                                <span class="fas fa-lock"></span>
+                                </div>
+                            </div> <!-- /.input-group-append -->
+                        {% endif %}
+                    </div> <!-- /.input-group -->
+
+                    <div class="col-4">
+                        <button type="submit" class="btn btn-primary btn-block">
+                          Sign In
+                        </button>
+                    </div>
                 </form>
             </div> <!-- card-body -->
         </div> <!-- /.card -->
