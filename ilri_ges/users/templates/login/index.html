@@ -18,6 +18,7 @@
             <div class="card-body">
                 <p class="login-box-msg">Sign in to start your session</p>
                 <form method="POST">
+                    {% include 'components/messages.html' %}
                     {% csrf_token %}
                     {{ form.non_field_errors }}
 
