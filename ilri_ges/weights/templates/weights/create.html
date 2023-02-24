@@ -1,0 +1,133 @@
+{% extends "sidebar.html" %} 
+{% load static %} 
+
+{% block stylesheet %} 
+{% include 'components/create_styles.html' %} 
+{% include 'components/daterangepicker_style.html' %} 
+{% include 'components/select2_style.html' %} 
+{% include 'components/datatables_style.html' %} 
+{% endblock %} 
+
+{% block title %} Create Weight Record - ILRI genetics Evaluation {% endblock %} 
+
+{% block body %}
+
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <div class="container-fluid">
+      <div class="row mb-2">
+        <div class="col-sm-6">
+          <h1>Weight</h1>
+        </div>
+        <div class="col-sm-6">
+          <ol class="breadcrumb float-sm-right">
+            <li class="breadcrumb-item"><a href="#">Home</a></li>
+            <li class="breadcrumb-item active">weights</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+    <!-- /.container-fluid -->
+  
+    <!-- Main content -->
+    <section class="content row">
+      <div class="col-md-6">
+        <div class="card card-primary">
+          <div class="card-header">
+            <h3 class="card-title">Weight Record</h3>
+          </div>
+          <form
+            action="/home/weights/"
+            method="POST"
+          >
+            {% csrf_token %}
+            <div class="card-body">
+                {{ form.chicken }}
+
+              <div class="form-group">
+                <label for="farm">Chicken</label>
+                <select
+                  id="chicken"
+                  name="chicken"
+                  class="form-control select2"
+                  style="width: 100%"
+                >
+                </select>
+              </div>
+  
+              <div class="form-group">
+                <label for="week">Week</label>
+                <input
+                  type="number"
+                  name="week"
+                  value="0"
+                  class="form-control"
+                  id="week"
+                  placeholder="Enter Week"
+                />
+              </div>
+  
+              <div class="form-group">
+                <label for="weight">Weight</label>
+                <input
+                  type="number"
+                  name="weight"
+                  value="0"
+                  class="form-control"
+                  id="weight"
+                  placeholder="Enter Weight in gram"
+                />
+              </div>
+            </div>
+            <!-- /.card-body -->
+  
+            <div class="card-footer">
+              <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+          </form>
+        </div>
+      </div>
+  
+      <!-- Table for Weight List -->
+      <div class="col-12">
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">All Weight Records</h3>
+          </div>
+          <!-- /.card-header -->
+          <div class="card-body">
+            <table id="dataListTable" class="table table-bordered table-striped">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Week</th>
+                  <th>Weight</th>
+                  <th>chicken</th>
+                  <th>Created At</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+              <tfoot>
+                <tr>
+                  <th>ID</th>
+                  <th>Week</th>
+                  <th>Weight</th>
+                  <th>chicken</th>
+                  <th>Created At</th>
+                  <th></th>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+          <!-- /.card-body -->
+        </div>
+        <!-- /.card -->
+      </div>
+  
+    </section>
+  
+    <!-- /.content -->
+</section>
+
+{% endblock %}

@@ -22,17 +22,17 @@ class Chicken(models.Model):
     )
 
     flock = models.ForeignKey(
-        Flock, on_delete=models.SET_NULL, null=True, related_name='chickens')
+        Flock, on_delete=models.SET_NULL, null=True, blank=True, related_name='chickens')
     tag = models.CharField(max_length=250, unique=True)
     sex = models.CharField(max_length=1, choices=SEX_CHOICES, default='')
     farm = models.ForeignKey(
-        Farm, on_delete=models.SET_NULL, null=True, related_name='chickens')
+        Farm, on_delete=models.SET_NULL, null=True, blank=True, related_name='chickens')
     house = models.ForeignKey(
-        House, on_delete=models.SET_NULL, null=True, related_name='chickens')
+        House, on_delete=models.SET_NULL, null=True, blank=True, related_name='chickens')
     breed_type = models.ForeignKey(
-        BreedType, on_delete=models.SET_NULL, null=True, related_name='chickens')
+        BreedType, on_delete=models.SET_NULL, null=True, blank=True, related_name='chickens')
     layed_place = models.ForeignKey(
-        LayedPlace, on_delete=models.SET_NULL, null=True)
+        LayedPlace, on_delete=models.SET_NULL, null=True, blank=True)
     is_double_yolk = models.BooleanField(default=False)
     hatch_date = models.DateField(null=True, blank=True)
 

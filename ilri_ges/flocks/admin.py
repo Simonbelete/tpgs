@@ -1,3 +1,6 @@
 from django.contrib import admin
+from simple_history.admin import SimpleHistoryAdmin
 
-# Register your models here.
+from flocks.models import Flock
+
+admin.site.register(Flock, SimpleHistoryAdmin)

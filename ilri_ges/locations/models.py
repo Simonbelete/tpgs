@@ -2,7 +2,6 @@ from django.db import models
 from django.conf import settings
 
 from core.models import CoreModel
-from farms.models import Farm
 
 
 class Country(CoreModel):
@@ -30,7 +29,7 @@ class City(CoreModel):
 class House(CoreModel):
     name = models.CharField(max_length=10)
     farm = models.ForeignKey(
-        Farm, on_delete=models.SET_NULL, null=True, related_name='houses')
+        'farms.Farm', on_delete=models.SET_NULL, null=True, related_name='houses')
 
     class Meta:
         ordering = ["name"]

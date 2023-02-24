@@ -41,14 +41,17 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'widget_tweaks',
     'rest_framework',
+    'simple_history',
     'core',
     'users',
     'dashboard',
     'breeds',
     'chickens',
-    'locations',
     'farms',
-    'stages'
+    'locations',
+    'stages',
+    'flocks',
+    'weights'
 ]
 
 AUTH_USER_MODEL = 'users.User'
@@ -74,10 +77,13 @@ TEMPLATES = [
             'users/templates',
             'dashboard/templates'
             'dashboard/templates',
+            'breeds/templates',
             'chickens/templates',
             'locations/templates',
             'farms/templates',
-            'stages/templates'
+            'stages/templates',
+            'flocks/templates',
+            'weights/templates'
         ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -150,6 +156,8 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "locations/static"),
     os.path.join(BASE_DIR, "farms/static"),
     os.path.join(BASE_DIR, "stages/static"),
+    os.path.join(BASE_DIR, "flocks/static"),
+    os.path.join(BASE_DIR, "weights/static"),
 ]
 
 # Default primary key field type
