@@ -40,9 +40,11 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'widget_tweaks',
+    'rest_framework',
     'core',
     'users',
-    'dashboard'
+    'dashboard',
+    'breeds'
 ]
 
 AUTH_USER_MODEL = 'users.User'
@@ -64,7 +66,9 @@ TEMPLATES = [
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
             'templates',
+            'core/templates',
             'users/templates',
+            'dashboard/templates'
             'dashboard/templates'
         ],
         'APP_DIRS': True,
@@ -132,12 +136,20 @@ STATIC_URL = 'static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
     os.path.join(BASE_DIR, "users/static"),
+    os.path.join(BASE_DIR, "dashboard/static"),
+    os.path.join(BASE_DIR, "breeds/static"),
 ]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+    ]
+}
 
 MESSAGE_TAGS = {
     messages.ERROR: 'danger',

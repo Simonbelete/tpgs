@@ -18,7 +18,7 @@ class LoginView(View):
                 request, email=form.cleaned_data['email'], password=form.cleaned_data['password'],)
             if user is not None:
                 login(request, user)
-                return redirect('home')
+                return redirect('dashboard')
             else:
                 messages.error(request, f'No user found')
         return render(request, 'login/index.html', {'form': form})
