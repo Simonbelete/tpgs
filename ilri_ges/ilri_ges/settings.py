@@ -44,7 +44,11 @@ INSTALLED_APPS = [
     'core',
     'users',
     'dashboard',
-    'breeds'
+    'breeds',
+    'chickens',
+    'locations',
+    'farms',
+    'stages'
 ]
 
 AUTH_USER_MODEL = 'users.User'
@@ -69,7 +73,11 @@ TEMPLATES = [
             'core/templates',
             'users/templates',
             'dashboard/templates'
-            'dashboard/templates'
+            'dashboard/templates',
+            'chickens/templates',
+            'locations/templates',
+            'farms/templates',
+            'stages/templates'
         ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -138,6 +146,10 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "users/static"),
     os.path.join(BASE_DIR, "dashboard/static"),
     os.path.join(BASE_DIR, "breeds/static"),
+    os.path.join(BASE_DIR, "chickens/static"),
+    os.path.join(BASE_DIR, "locations/static"),
+    os.path.join(BASE_DIR, "farms/static"),
+    os.path.join(BASE_DIR, "stages/static"),
 ]
 
 # Default primary key field type
