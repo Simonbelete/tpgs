@@ -7,7 +7,13 @@ requirejs(
       headers: {
         "X-CSRFToken": get_cookie("csrftoken"),
       },
-      url: "/chickens/import",
+      url:
+        "/chickens/import?flock=" +
+        $("flock_select").val() +
+        "&farm=" +
+        $("farm_select") +
+        "&breed_type=" +
+        $("breed_type_select"),
       paramName: "file_upload",
     });
 
@@ -16,6 +22,11 @@ requirejs(
       document.querySelector(
         "#chickens_import_progress .progress-bar"
       ).style.width = progress + "%";
+    });
+
+    myDropzone.on("error", function (file, response) {
+      // $(file.previewElement).find('.dz-error-message').text(response);
+      console.log("error");
     });
   }
 );
