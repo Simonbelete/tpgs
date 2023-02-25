@@ -25,5 +25,7 @@ require.config({
     adminLTE: "../../../static/js/lib/admin-LTE/dist/js/adminlte.min",
     dropzone:
       "../../../static/js/lib/admin-LTE/plugins/dropzone/min/dropzone.min",
+    select2:
+      "../../../static/js/lib/admin-LTE/plugins/select2/js/select2.full.min",
   },
 });
