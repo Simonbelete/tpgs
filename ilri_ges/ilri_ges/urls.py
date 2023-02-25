@@ -21,5 +21,6 @@ urlpatterns = [
     path('dashboard/', include('dashboard.urls')),
     path('breeds/', include('breeds.urls')),
     path('weights/', include('weights.urls')),
+    path('chickens/', include('chickens.urls')),
     path('admin/', admin.site.urls),
 ]

@@ -23,5 +23,7 @@ require.config({
     bootstrap:
       "../../../static/js/lib/admin-LTE/plugins/bootstrap/js/bootstrap.bundle.min",
     adminLTE: "../../../static/js/lib/admin-LTE/dist/js/adminlte.min",
+    dropzone:
+      "../../../static/js/lib/admin-LTE/plugins/dropzone/min/dropzone.min",
   },
 });
