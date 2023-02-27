@@ -48,6 +48,7 @@ class User(AbstractUser):
         verbose_name='email address', max_length=255, unique=True,)
     name = models.CharField(max_length=250, null=True, blank=True)
     date_joined = models.DateTimeField(default=timezone.now)
+    farms = models.ManyToManyField('farms.Farm')
 
     is_active = models.BooleanField(default=True)
 
