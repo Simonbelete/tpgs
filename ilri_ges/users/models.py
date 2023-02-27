@@ -2,6 +2,7 @@ from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import AbstractUser
 from django.contrib.auth.base_user import BaseUserManager
+from django.contrib.auth.models import Group
 
 from core.models import CoreModel
 
@@ -22,6 +23,11 @@ class UserManager(BaseUserManager):
         user = self.model(email=email, **extra_fields)
         user.set_password(password)
         user.save()
+
+        # Set User Groups
+        farmer_group = Group.objects.get(name='farmer')
+        farmer_group.user_set.add(user)
+
         return user
 
     def create_superuser(self, email, password, **extra_fields):
@@ -29,9 +35,8 @@ class UserManager(BaseUserManager):
         Create and save a SuperUser with the given email and password.
         """
         extra_fields.setdefault("is_superuser", True)
-        extra_fields.setdefault("is_staff", True)
 
-        return self.create_user(email, password, **extra_fields)
+        return self.create_user(email, password, ** extra_fields)
 
 
 class User(AbstractUser):
