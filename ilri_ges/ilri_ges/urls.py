@@ -25,6 +25,7 @@ urlpatterns = [
     path('breeds/', include('breeds.urls')),
     path('weights/', include('weights.urls')),
     path('chickens/', include('chickens.urls')),
+    path('breeding-pairs/', include('breeding_pairs.urls')),
     path('admin/', admin.site.urls),
 
     path('api/', include('breeds.api.urls')),
