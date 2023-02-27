@@ -12,6 +12,18 @@ require.config({
       //module value.
       exports: "Backbone",
     },
+    datatables: {
+      deps: [
+        "datatablesBs4",
+        "datatablesresponsive",
+        "datatablesResponsiveBs4",
+        "datatablesButtons",
+        "datatablesButtonsBs4",
+        "jszip",
+        "pdfmake",
+        "pdfmake_fonts",
+      ],
+    },
     underscore: {
       exports: "_",
     },
@@ -27,5 +39,20 @@ require.config({
       "../../../static/js/lib/admin-LTE/plugins/dropzone/min/dropzone.min",
     select2:
       "../../../static/js/lib/admin-LTE/plugins/select2/js/select2.full.min",
+    "datatables.net":
+      "../../../static/js/lib/admin-LTE/plugins/datatables/jquery.dataTables.min",
+    datatablesBs4:
+      "../../../static/js/lib/admin-LTE/plugins/datatables-bs4/js/dataTables.bootstrap4.min",
+    datatablesresponsive:
+      "../../../static/js/lib/admin-LTE/plugins/datatables-responsive/js/dataTables.responsive.min",
+    datatablesResponsiveBs4:
+      "../../../static/js/lib/admin-LTE/plugins/datatables-responsive/js/responsive.bootstrap4.min",
+    datatablesButtons:
+      "../../../static/js/lib/admin-LTE/plugins/datatables-buttons/js/dataTables.buttons.min",
+    datatablesButtonsBs4:
+      "../../../static/js/lib/admin-LTE/plugins/datatables-buttons/js/buttons.bootstrap4.min",
+    jszip: "../../../static/js/lib/admin-LTE/plugins/jszip/jszip.min",
+    pdfmake: "../../../static/js/lib/admin-LTE/plugins/pdfmake/pdfmake.min",
+    pdfmake_fonts: "../../../static/js/lib/admin-LTE/plugins/pdfmake/vfs_fonts",
   },
 });

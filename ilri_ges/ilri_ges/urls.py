@@ -16,7 +16,10 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
+from .views import index
+
 urlpatterns = [
+    path('', index, name='index'),
     path('users/', include('users.urls')),
     path('dashboard/', include('dashboard.urls')),
     path('breeds/', include('breeds.urls')),
@@ -26,4 +29,5 @@ urlpatterns = [
 
     path('api/', include('breeds.api.urls')),
     path('api/', include('chickens.api.urls')),
+    path('api/', include('users.api.urls')),
 ]

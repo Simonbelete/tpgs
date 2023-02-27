@@ -12,9 +12,11 @@ class Command(BaseCommand):
         models_list = [
             User
         ]
-        farm_admin_group, created = Group.objects.get_or_create(
+        admin_groups, admin_created = Group.objects.get_or_create(
+            name='admin')
+        farm_admin_group, farm_admin_created = Group.objects.get_or_create(
             name='farm admin')
-        farmer_group, created = Group.objects.get_or_create(
+        farmer_group, farmer_created = Group.objects.get_or_create(
             name='farmer')
 
         for model in models_list:
@@ -27,6 +29,7 @@ class Command(BaseCommand):
                     farmer_group.permissions.add(perm)
 
                 # Set all permission to farm admin
+                admin_groups.permissions.add(perm)
                 farm_admin_group.permissions.add(perm)
 
         self.stdout.write(self.style.SUCCESS(
