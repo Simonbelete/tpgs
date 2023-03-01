@@ -3,7 +3,7 @@ requirejs(["jquery", "select2"], function ($, Select2) {
   $("#dams_select").select2({
     theme: "bootstrap4",
     ajax: {
-      url: "/api/chickens",
+      url: "/api/chickens?sex=F",
       data: function (params) {
         var query = {
           search: params.term,

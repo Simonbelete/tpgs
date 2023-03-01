@@ -2,8 +2,9 @@ requirejs(["jquery", "select2"], function ($, Select2) {
   "use strict";
   $("#sire_select").select2({
     theme: "bootstrap4",
+    placeholder: "Select a Sire Tag",
     ajax: {
-      url: "/api/chickens",
+      url: "/api/chickens?sex=M",
       data: function (params) {
         var query = {
           search: params.term,
