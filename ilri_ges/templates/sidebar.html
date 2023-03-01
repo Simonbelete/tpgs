@@ -320,7 +320,8 @@
 
             <li class="nav-header">LOCATIONS</li>
             <li class="nav-item">
-              <a href="/home/countries" class="nav-link">
+              <a  href="{% url 'countries' %}"
+                  class="nav-link {% if request.path == '/locations/countries/' %}active{% endif %}">
                 <i class="fas fa-circle nav-icon"></i>
                 <p>Countries</p>
               </a>
@@ -349,7 +350,6 @@
       <!-- Control sidebar content goes here -->
       <div class="p-3">
         <h5>Farms</h5>
-        <p>asdfsdf</p>
         {% comment %} 
         {% if user.farms %}
           {% for farm in user.farms %}

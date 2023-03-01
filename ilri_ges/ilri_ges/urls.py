@@ -26,12 +26,14 @@ urlpatterns = [
     path('weights/', include('weights.urls')),
     path('chickens/', include('chickens.urls')),
     path('breeding-pairs/', include('breeding_pairs.urls')),
+    path('locations/', include('locations.urls')),
     path('admin/', admin.site.urls),
 
     path('api/', include('breeds.api.urls')),
     path('api/', include('chickens.api.urls')),
     path('api/', include('users.api.urls')),
     path('api/', include('breeding_pairs.api.urls')),
+    path('api/', include('locations.api.urls')),
 
     path('playgrounds/d3js', playground_d3js, name='playground_d3js'),
 
