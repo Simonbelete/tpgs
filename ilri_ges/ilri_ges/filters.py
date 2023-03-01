@@ -8,6 +8,9 @@ class IsActiveFilterBackend(BaseFilterBackend):
 
 class HaveFarmFilterBackend(BaseFilterBackend):
     def filter_queryset(self, request, queryset, view):
+        if (request.user == None):
+            return queryset
+
         if request.user.is_superuser:
             return queryset
         else:
