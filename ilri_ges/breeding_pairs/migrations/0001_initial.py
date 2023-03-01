@@ -11,21 +11,25 @@ class Migration(migrations.Migration):
 
     dependencies = [
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ('chickens', '0006_alter_chicken_flock'),
+        ('chickens', '0001_initial'),
     ]
 
     operations = [
         migrations.CreateModel(
             name='BreedPair',
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.BigAutoField(auto_created=True,
+                 primary_key=True, serialize=False, verbose_name='ID')),
                 ('created_at', models.DateTimeField(auto_now_add=True)),
                 ('updated_at', models.DateTimeField(auto_now=True)),
                 ('is_active', models.BooleanField(default=True)),
                 ('date', models.DateField(blank=True, null=True)),
-                ('created_by', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, to=settings.AUTH_USER_MODEL)),
-                ('dam', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='mother', to='chickens.chicken')),
-                ('sire', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='father', to='chickens.chicken')),
+                ('created_by', models.ForeignKey(
+                    on_delete=django.db.models.deletion.PROTECT, to=settings.AUTH_USER_MODEL)),
+                ('dam', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL,
+                 related_name='mother', to='chickens.chicken')),
+                ('sire', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL,
+                 related_name='father', to='chickens.chicken')),
             ],
             options={
                 'abstract': False,

@@ -10,7 +10,7 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ('chickens', '0003_initial'),
+        ('chickens', '0001_initial'),
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
     ]
 
@@ -18,14 +18,18 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Weight',
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.BigAutoField(auto_created=True,
+                 primary_key=True, serialize=False, verbose_name='ID')),
                 ('created_at', models.DateTimeField(auto_now_add=True)),
                 ('updated_at', models.DateTimeField(auto_now=True)),
                 ('is_active', models.BooleanField(default=True)),
                 ('week', models.IntegerField(default=0)),
-                ('weight', models.DecimalField(decimal_places=3, default=0, max_digits=10)),
-                ('chicken', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='weights', to='chickens.chicken')),
-                ('created_by', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, to=settings.AUTH_USER_MODEL)),
+                ('weight', models.DecimalField(
+                    decimal_places=3, default=0, max_digits=10)),
+                ('chicken', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE,
+                 related_name='weights', to='chickens.chicken')),
+                ('created_by', models.ForeignKey(
+                    on_delete=django.db.models.deletion.PROTECT, to=settings.AUTH_USER_MODEL)),
             ],
             options={
                 'abstract': False,

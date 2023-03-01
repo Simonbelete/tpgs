@@ -1,0 +1,143 @@
+{% extends "sidebar.html" %} 
+{% load static %} 
+
+{% block stylesheet %} 
+{% include 'components/list_styles.html' %}
+{% endblock %} 
+
+{% block title %} Chickens List  - ILRI genetics Evaluation {% endblock %} 
+
+{% block body %}
+
+
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <div class="container-fluid">
+      <div class="row mb-2">
+        <div class="col-sm-6">
+          <h1>Chickens</h1>
+        </div>
+        <div class="col-sm-6">
+          <ol class="breadcrumb float-sm-right">
+            <li class="breadcrumb-item"><a href="/">Home</a></li>
+            <li class="breadcrumb-item active">Chickens</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+    <!-- /.container-fluid -->
+
+    <!-- Main content -->
+  <section class="content">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-12">
+          <div class="card">
+            <div class="card-header row">
+              <h3 class="card-title col-10">List of Chickens</h3>
+              <div class="col-2">
+                <a href="/home/chickens-create" role="button" type="button" class="btn btn-primary float-right"><i class="fas fa-plus"></i> Create A Chicken</a>
+              </div>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body">
+              
+              <!-- Filters -->
+              <div class="row" style="align-items: end;">
+                <div class="col-md-6 col-lg-2 col-xl-1">
+                  <label for="filter_sex">Filter By Sex</label>
+                  <select
+                    id="filter_sex"
+                    name="farm"
+                    class="form-control select2"
+                    style="width: 100%"
+                  >
+                    <option value="" selected="selected">
+                    -
+                    </option>
+                    <option value="M">Male</option>
+                    <option value="F">Female</option>
+                  </select>
+                </div>
+                <div class="col-md-6 col-lg-2 col-xl-1">
+                  <label for="filter_farm">Filter By Farm</label>
+                  <select
+                    id="filter_farm"
+                    name="farm"
+                    class="form-control select2"
+                    style="width: 100%"
+                  >
+                    <option value="" selected="selected">
+                    -
+                    </option>
+                  </select>
+                </div>
+                <div class="col-md-6 col-lg-2 col-xl-1">
+                  <label for="filter_breed_type">Filter By Breed Type</label>
+                  <select
+                    id="filter_breed_type"
+                    name="breed_type"
+                    class="form-control select2"
+                    style="width: 100%"
+                  >
+                    <option value="" selected="selected">
+                    -
+                    </option>
+                  </select>
+                </div>
+                <button type="button" id="apply_filter" style="height: 40px" class="btn btn-secondary">Apply</button>
+              </div>
+              <!-- /.Filters -->
+              
+              <table
+                id="chickens_data_list_table"
+                class="table table-bordered table-striped"
+              >
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Tag</th>
+                    <th>Sex</th>
+                    <th>Farm</th>
+                    <th>House</th>
+                    <th>Breed Type</th>
+                    <th>Hatch Date</th>
+                    <th>Is Double Yolk</th>
+                    <th>Created At</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody></tbody>
+                <tfoot>
+                  <tr>
+                    <th>ID</th>
+                    <th>Tag</th>
+                    <th>Sex</th>
+                    <th>Farm</th>
+                    <th>House</th>
+                    <th>Breed Type</th>
+                    <th>Hatch Date</th>
+                    <th>Is Double Yolk</th>
+                    <th>Created At</th>
+                    <th></th>
+                  </tr>
+                </tfoot>
+              </table>
+            </div>
+            <!-- /.card-body -->
+          </div>
+          <!-- /.card -->
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- /.content -->
+</section>
+
+{% endblock %}
+
+{% block javascript %}
+<script src="{% static 'js/chickens_list.js' %}"></script>
+{% endblock %}

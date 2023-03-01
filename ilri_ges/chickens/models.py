@@ -1,6 +1,7 @@
 import math
 from django.db import models
 
+from core.models import CoreModel
 from flocks.models import Flock
 from farms.models import Farm
 from locations.models import House, LayedPlace
@@ -14,7 +15,7 @@ class ChickenManager(models.Manager):
         return math.floor(week)
 
 
-class Chicken(models.Model):
+class Chicken(CoreModel):
     objects = ChickenManager()
     SEX_CHOICES = (
         ('F', 'Female',),

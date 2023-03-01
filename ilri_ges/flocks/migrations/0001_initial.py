@@ -11,7 +11,7 @@ class Migration(migrations.Migration):
 
     dependencies = [
         ('breeds', '0001_initial'),
-        ('farms', '0002_initial'),
+        ('farms', '0001_initial'),
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
     ]
 
@@ -19,15 +19,19 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Flock',
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.BigAutoField(auto_created=True,
+                 primary_key=True, serialize=False, verbose_name='ID')),
                 ('created_at', models.DateTimeField(auto_now_add=True)),
                 ('updated_at', models.DateTimeField(auto_now=True)),
                 ('is_active', models.BooleanField(default=True)),
                 ('name', models.CharField(max_length=250, unique=True)),
                 ('hatch_date', models.DateField()),
-                ('breed_type', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='flocks', to='breeds.breedtype')),
-                ('created_by', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, to=settings.AUTH_USER_MODEL)),
-                ('farm', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='flock', to='farms.farm')),
+                ('breed_type', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL,
+                 related_name='flocks', to='breeds.breedtype')),
+                ('created_by', models.ForeignKey(
+                    on_delete=django.db.models.deletion.PROTECT, to=settings.AUTH_USER_MODEL)),
+                ('farm', models.ForeignKey(
+                    null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='flock', to='farms.farm')),
             ],
             options={
                 'abstract': False,
