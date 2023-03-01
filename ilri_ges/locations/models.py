@@ -40,7 +40,6 @@ class House(CoreModel):
 
 class LayedPlace(CoreModel):
     name = models.CharField(max_length=250)
-    is_active = models.BooleanField(default=True)
 
     def __str__(self):
         return self.name

@@ -251,8 +251,8 @@
 
             <li class="nav-item">
               <a
-                href="/home/layed-places"
-                class="nav-link {% if request.path == '/home/layed-places' %}active{% endif %}"
+                href="{% url 'layed_places' %}"
+                class="nav-link {% if request.path == '/locations/layed-places' %}active{% endif %}"
               >
                 <i class="nav-icon fas fa-map-marker-alt"></i>
                 <p>Layed Place</p>
@@ -271,8 +271,8 @@
 
             <li class="nav-item">
               <a
-                href="/home/feed-types"
-                class="nav-link {% if request.path == '/home/feed-types' %}active{% endif %}"
+                href="{% url 'houses' %}"
+                class="nav-link {% if request.path == '/locations/houses' %}active{% endif %}"
               >
                 <i class="nav-icon fas fa-seedling"></i>
                 <p>Pen</p>
@@ -321,13 +321,14 @@
             <li class="nav-header">LOCATIONS</li>
             <li class="nav-item">
               <a  href="{% url 'countries' %}"
-                  class="nav-link {% if request.path == '/locations/countries/' %}active{% endif %}">
+                  class="nav-link {% if request.path == '/locations/countries' %}active{% endif %}">
                 <i class="fas fa-circle nav-icon"></i>
                 <p>Countries</p>
               </a>
             </li>
             <li class="nav-item">
-              <a href="/home/cities" class="nav-link">
+              <a href="{% url 'cities' %}"
+                 class="nav-link {% if request.path == '/locations/cities' %}active{% endif %}">
                 <i class="fas fa-circle nav-icon"></i>
                 <p>Cities</p>
               </a>
