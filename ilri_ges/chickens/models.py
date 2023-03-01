@@ -1,11 +1,13 @@
 import math
 from django.db import models
+from datetime import date
 
 from core.models import CoreModel
 from flocks.models import Flock
 from farms.models import Farm
 from locations.models import House, LayedPlace
 from breeds.models import BreedType
+from weights.models import Weight
 
 
 class ChickenManager(models.Manager):
@@ -39,3 +41,27 @@ class Chicken(CoreModel):
 
     is_dead = models.BooleanField(default=False)
     dead_date = models.DateField(null=True, blank=True)
+
+    @property
+    def name(self):
+        house = self.house.name if self.house != None else ""
+        farm = self.farm.name if self.farm != None else ""
+        sex = self.sex
+        return "%s (%s, %s) %s" % (self.tag, house, farm, sex)
+
+    @property
+    def age(self):
+        if (self.hatch_date == None):
+            return 0
+
+        birth_date = self.hatch_date
+        today = date.today()
+        age = today.year - birth_date.year - \
+            ((today.month, today.day) < (birth_date.month, birth_date.day))
+
+        return age
+
+    @property
+    def hatch_weight(self):
+        """" Hatch Weight is computed from week 0 weight """
+        return Weight.objects.get(pk=self.id).earliest('week')
