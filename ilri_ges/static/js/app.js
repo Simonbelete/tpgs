@@ -60,5 +60,16 @@ require.config({
       "../../../static/js/lib/admin-LTE/plugins/datatables-buttons/js/buttons.print.min",
     datatables_buttons_colVis:
       "../../../static/js/lib/admin-LTE/plugins/datatables-buttons/js/buttons.colVis.min",
+    d3js: "https://d3js.org/d3.v7.min",
+    d3_hierarchy: "../../../static/js/lib/d3-hierarchy/d3-hierarchy@3",
+    "d3-color": "../../../static/js/lib/d3-zoom/d3-color",
+    "d3-dispatch": "../../../static/js/lib/d3-zoom/d3-dispatch",
+    "d3-drag": "../../../static/js/lib/d3-zoom/d3-drag",
+    "d3-ease": "../../../static/js/lib/d3-zoom/d3-ease",
+    "d3-interpolate": "../../../static/js/lib/d3-zoom/d3-interpolate",
+    "d3-selection": "../../../static/js/lib/d3-zoom/d3-selection",
+    "d3-timer": "../../../static/js/lib/d3-zoom/d3-timer",
+    "d3-transition": "../../../static/js/lib/d3-zoom/d3-transition",
+    "d3-zoom": "../../../static/js/lib/d3-zoom/d3-zoom",
   },
 });

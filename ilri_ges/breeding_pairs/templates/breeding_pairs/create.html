@@ -41,42 +41,47 @@
             method="POST"
           >
             {% csrf_token %}
-            <div class="form-group">
-                <label for="sire">Sire</label>
-                <select
-                  id="sire"
-                  name="sire"
-                  class="form-control select2"
-                  style="width: 100%;"
-                >
-                </select>
+            <div class="card-body">
+                <div class="form-group">
+                    <label for="sire">Sire</label>
+                    <select
+                    id="sire_select"
+                    name="sire"
+                    class="form-control select2"
+                    style="width: 100%;"
+                    >
+                    </select>
+                </div>
+    
+                <div class="form-group">
+                    <label for="dams_select">Dam</label>
+                    <select
+                    id="dams_select"
+                    name="dams"
+                    multiple="multiple"
+                    data-placeholder="Select Dam tags"
+                    style="width: 100%"
+                    >
+                    </select>
+                </div>
+    
+                
             </div>
-  
-            <div class="form-group">
-                <label for="dam_ids">Dam</label>
-                <select
-                  id="dams"
-                  name="dams"
-                  multiple="multiple"
-                  data-placeholder="Select Dam tags"
-                  style="width: 100%"
-                >
-                </select>
-            </div>
-  
-              
-            </div>
-            <!-- /.card-body -->
-  
-            <div class="card-footer">
-              <button type="submit" class="btn btn-primary">Submit</button>
-            </div>
-          </form>
+                <!-- /.card-body -->
+    
+                <div class="card-footer">
+                <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+            </form>
         </div>
-      </div>
+    </div>
     </section>
   
     <!-- /.content -->
 </section>
 
+{% endblock %}
+{% block javascript %}
+<script src="{% static 'js/sire_select.js' %}"></script>
+<script src="{% static 'js/dam_select.js' %}"></script>
 {% endblock %}

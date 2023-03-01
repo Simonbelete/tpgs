@@ -16,7 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
-from .views import index
+from .views import index, playground_d3js
 
 urlpatterns = [
     path('', index, name='index'),
@@ -31,4 +31,8 @@ urlpatterns = [
     path('api/', include('breeds.api.urls')),
     path('api/', include('chickens.api.urls')),
     path('api/', include('users.api.urls')),
+    path('api/', include('breeding_pairs.api.urls')),
+
+    path('playgrounds/d3js', playground_d3js, name='playground_d3js'),
+
 ]
