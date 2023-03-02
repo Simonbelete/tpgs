@@ -71,5 +71,6 @@ require.config({
     "d3-timer": "../../../static/js/lib/d3-zoom/d3-timer",
     "d3-transition": "../../../static/js/lib/d3-zoom/d3-transition",
     "d3-zoom": "../../../static/js/lib/d3-zoom/d3-zoom",
+    chartjs: "../../../static/js/lib/admin-LTE/plugins/chart.js/Chart.min",
   },
 });

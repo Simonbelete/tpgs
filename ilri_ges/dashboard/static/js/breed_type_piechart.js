@@ -1,4 +1,4 @@
-requirejs(["jquery"], function ($) {
+requirejs(["jquery", "chartjs"], function ($, Chart) {
   function percentCalculation(a, b) {
     var c = (a / b) * 100;
     return parseFloat(c);
@@ -28,7 +28,7 @@ requirejs(["jquery"], function ($) {
 
   var data = data || {};
 
-  $.getJSON("/api/v1/statics/breed-types/", data).done(function (response) {
+  $.getJSON("/api/breed-types/count/", data).done(function (response) {
     labels = [];
     datasets = { data: [], backgroundColor: [] };
     for (var i = 0; i < response.results.length; i++) {
