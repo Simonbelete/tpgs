@@ -28,6 +28,15 @@
     <div class="container-fluid">
         {% include 'components/count_statics.html' %}
     </div>
+    <div class="row">
+      <div class="col-md-4">
+        {% include 'components/breed_type_piechart.html' %}
+      </div>
+    </div>
 </div>
 
 {% endblock %}
+
+{% block javascript %}
+<script src="{% static 'js/breed_type_piechart.js' %}"></script>
+{% endblock%}

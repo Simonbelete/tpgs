@@ -139,20 +139,34 @@
             <li class="nav-item menu-open">
               <a
                 href="/"
-                class="nav-link {% if request.path == '/home/' %}active{% endif %}"
+                class="nav-link {% if request.path == '/dashboard/' %}active{% endif %}"
               >
                 <i class="nav-icon fas fa-tachometer-alt"></i>
                 <p>
                   Dashboard
-                  <!-- <i class="right fas fa-angle-left"></i> -->
+                  <i class="right fas fa-angle-left"></i>
                 </p>
               </a>
+              <ul class="nav nav-treeview">
+                <li class="nav-item">
+                  <a href="#" class="nav-link {% if request.path == '/dashboard/' %}active{% endif %}">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Statics</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="#" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Pedigree Chart</p>
+                  </a>
+                </li>
+              </ul>
             </li>
 
             <li class="nav-item">
               <a
                 href="{% url 'users' %}"
-                class="nav-link {% if request.path == '/users' %}active{% endif %}"
+                class="nav-link {% if request.path == '/users/' %}active{% endif %}"
               >
                 <i class="nav-icon fas fa-users"></i>
                 <p>Users</p>
@@ -351,13 +365,11 @@
       <!-- Control sidebar content goes here -->
       <div class="p-3">
         <h5>Farms</h5>
-        {% comment %} 
-        {% if user.farms %}
+        {% comment %} {% if user.farms %}
           {% for farm in user.farms %}
             <p>{{ farm.name }}</p>
           {% endfor %}
-        {% endif %}
-        {% endcomment %}
+        {% endif %} {% endcomment %}
       </div>
     </aside>
     <!-- /.control-sidebar -->
