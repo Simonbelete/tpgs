@@ -30,7 +30,7 @@
     <!-- /.container-fluid -->
 
      <!-- Main content -->
-  <section class="content">
+  <section class="content row">
     <div class="col-md-6">
       <div class="card card-primary">
         <div class="card-header">
@@ -67,7 +67,7 @@
           </div>
           <!-- /.card-header -->
           <div class="card-body">
-            <table id="history" class="table table-bordered table-striped">
+            <table id="history" data-id="{{ id }}" class="table table-bordered table-striped">
               <thead>
                 <tr>
                   <th>Changed By</th>
@@ -96,4 +96,8 @@
 
   <!-- /.content -->
 </section>
+{% endblock %}
+
+{% block javascript %}
+<script src="{% static 'js/country_history.js' %}"></script>
 {% endblock %}

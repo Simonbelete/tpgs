@@ -52,7 +52,7 @@ class CountriesEditView(LoginRequiredMixin, View):
         try:
             data = Country.objects.get(pk=id)
             form = CityForm(instance=data)
-            return render(request, 'countries/edit.html', {'form': form})
+            return render(request, 'countries/edit.html', {'form': form, "id": id})
         except Exception as ex:
             return redirect('500')
 

@@ -15,20 +15,21 @@ requirejs(
     "datatables_buttons_colVis",
   ],
   function ($, DataTable) {
+    var selector = $("#history");
     // History
     var historyColumns = [
       { data: "history_user.name" },
       { data: "name" },
       { data: "history_date" },
     ];
-    var historyTable = $("#history").DataTable({
+    var historyTable = selector.DataTable({
       responsive: true,
       lengthChange: false,
       autoWidth: false,
       processing: true,
       serverSide: true,
       ajax: {
-        url: "/api/v1/countries/" + "{{ data.id }}/histories",
+        url: "/api/countries/" + selector.data("id") + "/histories",
         dataSrc: function (json) {
           json["data"] = json["results"];
           json["recordsTotal"] = json["count"];
