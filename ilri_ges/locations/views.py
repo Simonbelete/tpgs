@@ -56,6 +56,19 @@ class CountriesEditView(LoginRequiredMixin, View):
         except Exception as ex:
             return redirect('500')
 
+    def post(self, request, id=0):
+        if id == 0:
+            return redirect('404')
+        try:
+            data = Country.objects.get(pk=id)
+            form = CityForm(request.POST, instance=data)
+            if form.is_valid():
+                form.save()
+            messages.success(request, 'Successfully Updated !')
+            return render(request, 'countries/edit.html', {'form': form})
+        except Exception as ex:
+            return redirect('500')
+
 
 class CitiesView(LoginRequiredMixin, View):
     login_url = '/users/login'
