@@ -44,7 +44,6 @@ class UsersCreateView(View):
             farmer_group = Group.objects.get(
                 name='farmer')
             farmer_group.user_set.add(user)
-            print(user)
             if user is not None:
                 return redirect('users')
             else:
