@@ -72,5 +72,8 @@ require.config({
     "d3-transition": "../../../static/js/lib/d3-zoom/d3-transition",
     "d3-zoom": "../../../static/js/lib/d3-zoom/d3-zoom",
     chartjs: "../../../static/js/lib/admin-LTE/plugins/chart.js/Chart.min",
+    moment: "../../../static/js/lib/admin-LTE/plugins/moment/moment.min",
+    daterangepicker:
+      "../../../static/js/lib/admin-LTE/plugins/daterangepicker/daterangepicker",
   },
 });

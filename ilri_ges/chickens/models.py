@@ -8,6 +8,7 @@ from farms.models import Farm
 from locations.models import House, LayedPlace
 from breeds.models import BreedType
 from weights.models import Weight
+from breeding_pairs.models import BreedPair
 
 
 class ChickenManager(models.Manager):
@@ -24,6 +25,8 @@ class Chicken(CoreModel):
         ('M', 'Male',),
     )
 
+    breed_pair = models.ForeignKey(
+        BreedPair, on_delete=models.SET_NULL, null=True, blank=True, related_name='children')
     flock = models.ForeignKey(
         Flock, on_delete=models.SET_NULL, null=True, blank=True, related_name='chickens')
     tag = models.CharField(max_length=250, unique=True)
