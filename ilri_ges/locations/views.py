@@ -51,7 +51,7 @@ class CountriesEditView(LoginRequiredMixin, View):
             return redirect('404')
         try:
             data = Country.objects.get(pk=id)
-            form = CityForm(instance=data)
+            form = CountryForm(instance=data)
             return render(request, 'countries/edit.html', {'form': form, "id": id})
         except Exception as ex:
             return redirect('500')
@@ -61,7 +61,7 @@ class CountriesEditView(LoginRequiredMixin, View):
             return redirect('404')
         try:
             data = Country.objects.get(pk=id)
-            form = CityForm(request.POST, instance=data)
+            form = CountryForm(request.POST, instance=data)
             if form.is_valid():
                 form.save()
             messages.success(request, 'Successfully Updated !')
@@ -83,7 +83,7 @@ class CitiesCreateView(LoginRequiredMixin, View):
     redirect_field_name = 'redirect_to'
 
     def get(self, request):
-        form = CityForm
+        form = CityForm()
         return render(request, 'cities/create.html', {'form': form})
 
     def post(self, request):
@@ -93,21 +93,39 @@ class CitiesCreateView(LoginRequiredMixin, View):
             form.created_by = request.user
             form.save()
             if form is not None:
-                return redirect('countries')
+                return redirect('cities')
             else:
                 messages.error(
                     request, 'Error occurred while creating, please check your data')
-        return render(request, 'countries/index.html')
+        return render(request, 'cities/index.html')
 
 
 class CitiesEditView(LoginRequiredMixin, View):
     login_url = '/users/login'
     redirect_field_name = 'redirect_to'
 
-    def get(self, request):
-        data = Country.objects.get(pk=id)
-        form = CityForm(instance=data)
-        return render(request, 'houses/index.html', {'form': form})
+    def get(self, request, id=0):
+        if id == 0:
+            return redirect('404')
+        try:
+            data = City.objects.get(pk=id)
+            form = CityForm(instance=data)
+            return render(request, 'cities/edit.html', {'form': form, "id": id})
+        except Exception as ex:
+            return redirect('500')
+
+    def post(self, request, id=0):
+        if id == 0:
+            return redirect('404')
+        try:
+            data = Country.objects.get(pk=id)
+            form = CityForm(request.POST, instance=data)
+            if form.is_valid():
+                form.save()
+            messages.success(request, 'Successfully Updated !')
+            return render(request, 'cities/edit.html', {'form': form})
+        except Exception as ex:
+            return redirect('500')
 
 
 class HousesView(LoginRequiredMixin, View):

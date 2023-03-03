@@ -64,7 +64,7 @@ requirejs(
     selector.on("click", "td.editor-edit", function (e) {
       e.preventDefault();
       var data = table.row(this).data();
-      window.location.href = "/locations/cities" + data.id;
+      window.location.href = "/locations/cities/" + data.id;
     });
   }
 );
