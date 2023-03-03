@@ -47,11 +47,14 @@ class CountriesEditView(LoginRequiredMixin, View):
     redirect_field_name = 'redirect_to'
 
     def get(self, request, id=0):
-        print('---------------------')
-        print(id)
         if id == 0:
             return redirect('404')
-        return render(request, 'countries/edit.html')
+        try:
+            data = Country.objects.get(pk=id)
+            form = CityForm(instance=data)
+            return render(request, 'countries/edit.html', {'form': form})
+        except Exception as ex:
+            return redirect('500')
 
 
 class CitiesView(LoginRequiredMixin, View):

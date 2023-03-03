@@ -16,7 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
-from .views import index, playground_d3js, page404
+from .views import index, playground_d3js, page404, page500
 
 urlpatterns = [
     path('', index, name='index'),
@@ -38,5 +38,6 @@ urlpatterns = [
     path('api/', include('farms.api.urls')),
 
     path('playgrounds/d3js', playground_d3js, name='playground_d3js'),
-    path('404', page404, name='404')
+    path('404', page404, name='404'),
+    path('500', page500, name='500')
 ]
