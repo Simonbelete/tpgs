@@ -15,7 +15,7 @@ requirejs(["jquery", "select2"], function ($, Select2) {
         params.page = params.page || 1;
         var transform = $.map(data.results, function (obj) {
           obj.id = obj.id || obj.id;
-          obj.text = obj.text || obj.tag;
+          obj.text = obj.text || obj.name;
           return obj;
         });
         return {
