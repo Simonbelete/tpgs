@@ -1,11 +1,13 @@
 from django.db import models
 from django.conf import settings
+from simple_history.models import HistoricalRecords
 
 from core.models import CoreModel
 
 
 class Country(CoreModel):
     name = models.CharField(max_length=100, unique=True)
+    history = HistoricalRecords()
 
     class Meta:
         ordering = ["name"]
