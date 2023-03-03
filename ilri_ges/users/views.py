@@ -3,7 +3,7 @@ from django.views import View
 from django.contrib import messages
 from django.contrib.auth import authenticate, logout, login
 
-from users.forms import LoginForm
+from users.forms import LoginForm, UserForm
 
 
 class LoginView(View):
@@ -24,6 +24,20 @@ class LoginView(View):
         return render(request, 'login/index.html', {'form': form})
 
 
-class UserView(View):
+class UsersView(View):
     def get(self, request):
         return render(request, 'users/index.html')
+
+
+class UsersCreateView(View):
+    def get(self, request):
+        form = UserForm()
+        return render(request, 'users/create.html', {'form': form})
+
+    def post(self, request):
+        pass
+
+
+class UsersEditView(View):
+    def get(self, request):
+        return render(request, 'users/edit.html')
