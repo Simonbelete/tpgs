@@ -35,7 +35,7 @@
         <div class="card-header">
           <h3 class="card-title">Create</h3>
         </div>
-        <form action="/home/users/" method="POST">
+        <form action="" method="POST">
           {% include 'components/messages.html' %}
 
           {% csrf_token %}
@@ -54,7 +54,7 @@
             </div>
             <div class="form-group">
               <label for="{{ form.password.id_for_label }}">Password</label>
-              {{ form.password|add_class:"form-control"|add_error_class:"is-invalid"|attr:"placeholder: Enter Password" }}
+              {{ form.password|add_class:"form-control"|add_error_class:"is-invalid"|attr:"placeholder: Enter Password"|attr:"type: password" }}
             </div>
             {% include 'components/multi_farm_select.html' %}
           </div>

@@ -1,9 +1,11 @@
 from django.shortcuts import render, redirect
 from django.views import View
 from django.contrib import messages
+from django.contrib.auth.models import Group, Permission
 from django.contrib.auth import authenticate, logout, login
 
 from users.forms import LoginForm, UserForm
+from .models import User
 
 
 class LoginView(View):
@@ -35,7 +37,19 @@ class UsersCreateView(View):
         return render(request, 'users/create.html', {'form': form})
 
     def post(self, request):
-        pass
+        form = UserForm(request.POST)
+        if form.is_valid():
+            user = User.objects.create_user(
+                form.cleaned_data['email'], form.cleaned_data['password'], name=form.cleaned_data['name'], farms=form.cleaned_data['farms'])
+            farmer_group = Group.objects.get(
+                name='farmer')
+            farmer_group.user_set.add(user)
+            print(user)
+            if user is not None:
+                return redirect('users')
+            else:
+                messages.error(request, f'Error occurred while creating user')
+        return render(request, 'users/create.html', {'form': form})
 
 
 class UsersEditView(View):

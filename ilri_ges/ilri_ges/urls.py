@@ -27,6 +27,7 @@ urlpatterns = [
     path('chickens/', include('chickens.urls')),
     path('breeding-pairs/', include('breeding_pairs.urls')),
     path('locations/', include('locations.urls')),
+    path('farms/', include('farms.urls')),
     path('admin/', admin.site.urls),
 
     path('api/', include('breeds.api.urls')),
@@ -34,6 +35,7 @@ urlpatterns = [
     path('api/', include('users.api.urls')),
     path('api/', include('breeding_pairs.api.urls')),
     path('api/', include('locations.api.urls')),
+    path('api/', include('farms.api.urls')),
 
     path('playgrounds/d3js', playground_d3js, name='playground_d3js'),
 

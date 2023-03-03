@@ -5,8 +5,9 @@
       name="farms"
       multiple="multiple"
       data-placeholder="Farms to manage"
-      class="form-control select2"
+      class="form-control select2 {% if form.farms.errors %} is-invalid {% endif %}"
       style="width: 100%"
     >
     </select>
+    <span id="{{ form.farms.id_for_label }}-error" class="error invalid-feedback">Please enter a valid farms</span>
 </div>
