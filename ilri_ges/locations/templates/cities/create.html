@@ -8,7 +8,7 @@
 {% include 'components/select2_style.html' %}
 {% endblock %} 
 
-{% block title %} Create User - ILRI genetics Evaluation {% endblock %} 
+{% block title %} Create City - ILRI genetics Evaluation {% endblock %} 
 
 {% block body %}
 
@@ -17,12 +17,12 @@
     <div class="container-fluid">
       <div class="row mb-2">
         <div class="col-sm-6">
-          <h1>Farm</h1>
+          <h1>City</h1>
         </div>
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
             <li class="breadcrumb-item"><a href="#">Home</a></li>
-            <li class="breadcrumb-item active">Create Farm</li>
+            <li class="breadcrumb-item active">Create City</li>
           </ol>
         </div>
       </div>
@@ -34,7 +34,7 @@
     <div class="col-md-6">
       <div class="card card-primary">
         <div class="card-header">
-          <h3 class="card-title">Farm</h3>
+          <h3 class="card-title">City</h3>
         </div>
         <form action="" method="POST">
           {% include 'components/messages.html' %}
@@ -44,12 +44,12 @@
 
           <div class="card-body">
             <div class="form-group">
-              <label for="{{ form.name.id_for_label }}">Farm Name</label>
+              <label for="{{ form.name.id_for_label }}">City Name</label>
               {{ form.name|add_class:"form-control"|add_error_class:"is-invalid"|attr:"placeholder: Enter name" }}
               <span id="{{ form.name.id_for_label }}-error" class="error invalid-feedback">Please enter a valid name</span>
             </div>
 
-            {% include 'components/city_select.html' %}
+            {% include 'components/country_select.html' %}
           </div>
           <!-- /.card-body -->
 
@@ -66,5 +66,5 @@
 {% endblock %}
 
 {% block javascript %}
-<script src="{% static 'js/city_select.js' %}"></script>
+<script src="{% static 'js/country_select.js' %}"></script>
 {% endblock %}

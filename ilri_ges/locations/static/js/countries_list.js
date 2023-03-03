@@ -26,7 +26,8 @@ requirejs(
       {
         data: null,
         className: "dt-center editor-edit",
-        defaultContent: '<i class="fas fa-pencil-alt"></i>',
+        defaultContent:
+          '<button type="button" class="btn btn-success">View / Edit</button>',
         orderable: false,
       },
     ];
@@ -62,7 +63,7 @@ requirejs(
     selector.on("click", "td.editor-edit", function (e) {
       e.preventDefault();
       var data = table.row(this).data();
-      window.location.href = "/locations/countries" + data.id;
+      window.location.href = "/locations/countries/" + data.id;
     });
   }
 );
