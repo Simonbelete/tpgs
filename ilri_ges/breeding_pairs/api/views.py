@@ -24,7 +24,9 @@ class BreedPairTreeViewSet(viewsets.ModelViewSet):
     serializer_class = BreedPairSerializer_GET_V1
 
     def list(self, request, *args, **kwargs):
-        tree = np.array(self.get_serializer(self.queryset, many=True).data)
+        data = self.get_serializer(self.queryset, many=True).data
+        data = self.queryset
+        tree = np.array(data)
         print('-----------------------------------------')
-        print(tree)
+        print(data[1].children)
         return Response({'hello': 'abc'})

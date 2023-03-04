@@ -22,3 +22,5 @@ class ChickenViewSet(viewsets.ModelViewSet):
     queryset = Chicken.objects.all()
     serializer_class = ChickenSerializer_GET_V1
     filterset_class = ChickenFilter
+    search_fields = ['tag']
+    ordering_fields = '__all__'
