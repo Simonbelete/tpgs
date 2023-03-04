@@ -150,8 +150,8 @@
 
             <li class="nav-item">
               <a
-                href="/home/breeding-pairs"
-                class="nav-link {% if request.path == '/home/breeding-pairs/' %}active{% endif %}"
+                href="{% url 'breeding_pairs' %}"
+                class="nav-link {% if request.path == '/breeding-pairs/' %}active{% endif %}"
               >
                 <i class="nav-icon fas fa-syringe"></i>
                 <p>Breeding Pairs</p>

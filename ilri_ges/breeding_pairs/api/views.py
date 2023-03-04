@@ -1,5 +1,6 @@
 import numpy as np
-from rest_framework import viewsets, status
+from rest_framework import viewsets
+from rest_framework.response import Response
 
 from breeding_pairs.models import BreedPair
 from breeding_pairs.api.serializers import BreedPairSerializer_GET_V1, BreedPairSerializer_POST_V1
@@ -23,4 +24,7 @@ class BreedPairTreeViewSet(viewsets.ModelViewSet):
     serializer_class = BreedPairSerializer_GET_V1
 
     def list(self, request, *args, **kwargs):
-        tree = np.array(self.serializer_class)
+        tree = np.array(self.get_serializer(self.queryset, many=True).data)
+        print('-----------------------------------------')
+        print(tree)
+        return Response({'hello': 'abc'})

@@ -1,0 +1,83 @@
+{% extends "sidebar.html" %} 
+{% load static %}
+
+{% block stylesheet %} 
+{% include 'components/list_styles.html' %} 
+{% endblock %} 
+
+{% block title %} Breeding Pairs - ILRI genetics Evaluation {% endblock %} 
+
+{% block body %}
+
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <div class="container-fluid">
+      <div class="row mb-2">
+        <div class="col-sm-6">
+          <h1>Cities</h1>
+        </div>
+        <div class="col-sm-6">
+          <ol class="breadcrumb float-sm-right">
+            <li class="breadcrumb-item"><a href="/">Home</a></li>
+            <li class="breadcrumb-item active">Breeding Pairs</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+    <!-- /.container-fluid -->
+</section>
+
+<!-- Main content -->
+<section class="content">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-12">
+          <div class="card">
+            <div class="card-header row">
+              <h3 class="card-title col-10">List of Breeding Pairs</h3>
+              <div class="col-2">
+                <a href="{% url 'breeding_pairs_create' %}" role="button" type="button" class="btn btn-primary float-right"><i class="fas fa-plus"></i> Create Breeding Pair</a>
+              </div>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body">
+              <table
+                id="breeding_pairs_data_table_list"
+                class="table table-bordered table-striped"
+              >
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Date</th>
+                    <th>Sire</th>
+                    <th>Dam</th>
+                    <th>Created At</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody></tbody>
+                <tfoot>
+                  <tr>
+                    <th>ID</th>
+                    <th>Date</th>
+                    <th>Sire</th>
+                    <th>Dam</th>
+                    <th>Created At</th>
+                    <th></th>
+                  </tr>
+                </tfoot>
+              </table>
+            </div>
+            <!-- /.card-body -->
+          </div>
+          <!-- /.card -->
+        </div>
+      </div>
+    </div>
+</section>
+
+{% endblock %}
+
+{% block javascript %}
+<script src="{% static 'js/breeding_pairs_list.js' %}"></script>
+{% endblock %}
