@@ -180,8 +180,8 @@
 
             <li class="nav-item">
               <a
-                href="/home/chickens"
-                class="nav-link {% if request.path == '/home/chickens/' %}active{% endif %}"
+                href="{% url 'chickens' %}"
+                class="nav-link {% if request.path == '/chickens/' %}active{% endif %}"
               >
                 <i class="nav-icon fas fa-crow"></i>
                 <p>Chickens</p>
