@@ -3,8 +3,9 @@
     <select
       id="chicken_select"
       name="chicken"
-      class="form-control select2"
+      class="form-control select2 {% if form.chicken.errors %} is-invalid {% endif %}"
       style="width: 100%"
     >
     </select>
+    <span id="{{ form.chicken.id_for_label }}-error" class="error invalid-feedback">Please enter a valid data</span>
 </div>

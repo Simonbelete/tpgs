@@ -39,6 +39,10 @@ class ChickenCreateView(LoginRequiredMixin, View):
             else:
                 messages.error(
                     request, 'Error occurred while creating, please check your data')
+        else:
+            messages.error(request,
+                           'Error occurred while creating, please check your data')
+            return render(request, 'chickens/create.html', {'form': form})
         return render(request, 'chickens/index.html', {'form': form})
 
 

@@ -2,12 +2,7 @@
 {% load static %}
 
 {% block page_content %}
-<div class="wrapper">
-    <!-- Preloader -->
-  <div class="preloader flex-column justify-content-center align-items-center">
-    <img class="animation__shake" src="{% static 'images/ilri_cgiar.png' %}" alt="ILRI Logo" height="80">
-  </div>
-
+ <div class="wrapper">
     <!-- Navbar -->
     <nav class="main-header navbar navbar-expand navbar-white navbar-light">
       <!-- Left navbar links -->
@@ -84,15 +79,9 @@
             <i class="fas fa-expand-arrows-alt"></i>
           </a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#" role="button">
-            <i class="fas fa-th-large"></i>
-          </a>
-        </li>
       </ul>
     </nav>
     <!-- /.navbar -->
-    
 
     <!-- Main Sidebar Container -->
     <aside class="main-sidebar sidebar-dark-primary elevation-4">
@@ -139,34 +128,20 @@
             <li class="nav-item menu-open">
               <a
                 href="/"
-                class="nav-link {% if request.path == '/dashboard/' %}active{% endif %}"
+                class="nav-link {% if request.path == '/home/' %}active{% endif %}"
               >
                 <i class="nav-icon fas fa-tachometer-alt"></i>
                 <p>
                   Dashboard
-                  <i class="right fas fa-angle-left"></i>
+                  <!-- <i class="right fas fa-angle-left"></i> -->
                 </p>
               </a>
-              <ul class="nav nav-treeview">
-                <li class="nav-item">
-                  <a href="#" class="nav-link {% if request.path == '/dashboard/' %}active{% endif %}">
-                    <i class="far fa-circle nav-icon"></i>
-                    <p>Statics</p>
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a href="#" class="nav-link">
-                    <i class="far fa-circle nav-icon"></i>
-                    <p>Pedigree Chart</p>
-                  </a>
-                </li>
-              </ul>
             </li>
 
             <li class="nav-item">
               <a
-                href="{% url 'users' %}"
-                class="nav-link {% if request.path == '/users/' %}active{% endif %}"
+                href="/home/users"
+                class="nav-link {% if request.path == '/home/users/' %}active{% endif %}"
               >
                 <i class="nav-icon fas fa-users"></i>
                 <p>Users</p>
@@ -195,8 +170,8 @@
 
             <li class="nav-item">
               <a
-                href="{% url 'farms' %}"
-                class="nav-link {% if request.path == '/farms/' %}active{% endif %}"
+                href="/home/farms"
+                class="nav-link {% if request.path == '/home/farms/' %}active{% endif %}"
               >
                 <i class="nav-icon fas fa-industry"></i>
                 <p>Farms</p>
@@ -205,8 +180,8 @@
 
             <li class="nav-item">
               <a
-                href="{% url 'chickens' %}"
-                class="nav-link {% if request.path == '/chickens/' %}active{% endif %}"
+                href="/home/chickens"
+                class="nav-link {% if request.path == '/home/chickens/' %}active{% endif %}"
               >
                 <i class="nav-icon fas fa-crow"></i>
                 <p>Chickens</p>
@@ -265,8 +240,8 @@
 
             <li class="nav-item">
               <a
-                href="{% url 'layed_places' %}"
-                class="nav-link {% if request.path == '/locations/layed-places' %}active{% endif %}"
+                href="/home/layed-places"
+                class="nav-link {% if request.path == '/home/layed-places' %}active{% endif %}"
               >
                 <i class="nav-icon fas fa-map-marker-alt"></i>
                 <p>Layed Place</p>
@@ -285,8 +260,8 @@
 
             <li class="nav-item">
               <a
-                href="{% url 'houses' %}"
-                class="nav-link {% if request.path == '/locations/houses' %}active{% endif %}"
+                href="/home/feed-types"
+                class="nav-link {% if request.path == '/home/feed-types' %}active{% endif %}"
               >
                 <i class="nav-icon fas fa-seedling"></i>
                 <p>Pen</p>
@@ -334,15 +309,13 @@
 
             <li class="nav-header">LOCATIONS</li>
             <li class="nav-item">
-              <a  href="{% url 'countries' %}"
-                  class="nav-link {% if request.path == '/locations/countries' %}active{% endif %}">
+              <a href="/home/countries" class="nav-link">
                 <i class="fas fa-circle nav-icon"></i>
                 <p>Countries</p>
               </a>
             </li>
             <li class="nav-item">
-              <a href="{% url 'cities' %}"
-                 class="nav-link {% if request.path == '/locations/cities' %}active{% endif %}">
+              <a href="/home/cities" class="nav-link">
                 <i class="fas fa-circle nav-icon"></i>
                 <p>Cities</p>
               </a>
@@ -358,22 +331,7 @@
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">{% block body %}{% endblock %}</div>
 
-    <!-- /.content-wrapper -->
-
-    <!-- Control Sidebar -->
-    <aside class="control-sidebar control-sidebar-dark">
-      <!-- Control sidebar content goes here -->
-      <div class="p-3">
-        <h5>Farms</h5>
-        {% comment %} {% if user.farms %}
-          {% for farm in user.farms %}
-            <p>{{ farm.name }}</p>
-          {% endfor %}
-        {% endif %} {% endcomment %}
-      </div>
-    </aside>
-    <!-- /.control-sidebar -->
-
+    {% comment %} <!-- /.content-wrapper -->
     <footer class="main-footer">
       <div class="float-right d-none d-sm-block"><b>Version</b> 0.1.0</div>
       <strong
@@ -383,7 +341,24 @@
         >.</strong
       >
       All rights reserved.
-    </footer>
+    </footer> {% endcomment %}
+
+    <!-- Control Sidebar -->
+    <aside class="control-sidebar control-sidebar-dark">
+      <!-- Control sidebar content goes here -->
+    </aside>
+    <!-- /.control-sidebar -->
+
+    <!-- Preloader -->
+     <div
+     class="preloader flex-column justify-content-center align-items-center">
+     <img
+       class="animation__shake"
+       src="{% static 'images/ilri_cgiar.png' %}"
+       alt="AdminLTELogo"
+       height="80"
+     />
+   </div>
 
     <!-- End Of Wrapper-->
   </div>

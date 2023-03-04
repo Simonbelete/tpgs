@@ -3,8 +3,11 @@
     <select
       id="farm_select"
       name="farm"
-      class="form-control select2"
+      class="form-control select2 {% if form.breed_type.errors %} is-invalid {% endif %}"
       style="width: 100%"
     >
     </select>
+    <span id="{{ form.breed_type.id_for_label }}-error" class="error invalid-feedback">
+      {{ form.breed_type.errors }}
+    </span>
 </div>
