@@ -9,6 +9,7 @@ from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 from chickens.models import Chicken
+from breeding_pairs.models import BreedPair
 from .forms import ChickenForm
 
 
@@ -85,10 +86,16 @@ class ChickenImportView(View):
         df.columns = df.columns.str.lower()
 
         for index, row in df.iterrows():
-            print('---------------------------------')
-            print(row['id'])
-            print(index)
-            chicken = Chicken.objects.update_or_create(tag=row['id'])
+            try:
+                sire = Chicken.objects.all().get(tag=row['sire id'])
+                dam = Chicken.objects.all().get(tag=row['dam id'])
+                breed_pair, breed_pair_created = BreedPair.objects.get_or_create(
+                    sire=sire, dam=dam, created_by=self.request.user)
+                chicken, chicken_created = Chicken.objects.update_or_create(
+                    tag=row['id'], breed_pair=breed_pair, created_by=self.request.user)
+            except:
+                chicken, chicken_created = Chicken.objects.update_or_create(
+                    tag=row['id'], created_by=self.request.user)
 
         return HttpResponse({
             'errors': errors,
