@@ -144,7 +144,7 @@
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a href="{% url 'dashboard_pedigree' %}" class="nav-link {% if request.path == '/dashboard/pedigree/' %}active{% endif %}">
+                  <a href="{% url 'dashboard_pedigree' %}" class="nav-link {% if request.path == '/dashboard/pedigree' %}active{% endif %}">
                     <i class="far fa-circle nav-icon"></i>
                     <p>Pedigree Tree</p>
                   </a>
@@ -154,8 +154,8 @@
 
             <li class="nav-item">
               <a
-                href="/home/users"
-                class="nav-link {% if request.path == '/home/users/' %}active{% endif %}"
+                href="{% url 'users' %}"
+                class="nav-link {% if request.path == '/users/' %}active{% endif %}"
               >
                 <i class="nav-icon fas fa-users"></i>
                 <p>Users</p>
@@ -214,8 +214,8 @@
 
             <li class="nav-item">
               <a
-                href="/home/feeds"
-                class="nav-link {% if request.path == '/home/feeds/' %}active{% endif %}"
+                href="{% url 'feeds' %}"
+                class="nav-link {% if request.path == '/feeds/' %}active{% endif %}"
               >
                 <i class="nav-icon fas fa-cookie-bite"></i>
                 <p>Feed</p>

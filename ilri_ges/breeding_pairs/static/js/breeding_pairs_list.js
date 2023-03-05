@@ -24,6 +24,7 @@ requirejs(
       { data: "date" },
       { data: "sire.tag" },
       { data: "dam.tag" },
+      { data: "children_count" },
       { data: "created_at" },
       {
         data: null,

@@ -53,7 +53,8 @@ INSTALLED_APPS = [
     'stages',
     'flocks',
     'weights',
-    'breeding_pairs'
+    'breeding_pairs',
+    'feeds'
 ]
 
 AUTH_USER_MODEL = 'users.User'
@@ -88,6 +89,7 @@ TEMPLATES = [
             'flocks/templates',
             'weights/templates',
             'breeding_pairs/templates'
+            'feeds/templates'
         ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -163,6 +165,7 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "flocks/static"),
     os.path.join(BASE_DIR, "weights/static"),
     os.path.join(BASE_DIR, "breeding_pairs/static"),
+    os.path.join(BASE_DIR, "feeds/static"),
 ]
 
 # Default primary key field type
