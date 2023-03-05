@@ -20,3 +20,11 @@ class DashboardView(LoginRequiredMixin, View):
             },
         }
         return render(request, 'dashboard/index.html', context=context)
+
+
+class DashboardPedigreeView(LoginRequiredMixin, View):
+    login_url = '/users/login'
+    redirect_field_name = 'redirect_to'
+
+    def get(self, request):
+        return render(request, 'pedigree/index.html')

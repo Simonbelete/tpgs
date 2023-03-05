@@ -47,7 +47,7 @@
             <div class="form-group">
               <label for="{{ form.tag.id_for_label }}">Tag</label>
               {{ form.tag|add_class:"form-control"|add_error_class:"is-invalid"|attr:"placeholder: Enter Tag" }}
-              <span id="{{ form.tag.id_for_label }}-error" class="error invalid-feedback">Please enter a valid tag</span>
+              <span id="{{ form.tag.id_for_label }}-error" class="error invalid-feedback">{{ form.tag.errors }}</span>
             </div>
 
             <div class="form-group">
@@ -55,13 +55,14 @@
                 <select
                   id="sex"
                   name="sex"
-                  class="form-control select2"
+                  class="form-control select2 {% if form.sex.errors %} is-invalid {% endif %}"
                   style="width: 100%"
                 >
                   <option value="" selected="selected">-</option>
                   <option value="M">Male</option>
                   <option value="F">Female</option>
                 </select>
+                <span id="{{ form.sex.id_for_label }}-error" class="error invalid-feedback">{{ form.sex.errors }}</span>
             </div>
 
             <div class="form-group">

@@ -575,7 +575,10 @@ requirejs(
       ],
     };
 
-    const sample = { name: "1", children: [{ name: "1.1" }] };
+    const sample = {
+      name: "root",
+      children: [{ name: 1, children: [{ name: 1.1 }] }, { name: 2 }],
+    };
     var chart = Tree(sample, {
       label: (d) => d.name,
       title: (d, n) =>

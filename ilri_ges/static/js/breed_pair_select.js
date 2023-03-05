@@ -14,7 +14,6 @@ requirejs(["jquery", "select2"], function ($, Select2) {
       processResults: function (data, params) {
         params.page = params.page || 1;
         var transform = $.map(data.results, function (obj) {
-          console.log(obj);
           obj.id = obj.id || obj.id;
           obj.text = obj.text || obj.sire.name + " - " + obj.dam.name;
           return obj;

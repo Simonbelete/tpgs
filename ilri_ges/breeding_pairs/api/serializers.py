@@ -11,7 +11,7 @@ class BreedPairSerializer_GET_V1(serializers.ModelSerializer):
 
     class Meta:
         model = BreedPair
-        fields = '__all__'
+        fields = ['sire', 'dam', 'children']
 
 
 class BreedPairSerializer_POST_V1(serializers.ModelSerializer):
