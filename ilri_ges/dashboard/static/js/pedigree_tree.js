@@ -23,10 +23,13 @@ requirejs(["jquery", "d3_tree"], function ($, D3Tree) {
           .map((d) => d.data.name)
           .join("/")}${n.children ? "" : ".as"}`,
       width: 1152,
-      height: 1152,
+      height: 650,
       margin: 100,
     });
 
     $("#chart_view_port").append(chart);
+    $("#chart_view_port > svg").css("border", "1px solid gray");
+    $("#chart_view_port > svg").attr("width", "100%");
+    $("#chart_view_port > svg").attr("height", "50%");
   });
 });
