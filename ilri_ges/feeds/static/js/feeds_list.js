@@ -21,7 +21,10 @@ requirejs(
 
     var columns = [
       { data: "id", visible: false },
-      { data: "name" },
+      { data: "date" },
+      { data: "weight" },
+      { data: "chicken" },
+      { data: "feed_type" },
       { data: "created_at" },
       {
         data: null,
