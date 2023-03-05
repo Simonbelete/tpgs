@@ -25,8 +25,6 @@ class FeedsCreateView(LoginRequiredMixin, View):
 
     def post(self, request):
         form = FeedForm(request.POST)
-        print('---------------------------')
-        print(form['chicken'])
         if form.is_valid():
             form = form.save(commit=False)
             form.created_by = request.user

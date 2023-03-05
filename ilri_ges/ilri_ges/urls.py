@@ -29,6 +29,7 @@ urlpatterns = [
     path('locations/', include('locations.urls')),
     path('farms/', include('farms.urls')),
     path('feeds/', include('feeds.urls')),
+    path('eggs/', include('eggs.urls')),
     path('admin/', admin.site.urls),
 
     path('api/', include('breeds.api.urls')),
@@ -38,6 +39,7 @@ urlpatterns = [
     path('api/', include('locations.api.urls')),
     path('api/', include('farms.api.urls')),
     path('api/', include('feeds.api.urls')),
+    path('api/', include('eggs.api.urls')),
 
     path('playgrounds/d3js', playground_d3js, name='playground_d3js'),
     path('404', page404, name='404'),

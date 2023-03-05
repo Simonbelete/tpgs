@@ -1,0 +1,85 @@
+{% extends "sidebar.html" %} 
+{% load static %}
+
+{% block stylesheet %} 
+    {% include 'components/list_styles.html' %} 
+{% endblock %} 
+
+{% block title %} Egg Records - ILRI genetics Evaluation {% endblock %} 
+
+{% block body %}
+
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <div class="container-fluid">
+      <div class="row mb-2">
+        <div class="col-sm-6">
+          <h1>Egg Records</h1>
+        </div>
+        <div class="col-sm-6">
+          <ol class="breadcrumb float-sm-right">
+            <li class="breadcrumb-item"><a href="/">Home</a></li>
+            <li class="breadcrumb-item active">Egg Records</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+    <!-- /.container-fluid -->
+
+    <!-- Main content -->
+  <section class="content">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-12">
+          <div class="card">
+            <div class="card-header row">
+              <h3 class="card-title col-10">List of Egg Records</h3>
+              <div class="col-2">
+                <a href="{% url 'eggs_create' %}" role="button" type="button" class="btn btn-primary float-right"><i class="fas fa-plus"></i> Create Egg Production Record</a>
+              </div>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body">
+              <table
+                id="eggs_data_table_list"
+                class="table table-bordered table-striped"
+              >
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Chicken</th>
+                    <th>Week</th>
+                    <th>Eggs</th>
+                    <th>Created At</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody></tbody>
+                <tfoot>
+                  <tr>
+                    <th>ID</th>
+                    <th>Chicken</th>
+                    <th>Week</th>
+                    <th>Eggs</th>
+                    <th>Created At</th>
+                    <th></th>
+                  </tr>
+                </tfoot>
+              </table>
+            </div>
+            <!-- /.card-body -->
+          </div>
+          <!-- /.card -->
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- /.content -->
+</section>
+
+{% endblock %}
+
+{% block javascript %}
+<script src="{% static 'js/eggs_list.js' %}"></script>
+{% endblock %}
