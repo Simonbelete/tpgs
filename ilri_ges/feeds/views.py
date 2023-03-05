@@ -90,7 +90,7 @@ class FeedTypesCreateView(LoginRequiredMixin, View):
             form.created_by = request.user
             form.save()
             if form is not None:
-                return redirect('feed_types')
+                return redirect('feeds_types')
             else:
                 messages.error(
                     request, 'Error occurred while creating, please check your data')
