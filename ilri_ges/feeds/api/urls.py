@@ -9,9 +9,9 @@ router.register(r'(?P<id>.+)/histories',
                 views.FeedHistoryViewSet, basename='api_feeds_histories'),
 
 router_types = routers.DefaultRouter()
-router_types.register(r'', views.FeedTypeViewSet, basename='api_feeds'),
+router_types.register(r'', views.FeedTypeViewSet, basename='api_feeds_types'),
 router_types.register(r'(?P<id>.+)/histories',
-                      views.FeedTypeHistoryViewSet, basename='api_feeds_histories'),
+                      views.FeedTypeHistoryViewSet, basename='api_feeds_types_histories'),
 
 
 urlpatterns = [

@@ -2,6 +2,7 @@ from rest_framework import serializers
 
 from feeds.models import Feed, FeedType
 from users.api.serializers import UserSerializer_GET_V1
+from chickens.api.serializers import ChickenSerializer_GET_V1
 
 
 class FeedTypeSerializer_GET_V1(serializers.ModelSerializer):
@@ -27,7 +28,8 @@ class FeedSerializer_GET_V1(serializers.ModelSerializer):
 
 class FeedHistory(serializers.ModelSerializer):
     history_user = UserSerializer_GET_V1()
-    name = serializers.CharField()
+    chicken = ChickenSerializer_GET_V1()
+    feed_type = FeedTypeSerializer_GET_V1()
 
     class Meta:
         model = Feed.history.__dict__['model']
