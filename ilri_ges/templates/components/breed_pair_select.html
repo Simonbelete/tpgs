@@ -1,11 +1,5 @@
 <div class="form-group">
     <label for="breed_pair_select">Breeding Pair</label>
-    <select
-      id="breed_pair_select"
-      name="breed_pair"
-      class="form-control select2 {% if form.breed_pair.errors %} is-invalid {% endif %}"
-      style="width: 100%"
-    >
-    </select>
-    <span id="{{ form.breed_pair.id_for_label }}-error" class="error invalid-feedback">Please enter a valid data</span>
+    {{ form.breed_pair|attr:"id:breed_pair_select"|add_class:"form-control"|add_error_class:"is-invalid" }}
+    <span id="{{ form.breed_pair.id_for_label }}-error" class="error invalid-feedback">{{ form.breed_pair.errors }}</span>
 </div>

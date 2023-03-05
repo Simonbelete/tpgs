@@ -25,6 +25,8 @@ class FeedsCreateView(LoginRequiredMixin, View):
 
     def post(self, request):
         form = FeedForm(request.POST)
+        print('---------------------------')
+        print(form['chicken'])
         if form.is_valid():
             form = form.save(commit=False)
             form.created_by = request.user
@@ -34,7 +36,7 @@ class FeedsCreateView(LoginRequiredMixin, View):
             else:
                 messages.error(
                     request, 'Error occurred while creating, please check your data')
-        return render(request, 'feeds/index.html')
+        return render(request, 'feeds/create.html', {'form': form})
 
 
 class FeedsEditView(LoginRequiredMixin, View):

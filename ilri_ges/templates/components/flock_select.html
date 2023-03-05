@@ -1,10 +1,6 @@
 <div class="form-group">
     <label for="flock_select">Flock</label>
-    <select
-      id="flock_select"
-      name="flock"
-      class="form-control select2"
-      style="width: 100%"
-    >
-    </select>
+    {{ form.flock|attr:"id:flock_select"|add_class:"form-control"|add_error_class:"is-invalid" }}
+    <span id="{{ form.flock.id_for_label }}-error" class="error invalid-feedback">{{ form.flock.errors }}</span>
+
 </div>

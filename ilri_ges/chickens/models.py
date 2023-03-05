@@ -45,6 +45,9 @@ class Chicken(CoreModel):
     is_dead = models.BooleanField(default=False)
     dead_date = models.DateField(null=True, blank=True)
 
+    def __str__(self):
+        return self.tag
+
     @property
     def name(self):
         house = self.house.name if self.house != None else ""

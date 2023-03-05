@@ -1,11 +1,5 @@
 <div class="form-group">
     <label for="country">country</label>
-    <select
-      id="country_select"
-      name="country"
-      class="form-control select2 {% if form.country.errors %} is-invalid {% endif %}"
-      style="width: 100%"
-    >
-    </select>
-    <span id="{{ form.country.id_for_label }}-error" class="error invalid-feedback">Please enter a valid data</span>
+    {{ form.country|attr:"id:country_select"|add_class:"form-control"|add_error_class:"is-invalid" }}
+    <span id="{{ form.country.id_for_label }}-error" class="error invalid-feedback">{{ form.country.errors }}</span>
 </div>

@@ -1,12 +1,6 @@
 <div class="form-group">
     <label for="feed_type_select">Feed Type</label>
-    <select
-      id="feed_type_select"
-      name="farm"
-      class="form-control select2 {% if form.feed_type.errors %} is-invalid {% endif %}"
-      style="width: 100%"
-    >
-    </select>
+    {{ form.feed_type|attr:"id:feed_type_select"|add_class:"form-control"|add_error_class:"is-invalid" }}
     <span id="{{ form.feed_type.id_for_label }}-error" class="error invalid-feedback">
       {{ form.feed_type.errors }}
     </span>

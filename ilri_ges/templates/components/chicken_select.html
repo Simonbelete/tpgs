@@ -1,11 +1,6 @@
+{% load widget_tweaks %}
 <div class="form-group">
     <label for="chicken">Chicken</label>
-    <select
-      id="chicken_select"
-      name="chicken"
-      class="form-control select2 {% if form.chicken.errors %} is-invalid {% endif %}"
-      style="width: 100%"
-    >
-    </select>
-    <span id="{{ form.chicken.id_for_label }}-error" class="error invalid-feedback">Please enter a valid data</span>
+    {{ form.chicken|attr:"id:chicken_select"|add_class:"form-control"|add_error_class:"is-invalid" }}
+    <span id="{{ form.chicken.id_for_label }}-error" class="error invalid-feedback">{{ form.chicken.errors }}</span>
 </div>
