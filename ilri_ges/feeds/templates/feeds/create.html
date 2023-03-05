@@ -1,0 +1,77 @@
+{% extends "sidebar.html" %} 
+{% load static %} 
+{% load widget_tweaks %}
+
+
+{% block stylesheet %} 
+{% include 'components/create_styles.html' %} 
+{% include 'components/select2_style.html' %}
+{% include 'components/daterangepicker_style.html' %} 
+{% include 'components/datatables_style.html' %}
+{% endblock %} 
+
+{% block title %} Create Feed Record - ILRI genetics Evaluation {% endblock %} 
+
+{% block body %}
+
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <div class="container-fluid">
+      <div class="row mb-2">
+        <div class="col-sm-6">
+          <h1>Feed Record</h1>
+        </div>
+        <div class="col-sm-6">
+          <ol class="breadcrumb float-sm-right">
+            <li class="breadcrumb-item"><a href="#">Home</a></li>
+            <li class="breadcrumb-item active">Feed Record</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+    <!-- /.container-fluid -->
+
+     <!-- Main content -->
+  <section class="content">
+    <div class="col-md-6">
+      <div class="card card-primary">
+        <div class="card-header">
+          <h3 class="card-title">Feed Record</h3>
+        </div>
+        <form action="" method="POST">
+          {% include 'components/messages.html' %}
+
+          {% csrf_token %}
+          {{ form.non_field_errors }}
+
+          <div class="card-body">
+            {% include 'components/chicken_select.html' %}
+            {% include 'components/date_picker.html' %}
+            {% include 'components/feed_type_select.html' %}
+
+            <div class="form-group">
+              <label for="{{ form.weight.id_for_label }}">Feed Weight</label>
+              {{ form.weight|add_class:"form-control"|add_error_class:"is-invalid"|attr:"placeholder: Enter name" }}
+              <span id="{{ form.weight.id_for_label }}-error" class="error invalid-feedback">{{ form.weight.errors }}</span>
+            </div>
+
+          </div>
+          <!-- /.card-body -->
+
+          <div class="card-footer">
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- /.content -->
+</section>
+{% endblock %}
+
+{% block javascript %}
+<script src="{% static 'js/chicken_select.js' %}"></script>
+<script src="{% static 'js/date_picker.js' %}"></script>
+<script src="{% static 'js/feed_type_select.js' %}"></script>
+{% endblock %}
