@@ -2,8 +2,9 @@ import io
 import math
 import pandas as pd
 from decimal import Decimal
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views import View
+from django.contrib import messages
 from datetime import date, timedelta, datetime
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponse, HttpResponseNotFound
@@ -28,11 +29,49 @@ class WeightsCreateView(LoginRequiredMixin, View):
     redirect_field_name = 'redirect_to'
 
     def get(self, request):
-        form = WeightForm()
+        form = WeightForm
         return render(request, 'weights/create.html', {'form': form})
 
     def post(self, request):
-        pass
+        form = WeightForm(request.POST)
+        if form.is_valid():
+            form = form.save(commit=False)
+            form.created_by = request.user
+            form.save()
+            if form is not None:
+                return redirect('weights')
+            else:
+                messages.error(
+                    request, 'Error occurred while creating, please check your data')
+        return render(request, 'eggs/create.html', {'form': form})
+
+
+class WeightsEditView(LoginRequiredMixin, View):
+    login_url = '/users/login'
+    redirect_field_name = 'redirect_to'
+
+    def get(self, request, id=0):
+        if id == 0:
+            return redirect('404')
+        try:
+            data = Weight.objects.get(pk=id)
+            form = WeightForm(instance=data)
+            return render(request, 'weights/edit.html', {'form': form, "id": id})
+        except Exception as ex:
+            return redirect('500')
+
+    def post(self, request, id=0):
+        if id == 0:
+            return redirect('404')
+        try:
+            data = Weight.objects.get(pk=id)
+            form = WeightForm(request.POST, instance=data)
+            if form.is_valid():
+                form.save()
+            messages.success(request, 'Successfully Updated !')
+            return render(request, 'weights/edit.html', {'form': form})
+        except Exception as ex:
+            return redirect('500')
 
 
 class WeightsImportView(View):

@@ -47,13 +47,15 @@
             <!-- /.card-header -->
             <div class="card-body">
               <table
-                id="breed_type_table"
+                id="weights_data_table_list"
                 class="table table-bordered table-striped"
               >
                 <thead>
                   <tr>
                     <th>ID</th>
-                    <th>Name</th>
+                    <th>Week</th>
+                    <th>Weight</th>
+                    <th>chicken</th>
                     <th>Created At</th>
                     <th></th>
                   </tr>
@@ -62,7 +64,9 @@
                 <tfoot>
                   <tr>
                     <th>ID</th>
-                    <th>Name</th>
+                    <th>Week</th>
+                    <th>Weight</th>
+                    <th>chicken</th>
                     <th>Created At</th>
                     <th></th>
                   </tr>
@@ -79,5 +83,5 @@
 </section>
 
 {% endblock %} {% block javascript %}
-<script src="{% static 'js/breeds_list.js' %}"></script>
+<script src="{% static 'js/weights_list.js' %}"></script>
 {% endblock %}

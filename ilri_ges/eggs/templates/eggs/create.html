@@ -45,7 +45,6 @@
           {{ form.non_field_errors }}
 
           <div class="card-body">
-            {{ forms.errors }}
             {% include 'components/chicken_select.html' %}
             {% include 'components/feed_type_select.html' %}
 
@@ -59,7 +58,7 @@
                 <label for="{{ form.week.id_for_label }}">Week</label>
                 {{ form.week|add_class:"form-control"|add_error_class:"is-invalid"|attr:"placeholder: Enter Week" }}
                 <span id="{{ form.week.id_for_label }}-error" class="error invalid-feedback">{{ form.week.errors }}</span>
-              </div>
+            </div>
 
           </div>
           <!-- /.card-body -->

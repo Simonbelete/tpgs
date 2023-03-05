@@ -40,6 +40,7 @@ urlpatterns = [
     path('api/', include('farms.api.urls')),
     path('api/', include('feeds.api.urls')),
     path('api/', include('eggs.api.urls')),
+    path('api/', include('weights.api.urls')),
 
     path('playgrounds/d3js', playground_d3js, name='playground_d3js'),
     path('404', page404, name='404'),

@@ -204,8 +204,8 @@
 
             <li class="nav-item">
               <a
-                href="/home/weights"
-                class="nav-link {% if request.path == '/home/weights/' %}active{% endif %}"
+                href="{% url 'weights' %}"
+                class="nav-link {% if request.path == '/weights/' %}active{% endif %}"
               >
                 <i class="nav-icon fas fa-weight"></i>
                 <p>Weight</p>
