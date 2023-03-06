@@ -192,3 +192,53 @@ class LayedPlacesView(LoginRequiredMixin, View):
 
     def get(self, request):
         return render(request, 'layed_places/index.html')
+
+
+class LayedPlacesCreateView(LoginRequiredMixin, View):
+    login_url = '/users/login'
+    redirect_field_name = 'redirect_to'
+
+    def get(self, request):
+        form = LayedPlaceForm
+        return render(request, 'layed_places/create.html', {'form': form})
+
+    def post(self, request):
+        form = LayedPlaceForm(request.POST)
+        if form.is_valid():
+            form = form.save(commit=False)
+            form.created_by = request.user
+            form.save()
+            if form is not None:
+                return redirect('layed_places')
+            else:
+                messages.error(
+                    request, 'Error occurred while creating, please check your data')
+        return render(request, 'layed_places/create.html', {'form': form})
+
+
+class LayedPlacesEditView(LoginRequiredMixin, View):
+    login_url = '/users/login'
+    redirect_field_name = 'redirect_to'
+
+    def get(self, request, id=0):
+        if id == 0:
+            return redirect('404')
+        try:
+            data = LayedPlace.objects.get(pk=id)
+            form = LayedPlaceForm(instance=data)
+            return render(request, 'layed_places/edit.html', {'form': form, "id": id})
+        except Exception as ex:
+            return redirect('500')
+
+    def post(self, request, id=0):
+        if id == 0:
+            return redirect('404')
+        try:
+            data = LayedPlace.objects.get(pk=id)
+            form = LayedPlaceForm(request.POST, instance=data)
+            if form.is_valid():
+                form.save()
+            messages.success(request, 'Successfully Updated !')
+            return render(request, 'layed_places/edit.html', {'form': form})
+        except Exception as ex:
+            return redirect('500')

@@ -15,4 +15,8 @@ urlpatterns = [
     path('houses/<int:id>/', views.HousesEditView.as_view(), name='houses_edit'),
     path('houses/create', views.HousesCreateView.as_view(), name='houses_create'),
     path('layed-places', views.LayedPlacesView.as_view(), name='layed_places'),
+    path('layed-places/<int:id>/', views.LayedPlacesEditView.as_view(),
+         name='layed_places_edit'),
+    path('layed-places/create', views.LayedPlacesCreateView.as_view(),
+         name='layed_places_create'),
 ]

@@ -254,8 +254,8 @@
 
             <li class="nav-item">
               <a
-                href="/home/layed-places"
-                class="nav-link {% if request.path == '/home/layed-places' %}active{% endif %}"
+                href="{% url 'layed_places' %}"
+                class="nav-link {% if request.path == '/layed-places/' %}active{% endif %}"
               >
                 <i class="nav-icon fas fa-map-marker-alt"></i>
                 <p>Layed Place</p>
