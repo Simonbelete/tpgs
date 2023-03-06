@@ -105,8 +105,8 @@ class FeedTypesEditView(LoginRequiredMixin, View):
         if id == 0:
             return redirect('404')
         try:
-            data = Feed.objects.get(pk=id)
-            form = FeedForm(instance=data)
+            data = FeedType.objects.get(pk=id)
+            form = FeedTypeForm(instance=data)
             return render(request, 'feed_types/edit.html', {'form': form, "id": id})
         except Exception as ex:
             return redirect('500')
