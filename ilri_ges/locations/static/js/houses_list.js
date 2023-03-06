@@ -22,6 +22,7 @@ requirejs(
     var columns = [
       { data: "id", visible: false },
       { data: "name" },
+      { data: "farm.name", defaultContent: "" },
       { data: "created_at" },
       {
         data: null,
@@ -63,7 +64,7 @@ requirejs(
     selector.on("click", "td.editor-edit", function (e) {
       e.preventDefault();
       var data = table.row(this).data();
-      window.location.href = "/locations/houses" + data.id;
+      window.location.href = "/locations/houses/" + data.id;
     });
   }
 );

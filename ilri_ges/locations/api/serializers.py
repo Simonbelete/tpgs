@@ -2,6 +2,7 @@ from rest_framework import serializers
 
 from locations.models import Country, City, LayedPlace, House
 from users.api.serializers import UserSerializer_GET_V1
+from farms.api.serializers import FarmSerializer_GET_V1
 
 
 class CountrySerializer_GET_V1(serializers.ModelSerializer):
@@ -34,6 +35,8 @@ class LayedPlaceSerializer_GET_V1(serializers.ModelSerializer):
 
 
 class HouseSerializer_GET_V1(serializers.ModelSerializer):
+    farm = FarmSerializer_GET_V1()
+
     class Meta:
         model = House
         fields = '__all__'
