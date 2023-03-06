@@ -39,7 +39,7 @@ class CountriesCreateView(LoginRequiredMixin, View):
             else:
                 messages.error(
                     request, 'Error occurred while creating, please check your data')
-        return render(request, 'countries/index.html')
+        return render(request, 'countries/index.html', {'form': form})
 
 
 class CountriesEditView(LoginRequiredMixin, View):
@@ -134,6 +134,56 @@ class HousesView(LoginRequiredMixin, View):
 
     def get(self, request, id=0):
         return render(request, 'houses/index.html')
+
+
+class HousesCreateView(LoginRequiredMixin, View):
+    login_url = '/users/login'
+    redirect_field_name = 'redirect_to'
+
+    def get(self, request):
+        form = HouseForm
+        return render(request, 'houses/create.html', {'form': form})
+
+    def post(self, request):
+        form = HouseForm(request.POST)
+        if form.is_valid():
+            form = form.save(commit=False)
+            form.created_by = request.user
+            form.save()
+            if form is not None:
+                return redirect('houses')
+            else:
+                messages.error(
+                    request, 'Error occurred while creating, please check your data')
+        return render(request, 'houses/create.html', {'form': form})
+
+
+class HousesEditView(LoginRequiredMixin, View):
+    login_url = '/users/login'
+    redirect_field_name = 'redirect_to'
+
+    def get(self, request, id=0):
+        if id == 0:
+            return redirect('404')
+        try:
+            data = House.objects.get(pk=id)
+            form = HouseForm(instance=data)
+            return render(request, 'houses/edit.html', {'form': form, "id": id})
+        except Exception as ex:
+            return redirect('500')
+
+    def post(self, request, id=0):
+        if id == 0:
+            return redirect('404')
+        try:
+            data = Country.objects.get(pk=id)
+            form = CountryForm(request.POST, instance=data)
+            if form.is_valid():
+                form.save()
+            messages.success(request, 'Successfully Updated !')
+            return render(request, 'houses/edit.html', {'form': form})
+        except Exception as ex:
+            return redirect('500')
 
 
 class LayedPlacesView(LoginRequiredMixin, View):
