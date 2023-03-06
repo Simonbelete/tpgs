@@ -12,5 +12,7 @@ urlpatterns = [
     path('cities/<int:id>/', views.CitiesEditView.as_view(), name='cities_edit'),
     path('cities/create', views.CitiesCreateView.as_view(), name='cities_create'),
     path('houses', views.HousesView.as_view(), name='houses'),
+    path('houses/<int:id>/', views.CitiesEditView.as_view(), name='houses_edit'),
+    path('houses/create', views.CitiesCreateView.as_view(), name='houses_create'),
     path('layed-places', views.LayedPlacesView.as_view(), name='layed_places'),
 ]

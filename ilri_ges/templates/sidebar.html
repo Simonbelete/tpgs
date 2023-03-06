@@ -274,10 +274,10 @@
 
             <li class="nav-item">
               <a
-                href="/home/feed-types"
-                class="nav-link {% if request.path == '/home/feed-types' %}active{% endif %}"
+                href="{% url 'houses' %}"
+                class="nav-link {% if request.path == '/locations/houses' %}active{% endif %}"
               >
-                <i class="nav-icon fas fa-seedling"></i>
+                <i class="nav-icon fas fa-table"></i>
                 <p>Pen</p>
               </a>
             </li>
