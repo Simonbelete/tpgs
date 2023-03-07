@@ -42,6 +42,8 @@ urlpatterns = [
     path('api/', include('eggs.api.urls')),
     path('api/', include('weights.api.urls')),
 
+    path('chickens/api/', include('chickens.api.urls')),
+
     path('playgrounds/d3js', playground_d3js, name='playground_d3js'),
     path('404', page404, name='404'),
     path('500', page500, name='500')

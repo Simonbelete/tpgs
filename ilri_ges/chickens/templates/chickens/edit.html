@@ -1,0 +1,108 @@
+{% extends "sidebar.html" %} 
+{% load static %} 
+{% load widget_tweaks %}
+
+
+{% block stylesheet %} 
+{% include 'components/create_styles.html' %} 
+{% include 'components/select2_style.html' %}
+{% include 'components/daterangepicker_style.html' %}
+{% endblock %} 
+
+{% block title %} Create Chicken - ILRI genetics Evaluation {% endblock %} 
+
+{% block body %}
+
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <div class="container-fluid">
+      <div class="row mb-2">
+        <div class="col-sm-6">
+          <h1>Chicken</h1>
+        </div>
+        <div class="col-sm-6">
+          <ol class="breadcrumb float-sm-right">
+            <li class="breadcrumb-item"><a href="#">Home</a></li>
+            <li class="breadcrumb-item active">Chicken</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+    <!-- /.container-fluid -->
+
+     <!-- Main content -->
+  <section class="content">
+    <div class="row col-12">
+        <div class="col-md-3 col-sm-6 col-12">
+            <div class="info-box">
+              <span class="info-box-icon bg-warning"><i class="far fa-copy"></i></span>
+
+              <div class="info-box-content">
+                <span class="info-box-text">Weight</span>
+                <span class="info-box-number" id="statics_weight">-</span>
+              </div>
+              <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+        </div>
+    </div>
+    <div class="col-md-6">
+      <div class="card card-primary">
+        <div class="card-header">
+          <h3 class="card-title">Chicken</h3>
+        </div>
+        <form action="" method="POST">
+          {% include 'components/messages.html' %}
+
+          {% csrf_token %}
+          {{ form.non_field_errors }}
+
+          <div class="card-body">
+            <div class="form-group">
+              <label for="{{ form.tag.id_for_label }}">Tag</label>
+              {{ form.tag|add_class:"form-control"|add_error_class:"is-invalid"|attr:"placeholder: Enter Tag" }}
+              <span id="{{ form.tag.id_for_label }}-error" class="error invalid-feedback">{{ form.tag.errors }}</span>
+            </div>
+
+            <div class="form-group">
+                <label for="sex">Sex</label>
+                {{ form.sex|add_class:"form-control"|add_error_class:"is-invalid"|attr:"id:sex"|attr:"placeholder: Sex" }}
+                <span id="{{ form.sex.id_for_label }}-error" class="error invalid-feedback">{{ form.sex.errors }}</span>
+            </div>
+
+            <div class="form-group">
+                <label for="{{ form.hatch_date.id_for_label }}">Hatch Date</label>
+                {{ form.hatch_date|add_class:"form-control"|add_error_class:"is-invalid"|attr:"id:hatch_date"|attr:"placeholder: Enter Tag" }}
+                <span id="{{ form.hatch_date.id_for_label }}-error" class="error invalid-feedback">Please enter a valid tag</span>
+            </div>
+
+            {% include 'components/farm_select.html' %}
+
+            {% include 'components/house_select.html' %}
+            {% include 'components/breed_select.html' %}
+            {% include 'components/breed_pair_select.html' %}
+          </div>
+          <!-- /.card-body -->
+
+          <div class="card-footer">
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    {% include 'components/fcr_growth.html' %}
+  </section>
+
+  <!-- /.content -->
+</section>
+{% endblock %}
+
+{% block javascript %}
+<script src="{% static 'js/farm_select.js' %}"></script>
+<script src="{% static 'js/chicken_create.js' %}"></script>
+<script src="{% static 'js/house_select.js' %}"></script>
+<script src="{% static 'js/breed_type_select.js' %}"></script>
+<script src="{% static 'js/breed_pair_select.js' %}"></script>
+<script src="{% static 'js/fcr_growth.js' %}"></script>
+{% endblock %}

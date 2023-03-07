@@ -1,0 +1,74 @@
+<div class="col-12">
+    <div class="card">
+      <div class="card-header d-flex" style="align-items: center">
+        <h3 class="card-title col-3">Feed Conversion Ratio - Growth Preformance</h3>
+        <div class="d-flex col-9 justify-content-end">
+            <div class="col-sm-1 col-md-1" style="align-items: center">
+                <input
+                  type="number"
+                  name="fcrg_start_week"
+                  value="0"
+                  min="0"
+                  class="form-control"
+                  id="fcrg_start_week"
+                  placeholder="Start Week"
+                />
+            </div>
+            <div>to</div>
+            <div class="col-sm-1 col-md-1">
+                <input
+                  type="number"
+                  name="fcrg_end_week"
+                  value="10"
+                  min="1"
+                  class="form-control"
+                  id="fcrg_end_week"
+                  placeholder="End Week"
+                />
+            </div>   
+            <button
+                  type="button"
+                  class="btn btn-primary"
+                  id="fcrg_apply"
+                >
+                  Apply
+            </button>     
+        </div>  
+      </div>
+      <!-- /.card-header -->
+      <div class="card-body">
+        <div class="tab-content">
+            <div class="container-fluid tab-pane active" id="tab_1">
+                <canvas id="fcrg_chart" style="min-height: 250px; height: 250px; max-height: 600px; max-width: 100%;"></canvas>
+            </div>
+            <!-- /.tab-pane -->
+            <div class="tab-pane" id="tab_2">
+                <table id="fcrg_data_list_table" data-id="{{ id }}" class="table table-bordered table-striped">
+                <thead>
+                  <tr>
+                    <th>Week</th>
+                    <th>Weight Gain</th>
+                    <th>Feed Weight</th>
+                    <th>FCR</th>
+                  </tr>
+                </thead>
+                <tbody></tbody>
+              </table>
+            </div>
+            <!-- /.tab-pane -->
+        </div>
+        {% comment %} <div class="container-fluid">
+            <canvas id="fcrg_chart" style="min-height: 250px; height: 250px; max-height: 600px; max-width: 100%;"></canvas>
+        </div> {% endcomment %}
+      </div>
+      <!-- /.card-body -->
+      
+      <div class="card-footer d-flex">
+        <ul class="nav nav-pills ml-auto">
+            <li class="nav-item"><a class="nav-link active" href="#tab_1" data-toggle="tab">Chart</a></li>
+            <li class="nav-item"><a class="nav-link" href="#tab_2" data-toggle="tab">Data</a></li>
+        </ul>
+      </div>
+    </div>
+    <!-- /.card -->
+</div>

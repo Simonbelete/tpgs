@@ -17,7 +17,7 @@ class FeedType(CoreModel):
 
 
 class Feed(CoreModel):
-    date = models.DateField()
+    week = models.IntegerField(default=0)
     chicken = models.ForeignKey(
         'chickens.Chicken', on_delete=models.CASCADE, related_name='feeds')
     weight = models.DecimalField(
