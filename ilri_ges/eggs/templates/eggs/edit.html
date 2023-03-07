@@ -56,6 +56,12 @@
             </div>
 
             <div class="form-group">
+              <label for="{{ form.total_weight.id_for_label }}">Total Weight</label>
+              {{ form.total_weight|add_class:"form-control"|add_error_class:"is-invalid"|attr:"placeholder: Enter total weight" }}
+              <span id="{{ form.total_weight.id_for_label }}-error" class="error invalid-feedback">{{ form.total_weight.errors }}</span>
+            </div>
+
+            <div class="form-group">
                 <label for="{{ form.week.id_for_label }}">Week</label>
                 {{ form.week|add_class:"form-control"|add_error_class:"is-invalid"|attr:"placeholder: Enter Week" }}
                 <span id="{{ form.week.id_for_label }}-error" class="error invalid-feedback">{{ form.week.errors }}</span>
