@@ -1,6 +1,7 @@
 import math
 from django.db import models
 from datetime import date
+from simple_history.models import HistoricalRecords
 
 from core.models import CoreModel
 from flocks.models import Flock
@@ -47,6 +48,8 @@ class Chicken(CoreModel):
 
     is_dead = models.BooleanField(default=False)
     dead_date = models.DateField(null=True, blank=True)
+
+    history = HistoricalRecords()
 
     def __str__(self):
         return self.tag

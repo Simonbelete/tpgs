@@ -3,8 +3,9 @@ from rest_framework.response import Response
 from django_filters import rest_framework as filters
 from rest_framework.views import APIView
 
+from core.views import HistoryViewSet
 from chickens.models import Chicken
-from chickens.api.serializers import ChickenSerializer_GET_V1
+from . import serializers
 from weights.models import Weight
 from feeds.models import Feed
 from eggs.models import Egg
@@ -25,7 +26,7 @@ class ChickenFilter(filters.FilterSet):
 
 class ChickenViewSet(viewsets.ModelViewSet):
     queryset = Chicken.objects.all()
-    serializer_class = ChickenSerializer_GET_V1
+    serializer_class = serializers.ChickenSerializer_GET_V1
     filterset_class = ChickenFilter
     search_fields = ['tag']
     ordering_fields = '__all__'
@@ -122,3 +123,10 @@ class FCrEgg(APIView):
             fcrs.append(current_week_fcr)
 
         return Response({'results': fcrs, 'count': len(fcrs)}, status=status.HTTP_200_OK)
+
+
+class ChickenHistoryViewSet(HistoryViewSet):
+    queryset = Chicken.history.all()
+    serializer_class = serializers.ChickenHistory
+    search_fields = ['name']
+    ordering_fields = '__all__'
