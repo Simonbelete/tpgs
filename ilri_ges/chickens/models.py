@@ -41,6 +41,9 @@ class Chicken(CoreModel):
         LayedPlace, on_delete=models.SET_NULL, null=True, blank=True)
     is_double_yolk = models.BooleanField(default=False)
     hatch_date = models.DateField(null=True, blank=True)
+    # Chickens self egg weight
+    egg_weight = models.DecimalField(
+        max_digits=10, decimal_places=3, default=0)
 
     is_dead = models.BooleanField(default=False)
     dead_date = models.DateField(null=True, blank=True)

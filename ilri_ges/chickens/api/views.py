@@ -7,6 +7,7 @@ from chickens.models import Chicken
 from chickens.api.serializers import ChickenSerializer_GET_V1
 from weights.models import Weight
 from feeds.models import Feed
+from eggs.models import Egg
 
 
 class ChickenFilter(filters.FilterSet):
@@ -74,6 +75,46 @@ class FCrGrowth(APIView):
             current_week_fcr['current_week_weight'] = current_week_weight
             current_week_fcr['previous_week_weight'] = previous_week_weight
             current_week_fcr['weight_gain'] = weight_gain
+            current_week_fcr['feed_weight'] = feed_weight
+            fcrs.append(current_week_fcr)
+
+        return Response({'results': fcrs, 'count': len(fcrs)}, status=status.HTTP_200_OK)
+
+
+class FCrEgg(APIView):
+    queryset = Chicken.objects.all()
+
+    def get(self, request, id=0):
+        start_week = request.GET.get('start_week') or 0
+        end_week = request.GET.get('end_week') or 0
+
+        start_week = int(start_week)
+        end_week = int(end_week)
+
+        if id == 0 or end_week == 0:
+            return Response({'results': [], 'error': ['Please provide valid data for start_week',
+                                                      'Please provide valid data for end_week',
+                                                      'Please provide valid data for id']}, status=status.HTTP_400_BAD_REQUEST)
+
+        fcrs = []
+        for current_week in range(start_week, end_week + 1):
+            current_week_fcr = {'week': current_week}
+            fcr = 0
+            total_egg_weight = 0
+            feed_weight = 0
+            try:
+                feed = Feed.objects.get(chicken=id, week=current_week)
+                total_egg_weight = Egg.objects.get(
+                    chicken=id, week=current_week)
+
+                feed_weight = feed.weight
+                total_egg_weight = total_egg_weight.total_weight
+
+                fcr = feed_weight/total_egg_weight
+            except:
+                fcr = 0
+            current_week_fcr['fcr'] = fcr
+            current_week_fcr['total_egg_weight'] = total_egg_weight
             current_week_fcr['feed_weight'] = feed_weight
             fcrs.append(current_week_fcr)
 

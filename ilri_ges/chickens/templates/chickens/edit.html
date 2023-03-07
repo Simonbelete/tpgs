@@ -29,9 +29,10 @@
       </div>
     </div>
     <!-- /.container-fluid -->
+</section>
 
      <!-- Main content -->
-  <section class="content">
+<section class="content">
     <div class="row col-12">
         <div class="col-md-3 col-sm-6 col-12">
             <div class="info-box">
@@ -46,56 +47,81 @@
             <!-- /.info-box -->
         </div>
     </div>
-    <div class="col-md-6">
+    <div class="col-md-12">
       <div class="card card-primary">
         <div class="card-header">
           <h3 class="card-title">Chicken</h3>
         </div>
-        <form action="" method="POST">
-          {% include 'components/messages.html' %}
+    
 
-          {% csrf_token %}
-          {{ form.non_field_errors }}
+          
 
           <div class="card-body">
-            <div class="form-group">
-              <label for="{{ form.tag.id_for_label }}">Tag</label>
-              {{ form.tag|add_class:"form-control"|add_error_class:"is-invalid"|attr:"placeholder: Enter Tag" }}
-              <span id="{{ form.tag.id_for_label }}-error" class="error invalid-feedback">{{ form.tag.errors }}</span>
-            </div>
+            <form action="" method="POST">
+                {% include 'components/messages.html' %}
+                {% csrf_token %}
+                {{ form.non_field_errors }}
 
-            <div class="form-group">
-                <label for="sex">Sex</label>
-                {{ form.sex|add_class:"form-control"|add_error_class:"is-invalid"|attr:"id:sex"|attr:"placeholder: Sex" }}
-                <span id="{{ form.sex.id_for_label }}-error" class="error invalid-feedback">{{ form.sex.errors }}</span>
-            </div>
+                <div class="row">
+                    <div class="form-group col-md-6">
+                        <label for="{{ form.tag.id_for_label }}">Tag</label>
+                        {{ form.tag|add_class:"form-control"|add_error_class:"is-invalid"|attr:"placeholder: Enter Tag" }}
+                        <span id="{{ form.tag.id_for_label }}-error" class="error invalid-feedback">{{ form.tag.errors }}</span>
+                    </div>
 
-            <div class="form-group">
-                <label for="{{ form.hatch_date.id_for_label }}">Hatch Date</label>
-                {{ form.hatch_date|add_class:"form-control"|add_error_class:"is-invalid"|attr:"id:hatch_date"|attr:"placeholder: Enter Tag" }}
-                <span id="{{ form.hatch_date.id_for_label }}-error" class="error invalid-feedback">Please enter a valid tag</span>
-            </div>
+                    <div class="form-group col-md-6">
+                        <label for="sex">Sex</label>
+                        {{ form.sex|add_class:"form-control"|add_error_class:"is-invalid"|attr:"id:sex"|attr:"placeholder: Sex" }}
+                        <span id="{{ form.sex.id_for_label }}-error" class="error invalid-feedback">{{ form.sex.errors }}</span>
+                    </div>
 
-            {% include 'components/farm_select.html' %}
+                    <div class="col-md-6">
+                        {% include 'components/farm_select.html' %}
+                    </div>
 
-            {% include 'components/house_select.html' %}
-            {% include 'components/breed_select.html' %}
-            {% include 'components/breed_pair_select.html' %}
+                    <div class="col-md-6">
+                        {% include 'components/house_select.html' %}
+                    </div>
+
+                    <div class="col-md-6">
+                        {% include 'components/breed_select.html' %}
+                    </div>
+
+                    <div class="col-md-6">
+                        {% include 'components/breed_pair_select.html' %}
+                    </div>
+
+                </div>
+
+                <h5>Egg Details</h5>
+
+                <div class="row">
+                    <div class="form-group col-md-6">
+                        <label for="{{ form.hatch_date.id_for_label }}">Hatch Date</label>
+                        {{ form.hatch_date|add_class:"form-control"|add_error_class:"is-invalid"|attr:"id:hatch_date"|attr:"placeholder: Enter Tag" }}
+                        <span id="{{ form.hatch_date.id_for_label }}-error" class="error invalid-feedback">Please enter a valid tag</span>
+                    </div>
+
+                    <div class="form-group col-md-6">
+                        <label for="{{ form.egg_weight.id_for_label }}">Egg Weight</label>
+                        {{ form.egg_weight|add_class:"form-control"|add_error_class:"is-invalid"|attr:"id:hatch_date"|attr:"placeholder: Enter Tag" }}
+                        <span id="{{ form.egg_weight.id_for_label }}-error" class="error invalid-feedback">{{ forms.egg_weight.errors }}</span>
+                    </div>
+                </div>
+        
+            </form>
           </div>
           <!-- /.card-body -->
 
           <div class="card-footer">
             <button type="submit" class="btn btn-primary">Submit</button>
           </div>
-        </form>
       </div>
     </div>
 
     {% include 'components/fcr_growth.html' %}
-  </section>
-
-  <!-- /.content -->
 </section>
+
 {% endblock %}
 
 {% block javascript %}
