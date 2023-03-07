@@ -100,6 +100,7 @@ class FCrEgg(APIView):
         for current_week in range(start_week, end_week + 1):
             current_week_fcr = {'week': current_week}
             fcr = 0
+            eggs = 0
             total_egg_weight = 0
             feed_weight = 0
             try:
@@ -108,6 +109,7 @@ class FCrEgg(APIView):
                     chicken=id, week=current_week)
 
                 feed_weight = feed.weight
+                eggs = total_egg_weight.eggs
                 total_egg_weight = total_egg_weight.total_weight
 
                 fcr = feed_weight/total_egg_weight
@@ -116,6 +118,7 @@ class FCrEgg(APIView):
             current_week_fcr['fcr'] = fcr
             current_week_fcr['total_egg_weight'] = total_egg_weight
             current_week_fcr['feed_weight'] = feed_weight
+            current_week_fcr['eggs'] = eggs
             fcrs.append(current_week_fcr)
 
         return Response({'results': fcrs, 'count': len(fcrs)}, status=status.HTTP_200_OK)

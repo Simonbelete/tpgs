@@ -8,5 +8,6 @@ router.register(r'chickens', views.ChickenViewSet, basename='api_chickens')
 
 urlpatterns = [
     path('chickens/<int:id>/fcr/growth', views.FCrGrowth.as_view()),
+    path('chickens/<int:id>/fcr/eggs', views.FCrEgg.as_view()),
     path('', include(router.urls)),
 ]
