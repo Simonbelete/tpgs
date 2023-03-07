@@ -25,6 +25,9 @@ requirejs(
       { data: "layed_date", defaultContent: "" },
       { data: "breed_type.name", defaultContent: "" },
       { data: "is_double_yolk" },
+      { data: "hatch_date" },
+      { data: "egg_weight" },
+      { data: "dead_date" },
       { data: "history_date" },
     ];
     var historyTable = selector.DataTable({
