@@ -69,8 +69,8 @@ class ChickenEditView(LoginRequiredMixin, View):
             form = ChickenForm(request.POST, instance=data)
             if form.is_valid():
                 form.save()
-            messages.success(request, 'Successfully Updated !')
-            return render(request, 'chickens/edit.html', {'form': form})
+                messages.success(request, 'Successfully Updated !')
+            return render(request, 'chickens/edit.html', {'form': form, "id": id})
         except Exception as ex:
             return redirect('500')
 

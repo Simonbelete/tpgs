@@ -47,17 +47,14 @@
             <!-- /.info-box -->
         </div>
     </div>
-    <div class="col-md-12">
+    <form class="col-md-12" action="" method="POST">
       <div class="card card-primary">
         <div class="card-header">
           <h3 class="card-title">Chicken</h3>
         </div>
-    
-
-          
 
           <div class="card-body">
-            <form action="" method="POST">
+            {% comment %} <form action="" method="POST"> {% endcomment %}
                 {% include 'components/messages.html' %}
                 {% csrf_token %}
                 {{ form.non_field_errors }}
@@ -98,13 +95,13 @@
                 <div class="row">
                     <div class="form-group col-md-6">
                         <label for="{{ form.hatch_date.id_for_label }}">Hatch Date</label>
-                        {{ form.hatch_date|add_class:"form-control"|add_error_class:"is-invalid"|attr:"id:hatch_date"|attr:"placeholder: Enter Tag" }}
-                        <span id="{{ form.hatch_date.id_for_label }}-error" class="error invalid-feedback">Please enter a valid tag</span>
+                        {{ form.hatch_date|add_class:"form-control"|add_error_class:"is-invalid"|attr:"id:hatch_date"|attr:"placeholder: Enter Hatch Date" }}
+                        <span id="{{ form.hatch_date.id_for_label }}-error" class="error invalid-feedback">{{ form.hatch_date.errors }}</span>
                     </div>
 
                     <div class="form-group col-md-6">
                         <label for="{{ form.egg_weight.id_for_label }}">Egg Weight</label>
-                        {{ form.egg_weight|add_class:"form-control"|add_error_class:"is-invalid"|attr:"id:hatch_date"|attr:"placeholder: Enter Tag" }}
+                        {{ form.egg_weight|add_class:"form-control"|add_error_class:"is-invalid"|attr:"id:egg_weight"|attr:"placeholder: Enter Tag" }}
                         <span id="{{ form.egg_weight.id_for_label }}-error" class="error invalid-feedback">{{ forms.egg_weight.errors }}</span>
                     </div>
                 </div>
@@ -116,8 +113,8 @@
           <div class="card-footer">
             <button type="submit" class="btn btn-primary">Submit</button>
           </div>
-      </div>
-    </div>
+        </div>
+    </form>
 
     {% include 'components/chicken_history.html' %}
     {% include 'components/fcr_growth.html' %}

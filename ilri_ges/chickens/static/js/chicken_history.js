@@ -19,9 +19,12 @@ requirejs(
     // History
     var historyColumns = [
       { data: "history_user.name" },
-      { data: "chicken.tag" },
-      { data: "week" },
-      { data: "eggs" },
+      { data: "tag" },
+      { data: "sex" },
+      { data: "farm.name", defaultContent: "" },
+      { data: "layed_date", defaultContent: "" },
+      { data: "breed_type.name", defaultContent: "" },
+      { data: "is_double_yolk" },
       { data: "history_date" },
     ];
     var historyTable = selector.DataTable({
