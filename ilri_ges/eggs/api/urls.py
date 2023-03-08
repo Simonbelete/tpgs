@@ -9,5 +9,6 @@ router.register(r'eggs/(?P<id>.+)/histories',
                 views.EggHistoryViewSet, basename='api_eggs_histories'),
 
 urlpatterns = [
-    path('', include(router.urls))
+    path('', include(router.urls)),
+    path('eggs/hdep', views.HHEP.as_view()),
 ]
