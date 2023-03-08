@@ -1,0 +1,44 @@
+{% load widget_tweaks %}
+
+<div class="modal fade" id="dead_modal">
+    <div class="modal-dialog">
+    <form method="POST" action="/chickens/{{ data.id }}/state">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Remove Chicken</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+                {% csrf_token %}
+
+                <div class="form-group col-md-6">
+                  <label for="{{ state_form.is_dead.id_for_label }}">Dead</label>
+                  {{ state_form.is_dead|add_class:"form-control"|add_error_class:"is-invalid"|attr:"placeholder: Enter days alive" }}
+                  <span id="{{ state_form.is_dead.id_for_label }}-error" class="error invalid-feedback">{{ state_form.is_dead.errors }}</span>
+                </div>
+
+                <div class="form-group col-md-6">
+                  <label for="{{ state_form.days_alive.id_for_label }}">Days Alive</label>
+                  {{ state_form.days_alive|add_class:"form-control"|add_error_class:"is-invalid"|attr:"placeholder: Enter days alive" }}
+                  <span id="{{ state_form.days_alive.id_for_label }}-error" class="error invalid-feedback">{{ state_form.days_alive.errors }}</span>
+                </div>
+
+                <div class="form-group col-md-6">
+                  <label for="{{ state_form.dead_date.id_for_label }}">Hatch Date</label>
+                  {{ state_form.dead_date|add_class:"form-control"|add_error_class:"is-invalid"|attr:"id:dead_date"|attr:"placeholder: Enter Date" }}
+                  <span id="{{ state_form.dead_date.id_for_label }}-error" class="error invalid-feedback">{{ state_form.dead_date.errors }}</span>
+              </div>
+            </form>
+        </div>
+        <div class="modal-footer justify-content-between">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+      </div>
+    </form>
+      <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>

@@ -47,6 +47,7 @@ class Chicken(CoreModel):
         max_digits=10, decimal_places=3, default=0)
 
     is_dead = models.BooleanField(default=False)
+    days_alive = models.IntegerField(null=True, blank=True)
     dead_date = models.DateField(null=True, blank=True)
 
     history = HistoricalRecords()

@@ -11,3 +11,12 @@ class ChickenForm(forms.ModelForm):
         model = Chicken
         fields = ['tag', 'sex', 'farm', 'hatch_date', 'egg_weight',
                   'house', 'breed_type', 'is_double_yolk', 'breed_pair']
+
+
+class ChickenState(forms.Form):
+    is_dead = forms.BooleanField()
+    dead_date = forms.DateField()
+    days_alive = forms.IntegerField()
+
+    class Meta:
+        fields = ['is_dead', 'dead_date', 'days_alive']

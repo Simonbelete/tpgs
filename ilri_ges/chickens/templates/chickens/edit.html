@@ -111,6 +111,7 @@
           <!-- /.card-body -->
 
           <div class="card-footer">
+            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#dead_modal">Remove</button>
             <button type="submit" class="btn btn-primary">Submit</button>
           </div>
         </div>
@@ -119,6 +120,7 @@
     {% include 'components/chicken_history.html' %}
     {% include 'components/fcr_growth.html' %}
     {% include 'components/fcr_egg.html' %}
+    {% include "components/dead_modal.html" %}
 </section>
 
 {% endblock %}

@@ -10,7 +10,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 
 from chickens.models import Chicken
 from breeding_pairs.models import BreedPair
-from .forms import ChickenForm
+from .forms import ChickenForm, ChickenState
 
 
 class ChickenView(LoginRequiredMixin, View):
@@ -57,7 +57,7 @@ class ChickenEditView(LoginRequiredMixin, View):
         try:
             data = Chicken.objects.get(pk=id)
             form = ChickenForm(instance=data)
-            return render(request, 'chickens/edit.html', {'form': form, "id": id})
+            return render(request, 'chickens/edit.html', {'form': form, "id": id, 'state_form': ChickenState})
         except Exception as ex:
             return redirect('500')
 
@@ -74,6 +74,27 @@ class ChickenEditView(LoginRequiredMixin, View):
             else:
                 return render(request, 'chickens/edit.html', {'form': form, "id": id})
         except Exception as ex:
+            return redirect('500')
+
+
+class ChickenStateView(LoginRequiredMixin, View):
+    login_url = '/users/login'
+    redirect_field_name = 'redirect_to'
+
+    def get(self, request, id=0):
+        if id == 0:
+            return redirect('404')
+
+        try:
+            form = ChickenState(request.POST)
+            chicken = Chicken.objects(pk=id)
+            chicken.is_dead = form.cleaned_data['is_dead']
+            chicken.dead_date = form.cleaned_data['dead_date']
+            chicken.days_alive = form.cleaned_data['days_alive']
+            chicken.save()
+            messages.success('Updated Successfully')
+            return render(request, 'chickens/edit.html', {'form': form, "id": id})
+        except:
             return redirect('500')
 
 
