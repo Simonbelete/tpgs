@@ -16,6 +16,7 @@ requirejs(
   ],
   function ($, d3, d3_hierarchy, d3_tree) {
     "use strict";
+
     var svg = d3
       .select("svg")
       .attr("width", 600)
@@ -58,9 +59,14 @@ requirejs(
     });
 
     var tree = d3.tree().size([500, 300]);
-    var info = tree(hierarchy);
-    console.log(info.descendants());
+    var info = tree(ds);
 
+    // info[5].x = info[4].x;
+    // info[5].y = info[4].y;
+    console.log(info.descendants());
+    console.log(info.descendants()[1].children[1].x);
+    info.descendants()[2].children[0].x = info.descendants()[1].children[1].x;
+    info.descendants()[2].children[0].y = info.descendants()[1].children[1].y;
     // Connections
     svg
       .append("g")
@@ -103,7 +109,7 @@ requirejs(
       .attr("paint-order", "stroke")
       .attr("stroke", "#fff")
       .attr("stroke-width", 3)
-      .text((d, i) => d.data.name);
+      .text((d, i) => d.data.child);
 
     // .attr("cx", (d) => d.x)
     // .attr("cy", (d) => d.y);
