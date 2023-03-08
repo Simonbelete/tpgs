@@ -2,7 +2,7 @@
 
 <div class="modal fade" id="dead_modal">
     <div class="modal-dialog">
-    <form method="POST" action="/chickens/{{ data.id }}/state">
+    <form method="POST" action="/chickens/{{ id }}/state">
       <div class="modal-content">
         <div class="modal-header">
           <h4 class="modal-title">Remove Chicken</h4>
@@ -26,7 +26,7 @@
                 </div>
 
                 <div class="form-group col-md-6">
-                  <label for="{{ state_form.dead_date.id_for_label }}">Hatch Date</label>
+                  <label for="{{ state_form.dead_date.id_for_label }}">Date</label>
                   {{ state_form.dead_date|add_class:"form-control"|add_error_class:"is-invalid"|attr:"id:dead_date"|attr:"placeholder: Enter Date" }}
                   <span id="{{ state_form.dead_date.id_for_label }}-error" class="error invalid-feedback">{{ state_form.dead_date.errors }}</span>
               </div>

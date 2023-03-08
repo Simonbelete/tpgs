@@ -53,5 +53,8 @@ requirejs(
     $("#dead_date").on("apply.daterangepicker", function (ev, picker) {
       $(this).val(picker.startDate.format("MM/DD/YYYY"));
     });
+    
+    $('#dead_date').removeAttr('required');​​​​​
+
   }
 );
