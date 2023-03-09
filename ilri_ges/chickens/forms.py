@@ -17,3 +17,9 @@ class ChickenStateForm(forms.ModelForm):
     class Meta:
         model = Chicken
         fields = ['is_dead', 'dead_date', 'days_alive']
+
+
+class ChickenImportForm(forms.ModelForm):
+    class Meta:
+        model = Chicken
+        fields = ['breed_type', 'farm']

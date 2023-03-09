@@ -10,7 +10,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 
 from chickens.models import Chicken
 from breeding_pairs.models import BreedPair
-from .forms import ChickenForm, ChickenStateForm
+from .forms import ChickenForm, ChickenStateForm, ChickenImportForm
 
 
 class ChickenView(LoginRequiredMixin, View):
@@ -103,7 +103,8 @@ class ChickenStateView(LoginRequiredMixin, View):
 
 class ChickenImportView(View):
     def get(self, request):
-        return render(request, 'import/index.html')
+        form = ChickenImportForm
+        return render(request, 'import/index.html', {'form': form})
 
     def post(self, request):
         errors = []
