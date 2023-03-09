@@ -130,22 +130,30 @@ class ChickenPedigreeViewSet(APIView):
 
     def get(self, request):
         chickens = self.queryset
-        hierarchy = []
+        hierarchy = [
+            {'id': 0, 'child': "0", 'parent': ""}
+        ]
         for chicken in chickens.iterator():
             if chicken.breed_pair is None:
-                continue
-            node_sire = {
-                'id': chicken.id,
-                'child': chicken.name,
-                'parent': chicken.breed_pair.sire.id
-            }
-            node_dam = {
-                'id': chicken.id,
-                'child': chicken.name,
-                'parent': chicken.breed_pair.dam.id
-            }
-            hierarchy.append(node_sire)
-            hierarchy.append(node_dam)
+                node = {
+                    'id': chicken.id,
+                    'child': chicken.name,
+                    'parent': 0
+                }
+                hierarchy.append(node)
+            else:
+                node_sire = {
+                    'id': chicken.id,
+                    'child': chicken.name,
+                    'parent': chicken.breed_pair.sire.id
+                }
+                node_dam = {
+                    'id': chicken.id,
+                    'child': chicken.name,
+                    'parent': chicken.breed_pair.dam.id
+                }
+                hierarchy.append(node_sire)
+                hierarchy.append(node_dam)
 
         return Response({'results': hierarchy})
 

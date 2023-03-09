@@ -11,6 +11,6 @@ router.register(r'chickens/(?P<id>.+)/histories',
 urlpatterns = [
     path('chickens/<int:id>/fcr/growth', views.FCrGrowth.as_view()),
     path('chickens/<int:id>/fcr/eggs', views.FCrEgg.as_view()),
-    path('chickens/pedigree', views.ChickenPedigreeViewSet.as_view()),
+    path('chickens/pedigree/', views.ChickenPedigreeViewSet.as_view()),
     path('', include(router.urls)),
 ]
