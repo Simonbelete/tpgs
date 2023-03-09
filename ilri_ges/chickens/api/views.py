@@ -125,6 +125,31 @@ class FCrEgg(APIView):
         return Response({'results': fcrs, 'count': len(fcrs)}, status=status.HTTP_200_OK)
 
 
+class ChickenPedigreeViewSet(APIView):
+    queryset = Chicken.objects.all()
+
+    def get(self, request):
+        chickens = self.queryset
+        hierarchy = []
+        for chicken in chickens.iterator():
+            if chicken.breed_pair is None:
+                continue
+            node_sire = {
+                'id': chicken.id,
+                'child': chicken.name,
+                'parent': chicken.breed_pair.sire.id
+            }
+            node_dam = {
+                'id': chicken.id,
+                'child': chicken.name,
+                'parent': chicken.breed_pair.dam.id
+            }
+            hierarchy.append(node_sire)
+            hierarchy.append(node_dam)
+
+        return Response({'results': hierarchy})
+
+
 class ChickenHistoryViewSet(HistoryViewSet):
     queryset = Chicken.history.all()
     serializer_class = serializers.ChickenHistory

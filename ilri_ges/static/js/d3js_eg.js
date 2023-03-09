@@ -25,39 +25,26 @@ requirejs(
       .attr("transform", "translate(50, 50)");
 
     var data = [
-      { child: "1", parent: "" },
-      { child: "2", parent: "1" },
-      { child: "3", parent: "1" },
-      { child: "4", parent: "2" },
-      { child: "5", parent: "3" },
-      { child: "5", parent: "2" },
-      { child: "6", parent: "3" },
-      { child: "6", parent: "2" },
+      { id: "1", child: "1", parent: "" },
+      { id: "2", child: "2", parent: "1" },
+      { id: "3", child: "3", parent: "1" },
+      { id: "4", child: "4", parent: "2" },
+      { id: "5", child: "5", parent: "3" },
+      { id: "6", child: "5", parent: "2" },
+      { id: "7", child: "6", parent: "3" },
+      { id: "8", child: "6", parent: "2" },
+      { id: "9", child: "7", parent: "6" },
+      { id: "8", child: "8", parent: "9" },
     ];
 
     var ds = d3
       .stratify()
       .id(function (d) {
-        return d.child;
+        return d.id;
       })
       .parentId(function (d) {
         return d.parent;
       })(data);
-
-    var hierarchy = d3.hierarchy({
-      name: "root",
-      children: [
-        { name: "child #1" },
-        {
-          name: "child #2",
-          children: [
-            { name: "grandchild #1" },
-            { name: "grandchild #2" },
-            { name: "grandchild #3" },
-          ],
-        },
-      ],
-    });
 
     var tree = d3.tree().size([500, 300]);
     var info = tree(ds);
@@ -69,11 +56,13 @@ requirejs(
       return _.includes(iteratee, val, i + 1);
     });
 
+    console.log(ds.links());
+
     var first_node;
     for (var i = 0; i < duplicates.length; i++) {
       first_node = null;
       for (var j = 0; j < ds.links().length; j++) {
-        if (duplicates[i] === ds.links()[j].target.id) {
+        if (duplicates[i] === ds.links()[j].target.data.child) {
           if (first_node == null) {
             first_node = ds.links()[j].target;
           }
@@ -113,18 +102,18 @@ requirejs(
 
     node
       .append("circle")
-      .attr("fill", (d) => (d.children ? "#555" : "#999"))
-      .attr("r", 3);
+      .attr("fill", (d) => (d.children ? "#555" : "#555"))
+      .attr("r", 4);
 
     // Node Text
     node
       .append("text")
       .attr("dy", "0.32em")
-      .attr("x", (d) => (d.children ? -6 : 6))
+      .attr("x", (d) => (d.children ? -6 : -15))
       .attr("text-anchor", (d) => (d.children ? "end" : "start"))
       .attr("paint-order", "stroke")
       .attr("stroke", "#fff")
-      .attr("stroke-width", 3)
+      .attr("stroke-width", 6)
       .text((d, i) => d.data.child);
 
     // .attr("cx", (d) => d.x)
