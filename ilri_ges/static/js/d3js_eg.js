@@ -4,6 +4,7 @@ requirejs(
     "d3js",
     "d3_hierarchy",
     "d3_tree",
+    "lodash",
     "d3-color",
     "d3-dispatch",
     "d3-drag",
@@ -14,9 +15,8 @@ requirejs(
     "d3-transition",
     "d3-zoom",
   ],
-  function ($, d3, d3_hierarchy, d3_tree) {
+  function ($, d3, d3_hierarchy, d3_tree, _) {
     "use strict";
-
     var svg = d3
       .select("svg")
       .attr("width", 600)
@@ -29,9 +29,10 @@ requirejs(
       { child: "2", parent: "1" },
       { child: "3", parent: "1" },
       { child: "4", parent: "2" },
-      { child: "5", parent: "2" },
       { child: "5", parent: "3" },
+      { child: "5", parent: "2" },
       { child: "6", parent: "3" },
+      { child: "6", parent: "2" },
     ];
 
     var ds = d3
@@ -61,12 +62,27 @@ requirejs(
     var tree = d3.tree().size([500, 300]);
     var info = tree(ds);
 
-    // info[5].x = info[4].x;
-    // info[5].y = info[4].y;
-    console.log(info.descendants());
-    console.log(info.descendants()[1].children[1].x);
-    info.descendants()[2].children[0].x = info.descendants()[1].children[1].x;
-    info.descendants()[2].children[0].y = info.descendants()[1].children[1].y;
+    // Tangled Tree
+    var child = _.toArray(_.map(data, "child"));
+
+    var duplicates = _.filter(child, function (val, i, iteratee) {
+      return _.includes(iteratee, val, i + 1);
+    });
+
+    var first_node;
+    for (var i = 0; i < duplicates.length; i++) {
+      first_node = null;
+      for (var j = 0; j < ds.links().length; j++) {
+        if (duplicates[i] === ds.links()[j].target.id) {
+          if (first_node == null) {
+            first_node = ds.links()[j].target;
+          }
+          ds.links()[j].target.x = first_node.x;
+          ds.links()[j].target.y = first_node.y;
+        }
+      }
+    }
+
     // Connections
     svg
       .append("g")

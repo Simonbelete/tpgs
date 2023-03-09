@@ -75,5 +75,6 @@ require.config({
     moment: "../../../static/js/lib/admin-LTE/plugins/moment/moment.min",
     daterangepicker:
       "../../../static/js/lib/admin-LTE/plugins/daterangepicker/daterangepicker",
+    lodash: "../../../static/js/lib/lodash/lodash.min",
   },
 });
