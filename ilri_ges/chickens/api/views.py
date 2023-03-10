@@ -70,8 +70,11 @@ class FCrGrowth(APIView):
 
                 weight_gain = current_week_weight - previous_week_weight
                 fcr = feed_weight/weight_gain
-            except:
+            except Exception as ex:
                 fcr = 0
+                current_week_weight = 0
+                previous_week_weight = 0
+
             current_week_fcr['fcr'] = fcr
             current_week_fcr['current_week_weight'] = current_week_weight
             current_week_fcr['previous_week_weight'] = previous_week_weight
