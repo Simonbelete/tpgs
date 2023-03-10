@@ -51,7 +51,7 @@ class BreedsEditView(LoginRequiredMixin, View):
         try:
             data = BreedType.objects.get(pk=id)
             form = BreedForm(instance=data)
-            return render(request, 'breeds/edit.html', {'form': form, "id": id, 'state_form': ChickenStateForm})
+            return render(request, 'breeds/edit.html', {'form': form, "id": id})
         except Exception as ex:
             return redirect('500')
 
