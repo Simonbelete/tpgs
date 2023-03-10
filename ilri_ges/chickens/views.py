@@ -150,14 +150,11 @@ class ChickenImportView(View):
             hatch_date = row['chicken', "hatch date"].values[0]
             sire_id = row['chicken', "sire id"].values[0]
             dam_id = row['chicken', "dam id"].values[0]
-            print('----------------------')
             try:
                 sire = Chicken.objects.all().filter(tag=sire_id)
                 dam = Chicken.objects.all().filter(tag=dam_id)
                 sire = sire[0] if sire else None
                 dam = dam[0] if dam else None
-                print(sire)
-                print(dam)
                 breed_pair, breed_pair_created = BreedPair.objects.get_or_create(
                     sire=sire, dam=dam, created_by=self.request.user)
                 chicken, chicken_created = Chicken.objects.update_or_create(
@@ -169,11 +166,11 @@ class ChickenImportView(View):
                     eggs = row[week, "egg"].values[0]
                     eggs_weights = row[week, "egg weight"].values[0]
                     weight, weight_created = Weight.objects.update_or_create(
-                        week=week_no, chicken=chicken, weight=Decimal(weight))
+                        week=week_no, chicken=chicken, weight=Decimal(weight), created_by=self.request.user)
                     egg, egg_created = Egg.objects.update_or_create(
-                        week=week_no, chicken=chicken, eggs=int(eggs), total_weight=Decimal(eggs_weights))
+                        week=week_no, chicken=chicken, eggs=int(eggs), total_weight=Decimal(eggs_weights), created_by=self.request.user)
                     feed, feed_created = Feed.objects.update_or_create(
-                        week=week_no, chicken=chicken, weight=Decimal(feed_weight))
+                        week=week_no, chicken=chicken, weight=Decimal(feed_weight), created_by=self.request.user)
             except Exception as ex:
                 errors.append({'data': {
                     'tag': tag,
