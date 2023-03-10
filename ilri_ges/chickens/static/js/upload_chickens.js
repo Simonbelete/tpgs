@@ -20,11 +20,38 @@ requirejs(
       document.querySelector(
         "#chickens_import_progress .progress-bar"
       ).style.width = progress + "%";
+      $("#chicken_import_error").append("<h5>Loading...</h5>");
     });
 
     myDropzone.on("error", function (file, response) {
       // $(file.previewElement).find('.dz-error-message').text(response);
       console.log("error");
     });
+
+    myDropzone.on("success", function (file, res) {
+      console.log(res);
+      console.log(res.errors);
+      var tbl = createTable(res.errors);
+      $("#chicken_import_error").empty();
+      $("#chicken_import_error").append(tbl);
+    });
+
+    function createTable(data) {
+      var table = "<table  class='table table-bordered table-striped'>";
+      table += `<tr>
+                  <th>Row</th>
+                  <th>Error</th>
+                </tr>`;
+      var tr = "";
+      for (let i = 0; i < data.length; i++) {
+        tr += "<tr>";
+        tr += `<td>${data[i].row}</td>`;
+        tr += `<td>${data[i].exception}</td>`;
+        tr += "</tr>";
+      }
+      table += tr + "</table>";
+
+      return table;
+    }
   }
 );

@@ -1,6 +1,9 @@
+{% load widget_tweaks %}
+
 <div class="form-group">
     <label for="farm_select">Farm</label>
-    <select
+    {{ form.farms|attr:"multiple:multiple"|attr:"id:farm_select"|add_class:"form-control"|add_error_class:"is-invalid" }}
+    {% comment %} <select
       id="farm_select"
       name="farms"
       multiple="multiple"
@@ -8,6 +11,6 @@
       class="form-control select2 {% if form.farms.errors %} is-invalid {% endif %}"
       style="width: 100%"
     >
-    </select>
-    <span id="{{ form.farms.id_for_label }}-error" class="error invalid-feedback">Please enter a valid farms</span>
+    </select> {% endcomment %}
+    <span id="{{ form.farms.id_for_label }}-error" class="error invalid-feedback">{{ form.farms.errors }}</span>
 </div>

@@ -161,6 +161,13 @@ class ChickenPedigreeViewSet(APIView):
         return Response({'results': hierarchy})
 
 
+class ChickenMoralityRate(APIView):
+    queryset = Chicken.objects.all()
+
+    def get(self, request):
+        pass
+
+
 class ChickenHistoryViewSet(HistoryViewSet):
     queryset = Chicken.history.all()
     serializer_class = serializers.ChickenHistory

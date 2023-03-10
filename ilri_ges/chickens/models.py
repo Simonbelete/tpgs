@@ -1,6 +1,7 @@
 import math
 from django.db import models
 from datetime import date
+from datetime import timedelta, date
 from simple_history.models import HistoricalRecords
 
 from core.models import CoreModel
@@ -78,3 +79,8 @@ class Chicken(CoreModel):
     def hatch_weight(self):
         """" Hatch Weight is computed from week 0 weight """
         return Weight.objects.get(pk=self.id).earliest('week')
+
+    @property
+    def morality_date(self):
+        added_date = self.hatch_date + timedelta(days=self.days_alive)
+        return self.dead_date if self.dead_date != None else added_date

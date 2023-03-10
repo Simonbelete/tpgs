@@ -68,5 +68,27 @@ class UsersEditView(LoginRequiredMixin, View):
     login_url = '/users/login'
     redirect_field_name = 'redirect_to'
 
-    def get(self, request):
-        return render(request, 'users/edit.html')
+    def get(self, request, id=0):
+        if id == 0:
+            return redirect('404')
+        try:
+            data = User.objects.get(pk=id)
+            form = UserForm(instance=data)
+            return render(request, 'users/edit.html', {'form': form, "id": id})
+        except Exception as ex:
+            return redirect('500')
+
+    def post(self, request, id=0):
+        if id == 0:
+            return redirect('404')
+        try:
+            data = User.objects.get(pk=id)
+            form = UserForm(request.POST, instance=data)
+            if form.is_valid():
+                form.save()
+                messages.success(request, 'Successfully Updated !')
+                return redirect('users')
+            else:
+                return render(request, 'users/edit.html', {'form': form})
+        except Exception as ex:
+            return redirect('500')

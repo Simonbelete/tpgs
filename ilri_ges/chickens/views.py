@@ -115,14 +115,18 @@ class ChickenImportView(View):
         #     absolute_path, '../../horro_chickens_fake.xlsx')
         # file_upload = full_path
         df = pd.read_excel(file_upload, header=0)
+
+        df = df.head()
+
         df.columns = df.columns.str.lower()
         df.iloc[0] = df.iloc[0].apply(str.lower)
 
         df.columns.values[0:9] = 'chicken'
 
         col_weeks = len(df.columns[9:]) / 4
-        if (col_weeks % 2 != 0):
-            return HttpResponse()
+
+        if (len(df.columns[9:]) % 2 != 0):
+            return HttpResponse("Invalid Columns")
         else:
             col_weeks = int(col_weeks)
 
@@ -141,7 +145,7 @@ class ChickenImportView(View):
         weeks = weeks[weeks != 'chicken']
 
         for i, row in df.groupby(level=0):
-            tag = row['chicken', "id"].values[0]
+            tag = str(row['chicken', "id"].values[0])
             sex = row['chicken', "sex"].values[0]
             house_name = row['chicken', "house"].values[0]
             pen_name = row['chicken', "pen"].values[0]
@@ -155,11 +159,15 @@ class ChickenImportView(View):
                 dam = Chicken.objects.all().filter(tag=dam_id)
                 sire = sire[0] if sire else None
                 dam = dam[0] if dam else None
-                breed_pair, breed_pair_created = BreedPair.objects.get_or_create(
-                    sire=sire, dam=dam, created_by=self.request.user)
+                if (sire and dam):
+                    breed_pair, breed_pair_created = BreedPair.objects.get_or_create(
+                        sire=sire, dam=dam, created_by=self.request.user)
+                else:
+                    breed_pair = None
                 chicken, chicken_created = Chicken.objects.update_or_create(
                     tag=tag, defaults={'sex': sex, 'breed_pair': breed_pair, 'created_by': self.request.user})
                 for week in weeks:
+                    print('------------------------')
                     week_no = week.split(" ")[-1]
                     weight = row[week, "weight"].values[0]
                     feed_weight = row[week, "feed"].values[0]
