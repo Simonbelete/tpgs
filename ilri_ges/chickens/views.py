@@ -1,14 +1,17 @@
-import io
-import math
+import os
 import pandas as pd
+import numpy as np
 from decimal import Decimal
 from django.shortcuts import render, redirect
 from django.views import View
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 from chickens.models import Chicken
+from weights.models import Weight
+from eggs.models import Egg
+from feeds.models import Feed
 from breeding_pairs.models import BreedPair
 from .forms import ChickenForm, ChickenStateForm, ChickenImportForm
 
@@ -96,8 +99,6 @@ class ChickenStateView(LoginRequiredMixin, View):
                 messages.success(request, 'Updated Successfully')
             return render(request, 'chickens/edit.html', {'form': form, "id": id})
         except Exception as ex:
-            print('----------------------------------')
-            print(ex)
             return redirect('500')
 
 
@@ -109,21 +110,75 @@ class ChickenImportView(View):
     def post(self, request):
         errors = []
         file_upload = request.FILES.get('file_upload')
+        # absolute_path = os.path.dirname(__file__)
+        # full_path = os.path.join(
+        #     absolute_path, '../../horro_chickens_fake.xlsx')
+        # file_upload = full_path
         df = pd.read_excel(file_upload, header=0)
         df.columns = df.columns.str.lower()
+        df.iloc[0] = df.iloc[0].apply(str.lower)
 
-        for index, row in df.iterrows():
+        df.columns.values[0:9] = 'chicken'
+
+        col_weeks = len(df.columns[9:]) / 4
+        if (col_weeks % 2 != 0):
+            return HttpResponse()
+        else:
+            col_weeks = int(col_weeks)
+
+        for col_w in range(0, col_weeks):
+            start_col = 9 + col_w * 4
+            end_col = start_col + 4
+            df.columns.values[start_col:end_col] = df.columns[start_col]
+
+        tuple = list(zip(df.columns, df.iloc[0]))
+        index = pd.MultiIndex.from_tuples(tuple, names=['first', 'second'])
+        df.columns = index
+        df = df.drop([0])
+
+        weeks = index.get_level_values(0).values
+        weeks = np.unique(weeks)
+        weeks = weeks[weeks != 'chicken']
+
+        for i, row in df.groupby(level=0):
+            tag = row['chicken', "id"].values[0]
+            sex = row['chicken', "sex"].values[0]
+            house_name = row['chicken', "house"].values[0]
+            pen_name = row['chicken', "pen"].values[0]
+            flock_name = row['chicken', "batch"].values[0]
+            days_alive = row['chicken', "days alive"].values[0]
+            hatch_date = row['chicken', "hatch date"].values[0]
+            sire_id = row['chicken', "sire id"].values[0]
+            dam_id = row['chicken', "dam id"].values[0]
+            print('----------------------')
             try:
-                sire = Chicken.objects.all().get(tag=row['sire id'])
-                dam = Chicken.objects.all().get(tag=row['dam id'])
+                sire = Chicken.objects.all().filter(tag=sire_id)
+                dam = Chicken.objects.all().filter(tag=dam_id)
+                sire = sire[0] if sire else None
+                dam = dam[0] if dam else None
+                print(sire)
+                print(dam)
                 breed_pair, breed_pair_created = BreedPair.objects.get_or_create(
                     sire=sire, dam=dam, created_by=self.request.user)
                 chicken, chicken_created = Chicken.objects.update_or_create(
-                    tag=row['id'], breed_pair=breed_pair, created_by=self.request.user)
-            except:
-                chicken, chicken_created = Chicken.objects.update_or_create(
-                    tag=row['id'], created_by=self.request.user)
-
-        return HttpResponse({
+                    tag=tag, defaults={'sex': sex, 'breed_pair': breed_pair, 'created_by': self.request.user})
+                for week in weeks:
+                    week_no = week.split(" ")[-1]
+                    weight = row[week, "weight"].values[0]
+                    feed_weight = row[week, "feed"].values[0]
+                    eggs = row[week, "egg"].values[0]
+                    eggs_weights = row[week, "egg weight"].values[0]
+                    weight, weight_created = Weight.objects.update_or_create(
+                        week=week_no, chicken=chicken, weight=Decimal(weight))
+                    egg, egg_created = Egg.objects.update_or_create(
+                        week=week_no, chicken=chicken, eggs=int(eggs), total_weight=Decimal(eggs_weights))
+                    feed, feed_created = Feed.objects.update_or_create(
+                        week=week_no, chicken=chicken, weight=Decimal(feed_weight))
+            except Exception as ex:
+                errors.append({'data': {
+                    'tag': tag,
+                    'sex': sex
+                }, 'exception': str(ex)})
+        return JsonResponse({
             'errors': errors,
         })

@@ -8,12 +8,10 @@ requirejs(
         "X-CSRFToken": get_cookie("csrftoken"),
       },
       url:
-        "/chickens/import?flock=" +
-        $("flock_select").val() +
-        "&farm=" +
-        $("farm_select") +
+        "/chickens/import?farm=" +
+        $("farm_select").val() +
         "&breed_type=" +
-        $("breed_type_select"),
+        $("breed_type_select").val(),
       paramName: "file_upload",
     });
 
