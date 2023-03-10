@@ -4,4 +4,6 @@ from . import views
 
 urlpatterns = [
     path('', views.BreedsView.as_view(), name="breeds"),
+    path('<int:id>/', views.BreedsEditView.as_view(), name="breeds_edit"),
+    path('create', views.BreedsCreateView.as_view(), name="breeds_create"),
 ]

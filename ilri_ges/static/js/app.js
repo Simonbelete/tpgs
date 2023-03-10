@@ -76,5 +76,7 @@ require.config({
     daterangepicker:
       "../../../static/js/lib/admin-LTE/plugins/daterangepicker/daterangepicker",
     lodash: "../../../static/js/lib/lodash/lodash.min",
+    "bootstrap-colorpicker":
+      "../../../static/js/lib/admin-LTE/plugins/bootstrap-colorpicker/js/bootstrap-colorpicker",
   },
 });

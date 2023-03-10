@@ -1,0 +1,12 @@
+{% load widget_tweaks %}
+
+<div class="form-group">
+    <label for="{{ form.color.id_for_label }}">Color</label>
+    <div class="input-group" id="color_picker">
+        {{ form.color|add_class:"form-control"|add_error_class:"is-invalid"|attr:"placeholder: Enter color" }}
+        <div class="input-group-append">
+            <span class="input-group-text"><i class="fas fa-square"></i></span>
+        </div>
+    </div>
+    <span id="{{ form.color.id_for_label }}-error" class="error invalid-feedback">{{ form.color.errors }}</span>
+</div>

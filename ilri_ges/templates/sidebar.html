@@ -234,8 +234,8 @@
 
             <li class="nav-item">
               <a
-                href="/home/breed-types"
-                class="nav-link {% if request.path == '/home/breed-types/' %}active{% endif %}"
+                href="{% url 'breeds' %}"
+                class="nav-link {% if request.path == '/breeds/' %}active{% endif %}"
               >
                 <i class="nav-icon fas fa-dna"></i>
                 <p>Breed Types</p>
