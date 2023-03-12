@@ -1,0 +1,75 @@
+{% extends "sidebar.html" %} 
+{% load static %} 
+{% load widget_tweaks %}
+
+{% block stylesheet %} 
+{% include 'components/create_styles.html' %} 
+{% include 'components/daterangepicker_style.html' %} 
+{% include 'components/select2_style.html' %} 
+{% include 'components/datatables_style.html' %} 
+{% endblock %} 
+
+{% block title %} Breeding Pairs  - ILRI genetics Evaluation {% endblock %} 
+
+{% block body %}
+
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <div class="container-fluid">
+      <div class="row mb-2">
+        <div class="col-sm-6">
+          <h1>Breeding Pairs</h1>
+        </div>
+        <div class="col-sm-6">
+          <ol class="breadcrumb float-sm-right">
+            <li class="breadcrumb-item"><a href="#">Home</a></li>
+            <li class="breadcrumb-item active">Breeding Pairs</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+    <!-- /.container-fluid -->
+  
+    <!-- Main content -->
+    <section class="content row">
+      <div class="col-md-6">
+        <div class="card card-primary">
+          <div class="card-header">
+            <h3 class="card-title">Breeding Pairs</h3>
+          </div>
+          <form
+            action="{% url 'breeding_pairs' %}"
+            method="POST"
+          >
+            {% csrf_token %}
+            <div class="card-body">
+                <div class="form-group">
+                    <label for="{{ form.sire.id_for_label }}">Sire</label>
+                    {{ form.sire|attr:"id:sire_select"|add_class:"form-control"|add_error_class:"is-invalid" }}
+                    <span id="{{ form.sire.id_for_label }}-error" class="error invalid-feedback">{{ form.sire.errors }}</span>
+                </div>
+
+                <div class="form-group">
+                    <label for="{{ form.dam.id_for_label }}">Dam</label>
+                    {{ form.dam|attr:"id:dams_select"|add_class:"form-control"|add_error_class:"is-invalid" }}
+                    <span id="{{ form.dam.id_for_label }}-error" class="error invalid-feedback">{{ form.dam.errors }}</span>
+                </div>
+            </div>
+                <!-- /.card-body -->
+    
+                <div class="card-footer">
+                <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    </section>
+  
+    <!-- /.content -->
+</section>
+
+{% endblock %}
+{% block javascript %}
+<script src="{% static 'js/sire_select.js' %}"></script>
+<script src="{% static 'js/dam_select.js' %}"></script>
+{% endblock %}
