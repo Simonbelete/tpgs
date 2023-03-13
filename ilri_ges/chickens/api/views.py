@@ -156,7 +156,7 @@ class ChickenPedigreeViewSet(APIView):
                     'parent': chicken.breed_pair.dam.id
                 }
                 hierarchy.append(node_sire)
-                hierarchy.append(node_dam)
+                # hierarchy.append(node_dam)
 
         return Response({'results': hierarchy})
 

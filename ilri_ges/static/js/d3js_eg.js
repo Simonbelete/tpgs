@@ -34,7 +34,7 @@ requirejs(
       { id: "7", child: "6", parent: "3" },
       { id: "8", child: "6", parent: "2" },
       { id: "9", child: "7", parent: "6" },
-      { id: "8", child: "8", parent: "9" },
+      { id: "10", child: "8", parent: "9" },
     ];
 
     var ds = d3
