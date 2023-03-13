@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 
 
 def index(request):
-    return redirect('dashboard')
+    return render(request, 'main.html')
 
 
 def page404(request):
