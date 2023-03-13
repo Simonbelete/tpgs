@@ -9,6 +9,8 @@ from breeding_pairs.api.serializers import BreedPairSerializer_GET_V1, BreedPair
 class BreedPairViewSet(viewsets.ModelViewSet):
     queryset = BreedPair.objects.all()
     serializer_class = BreedPairSerializer_GET_V1
+    search_fields = ['sire__tag', 'dam__tag']
+    ordering_fields = '__all__'
 
     def perform_create(self, serializer):
         serializer.save(created_by=self.request.user)
