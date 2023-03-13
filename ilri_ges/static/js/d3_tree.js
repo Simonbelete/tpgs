@@ -50,7 +50,6 @@ define([
     d3.select(select).call(zoom);
 
     $("#d3_zoomIn").click(function () {
-      console.log("abc");
       d3.select(select).transition().call(zoom.scaleBy, 2);
     });
 
@@ -146,9 +145,10 @@ define([
       .attr("stroke", "black")
       .attr("stroke-width", 1)
       .style("fill", function (d) {
-        if (d.child.split()[-1] == "M") return "red";
-        else if (d.child.split()[-1] == "F") return "blue";
-        else "#fff";
+        var mf = d.data.child.split(" ");
+        if (mf[mf.length - 1] == "M") return "lightcoral";
+        else if (mf[mf.length - 1] == "F") return "lightsteelblue";
+        else return "#fff";
       });
 
     node

@@ -5,7 +5,6 @@ requirejs(["jquery", "d3_tree"], function ($, D3Tree) {
 
     console.log(results);
 
-    var data = results;
     var chart = D3Tree(data, {
       select: "#chart_view_port",
       width: $(window).width() * 0.86,
