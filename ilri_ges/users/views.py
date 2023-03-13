@@ -11,6 +11,8 @@ from .models import User
 
 class LoginView(View):
     def get(self, request):
+        if request.user.is_authenticated:
+            return redirect('dashboard')
         form = LoginForm()
         return render(request, 'login/index.html', {'form': form})
 
