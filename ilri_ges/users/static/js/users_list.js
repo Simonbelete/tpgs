@@ -55,6 +55,7 @@ requirejs(
 
           // Filters
           d.is_active = $("#is_active").val();
+          if ($("#farm_select").val() !== "") d.farms = $("#farm_select").val();
 
           d.columns = [];
           d.order = [];
