@@ -1,4 +1,5 @@
 from rest_framework.filters import BaseFilterBackend
+from rest_framework.pagination import PageNumberPagination
 
 
 class IsActiveFilterBackend(BaseFilterBackend):
@@ -19,3 +20,7 @@ class HaveFarmFilterBackend(BaseFilterBackend):
         else:
             farms = request.user.farms if request.user.farms.exists() else []
             return queryset.filter(farm__in=farms, farms__in=farms)
+
+
+class LimitPageNumberPagination(PageNumberPagination):
+    page_size_query_param = 'limit'

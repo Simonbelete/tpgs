@@ -178,7 +178,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 REST_FRAMEWORK = {
     'DEFAULT_VERSIONING_CLASS': 'rest_framework.versioning.NamespaceVersioning',
-    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    # 'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'DEFAULT_PAGINATION_CLASS': 'ilri_ges.filters.LimitPageNumberPagination',
     'PAGE_SIZE': 10,
     'DATETIME_FORMAT': "%d-%m-%Y %H:%M:%S",
     'DEFAULT_FILTER_BACKENDS': [
