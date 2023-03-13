@@ -39,6 +39,11 @@
               </div>
               <!-- /.card-header -->
               <div class="card-body">
+                <div class="row mb-10" style="align-items: end; margin-bottom: 50px">
+                  {% include 'components/is_active_filter.html' %}
+                  <button type="button" id="apply_filter" style="height: 40px" class="btn btn-secondary">Apply</button>
+                </div>
+
                 <table
                   id="users_data_list_table"
                   class="table table-bordered table-striped"
