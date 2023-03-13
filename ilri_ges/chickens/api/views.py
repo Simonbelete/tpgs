@@ -134,29 +134,33 @@ class ChickenPedigreeViewSet(APIView):
     def get(self, request):
         chickens = self.queryset
         hierarchy = [
-            {'id': 0, 'child': "0", 'parent': ""}
+            {'id': '0', 'child': "0", 'parent': ""}
         ]
         for chicken in chickens.iterator():
             if chicken.breed_pair is None:
                 node = {
-                    'id': chicken.id,
+                    'id': str(chicken.id),
                     'child': chicken.name,
-                    'parent': 0
+                    'parent': '0'
                 }
                 hierarchy.append(node)
             else:
+                parent_sire = str(chicken.breed_pair.sire.id) + " " + str(
+                    chicken.breed_pair.sire.breed_pair.sire.id) if chicken.breed_pair.sire.breed_pair else str(chicken.breed_pair.sire.id)
+                parent_dam = str(chicken.breed_pair.dam.id) + " " + str(
+                    chicken.breed_pair.dam.breed_pair.dam.id) if chicken.breed_pair.dam.breed_pair else str(chicken.breed_pair.dam.id)
                 node_sire = {
-                    'id': chicken.id,
+                    'id': str(chicken.id) + " " + str(chicken.breed_pair.sire.id),
                     'child': chicken.name,
-                    'parent': chicken.breed_pair.sire.id
+                    'parent': parent_sire
                 }
                 node_dam = {
-                    'id': chicken.id,
+                    'id': str(chicken.id) + " " + str(chicken.breed_pair.dam.id),
                     'child': chicken.name,
-                    'parent': chicken.breed_pair.dam.id
+                    'parent': parent_dam
                 }
                 hierarchy.append(node_sire)
-                # hierarchy.append(node_dam)
+                hierarchy.append(node_dam)
 
         return Response({'results': hierarchy})
 

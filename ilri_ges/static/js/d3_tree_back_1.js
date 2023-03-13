@@ -22,9 +22,6 @@ define([
       select,
       width = 1102, // outer width, in pixels
       height = 1102,
-      rect_width = 60,
-      rect_height = 30,
-      padding = 20,
     }
   ) {
     // To multiply x and y
@@ -34,7 +31,8 @@ define([
       .select(select)
       .attr("width", width)
       .attr("height", height)
-      .append("g");
+      .append("g")
+      .attr("transform", "translate(50, 50)");
 
     ///
     /// Controllers
@@ -86,8 +84,6 @@ define([
       })(data);
 
     var tree = d3.tree().size([width, height]);
-    // Size each node size
-    tree.nodeSize([rect_width + padding, data.length * 10]);
     var info = tree(ds);
 
     // Tangled Tree
@@ -112,6 +108,7 @@ define([
       }
     }
 
+    // Connections
     svg
       .append("g")
       .attr("fill", "none")
@@ -126,9 +123,9 @@ define([
       .attr(
         "d",
         d3
-          .link(d3.curveBumpY)
-          .x((d) => d.x + rect_width / 2)
-          .y((d) => d.y + rect_height + 5)
+          .link(d3.curveBumpX)
+          .x((d) => d.y)
+          .y((d) => d.x)
       );
 
     // Nodes
@@ -137,38 +134,23 @@ define([
       .selectAll("a")
       .data(info.descendants())
       .join("a")
-      .attr("transform", (d) => `translate(${d.x},${d.y})`);
+      .attr("transform", (d) => `translate(${d.y},${d.x})`);
 
     node
-      .append("rect")
-      .attr("width", rect_width)
-      .attr("height", rect_height)
-      .attr("stroke", "black")
-      .attr("stroke-width", 1)
-      .style("fill", function (d) {
-        if (d.child.split()[-1] == "M") return "red";
-        else if (d.child.split()[-1] == "F") return "blue";
-        else "#fff";
-      });
-
-    node
-      .append("text")
-      .attr("x", rect_width / 2)
-      .attr("y", rect_height / 2)
-      .attr("dy", ".35em")
-      .attr("text-anchor", "middle")
-      .text((d, i) => d.data.child);
+      .append("circle")
+      .attr("fill", (d) => (d.children ? "#555" : "#555"))
+      .attr("r", 4);
 
     // Node Text
-    // node
-    //   .append("text")
-    //   .attr("dy", "0.32em")
-    //   .attr("x", (d) => (d.children ? -6 : -15))
-    //   .attr("text-anchor", (d) => (d.children ? "end" : "start"))
-    //   .attr("paint-order", "stroke")
-    //   .attr("stroke", "#fff")
-    //   .attr("stroke-width", 6)
-    //   .text((d, i) => d.data.child);
+    node
+      .append("text")
+      .attr("dy", "0.32em")
+      .attr("x", (d) => (d.children ? -6 : -15))
+      .attr("text-anchor", (d) => (d.children ? "end" : "start"))
+      .attr("paint-order", "stroke")
+      .attr("stroke", "#fff")
+      .attr("stroke-width", 6)
+      .text((d, i) => d.data.child);
 
     return svg.node();
   };

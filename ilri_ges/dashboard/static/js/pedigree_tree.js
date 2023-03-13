@@ -3,6 +3,8 @@ requirejs(["jquery", "d3_tree"], function ($, D3Tree) {
   $.getJSON("/api/chickens/pedigree/", {}).done(function (response) {
     var results = response.results;
 
+    console.log(results);
+
     var data = results;
     var chart = D3Tree(data, {
       select: "#chart_view_port",
