@@ -24,6 +24,9 @@ define([
       height = 1102,
     }
   ) {
+    // To multiply x and y
+    var spacer = Math.log10(data.length);
+
     var svg = d3
       .select(select)
       .attr("width", width)
@@ -85,8 +88,8 @@ define([
         "d",
         d3
           .link(d3.curveBumpX)
-          .x((d) => d.y)
-          .y((d) => d.x)
+          .x((d) => d.y * spacer)
+          .y((d) => d.x * spacer)
       );
 
     // Nodes
@@ -95,7 +98,7 @@ define([
       .selectAll("a")
       .data(info.descendants())
       .join("a")
-      .attr("transform", (d) => `translate(${d.y},${d.x})`);
+      .attr("transform", (d) => `translate(${d.y * spacer},${d.x * spacer})`);
 
     node
       .append("circle")

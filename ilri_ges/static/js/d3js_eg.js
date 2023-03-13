@@ -19,8 +19,8 @@ requirejs(
     "use strict";
     var svg = d3
       .select("svg")
-      .attr("width", 600)
-      .attr("height", 600)
+      .attr("width", 1000)
+      .attr("height", 1000)
       .append("g")
       .attr("transform", "translate(50, 50)");
 
@@ -34,7 +34,10 @@ requirejs(
       { id: "7", child: "6", parent: "3" },
       { id: "8", child: "6", parent: "2" },
       { id: "9", child: "7", parent: "6" },
-      { id: "10", child: "8", parent: "9" },
+      { id: "10", child: "1.10", parent: "1" },
+      { id: "11", child: "1.11", parent: "1" },
+      { id: "12", child: "1.12", parent: "1" },
+      { id: "13", child: "1.13", parent: "1" },
     ];
 
     var ds = d3
@@ -72,6 +75,8 @@ requirejs(
       }
     }
 
+    var spacer = Math.log10(data.length);
+
     // Connections
     svg
       .append("g")
@@ -88,8 +93,8 @@ requirejs(
         "d",
         d3
           .link(d3.curveBumpX)
-          .x((d) => d.y)
-          .y((d) => d.x)
+          .x((d) => d.y * spacer)
+          .y((d) => d.x * spacer)
       );
 
     // Nodes
@@ -98,7 +103,7 @@ requirejs(
       .selectAll("a")
       .data(info.descendants())
       .join("a")
-      .attr("transform", (d) => `translate(${d.y},${d.x})`);
+      .attr("transform", (d) => `translate(${d.y * spacer},${d.x * spacer})`);
 
     node
       .append("circle")
