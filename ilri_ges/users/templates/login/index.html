@@ -2,10 +2,18 @@
 {% load static %}
 {% load widget_tweaks %}
 
+{% block stylesheet %}
+<style>
+.card-primary.card-outline{
+    border-top: 3px solid {{ priamryColor }}
+}
+</style>
+{% endblock %}
+
 {% block page_content %}
 {% include 'nav.html' %}
 
-<div class="hold-transition login-page" style="background: #F8F9FA">
+<div class="hold-transition login-page" style="background: #fff; height: 80%">
     <div class="login-box">
         <div class="card card-outline card-primary">
             <div class="card-header text-center">

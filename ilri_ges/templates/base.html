@@ -16,6 +16,14 @@
     <!-- Theme style -->
     <link rel="stylesheet" href="{% static 'js/lib/admin-LTE/dist/css/adminlte.min.css' %}">
     {% block stylesheet %}{% endblock %}
+    
+    <!-- Overide Admin let theme-->
+    <style>
+        .btn-primary {
+            background-color: {{ priamryColor }};
+            border-color: {{ priamryColor }};
+        }
+    </style>
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
 {% block page_content %}{% endblock %}
