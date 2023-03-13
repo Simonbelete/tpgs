@@ -12,14 +12,14 @@ class UserFilter(filters.FilterSet):
 
     class Meta:
         model = User
-        fields = ['name', 'is_active', 'farms']
+        fields = ['name', 'email', 'is_active', 'farms']
 
 
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer_GET_V1
     filterset_class = UserFilter
-    search_fields = ['name']
+    search_fields = ['name', 'email']
     ordering_fields = '__all__'
 
 
