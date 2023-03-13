@@ -1,0 +1,33 @@
+{% load static %}
+
+{% with priamryColor="#c7cf32" %}
+
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="icon" type="image/x-icon" href="{% static 'icons/favicon.ico' %}">
+
+    <!-- Google Font: Source Sans Pro -->
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="{% static 'js/lib/admin-LTE/plugins/fontawesome-free/css/all.min.css' %}">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="{% static 'js/lib/admin-LTE/dist/css/adminlte.min.css' %}">
+    {% block stylesheet %}{% endblock %}
+</head>
+<body>
+{% block page_content %}{% endblock %}
+
+<script src="{% static 'js/lib/requirejs/require-v2.3.6-min.js' %}"></script>
+<script src="{% static 'js/app.js' %}"></script>
+<script>
+    requirejs(["jquery", "bootstrap", "adminLTE"], function () {})
+</script>
+
+{% block javascript %}{% endblock %}
+</body>
+</html>
+
+{% endwith %}

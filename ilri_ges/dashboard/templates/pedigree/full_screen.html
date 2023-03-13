@@ -1,0 +1,14 @@
+{% extends "plain.html" %}
+{% load static %}
+
+{% block title %}
+Pedigree Tree - ILRI genetics Evaluation
+{% endblock %}
+
+{% block page_content %}
+<svg id="chart_view_port" style="border: 1px solid {{ priamryColor }}"></svg>
+{% endblock %}
+
+{% block javascript %}
+<script src="{% static 'js/pedigree_tree.js' %}"></script>
+{% endblock%}

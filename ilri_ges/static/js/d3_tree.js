@@ -32,12 +32,14 @@ define([
       .attr("width", width)
       .attr("height", height)
       .append("g")
-      .attr("transform", "translate(50, 50)")
-      .call(
-        d3.zoom().on("zoom", function (e) {
-          d3.selectAll(select + " g").attr("transform", e.transform);
-        })
-      );
+      .attr("transform", "translate(50, 50)");
+
+    // Zoom & pan
+    d3.select(select).call(
+      d3.zoom().on("zoom", function (e) {
+        d3.selectAll(" g").attr("transform", e.transform);
+      })
+    );
 
     var ds = d3
       .stratify()
@@ -48,7 +50,7 @@ define([
         return d.parent;
       })(data);
 
-    var tree = d3.tree().size([500, 300]);
+    var tree = d3.tree().size([width, height]);
     var info = tree(ds);
 
     // Tangled Tree
@@ -88,8 +90,8 @@ define([
         "d",
         d3
           .link(d3.curveBumpX)
-          .x((d) => d.y * spacer)
-          .y((d) => d.x * spacer)
+          .x((d) => d.y)
+          .y((d) => d.x)
       );
 
     // Nodes
@@ -98,7 +100,7 @@ define([
       .selectAll("a")
       .data(info.descendants())
       .join("a")
-      .attr("transform", (d) => `translate(${d.y * spacer},${d.x * spacer})`);
+      .attr("transform", (d) => `translate(${d.y},${d.x})`);
 
     node
       .append("circle")

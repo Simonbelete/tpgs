@@ -19,10 +19,18 @@ requirejs(
     "use strict";
     var svg = d3
       .select("svg")
-      .attr("width", 1000)
-      .attr("height", 1000)
+      .attr("width", 600)
+      .attr("height", 600)
       .append("g")
       .attr("transform", "translate(50, 50)");
+
+    d3.select("svg").call(
+      d3.zoom().on("zoom", function (e) {
+        console.log(e.transform);
+
+        d3.selectAll("g").attr("transform", e.transform);
+      })
+    );
 
     var data = [
       { id: "1", child: "1", parent: "" },
