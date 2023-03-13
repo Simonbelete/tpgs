@@ -3,7 +3,10 @@ from rest_framework.filters import BaseFilterBackend
 
 class IsActiveFilterBackend(BaseFilterBackend):
     def filter_queryset(self, request, queryset, view):
-        return queryset.filter(is_active=True)
+        if (request.GET.get('is_active') != False):
+            return queryset.filter(is_active=True)
+        else:
+            return queryset
 
 
 class HaveFarmFilterBackend(BaseFilterBackend):
