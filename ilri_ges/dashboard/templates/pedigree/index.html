@@ -29,8 +29,40 @@ Pedigree Tree - ILRI genetics Evaluation
 </div> <!-- /.content-header -->
 
 <!-- Main content -->
-<section class="content" style="background: #f4f6f9">
-    <svg id="chart_view_port">
+<section class="content" style="background: #f4f6f9: overflwo">
+  <div class="container-fluid mb-10">
+    <div class="row">
+      <a href="{% url 'dashboard_pedigree_full' %}" class="btn btn-app">
+        <i class="fas fa-expand-arrows-alt"></i>
+        Full Screen
+      </a>
+      <button class="btn btn-app" id="d3_zoomIn">
+        <i class="fas fa-search-plus"></i>
+        Zoom in
+      </button>
+      <button class="btn btn-app" id="d3_zoomOut">
+        <i class="fas fa-search-minus"></i>
+        Zoom out
+      </button>
+      <button class="btn btn-app" id="d3_resetZoom">
+        <i class="fas fa-undo"></i>
+        Reset zoom
+      </button>
+      <button class="btn btn-app" id="d3_panLeft">
+        <i class="fas fa-angle-double-left"></i>
+        Pan left
+      </button>
+      <button class="btn btn-app" id="d3_panRight">
+        <i class="fas fa-angle-double-right"></i>
+        Pan right
+      </button>
+      <button class="btn btn-app" id="d3_center">
+        <i class="fas fa-expand"></i>
+        Center
+      </button>
+    </div>
+  </div>
+    <svg id="chart_view_port" style="border: 1px solid {{ priamryColor }}">
     </svg>
 </div>
 

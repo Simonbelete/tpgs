@@ -34,12 +34,45 @@ define([
       .append("g")
       .attr("transform", "translate(50, 50)");
 
+    ///
+    /// Controllers
+    ///
     // Zoom & pan
-    d3.select(select).call(
-      d3.zoom().on("zoom", function (e) {
+    var zoom = d3
+      .zoom()
+      .scaleExtent([0.25, 5])
+      .on("zoom", function (e) {
         d3.selectAll(" g").attr("transform", e.transform);
-      })
-    );
+      });
+
+    d3.select(select).call(zoom);
+
+    $("#d3_zoomIn").click(function () {
+      console.log("abc");
+      d3.select(select).transition().call(zoom.scaleBy, 2);
+    });
+
+    $("#d3_zoomOut").click(function () {
+      d3.select(select).transition().call(zoom.scaleBy, 0.5);
+    });
+
+    $("#d3_resetZoom").click(function () {
+      d3.select(select).transition().call(zoom.scaleTo, 1);
+    });
+
+    $("#d3_panLeft").click(function () {
+      d3.select(select).transition().call(zoom.translateBy, -50, 0);
+    });
+
+    $("#d3_panRight").click(function () {
+      d3.select(select).transition().call(zoom.translateBy, 50, 0);
+    });
+
+    $("#d3_center").click(function () {
+      d3.select(select)
+        .transition()
+        .call(zoom.translateTo, 0.5 * width, 0.5 * height);
+    });
 
     var ds = d3
       .stratify()

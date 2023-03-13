@@ -31,5 +31,12 @@ class DashboardPedigreeView(LoginRequiredMixin, View):
     redirect_field_name = 'redirect_to'
 
     def get(self, request):
+        return render(request, 'pedigree/index.html')
+
+
+class DashboardPedigreeFullScreenView(LoginRequiredMixin, View):
+    login_url = '/users/login'
+    redirect_field_name = 'redirect_to'
+
+    def get(self, request):
         return render(request, 'pedigree/full_screen.html')
-        # return render(request, 'pedigree/index.html')full_screen.html

@@ -6,8 +6,8 @@ requirejs(["jquery", "d3_tree"], function ($, D3Tree) {
     var data = results;
     var chart = D3Tree(data, {
       select: "#chart_view_port",
-      width: $(window).width(),
-      height: $(window).height(),
+      width: $(window).width() * 0.86,
+      height: $(window).height() * 0.7,
     });
   });
 });
