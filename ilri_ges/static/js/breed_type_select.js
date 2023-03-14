@@ -2,6 +2,8 @@ requirejs(["jquery", "select2"], function ($, Select2) {
   "use strict";
   $("#breed_type_select").select2({
     theme: "bootstrap4",
+    placeholder: "-----",
+    allowClear: true,
     ajax: {
       url: "/api/breed-types",
       data: function (params) {
