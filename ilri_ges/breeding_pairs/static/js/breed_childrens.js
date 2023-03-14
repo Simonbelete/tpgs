@@ -50,12 +50,16 @@ requirejs(
           return json.data;
         },
         data: function (d) {
-          d.search = "";
+          d.search = d.search.value;
+          d.offset = d.start;
+          d.limit = d.length;
           var sign = d.order[0].dir == "asc" ? "+" : "-";
           d.ordering = "";
 
           d.columns = [];
           d.order = [];
+          delete d.length;
+          delete d.draw;
         },
       },
       columns: columns,
