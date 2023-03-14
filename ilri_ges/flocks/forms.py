@@ -6,4 +6,4 @@ from .models import Flock
 class FlockForm(forms.ModelForm):
     class Meta:
         model = Flock
-        fields = ['name', 'hatch_date', 'breed_type', 'farm']
+        fields = ['name', 'breed_type', 'farm']

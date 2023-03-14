@@ -9,15 +9,13 @@ from flocks.models import Flock
 
 class FlockSerializer_GET_V1(serializers.ModelSerializer):
     name = serializers.CharField()
-    hatch_date = serializers.DateField()
     farm = FarmSerializer_GET_V1()
-    chickens = ChickenSerializer_GET_V1(many=True)
     breed_type = BreedTypeSerializer_GET_V1()
 
     class Meta:
         model = Flock
         fields = ['id', 'name', 'breed_type',
-                  'hatch_date', 'farm', 'chickens', 'created_at', 'is_active']
+                  'farm', 'chickens_count', 'created_at', 'is_active']
 
 
 class FlockHistory(serializers.ModelSerializer):

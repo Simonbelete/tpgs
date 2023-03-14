@@ -24,9 +24,9 @@ requirejs(
     var columns = [
       { data: "id", visible: false },
       { data: "name" },
-      { data: "hatch_date" },
       { data: "farm.name", defaultContent: "" },
-      { data: "chicken_count" },
+      { data: "breed_type.name", defaultContent: "" },
+      { data: "chickens_count" },
       { data: "created_at" },
       {
         data: null,
