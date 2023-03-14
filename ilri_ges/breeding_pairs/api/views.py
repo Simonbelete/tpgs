@@ -2,8 +2,9 @@ import numpy as np
 from rest_framework import viewsets
 from rest_framework.response import Response
 
+from core.views import HistoryViewSet
 from breeding_pairs.models import BreedPair
-from breeding_pairs.api.serializers import BreedPairSerializer_GET_V1, BreedPairSerializer_POST_V1
+from breeding_pairs.api.serializers import BreedPairSerializer_GET_V1, BreedPairSerializer_POST_V1, BreedPairHistory
 
 
 class BreedPairViewSet(viewsets.ModelViewSet):
@@ -19,6 +20,11 @@ class BreedPairViewSet(viewsets.ModelViewSet):
         if self.request.method == 'GET':
             return BreedPairSerializer_GET_V1
         return BreedPairSerializer_POST_V1
+
+
+class BreedPairHistoryViewSet(HistoryViewSet):
+    queryset = BreedPair.history.all()
+    serializer_class = BreedPairHistory
 
 
 class BreedPairTreeViewSet(viewsets.ModelViewSet):
