@@ -193,6 +193,8 @@ REST_FRAMEWORK = {
     ]
 }
 
+DATETIME_FORMAT = "%d-%m-%Y %H:%M:%S"
+
 MESSAGE_TAGS = {
     messages.ERROR: 'danger',
 }

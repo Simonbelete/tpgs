@@ -25,6 +25,9 @@ requirejs(
         showDropdowns: true,
         minYear: 1901,
         maxYear: parseInt(moment().format("YYYY"), 10),
+        locale: {
+          format: "YYYY/MM/DD",
+        },
       },
       function (start, end, label) {
         var years = moment().diff(start, "years");
@@ -53,8 +56,7 @@ requirejs(
     $("#dead_date").on("apply.daterangepicker", function (ev, picker) {
       $(this).val(picker.startDate.format("MM/DD/YYYY"));
     });
-    
-    $('#dead_date').removeAttr('required');​​​​​
 
+    $("#dead_date").removeAttr("required");
   }
 );
