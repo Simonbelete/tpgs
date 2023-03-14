@@ -10,4 +10,7 @@ router.register(r'weights/(?P<id>.+)/histories',
 
 urlpatterns = [
     path('', include(router.urls)),
+    path('weights/growth-performance',  views.get_weight_graph,
+         name='api_weights_growth_performance'),
+
 ]

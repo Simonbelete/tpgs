@@ -11,7 +11,7 @@ class FlockFilter(filters.FilterSet):
 
     class Meta:
         model = Flock
-        fields = ['name', 'is_active']
+        fields = ['name', 'farm', 'is_active']
 
 
 class FlockViewSet(viewsets.ModelViewSet):

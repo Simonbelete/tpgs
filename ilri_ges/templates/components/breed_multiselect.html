@@ -1,0 +1,15 @@
+{% load widget_tweaks %}
+
+<div class="form-group">
+  <label for="breed_type_select">Breed Type</label>
+
+  <select
+    id="breed_type_select"
+    multiple="multiple"
+    data-placeholder="Select Breeds"
+    style="width: 100%"
+  >
+  </select>
+  {% comment %} {{ form.breed_type|attr:"multiple:multiple"|attr:"id:breed_type_select"|add_class:"form-control"|add_error_class:"is-invalid" }} {% endcomment %}
+  {% comment %} <span id="{{ form.breed_type.id_for_label }}-error" class="error invalid-feedback">{{ form.breed_type.errors }}</span> {% endcomment %}
+</div>

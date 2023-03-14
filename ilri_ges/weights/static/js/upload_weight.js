@@ -1,5 +1,3 @@
-"use strict";
-
 requirejs(
   ["jquery", "dropzone", "get_cookie"],
   function ($, dropzone, get_cookie) {

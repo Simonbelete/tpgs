@@ -16,6 +16,14 @@ from flocks.models import Flock
 from breeds.models import BreedType
 
 
+class GrowthPerformanceView(LoginRequiredMixin, View):
+    login_url = '/users/login'
+    redirect_field_name = 'redirect_to'
+
+    def get(self, request):
+        return render(request, 'growth_preformance/index.html')
+
+
 class WeightsView(LoginRequiredMixin, View):
     login_url = '/users/login'
     redirect_field_name = 'redirect_to'

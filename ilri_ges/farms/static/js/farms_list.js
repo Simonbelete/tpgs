@@ -38,8 +38,7 @@ requirejs(
       responsive: true,
       autoWidth: false,
       lengthChange: true,
-      dom: "lBfrtip",
-      buttons: ["copyHtml5", "excelHtml5", "pdfHtml5", "csvHtml5"],
+      buttons: ["copyHtml5", "excelHtml5", "csvHtml5", "pdfHtml5"],
       ajax: {
         url: "/api/farms/",
         dataSrc: function (json) {
@@ -50,11 +49,15 @@ requirejs(
         },
         data: function (d) {
           d.search = d.search.value;
+          d.offset = d.start;
           d.limit = d.length;
           var sign = d.order[0].dir == "asc" ? "+" : "-";
           d.ordering = sign + columns[d.order[0].column].data;
+
           d.columns = [];
           d.order = [];
+          delete d.length;
+          delete d.draw;
         },
       },
       columns: columns,

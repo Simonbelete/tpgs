@@ -284,8 +284,8 @@
 
             <li class="nav-header">REPORTS</li>
             <li class="nav-item">
-              <a href="/home/growth-performance/" class="nav-link">
-                <i class="fas fa-circle nav-icon"></i>
+              <a href="{% url 'weights_growth_performance' %}" class="nav-link">
+                <i class="fas fa-circle nav-icon {% if request.path == '/growth-performance' %}active{% endif %}"></i>
                 <p>Growth Preformance</p>
               </a>
             </li>
