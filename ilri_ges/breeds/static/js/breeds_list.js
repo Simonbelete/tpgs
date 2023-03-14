@@ -60,7 +60,7 @@ requirejs(
     });
 
     // Edit record
-    selector.on("click", "td.editor-edit", function (e) {
+    selector.on("click", "td.editor-edit, tr td ul .editor-edit", function (e) {
       e.preventDefault();
       var data = table.row(this).data();
       window.location.href = "/breeds/" + data.id;

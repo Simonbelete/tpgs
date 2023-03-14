@@ -83,10 +83,21 @@ requirejs(
     });
 
     // Edit record
-    selector.on("click", "td.editor-edit", function (e) {
+    selector.on("click", "td.editor-edit, tr td ul .editor-edit", function (e) {
       e.preventDefault();
       var data = table.row(this).data();
       window.location.href = "/chickens/" + data.id;
     });
+
+    // if (window.matchMedia("(max-width: 767px)").matches) {
+    //   $("#chickens_data_list_table tbody").on(
+    //     "click",
+    //     "tr td ul .editor-edit",
+    //     function () {
+    //       var data = table.row(this).data();
+    //       window.location.href = "/home/users/" + data.id;
+    //     }
+    //   );
+    // }
   }
 );
