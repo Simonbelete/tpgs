@@ -118,7 +118,7 @@ class CitiesEditView(LoginRequiredMixin, View):
         if id == 0:
             return redirect('404')
         try:
-            data = Country.objects.get(pk=id)
+            data = City.objects.get(pk=id)
             form = CityForm(request.POST, instance=data)
             if form.is_valid():
                 form.save()
