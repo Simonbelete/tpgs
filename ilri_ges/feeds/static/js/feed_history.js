@@ -19,10 +19,10 @@ requirejs(
     // History
     var historyColumns = [
       { data: "history_user.name" },
-      { data: "date" },
+      { data: "week" },
       { data: "weight" },
       { data: "chicken.name" },
-      { data: "feed_type.name" },
+      { data: "feed_type.name", defaultContent: "" },
       { data: "history_date" },
     ];
     var historyTable = selector.DataTable({
