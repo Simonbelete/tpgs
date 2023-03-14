@@ -17,15 +17,9 @@ class BreedPairSerializer_GET_V1(serializers.ModelSerializer):
 
 
 class BreedPairSerializer_POST_V1(serializers.ModelSerializer):
-    father = serializers.PrimaryKeyRelatedField(
-        read_only=False, queryset=Chicken.objects.all())
-    mother = serializers.PrimaryKeyRelatedField(
-        read_only=False, queryset=Chicken.objects.all())
-    date = serializers.DateField()
-
     class Meta:
         model = BreedPair
-        fields = ['father', 'mother', 'date']
+        fields = '__all__'
 
 
 class BreedPairHistory(serializers.ModelSerializer):

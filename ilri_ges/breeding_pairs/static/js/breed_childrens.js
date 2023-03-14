@@ -1,5 +1,3 @@
-"use strict";
-
 requirejs(
   [
     "jquery",
@@ -17,10 +15,8 @@ requirejs(
     "datatables_buttons_colVis",
   ],
   function ($, DataTable) {
-    "use strict";
-
-    var selector = $("#chickens_data_list_table");
-
+    var selector = $("#breed_childrens");
+    // History
     var columns = [
       { data: "id", visible: false },
       { data: "tag" },
@@ -39,19 +35,14 @@ requirejs(
         orderable: false,
       },
     ];
-
     var table = selector.DataTable({
       responsive: true,
       lengthChange: false,
       autoWidth: false,
-      select: true,
-      //dom: 'Bfrtip',
-      dom: "Plfrtip",
-      buttons: ["copyHtml5", "excelHtml5", "pdfHtml5", "csvHtml5"],
       processing: true,
       serverSide: true,
       ajax: {
-        url: "/api/chickens/",
+        url: "/api/breeding-pairs/" + selector.data("id") + "/children",
         dataSrc: function (json) {
           json["data"] = json["results"];
           json["recordsTotal"] = json["count"];
@@ -59,15 +50,9 @@ requirejs(
           return json.data;
         },
         data: function (d) {
-          console.log(d);
-          d.search = d.search.value;
+          d.search = "";
           var sign = d.order[0].dir == "asc" ? "+" : "-";
-          d.ordering = sign + columns[d.order[0].column].data;
-
-          // Filters
-          d.sex = $("#filter_sex").val();
-          d.farm = $("#filter_farm").val();
-          d.breed_type = $("#filter_breed_type").val();
+          d.ordering = "";
 
           d.columns = [];
           d.order = [];
