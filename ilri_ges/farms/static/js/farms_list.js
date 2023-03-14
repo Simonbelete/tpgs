@@ -22,6 +22,8 @@ requirejs(
     var columns = [
       { data: "id", visible: false },
       { data: "name" },
+      { data: "city", defaultContent: "" },
+      { data: "chicken_count", defaultContent: "" },
       { data: "created_at" },
       {
         data: null,

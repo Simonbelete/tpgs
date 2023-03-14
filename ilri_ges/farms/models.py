@@ -14,3 +14,7 @@ class Farm(CoreModel):
 
     def __str__(self):
         return self.name
+
+    @property
+    def chicken_count(self):
+        return self.chickens.count()
