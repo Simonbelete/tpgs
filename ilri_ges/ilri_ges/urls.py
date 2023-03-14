@@ -30,6 +30,7 @@ urlpatterns = [
     path('farms/', include('farms.urls')),
     path('feeds/', include('feeds.urls')),
     path('eggs/', include('eggs.urls')),
+    path('flocks/', include('flocks.urls')),
     path('admin/', admin.site.urls),
 
     path('api/', include('breeds.api.urls')),
@@ -41,6 +42,7 @@ urlpatterns = [
     path('api/', include('feeds.api.urls')),
     path('api/', include('eggs.api.urls')),
     path('api/', include('weights.api.urls')),
+    path('api/', include('flocks.api.urls')),
 
     path('chickens/api/', include('chickens.api.urls')),
 

@@ -174,8 +174,8 @@
 
             <li class="nav-item">
               <a
-                href="/home/flocks"
-                class="nav-link {% if request.path == '/home/flocks/' %}active{% endif %}"
+                href="{% url 'flocks' %}"
+                class="nav-link {% if request.path == '/flocks/' %}active{% endif %}"
               >
                 <i class="nav-icon fab fa-hive"></i>
                 <p>Flocks</p>

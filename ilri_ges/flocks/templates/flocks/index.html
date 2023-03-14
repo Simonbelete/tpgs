@@ -1,0 +1,93 @@
+{% extends "sidebar.html" %} 
+{% load static %}
+
+{% block stylesheet %} 
+{% include 'components/list_styles.html' %}
+{% include 'components/select2_style.html' %}
+{% endblock %} 
+
+{% block title %} Flocks - ILRI genetics Evaluation {% endblock %} 
+
+{% block body %}
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <div class="container-fluid">
+      <div class="row mb-2">
+        <div class="col-sm-6">
+          <h1>Flocks</h1>
+        </div>
+        <div class="col-sm-6">
+          <ol class="breadcrumb float-sm-right">
+            <li class="breadcrumb-item"><a href="#">Home</a></li>
+            <li class="breadcrumb-item active">Flocks</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+    <!-- /.container-fluid -->
+  
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-12">
+            <div class="card">
+              <div class="card-header row">
+                <h3 class="card-title col-10">Flocks List</h3>
+                <div class="col-2">
+                  <a href="{% url 'flocks_create' %}" role="button" type="button" class="btn btn-primary float-right"><i class="fas fa-plus"></i> Create Flock</a>
+                </div>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body">
+                <div class="row mb-10" style="align-items: end; margin-bottom: 50px">
+                  {% include 'components/is_active_filter.html' %}
+                  {% include 'components/farm_filter.html' %}
+                  <button type="button" id="apply_filter" style="height: 40px" class="btn btn-secondary">Apply</button>
+                </div>
+
+                <table
+                  id="flocks_data_list_table"
+                  class="table table-bordered table-striped"
+                >
+                  <thead>
+                    <tr>
+                      <th>ID</th>
+                      <th>Name</th>
+                      <th>Hatch Date</th>
+                      <th>Farm</th>
+                      <th>Chickens</th>
+                      <th>Created At</th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody></tbody>
+                  <tfoot>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Hatch Date</th>
+                        <th>Farm</th>
+                        <th>Chickens</th>
+                        <th>Created At</th>
+                        <th></th>
+                    </tr>
+                  </tfoot>
+                </table>
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+          </div>
+        </div>
+      </div>
+    </section>
+  
+    <!-- /.content -->
+</section>
+{% endblock %}
+
+{% block javascript %}
+<script src="{% static 'js/flocks_list.js' %}"></script>
+<script src="{% static 'js/farm_select.js' %}"></script>
+{% endblock%}
