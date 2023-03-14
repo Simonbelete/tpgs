@@ -41,15 +41,12 @@ requirejs(
     ];
 
     var table = selector.DataTable({
-      responsive: true,
-      lengthChange: false,
-      autoWidth: false,
-      select: true,
-      //dom: 'Bfrtip',
-      dom: "Plfrtip",
-      buttons: ["copyHtml5", "excelHtml5", "pdfHtml5", "csvHtml5"],
       processing: true,
       serverSide: true,
+      responsive: true,
+      autoWidth: false,
+      lengthChange: true,
+      buttons: ["copyHtml5", "excelHtml5", "csvHtml5", "pdfHtml5"],
       ajax: {
         url: "/api/chickens/",
         dataSrc: function (json) {
@@ -59,21 +56,29 @@ requirejs(
           return json.data;
         },
         data: function (d) {
-          console.log(d);
           d.search = d.search.value;
+          d.offset = d.start;
+          d.limit = d.length;
           var sign = d.order[0].dir == "asc" ? "+" : "-";
           d.ordering = sign + columns[d.order[0].column].data;
 
           // Filters
+          d.is_active = $("#is_active").val();
           d.sex = $("#filter_sex").val();
-          d.farm = $("#filter_farm").val();
+          if ($("#farm_select").val() !== "") d.farm = $("#farm_select").val();
           d.breed_type = $("#filter_breed_type").val();
 
           d.columns = [];
           d.order = [];
+          delete d.length;
+          delete d.draw;
         },
       },
       columns: columns,
+    });
+
+    $("#apply_filter").click(function () {
+      table.ajax.reload(null, false);
     });
 
     // Edit record

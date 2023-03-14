@@ -1,5 +1,5 @@
 from rest_framework.filters import BaseFilterBackend
-from rest_framework.pagination import PageNumberPagination
+from rest_framework.pagination import PageNumberPagination, LimitOffsetPagination
 
 
 class IsActiveFilterBackend(BaseFilterBackend):
@@ -22,5 +22,5 @@ class HaveFarmFilterBackend(BaseFilterBackend):
             return queryset.filter(farm__in=farms, farms__in=farms)
 
 
-class LimitPageNumberPagination(PageNumberPagination):
+class LimitPageNumberPagination(LimitOffsetPagination):
     page_size_query_param = 'limit'

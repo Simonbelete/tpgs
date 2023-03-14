@@ -21,7 +21,7 @@ class ChickenFilter(filters.FilterSet):
 
     class Meta:
         model = Chicken
-        fields = ['tag', 'farm', 'flock', 'sex', 'breed_type']
+        fields = ['tag', 'farm', 'flock', 'sex', 'is_active', 'breed_type']
 
 
 class ChickenViewSet(viewsets.ModelViewSet):

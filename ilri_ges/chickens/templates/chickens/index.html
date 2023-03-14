@@ -3,6 +3,7 @@
 
 {% block stylesheet %} 
 {% include 'components/list_styles.html' %}
+{% include 'components/select2_style.html' %}
 {% endblock %} 
 
 {% block title %} Chickens List  - ILRI genetics Evaluation {% endblock %} 
@@ -45,7 +46,7 @@
             <div class="card-body">
               
               <!-- Filters -->
-              <div class="row" style="align-items: end;">
+              <div class="row" style="align-items: end; margin-bottom: 50px">
                 <div class="col-md-6 col-lg-2 col-xl-1">
                   <label for="filter_sex">Filter By Sex</label>
                   <select
@@ -61,32 +62,8 @@
                     <option value="F">Female</option>
                   </select>
                 </div>
-                <div class="col-md-6 col-lg-2 col-xl-1">
-                  <label for="filter_farm">Filter By Farm</label>
-                  <select
-                    id="filter_farm"
-                    name="farm"
-                    class="form-control select2"
-                    style="width: 100%"
-                  >
-                    <option value="" selected="selected">
-                    -
-                    </option>
-                  </select>
-                </div>
-                <div class="col-md-6 col-lg-2 col-xl-1">
-                  <label for="filter_breed_type">Filter By Breed Type</label>
-                  <select
-                    id="filter_breed_type"
-                    name="breed_type"
-                    class="form-control select2"
-                    style="width: 100%"
-                  >
-                    <option value="" selected="selected">
-                    -
-                    </option>
-                  </select>
-                </div>
+                {% include 'components/is_active_filter.html' %}
+                {% include 'components/farm_filter.html' %}
                 <button type="button" id="apply_filter" style="height: 40px" class="btn btn-secondary">Apply</button>
               </div>
               <!-- /.Filters -->
@@ -142,4 +119,5 @@
 
 {% block javascript %}
 <script src="{% static 'js/chickens_list.js' %}"></script>
+<script src="{% static 'js/farm_select.js' %}"></script>
 {% endblock %}
