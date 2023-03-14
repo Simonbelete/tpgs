@@ -106,7 +106,6 @@ requirejs(
     });
 
     $("#hdep_apply").click(function () {
-      console.log($("#hdep_measurement").val());
       table.ajax.reload(null, false);
     });
   }
