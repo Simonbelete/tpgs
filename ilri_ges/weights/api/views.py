@@ -13,6 +13,9 @@ from django.http import HttpResponse
 from . import serializers
 from core.views import HistoryViewSet
 from .. import models
+from breeds.models import BreedType
+from weights.models import Weight
+from flocks.models import Flock
 
 
 class WeightFilter(filters.FilterSet):
@@ -63,14 +66,14 @@ def get_weight_graph(request):
     # For Flock Weights
     if (flock_id != 0):
         try:
-            flock = models.Flock.objects.get(pk=flock_id)
+            flock = Flock.objects.get(pk=flock_id)
             flock_color = flock.breed_type.color if flock.breed_type != None else '#4472C4'
             # Weights per week
             week_weights = []
             week_erros = []
             for w in x_pos:
                 current_week_weights = []
-                weights = models.Weight.objects.all().filter(chicken__flock=flock_id, week=w)
+                weights = Weight.objects.all().filter(chicken__flock=flock_id, week=w)
                 for row in weights.iterator():
                     current_week_weights.append(Decimal(row.weight))
                 avg = np.average(current_week_weights)
@@ -86,14 +89,14 @@ def get_weight_graph(request):
     elif len(breed_ids) != 0:
         for breed_id in breed_ids:
             try:
-                breed = models.BreedType.objects.get(pk=breed_id)
+                breed = BreedType.objects.get(pk=breed_id)
                 breed_color = breed.color if breed.color != None else '#4472C4'
                 # Weights per week
                 week_weights = []
                 week_erros = []
                 for w in x_pos:
                     current_week_weights = []
-                    weights = models.Weight.objects.all().filter(
+                    weights = Weight.objects.all().filter(
                         chicken__breed_type=breed_id, week=w)
                     for row in weights.iterator():
                         current_week_weights.append(Decimal(row.weight))

@@ -1,18 +1,12 @@
 requirejs(["jquery", "select2"], function ($, Select2) {
-  breed_multiselect_input = breedMultipleSelect.init($("#breed-multiselect"));
-
-  breed_multiselect_input.on("select2:select", function (e) {
-    var data = e.params.data;
-    console.log($("#breed-multiselect").val());
-  });
-
   $("#weight_piechart_apply").click(function () {
-    start_week = $("#start_week").val();
-    end_week = $("#end_week").val();
-    breed_types_select = $("#breed-multiselect").val();
-    query =
+    var start_week = $("#start_week").val();
+    var end_week = $("#end_week").val();
+    var breed_types_select = $("#breed_type_select").val();
+    // join(",")
+    var query =
       "?breed_type=" +
-      breed_types_select.join(",") +
+      breed_types_select +
       "&start_week=" +
       start_week +
       "&end_week=" +

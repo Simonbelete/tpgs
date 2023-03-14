@@ -5,22 +5,22 @@
     </div>
     <!-- /.card-header -->
     <div class="card-body">
-      <div class="row col-12">
-        <div class="row">{% include "components/breed_multiselect.html" %}</div>
-        <div class="col-4">
-          <div class="col-2">
-            <input
-              type="number"
-              name="start_week"
-              value="0"
-              min="0"
-              class="form-control"
-              id="start_week"
-              placeholder="Start Week"
-            />
-          </div>
-          <div>to</div>
-          <div class="col-2">
+      <div class="row" style="align-items: center">
+        <div class="col-sm-1 col-md-1" style="align-items: center">
+          <label>Start Week</label>
+          <input
+            type="number"
+            name="start_week"
+            value="0"
+            min="0"
+            class="form-control"
+            id="start_week"
+            placeholder="Start Week"
+          />
+        </div>
+
+        <div class="col-sm-1 col-md-1">
+          <label>End Week</label>
             <input
               type="number"
               name="end_week"
@@ -28,12 +28,18 @@
               min="1"
               class="form-control"
               id="end_week"
-              placeholder="Start Week"
+              placeholder="End Week"
             />
-          </div>
+        </div> 
+
+        <div class="col-3">
+          {% include "components/breed_multiselect.html" %}
         </div>
+
+
         <div class="btn-group">
           <button
+          style="height: 40px; align-self: end;"
             type="button"
             class="btn btn-primary"
             id="weight_piechart_apply"
@@ -41,6 +47,7 @@
             Apply
           </button>
           <button
+          style="height: 40px; align-self: end;"
             type="button"
             class="btn dropdown-toggle dropdown-icon btn-primary"
             data-toggle="dropdown"
@@ -52,7 +59,8 @@
             <a class="dropdown-item" href="#" id="weight_piechart_download">Download</a>
           </div>
         </div>
-      </div>
+
+    </div>
       <div class="container-fluid">
         <img
           src=""
