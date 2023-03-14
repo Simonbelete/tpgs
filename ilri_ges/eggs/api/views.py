@@ -40,9 +40,9 @@ class HHEP(APIView):
     queryset = models.Egg.objects.all()
 
     def get(self, request):
-        start_week = request.GET.get('start_week') or 0
-        end_week = request.GET.get('end_week') or 0
-        measurement = request.GET.get('measurement') or 'daily'
+        start_week = int(request.GET.get('start_week', 0))
+        end_week = int(request.GET.get('end_week', 0))
+        measurement = request.GET.get('measurement', 'daily')
         # chicken, flock, breed
         group = request.GET.get('group') or 'chicken'
         chicken_ids = request.GET.get('chicken') or []

@@ -1,0 +1,97 @@
+<div class="col-12">
+    <div class="card">
+        <div class="card-header d-flex">
+          <h3 class="card-title col-3">Hen-Day Egg Production (HDEP) - Chickens</h3>
+        </div>
+        <div class="card-body">
+          <div class="row" style="align-items: center">
+
+            <div class="col-md-6 col-lg-2 col-xl-1">
+              <label>Measurement</label>
+              <select
+                id="hdep_measurement"
+                class="form-control select2"
+                style="width: 100%"
+              >
+                <option value="daily" selected="selected">Daily</option>
+                <option value="weekly">Weekly</option>
+              </select>
+            </div>
+
+            <div class="col-sm-1 col-md-1" style="align-items: center">
+              <label>Start Week</label>
+              <input
+                type="number"
+                name="hdep_start_week"
+                value="0"
+                min="0"
+                class="form-control"
+                id="hdep_start_week"
+                placeholder="Start Week"
+              />
+            </div>
+
+          <div class="col-sm-1 col-md-1">
+            <label>End Week</label>
+              <input
+                type="number"
+                name="hdep_end_week"
+                value="10"
+                min="1"
+                class="form-control"
+                id="hdep_end_week"
+                placeholder="End Week"
+              />
+          </div> 
+
+          <div class="col-3">
+            {% if group == "chicken" %}
+              {% include 'components/chicken_multiselect.html' %}
+            {% elif group == "breeds" %}
+              {% include 'components/breed_multiselect.html' %}
+            {% elif group == "flock" %}
+              {% include 'components/flock_multiselect.html' %}
+            {% else %}
+              {% include 'components/chicken_multiselect.html' %}
+            {% endif %}
+          </div>
+
+          <input type="hidden" id="hdep_group" value="{{ group }}" />
+
+            <button
+                  type="button"
+                  style="height: 40px; align-self: end;"
+                  class="btn btn-primary"
+                  id="hdep_apply"
+                >
+                  Apply
+            </button>  
+          </div>
+            <div class="tab-content">
+                <div class="container-fluid tab-pane active" id="tab_e_1">
+                    <canvas id="hdep_chart" style="min-height: 250px; height: 250px; max-height: 600px; max-width: 100%;"></canvas>
+                </div>
+                <!-- /.tab-pane -->
+                <div class="tab-pane" id="tab_e_2">
+                    <table id="hdep_data_list_table" data-id="{{ id }}" class="table table-bordered table-striped">
+                    <thead>
+                      <tr>
+                        <th>Week</th>
+                        <th>Day</th>
+                        <th>HDEP</th>
+                      </tr>
+                    </thead>
+                    <tbody></tbody>
+                  </table>
+                </div>
+                <!-- /.tab-pane -->
+            </div>
+        </div>
+        <div class="card-footer d-flex">
+            <ul class="nav nav-pills ml-auto">
+                <li class="nav-item"><a class="nav-link active" href="#tab_e_1" data-toggle="tab">Chart</a></li>
+                <li class="nav-item"><a class="nav-link" href="#tab_e_2" data-toggle="tab">Data</a></li>
+            </ul>
+          </div>
+    </div>
+</div>

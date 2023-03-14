@@ -15,6 +15,14 @@ class EggsView(LoginRequiredMixin, View):
         return render(request, 'eggs/index.html')
 
 
+class HDEPView(LoginRequiredMixin, View):
+    login_url = '/users/login'
+    redirect_field_name = 'redirect_to'
+
+    def get(self, request):
+        return render(request, 'hdep/index.html', {'group': request.GET.get('group', 'chicken')})
+
+
 class EggsCreateView(LoginRequiredMixin, View):
     login_url = '/users/login'
     redirect_field_name = 'redirect_to'

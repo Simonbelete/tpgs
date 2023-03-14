@@ -1,6 +1,6 @@
 requirejs(["jquery", "select2"], function ($, Select2) {
   "use strict";
-  $("#farm_select").select2({
+  $("#flock_select").select2({
     theme: "bootstrap4",
     ajax: {
       url: "/api/flocks",

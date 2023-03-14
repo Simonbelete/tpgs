@@ -1,0 +1,49 @@
+{% extends "sidebar.html" %} 
+{% load static %} 
+{% load widget_tweaks %}
+
+
+{% block stylesheet %} 
+{% include 'components/create_styles.html' %} 
+{% include 'components/select2_style.html' %}
+{% include 'components/daterangepicker_style.html' %} 
+{% include 'components/datatables_style.html' %}
+{% endblock %} 
+
+{% block title %} Egg Record - ILRI genetics Evaluation {% endblock %} 
+
+{% block body %}
+
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <div class="container-fluid">
+      <div class="row mb-2">
+        <div class="col-sm-6">
+          <h1>Hen-Day Egg Production (HDEP)</h1>
+        </div>
+        <div class="col-sm-6">
+          <ol class="breadcrumb float-sm-right">
+            <li class="breadcrumb-item"><a href="#">Home</a></li>
+            <li class="breadcrumb-item active">HDEP</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+    <!-- /.container-fluid -->
+
+     <!-- Main content -->
+  <section class="content">
+    {% include 'components/hdep_chart.html' %}
+
+  </section>
+
+  <!-- /.content -->
+</section>
+{% endblock %}
+
+{% block javascript %}
+<script src="{% static 'js/hdep.js' %}"></script>
+<script src="{% static 'js/chicken_select.js' %}"></script>
+<script src="{% static 'js/flock_select.js' %}"></script>
+<script src="{% static 'js/breed_type_select.js' %}"></script>
+{% endblock %}

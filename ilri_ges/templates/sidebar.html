@@ -300,25 +300,25 @@
               </a>
               <ul class="nav nav-treeview">
                 <li class="nav-item">
-                  <a href="#" class="nav-link">
+                  <a href="{% url 'hdep_report' %}" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
                     <p>By Chicken</p>
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a href="#" class="nav-link" data-toggle="modal" data-target="#weight_import_modal">
+                  <a href="/eggs/hdep?group=flock" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
                     <p>By Flock</p>
                   </a>
                 </li>
-                <li class="nav-item">
+                {% comment %} <li class="nav-item">
                   <a href="#" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
                     <p>By House</p>
                   </a>
-                </li>
+                </li> {% endcomment %}
                 <li class="nav-item">
-                  <a href="#" class="nav-link">
+                  <a href="/eggs/hdep?group=breeds" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
                     <p>By Breed</p>
                   </a>
