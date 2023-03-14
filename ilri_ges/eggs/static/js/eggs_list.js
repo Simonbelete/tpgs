@@ -34,13 +34,12 @@ requirejs(
       },
     ];
     var table = selector.DataTable({
-      responsive: true,
-      lengthChange: true,
-      autoWidth: false,
-      dom: "lBfrtip",
-      buttons: ["copyHtml5", "excelHtml5", "pdfHtml5", "csvHtml5"],
       processing: true,
       serverSide: true,
+      responsive: true,
+      autoWidth: false,
+      lengthChange: true,
+      buttons: ["copyHtml5", "excelHtml5", "csvHtml5", "pdfHtml5"],
       ajax: {
         url: "/api/eggs",
         dataSrc: function (json) {
@@ -51,11 +50,15 @@ requirejs(
         },
         data: function (d) {
           d.search = d.search.value;
+          d.offset = d.start;
           d.limit = d.length;
           var sign = d.order[0].dir == "asc" ? "+" : "-";
           d.ordering = sign + columns[d.order[0].column].data;
+
           d.columns = [];
           d.order = [];
+          delete d.length;
+          delete d.draw;
         },
       },
       columns: columns,
