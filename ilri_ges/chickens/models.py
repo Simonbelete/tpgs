@@ -76,6 +76,18 @@ class Chicken(CoreModel):
         return age
 
     @property
+    def age_in_days(self):
+        if self.hatch_date == None:
+            return 0
+        return (date.today() - self.hatch_date).days
+
+    @property
+    def age_in_weeks(self):
+        if self.hatch_date == None:
+            return 0
+        return round(self.age_in_days/7, 2)
+
+    @property
     def hatch_weight(self):
         """" Hatch Weight is computed from week 0 weight """
         return Weight.objects.get(pk=self.id).earliest('week')
