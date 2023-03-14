@@ -1,7 +1,7 @@
 requirejs(["jquery", "chartjs"], function ($, Chart) {
   function percentCalculation(a, b) {
     var c = (a / b) * 100;
-    return parseFloat(c);
+    return parseFloat(c.toFixed(2));
   }
 
   var pieData = {
