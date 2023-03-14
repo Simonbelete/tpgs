@@ -36,17 +36,61 @@
 <section class="content">
     <div class="row col-12">
         <div class="col-md-3 col-sm-6 col-12">
+            <!-- .info-box-->
             <div class="info-box">
               <span class="info-box-icon bg-warning"><i class="far fa-copy"></i></span>
 
               <div class="info-box-content">
-                <span class="info-box-text">Weight</span>
+                <span class="info-box-text font-weight-bold">Weight</span>
                 <span class="info-box-number" id="statics_weight">-</span>
               </div>
               <!-- /.info-box-content -->
             </div>
             <!-- /.info-box -->
         </div>
+
+        <div class="col-md-3 col-sm-6 col-12">
+          <!-- .info-box-->
+          <div class="info-box">
+            <span class="info-box-icon bg-warning"><i class="far fa-copy"></i></span>
+
+            <div class="info-box-content">
+              <span class="info-box-text font-weight-bold">Age</span>
+              <span class="info-box-number" >{{ data.age }}</span>
+            </div>
+            <!-- /.info-box-content -->
+          </div>
+          <!-- /.info-box -->
+        </div>
+
+        <div class="col-md-3 col-sm-6 col-12">
+          <!-- .info-box-->
+          <div class="info-box">
+            <span class="info-box-icon bg-warning"><i class="far fa-copy"></i></span>
+
+            <div class="info-box-content">
+              <span class="info-box-text font-weight-bold">Total Egg Production</span>
+              <span class="info-box-number" id="statics_egg">-</span>
+            </div>
+            <!-- /.info-box-content -->
+          </div>
+          <!-- /.info-box -->
+        </div>
+
+        <div class="col-md-3 col-sm-6 col-12">
+          <!-- .info-box-->
+          <div class="info-box">
+            <span class="info-box-icon bg-warning"><i class="far fa-copy"></i></span>
+
+            <div class="info-box-content">
+              <span class="info-box-text font-weight-bold">Total Feed</span>
+              <span class="info-box-number" id="statics_total_feed">-</span>
+            </div>
+            <!-- /.info-box-content -->
+          </div>
+          <!-- /.info-box -->
+        </div>
+
     </div>
     <form class="col-md-12" action="" method="POST">
       <div class="card card-primary">
@@ -61,6 +105,7 @@
                 {{ form.non_field_errors }}
 
                 <div class="row">
+                    <input type="hidden" id="chicken_id" value="{{ form.id.vlaue }}" data-id="{{ data.id }}" />
                     <div class="form-group col-md-6">
                         <label for="{{ form.tag.id_for_label }}">Tag</label>
                         {{ form.tag|add_class:"form-control"|add_error_class:"is-invalid"|attr:"placeholder: Enter Tag" }}
@@ -135,4 +180,5 @@
 <script src="{% static 'js/fcr_growth.js' %}"></script>
 <script src="{% static 'js/fcr_egg.js' %}"></script>
 <script src="{% static 'js/chicken_history.js' %}"></script>
+<script src="{% static 'js/chicken_stats.js' %}"></script>
 {% endblock %}

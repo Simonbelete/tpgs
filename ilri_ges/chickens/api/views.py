@@ -2,6 +2,7 @@ from rest_framework import viewsets, status
 from rest_framework.response import Response
 from django_filters import rest_framework as filters
 from rest_framework.views import APIView
+from django.db.models import Count, Sum
 
 from core.views import HistoryViewSet
 from chickens.models import Chicken
@@ -9,6 +10,7 @@ from . import serializers
 from weights.models import Weight
 from feeds.models import Feed
 from eggs.models import Egg
+from weights.api.serializers import WeightSerializer_GET_V1
 
 
 class ChickenFilter(filters.FilterSet):
@@ -177,3 +179,26 @@ class ChickenHistoryViewSet(HistoryViewSet):
     serializer_class = serializers.ChickenHistory
     search_fields = ['name']
     ordering_fields = '__all__'
+
+
+class ChickenStaticsViewSet(viewsets.ModelViewSet):
+    queryset = Chicken.objects.all()
+    serializer_class = serializers.ChickenSerializer_GET_V1
+
+    def list(self, request, *args, **kwargs):
+        id = self.kwargs['id']
+        latest_weight = Weight.objects.all().filter(chicken=id).latest('week')
+        total_feed = Feed.objects.filter(
+            chicken=id).aggregate(feed_sum=Sum('weight'))
+        total_egg = Egg.objects.filter(
+            chicken=id).aggregate(egg_sum=Sum('eggs'))
+        feed = total_feed['feed_sum']
+
+        return Response({
+            'weight': {
+                'week': latest_weight.week,
+                'weight': latest_weight.weight,
+            },
+            'total_egg': total_egg['egg_sum'] if total_egg else 0,
+            'total_feed': feed
+        }, status=status.HTTP_200_OK)
