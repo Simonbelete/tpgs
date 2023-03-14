@@ -15,16 +15,18 @@ from breeds.models import BreedType
 
 
 class EggFilter(filters.FilterSet):
+    chicken = filters.CharFilter(field_name='chicken', lookup_expr='exact')
+
     class Meta:
         model = models.Egg
-        fields = ''
+        fields = ['chicken']
 
 
 class EggViewSet(viewsets.ModelViewSet):
     queryset = models.Egg.objects.all()
     serializer_class = serializers.EggSerializer_GET_V1
     filterset_class = EggFilter
-    search_fields = ['chicken']
+    search_fields = ['chicken__tag']
     ordering_fields = '__all__'
 
     def perform_create(self, serializer):
