@@ -8,6 +8,10 @@ from breeds.api.serializers import BreedTypeSerializer_GET_V1
 
 
 class ChickenSerializer_GET_V1(serializers.ModelSerializer):
+    breed_type = BreedTypeSerializer_GET_V1()
+    farm = FarmSerializer_GET_V1()
+    house = HouseSerializer_GET_V1()
+
     class Meta:
         model = Chicken
         fields = ['name', 'age', 'hatch_weight', 'flock', 'id', 'tag', 'sex', 'farm', 'breed_pair',
