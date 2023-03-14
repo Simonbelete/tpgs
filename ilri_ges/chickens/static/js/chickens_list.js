@@ -66,7 +66,8 @@ requirejs(
           d.is_active = $("#is_active").val();
           d.sex = $("#filter_sex").val();
           if ($("#farm_select").val() !== "") d.farm = $("#farm_select").val();
-          d.breed_type = $("#filter_breed_type").val();
+          if ($("#breed_type_select").val() !== "")
+            d.breed_type = $("#breed_type_select").val();
 
           d.columns = [];
           d.order = [];

@@ -64,6 +64,7 @@
                 </div>
                 {% include 'components/is_active_filter.html' %}
                 {% include 'components/farm_filter.html' %}
+                {% include 'components/breed_filter.html' %}
                 <button type="button" id="apply_filter" style="height: 40px" class="btn btn-secondary">Apply</button>
               </div>
               <!-- /.Filters -->
@@ -120,4 +121,5 @@
 {% block javascript %}
 <script src="{% static 'js/chickens_list.js' %}"></script>
 <script src="{% static 'js/farm_select.js' %}"></script>
+<script src="{% static 'js/breed_type_select.js' %}"></script>
 {% endblock %}
