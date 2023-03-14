@@ -77,7 +77,7 @@ class FCrGrowth(APIView):
                 current_week_weight = 0
                 previous_week_weight = 0
 
-            current_week_fcr['fcr'] = fcr
+            current_week_fcr['fcr'] = round(fcr, 3)
             current_week_fcr['current_week_weight'] = current_week_weight
             current_week_fcr['previous_week_weight'] = previous_week_weight
             current_week_fcr['weight_gain'] = weight_gain
@@ -121,7 +121,7 @@ class FCrEgg(APIView):
                 fcr = feed_weight/total_egg_weight
             except:
                 fcr = 0
-            current_week_fcr['fcr'] = fcr
+            current_week_fcr['fcr'] = round(fcr, 3)
             current_week_fcr['total_egg_weight'] = total_egg_weight
             current_week_fcr['feed_weight'] = feed_weight
             current_week_fcr['eggs'] = eggs
