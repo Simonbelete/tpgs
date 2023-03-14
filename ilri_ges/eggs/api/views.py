@@ -76,12 +76,16 @@ class HHEP(APIView):
                     chicken_ids = breed_type.chickens.values_list(
                         'id', flat=True)
 
+                must_alive = (end_week - start_week) * 7
+                # Handle null on days_alive
                 chickens = Chicken.objects.all().filter(
-                    id__in=chicken_ids, days_alive__lte=start_week*7)
+                    id__in=chicken_ids, days_alive=None)
+                chickens2 = Chicken.objects.all().filter(
+                    id__in=chicken_ids, days_alive__lte=-10)
                 week_eggs = models.Egg.objects.filter(
-                    chicken__in=chicken_ids).aggregate(eggs_sum=Sum('eggs'))['eggs_sum'] or 0
-                if (len(chickens) != 0):
-                    hdep = week_eggs/len(chickens) * 100
+                    chicken__in=chicken_ids, week=week).aggregate(eggs_sum=Sum('eggs'))['eggs_sum'] or 0
+                if (len(chickens) != 0 or len(chickens2)):
+                    hdep = week_eggs/len(chickens) + len(chickens2) * 100
                 if measurement == 'daily':
                     for day in range(1, 8):
                         chickens = chickens.filter(
@@ -96,7 +100,8 @@ class HHEP(APIView):
                 else:
                     results.append({
                         'week': week,
-                        'hdep': hdep
+                        'hdep': hdep,
+                        'week_eggs': week_eggs
                     })
             except Exception as ex:
                 pass

@@ -93,7 +93,8 @@ requirejs(
           d.end_week = $("#hdep_end_week").val();
           d.group = $("#hdep_group").val();
           d.measurement = $("#hdep_measurement").val();
-          d.flock = $("#chicken_select").val();
+          d.chicken = $("#chicken_select").val().join(", ");
+          d.flock = $("#flock_select").val();
           d.breeds = $("#breed_type_select").val();
 
           d.columns = [];
