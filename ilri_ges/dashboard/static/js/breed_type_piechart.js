@@ -5,13 +5,8 @@ requirejs(["jquery", "chartjs"], function ($, Chart) {
   }
 
   var pieData = {
-    labels: [],
-    datasets: [
-      {
-        data: [],
-        backgroundColor: [],
-      },
-    ],
+    labels: ["A", "B"],
+    datasets: [],
   };
 
   var pieOptions = {
@@ -20,7 +15,9 @@ requirejs(["jquery", "chartjs"], function ($, Chart) {
     },
   };
 
-  var pieChart = new Chart($("breed_type_piechart"), {
+  var ctx = $("#breed_type_piechart").get(0).getContext("2d");
+
+  var pieChart = new Chart(ctx, {
     type: "doughnut",
     data: pieData,
     options: pieOptions,
@@ -66,6 +63,7 @@ requirejs(["jquery", "chartjs"], function ($, Chart) {
           "</li>"
       );
     }
+
     pieChart.data.labels = labels;
     pieChart.data.datasets[0] = datasets;
     pieChart.update();
