@@ -49,7 +49,7 @@ requirejs(["jquery", "chartjs"], function ($, Chart) {
       );
       $("#breed_type_piechart_detail_list").append(
         '<li class="nav-item">' +
-          '<a href="/home/breed-types/' +
+          '<a href="/breeds/' +
           response.results[i].id +
           '" class="nav-link">' +
           response.results[i].name +
