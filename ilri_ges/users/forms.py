@@ -17,4 +17,4 @@ class UserForm(forms.ModelForm):
     #     queryset=Farm.objects.all(), blank=True)
     class Meta:
         model = User
-        fields = ['name', 'email', 'farms']
+        fields = ['name', 'email', 'farms', 'is_active']

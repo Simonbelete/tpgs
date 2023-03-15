@@ -57,6 +57,11 @@
               {{ form.password|add_class:"form-control"|add_error_class:"is-invalid"|attr:"placeholder: Enter Password"|attr:"type: password" }}
             </div> {% endcomment %}
             {% include 'components/multi_farm_select.html' %}
+            <div class="form-group col-1">
+              <label for="{{ form.is_active.id_for_label }}">Active</label>
+              {{ form.is_active|add_class:"form-control"|add_error_class:"is-invalid"|attr:"placeholder: Active" }}
+              <span id="{{ form.is_active.id_for_label }}-error" class="error invalid-feedback">{{ form.is_active.errors }}</span>
+            </div>
           </div>
           <!-- /.card-body -->
 
