@@ -10,7 +10,7 @@ class ChickenForm(forms.ModelForm):
     class Meta:
         model = Chicken
         fields = ['tag', 'sex', 'farm', 'hatch_date', 'egg_weight',
-                  'house', 'breed_type', 'is_double_yolk', 'breed_pair']
+                  'house', 'breed_type', 'breed_pair']
 
 
 class ChickenStateForm(forms.ModelForm):

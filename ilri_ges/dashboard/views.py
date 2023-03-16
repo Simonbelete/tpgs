@@ -14,6 +14,18 @@ class DashboardView(LoginRequiredMixin, View):
     redirect_field_name = 'redirect_to'
 
     def get(self, request):
+        # hatch_date =
+        # today =
+
+        # days = hd - td
+        # age_in_weeks =
+        # if (chicken.age_weeks)
+
+        # chickens = Chicken.objects.all().exclude(hatch_date=None)
+
+        # for chicken in chickens:
+        #     chicken_current_week = chicken.age_in_weeks
+
         context = {
             'statics_count': {
                 'users_count': User.objects.count(),

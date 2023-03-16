@@ -85,7 +85,7 @@ class Chicken(CoreModel):
     def age_in_weeks(self):
         if self.hatch_date == None:
             return 0
-        return round(self.age_in_days/7, 2)
+        return math.floor(self.age_in_days/7)
 
     @property
     def hatch_weight(self):
