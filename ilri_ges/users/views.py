@@ -1,3 +1,4 @@
+import logging
 from django.shortcuts import render, redirect
 from django.views import View
 from django.contrib import messages
@@ -46,6 +47,7 @@ class UsersView(LoginRequiredMixin, View):
 class UsersCreateView(LoginRequiredMixin, View):
     login_url = '/users/login'
     redirect_field_name = 'redirect_to'
+    logger = logging.getLogger(__name__)
 
     def get(self, request):
         form = UserForm()
@@ -60,6 +62,7 @@ class UsersCreateView(LoginRequiredMixin, View):
                 name='farmer')
             farmer_group.user_set.add(user)
             if user is not None:
+                self.logger.error('Failed to create user')
                 return redirect('users')
             else:
                 messages.error(request, f'Error occurred while creating user')
