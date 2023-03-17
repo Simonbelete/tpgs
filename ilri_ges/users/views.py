@@ -13,6 +13,9 @@ from django.db.models.query_utils import Q
 from django.utils.http import urlsafe_base64_encode
 from django.contrib.auth.tokens import default_token_generator
 from django.utils.encoding import force_bytes
+from django.contrib.auth.mixins import PermissionRequiredMixin
+from django.contrib.auth.decorators import login_required, permission_required
+
 
 from users.forms import LoginForm, UserForm
 from .models import User
@@ -44,9 +47,10 @@ class LogoutView(View):
         return redirect('index')
 
 
-class UsersView(LoginRequiredMixin, View):
+class UsersView(PermissionRequiredMixin, View):
     login_url = '/users/login'
     redirect_field_name = 'redirect_to'
+    permission_required = ('users.view_user')
 
     def get(self, request):
         return render(request, 'users/index.html')
