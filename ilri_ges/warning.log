@@ -73,3 +73,4 @@ Traceback (most recent call last):
   File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/venv/lib/python3.8/site-packages/django/core/handlers/base.py", line 332, in check_response
     raise ValueError(
 ValueError: The view users.views.view didn't return an HttpResponse object. It returned None instead.
+Not Found: /login
