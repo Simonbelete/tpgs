@@ -56,9 +56,10 @@ class UsersView(PermissionRequiredMixin, View):
         return render(request, 'users/index.html')
 
 
-class UsersCreateView(LoginRequiredMixin, View):
+class UsersCreateView(PermissionRequiredMixin, View):
     login_url = '/users/login'
     redirect_field_name = 'redirect_to'
+    permission_required = ('users.create_user', 'users.add_user',)
     logger = logging.getLogger(__name__)
 
     def get(self, request):
@@ -81,9 +82,10 @@ class UsersCreateView(LoginRequiredMixin, View):
         return render(request, 'users/create.html', {'form': form})
 
 
-class UsersEditView(LoginRequiredMixin, View):
+class UsersEditView(PermissionRequiredMixin, View):
     login_url = '/users/login'
     redirect_field_name = 'redirect_to'
+    permission_required = ('users.create_user', 'users.change_user',)
 
     def get(self, request, id=0):
         if id == 0:
