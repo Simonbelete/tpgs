@@ -22,8 +22,15 @@ requirejs(["jquery", "datatables"], function ($, DataTable) {
     responsive: true,
     autoWidth: false,
     lengthChange: true,
-    dom: "Plfrtip",
-    buttons: ["copyHtml5", "excelHtml5", "csvHtml5", "pdfHtml5"],
+    dom: "Bfrtip",
+    buttons: [
+      {
+        extend: "searchPanes",
+        config: {
+          cascadePanes: true,
+        },
+      },
+    ],
     ajax: {
       url: "/api/users/",
       dataSrc: function (json) {
@@ -55,7 +62,7 @@ requirejs(["jquery", "datatables"], function ($, DataTable) {
         searchPanes: {
           show: true,
         },
-        targets: [2],
+        targets: [0, 1, 2],
       },
     ],
   });
