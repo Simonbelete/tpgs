@@ -24,8 +24,9 @@ require.config({
       "../../../static/js/lib/admin-LTE/plugins/datatables-responsive/js/dataTables.responsive.min",
     datatablesResponsiveBs4:
       "../../../static/js/lib/admin-LTE/plugins/datatables-responsive/js/responsive.bootstrap4.min",
-    "datatables.net-searchpanes":
-      "../../../static/js/lib/admin-LTE/plugins/datatables-searchpanes/js/dataTables.searchPanes.min",
+    // "datatables.net-searchpanes":
+    //   "../../../static/js/lib/admin-LTE/plugins/datatables-searchpanes/js/dataTables.searchPanes.min",
+    "datatables.net-searchpanes": "../../../static/js/dataTables.searchPanes",
     datatablesSearchpanesBs4:
       "../../../static/js/lib/admin-LTE/plugins/datatables-searchpanes/js/searchPanes.bootstrap4.min",
     "datatables.net-select":

@@ -1908,3 +1908,5 @@ Traceback (most recent call last):
   File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/venv/lib/python3.8/site-packages/django/template/loader_tags.py", line 226, in do_block
     raise TemplateSyntaxError(
 django.template.exceptions.TemplateSyntaxError: 'block' tag with name 'data_menu' appears more than once
+Not Found: /api/breeds
+Not Found: /favicon.ico

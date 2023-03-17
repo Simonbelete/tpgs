@@ -8,31 +8,27 @@
 {% block data_btn %}Create User{% endblock %}
 
 {% block table %}
-<table
-id="users_data_list_table"
-class="table table-bordered table-striped"
->
-<thead>
-  <tr>
-    <th style="display: none;">ID</th>
-    <th>Name</th>
-    <th>Email</th>
-    <th></th>
-  </tr>
-</thead>
-<tbody></tbody>
-<tfoot>
-  <tr>
-    <th style="display: none;">ID</th>
-    <th>Name</th>
-    <th>Email</th>
-    <th></th>
-  </tr>
-</tfoot>
+<table id="users_data_list_table" class="table table-bordered table-striped">
+	<thead>
+		<tr>
+			<th style="display: none;">ID</th>
+			<th>Name</th>
+			<th>Email</th>
+			<th></th>
+		</tr>
+	</thead>
+	<tbody></tbody>
+	<tfoot>
+		<tr>
+		    <th style="display: none;">ID</th>
+		    <th>Name</th>
+		    <th>Email</th>
+		    <th></th>
+		</tr>
+	</tfoot>
 </table>
 {% endblock %}
 
 {% block javascript %}
 <script src="{% static 'js/users_list.js' %}"></script>
-<script src="{% static 'js/farm_select.js' %}"></script>
 {% endblock%}

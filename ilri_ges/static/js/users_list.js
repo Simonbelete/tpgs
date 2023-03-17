@@ -1,4 +1,4 @@
-requirejs(["jquery", "datatables"], function ($, DataTable) {
+requirejs(["jquery", "datatables", "lodash"], function ($, DataTable, _) {
   "use strict";
 
   var selector = $("#users_data_list_table");
@@ -22,7 +22,7 @@ requirejs(["jquery", "datatables"], function ($, DataTable) {
     responsive: true,
     autoWidth: false,
     lengthChange: true,
-    dom: "Bfrtip",
+    dom: "Bfrltip",
     buttons: [
       {
         extend: "searchPanes",
@@ -40,17 +40,27 @@ requirejs(["jquery", "datatables"], function ($, DataTable) {
         return json.data;
       },
       data: function (d) {
-        d.search = d.search.value;
-        d.limit = d.length;
-        var sign = d.order[0].dir == "asc" ? "+" : "-";
-        d.ordering = sign + columns[d.order[0].column].data;
-
+        // d.search = d.search.value;
+        // d.limit = d.length;
+        // var sign = d.order[0].dir == "asc" ? "+" : "-";
+        // d.ordering = sign + columns[d.order[0].column].data;
+        // var filters = _.omitBy(d.searchPanes, _.isEmpty);
+        // console.log(d);
+        // console.log(d);
+        // const searchPanes = d.searchPanes;
+        // console.log(searchPanes);
+        // for (var k in d) {
+        //   console.log(k);
+        // }
+        // for (k in filters) {
+        //   d[k] = filters[k][0];
+        //   console.log(filters[k][0]);
+        // }
         // Filters
-        d.is_active = $("#is_active").val();
-        if ($("#farm_select").val() !== "") d.farms = $("#farm_select").val();
-
-        d.columns = [];
-        d.order = [];
+        // d.is_active = $("#is_active").val();
+        // if ($("#farm_select").val() !== "") d.farms = $("#farm_select").val();
+        // d.columns = [];
+        // d.order = [];
       },
     },
     columns: columns,
@@ -65,6 +75,11 @@ requirejs(["jquery", "datatables"], function ($, DataTable) {
         targets: [0, 1, 2],
       },
     ],
+  });
+
+  table.on("preXhr.dt", function (e, settings, data) {
+    console.log(data);
+    console.log(data.searchPanes);
   });
 
   $("#apply_filter").click(function () {
