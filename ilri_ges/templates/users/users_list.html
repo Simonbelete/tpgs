@@ -1,94 +1,35 @@
-{% extends "sidebar.html" %} 
+{% extends "data_list.html" %}
 {% load static %}
 
-{% block stylesheet %} 
-{% include 'components/list_styles.html' %}
-{% include "components/styles/table_style.html" %}
-{% include 'components/select2_style.html' %}
-{% endblock %} 
+{% block data_title %}Users{% endblock %}
+{% block data_description %}List of all users{% endblock %}
+{% block data_menu %}Users{% endblock %}
+{% block data_url %}{% url 'users_create' %}{% endblock %}
+{% block data_btn %}Create User{% endblock %}
 
-{% block title %} Users - ILRI genetics Evaluation {% endblock %} 
-
-{% block body %}
-{% include "components/content_header_section.html" with menu="Users" %}
-
-<div class="container">
-  <table
-                  id="users_data_list_table"
-                  class="table table-bordered table-striped"
-                >
-                  <thead>
-                    <tr>
-                      <th style="display: none;">ID</th>
-                      <th>Name</th>
-                      <th>Email</th>
-                      <th></th>
-                    </tr>
-                  </thead>
-                  <tbody></tbody>
-                  <tfoot>
-                    <tr>
-                      <th style="display: none;">ID</th>
-                      <th>Name</th>
-                      <th>Email</th>
-                      <th></th>
-                    </tr>
-                  </tfoot>
-                </table>
-</div>
-
-
-{% comment %}   
-    <!-- Main content -->
-    <section class="content">
-      <div class="container-fluid">
-        <div class="row">
-          <div class="col-12">
-            <div class="card">
-              <div class="card-header row">
-                <h3 class="card-title col-10">Users List</h3>
-                <div class="col-2">
-                  <a href="{% url 'users_create' %}" role="button" type="button" class="btn btn-primary float-right"><i class="fas fa-plus"></i> Create User</a>
-                </div>
-              </div>
-              <!-- /.card-header -->
-              <div class="card-body">
-                <div class="row mb-10" style="align-items: end; margin-bottom: 50px">
-                  {% include 'components/is_active_filter.html' %}
-                  {% include 'components/farm_filter.html' %}
-                  <button type="button" id="apply_filter" style="height: 40px" class="btn btn-secondary">Apply</button>
-                </div>
-
-                <table
-                  id="users_data_list_table"
-                  class="table table-bordered table-striped"
-                >
-                  <thead>
-                    <tr>
-                      <th style="display: none;">ID</th>
-                      <th>Name</th>
-                      <th>Email</th>
-                      <th></th>
-                    </tr>
-                  </thead>
-                  <tbody></tbody>
-                  <tfoot>
-                    <tr>
-                      <th style="display: none;">ID</th>
-                      <th>Name</th>
-                      <th>Email</th>
-                      <th></th>
-                    </tr>
-                  </tfoot>
-                </table>
-              </div>
-              <!-- /.card-body -->
-            </div>
-            <!-- /.card -->
-          </div>
-        </div>
-      </div>
-    </section> {% endcomment %}
+{% block table %}
+<table
+id="users_data_list_table"
+class="table table-bordered table-striped"
+>
+<thead>
+  <tr>
+    <th style="display: none;">ID</th>
+    <th>Name</th>
+    <th>Email</th>
+    <th></th>
+  </tr>
+</thead>
+<tbody></tbody>
+<tfoot>
+  <tr>
+    <th style="display: none;">ID</th>
+    <th>Name</th>
+    <th>Email</th>
+    <th></th>
+  </tr>
+</tfoot>
+</table>
 {% endblock %}
 
 {% block javascript %}

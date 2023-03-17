@@ -1,0 +1,20 @@
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header row">
+                        <h3 class="card-title col-10">{{ menu }} List</h3>
+                        <div class="col-2">
+                            <a href="{% url 'users_create' %}" role="button" type="button" class="btn btn-primary float-right"><i class="fas fa-plus"></i> Create {{ menu }}</a>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        {% block table %}{% endblock%}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+            
