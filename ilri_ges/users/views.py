@@ -138,6 +138,6 @@ class PasswordReset(View):
                         return HttpResponse('Invalid header found.')
                     return redirect("/password_reset/done/")
             else:
-                messages.info(
-                    request, 'Email Address not found, please register')
+                messages.warning(
+                    request, 'Email address isn\'t registered yet')
         return render(request, 'password/password_reset.html', {'form': form})

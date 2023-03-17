@@ -197,6 +197,9 @@ REST_FRAMEWORK = {
 DATETIME_FORMAT = "%d-%m-%Y %H:%M:%S"
 
 MESSAGE_TAGS = {
+    messages.INFO: 'info',
+    messages.WARNING: 'warning',
+    messages.ERROR: 'success',
     messages.ERROR: 'danger',
 }
 

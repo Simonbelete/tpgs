@@ -9,7 +9,24 @@
             >
             x
             </button>
-            <h5><i class="icon fas fa-ban"></i> {{ message.tags }}!</h5>
+            <h5>
+                {% if message.tags == "info" %}
+                    <i class="icon fas fa-info"></i>
+                    Info!
+                {% elif message.tags == "warning"%}
+                    <i class="icon fas fa-exclamation-triangle"></i>
+                    Alert!
+                {% elif message.tags == "success"%}
+                    <i class="icon fas fa-check"></i>
+                    Success!
+                {% elif message.tags == "danger"%}
+                    <i class="icon fas fa-ban"></i>
+                    Error!
+                {% else %}
+                    <i class="fas fa-bullhorn"></i>
+                    Message!
+                {% endif %}
+            </h5>
             <ul class="messages">
                 <li> {{ message }} </li>
             </ul>
