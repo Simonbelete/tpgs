@@ -3,7 +3,7 @@ requirejs(["jquery", "select2"], function ($, Select2) {
   $("#groups_select").select2({
     theme: "bootstrap4",
     ajax: {
-      url: "/api/breeding-pairs",
+      url: "/api/groups",
       data: function (params) {
         var query = {
           search: params.term,

@@ -3,10 +3,13 @@ from rest_framework import routers
 
 from users.api.views import UserViewSet, GroupViewSet
 
-router = routers.DefaultRouter()
-router.register(r'users', UserViewSet, basename='api_users')
-router.register(r'groups', GroupViewSet, basename='api_groups')
+users_router = routers.DefaultRouter()
+users_router.register(r'', UserViewSet, basename='api_users')
+
+groups_router = routers.DefaultRouter()
+groups_router.register(r'', GroupViewSet, basename='api_groups')
 
 urlpatterns = [
-    path('', include(router.urls)),
+    path('users/', include(users_router.urls)),
+    path('groups/', include(groups_router.urls)),
 ]

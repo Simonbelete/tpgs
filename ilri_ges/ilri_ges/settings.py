@@ -80,7 +80,6 @@ TEMPLATES = [
         'DIRS': [
             'templates',
             'core/templates',
-            'users/templates',
             'dashboard/templates'
             'dashboard/templates',
             'breeds/templates',
@@ -158,7 +157,6 @@ STATIC_URL = 'static/'
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
-    os.path.join(BASE_DIR, "users/static"),
     os.path.join(BASE_DIR, "dashboard/static"),
     os.path.join(BASE_DIR, "breeds/static"),
     os.path.join(BASE_DIR, "chickens/static"),

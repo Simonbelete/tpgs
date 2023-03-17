@@ -53,7 +53,7 @@ class UsersView(PermissionRequiredMixin, View):
     permission_required = ('users.view_user')
 
     def get(self, request):
-        return render(request, 'users/index.html')
+        return render(request, 'users/users_list.html')
 
 
 class UsersCreateView(PermissionRequiredMixin, View):
