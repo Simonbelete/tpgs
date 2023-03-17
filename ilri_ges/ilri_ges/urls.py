@@ -15,8 +15,9 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.conf.urls import handler404, handler500
 
-from .views import index, playground_d3js, page404, page500
+from .views import index, playground_d3js, page404, page500, error_404, error_500
 
 urlpatterns = [
     path('', index, name='index'),
@@ -50,3 +51,6 @@ urlpatterns = [
     path('404', page404, name='404'),
     path('500', page500, name='500')
 ]
+
+handler404 = error_404
+handler500 = error_500
