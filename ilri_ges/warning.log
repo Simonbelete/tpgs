@@ -1910,3 +1910,362 @@ Traceback (most recent call last):
 django.template.exceptions.TemplateSyntaxError: 'block' tag with name 'data_menu' appears more than once
 Not Found: /api/breeds
 Not Found: /favicon.ico
+Internal Server Error: /api/users/
+Traceback (most recent call last):
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/venv/lib/python3.8/site-packages/django/core/handlers/exception.py", line 56, in inner
+    response = get_response(request)
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/venv/lib/python3.8/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/venv/lib/python3.8/site-packages/django/views/decorators/csrf.py", line 55, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/viewsets.py", line 125, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/users/api/views.py", line 41, in list
+    pk = self.kwargs['id']
+KeyError: 'id'
+Internal Server Error: /api/users/
+Traceback (most recent call last):
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/venv/lib/python3.8/site-packages/django/core/handlers/exception.py", line 56, in inner
+    response = get_response(request)
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/venv/lib/python3.8/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/venv/lib/python3.8/site-packages/django/views/decorators/csrf.py", line 55, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/viewsets.py", line 125, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/users/api/views.py", line 46, in list
+    return self.get_paginated_response(serializer.data, {'a': 'b'})
+TypeError: get_paginated_response() takes 2 positional arguments but 3 were given
+Internal Server Error: /api/users/
+Traceback (most recent call last):
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/venv/lib/python3.8/site-packages/django/core/handlers/exception.py", line 56, in inner
+    response = get_response(request)
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/venv/lib/python3.8/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/venv/lib/python3.8/site-packages/django/views/decorators/csrf.py", line 55, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/viewsets.py", line 125, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/users/api/views.py", line 46, in list
+    return self.get_paginated_response(serializer.data, {'a': 'b'})
+TypeError: get_paginated_response() takes 2 positional arguments but 3 were given
+Internal Server Error: /api/users/
+Traceback (most recent call last):
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/venv/lib/python3.8/site-packages/django/core/handlers/exception.py", line 56, in inner
+    response = get_response(request)
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/venv/lib/python3.8/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/venv/lib/python3.8/site-packages/django/views/decorators/csrf.py", line 55, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/viewsets.py", line 125, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/users/api/views.py", line 46, in list
+    return self.get_paginated_response(serializer.data)
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/generics.py", line 178, in get_paginated_response
+    return self.paginator.get_paginated_response(data)
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/ilri_ges/filters.py", line 31, in get_paginated_response
+    queryset = self.filter_queryset(self.get_queryset())
+AttributeError: 'LimitPageNumberPagination' object has no attribute 'filter_queryset'
+Internal Server Error: /api/users/
+Traceback (most recent call last):
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/venv/lib/python3.8/site-packages/django/core/handlers/exception.py", line 56, in inner
+    response = get_response(request)
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/venv/lib/python3.8/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/venv/lib/python3.8/site-packages/django/views/decorators/csrf.py", line 55, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/viewsets.py", line 125, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/users/api/views.py", line 46, in list
+    return self.get_paginated_response(serializer.data)
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/generics.py", line 178, in get_paginated_response
+    return self.paginator.get_paginated_response(data)
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/ilri_ges/filters.py", line 31, in get_paginated_response
+    queryset = self.get_queryset()
+AttributeError: 'LimitPageNumberPagination' object has no attribute 'get_queryset'
+Internal Server Error: /api/users/
+Traceback (most recent call last):
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/venv/lib/python3.8/site-packages/django/core/handlers/exception.py", line 56, in inner
+    response = get_response(request)
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/venv/lib/python3.8/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/venv/lib/python3.8/site-packages/django/views/decorators/csrf.py", line 55, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/viewsets.py", line 125, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/users/api/views.py", line 46, in list
+    return self.get_paginated_response(serializer.data)
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/generics.py", line 178, in get_paginated_response
+    return self.paginator.get_paginated_response(data)
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/ilri_ges/filters.py", line 31, in get_paginated_response
+    queryset = self.paginate_queryset()
+TypeError: paginate_queryset() missing 2 required positional arguments: 'queryset' and 'request'
+Internal Server Error: /api/users/
+Traceback (most recent call last):
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/venv/lib/python3.8/site-packages/django/core/handlers/exception.py", line 56, in inner
+    response = get_response(request)
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/venv/lib/python3.8/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/venv/lib/python3.8/site-packages/django/views/decorators/csrf.py", line 55, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/viewsets.py", line 125, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/users/api/views.py", line 46, in list
+    return self.get_paginated_response(serializer.data)
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/generics.py", line 178, in get_paginated_response
+    return self.paginator.get_paginated_response(data)
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/ilri_ges/filters.py", line 48, in get_paginated_response
+    queryset = self.queryset
+TypeError: 'QuerySet' object is not callable
+Internal Server Error: /api/users/
+Traceback (most recent call last):
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/venv/lib/python3.8/site-packages/django/core/handlers/exception.py", line 56, in inner
+    response = get_response(request)
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/venv/lib/python3.8/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/venv/lib/python3.8/site-packages/django/views/decorators/csrf.py", line 55, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/viewsets.py", line 125, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/users/api/views.py", line 46, in list
+    return self.get_paginated_response(serializer.data)
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/generics.py", line 178, in get_paginated_response
+    return self.paginator.get_paginated_response(data)
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/ilri_ges/filters.py", line 48, in get_paginated_response
+    queryset = self.queryset
+TypeError: 'QuerySet' object is not callable
+Internal Server Error: /api/users/
+Traceback (most recent call last):
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/venv/lib/python3.8/site-packages/django/core/handlers/exception.py", line 56, in inner
+    response = get_response(request)
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/venv/lib/python3.8/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/venv/lib/python3.8/site-packages/django/views/decorators/csrf.py", line 55, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/viewsets.py", line 125, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/users/api/views.py", line 46, in list
+    return self.get_paginated_response(serializer.data)
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/generics.py", line 178, in get_paginated_response
+    return self.paginator.get_paginated_response(data)
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/ilri_ges/filters.py", line 54, in get_paginated_response
+    ('count', self.page.paginator.count),
+AttributeError: 'LimitPageNumberPagination' object has no attribute 'page'
+Internal Server Error: /api/users/
+Traceback (most recent call last):
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/venv/lib/python3.8/site-packages/django/core/handlers/exception.py", line 56, in inner
+    response = get_response(request)
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/venv/lib/python3.8/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/venv/lib/python3.8/site-packages/django/views/decorators/csrf.py", line 55, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/viewsets.py", line 125, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/users/api/views.py", line 46, in list
+    return self.get_paginated_response(serializer.data)
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/generics.py", line 178, in get_paginated_response
+    return self.paginator.get_paginated_response(data)
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/ilri_ges/filters.py", line 53, in get_paginated_response
+    ('count', self.page.paginator.count),
+AttributeError: 'LimitPageNumberPagination' object has no attribute 'page'
+Internal Server Error: /api/users/
+Traceback (most recent call last):
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/venv/lib/python3.8/site-packages/django/core/handlers/exception.py", line 56, in inner
+    response = get_response(request)
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/venv/lib/python3.8/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/venv/lib/python3.8/site-packages/django/views/decorators/csrf.py", line 55, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/viewsets.py", line 125, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/mixins.py", line 43, in list
+    return self.get_paginated_response(serializer.data)
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/generics.py", line 178, in get_paginated_response
+    return self.paginator.get_paginated_response(data)
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/ilri_ges/filters.py", line 53, in get_paginated_response
+    ('count', self.page.paginator.count),
+AttributeError: 'LimitPageNumberPagination' object has no attribute 'page'
+Internal Server Error: /api/users/
+Traceback (most recent call last):
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/venv/lib/python3.8/site-packages/django/core/handlers/exception.py", line 56, in inner
+    response = get_response(request)
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/venv/lib/python3.8/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/venv/lib/python3.8/site-packages/django/views/decorators/csrf.py", line 55, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/viewsets.py", line 125, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/mixins.py", line 43, in list
+    return self.get_paginated_response(serializer.data)
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/generics.py", line 178, in get_paginated_response
+    return self.paginator.get_paginated_response(data)
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/ilri_ges/filters.py", line 53, in get_paginated_response
+    ('count', self.page.paginator.count),
+AttributeError: 'LimitPageNumberPagination' object has no attribute 'page'
+Internal Server Error: /api/users/
+Traceback (most recent call last):
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/venv/lib/python3.8/site-packages/django/core/handlers/exception.py", line 56, in inner
+    response = get_response(request)
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/venv/lib/python3.8/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/venv/lib/python3.8/site-packages/django/views/decorators/csrf.py", line 55, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/viewsets.py", line 125, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/users/api/views.py", line 57, in list
+    return self.get_paginated_response(serializer.data)
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/generics.py", line 178, in get_paginated_response
+    return self.paginator.get_paginated_response(data)
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/ilri_ges/filters.py", line 39, in get_paginated_response
+    ('filters', self.filters())
+AttributeError: 'LimitPageNumberPagination' object has no attribute 'filters'
+Internal Server Error: /api/users/
+Traceback (most recent call last):
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/venv/lib/python3.8/site-packages/django/core/handlers/exception.py", line 56, in inner
+    response = get_response(request)
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/venv/lib/python3.8/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/venv/lib/python3.8/site-packages/django/views/decorators/csrf.py", line 55, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/viewsets.py", line 125, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/users/api/views.py", line 57, in list
+    return self.get_paginated_response(serializer.data, self.filters())
+TypeError: get_paginated_response() takes 2 positional arguments but 3 were given
+Internal Server Error: /api/users/
+Traceback (most recent call last):
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/venv/lib/python3.8/site-packages/django/core/handlers/exception.py", line 56, in inner
+    response = get_response(request)
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/venv/lib/python3.8/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/venv/lib/python3.8/site-packages/django/views/decorators/csrf.py", line 55, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/viewsets.py", line 125, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/users/api/views.py", line 58, in list
+    return self.get_paginated_response(serializer.data)
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/generics.py", line 178, in get_paginated_response
+    return self.paginator.get_paginated_response(data)
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/ilri_ges/filters.py", line 39, in get_paginated_response
+    ('filters', self.fi)
+AttributeError: 'LimitPageNumberPagination' object has no attribute 'fi'
