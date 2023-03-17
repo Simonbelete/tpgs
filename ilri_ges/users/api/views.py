@@ -22,6 +22,20 @@ class UserViewSet(viewsets.ModelViewSet):
     search_fields = ['name', 'email']
     ordering_fields = '__all__'
 
+    def list(self, request, *args, **kwargs):
+        queryset = self.filter_queryset(self.get_queryset())
+        serializer = self.get_serializer(queryset, many=True)
+        return Response({'count': 10, 'result': serializer.data, 'searchPanes': {'options': {
+            "email": [
+                {
+                    "label": "email 1",
+                    "total": 1,
+                    "value": "email 1",
+                    "count": 1
+                }
+            ]
+        }}})
+
 
 class GroupViewSet(viewsets.ModelViewSet):
     queryset = Group.objects.all()

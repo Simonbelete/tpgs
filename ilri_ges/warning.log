@@ -749,3 +749,4 @@ Traceback (most recent call last):
   File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 703, in __init__
     raise TemplateSyntaxError(
 django.template.exceptions.TemplateSyntaxError: Could not parse the remainder: '[]' from '[]'
+Not Found: /favicon.ico

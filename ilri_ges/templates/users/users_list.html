@@ -3,14 +3,42 @@
 
 {% block stylesheet %} 
 {% include 'components/list_styles.html' %}
+{% include "components/styles/table_style.html" %}
 {% include 'components/select2_style.html' %}
 {% endblock %} 
 
 {% block title %} Users - ILRI genetics Evaluation {% endblock %} 
 
 {% block body %}
-  {% include "components/content_header_section.html" with menu="Users" %}
-  
+{% include "components/content_header_section.html" with menu="Users" %}
+
+<div class="container">
+  <table
+                  id="users_data_list_table"
+                  class="table table-bordered table-striped"
+                >
+                  <thead>
+                    <tr>
+                      <th style="display: none;">ID</th>
+                      <th>Name</th>
+                      <th>Email</th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody></tbody>
+                  <tfoot>
+                    <tr>
+                      <th style="display: none;">ID</th>
+                      <th>Name</th>
+                      <th>Email</th>
+                      <th></th>
+                    </tr>
+                  </tfoot>
+                </table>
+</div>
+
+
+{% comment %}   
     <!-- Main content -->
     <section class="content">
       <div class="container-fluid">
@@ -60,7 +88,7 @@
           </div>
         </div>
       </div>
-    </section>
+    </section> {% endcomment %}
 {% endblock %}
 
 {% block javascript %}

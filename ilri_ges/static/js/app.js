@@ -3,31 +3,8 @@
 
 require.config({
   baseUrl: "/static/js",
-  shim: {
-    backbone: {
-      //These script dependencies should be loaded before loading
-      //backbone.js
-      deps: ["underscore", "jquery"],
-      //Once loaded, use the global 'Backbone' as the
-      //module value.
-      exports: "Backbone",
-    },
-    // "datatables.net": {
-    //   deps: [
-    //     "datatables.net-bs4",
-    //     "datatables.net-responsive",
-    //     "datatablesResponsiveBs4",
-    //     "datatables.net-buttons",
-    //     "datatablesButtonsBs4",
-    //     "jszip",
-    //     "pdfmake",
-    //     "pdfmake_fonts",
-    //   ],
-    // },
-    underscore: {
-      exports: "_",
-    },
-  },
+  enforceDefine: true,
+  waitSeconds: 1,
   paths: {
     jquery: "../../../static/js/lib/admin-LTE/plugins/jquery/jquery.min",
     underscore: "../../../static/js/lib/underscorejs/underscore-umd-min",
@@ -47,6 +24,14 @@ require.config({
       "../../../static/js/lib/admin-LTE/plugins/datatables-responsive/js/dataTables.responsive.min",
     datatablesResponsiveBs4:
       "../../../static/js/lib/admin-LTE/plugins/datatables-responsive/js/responsive.bootstrap4.min",
+    "datatables.net-searchpanes":
+      "../../../static/js/lib/admin-LTE/plugins/datatables-searchpanes/js/dataTables.searchPanes.min",
+    datatablesSearchpanesBs4:
+      "../../../static/js/lib/admin-LTE/plugins/datatables-searchpanes/js/searchPanes.bootstrap4.min",
+    "datatables.net-select":
+      "../../../static/js/lib/admin-LTE/plugins/datatables-select/js/dataTables.select.min",
+    datatablesSelectBs4:
+      "../../../static/js/lib/admin-LTE/plugins/datatables-select/js/select.bootstrap4.min",
     "datatables.net-buttons":
       "../../../static/js/lib/admin-LTE/plugins/datatables-buttons/js/dataTables.buttons.min",
     datatablesButtonsBs4:
@@ -79,4 +64,25 @@ require.config({
     "bootstrap-colorpicker":
       "../../../static/js/lib/admin-LTE/plugins/bootstrap-colorpicker/js/bootstrap-colorpicker",
   },
+});
+
+define("datatables", [
+  "datatables.net",
+  "datatables.net-bs4",
+  "datatables.net-responsive",
+  "datatablesResponsiveBs4",
+  "datatables.net-buttons",
+  "datatablesButtonsBs4",
+  "jszip",
+  "pdfmake",
+  // "pdfmake_fonts",
+  "datatables_buttons_html5",
+  "datatables_buttons_print",
+  "datatables_buttons_colVis",
+  "datatables.net-select",
+  "datatablesSelectBs4",
+  "datatables.net-searchpanes",
+  "datatablesSearchpanesBs4",
+], function (DataTable) {
+  return DataTable;
 });
