@@ -12,7 +12,7 @@ class UserFilter(filters.FilterSet):
 
     class Meta:
         model = User
-        fields = ['name', 'email', 'is_active', 'farms']
+        fields = ['name', 'email', 'groups', 'is_active', 'farms']
 
 
 class UserViewSet(viewsets.ModelViewSet):

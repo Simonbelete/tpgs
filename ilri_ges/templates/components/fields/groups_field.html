@@ -1,0 +1,9 @@
+<div class="col-md-6 col-lg-2 col-xl-2">
+  <label for="groups_select">Filter By groups</label>
+  {% if form.groups %}
+    {{ form.groups|attr:"id:groups_select"|add_class:"form-control"|add_error_class:"is-invalid" }}
+  {% else %}
+    <select id="groups_select" data-placeholder="Select Breeds" style="width: 100%"></select>
+  {% endif %}
+  <span id="{{ form.groups.id_for_label }}-error" class="error invalid-feedback">{{ form.groups.errors }}</span>
+</div>

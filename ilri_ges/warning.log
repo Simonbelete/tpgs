@@ -679,3 +679,7 @@ Traceback (most recent call last):
   File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/venv/lib/python3.8/site-packages/django/contrib/auth/mixins.py", line 48, in handle_no_permission
     raise PermissionDenied(self.get_permission_denied_message())
 django.core.exceptions.PermissionDenied
+Bad Request: /api/users/
+Bad Request: /api/users/
+Not Found: /api/users/groups/
+Not Found: /api/users/groups/
