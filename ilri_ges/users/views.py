@@ -18,6 +18,7 @@ from django.contrib.auth.mixins import PermissionRequiredMixin
 
 from users.forms import LoginForm, UserForm
 from .models import User
+from farms.models import Farm
 
 
 class LoginView(View):
@@ -91,10 +92,12 @@ class UsersCreateView(PermissionRequiredMixin, View):
         form = UserForm(request.POST)
         if form.is_valid():
             user = User.objects.create_user(
-                form.cleaned_data['email'], form.cleaned_data['password'], name=form.cleaned_data['name'], farms=form.cleaned_data['farms'])
-            farmer_group = Group.objects.get(
-                name='farmer')
-            farmer_group.user_set.add(user)
+                form.cleaned_data['email'], form.cleaned_data['password'], name=form.cleaned_data['name'])
+            for farm in form.cleaned_data['farms']:
+                user.farms.add(farm)
+                user.save()
+            for farm_group in form.cleaned_data['groups']:
+                farm_group.user_set.add(user)
             if user is not None:
                 self.logger.error('Failed to create user')
                 return redirect('users')
