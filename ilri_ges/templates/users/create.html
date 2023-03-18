@@ -56,7 +56,7 @@
               <label for="{{ form.password.id_for_label }}">Password</label>
               {{ form.password|add_class:"form-control"|add_error_class:"is-invalid"|attr:"placeholder: Enter Password"|attr:"type: password" }}
             </div>
-            {% include 'components/multi_farm_select.html' %}
+            {% include "components/fields/farm_field.html" %}
           </div>
           <!-- /.card-body -->
 
