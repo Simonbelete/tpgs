@@ -5,7 +5,7 @@ from django.contrib import messages
 from django.contrib.auth.models import Group, Permission
 from django.contrib.auth import authenticate, logout, login
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.auth.forms import PasswordResetForm
+from django.contrib.auth.forms import PasswordResetForm, PasswordChangeForm
 from django.core.mail import send_mail, BadHeaderError
 from django.http import HttpResponse
 from django.template.loader import render_to_string
@@ -14,7 +14,6 @@ from django.utils.http import urlsafe_base64_encode
 from django.contrib.auth.tokens import default_token_generator
 from django.utils.encoding import force_bytes
 from django.contrib.auth.mixins import PermissionRequiredMixin
-from django.contrib.auth.decorators import login_required, permission_required
 
 
 from users.forms import LoginForm, UserForm
@@ -45,6 +44,28 @@ class LogoutView(View):
     def get(self, request):
         logout(request)
         return redirect('index')
+
+
+class ChangePassword(LoginRequiredMixin, View):
+    login_url = '/users/login'
+    redirect_field_name = 'redirect_to'
+
+    def post(self, request):
+        pass
+        #     form = PasswordChangeForm(request.user, request.POST)
+        #     if form.is_valid():
+        #         user = form.save()
+        #         update_session_auth_hash(request, user)  # Important!
+        #         messages.success(
+        #             request, 'Your password was successfully updated!')
+        #         return redirect('change_password')
+        #         else:
+        #             messages.error(request, 'Please correct the error below.')
+        #     else:
+        #         form = PasswordChangeForm(request.user)
+        #     return render(request, 'accounts/change_password.html', {
+        #         'form': form
+        # })
 
 
 class UsersView(PermissionRequiredMixin, View):
@@ -93,7 +114,7 @@ class UsersEditView(PermissionRequiredMixin, View):
         try:
             data = User.objects.get(pk=id)
             form = UserForm(instance=data)
-            return render(request, 'users/edit.html', {'form': form, "id": id})
+            return render(request, 'users/edit.html', {'form': form, "id": id, "password_change": PasswordChangeForm})
         except Exception as ex:
             return redirect('500')
 
@@ -108,7 +129,7 @@ class UsersEditView(PermissionRequiredMixin, View):
                 messages.success(request, 'Successfully Updated !')
                 return redirect('users')
             else:
-                return render(request, 'users/edit.html', {'form': form})
+                return render(request, 'users/edit.html', {'form': form, "password_change": PasswordChangeForm})
         except Exception as ex:
             return redirect('500')
 

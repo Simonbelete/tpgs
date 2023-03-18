@@ -11,11 +11,6 @@ class LoginForm(forms.Form):
 
 
 class UserForm(forms.ModelForm):
-    # name = forms.CharField()
-    # email = forms.EmailField()
-    # password = forms.CharField()
-    # farms = forms.ModelMultipleChoiceField(
-    #     queryset=Farm.objects.all(), blank=True)
     class Meta:
         model = User
-        fields = ['name', 'email', 'farms', 'is_active']
+        fields = ['name', 'email', 'farms', 'password', 'groups' 'is_active']
