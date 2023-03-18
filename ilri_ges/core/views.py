@@ -32,7 +32,7 @@ class ModelFilterViewSet(viewsets.ModelViewSet):
         if page is not None:
             serializer = self.get_serializer(page, many=True)
             response = self.get_paginated_response(serializer.data)
-            response.data['filters'] = self.filters()
+            response.data['searchPanes'] = {"options": self.filters()}
             return response
 
         serializer = self.get_serializer(queryset, many=True)

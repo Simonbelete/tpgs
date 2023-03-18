@@ -8,6 +8,22 @@ requirejs(["jquery", "datatables", "lodash"], function ($, DataTable, _) {
     { data: "name" },
     { data: "email" },
     {
+      data: "farms",
+      render: {
+        _: "[, ].name",
+        sp: "[].name",
+      },
+      orderable: false,
+    },
+    {
+      data: "groups",
+      render: {
+        _: "[, ].name",
+        sp: "[].name",
+      },
+      orderable: false,
+    },
+    {
       data: null,
       className: "dt-center editor-edit",
       defaultContent:
@@ -58,7 +74,7 @@ requirejs(["jquery", "datatables", "lodash"], function ($, DataTable, _) {
         searchPanes: {
           show: true,
         },
-        targets: [0, 1, 2],
+        targets: [3, 4],
       },
     ],
   });

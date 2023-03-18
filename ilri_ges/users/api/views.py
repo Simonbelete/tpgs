@@ -2,6 +2,8 @@ from rest_framework import viewsets
 from rest_framework.response import Response
 from django.contrib.auth.models import Group
 from django_filters import rest_framework as filters
+from django.db.models import Count, Sum
+from django.db.models import F
 
 from users.models import User
 from users.api.serializers import UserSerializer_GET_V1, GroupSerializer_GET_V1
@@ -24,45 +26,14 @@ class UserViewSet(ModelFilterViewSet):
     ordering_fields = '__all__'
     fi = {'ab': 'b'}
 
-    # def list(self, request, *args, **kwargs):
-    #     queryset = self.filter_queryset(self.get_queryset())
-    #     serializer = self.get_serializer(queryset, many=True)
-
-    #     return Response({'count': 10, 'result': serializer.data, 'searchPanes': {'options': {
-    #         "email": [
-    #             {
-    #                 "label": "email 1",
-    #                 # "total": 10,
-    #                 "value": "email 1",
-    #                 "count": 1
-    #             }
-    #         ]
-    #     }}})
-
     def filters(self):
         queryset = self.filter_queryset(self.get_queryset())
-        email_filters = queryset.values_list('email').distinct()
-        print('-------------------')
-        print(email_filters)
         return {
-            'email': {
-                'label': 'Email',
-                'value': 'b'
-            }
+            'farms': queryset.values('farms__name', 'farms__id').annotate(
+                count=Count("pk", distinct=True), label=F('farms__name'), value=F('farms__id')),
+            'groups': queryset.values('groups__name', 'groups__id').annotate(
+                count=Count("pk", distinct=True), label=F('groups__name'), value=F('groups__id'))
         }
-
-    def list(self, request, *args, **kwargs):
-        queryset = self.filter_queryset(self.get_queryset())
-
-        page = self.paginate_queryset(queryset)
-        if page is not None:
-            serializer = self.get_serializer(page, many=True)
-            response = self.get_paginated_response(serializer.data)
-            response.data['filters'] = self.filters()
-            return response
-
-        serializer = self.get_serializer(queryset, many=True)
-        return Response(serializer.data)
 
 
 class GroupViewSet(viewsets.ModelViewSet):
