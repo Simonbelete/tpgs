@@ -56,7 +56,9 @@
               <label for="{{ form.password.id_for_label }}">Password</label>
               {{ form.password|add_class:"form-control"|add_error_class:"is-invalid"|attr:"placeholder: Enter Password"|attr:"type: password" }}
             </div> {% endcomment %}
-            {% include 'components/multi_farm_select.html' %}
+            {% include "components/fields/farm_field.html" %}
+            {% include "components/fields/groups_field.html" %}
+
             <div class="form-group col-1">
               <label for="{{ form.is_active.id_for_label }}">Active</label>
               {{ form.is_active|add_class:"form-control"|add_error_class:"is-invalid"|attr:"placeholder: Active" }}
@@ -66,6 +68,7 @@
           <!-- /.card-body -->
 
           <div class="card-footer">
+            <a href=""><button type="button" class="btn">Change Password</button></a>
             <button type="submit" class="btn btn-primary">Submit</button>
           </div>
         </form>
@@ -80,4 +83,5 @@
 
 {% block javascript%}
 <script src="{% static 'js/farm_select.js' %}"></script>
+<script src="{% static 'js/groups_select.js' %}"></script>
 {% endblock %}
