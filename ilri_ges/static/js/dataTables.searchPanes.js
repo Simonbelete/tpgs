@@ -3356,6 +3356,7 @@
                 .toArray();
               for (var i = 0; i < rowData.length; i++) {
                 // data.searchPanes[src][i] = rowData[i].filter;
+                // CHANGED
                 data[src] = rowData[i].filter;
                 if (data.searchPanes[src][i] === null) {
                   data.searchPanes_null[src][i] = true;
