@@ -1,10 +1,10 @@
 {% load widget_tweaks %}
 
-<div class="col-md-6 col-lg-2 col-xl-2">
-  <label for="groups_select">Filter By groups</label>
+<div class="form-group">
+  <label for="groups_select">Groups</label>
   {% if form.group %}
     {{ form.groups|attr:"id:groups_select"|add_class:"form-control"|add_error_class:"is-invalid" }}
-  {% if form.groups %}
+  {% elif form.groups %}
     {{ form.groups|attr:"multiple:multiple"|attr:"id:groups_select"|add_class:"form-control"|add_error_class:"is-invalid" }}
   {% else %}
     <select id="groups_select" {{ multiple }} data-placeholder="Select Breeds" style="width: 100%"></select>
