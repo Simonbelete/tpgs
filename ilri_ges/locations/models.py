@@ -29,9 +29,11 @@ class City(CoreModel):
 
 
 class House(CoreModel):
-    name = models.CharField(max_length=10)
+    name = models.CharField(max_length=10,  unique=True)
     farm = models.ForeignKey(
         'farms.Farm', on_delete=models.SET_NULL, null=True, related_name='houses')
+
+    history = HistoricalRecords()
 
     class Meta:
         ordering = ["name"]

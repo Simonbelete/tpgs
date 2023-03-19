@@ -176,13 +176,14 @@ class HousesEditView(LoginRequiredMixin, View):
         if id == 0:
             return redirect('404')
         try:
-            data = Country.objects.get(pk=id)
-            form = CountryForm(request.POST, instance=data)
+            data = House.objects.get(pk=id)
+            form = HouseForm(request.POST, instance=data)
             if form.is_valid():
                 form.save()
             messages.success(request, 'Successfully Updated !')
             return render(request, 'houses/edit.html', {'form': form})
         except Exception as ex:
+            print(ex)
             return redirect('500')
 
 
