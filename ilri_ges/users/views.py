@@ -3,9 +3,9 @@ from django.shortcuts import render, redirect
 from django.views import View
 from django.contrib import messages
 from django.contrib.auth.models import Group, Permission
-from django.contrib.auth import authenticate, logout, login
+from django.contrib.auth import authenticate, logout, login, update_session_auth_hash
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.auth.forms import PasswordResetForm, PasswordChangeForm
+from django.contrib.auth.forms import PasswordResetForm, PasswordChangeForm, SetPasswordForm
 from django.core.mail import send_mail, BadHeaderError
 from django.http import HttpResponse
 from django.template.loader import render_to_string
@@ -50,6 +50,30 @@ class LogoutView(View):
 class ChangePassword(LoginRequiredMixin, View):
     login_url = '/users/login'
     redirect_field_name = 'redirect_to'
+
+    def get(self, request):
+        form = PasswordChangeForm(request.user)
+        return render(request, 'users/change_password.html', {"form": form})
+
+    def post(self, request):
+        form = PasswordChangeForm(request.user, request.POST)
+        if form.is_valid():
+            user = form.save()
+            update_session_auth_hash(request, user)  # Important!
+            messages.success(
+                request, 'Your password was successfully updated!')
+            return redirect('dashboard')
+        else:
+            messages.error(request, 'Please correct the error below.')
+        return render(request, 'users/change_password.html', {"form": form})
+
+
+class ChangeUserPassword(LoginRequiredMixin, View):
+    login_url = '/users/login'
+    redirect_field_name = 'redirect_to'
+
+    def get(self, request):
+        return render(request, 'password/change_password.html')
 
     def post(self, request):
         pass
