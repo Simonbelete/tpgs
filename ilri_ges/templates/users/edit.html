@@ -68,8 +68,8 @@
           <!-- /.card-body -->
 
           <div class="card-footer">
-            <a href="{% url 'change_password' %}"><button type="button" class="btn btn-default">Change Password</button></a>
             <button type="submit" class="btn btn-primary">Submit</button>
+            <a href="{% url 'change_password' data.id %}"><button type="button" class="btn btn-default">Change Password</button></a>
           </div>
         </form>
       </div>

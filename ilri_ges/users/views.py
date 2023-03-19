@@ -72,25 +72,32 @@ class ChangeUserPassword(LoginRequiredMixin, View):
     login_url = '/users/login'
     redirect_field_name = 'redirect_to'
 
-    def get(self, request):
-        return render(request, 'password/change_password.html')
+    def get(self, request, id=0):
+        if id == 0:
+            return redirect('404')
+        try:
+            user = User.objects.get(pk=id)
+            form = SetPasswordForm(user)
+            return render(request, 'password/change_password.html', {"form": form, "user": user})
+        except Exception as ex:
+            return redirect('500')
 
-    def post(self, request):
-        pass
-        #     form = PasswordChangeForm(request.user, request.POST)
-        #     if form.is_valid():
-        #         user = form.save()
-        #         update_session_auth_hash(request, user)  # Important!
-        #         messages.success(
-        #             request, 'Your password was successfully updated!')
-        #         return redirect('change_password')
-        #         else:
-        #             messages.error(request, 'Please correct the error below.')
-        #     else:
-        #         form = PasswordChangeForm(request.user)
-        #     return render(request, 'accounts/change_password.html', {
-        #         'form': form
-        # })
+    def post(self, request, id=0):
+        if id == 0:
+            return redirect('404')
+        try:
+            user = User.objects.get(pk=id)
+            form = SetPasswordForm(user, request.POST)
+            if form.is_valid():
+                user = form.save()
+                messages.success(
+                    request, 'Password was successfully updated!')
+                return redirect('users')
+            else:
+                messages.error(request, 'Please correct the error below.')
+            return render(request, 'password/change_password.html', {"form": form})
+        except Exception as ex:
+            return redirect('500')
 
 
 class UsersView(PermissionRequiredMixin, View):
@@ -141,7 +148,7 @@ class UsersEditView(PermissionRequiredMixin, View):
         try:
             data = User.objects.get(pk=id)
             form = UserForm(instance=data)
-            return render(request, 'users/edit.html', {'form': form, "id": id, "password_change": PasswordChangeForm})
+            return render(request, 'users/edit.html', {'form': form, "id": id, "data": data, "password_change": PasswordChangeForm})
         except Exception as ex:
             return redirect('500')
 
