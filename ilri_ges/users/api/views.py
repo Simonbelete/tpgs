@@ -24,7 +24,6 @@ class UserViewSet(ModelFilterViewSet):
     filterset_class = UserFilter
     search_fields = ['name', 'email']
     ordering_fields = '__all__'
-    fi = {'ab': 'b'}
 
     def filters(self):
         queryset = self.filter_queryset(self.get_queryset())
