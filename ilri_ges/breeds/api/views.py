@@ -2,15 +2,37 @@ from rest_framework import viewsets, status
 from django.db.models import Count, Sum
 from rest_framework.response import Response
 from django.http import Http404, HttpResponse
+from core.views import ModelFilterViewSet
+from django_filters import rest_framework as filters
+from django.db.models import Count, Sum
+from django.db.models import F
 
 from breeds.models import BreedType
 from chickens.models import Chicken
 from breeds.api.serializers import BreedTypeSerializer_GET_V1, BreedTypeSerializer_Statics
 
 
-class BreedTypeViewSet(viewsets.ModelViewSet):
+class BreedTypeFilter(filters.FilterSet):
+    name = filters.CharFilter(field_name='name', lookup_expr='contains')
+
+    class Meta:
+        model = BreedType
+        fields = ['name']
+
+
+class BreedTypeViewSet(ModelFilterViewSet):
     queryset = BreedType.objects.all()
     serializer_class = BreedTypeSerializer_GET_V1
+    filterset_class = BreedTypeFilter
+    search_fields = ['name']
+    ordering_fields = '__all__'
+
+    def filters(self):
+        queryset = self.filter_queryset(self.get_queryset())
+        return {
+            'is_active': queryset.values('is_active').annotate(
+                count=Count("pk", distinct=True), label=F('is_active'), value=F('is_active')),
+        }
 
 
 class BreedTypeCountViewSet(viewsets.ModelViewSet):
