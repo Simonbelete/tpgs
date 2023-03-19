@@ -31,7 +31,9 @@ class UserViewSet(ModelFilterViewSet):
             'farms': queryset.values('farms__name', 'farms__id').annotate(
                 count=Count("pk", distinct=True), label=F('farms__name'), value=F('farms__id')),
             'groups': queryset.values('groups__name', 'groups__id').annotate(
-                count=Count("pk", distinct=True), label=F('groups__name'), value=F('groups__id'))
+                count=Count("pk", distinct=True), label=F('groups__name'), value=F('groups__id')),
+            'is_active': queryset.values('is_active').annotate(
+                count=Count("pk", distinct=True), label=F('is_active'), value=F('is_active')),
         }
 
 

@@ -23,6 +23,7 @@ requirejs(["jquery", "datatables", "lodash"], function ($, DataTable, _) {
       },
       orderable: false,
     },
+    { data: "is_active", visible: false },
     {
       data: null,
       className: "dt-center editor-edit",
@@ -75,7 +76,7 @@ requirejs(["jquery", "datatables", "lodash"], function ($, DataTable, _) {
         searchPanes: {
           show: true,
         },
-        targets: [3, 4],
+        targets: [3, 4, 5],
       },
     ],
   });
