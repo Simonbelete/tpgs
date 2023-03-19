@@ -3,11 +3,12 @@
 <div class="form-group">
     <label for="farm_select">Farms</label>
     {% if form.farm %}
-        {{ form.farms|attr:"id:farm_select"|add_class:"form-control"|add_error_class:"is-invalid" }}
+        {{ form.farm|attr:"id:farm_select"|add_class:"form-control"|add_error_class:"is-invalid" }}
     {% elif form.farms %}
         {{ form.farms|attr:"multiple:multiple"|attr:"id:farm_select"|add_class:"form-control"|add_error_class:"is-invalid" }}
     {% else %}
         <select id="farm_select" {{ multiple }} name="farm" class="form-control select2" style="width: 100%"></select>
     {% endif %}
     <span id="{{ form.farms.id_for_label }}-error" class="error invalid-feedback">{{ form.farms.errors }}</span>
+    <span id="{{ form.farm.id_for_label }}-error" class="error invalid-feedback">{{ form.farm.errors }}</span>
 </div>

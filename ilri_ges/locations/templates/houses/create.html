@@ -1,69 +1,38 @@
-{% extends "sidebar.html" %} 
+{% extends "form_template.html" %} 
 {% load static %} 
 {% load widget_tweaks %}
 
+{% block page_title %}Pen{% endblock %}
+{% block data_title %}Pen{% endblock %}
+{% block data_description %}Create Pen{% endblock %}
+{% block data_menu %}Pen{% endblock %}
 
-{% block stylesheet %} 
-{% include 'components/create_styles.html' %} 
-{% include 'components/select2_style.html' %}
-{% endblock %} 
-
-{% block title %} Create Pen - ILRI genetics Evaluation {% endblock %} 
-
-{% block body %}
-
-<!-- Content Header (Page header) -->
-<section class="content-header">
-    <div class="container-fluid">
-      <div class="row mb-2">
-        <div class="col-sm-6">
-          <h1>Pen</h1>
-        </div>
-        <div class="col-sm-6">
-          <ol class="breadcrumb float-sm-right">
-            <li class="breadcrumb-item"><a href="#">Home</a></li>
-            <li class="breadcrumb-item active">Create Pen</li>
-          </ol>
-        </div>
-      </div>
-    </div>
-    <!-- /.container-fluid -->
-
-     <!-- Main content -->
-  <section class="content">
-    <div class="col-md-6">
-      <div class="card card-primary">
+{% block contents %}
+<div class="container">
+	<form method="POST" class="card card-primary">
         <div class="card-header">
-          <h3 class="card-title">Pen</h3>
+            <h3 class="card-title">Create House</h3>
         </div>
-        <form action="" method="POST">
-          {% include 'components/messages.html' %}
+        <div class="card-body">
+			{% include 'components/messages.html' %}
 
-          {% csrf_token %}
-          {{ form.non_field_errors }}
+			{% csrf_token %}
+			{{ form.non_field_errors }}
 
-          <div class="card-body">
-            <div class="form-group">
-              <label for="{{ form.name.id_for_label }}">Pen Name</label>
-              {{ form.name|add_class:"form-control"|add_error_class:"is-invalid"|attr:"placeholder: Enter name" }}
-              <span id="{{ form.name.id_for_label }}-error" class="error invalid-feedback">{{ form.name.erros }}</span>
-            </div>
+			<div class="form-group">
+				<label for="{{ form.name.id_for_label }}">Pen Name</label>
+				{{ form.name|add_class:"form-control"|add_error_class:"is-invalid"|attr:"placeholder: Enter Name" }}
+				<span id="{{ form.name.id_for_label }}-error" class="error invalid-feedback">{{ form.name.erros }}</span>
+			</div>
 
-            {% include 'components/farm_select.html' %}
-
-          </div>
-          <!-- /.card-body -->
-
-          <div class="card-footer">
+            {% include 'components/fields/farm_field.html' %}
+		</div>
+		<div class="card-footer">
             <button type="submit" class="btn btn-primary">Submit</button>
-          </div>
-        </form>
-      </div>
-    </div>
-  </section>
+        </div>
+	</form>
 
-  <!-- /.content -->
-</section>
+</div>
 {% endblock %}
 
 {% block javascript %}
