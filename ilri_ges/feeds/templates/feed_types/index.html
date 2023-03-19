@@ -1,79 +1,35 @@
-{% extends "sidebar.html" %} 
+{% extends "list_template.html" %}
 {% load static %}
 
-{% block stylesheet %} 
-    {% include 'components/list_styles.html' %} 
-{% endblock %} 
+{% block page_title %}Feed types{% endblock %}
+{% block data_title %}Feed types{% endblock %}
+{% block data_description %}List of all Feed types{% endblock %}
+{% block data_menu %}Feed types{% endblock %}
+{% block data_url %}{% url 'feeds_types_create' %}{% endblock %}
+{% block data_btn %}Create Feed type{% endblock %}
 
-{% block title %} Feed Types - ILRI genetics Evaluation {% endblock %} 
-
-{% block body %}
-
-<!-- Content Header (Page header) -->
-<section class="content-header">
-    <div class="container-fluid">
-      <div class="row mb-2">
-        <div class="col-sm-6">
-          <h1>Feed Types</h1>
-        </div>
-        <div class="col-sm-6">
-          <ol class="breadcrumb float-sm-right">
-            <li class="breadcrumb-item"><a href="/">Home</a></li>
-            <li class="breadcrumb-item active">Feed Types</li>
-          </ol>
-        </div>
-      </div>
-    </div>
-    <!-- /.container-fluid -->
-
-    <!-- Main content -->
-  <section class="content">
-    <div class="container-fluid">
-      <div class="row">
-        <div class="col-12">
-          <div class="card">
-            <div class="card-header row">
-              <h3 class="card-title col-10">List of Feed Types</h3>
-              <div class="col-2">
-                <a href="{% url 'feeds_types_create' %}" role="button" type="button" class="btn btn-primary float-right"><i class="fas fa-plus"></i> Create Feed Type</a>
-              </div>
-            </div>
-            <!-- /.card-header -->
-            <div class="card-body">
-              <table
-                id="feed_types_data_table_list"
-                class="table table-bordered table-striped"
-              >
-                <thead>
-                  <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Created At</th>
-                    <th></th>
-                  </tr>
-                </thead>
-                <tbody></tbody>
-                <tfoot>
-                  <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Created At</th>
-                    <th></th>
-                  </tr>
-                </tfoot>
-              </table>
-            </div>
-            <!-- /.card-body -->
-          </div>
-          <!-- /.card -->
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- /.content -->
-</section>
-
+{% block table %}
+<table id="feed_types_data_table_list" class="table table-bordered table-striped">
+	<thead>
+		<tr>
+			<th style="display: none;">ID</th>
+			<th>Name</th>
+			<th>Active</th>
+			<th>Created At</th>
+			<th></th>
+		</tr>
+	</thead>
+	<tbody></tbody>
+	<tfoot>
+		<tr>
+		    <th style="display: none;">ID</th>
+		    <th>Name</th>
+			  <th>Active</th>
+			  <th>Created At</th>
+		    <th></th>
+		</tr>
+	</tfoot>
+</table>
 {% endblock %}
 
 {% block javascript %}

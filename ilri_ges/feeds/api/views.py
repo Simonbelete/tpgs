@@ -1,6 +1,9 @@
 from rest_framework import viewsets, status
 from django_filters import rest_framework as filters
 from rest_framework.response import Response
+from core.views import ModelFilterViewSet
+from django.db.models import Count, Sum
+from django.db.models import F
 
 from . import serializers
 from core.views import HistoryViewSet
@@ -17,7 +20,7 @@ class FeedTypeFilter(filters.FilterSet):
         fields = ['name']
 
 
-class FeedTypeViewSet(viewsets.ModelViewSet):
+class FeedTypeViewSet(ModelFilterViewSet):
     queryset = models.FeedType.objects.all()
     serializer_class = serializers.FeedTypeSerializer_GET_V1
     filterset_class = FeedTypeFilter
@@ -26,6 +29,13 @@ class FeedTypeViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         serializer.save(created_by=self.request.user)
+
+    def filters(self):
+        queryset = self.filter_queryset(self.get_queryset())
+        return {
+            'is_active': queryset.values('is_active').annotate(
+                count=Count("pk", distinct=True), label=F('is_active'), value=F('is_active')),
+        }
 
 
 class FeedTypeHistoryViewSet(HistoryViewSet):
