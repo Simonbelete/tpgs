@@ -52,7 +52,7 @@ class HouseViewSet(ModelFilterViewSet):
     def filters(self):
         queryset = self.filter_queryset(self.get_queryset())
         return {
-            'farms': queryset.values('farm__name', 'farm__id').annotate(
+            'farm': queryset.values('farm__name', 'farm__id').annotate(
                 count=Count("pk", distinct=True), label=F('farm__name'), value=F('farm__id')),
         }
 
