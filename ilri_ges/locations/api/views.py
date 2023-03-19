@@ -40,9 +40,18 @@ class CityViewSet(viewsets.ModelViewSet):
         serializer.save(created_by=self.request.user)
 
 
+class HouseFilter(filters.FilterSet):
+    name = filters.CharFilter(field_name='name', lookup_expr='contains')
+
+    class Meta:
+        model = House
+        fields = ['name', 'is_active', 'farm']
+
+
 class HouseViewSet(ModelFilterViewSet):
     queryset = House.objects.all()
     serializer_class = serializers.HouseSerializer_GET_V1
+    filterset_class = HouseFilter
     search_fields = ['name']
     ordering_fields = '__all__'
 
