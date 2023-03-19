@@ -244,7 +244,7 @@
               </a>
             </li>
 
-            <li class="nav-item">
+            {% comment %} <li class="nav-item">
               <a
                 href="/home/stages"
                 class="nav-link {% if request.path == '/home/stages/' %}active{% endif %}"
@@ -252,9 +252,9 @@
                 <i class="nav-icon fas fa-recycle"></i>
                 <p>Chicken Stage</p>
               </a>
-            </li>
+            </li> {% endcomment %}
 
-            <li class="nav-item">
+            {% comment %} <li class="nav-item">
               <a
                 href="{% url 'layed_places' %}"
                 class="nav-link {% if request.path == '/layed-places/' %}active{% endif %}"
@@ -262,7 +262,7 @@
                 <i class="nav-icon fas fa-map-marker-alt"></i>
                 <p>Layed Place</p>
               </a>
-            </li>
+            </li> {% endcomment %}
 
             <li class="nav-item">
               <a
