@@ -79,10 +79,6 @@ class EggsEditView(LoginRequiredMixin, View):
         try:
             data = Egg.objects.get(pk=id)
             form = EggForm(request.POST, instance=data)
-            print('----------------------------')
-            print(data.id)
-            print(data.chicken)
-            print(data.chicken.id)
             if form.is_valid():
                 record_eggs = Egg.objects.filter(~Q(id=data.id),
                                                  chicken=form.cleaned_data['chicken'], week=form.cleaned_data['week'])
@@ -97,6 +93,6 @@ class EggsEditView(LoginRequiredMixin, View):
                 else:
                     form.save()
                     return redirect('eggs')
-            return render(request, 'eggs/edit.html', {'form': form})
+            return render(request, 'eggs/edit.html', {'form': form, "id": id})
         except Exception as ex:
             return redirect('500')
