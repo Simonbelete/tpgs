@@ -23,6 +23,6 @@ class Feed(CoreModel):
     weight = models.DecimalField(
         max_digits=10, decimal_places=3, default=0)
     feed_type = models.ForeignKey(
-        FeedType, on_delete=models.SET_NULL, null=True, related_name='feeds')
+        FeedType, on_delete=models.SET_NULL, null=True, blank=True, related_name='feeds')
 
     history = HistoricalRecords()

@@ -21,6 +21,8 @@ class FeedTypeHistory(serializers.ModelSerializer):
 
 
 class FeedSerializer_GET_V1(serializers.ModelSerializer):
+    chicken = ChickenSerializer_GET_V1()
+
     class Meta:
         model = Feed
         fields = '__all__'

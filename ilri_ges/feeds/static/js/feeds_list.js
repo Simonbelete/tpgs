@@ -7,7 +7,7 @@ requirejs(["jquery", "datatables", "lodash"], function ($, DataTable, _) {
     { data: "id", visible: false },
     { data: "week" },
     { data: "weight" },
-    { data: "chicken" },
+    { data: "chicken.name", defaultContent: "" },
     { data: "feed_type" },
     { data: "created_at" },
     {

@@ -44,6 +44,8 @@ class FeedsCreateView(LoginRequiredMixin, View):
                 else:
                     messages.error(
                         request, 'Error occurred while creating, please check your data')
+        else:
+            messages.error(request, 'Error please check your data')
         return render(request, 'feeds/create.html', {'form': form})
 
 

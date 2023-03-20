@@ -53,6 +53,8 @@ class EggsCreateView(LoginRequiredMixin, View):
                 else:
                     messages.error(
                         request, 'Error occurred while creating, please check your data')
+        else:
+            messages.error(request, 'Error please check your data')
         return render(request, 'eggs/create.html', {'form': form})
 
 
