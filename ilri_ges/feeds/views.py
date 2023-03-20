@@ -70,8 +70,18 @@ class FeedsEditView(LoginRequiredMixin, View):
             data = Feed.objects.get(pk=id)
             form = FeedForm(request.POST, instance=data)
             if form.is_valid():
-                form.save()
-            messages.success(request, 'Successfully Updated !')
+                record_feed = Feed.objects.filter(
+                    chicken=form.cleaned_data['chicken'], week=form.cleaned_data['week'])
+                if record_feed.exists():
+                    previous_feed_links = ""
+                    for e in record_feed.iterator():
+                        previous_feed_links += "<br><a href='/feeds/%s'> Tag: %s Week %s Click to View</a>" % (
+                            e.id, e.chicken.tag, e.week)
+                    messages.error(
+                        request, 'Error record for the given week %s already exists' % form.cleaned_data['week'] + previous_feed_links)
+                else:
+                    form.save()
+                    return redirect('feeds')
             return render(request, 'feeds/edit.html', {'form': form})
         except Exception as ex:
             return redirect('500')
