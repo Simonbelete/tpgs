@@ -87,7 +87,27 @@ class ChickenEgg(LoginRequiredMixin, View):
     def get(self, request, id=0):
         if id == 0:
             return redirect('404')
-        return render(request, 'chicken_eggs/chicken_eggs.html', {"id": id})
+        return render(request, 'chickens/chicken_eggs.html', {"id": id})
+
+
+class ChickenEgg(LoginRequiredMixin, View):
+    login_url = '/users/login'
+    redirect_field_name = 'redirect_to'
+
+    def get(self, request, id=0):
+        if id == 0:
+            return redirect('404')
+        return render(request, 'chickens/chicken_eggs.html', {"id": id})
+
+
+class ChickenFeed(LoginRequiredMixin, View):
+    login_url = '/users/login'
+    redirect_field_name = 'redirect_to'
+
+    def get(self, request, id=0):
+        if id == 0:
+            return redirect('404')
+        return render(request, 'chickens/chicken_feeds.html', {"id": id})
 
 
 class ChickenStateView(LoginRequiredMixin, View):

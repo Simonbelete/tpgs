@@ -9,6 +9,8 @@ router.register(r'chickens/(?P<id>.+)/histories',
                 views.ChickenHistoryViewSet, basename='api_chickens_histories')
 router.register(r'chickens/(?P<id>.+)/eggs',
                 views.ChickenEggsviewSet, basename='api_chickens_eggs')
+router.register(r'chickens/(?P<id>.+)/feeds',
+                views.ChickenFeedsviewSet, basename='api_chickens_eggs')
 router.register(r'chickens/(?P<id>.+)/statics',
                 views.ChickenStaticsViewSet, basename='api_chickens_statics')
 

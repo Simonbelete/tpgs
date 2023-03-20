@@ -1,19 +1,25 @@
 requirejs(
   ["jquery", "datatables", "lodash", "chartjs"],
-  function ($, DataTable, Chart) {
+  function ($, DataTable, _, Chart) {
     "use strict";
 
-    var selector = $("#fcre_data_list_table");
+    var selector = $("#chicken_feeds");
 
     var columns = [
+      { data: "id", visible: false },
       { data: "week" },
-      { data: "total_egg_weight" },
-      { data: "feed_weight" },
-      { data: "eggs" },
-      { data: "fcr" },
+      { data: "weight" },
+      { data: "feed_type.name", defaultContent: "" },
+      {
+        data: null,
+        className: "dt-center editor-edit",
+        defaultContent:
+          '<button type="button" class="btn btn-success">View / Edit</button>',
+        orderable: false,
+      },
     ];
 
-    var chartId = $("#fcre_chart").get(0).getContext("2d");
+    var chartId = $("#chicken_feeds_chart").get(0).getContext("2d");
     var chart = new Chart(chartId, {
       type: "line",
       data: {
@@ -23,21 +29,19 @@ requirejs(
       options: {
         title: {
           display: true,
-          text: "FCR - Eggs",
+          text: "Feed Intake",
         },
       },
     });
 
     var table = selector.DataTable({
-      responsive: true,
-      autoWidth: false,
-      ordering: false,
-      dom: "lrt",
-      bPaginate: false,
       processing: true,
       serverSide: true,
+      responsive: true,
+      autoWidth: false,
+      dom: "lrt",
       ajax: {
-        url: "/api/chickens/" + selector.data("id") + "/fcr/eggs",
+        url: "/api/chickens/" + selector.data("id") + "/feeds",
         dataSrc: function (json) {
           // For Chartjs
           var datasets = {
@@ -49,7 +53,7 @@ requirejs(
           var labels = [];
           for (var i = 0; i < json["results"].length; i++) {
             labels.push(json["results"][i]["week"]);
-            datasets.data.push(json["results"][i]["fcr"]);
+            datasets.data.push(json["results"][i]["weight"]);
           }
           chart.data.labels = labels;
           chart.data.datasets[0] = datasets;
@@ -61,13 +65,17 @@ requirejs(
           return json.data;
         },
         data: function (d) {
-          d.start_week = $("#fcre_start_week").val();
-          d.end_week = $("#fcre_end_week").val();
+          d.start_week = $("#start_week").val();
+          d.end_week = $("#end_week").val();
+
+          d.search = d.search.value;
+          d.offset = d.start;
+          d.limit = d.length;
+          var sign = d.order[0].dir == "asc" ? "+" : "-";
+          d.ordering = sign + columns[d.order[0].column].data;
 
           d.columns = [];
           d.order = [];
-          delete d.start;
-          delete d.search;
           delete d.length;
           delete d.draw;
         },
@@ -75,7 +83,18 @@ requirejs(
       columns: columns,
     });
 
-    $("#fcre_apply").click(function () {
+    $("#apply_filter").click(function () {
+      table.ajax.reload(null, false);
+    });
+
+    // Edit record
+    selector.on("click", "td.editor-edit, tr td ul .editor-edit", function (e) {
+      e.preventDefault();
+      var data = table.row(this).data();
+      window.location.href = "/eggs/" + data.id;
+    });
+
+    $("#apply").click(function () {
       table.ajax.reload(null, false);
     });
   }

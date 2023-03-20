@@ -1,22 +1,5 @@
-"use strict";
-
 requirejs(
-  [
-    "jquery",
-    "datatables.net",
-    "chartjs",
-    "datatables.net-bs4",
-    "datatables.net-responsive",
-    "datatablesResponsiveBs4",
-    "datatables.net-buttons",
-    "datatablesButtonsBs4",
-    "jszip",
-    "pdfmake",
-    "pdfmake_fonts",
-    "datatables_buttons_html5",
-    "datatables_buttons_print",
-    "datatables_buttons_colVis",
-  ],
+  ["jquery", "datatables", "lodash", "chartjs"],
   function ($, DataTable, Chart) {
     "use strict";
 

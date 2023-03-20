@@ -10,8 +10,8 @@ from . import serializers
 from weights.models import Weight
 from feeds.models import Feed
 from eggs.models import Egg
-from weights.api.serializers import WeightSerializer_GET_V1
-from eggs.api.serializers import EggSerializer_GET_V1, ChickenEggSerializer
+from eggs.api.serializers import ChickenEggSerializer
+from feeds.api.serializers import ChickenFeedSerialize
 
 
 class ChickenFilter(filters.FilterSet):
@@ -208,6 +208,22 @@ class ChickenStaticsViewSet(viewsets.ModelViewSet):
 class ChickenEggsviewSet(viewsets.ModelViewSet):
     queryset = Egg.objects.all()
     serializer_class = ChickenEggSerializer
+
+    def list(self, request, *args, **kwargs):
+        id = self.kwargs['id']
+        start_week = int(request.GET.get('start_week', 0))
+        end_week = int(request.GET.get('end_week', 0))
+
+        queryset = self.filter_queryset(self.get_queryset().filter(
+            chicken=id, week__in=range(start_week, end_week + 1)))
+
+        serializer = self.get_serializer(queryset, many=True)
+        return Response({'results': serializer.data})
+
+
+class ChickenFeedsviewSet(viewsets.ModelViewSet):
+    queryset = Feed.objects.all()
+    serializer_class = ChickenFeedSerialize
 
     def list(self, request, *args, **kwargs):
         id = self.kwargs['id']

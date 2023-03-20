@@ -28,6 +28,12 @@ class FeedSerializer_GET_V1(serializers.ModelSerializer):
         fields = '__all__'
 
 
+class ChickenFeedSerialize(serializers.ModelSerializer):
+    class Meta:
+        model = Feed
+        fields = '__all__'
+
+
 class FeedHistory(serializers.ModelSerializer):
     history_user = UserSerializer_GET_V1()
     chicken = ChickenSerializer_GET_V1()
