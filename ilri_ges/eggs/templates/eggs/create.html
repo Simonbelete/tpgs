@@ -1,87 +1,51 @@
-{% extends "sidebar.html" %} 
+{% extends "form_template.html" %} 
 {% load static %} 
 {% load widget_tweaks %}
 
+{% block page_title %}Eggs{% endblock %}
+{% block data_title %}Eggs{% endblock %}
+{% block data_description %}Create new Egg record{% endblock %}
+{% block data_menu %}Eggs{% endblock %}
 
-{% block stylesheet %} 
-{% include 'components/create_styles.html' %} 
-{% include 'components/select2_style.html' %}
-{% include 'components/daterangepicker_style.html' %} 
-{% include 'components/datatables_style.html' %}
-{% endblock %} 
-
-{% block title %} Create Egg Record - ILRI genetics Evaluation {% endblock %} 
-
-{% block body %}
-
-<!-- Content Header (Page header) -->
-<section class="content-header">
-    <div class="container-fluid">
-      <div class="row mb-2">
-        <div class="col-sm-6">
-          <h1>Egg Record</h1>
-        </div>
-        <div class="col-sm-6">
-          <ol class="breadcrumb float-sm-right">
-            <li class="breadcrumb-item"><a href="#">Home</a></li>
-            <li class="breadcrumb-item active">Egg Record</li>
-          </ol>
-        </div>
-      </div>
-    </div>
-    <!-- /.container-fluid -->
-
-     <!-- Main content -->
-  <section class="content">
-    <div class="col-md-6">
-      <div class="card card-primary">
+{% block contents %}
+<div class="container">
+	<form method="POST" class="card card-primary">
         <div class="card-header">
-          <h3 class="card-title">Egg Record</h3>
+            <h3 class="card-title">Create House</h3>
         </div>
-        <form action="" method="POST">
-          {% include 'components/messages.html' %}
+        <div class="card-body">
+			{% include 'components/messages.html' %}
 
-          {% csrf_token %}
-          {{ form.non_field_errors }}
+			{% csrf_token %}
+			{{ form.non_field_errors }}
 
-          <div class="card-body">
-            {% include 'components/chicken_select.html' %}
-            {% include 'components/feed_type_select.html' %}
+			{% include 'components/chicken_select.html' %}
 
-            <div class="form-group">
-              <label for="{{ form.eggs.id_for_label }}">Number of eggs</label>
-              {{ form.eggs|add_class:"form-control"|add_error_class:"is-invalid"|attr:"placeholder: Enter number of eggs" }}
-              <span id="{{ form.eggs.id_for_label }}-error" class="error invalid-feedback">{{ form.eggs.errors }}</span>
-            </div>
+			<div class="form-group">
+				<label for="{{ form.week.id_for_label }}">Week</label>
+				{{ form.week|add_class:"form-control"|add_error_class:"is-invalid"|attr:"placeholder: Enter Week" }}
+				<span id="{{ form.week.id_for_label }}-error" class="error invalid-feedback">{{ form.week.errors }}</span>
+			</div>
 
-            <div class="form-group">
-              <label for="{{ form.total_weight.id_for_label }}">Total Weight</label>
-              {{ form.total_weight|add_class:"form-control"|add_error_class:"is-invalid"|attr:"placeholder: Enter total weight" }}
-              <span id="{{ form.total_weight.id_for_label }}-error" class="error invalid-feedback">{{ form.total_weight.errors }}</span>
-            </div>
+			<div class="form-group">
+				<label for="{{ form.eggs.id_for_label }}">Number of eggs</label>
+				{{ form.eggs|add_class:"form-control"|add_error_class:"is-invalid"|attr:"placeholder: Enter number of eggs" }}
+				<span id="{{ form.eggs.id_for_label }}-error" class="error invalid-feedback">{{ form.eggs.errors }}</span>
+			</div>
+  
+			<div class="form-group">
+				<label for="{{ form.total_weight.id_for_label }}">Total Weight</label>
+				{{ form.total_weight|add_class:"form-control"|add_error_class:"is-invalid"|attr:"placeholder: Enter total weight" }}
+				<span id="{{ form.total_weight.id_for_label }}-error" class="error invalid-feedback">{{ form.total_weight.errors }}</span>
+			</div>
 
-            <div class="form-group">
-                <label for="{{ form.week.id_for_label }}">Week</label>
-                {{ form.week|add_class:"form-control"|add_error_class:"is-invalid"|attr:"placeholder: Enter Week" }}
-                <span id="{{ form.week.id_for_label }}-error" class="error invalid-feedback">{{ form.week.errors }}</span>
-            </div>
-
-          </div>
-          <!-- /.card-body -->
-
-          <div class="card-footer">
+		</div>
+		<div class="card-footer">
             <button type="submit" class="btn btn-primary">Submit</button>
-          </div>
-        </form>
-      </div>
-    </div>
-  </section>
-
-  <!-- /.content -->
-</section>
+        </div>
+	</form>
 {% endblock %}
 
 {% block javascript %}
 <script src="{% static 'js/chicken_select.js' %}"></script>
-<script src="{% static 'js/feed_type_select.js' %}"></script>
 {% endblock %}

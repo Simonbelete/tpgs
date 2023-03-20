@@ -28,7 +28,7 @@
                 {% endif %}
             </h5>
             <ul class="messages">
-                <li> {{ message }} </li>
+                {{ message|safe }}
             </ul>
             {{ form.errors }}
         </div>

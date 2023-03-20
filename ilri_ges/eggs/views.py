@@ -34,14 +34,25 @@ class EggsCreateView(LoginRequiredMixin, View):
     def post(self, request):
         form = EggForm(request.POST)
         if form.is_valid():
-            form = form.save(commit=False)
-            form.created_by = request.user
-            form.save()
-            if form is not None:
-                return redirect('eggs')
+            record_eggs = Egg.objects.filter(
+                chicken=form.cleaned_data['chicken'], week=form.cleaned_data['week'])
+            if record_eggs.exists():
+                previous_egg_links = ""
+                for e in record_eggs.iterator():
+                    previous_egg_links += "<br><a href='/eggs/%s'> Tag: %s Week: %s Click to View</a>" % (
+                        e.id, e.chicken.tag, e.week)
+                messages.error(request,
+                               'Error record for the given week %s already exists' % form.cleaned_data['week'] +
+                               previous_egg_links)
             else:
-                messages.error(
-                    request, 'Error occurred while creating, please check your data')
+                form = form.save(commit=False)
+                form.created_by = request.user
+                form.save()
+                if form is not None:
+                    return redirect('eggs')
+                else:
+                    messages.error(
+                        request, 'Error occurred while creating, please check your data')
         return render(request, 'eggs/create.html', {'form': form})
 
 
