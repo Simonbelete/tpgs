@@ -13,6 +13,12 @@ class EggSerializer_GET_V1(serializers.ModelSerializer):
         fields = '__all__'
 
 
+class ChickenEggSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Egg
+        fields = '__all__'
+
+
 class EggHistory(serializers.ModelSerializer):
     history_user = UserSerializer_GET_V1()
     chicken = ChickenSerializer_GET_V1()

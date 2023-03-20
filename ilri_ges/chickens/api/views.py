@@ -11,6 +11,7 @@ from weights.models import Weight
 from feeds.models import Feed
 from eggs.models import Egg
 from weights.api.serializers import WeightSerializer_GET_V1
+from eggs.api.serializers import EggSerializer_GET_V1, ChickenEggSerializer
 
 
 class ChickenFilter(filters.FilterSet):
@@ -202,3 +203,19 @@ class ChickenStaticsViewSet(viewsets.ModelViewSet):
             'total_egg': total_egg['egg_sum'] if total_egg else 0,
             'total_feed': feed
         }, status=status.HTTP_200_OK)
+
+
+class ChickenEggsviewSet(viewsets.ModelViewSet):
+    queryset = Egg.objects.all()
+    serializer_class = ChickenEggSerializer
+
+    def list(self, request, *args, **kwargs):
+        id = self.kwargs['id']
+        start_week = int(request.GET.get('start_week', 0))
+        end_week = int(request.GET.get('end_week', 0))
+
+        queryset = self.filter_queryset(self.get_queryset().filter(
+            chicken=id, week__in=range(start_week, end_week + 1)))
+
+        serializer = self.get_serializer(queryset, many=True)
+        return Response({'results': serializer.data})

@@ -62,8 +62,6 @@ class ChickenEditView(LoginRequiredMixin, View):
             form = ChickenForm(instance=data)
             return render(request, 'chickens/edit.html', {'form': form, "data": data, "id": id, 'state_form': ChickenStateForm})
         except Exception as ex:
-            print('---------------------------')
-            print(ex)
             return redirect('500')
 
     def post(self, request, id=0):
@@ -80,6 +78,16 @@ class ChickenEditView(LoginRequiredMixin, View):
                 return render(request, 'chickens/edit.html', {'form': form, "id": id})
         except Exception as ex:
             return redirect('500')
+
+
+class ChickenEgg(LoginRequiredMixin, View):
+    login_url = '/users/login'
+    redirect_field_name = 'redirect_to'
+
+    def get(self, request, id=0):
+        if id == 0:
+            return redirect('404')
+        return render(request, 'chicken_eggs/chicken_eggs.html', {"id": id})
 
 
 class ChickenStateView(LoginRequiredMixin, View):
@@ -169,7 +177,6 @@ class ChickenImportView(View):
                 chicken, chicken_created = Chicken.objects.update_or_create(
                     tag=tag, defaults={'sex': sex, 'breed_pair': breed_pair, 'created_by': self.request.user})
                 for week in weeks:
-                    print('------------------------')
                     week_no = week.split(" ")[-1]
                     weight = row[week, "weight"].values[0]
                     feed_weight = row[week, "feed"].values[0]
