@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.views import View
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.db.models import Q
 
 from .models import Egg
 from .forms import EggForm
@@ -78,9 +79,24 @@ class EggsEditView(LoginRequiredMixin, View):
         try:
             data = Egg.objects.get(pk=id)
             form = EggForm(request.POST, instance=data)
+            print('----------------------------')
+            print(data.id)
+            print(data.chicken)
+            print(data.chicken.id)
             if form.is_valid():
-                form.save()
-            messages.success(request, 'Successfully Updated !')
+                record_eggs = Egg.objects.filter(~Q(id=data.id),
+                                                 chicken=form.cleaned_data['chicken'], week=form.cleaned_data['week'])
+                if record_eggs.exists():
+                    previous_egg_links = ""
+                    for e in record_eggs.iterator():
+                        previous_egg_links += "<br><a href='/eggs/%s'> Tag: %s Week: %s Click to View</a>" % (
+                            e.id, e.chicken.tag, e.week)
+                    messages.error(request,
+                                   'Error record for the given week %s already exists' % form.cleaned_data['week'] +
+                                   previous_egg_links)
+                else:
+                    form.save()
+                    return redirect('eggs')
             return render(request, 'eggs/edit.html', {'form': form})
         except Exception as ex:
             return redirect('500')

@@ -5234,3 +5234,9 @@ Traceback (most recent call last):
   File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/serializers.py", line 686, in to_representation
     return [
 TypeError: 'Chicken' object is not iterable
+No artists with labels found to put in legend.  Note that artists whose label start with an underscore are ignored when legend() is called with no argument.
+Not Found: /api/eggs//histories
+Not Found: /api/eggs//histories
+Not Found: /api/eggs//histories
+Not Found: /api/eggs//histories
+Not Found: /api/eggs//histories
