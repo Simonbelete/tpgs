@@ -26,14 +26,24 @@ class FeedsCreateView(LoginRequiredMixin, View):
     def post(self, request):
         form = FeedForm(request.POST)
         if form.is_valid():
-            form = form.save(commit=False)
-            form.created_by = request.user
-            form.save()
-            if form is not None:
-                return redirect('feeds')
-            else:
+            record_feed = Feed.objects.filter(
+                chicken=form.cleaned_data['chicken'], week=form.cleaned_data['week'])
+            if record_feed.exists():
+                previous_feed_links = ""
+                for e in record_feed.iterator():
+                    previous_feed_links += "<br><a href='/feeds/%s'> Tag: %s Week %s Click to View</a>" % (
+                        e.id, e.chicken.tag, e.week)
                 messages.error(
-                    request, 'Error occurred while creating, please check your data')
+                    request, 'Error record for the given week %s already exists' % form.cleaned_data['week'] + previous_feed_links)
+            else:
+                form = form.save(commit=False)
+                form.created_by = request.user
+                form.save()
+                if form is not None:
+                    return redirect('feeds')
+                else:
+                    messages.error(
+                        request, 'Error occurred while creating, please check your data')
         return render(request, 'feeds/create.html', {'form': form})
 
 
