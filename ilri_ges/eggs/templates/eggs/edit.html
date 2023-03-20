@@ -47,7 +47,6 @@
           <div class="card-body">
             {{ forms.errors }}
             {% include 'components/chicken_select.html' %}
-            {% include 'components/feed_type_select.html' %}
 
             <div class="form-group">
               <label for="{{ form.eggs.id_for_label }}">Number of eggs</label>
@@ -121,6 +120,5 @@
 
 {% block javascript %}
 <script src="{% static 'js/chicken_select.js' %}"></script>
-<script src="{% static 'js/feed_type_select.js' %}"></script>
 <script src="{% static 'js/egg_history.js' %}"></script>
 {% endblock %}

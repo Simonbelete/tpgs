@@ -62,6 +62,8 @@ class ChickenEditView(LoginRequiredMixin, View):
             form = ChickenForm(instance=data)
             return render(request, 'chickens/edit.html', {'form': form, "data": data, "id": id, 'state_form': ChickenStateForm})
         except Exception as ex:
+            print('---------------------------')
+            print(ex)
             return redirect('500')
 
     def post(self, request, id=0):
