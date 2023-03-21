@@ -6492,3 +6492,4 @@ Traceback (most recent call last):
   File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/sql/query.py", line 1709, in names_to_path
     raise FieldError(
 django.core.exceptions.FieldError: Cannot resolve keyword 'reed_pair' into field. Choices are: breed_pair, breed_pair_id, breed_type, breed_type_id, created_at, created_by, created_by_id, days_alive, dead_date, egg_weight, eggs, farm, farm_id, father, feeds, flock, flock_id, hatch_date, house, house_id, id, is_active, is_dead, is_double_yolk, layed_place, layed_place_id, mother, sex, tag, updated_at, weights
+No artists with labels found to put in legend.  Note that artists whose label start with an underscore are ignored when legend() is called with no argument.
