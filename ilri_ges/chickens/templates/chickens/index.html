@@ -45,7 +45,7 @@
             <!-- /.card-header -->
             <div class="card-body">
               
-              <!-- Filters -->
+              {% comment %} <!-- Filters -->
               <div class="row" style="align-items: end; margin-bottom: 50px">
                 <div class="col-md-6 col-lg-2 col-xl-1">
                   <label for="filter_sex">Filter By Sex</label>
@@ -67,7 +67,7 @@
                 {% include 'components/breed_filter.html' %}
                 <button type="button" id="apply_filter" style="height: 40px" class="btn btn-secondary">Apply</button>
               </div>
-              <!-- /.Filters -->
+              <!-- /.Filters --> {% endcomment %}
               
               <table
                 id="chickens_data_list_table"

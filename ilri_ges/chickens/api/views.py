@@ -2,7 +2,8 @@ from rest_framework import viewsets, status
 from rest_framework.response import Response
 from django_filters import rest_framework as filters
 from rest_framework.views import APIView
-from django.db.models import Count, Sum
+from django.db.models import Count, Sum, F, Value
+from django.db.models.functions import Concat
 
 from core.views import HistoryViewSet
 from chickens.models import Chicken
@@ -12,6 +13,8 @@ from feeds.models import Feed
 from eggs.models import Egg
 from eggs.api.serializers import ChickenEggSerializer
 from feeds.api.serializers import ChickenFeedSerialize
+from weights.api.serializers import ChickenWeightSerializer
+from core.views import ModelFilterViewSet
 
 
 class ChickenFilter(filters.FilterSet):
@@ -27,12 +30,37 @@ class ChickenFilter(filters.FilterSet):
         fields = ['tag', 'farm', 'flock', 'sex', 'is_active', 'breed_type']
 
 
-class ChickenViewSet(viewsets.ModelViewSet):
+class ChickenViewSet(ModelFilterViewSet):
     queryset = Chicken.objects.all()
     serializer_class = serializers.ChickenSerializer_GET_V1
     filterset_class = ChickenFilter
     search_fields = ['tag']
     ordering_fields = '__all__'
+
+    def filters(self):
+        queryset = self.filter_queryset(self.get_queryset())
+        return {
+            'is_active': queryset.values('is_active').annotate(
+                count=Count("pk", distinct=True), label=F('is_active'), value=F('is_active')),
+            'is_dead': queryset.values('is_dead').annotate(
+                count=Count("pk", distinct=True), label=F('is_dead'), value=F('is_dead')),
+            'dead_date': queryset.values('dead_date').annotate(
+                count=Count("pk", distinct=True), label=F('dead_date'), value=F('dead_date')),
+            'sex': queryset.values('sex').annotate(
+                count=Count("pk", distinct=True), label=F('sex'), value=F('sex')),
+            'hatch_date': queryset.values('hatch_date').annotate(
+                count=Count("pk", distinct=True), label=F('hatch_date'), value=F('hatch_date')),
+            'farm': queryset.values('farm__name', 'farm__id').annotate(
+                count=Count("pk", distinct=True), label=F('farm__name'), value=F('farm__id')),
+            'flock': queryset.values('flock__name', 'flock__id').annotate(
+                count=Count("pk", distinct=True), label=F('flock__name'), value=F('flock__id')),
+            'house': queryset.values('house__name', 'house__id').annotate(
+                count=Count("pk", distinct=True), label=F('house__name'), value=F('house__id')),
+            'breed_type': queryset.values('breed_type__name', 'breed_type__id').annotate(
+                count=Count("pk", distinct=True), label=F('breed_type__name'), value=F('breed_type__id')),
+            'breed_pair': queryset.values('breed_pair__dam__tag', 'breed_pair__sire__tag', 'breed_pair__id').annotate(
+                count=Count("pk", distinct=True), label=Concat('breed_pair__dam__tag', Value(' - '), 'breed_pair__sire__tag'), value=F('breed_pair__id')),
+        }
 
 # Feed Conversion ration - Growth
 
@@ -224,6 +252,22 @@ class ChickenEggsviewSet(viewsets.ModelViewSet):
 class ChickenFeedsviewSet(viewsets.ModelViewSet):
     queryset = Feed.objects.all()
     serializer_class = ChickenFeedSerialize
+
+    def list(self, request, *args, **kwargs):
+        id = self.kwargs['id']
+        start_week = int(request.GET.get('start_week', 0))
+        end_week = int(request.GET.get('end_week', 0))
+
+        queryset = self.filter_queryset(self.get_queryset().filter(
+            chicken=id, week__in=range(start_week, end_week + 1)))
+
+        serializer = self.get_serializer(queryset, many=True)
+        return Response({'results': serializer.data})
+
+
+class ChickenWeightsviewSet(viewsets.ModelViewSet):
+    queryset = Feed.objects.all()
+    serializer_class = ChickenWeightSerializer
 
     def list(self, request, *args, **kwargs):
         id = self.kwargs['id']

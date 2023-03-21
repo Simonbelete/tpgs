@@ -5,6 +5,12 @@ from users.api.serializers import UserSerializer_GET_V1
 from chickens.api.serializers import ChickenSerializer_GET_V1
 
 
+class ChickenWeightSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Weight
+        fields = '__all__'
+
+
 class WeightSerializer_GET_V1(serializers.ModelSerializer):
     chicken = ChickenSerializer_GET_V1()
 

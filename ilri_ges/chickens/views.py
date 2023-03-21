@@ -14,6 +14,7 @@ from eggs.models import Egg
 from feeds.models import Feed
 from breeding_pairs.models import BreedPair
 from .forms import ChickenForm, ChickenStateForm, ChickenImportForm
+from core.views import ModelFilterViewSet
 
 
 class ChickenView(LoginRequiredMixin, View):
@@ -90,14 +91,14 @@ class ChickenEgg(LoginRequiredMixin, View):
         return render(request, 'chickens/chicken_eggs.html', {"id": id})
 
 
-class ChickenEgg(LoginRequiredMixin, View):
+class ChickenWeights(LoginRequiredMixin, View):
     login_url = '/users/login'
     redirect_field_name = 'redirect_to'
 
     def get(self, request, id=0):
         if id == 0:
             return redirect('404')
-        return render(request, 'chickens/chicken_eggs.html', {"id": id})
+        return render(request, 'chickens/chicken_weights.html', {"id": id})
 
 
 class ChickenFeed(LoginRequiredMixin, View):
