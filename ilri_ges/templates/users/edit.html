@@ -37,7 +37,7 @@
         </div>
         <form action="" method="POST">
           {% include 'components/messages.html' %}
-
+          
           {% csrf_token %}
           {{ form.non_field_errors }}
 
@@ -69,7 +69,7 @@
 
           <div class="card-footer">
             <button type="submit" class="btn btn-primary">Submit</button>
-            <a href="{% url 'change_password' data.id %}"><button type="button" class="btn btn-default">Change Password</button></a>
+            <a href="{% url 'change_password' id %}"><button type="button" class="btn btn-default">Change Password</button></a>
           </div>
         </form>
       </div>

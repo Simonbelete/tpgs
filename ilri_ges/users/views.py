@@ -163,7 +163,8 @@ class UsersEditView(PermissionRequiredMixin, View):
                 messages.success(request, 'Successfully Updated !')
                 return redirect('users')
             else:
-                return render(request, 'users/edit.html', {'form': form, "password_change": PasswordChangeForm})
+                messages.error(request, "Error, please check your data")
+            return render(request, 'users/edit.html', {'form': form, "id": id, "password_change": PasswordChangeForm})
         except Exception as ex:
             return redirect('500')
 
