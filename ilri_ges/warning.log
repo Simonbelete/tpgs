@@ -5361,3 +5361,6 @@ Traceback (most recent call last):
 AttributeError: Got AttributeError when attempting to get a value for field `eggs` on serializer `ChickenEggSerializer`.
 The serializer field might be named incorrectly and not match any attribute or key on the `Feed` instance.
 Original exception text was: 'Feed' object has no attribute 'eggs'.
+Not Found: /favicon.ico
+Not Found: /api/weights//histories
+Not Found: /api/weights//histories

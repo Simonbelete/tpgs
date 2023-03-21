@@ -7,7 +7,8 @@ from django.views import View
 from django.contrib import messages
 from datetime import date, timedelta, datetime
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.http import HttpResponse, HttpResponseNotFound
+from django.http import HttpResponse
+from django.db.models import Q
 
 from weights.forms import WeightForm
 from weights.models import Weight
@@ -85,9 +86,20 @@ class WeightsEditView(LoginRequiredMixin, View):
             data = Weight.objects.get(pk=id)
             form = WeightForm(request.POST, instance=data)
             if form.is_valid():
-                form.save()
-            messages.success(request, 'Successfully Updated !')
-            return render(request, 'weights/edit.html', {'form': form})
+                record_weights = Weight.objects.filter(~Q(id=data.id),
+                                                       chicken=form.cleaned_data['chicken'], week=form.cleaned_data['week'])
+                if record_weights.exists():
+                    previous_weights_links = ""
+                    for e in record_weights.iterator():
+                        previous_weights_links += "<br><a href='/weights/%s'> Tag: %s Week: %s Click to View</a>" % (
+                            e.id, e.chicken.tag, e.week)
+                    messages.error(request,
+                                   'Error record for the given week %s already exists' % form.cleaned_data['week'] +
+                                   previous_weights_links)
+                else:
+                    form.save()
+                    return redirect('eggs')
+            return render(request, 'weights/edit.html', {'form': form, "id": id})
         except Exception as ex:
             return redirect('500')
 

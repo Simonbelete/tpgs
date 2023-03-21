@@ -67,6 +67,42 @@
           </form>
         </div>
       </div>
+
+      <!-- History Card -->
+    <div class="col-md-12">
+      <div class="card card-secondary">
+        <div class="card-header">
+          <h3 class="card-title">History</h3>
+        </div>
+        <!-- /.card-header -->
+        <div class="card-body">
+          <table id="history" data-id="{{ id }}" class="table table-bordered table-striped">
+            <thead>
+              <tr>
+                  <th>Changed By</th>
+                  <th>Week</th>
+                  <th>weight</th>
+                  <th>Chicken</th>
+                  <th>Date</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+            <tfoot>
+              <tr>
+                  <th>Changed By</th>
+                  <th>Week</th>
+                  <th>weight</th>
+                  <th>Chicken</th>
+                  <th>Date</th>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+        <!-- /.card-body -->
+      </div>
+      <!-- /.card -->
+    </div>
+    <!-- /.History -->
   
     </section>
   
@@ -77,4 +113,5 @@
 
 {% block javascript %}
 <script src="{% static 'js/chicken_select.js' %}"></script>
+<script src="{% static 'js/weight_history.js' %}"></script>
 {% endblock %}
