@@ -15,7 +15,7 @@ class ChickenSerializer_GET_V1(serializers.ModelSerializer):
     class Meta:
         model = Chicken
         fields = ['name', 'age', 'age_in_days', 'age_in_weeks', 'hatch_weight', 'flock', 'id', 'tag', 'sex', 'farm', 'breed_pair',
-                  'house', 'breed_type', 'layed_place', 'is_double_yolk', 'hatch_date', 'days_alive', 'created_at']
+                  'house', 'breed_type', 'layed_place', 'is_double_yolk', 'hatch_date', 'days_alive', 'dead_date', 'is_active', 'created_at']
 
 
 class ChickenHistory(serializers.ModelSerializer):

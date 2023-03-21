@@ -7,11 +7,34 @@ requirejs(["jquery", "datatables", "lodash"], function ($, DataTable, _) {
     { data: "id", visible: false },
     { data: "tag" },
     { data: "sex" },
-    { data: "farm.name", defaultContent: "" },
-    { data: "house.name", defaultContent: "" },
-    { data: "breed_type.name", defaultContent: "" },
+    {
+      data: "farm",
+      defaultContent: "",
+      render: ".name",
+      orderable: false,
+    },
+    {
+      data: "house",
+      render: ".name",
+      orderable: false,
+      defaultContent: "",
+    },
+    {
+      data: "breed_type",
+      render: ".name",
+      orderable: false,
+      defaultContent: "",
+    },
+    {
+      data: "flock",
+      defaultContent: "",
+      render: ".name",
+      orderable: false,
+    },
     { data: "hatch_date" },
-    { data: "is_double_yolk" },
+    { data: "breed_pair" },
+    { data: "dead_date" },
+    { data: "is_active" },
     { data: "created_at" },
     {
       data: null,
@@ -28,7 +51,15 @@ requirejs(["jquery", "datatables", "lodash"], function ($, DataTable, _) {
     responsive: true,
     autoWidth: false,
     lengthChange: true,
-    buttons: ["copyHtml5", "excelHtml5", "csvHtml5", "pdfHtml5"],
+    dom: "Bfrltip",
+    buttons: [
+      {
+        extend: "searchPanes",
+        config: {
+          cascadePanes: true,
+        },
+      },
+    ],
     ajax: {
       url: "/api/chickens/",
       dataSrc: function (json) {
@@ -45,11 +76,11 @@ requirejs(["jquery", "datatables", "lodash"], function ($, DataTable, _) {
         d.ordering = sign + columns[d.order[0].column].data;
 
         // Filters
-        d.is_active = $("#is_active").val();
-        d.sex = $("#filter_sex").val();
-        if ($("#farm_select").val() !== "") d.farm = $("#farm_select").val();
-        if ($("#breed_type_select").val() !== "")
-          d.breed_type = $("#breed_type_select").val();
+        // d.is_active = $("#is_active").val();
+        // d.sex = $("#filter_sex").val();
+        // if ($("#farm_select").val() !== "") d.farm = $("#farm_select").val();
+        // if ($("#breed_type_select").val() !== "")
+        //   d.breed_type = $("#breed_type_select").val();
 
         d.columns = [];
         d.order = [];
@@ -58,6 +89,17 @@ requirejs(["jquery", "datatables", "lodash"], function ($, DataTable, _) {
       },
     },
     columns: columns,
+    searchPanes: {
+      viewTotal: true,
+    },
+    columnDefs: [
+      {
+        searchPanes: {
+          show: true,
+        },
+        targets: [2, 4, 5, 6, 7, 8, 9, 10],
+      },
+    ],
   });
 
   $("#apply_filter").click(function () {
