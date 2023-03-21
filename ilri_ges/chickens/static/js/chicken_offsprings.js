@@ -3,13 +3,13 @@ requirejs(
   function ($, DataTable, _, Chart) {
     "use strict";
 
-    var selector = $("#chicken_partner");
+    var selector = $("#chicken_offsprings");
 
     var columns = [
       { data: "id", visible: false },
-      { data: "sire.name", defaultContent: "" },
-      { data: "dam.name", defaultContent: "" },
-      { data: "date" },
+      { data: "breed_pair.sire.name", defaultContent: "" },
+      { data: "breed_pair.dam.name", defaultContent: "" },
+      { data: "tag", defaultContent: "" },
       {
         data: null,
         className: "dt-center editor-edit",
@@ -24,9 +24,10 @@ requirejs(
       serverSide: true,
       responsive: true,
       autoWidth: false,
-      dom: "lrt",
+      lengthChange: true,
+      dom: "rltip",
       ajax: {
-        url: "/api/chickens/" + selector.data("id") + "/breedings",
+        url: "/api/chickens/" + selector.data("id") + "/offsprings",
         dataSrc: function (json) {
           json["data"] = json["results"];
           json["recordsTotal"] = json["count"];
@@ -53,7 +54,7 @@ requirejs(
     selector.on("click", "td.editor-edit, tr td ul .editor-edit", function (e) {
       e.preventDefault();
       var data = table.row(this).data();
-      window.location.href = "/breeding-pairs/" + data.id;
+      window.location.href = "/chickens/" + data.id;
     });
   }
 );

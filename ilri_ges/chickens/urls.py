@@ -11,6 +11,8 @@ urlpatterns = [
          name="chickens_weights"),
     path('<int:id>/breeding', views.ChickenPartners.as_view(),
          name="chickens_breeding"),
+    path('<int:id>/offsprings', views.ChickenOffsprings.as_view(),
+         name="chickens_offsprings"),
     path('<int:id>/state', views.ChickenStateView.as_view(),
          name="chickens_state_edit"),
     path('create', views.ChickenCreateView.as_view(), name="chickens_create"),

@@ -121,6 +121,16 @@ class ChickenPartners(LoginRequiredMixin, View):
         return render(request, 'chickens/chicken_partners.html', {"id": id})
 
 
+class ChickenOffsprings(LoginRequiredMixin, View):
+    login_url = '/users/login'
+    redirect_field_name = 'redirect_to'
+
+    def get(self, request, id=0):
+        if id == 0:
+            return redirect('404')
+        return render(request, 'chickens/chicken_offsprings.html', {"id": id})
+
+
 class ChickenStateView(LoginRequiredMixin, View):
     login_url = '/users/login'
     redirect_field_name = 'redirect_to'

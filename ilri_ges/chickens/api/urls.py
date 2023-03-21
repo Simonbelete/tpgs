@@ -13,6 +13,10 @@ router.register(r'chickens/(?P<id>.+)/feeds',
                 views.ChickenFeedsviewSet, basename='api_chickens_eggs')
 router.register(r'chickens/(?P<id>.+)/weights',
                 views.ChickenWeightsviewSet, basename='api_chickens_weights')
+router.register(r'chickens/(?P<id>.+)/breedings',
+                views.ChickenPartnerviewSet, basename='api_chickens_breedings')
+router.register(r'chickens/(?P<id>.+)/offsprings',
+                views.ChickenOffspringsViewSet, basename='api_chickens_offsprings')
 router.register(r'chickens/(?P<id>.+)/statics',
                 views.ChickenStaticsViewSet, basename='api_chickens_statics')
 

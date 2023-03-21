@@ -9,6 +9,7 @@ requirejs(["jquery"], function () {
       $("#statics_fcr").html(data.fcr + "%");
       $("#statics_total_feed").html(data.total_feed + "g");
       $("#statics_breeding").html(data.total_breeding);
+      $("#statics_offsprings").html(data.total_offsprings);
     }
   );
 });

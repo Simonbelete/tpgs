@@ -16,6 +16,7 @@ from feeds.api.serializers import ChickenFeedSerialize
 from weights.api.serializers import ChickenWeightSerializer
 from core.views import ModelFilterViewSet
 from breeding_pairs.models import BreedPair
+from breeding_pairs.api.serializers import BreedPairSerializer_GET_V1
 
 
 class ChickenFilter(filters.FilterSet):
@@ -224,7 +225,11 @@ class ChickenStaticsViewSet(viewsets.ModelViewSet):
             chicken=id).aggregate(egg_sum=Sum('eggs'))
         feed = total_feed['feed_sum']
         breding_partner = BreedPair.objects.filter(
-            Q(sire=id) | Q(dam=id)).aggregate(count=Sum('id'))
+            Q(sire=id) | Q(dam=id)).aggregate(count=Count('id'))
+        breeding_pairs = BreedPair.objects.filter(
+            Q(sire=id) | Q(dam=id)).values_list('id', flat=True)
+        offsprings = Chicken.objects.filter(
+            breed_pair__in=breeding_pairs).aggregate(count=Count('id'))
 
         return Response({
             'weight': {
@@ -233,7 +238,8 @@ class ChickenStaticsViewSet(viewsets.ModelViewSet):
             },
             'total_egg': total_egg['egg_sum'] if total_egg else 0,
             'total_feed': feed,
-            'total_breeding': breding_partner['count'] if breding_partner else 0
+            'total_breeding': breding_partner['count'] if breding_partner else 0,
+            'total_offsprings': offsprings['count'] if offsprings else 0
         }, status=status.HTTP_200_OK)
 
 
@@ -287,7 +293,7 @@ class ChickenWeightsviewSet(viewsets.ModelViewSet):
 
 class ChickenPartnerviewSet(viewsets.ModelViewSet):
     queryset = BreedPair.objects.all()
-    serializer_class = ChickenWeightSerializer
+    serializer_class = BreedPairSerializer_GET_V1
 
     def list(self, request, *args, **kwargs):
         id = self.kwargs['id']
@@ -296,3 +302,34 @@ class ChickenPartnerviewSet(viewsets.ModelViewSet):
             self.get_queryset().filter(Q(sire=id) | Q(dam=id)))
         serializer = self.get_serializer(queryset, many=True)
         return Response({'results': serializer.data})
+
+
+class ChickenOffspringsViewSet(viewsets.ModelViewSet):
+    queryset = Chicken.objects.all()
+    serializer_class = serializers.ChickenSerializerOffsprings_GET_V1
+
+    def list(self, request, *args, **kwargs):
+        id = self.kwargs['id']
+        breeding_pairs = BreedPair.objects.filter(
+            Q(sire=id) | Q(dam=id)).values_list('id', flat=True)
+        queryset = self.filter_queryset(
+            self.get_queryset().filter(breed_pair__in=breeding_pairs))
+
+        page = self.paginate_queryset(queryset)
+        if page is not None:
+            serializer = self.get_serializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
+
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data)
+
+    # def list(self, request, *args, **kwargs):
+    #     id = self.kwargs['id']
+
+    #     breeding_pairs = BreedPair.objects.filter(
+    #         Q(sire=id) | Q(dam=id)).values_list('id', flat=True)
+
+    #     queryset = self.filter_queryset(
+    #         self.get_queryset().filter(breed_pair__in=breeding_pairs))
+    #     serializer = self.get_serializer(queryset, many=True)
+    #     return Response({'results': serializer.data})

@@ -2,22 +2,22 @@
 {% load static %} 
 {% load widget_tweaks %}
 
-{% block page_title %}Chicken Partners{% endblock %}
-{% block data_title %}Chicken Partners{% endblock %}
+{% block page_title %}Chicken Offsprings{% endblock %}
+{% block data_title %}Chicken Offsprings{% endblock %}
 {% block data_description %}{% endblock %}
-{% block data_menu %}Chicken Partners{% endblock %}
+{% block data_menu %}Chicken Offsprings{% endblock %}
 
 {% block contents %}
 <div class="container-fluid">
     <div class="card">
         <div class="card-body">
-            <table id="chicken_partner" data-id="{{ id }}" class="table table-bordered table-striped">
+            <table id="chicken_offsprings" data-id="{{ id }}" class="table table-bordered table-striped">
                 <thead>
                     <tr>
                     <th>ID</th>
                     <th>Sire</th>
                     <th>Dam</th>
-                    <th>Date</th>
+                    <th>Tag</th>
                     </tr>
                 </thead>
                 <tbody></tbody>
@@ -27,5 +27,5 @@
 </div>
 {% endblock %}
 {% block javascript %}
-<script src="{% static 'js/chicken_partner.js' %}"></script>
+<script src="{% static 'js/chicken_offsprings.js' %}"></script> 
 {% endblock %}
