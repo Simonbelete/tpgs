@@ -2,7 +2,7 @@ from rest_framework import viewsets, status
 from rest_framework.response import Response
 from django_filters import rest_framework as filters
 from rest_framework.views import APIView
-from django.db.models import Count, Sum, F, Value
+from django.db.models import Count, Sum, F, Value, Q
 from django.db.models.functions import Concat
 
 from core.views import HistoryViewSet
@@ -15,6 +15,7 @@ from eggs.api.serializers import ChickenEggSerializer
 from feeds.api.serializers import ChickenFeedSerialize
 from weights.api.serializers import ChickenWeightSerializer
 from core.views import ModelFilterViewSet
+from breeding_pairs.models import BreedPair
 
 
 class ChickenFilter(filters.FilterSet):
@@ -222,6 +223,8 @@ class ChickenStaticsViewSet(viewsets.ModelViewSet):
         total_egg = Egg.objects.filter(
             chicken=id).aggregate(egg_sum=Sum('eggs'))
         feed = total_feed['feed_sum']
+        breding_partner = BreedPair.objects.filter(
+            Q(sire=id) | Q(dam=id)).aggregate(count=Sum('id'))
 
         return Response({
             'weight': {
@@ -229,7 +232,8 @@ class ChickenStaticsViewSet(viewsets.ModelViewSet):
                 'weight': latest_weight.weight,
             },
             'total_egg': total_egg['egg_sum'] if total_egg else 0,
-            'total_feed': feed
+            'total_feed': feed,
+            'total_breeding': breding_partner['count'] if breding_partner else 0
         }, status=status.HTTP_200_OK)
 
 
@@ -277,5 +281,18 @@ class ChickenWeightsviewSet(viewsets.ModelViewSet):
         queryset = self.filter_queryset(self.get_queryset().filter(
             chicken=id, week__in=range(start_week, end_week + 1)))
 
+        serializer = self.get_serializer(queryset, many=True)
+        return Response({'results': serializer.data})
+
+
+class ChickenPartnerviewSet(viewsets.ModelViewSet):
+    queryset = BreedPair.objects.all()
+    serializer_class = ChickenWeightSerializer
+
+    def list(self, request, *args, **kwargs):
+        id = self.kwargs['id']
+
+        queryset = self.filter_queryset(
+            self.get_queryset().filter(Q(sire=id) | Q(dam=id)))
         serializer = self.get_serializer(queryset, many=True)
         return Response({'results': serializer.data})

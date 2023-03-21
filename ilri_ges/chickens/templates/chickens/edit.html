@@ -92,6 +92,22 @@
         </a>
 
     </div>
+    <div class="row col-12">
+      <a href="/chickens/{{id}}/breeding" class="col-md-3 col-sm-6 col-12">
+        <!-- .info-box-->
+        <div class="info-box">
+          <span class="info-box-icon bg-warning"><i class="far fa-copy"></i></span>
+
+          <div class="info-box-content">
+            <span class="info-box-text font-weight-bold">Breeding</span>
+            <span class="info-box-number" id="statics_breeding">-</span>
+          </div>
+          <!-- /.info-box-content -->
+        </div>
+        <!-- /.info-box -->
+      </a>
+    </div>
+
     <form class="col-md-12" action="" method="POST">
       <div class="card card-primary">
         <div class="card-header">
@@ -181,4 +197,5 @@
 <script src="{% static 'js/fcr_egg.js' %}"></script>
 <script src="{% static 'js/chicken_history.js' %}"></script>
 <script src="{% static 'js/chicken_stats.js' %}"></script>
+<script src="{% static 'js/chicken_partner.js' %}"></script>
 {% endblock %}

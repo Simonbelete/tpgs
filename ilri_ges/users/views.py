@@ -165,7 +165,6 @@ class UsersEditView(PermissionRequiredMixin, View):
                 return redirect('404')
             if form.is_valid():
                 form.save()
-                messages.success(request, 'Successfully Updated !')
                 return redirect('users')
             else:
                 messages.error(request, "Error, please check your data")

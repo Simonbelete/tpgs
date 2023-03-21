@@ -1,0 +1,27 @@
+{% extends "form_template.html" %} 
+{% load static %} 
+{% load widget_tweaks %}
+
+{% block page_title %}Chicken Eggs{% endblock %}
+{% block data_title %}Chicken Eggs{% endblock %}
+{% block data_description %}{% endblock %}
+{% block data_menu %}Chicken{% endblock %}
+
+{% block contents %}
+<div class="container-fluid">
+    <table id="chicken_partner" data-id="{{ id }}" class="table table-bordered table-striped">
+        <thead>
+            <tr>
+              <th>ID</th>
+              <th>Sire</th>
+              <th>Dam</th>
+              <th>Date</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+    </table>
+</div>
+{% endblock %}
+{% block javascript %}
+<script src="{% static 'js/chicken_partner.js' %}"></script>
+{% endblock %}

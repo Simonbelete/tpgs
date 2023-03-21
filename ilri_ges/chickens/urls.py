@@ -9,6 +9,8 @@ urlpatterns = [
     path('<int:id>/feeds', views.ChickenFeed.as_view(), name="chickens_feeds"),
     path('<int:id>/weights', views.ChickenWeights.as_view(),
          name="chickens_weights"),
+    path('<int:id>/breeding', views.ChickenPartners.as_view(),
+         name="chickens_breeding"),
     path('<int:id>/state', views.ChickenStateView.as_view(),
          name="chickens_state_edit"),
     path('create', views.ChickenCreateView.as_view(), name="chickens_create"),
