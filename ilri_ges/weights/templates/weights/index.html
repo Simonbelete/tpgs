@@ -1,87 +1,39 @@
-{% extends "sidebar.html" %} 
-{% load static %} 
+{% extends "list_template.html" %}
+{% load static %}
 
-{% block stylesheet %} 
-{% include 'components/list_styles.html' %} 
-{% endblock %} 
+{% block page_title %}Weight Records{% endblock %}
+{% block data_title %}Weight Records{% endblock %}
+{% block data_description %}List of Weight Records{% endblock %}
+{% block data_menu %}Weight Records{% endblock %}
+{% block data_url %}{% url 'weights_create' %}{% endblock %}
+{% block data_btn %}Create Weight Records{% endblock %}
 
-{% block title %} Weight Record - ILRI genetics Evaluation {% endblock %} 
+{% block table %}
+<table id="weights_data_table_list" class="table table-bordered table-striped">
+	<thead>
+		<tr>
+			<th>ID</th>
+			<th>Week</th>
+            <th>Weight</th>
+            <th>chicken</th>
+			<th>Created At</th>
+			<th></th>
+		</tr>
+	</thead>
+	<tbody></tbody>
+	<tfoot>
+		<tr>
+			<th>ID</th>
+			<th>Week</th>
+            <th>Weight</th>
+            <th>chicken</th>
+			<th>Created At</th>
+			<th></th>
+		</tr>
+	</tfoot>
+</table>
+{% endblock %}
 
-{% block body %}
-
-<!-- Content Header (Page header) -->
-<section class="content-header">
-  <div class="container-fluid">
-    <div class="row mb-2">
-      <div class="col-sm-6">
-        <h1>Chicken Weight</h1>
-      </div>
-      <div class="col-sm-6">
-        <ol class="breadcrumb float-sm-right">
-          <li class="breadcrumb-item"><a href="/">Home</a></li>
-          <li class="breadcrumb-item active">Chicken Weight</li>
-        </ol>
-      </div>
-    </div>
-  </div>
-  <!-- /.container-fluid -->
-
-  <!-- Main content -->
-  <section class="content">
-    <div class="container-fluid">
-      <div class="row">
-        <div class="col-12">
-          <div class="card">
-            <div class="card-header row">
-              <h3 class="card-title col-10">List</h3>
-              <div class="col-2">
-                <a
-                  href="{% url 'weights_create' %}"
-                  role="button"
-                  type="button"
-                  class="btn btn-primary float-right"
-                  ><i class="fas fa-plus"></i> Create weight Record</a
-                >
-              </div>
-            </div>
-            <!-- /.card-header -->
-            <div class="card-body">
-              <table
-                id="weights_data_table_list"
-                class="table table-bordered table-striped"
-              >
-                <thead>
-                  <tr>
-                    <th>ID</th>
-                    <th>Week</th>
-                    <th>Weight</th>
-                    <th>chicken</th>
-                    <th>Created At</th>
-                    <th></th>
-                  </tr>
-                </thead>
-                <tbody></tbody>
-                <tfoot>
-                  <tr>
-                    <th>ID</th>
-                    <th>Week</th>
-                    <th>Weight</th>
-                    <th>chicken</th>
-                    <th>Created At</th>
-                    <th></th>
-                  </tr>
-                </tfoot>
-              </table>
-            </div>
-            <!-- /.card-body -->
-          </div>
-          <!-- /.card -->
-        </div>
-      </div>
-    </div>
-  </section>
-</section>
-
-{% endblock %} {% block javascript %}
+{% block javascript %}
 <script src="{% static 'js/weights_list.js' %}"></script>
 {% endblock %}

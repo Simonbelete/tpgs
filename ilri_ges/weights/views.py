@@ -43,6 +43,16 @@ class WeightsCreateView(LoginRequiredMixin, View):
     def post(self, request):
         form = WeightForm(request.POST)
         if form.is_valid():
+            record_weight = Weight.objects.filter(
+                chicken=form.cleaned_data['chicken'], week=form.cleaned_data['week'])
+            if record_weight.exists():
+                previous_weight_links = ""
+                for e in record_weight.iterator():
+                    previous_weight_links += "<br><a href='/weights/%s'> Tag: %s Week %s Click to View</a>" % (
+                        e.id, e.chicken.tag, e.week)
+                messages.error(
+                    request, 'Error record for the given week %s already exists' % form.cleaned_data['week'] + previous_weight_links)
+        else:
             form = form.save(commit=False)
             form.created_by = request.user
             form.save()
@@ -51,7 +61,7 @@ class WeightsCreateView(LoginRequiredMixin, View):
             else:
                 messages.error(
                     request, 'Error occurred while creating, please check your data')
-        return render(request, 'eggs/create.html', {'form': form})
+        return render(request, 'weights/create.html', {'form': form})
 
 
 class WeightsEditView(LoginRequiredMixin, View):
