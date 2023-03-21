@@ -147,9 +147,12 @@ class UsersEditView(PermissionRequiredMixin, View):
             return redirect('404')
         try:
             data = User.objects.get(pk=id)
+            if (data.is_superuser == True):
+                return redirect('404')
             form = UserForm(instance=data)
             return render(request, 'users/edit.html', {'form': form, "id": id, "data": data, "password_change": PasswordChangeForm})
         except Exception as ex:
+            print(ex)
             return redirect('500')
 
     def post(self, request, id=0):
@@ -158,6 +161,8 @@ class UsersEditView(PermissionRequiredMixin, View):
         try:
             data = User.objects.get(pk=id)
             form = UserForm(request.POST, instance=data)
+            if (data.is_superuser == True):
+                return redirect('404')
             if form.is_valid():
                 form.save()
                 messages.success(request, 'Successfully Updated !')

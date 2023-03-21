@@ -3,7 +3,7 @@ from rest_framework.response import Response
 from django.contrib.auth.models import Group
 from django_filters import rest_framework as filters
 from django.db.models import Count, Sum
-from django.db.models import F
+from django.db.models import F, Q
 
 from users.models import User
 from users.api.serializers import UserSerializer_GET_V1, GroupSerializer_GET_V1
@@ -26,7 +26,8 @@ class UserViewSet(ModelFilterViewSet):
     ordering_fields = '__all__'
 
     def filters(self):
-        queryset = self.filter_queryset(self.get_queryset())
+        queryset = self.filter_queryset(
+            self.get_queryset())
         return {
             'farms': queryset.values('farms__name', 'farms__id').annotate(
                 count=Count("pk", distinct=True), label=F('farms__name'), value=F('farms__id')),
@@ -35,6 +36,18 @@ class UserViewSet(ModelFilterViewSet):
             'is_active': queryset.values('is_active').annotate(
                 count=Count("pk", distinct=True), label=F('is_active'), value=F('is_active')),
         }
+
+    def list(self, request, *args, **kwargs):
+        queryset = self.filter_queryset(
+            self.get_queryset().filter(is_superuser=False))
+
+        page = self.paginate_queryset(queryset)
+        if page is not None:
+            serializer = self.get_serializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
+
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data)
 
 
 class GroupViewSet(viewsets.ModelViewSet):
