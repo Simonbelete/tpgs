@@ -1,21 +1,5 @@
 requirejs(
-  [
-    "jquery",
-    "datatables.net",
-    "moment",
-    "daterangepicker",
-    "datatables.net-bs4",
-    "datatables.net-responsive",
-    "datatablesResponsiveBs4",
-    "datatables.net-buttons",
-    "datatablesButtonsBs4",
-    "jszip",
-    "pdfmake",
-    "pdfmake_fonts",
-    "datatables_buttons_html5",
-    "datatables_buttons_print",
-    "datatables_buttons_colVis",
-  ],
+  ["jquery", "datatables", "moment", "daterangepicker"],
   function ($, DataTable, moment, daterangepicker) {
     $("#hatch_date").daterangepicker(
       {
@@ -58,5 +42,18 @@ requirejs(
     });
 
     $("#dead_date").removeAttr("required");
+
+    $("#delete_button").click(function () {
+      if (confirm("Are you sure you want to delete?")) {
+        $.ajax({
+          url: "/chickens/" + $("#chicken_id").data("id"),
+          type: "DELETE",
+          success: function (result) {
+            console.log(result);
+          },
+        });
+        // window.location = "/chickens/" + $("#chicken_id").data("id");
+      }
+    });
   }
 );

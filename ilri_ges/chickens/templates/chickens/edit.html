@@ -198,8 +198,9 @@
           <!-- /.card-body -->
 
           <div class="card-footer">
-            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#dead_modal">Remove</button>
             <button type="submit" class="btn btn-primary">Submit</button>
+            <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#dead_modal">Remove</button>
+            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete_modal">Delete</button>
           </div>
         </div>
     </form>
@@ -208,6 +209,7 @@
     {% include 'components/fcr_growth.html' %}
     {% include 'components/fcr_egg.html' %}
     {% include "components/dead_modal.html" %}
+    {% include "components/delete_modal.html" %}
 </section>
 
 {% endblock %}

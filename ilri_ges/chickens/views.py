@@ -6,7 +6,7 @@ from django.shortcuts import render, redirect
 from django.views import View
 from django.http import HttpResponse, JsonResponse
 from django.contrib import messages
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 
 from chickens.models import Chicken
 from weights.models import Weight
@@ -81,6 +81,22 @@ class ChickenEditView(LoginRequiredMixin, View):
             return render(request, 'chickens/edit.html', {'form': form, "id": id})
         except Exception as ex:
             return redirect('500')
+
+
+class ChickenDeleteView(PermissionRequiredMixin, View):
+    login_url = '/users/login'
+    redirect_field_name = 'redirect_to'
+    permission_required = ('chickens.delete_chicken')
+
+    def post(self, request, id=0):
+        if id == 0:
+            return HttpResponse(500)
+        try:
+            chicken = Chicken.objects.get(id=id)
+            chicken.delete()
+            return redirect('chickens')
+        except:
+            return redirect(500)
 
 
 class ChickenEgg(LoginRequiredMixin, View):
