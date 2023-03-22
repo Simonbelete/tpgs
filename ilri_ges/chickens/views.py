@@ -2,6 +2,7 @@ import os
 import pandas as pd
 import numpy as np
 from decimal import Decimal
+from datetime import datetime
 from django.shortcuts import render, redirect
 from django.views import View
 from django.http import HttpResponse, JsonResponse
@@ -17,6 +18,8 @@ from .forms import ChickenForm, ChickenStateForm, ChickenImportForm
 from core.views import ModelFilterViewSet
 from farms.models import Farm
 from breeds.models import BreedType
+from locations.models import House
+from flocks.models import Flock
 
 
 class ChickenView(LoginRequiredMixin, View):
@@ -188,7 +191,7 @@ class ChickenImportView(View):
         # file_upload = full_path
         df = pd.read_excel(file_upload, header=0)
 
-        df = df.head()
+        df = df.replace(np.nan, None)  # nan to None
 
         df.columns = df.columns.str.lower()
         df.iloc[0] = df.iloc[0].apply(str.lower)
@@ -222,13 +225,33 @@ class ChickenImportView(View):
             house_name = row['chicken', "house"].values[0]
             pen_name = row['chicken', "pen"].values[0]
             flock_name = row['chicken', "batch"].values[0]
-            days_alive = row['chicken', "mortality"].values[0]
+            mortality = row['chicken', "mortality"].values[0]
             hatch_date = row['chicken', "hatch date"].values[0]
             sire_id = row['chicken', "sire id"].values[0]
             dam_id = row['chicken', "dam id"].values[0]
             if (tag == None):
                 continue
+            # Create
+
             try:
+                if house_name != None:
+                    house, house_created = House.objects.get_or_create(name=house_name, defaults={
+                        'created_by': self.request.user
+                    })
+                else:
+                    house = None
+                if flock_name != None:
+                    flock, flock_created = Flock.objects.get_or_create(name=flock_name, defaults={
+                        'created_by': self.request.user
+                    })
+                else:
+                    flock = None
+                if mortality != None:
+                    mortality = datetime.strptime(
+                        mortality, '%d/%m/%Y')
+                if hatch_date != None:
+                    hatch_date = datetime.strptime(hatch_date, '%d/%m/%Y')
+
                 sire = Chicken.objects.all().filter(tag=sire_id)
                 dam = Chicken.objects.all().filter(tag=dam_id)
                 sire = sire[0] if sire else None
@@ -239,7 +262,15 @@ class ChickenImportView(View):
                 else:
                     breed_pair = None
                 chicken, chicken_created = Chicken.objects.update_or_create(
-                    tag=tag, defaults={'sex': sex, 'breed_pair': breed_pair, 'farm': farm_id, 'breed_type': breed_type_id, 'created_by': self.request.user})
+                    tag=tag, defaults={
+                        'sex': sex, 'breed_pair':
+                        breed_pair, 'farm': farm_id,
+                        'breed_type': breed_type_id,
+                        'house': house,
+                        'flock': flock,
+                        'dead_date': mortality,
+                        'hatch_date': hatch_date,
+                        'created_by': self.request.user})
                 for week in weeks:
                     week_no = week.split(" ")[-1]
                     weight = row[week, "weight"].values[0]
