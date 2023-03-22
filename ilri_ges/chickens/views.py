@@ -247,6 +247,9 @@ class ChickenImportView(View):
                 if mortality != None:
                     mortality = mortality.strftime("%d/%m/%Y")
                     mortality = datetime.strptime(mortality, '%m/%d/%Y')
+                    is_dead = True
+                else:
+                    is_dead = False
                 if hatch_date != None:
                     hatch_date = hatch_date.strftime("%d/%m/%Y")
                     hatch_date = datetime.strptime(hatch_date, '%m/%d/%Y')
@@ -267,6 +270,8 @@ class ChickenImportView(View):
                         'breed_type': breed_type_id,
                         'house': house,
                         'flock': flock,
+                        'pen': pen_name,
+                        'is_dead': is_dead,
                         'dead_date': mortality,
                         'hatch_date': hatch_date,
                         'created_by': self.request.user})

@@ -38,6 +38,7 @@ class Chicken(CoreModel):
         Farm, on_delete=models.SET_NULL, null=True, blank=True, related_name='chickens')
     house = models.ForeignKey(
         House, on_delete=models.SET_NULL, null=True, blank=True, related_name='chickens')
+    pen = models.CharField(max_length=250, null=True, blank=True)
     breed_type = models.ForeignKey(
         BreedType, on_delete=models.SET_NULL, null=True, blank=True, related_name='chickens')
     layed_place = models.ForeignKey(
