@@ -6800,3 +6800,5 @@ Traceback (most recent call last):
   File "/usr/lib/python3.8/_strptime.py", line 349, in _strptime
     raise ValueError("time data %r does not match format %r" %
 ValueError: time data '' does not match format '%d/%m/%Y'
+Not Found: /api/chickens/1/
+Not Found: /api/chickens/2/

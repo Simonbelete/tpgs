@@ -231,8 +231,6 @@ class ChickenImportView(View):
             dam_id = row['chicken', "dam id"].values[0]
             if (tag == None):
                 continue
-            # Create
-
             try:
                 if house_name != None:
                     house, house_created = House.objects.get_or_create(name=house_name, defaults={
@@ -247,10 +245,11 @@ class ChickenImportView(View):
                 else:
                     flock = None
                 if mortality != None:
-                    mortality = datetime.strptime(
-                        mortality, '%d/%m/%Y')
+                    mortality = mortality.strftime("%d/%m/%Y")
+                    mortality = datetime.strptime(mortality, '%m/%d/%Y')
                 if hatch_date != None:
-                    hatch_date = datetime.strptime(hatch_date, '%d/%m/%Y')
+                    hatch_date = hatch_date.strftime("%d/%m/%Y")
+                    hatch_date = datetime.strptime(hatch_date, '%m/%d/%Y')
 
                 sire = Chicken.objects.all().filter(tag=sire_id)
                 dam = Chicken.objects.all().filter(tag=dam_id)
