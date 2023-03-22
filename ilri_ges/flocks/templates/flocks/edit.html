@@ -56,11 +56,14 @@
 
           <div class="card-footer">
             <button type="submit" class="btn btn-primary">Submit</button>
+            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete_modal">Delete</button>
           </div>
         </form>
       </div>
     </div>
   </section>
+
+    {% include 'components/flocks_delete_modal.html' %}
 
   <!-- /.content -->
 </section>
@@ -68,5 +71,5 @@
 
 {% block javascript %}
 <script src="{% static 'js/farm_select.js' %}"></script>
-<script src="{% static 'js/breed_select.js' %}"></script>
+<script src="{% static 'js/breed_type_select.js' %}"></script>
 {% endblock %}

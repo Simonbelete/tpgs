@@ -6,7 +6,7 @@ from django.shortcuts import render, redirect
 from django.views import View
 from django.http import HttpResponse, JsonResponse
 from django.contrib import messages
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 
 from .models import Flock
 from .forms import FlockForm
@@ -74,3 +74,19 @@ class FlocksEditView(LoginRequiredMixin, View):
                 return render(request, 'flocks/edit.html', {'form': form, "id": id})
         except Exception as ex:
             return redirect('500')
+
+
+class FlockDeleteView(PermissionRequiredMixin, View):
+    login_url = '/users/login'
+    redirect_field_name = 'redirect_to'
+    permission_required = ('flocks.delete_flock')
+
+    def post(self, request, id=0):
+        if id == 0:
+            return redirect(400)
+        try:
+            breed_pair = Flock.objects.get(id=id)
+            breed_pair.delete()
+            return redirect('flocks')
+        except:
+            return redirect(500)
