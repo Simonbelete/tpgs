@@ -5,13 +5,11 @@ requirejs(["jquery", "datatables", "lodash"], function ($, DataTable, _) {
 
   var columns = [
     { data: "id", visible: false },
-    { data: "name" },
+    { data: "name", defaultContent: "" },
     {
       data: "farm",
-      render: {
-        _: "name",
-        sp: "name",
-      },
+      defaultContent: "",
+      render: ".name",
       orderable: false,
     },
     { data: "created_at" },
