@@ -15,6 +15,8 @@ from feeds.models import Feed
 from breeding_pairs.models import BreedPair
 from .forms import ChickenForm, ChickenStateForm, ChickenImportForm
 from core.views import ModelFilterViewSet
+from farms.models import Farm
+from breeds.models import BreedType
 
 
 class ChickenView(LoginRequiredMixin, View):
@@ -161,6 +163,9 @@ class ChickenImportView(View):
     def post(self, request):
         errors = []
         file_upload = request.FILES.get('file_upload')
+        farm_id = request.POST.get('farm', None)
+        breed_type_id = request.POST.get('breed_type', None)
+
         # absolute_path = os.path.dirname(__file__)
         # full_path = os.path.join(
         #     absolute_path, '../../horro_chickens_fake.xlsx')
@@ -216,7 +221,7 @@ class ChickenImportView(View):
                 else:
                     breed_pair = None
                 chicken, chicken_created = Chicken.objects.update_or_create(
-                    tag=tag, defaults={'sex': sex, 'breed_pair': breed_pair, 'created_by': self.request.user})
+                    tag=tag, defaults={'sex': sex, 'breed_pair': breed_pair, 'farm': farm_id, 'breed_type': breed_type_id, 'created_by': self.request.user})
                 for week in weeks:
                     week_no = week.split(" ")[-1]
                     weight = row[week, "weight"].values[0]
