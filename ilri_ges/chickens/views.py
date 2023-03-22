@@ -226,6 +226,8 @@ class ChickenImportView(View):
             hatch_date = row['chicken', "hatch date"].values[0]
             sire_id = row['chicken', "sire id"].values[0]
             dam_id = row['chicken', "dam id"].values[0]
+            if (tag == None):
+                continue
             try:
                 sire = Chicken.objects.all().filter(tag=sire_id)
                 dam = Chicken.objects.all().filter(tag=dam_id)

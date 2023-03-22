@@ -32,7 +32,7 @@ class Chicken(CoreModel):
     flock = models.ForeignKey(
         Flock, on_delete=models.SET_NULL, null=True, blank=True, related_name='chickens')
     tag = models.CharField(max_length=250, unique=True)
-    sex = models.CharField(max_length=1, choices=SEX_CHOICES, default='')
+    sex = models.CharField(max_length=1, choices=SEX_CHOICES, null=True, blank=True default=None)
     farm = models.ForeignKey(
         Farm, on_delete=models.SET_NULL, null=True, blank=True, related_name='chickens')
     house = models.ForeignKey(
