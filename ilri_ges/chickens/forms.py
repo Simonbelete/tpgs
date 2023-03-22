@@ -13,6 +13,16 @@ class ChickenForm(forms.ModelForm):
                   'house', 'breed_type', 'is_active', 'flock', 'breed_pair', 'pen']
 
 
+class ChickenCreateForm(forms.ModelForm):
+    # hatch_date = forms.DateField(
+    #     widget=forms.widgets.DateInput(format="%d-%m-%Y"))
+
+    class Meta:
+        model = Chicken
+        fields = ['tag', 'sex', 'farm', 'hatch_date', 'egg_weight',
+                  'house', 'breed_type', 'is_active', 'flock', 'breed_pair', 'pen', 'is_dead', 'dead_date']
+
+
 class ChickenStateForm(forms.ModelForm):
     class Meta:
         model = Chicken

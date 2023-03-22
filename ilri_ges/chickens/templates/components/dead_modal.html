@@ -19,11 +19,11 @@
                   <span id="{{ state_form.is_dead.id_for_label }}-error" class="error invalid-feedback">{{ state_form.is_dead.errors }}</span>
                 </div>
 
-                <div class="form-group col-md-6">
+                {% comment %} <div class="form-group col-md-6">
                   <label for="{{ state_form.days_alive.id_for_label }}">Days Alive</label>
                   {{ state_form.days_alive|add_class:"form-control"|add_error_class:"is-invalid"|attr:"placeholder: Enter days alive" }}
                   <span id="{{ state_form.days_alive.id_for_label }}-error" class="error invalid-feedback">{{ state_form.days_alive.errors }}</span>
-                </div>
+                </div> {% endcomment %}
 
                 <div class="form-group col-md-6">
                   <label for="{{ state_form.dead_date.id_for_label }}">Date</label>

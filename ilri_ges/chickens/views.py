@@ -14,7 +14,7 @@ from weights.models import Weight
 from eggs.models import Egg
 from feeds.models import Feed
 from breeding_pairs.models import BreedPair
-from .forms import ChickenForm, ChickenStateForm, ChickenImportForm
+from .forms import ChickenForm, ChickenStateForm, ChickenImportForm, ChickenCreateForm
 from core.views import ModelFilterViewSet
 from farms.models import Farm
 from breeds.models import BreedType
@@ -35,11 +35,11 @@ class ChickenCreateView(LoginRequiredMixin, View):
     redirect_field_name = 'redirect_to'
 
     def get(self, request):
-        form = ChickenForm
+        form = ChickenCreateForm
         return render(request, 'chickens/create.html', {'form': form})
 
     def post(self, request):
-        form = ChickenForm(request.POST)
+        form = ChickenCreateForm(request.POST)
         if form.is_valid():
             form = form.save(commit=False)
             form.created_by = request.user
@@ -66,7 +66,8 @@ class ChickenEditView(LoginRequiredMixin, View):
         try:
             data = Chicken.objects.get(pk=id)
             form = ChickenForm(instance=data)
-            return render(request, 'chickens/edit.html', {'form': form, "data": data, "id": id, 'state_form': ChickenStateForm})
+            form2 = ChickenStateForm(instance=data)
+            return render(request, 'chickens/edit.html', {'form': form, "data": data, "id": id, 'state_form': form2})
         except Exception as ex:
             return redirect('500')
 
@@ -169,7 +170,8 @@ class ChickenStateView(LoginRequiredMixin, View):
                 # chicken.days_alive = form.cleaned_data['days_alive']
                 chicken.save()
                 messages.success(request, 'Updated Successfully')
-            return render(request, 'chickens/edit.html', {'form': form, "id": id})
+            return redirect('chickens')
+            # return render(request, 'chickens/edit.html', {'form': form, "id": id})
         except Exception as ex:
             return redirect('500')
 

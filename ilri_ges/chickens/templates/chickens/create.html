@@ -103,13 +103,28 @@
                         <span id="{{ form.egg_weight.id_for_label }}-error" class="error invalid-feedback">{{ forms.egg_weight.errors }}</span>
                     </div>
                 </div>
+
+                <h5>Mortality</h5>
+
+                <div class="row">
+                  <div class="form-group col-md-6">
+                    <label for="{{ form.is_dead.id_for_label }}">Dead</label>
+                    {{ form.is_dead|add_class:"form-control"|add_error_class:"is-invalid"|attr:"placeholder: Enter days alive" }}
+                    <span id="{{ form.is_dead.id_for_label }}-error" class="error invalid-feedback">{{ form.is_dead.errors }}</span>
+                  </div>
+                  
+                  <div class="form-group col-md-6">
+                    <label for="{{ form.dead_date.id_for_label }}">Date</label>
+                    {{ form.dead_date|add_class:"form-control"|add_error_class:"is-invalid"|attr:"id:dead_date"|attr:"placeholder: Enter Date" }}
+                    <span id="{{ form.dead_date.id_for_label }}-error" class="error invalid-feedback">{{ form.dead_date.errors }}</span>
+                </div>
+                </div>
         
             </form>
           </div>
           <!-- /.card-body -->
 
           <div class="card-footer">
-            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#dead_modal">Remove</button>
             <button type="submit" class="btn btn-primary">Submit</button>
           </div>
         </div>
