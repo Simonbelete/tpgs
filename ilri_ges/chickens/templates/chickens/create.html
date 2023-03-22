@@ -76,6 +76,10 @@
                         {% include 'components/breed_pair_select.html' %}
                     </div>
 
+                    <div class="col-md-6">
+                      {% include 'components/flock_select.html' %}
+                    </div>
+
                 </div>
 
                 <h5>Egg Details</h5>
@@ -91,6 +95,14 @@
                         <label for="{{ form.egg_weight.id_for_label }}">Egg Weight</label>
                         {{ form.egg_weight|add_class:"form-control"|add_error_class:"is-invalid"|attr:"id:egg_weight"|attr:"placeholder: Enter Tag" }}
                         <span id="{{ form.egg_weight.id_for_label }}-error" class="error invalid-feedback">{{ forms.egg_weight.errors }}</span>
+                    </div>
+
+                    <div class="col-md-12">
+                      <div class="form-group col-1">
+                        <label for="{{ form.is_active.id_for_label }}">Active</label>
+                        {{ form.is_active|add_class:"form-control"|add_error_class:"is-invalid"|attr:"placeholder: Active" }}
+                        <span id="{{ form.is_active.id_for_label }}-error" class="error invalid-feedback">{{ form.is_active.errors }}</span>
+                      </div>
                     </div>
                 </div>
         
@@ -114,4 +126,5 @@
 <script src="{% static 'js/house_select.js' %}"></script>
 <script src="{% static 'js/breed_type_select.js' %}"></script>
 <script src="{% static 'js/breed_pair_select.js' %}"></script>
+<script src="{% static 'js/flock_select.js' %}"></script>
 {% endblock %}

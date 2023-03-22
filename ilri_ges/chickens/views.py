@@ -147,7 +147,7 @@ class ChickenStateView(LoginRequiredMixin, View):
                 chicken = Chicken.objects.get(pk=id)
                 chicken.is_dead = form.cleaned_data['is_dead']
                 chicken.dead_date = form.cleaned_data['dead_date']
-                chicken.days_alive = form.cleaned_data['days_alive']
+                # chicken.days_alive = form.cleaned_data['days_alive']
                 chicken.save()
                 messages.success(request, 'Updated Successfully')
             return render(request, 'chickens/edit.html', {'form': form, "id": id})
@@ -206,7 +206,7 @@ class ChickenImportView(View):
             house_name = row['chicken', "house"].values[0]
             pen_name = row['chicken', "pen"].values[0]
             flock_name = row['chicken', "batch"].values[0]
-            days_alive = row['chicken', "days alive"].values[0]
+            days_alive = row['chicken', "mortality"].values[0]
             hatch_date = row['chicken', "hatch date"].values[0]
             sire_id = row['chicken', "sire id"].values[0]
             dam_id = row['chicken', "dam id"].values[0]
