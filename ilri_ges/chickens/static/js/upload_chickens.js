@@ -25,12 +25,9 @@ requirejs(
 
     myDropzone.on("error", function (file, response) {
       // $(file.previewElement).find('.dz-error-message').text(response);
-      console.log("error");
     });
 
     myDropzone.on("success", function (file, res) {
-      console.log(res);
-      console.log(res.errors);
       var tbl = createTable(res.errors);
       $("#chicken_import_error").empty();
       $("#chicken_import_error").append(tbl);
@@ -44,8 +41,10 @@ requirejs(
                 </tr>`;
       var tr = "";
       for (let i = 0; i < data.length; i++) {
+        console.log(data[i]);
+        var da = JSON.stringify(data[i].data, null, 4);
         tr += "<tr>";
-        tr += `<td>${data[i].row}</td>`;
+        tr += `<td>${da}</td>`;
         tr += `<td>${data[i].exception}</td>`;
         tr += "</tr>";
       }
