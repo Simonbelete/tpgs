@@ -90,7 +90,7 @@ class ChickenDeleteView(PermissionRequiredMixin, View):
 
     def post(self, request, id=0):
         if id == 0:
-            return HttpResponse(500)
+            return redirect(400)
         try:
             chicken = Chicken.objects.get(id=id)
             chicken.delete()

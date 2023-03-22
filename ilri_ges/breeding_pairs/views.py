@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.views import View
 from django.contrib import messages
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 
 from breeding_pairs.forms import BreedPairForm
 from chickens.models import Chicken
@@ -73,3 +73,19 @@ class BreedPairEditView(LoginRequiredMixin, View):
                 return render(request, 'breeding_pairs/edit.html', {'form': form, "id": id})
         except Exception as ex:
             return redirect('500')
+
+
+class BreedPairDeleteView(PermissionRequiredMixin, View):
+    login_url = '/users/login'
+    redirect_field_name = 'redirect_to'
+    permission_required = ('breeding_pairs.delete_breedpair')
+
+    def post(self, request, id=0):
+        if id == 0:
+            return redirect(400)
+        try:
+            breed_pair = BreedPair.objects.get(id=id)
+            breed_pair.delete()
+            return redirect('breeding_pairs')
+        except:
+            return redirect(500)
