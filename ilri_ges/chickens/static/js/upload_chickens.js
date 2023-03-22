@@ -1,7 +1,7 @@
 "use strict";
 
 requirejs(
-  ["jquery", "dropzone", "get_cookie", "breed_type_select"],
+  ["jquery", "dropzone", "get_cookie"],
   function ($, dropzone, get_cookie) {
     var myDropzone = new dropzone.Dropzone("#chickens_import", {
       headers: {
