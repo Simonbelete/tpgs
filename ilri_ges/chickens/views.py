@@ -48,7 +48,7 @@ class ChickenCreateView(LoginRequiredMixin, View):
                     request, 'Error occurred while creating, please check your data')
         else:
             messages.error(request,
-                           'A: Error occurred while creating, please check your data')
+                           'Error occurred while creating, please check your data')
             return render(request, 'chickens/create.html', {'form': form})
         return render(request, 'chickens/index.html', {'form': form})
 
@@ -75,10 +75,10 @@ class ChickenEditView(LoginRequiredMixin, View):
             form = ChickenForm(request.POST, instance=data)
             if form.is_valid():
                 form.save()
-                messages.success(request, 'Successfully Updated !')
                 return redirect('chickens')
             else:
-                return render(request, 'chickens/edit.html', {'form': form, "id": id})
+                messages.error('Error, please check your data')
+            return render(request, 'chickens/edit.html', {'form': form, "id": id})
         except Exception as ex:
             return redirect('500')
 
