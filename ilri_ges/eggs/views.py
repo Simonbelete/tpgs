@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.views import View
 from django.contrib import messages
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.db.models import Q
 
 from .models import Egg
@@ -96,3 +96,19 @@ class EggsEditView(LoginRequiredMixin, View):
             return render(request, 'eggs/edit.html', {'form': form, "id": id})
         except Exception as ex:
             return redirect('500')
+
+
+class EggsDeleteView(PermissionRequiredMixin, View):
+    login_url = '/users/login'
+    redirect_field_name = 'redirect_to'
+    permission_required = ('eggs.delete_egg')
+
+    def post(self, request, id=0):
+        if id == 0:
+            return redirect(400)
+        try:
+            breed_pair = Egg.objects.get(id=id)
+            breed_pair.delete()
+            return redirect('eggs')
+        except:
+            return redirect(500)

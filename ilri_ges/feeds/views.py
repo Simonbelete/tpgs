@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.views import View
 from django.contrib import messages
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 
 from .forms import FeedForm, FeedTypeForm
 from .models import FeedType, Feed
@@ -145,3 +145,19 @@ class FeedTypesEditView(LoginRequiredMixin, View):
             return render(request, 'feed_types/edit.html', {'form': form})
         except Exception as ex:
             return redirect('500')
+
+
+class FeedsDeleteView(PermissionRequiredMixin, View):
+    login_url = '/users/login'
+    redirect_field_name = 'redirect_to'
+    permission_required = ('feeds.delete_feed')
+
+    def post(self, request, id=0):
+        if id == 0:
+            return redirect(400)
+        try:
+            breed_pair = Feed.objects.get(id=id)
+            breed_pair.delete()
+            return redirect('feeds')
+        except:
+            return redirect(500)

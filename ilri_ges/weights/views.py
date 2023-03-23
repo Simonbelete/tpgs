@@ -6,7 +6,7 @@ from django.shortcuts import render, redirect
 from django.views import View
 from django.contrib import messages
 from datetime import date, timedelta, datetime
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.http import HttpResponse
 from django.db.models import Q
 
@@ -141,3 +141,19 @@ class WeightsImportView(View):
         return HttpResponse({
             'errors': errors,
         })
+
+
+class WeightDeleteView(PermissionRequiredMixin, View):
+    login_url = '/users/login'
+    redirect_field_name = 'redirect_to'
+    permission_required = ('weights.delete_weight')
+
+    def post(self, request, id=0):
+        if id == 0:
+            return redirect(400)
+        try:
+            breed_pair = Weight.objects.get(id=id)
+            breed_pair.delete()
+            return redirect('weights')
+        except:
+            return redirect(500)
