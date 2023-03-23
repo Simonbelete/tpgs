@@ -3,15 +3,15 @@
 {% load widget_tweaks %}
 
 {% block page_title %}{{ form.name.value }}{% endblock %}
-{% block data_title %}Pen{% endblock %}
-{% block data_description %}Edit Pen{% endblock %}
-{% block data_menu %}Pen{% endblock %}
+{% block data_title %}House{% endblock %}
+{% block data_description %}Edit House{% endblock %}
+{% block data_menu %}House{% endblock %}
 
 {% block contents %}
 <div class="container">
 	<form method="POST" class="card card-primary">
         <div class="card-header">
-            <h3 class="card-title">Edit Pen</h3>
+            <h3 class="card-title">Edit House/Pen</h3>
         </div>
         <div class="card-body">
 			{% include 'components/messages.html' %}
@@ -20,7 +20,7 @@
 			{{ form.non_field_errors }}
 
 			<div class="form-group">
-				<label for="{{ form.name.id_for_label }}">Pen Name</label>
+				<label for="{{ form.name.id_for_label }}">House Name</label>
 				{{ form.name|add_class:"form-control"|add_error_class:"is-invalid"|attr:"placeholder: Enter Name" }}
 				<span id="{{ form.name.id_for_label }}-error" class="error invalid-feedback">{{ form.name.erros }}</span>
 			</div>
@@ -29,10 +29,13 @@
 		</div>
 		<div class="card-footer">
             <button type="submit" class="btn btn-primary">Submit</button>
+            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete_modal">Delete</button>
         </div>
 	</form>
 
 </div>
+{% include 'components/delete_modal.html' with url="/houses/delete" %}
+
 {% endblock %}
 
 {% block javascript %}

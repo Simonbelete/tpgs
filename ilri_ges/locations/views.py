@@ -6,7 +6,7 @@ from django.shortcuts import render, redirect
 from django.views import View
 from django.contrib import messages
 from django.http import HttpResponse
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 
 from .forms import CountryForm, CityForm, HouseForm, LayedPlaceForm
 from .models import Country, City, House, LayedPlace
@@ -243,3 +243,51 @@ class LayedPlacesEditView(LoginRequiredMixin, View):
             return render(request, 'layed_places/edit.html', {'form': form})
         except Exception as ex:
             return redirect('500')
+
+
+class CountriesDeleteView(PermissionRequiredMixin, View):
+    login_url = '/users/login'
+    redirect_field_name = 'redirect_to'
+    permission_required = ('locations.delete_country')
+
+    def post(self, request, id=0):
+        if id == 0:
+            return redirect(400)
+        try:
+            data = Country.objects.get(id=id)
+            data.delete()
+            return redirect('countries')
+        except:
+            return redirect(500)
+
+
+class CitiesDeleteView(PermissionRequiredMixin, View):
+    login_url = '/users/login'
+    redirect_field_name = 'redirect_to'
+    permission_required = ('locations.delete_city')
+
+    def post(self, request, id=0):
+        if id == 0:
+            return redirect(400)
+        try:
+            data = City.objects.get(id=id)
+            data.delete()
+            return redirect('cities')
+        except:
+            return redirect(500)
+
+
+class HouseDeleteView(PermissionRequiredMixin, View):
+    login_url = '/users/login'
+    redirect_field_name = 'redirect_to'
+    permission_required = ('locations.delete_house')
+
+    def post(self, request, id=0):
+        if id == 0:
+            return redirect(400)
+        try:
+            data = House.objects.get(id=id)
+            data.delete()
+            return redirect('houses')
+        except:
+            return redirect(500)
