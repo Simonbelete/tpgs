@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.views import View
 from django.contrib import messages
 from django.contrib.auth.models import Group, Permission
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.contrib.auth import authenticate, logout, login
 
 from .forms import FarmForm
@@ -63,3 +63,19 @@ class FarmsEditView(LoginRequiredMixin, View):
             return render(request, 'farms/edit.html', {'form': form})
         except Exception as ex:
             return redirect('500')
+
+
+class FarmDeleteView(PermissionRequiredMixin, View):
+    login_url = '/users/login'
+    redirect_field_name = 'redirect_to'
+    permission_required = ('farms.delete_farm')
+
+    def post(self, request, id=0):
+        if id == 0:
+            return redirect(400)
+        try:
+            breed_pair = Farm.objects.get(id=id)
+            breed_pair.delete()
+            return redirect('farms')
+        except:
+            return redirect(500)
