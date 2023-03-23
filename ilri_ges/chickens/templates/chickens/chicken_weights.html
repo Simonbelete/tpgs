@@ -2,10 +2,10 @@
 {% load static %} 
 {% load widget_tweaks %}
 
-{% block page_title %}Chicken Eggs{% endblock %}
-{% block data_title %}Chicken Eggs{% endblock %}
+{% block page_title %}Chicken Weekly Weight{% endblock %}
+{% block data_title %}Chicken Weekly Weight{% endblock %}
 {% block data_description %}{% endblock %}
-{% block data_menu %}Chicken{% endblock %}
+{% block data_menu %}Chicken Weekly Weight{% endblock %}
 
 {% block contents %}
 <div class="container-fluid">
@@ -50,6 +50,11 @@
           <div class="card-body">
             <div class="tab-content">
                 <div class="container-fluid tab-pane active" id="tab_e_1">
+                    <button class="btn btn-app" id="download_chart">
+                      <i class="fas fa-download"></i>
+                      Download
+                      <div></div><!-- Donload href container -->
+                    </button>
                     <canvas id="chicken_feeds_chart" style="min-height: 250px; height: 250px; max-height: 600px; max-width: 100%;"></canvas>
                 </div>
                 <!-- /.tab-pane -->
@@ -59,8 +64,7 @@
                       <tr>
                         <th>ID</th>
                         <th>Week</th>
-                        <th>Feed Weight</th>
-                        <th>Feed Type</th>
+                        <th>Body Weight</th>
                         <th></th>
                       </tr>
                     </thead>

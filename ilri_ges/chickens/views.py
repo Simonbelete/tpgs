@@ -1,6 +1,7 @@
 import os
 import pandas as pd
 import numpy as np
+from dateutil.parser import parse
 from decimal import Decimal
 from datetime import datetime
 from django.shortcuts import render, redirect
@@ -247,14 +248,19 @@ class ChickenImportView(View):
                 else:
                     flock = None
                 if mortality != None:
-                    mortality = mortality.strftime("%d/%m/%Y")
-                    mortality = datetime.strptime(mortality, '%m/%d/%Y')
+                    if isinstance(hatch_date, datetime):
+                        mortality = mortality.strftime("%Y-%m-%d")
+                    else:
+                        mortality = datetime.strptime(mortality, '%d/%m/%y')
                     is_dead = True
                 else:
                     is_dead = False
                 if hatch_date != None:
-                    hatch_date = hatch_date.strftime("%d/%m/%Y")
-                    hatch_date = datetime.strptime(hatch_date, '%m/%d/%Y')
+                    # hatch_date = hatch_date.strftime("%d/%m/%Y")
+                    if isinstance(hatch_date, datetime):
+                        hatch_date = hatch_date.strftime("%Y-%m-%d")
+                    else:
+                        hatch_date = datetime.strptime(hatch_date, '%d/%m/%y')
 
                 sire = Chicken.objects.all().filter(tag=sire_id)
                 dam = Chicken.objects.all().filter(tag=dam_id)
@@ -283,12 +289,22 @@ class ChickenImportView(View):
                     feed_weight = row[week, "feed"].values[0]
                     eggs = row[week, "egg"].values[0]
                     eggs_weights = row[week, "egg weight"].values[0]
-                    weight, weight_created = Weight.objects.update_or_create(
-                        week=week_no, chicken=chicken, weight=Decimal(weight), created_by=self.request.user)
-                    egg, egg_created = Egg.objects.update_or_create(
-                        week=week_no, chicken=chicken, eggs=int(eggs), total_weight=Decimal(eggs_weights), created_by=self.request.user)
-                    feed, feed_created = Feed.objects.update_or_create(
-                        week=week_no, chicken=chicken, weight=Decimal(feed_weight), created_by=self.request.user)
+                    print('----------------------')
+                    print(weight)
+                    print(feed_weight)
+                    print(feed_weight != 0 or feed_weight != None)
+                    print(eggs)
+                    print(eggs == None)
+
+                    if weight != None:
+                        weight, weight_created = Weight.objects.update_or_create(
+                            week=week_no, chicken=chicken, weight=Decimal(weight), created_by=self.request.user)
+                    if eggs != None:
+                        egg, egg_created = Egg.objects.update_or_create(
+                            week=week_no, chicken=chicken, eggs=int(eggs), total_weight=Decimal(eggs_weights), created_by=self.request.user)
+                    if feed_weight != None:
+                        feed, feed_created = Feed.objects.update_or_create(
+                            week=week_no, chicken=chicken, weight=Decimal(feed_weight), created_by=self.request.user)
             except Exception as ex:
                 errors.append({'data': {
                     'tag': tag,

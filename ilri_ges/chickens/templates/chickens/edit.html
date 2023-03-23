@@ -99,7 +99,7 @@
           <span class="info-box-icon bg-warning"><i class="far fa-copy"></i></span>
 
           <div class="info-box-content">
-            <span class="info-box-text font-weight-bold">Breeding Partners</span>
+            <span class="info-box-text font-weight-bold">Breeding Pair</span>
             <span class="info-box-number" id="statics_breeding">-</span>
           </div>
           <!-- /.info-box-content -->
@@ -215,7 +215,7 @@
     {% include 'components/fcr_growth.html' %}
     {% include 'components/fcr_egg.html' %}
     {% include "components/dead_modal.html" %}
-    {% include "components/dead_modal.html" with url="/chickens/delete" %}
+    {% include "components/delete_modal.html" with url="/chickens/delete" %}
 </section>
 
 {% endblock %}

@@ -30,6 +30,7 @@ requirejs(
           display: true,
           text: "Weights",
         },
+        backgroundColor: "#F5DEB3",
       },
     });
 
@@ -95,6 +96,15 @@ requirejs(
 
     $("#apply").click(function () {
       table.ajax.reload(null, false);
+    });
+
+    $("#download_chart").click(function () {
+      var a = document.createElement("a");
+      a.href = chart.toBase64Image();
+      a.download = "my_file_name.png";
+      a.click();
+
+      console.log(a);
     });
   }
 );

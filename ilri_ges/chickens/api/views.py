@@ -276,16 +276,16 @@ class ChickenFeedsviewSet(viewsets.ModelViewSet):
 
 
 class ChickenWeightsviewSet(viewsets.ModelViewSet):
-    queryset = Feed.objects.all()
+    queryset = Weight.objects.all()
     serializer_class = ChickenWeightSerializer
 
     def list(self, request, *args, **kwargs):
         id = self.kwargs['id']
         start_week = int(request.GET.get('start_week', 0))
         end_week = int(request.GET.get('end_week', 0))
-
+        weeks = [*range(start_week, end_week + 1)]
         queryset = self.filter_queryset(self.get_queryset().filter(
-            chicken=id, week__in=range(start_week, end_week + 1)))
+            chicken=id, week__in=weeks))
 
         serializer = self.get_serializer(queryset, many=True)
         return Response({'results': serializer.data})

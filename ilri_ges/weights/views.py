@@ -53,15 +53,15 @@ class WeightsCreateView(LoginRequiredMixin, View):
                         e.id, e.chicken.tag, e.week)
                 messages.error(
                     request, 'Error record for the given week %s already exists' % form.cleaned_data['week'] + previous_weight_links)
-        else:
-            form = form.save(commit=False)
-            form.created_by = request.user
-            form.save()
-            if form is not None:
-                return redirect('weights')
             else:
-                messages.error(
-                    request, 'Error occurred while creating, please check your data')
+                form = form.save(commit=False)
+                form.created_by = request.user
+                form.save()
+                if form is not None:
+                    return redirect('weights')
+                else:
+                    messages.error(
+                        request, 'Error occurred while creating, please check your data')
         return render(request, 'weights/create.html', {'form': form})
 
 
@@ -98,7 +98,7 @@ class WeightsEditView(LoginRequiredMixin, View):
                                    previous_weights_links)
                 else:
                     form.save()
-                    return redirect('eggs')
+                    return redirect('weights')
             return render(request, 'weights/edit.html', {'form': form, "id": id})
         except Exception as ex:
             return redirect('500')
