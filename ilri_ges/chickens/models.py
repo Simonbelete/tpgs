@@ -62,7 +62,7 @@ class Chicken(CoreModel):
     def name(self):
         house = self.house.name if self.house != None else ""
         farm = self.farm.name if self.farm != None else ""
-        sex = self.sex
+        sex = self.sex if self.sex else ""
         return "%s %s" % (self.tag, sex)
 
     @property
