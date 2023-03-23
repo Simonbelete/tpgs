@@ -54,6 +54,7 @@
 
           <div class="card-footer">
             <button type="submit" class="btn btn-primary">Submit</button>
+            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete_modal">Delete</button>
           </div>
         </form>
       </div>
@@ -93,6 +94,7 @@
   </section>
 
   </section>
+  {% include 'components/delete_modal.html' with url="/countries/delete" %}
 
   <!-- /.content -->
 </section>
