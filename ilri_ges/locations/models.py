@@ -25,7 +25,8 @@ class City(CoreModel):
         ordering = ["name"]
 
     def __str__(self):
-        return f'{self.country.name} - {self.name}'
+        country = self.country.name if self.country != None else ''
+        return f'{country} - {self.name}'
 
 
 class House(CoreModel):

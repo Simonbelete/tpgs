@@ -43,6 +43,7 @@ class FarmsEditView(LoginRequiredMixin, View):
     def get(self, request, id=0):
         if id == 0:
             return redirect('404')
+
         try:
             data = Farm.objects.get(pk=id)
             form = FarmForm(instance=data)

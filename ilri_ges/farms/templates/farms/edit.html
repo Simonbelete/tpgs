@@ -22,7 +22,7 @@
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
             <li class="breadcrumb-item"><a href="#">Home</a></li>
-            <li class="breadcrumb-item active">Create Farm</li>
+            <li class="breadcrumb-item active">Edit Farm</li>
           </ol>
         </div>
       </div>
@@ -46,7 +46,7 @@
             <div class="form-group">
               <label for="{{ form.name.id_for_label }}">Farm Name</label>
               {{ form.name|add_class:"form-control"|add_error_class:"is-invalid"|attr:"placeholder: Enter name" }}
-              <span id="{{ form.name.id_for_label }}-error" class="error invalid-feedback">Please enter a valid name</span>
+              <span id="{{ form.name.id_for_label }}-error" class="error invalid-feedback">{{ farm.name }}</span>
             </div>
 
             {% include 'components/city_select.html' %}
