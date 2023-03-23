@@ -161,3 +161,19 @@ class FeedsDeleteView(PermissionRequiredMixin, View):
             return redirect('feeds')
         except:
             return redirect(500)
+
+
+class FeedTypesDeleteView(PermissionRequiredMixin, View):
+    login_url = '/users/login'
+    redirect_field_name = 'redirect_to'
+    permission_required = ('feeds.delete_feedtype')
+
+    def post(self, request, id=0):
+        if id == 0:
+            return redirect(400)
+        try:
+            breed_pair = FeedType.objects.get(id=id)
+            breed_pair.delete()
+            return redirect('feeds_types')
+        except:
+            return redirect(500)

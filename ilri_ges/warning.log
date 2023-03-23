@@ -7106,3 +7106,5 @@ Traceback (most recent call last):
 weights.models.Weight.DoesNotExist: Weight matching query does not exist.
 Not Found: /countries/delete/1/
 Not Found: /favicon.ico
+Not Found: /1/
+Not Found: /feeds/types/delete/1/

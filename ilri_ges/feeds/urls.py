@@ -10,6 +10,8 @@ urlpatterns = [
     path('types', views.FeedTypesView.as_view(), name='feeds_types'),
     path('types/<int:id>/', views.FeedTypesEditView.as_view(),
          name='feeds_types_edit'),
+    path('types/delete/<int:id>/', views.FeedTypesDeleteView.as_view(),
+         name='feeds_types_delete'),
     path('types/create', views.FeedTypesCreateView.as_view(),
          name='feeds_types_create'),
 ]

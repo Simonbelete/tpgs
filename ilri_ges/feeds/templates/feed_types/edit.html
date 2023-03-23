@@ -54,13 +54,14 @@
 
           <div class="card-footer">
             <button type="submit" class="btn btn-primary">Submit</button>
+            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete_modal">Delete</button>
           </div>
         </form>
       </div>
     </div>
   </section>
 
-  {% include 'components/delete_modal.html' %}
+  {% include 'components/delete_modal.html' with url="/feeds/types/delete" %}
 
   <!-- /.content -->
 </section>
