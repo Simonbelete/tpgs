@@ -7563,3 +7563,4 @@ Traceback (most recent call last):
     raise FieldError(
 django.core.exceptions.FieldError: Cannot resolve keyword 'name' into field. Choices are: chicken, chicken_id, created_at, created_by, created_by_id, feed_type, feed_type_id, id, is_active, updated_at, week, weight
 Not Found: /favicon.ico
+Not Found: /favicon.ico

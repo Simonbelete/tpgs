@@ -273,8 +273,9 @@ class ChickenImportView(View):
                     breed_pair = None
                 chicken, chicken_created = Chicken.objects.update_or_create(
                     tag=tag, defaults={
-                        'sex': sex, 'breed_pair':
-                        breed_pair, 'farm': farm_id,
+                        'sex': sex,
+                        'breed_pair': breed_pair,
+                        'farm': farm_id,
                         'breed_type': breed_type_id,
                         'house': house,
                         'flock': flock,
@@ -289,22 +290,16 @@ class ChickenImportView(View):
                     feed_weight = row[week, "feed"].values[0]
                     eggs = row[week, "egg"].values[0]
                     eggs_weights = row[week, "egg weight"].values[0]
-                    print('----------------------')
-                    print(weight)
-                    print(feed_weight)
-                    print(feed_weight != 0 or feed_weight != None)
-                    print(eggs)
-                    print(eggs == None)
 
                     if weight != None:
                         weight, weight_created = Weight.objects.update_or_create(
-                            week=week_no, chicken=chicken, weight=Decimal(weight), created_by=self.request.user)
+                            week=week_no, chicken=chicken, defaults={'weight': Decimal(weight), 'created_by': self.request.user})
                     if eggs != None:
                         egg, egg_created = Egg.objects.update_or_create(
-                            week=week_no, chicken=chicken, eggs=int(eggs), total_weight=Decimal(eggs_weights), created_by=self.request.user)
+                            week=week_no, chicken=chicken, defaults={'eggs': int(eggs), 'total_weight': Decimal(eggs_weights), 'created_by': self.request.user})
                     if feed_weight != None:
                         feed, feed_created = Feed.objects.update_or_create(
-                            week=week_no, chicken=chicken, weight=Decimal(feed_weight), created_by=self.request.user)
+                            week=week_no, chicken=chicken, defaults={'weight': Decimal(feed_weight), 'created_by': self.request.user})
             except Exception as ex:
                 errors.append({'data': {
                     'tag': tag,

@@ -34,7 +34,7 @@ requirejs(["jquery", "datatables", "lodash"], function ($, DataTable, _) {
     { data: "hatch_date" },
     { data: "breed_pair" },
     { data: "dead_date" },
-    { data: "is_active" },
+    { data: "is_active", visible: false },
     { data: "created_at" },
     {
       data: null,
