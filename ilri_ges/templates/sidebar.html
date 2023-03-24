@@ -328,35 +328,30 @@
               </ul>
             </li>
 
-            <li class="nav-header">IMPORT &and; EXPORT</li>
             <li class="nav-item">
-              <a href="#" class="nav-link">
-                <i class="nav-icon fas fa-circle"></i>
-                <p>
-                  Chicken Record
-                  <i class="right fas fa-angle-left"></i>
-                </p>
+              <a href="{% url 'chickens_feed_by_weight' %}" class="nav-link">
+                <i class="fas fa-circle nav-icon {% if request.path == '/chickens/feed-by-weight' %}active{% endif %}"></i>
+                <p>Feed By Weight</p>
               </a>
-              <ul class="nav nav-treeview">
-                <li class="nav-item">
-                  <a href="#" class="nav-link">
-                    <i class="far fa-circle nav-icon"></i>
-                    <p>Export Data</p>
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a href="{% url 'chickens_import' %}" class="nav-link">
-                    <i class="far fa-circle nav-icon"></i>
-                    <p>Import Data</p>
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a href="/static/excel/master_template.xlsx" class="nav-link">
-                    <i class="far fa-circle nav-icon"></i>
-                    <p>Download Template</p>
-                  </a>
-                </li>
-              </ul>
+            </li>
+
+            <!-- Import Export -->
+
+            <li class="nav-header">IMPORT & EXPORT</li>
+
+            <li class="nav-item">
+
+              <a href="{% url 'chickens_export' %}" class="nav-link {% if request.path == '/chickens/export'  %}active{% endif %}">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Export Chickens</p>
+              </a>
+            </li>
+
+            <li class="nav-item">
+              <a href="{% url 'chickens_import' %}" class="nav-link {% if request.path == '/chickens/import'  %}active{% endif %}">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Import Chickens</p>
+              </a>
             </li>
             <li class="nav-item">
               <a href="/static/excel/master_template.xlsx" class="nav-link">

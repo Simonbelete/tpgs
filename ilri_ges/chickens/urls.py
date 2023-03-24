@@ -19,5 +19,7 @@ urlpatterns = [
          name="chickens_state_edit"),
     path('create', views.ChickenCreateView.as_view(), name="chickens_create"),
     path('import', views.ChickenImportView.as_view(), name="chickens_import"),
-    path('export', views.ChickenExportView.as_view(), name="chickens_export")
+    path('export', views.ChickenExportView.as_view(), name="chickens_export"),
+    path('feed-by-weight', views.ChickensReportFeedByWeight.as_view(),
+         name="chickens_feed_by_weight")
 ]

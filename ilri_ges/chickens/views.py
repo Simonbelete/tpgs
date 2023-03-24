@@ -354,3 +354,10 @@ class ChickenExportView(View):
         response['Content-Disposition'] = 'attachment; filename=%s' % filename
 
         return response
+
+# Reports
+
+
+class ChickensReportFeedByWeight(View):
+    def get(self, request):
+        return render(request, 'reports/feed_by_weight.html')
