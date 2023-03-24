@@ -33,3 +33,9 @@ class ChickenImportForm(forms.ModelForm):
     class Meta:
         model = Chicken
         fields = ['breed_type', 'farm']
+
+
+class ChickenExportForm(forms.ModelForm):
+    class Meta:
+        model = Chicken
+        fields = ['breed_type', 'farm', 'house']

@@ -15,7 +15,7 @@ from weights.models import Weight
 from eggs.models import Egg
 from feeds.models import Feed
 from breeding_pairs.models import BreedPair
-from .forms import ChickenForm, ChickenStateForm, ChickenImportForm, ChickenCreateForm
+from .forms import ChickenForm, ChickenStateForm, ChickenImportForm, ChickenCreateForm, ChickenExportForm
 from core.views import ModelFilterViewSet
 from farms.models import Farm
 from breeds.models import BreedType
@@ -312,19 +312,34 @@ class ChickenImportView(View):
 
 class ChickenExportView(View):
     def get(self, request):
-        return render(request, 'export/chicken_export.html')
+        form = ChickenExportForm
+        return render(request, 'export/chicken_export.html', {'form': form})
 
     def post(self, request):
-        output = io.BytesIO()
-        df_marks = pd.DataFrame({'name': ['Somu', 'Kiku', 'Amol', 'Lini'],
-                                 'physics': [68, 74, 77, 78],
-                                 'chemistry': [84, 56, 73, 69],
-                                 'algebra': [78, 88, 82, 87]})
+        form = ChickenExportForm(request.POST)
+        if not form.is_valid():
+            return render(request, 'export/chicken_export.html', {'form': form})
 
+        output = io.BytesIO()
+        cols = [
+            ['chicken', 'chicken', 'chicken', 'chicken',
+                'chicken', 'week 1', 'week 1'],
+            ['ID', 'Sex', 'SIRE ID', 'DAM ID', 'HATCH DATE', 10, 20]
+        ]
+        tuples = list(zip(*cols))
+        columns = pd.MultiIndex.from_tuples(tuples)
+        data = []
+        chickens = Chicken.objects.all().values_list(
+            'tag', 'sex', 'breed_pair__sire', 'breed_pair__dam', 'hatch_date')
+        data = chickens
+        print('-----------------------')
+        print(chickens)
+
+        df = pd.DataFrame(data, columns=columns)
         # create excel writer object
         writer = pd.ExcelWriter(output)
         # write dataframe to excel
-        df_marks.to_excel(writer)
+        df.to_excel(writer)
         # save the excel
         writer.save()
 
