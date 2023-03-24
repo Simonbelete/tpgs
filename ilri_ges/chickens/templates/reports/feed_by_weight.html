@@ -11,9 +11,34 @@
         <div class="card-header">
             <h3 class="card-title">Feed consumption by Body Weight Report</h3>
         </div>
-        <div class="card-body">
-
+        <div class="card-body row">
+            <div class="col-sm-12 col-md-6">
+            {% include 'components/fields/farm_field.html' %}
+            </div>
+            <div class="col-md-6 col-sm-12">
+                {% include 'components/week_selector.html' %}
+            </div>
+            <div class="col-sm-12 col-md-6">
+                {% include 'components/fields/breed_select.html' %}
+            </div>
+            <div class="col-sm-12 col-md-6">
+                {% include 'components/house_select.html' %}
+            </div>
+            <div class="col-12">
+                <button class="btn btn-primary">Apply</button>
+            </div>
+            <div class="col-12" style="margin-top: 20px">
+                <canvas id="fbw_chart" style="min-height: 250px; height: 250px; max-height: 600px; max-width: 100%;"></canvas>
+            </div>
         </div>
     </div>
 </div>
+{% endblock %}
+
+{% block javascript %}
+<script src="{% static 'js/farm_select.js' %}"></script>
+<script src="{% static 'js/breed_type_select.js' %}"></script>
+<script src="{% static 'js/house_select.js' %}"></script>
+<script src="{% static 'js/house_select.js' %}"></script>
+<script src="{% static 'js/chicken_feed_byweights.js' %}"></script>
 {% endblock %}

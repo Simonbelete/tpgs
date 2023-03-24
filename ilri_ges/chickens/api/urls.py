@@ -25,5 +25,6 @@ urlpatterns = [
     path('chickens/<int:id>/fcr/eggs', views.FCrEgg.as_view()),
     path('chickens/pedigree/', views.ChickenPedigreeViewSet.as_view()),
     path('chickens/mortality-rate/', views.ChickenPedigreeViewSet.as_view()),
+    path('chickens/feed-by-weight/', views.chickenFeebByWeightReport.as_view()),
     path('', include(router.urls)),
 ]

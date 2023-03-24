@@ -2,7 +2,8 @@ from rest_framework import viewsets, status
 from rest_framework.response import Response
 from django_filters import rest_framework as filters
 from rest_framework.views import APIView
-from django.db.models import Count, Sum, F, Value, Q
+from rest_framework.generics import GenericAPIView
+from django.db.models import Count, Sum, F, Value, Q, Avg
 from django.db.models.functions import Concat
 
 from core.views import HistoryViewSet
@@ -333,3 +334,39 @@ class ChickenOffspringsViewSet(viewsets.ModelViewSet):
     #         self.get_queryset().filter(breed_pair__in=breeding_pairs))
     #     serializer = self.get_serializer(queryset, many=True)
     #     return Response({'results': serializer.data})
+
+
+class chickenFeebByWeightReport(APIView):
+    queryset = Chicken.objects.all()
+
+    def get(self, request):
+        start_week = int(request.GET.get('start_week', 0))
+        end_week = int(request.GET.get('end_week', 0))
+
+        farm = request.GET.get('farm', None)
+        breed_type = request.GET.get('breed_type', None)
+        house = request.GET.get('house', None)
+
+        dataset = []
+        labels = []
+        feeds_dataset = []
+        weights_dataset = []
+
+        # TODO: Returns Chart Js dataset
+        # TODO: Improve performance
+        for week in range(start_week, end_week + 1):
+            labels.append('Week %s' % week)
+            feeds = Feed.objects.filter(
+                # chicken__farm=farm,
+                # chicken__breed_type=breed_type,
+                # chicken__house=house,
+                week=week).aggregate(weight_avg=Avg('weight'))
+            feeds_dataset.append(feeds['weight_avg'])
+            weights = Weight.objects.filter(
+                # chicken__farm=farm,
+                # chicken__breed_type=breed_type,
+                # chicken__house=house,
+                week=week).aggregate(weight_avg=Avg('weight'))
+            weights_dataset.append(weights['weight_avg'])
+
+        return Response({'results': dataset, 'chartjs': {'labels': labels, 'y1': feeds_dataset, 'y2': weights_dataset}})
