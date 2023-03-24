@@ -1,5 +1,5 @@
 requirejs(
-  ["jquery", "datatables", "lodash", "chartjs"],
+  ["jquery", "datatables", "lodash", "chartjs4"],
   function ($, DataTable, _, Chart) {
     "use strict";
 
@@ -61,6 +61,7 @@ requirejs(
             yAxisID: "y2",
           },
         ];
+        console.log(chart.data);
         chart.update();
       });
     }

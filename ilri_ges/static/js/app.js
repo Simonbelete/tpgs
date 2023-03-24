@@ -64,6 +64,7 @@ require.config({
     lodash: "../../../static/js/lib/lodash/lodash.min",
     "bootstrap-colorpicker":
       "../../../static/js/lib/admin-LTE/plugins/bootstrap-colorpicker/js/bootstrap-colorpicker",
+    chartjs4: "../../../static/js/chartjs-4/chart.umd",
   },
 });
 
