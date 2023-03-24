@@ -1,4 +1,4 @@
-import os
+import io
 import pandas as pd
 import numpy as np
 from dateutil.parser import parse
@@ -308,3 +308,34 @@ class ChickenImportView(View):
         return JsonResponse({
             'errors': errors,
         })
+
+
+class ChickenExportView(View):
+    def get(self, request):
+        return render(request, 'export/chicken_export.html')
+
+    def post(self, request):
+        output = io.BytesIO()
+        df_marks = pd.DataFrame({'name': ['Somu', 'Kiku', 'Amol', 'Lini'],
+                                 'physics': [68, 74, 77, 78],
+                                 'chemistry': [84, 56, 73, 69],
+                                 'algebra': [78, 88, 82, 87]})
+
+        # create excel writer object
+        writer = pd.ExcelWriter(output)
+        # write dataframe to excel
+        df_marks.to_excel(writer)
+        # save the excel
+        writer.save()
+
+        # Rewind the buffer.
+        output.seek(0)
+
+        filename = 'report.xlsx'
+        response = HttpResponse(
+            output,
+            content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+        )
+        response['Content-Disposition'] = 'attachment; filename=%s' % filename
+
+        return response

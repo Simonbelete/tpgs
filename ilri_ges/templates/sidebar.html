@@ -166,6 +166,16 @@
 
             <li class="nav-item">
               <a
+                href="{% url 'chickens' %}"
+                class="nav-link {% if request.path == '/chickens/' %}active{% endif %}"
+              >
+                <i class="nav-icon fas fa-crow"></i>
+                <p>Chickens</p>
+              </a>
+            </li>
+
+            <li class="nav-item">
+              <a
                 href="{% url 'breeding_pairs' %}"
                 class="nav-link {% if request.path == '/breeding-pairs/' %}active{% endif %}"
               >
@@ -191,16 +201,6 @@
               >
                 <i class="nav-icon fas fa-industry"></i>
                 <p>Farms</p>
-              </a>
-            </li>
-
-            <li class="nav-item">
-              <a
-                href="{% url 'chickens' %}"
-                class="nav-link {% if request.path == '/chickens/' %}active{% endif %}"
-              >
-                <i class="nav-icon fas fa-crow"></i>
-                <p>Chickens</p>
               </a>
             </li>
 

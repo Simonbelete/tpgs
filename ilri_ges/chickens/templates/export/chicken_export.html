@@ -1,0 +1,59 @@
+{% extends "sidebar.html" %} 
+{% load static %} 
+
+{% block stylesheet %} 
+{% include 'components/list_styles.html' %}
+{% include 'components/select2_style.html' %}
+{% include 'components/dropzone_style.html' %} 
+{% endblock %} 
+
+{% block title %} Import Chickens - ILRI genetics Evaluation {% endblock %} 
+
+{% block body %}
+
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <div class="container-fluid">
+      <div class="row mb-2">
+        <div class="col-sm-6">
+          <h1>Export Chickens - Excel</h1>
+        </div>
+        <div class="col-sm-6">
+          <ol class="breadcrumb float-sm-right">
+            <li class="breadcrumb-item"><a href="/">Home</a></li>
+            <li class="breadcrumb-item">Chickens</li>
+            <li class="breadcrumb-item active">Import</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+    <!-- /.container-fluid -->
+  
+    <!-- Main content -->
+    <section class="content">
+      <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="card card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title">Export Chickens Data</h3>
+                    </div>
+                    <div class="card-body">
+                        {% include 'components/fields/farm_field.html' %}
+                        {% include 'components/fields/breed_select.html' %}
+                        {% include 'components/house_select.html' %}
+                    </div>
+                </div>
+            </div>
+        </div>
+      </div>
+    </section>
+</section>
+
+{% endblock %}
+
+{% block javascript %}
+<script src="{% static 'js/farm_select.js' %}"></script>
+<script src="{% static 'js/breed_type_select.js' %}"></script>
+<script src="{% static 'js/house_select.js' %}"></script>
+{% endblock %}

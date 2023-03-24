@@ -1,0 +1,10 @@
+{% load widget_tweaks %}
+<div class="form-group">
+    <label for="breed_type_select">Breed Type</label>
+    {% if form.breed_type %}
+        {{ form.breed_type|attr:"id:breed_type_select"|add_class:"form-control"|add_error_class:"is-invalid" }}
+    {% else %}
+        <select id="breed_type_select" {{ multiple }} name="farm" class="form-control select2" style="width: 100%"></select>
+    {% endif %}
+    <span id="{{ form.breed_type.id_for_label }}-error" class="error invalid-feedback">{{ form.breed_type.errors }}</span>
+</div>

@@ -18,5 +18,6 @@ urlpatterns = [
     path('<int:id>/state', views.ChickenStateView.as_view(),
          name="chickens_state_edit"),
     path('create', views.ChickenCreateView.as_view(), name="chickens_create"),
-    path('import', views.ChickenImportView.as_view(), name="chickens_import")
+    path('import', views.ChickenImportView.as_view(), name="chickens_import"),
+    path('export', views.ChickenExportView.as_view(), name="chickens_export")
 ]
