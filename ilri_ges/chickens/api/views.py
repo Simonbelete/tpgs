@@ -270,7 +270,7 @@ class ChickenFeedsviewSet(viewsets.ModelViewSet):
         end_week = int(request.GET.get('end_week', 0))
 
         queryset = self.filter_queryset(self.get_queryset().filter(
-            chicken=id, week__in=range(start_week, end_week + 1)))
+            chicken=id, week__in=range(start_week, end_week + 1)).order_by('week'))
 
         serializer = self.get_serializer(queryset, many=True)
         return Response({'results': serializer.data})
@@ -286,7 +286,7 @@ class ChickenWeightsviewSet(viewsets.ModelViewSet):
         end_week = int(request.GET.get('end_week', 0))
         weeks = [*range(start_week, end_week + 1)]
         queryset = self.filter_queryset(self.get_queryset().filter(
-            chicken=id, week__in=weeks))
+            chicken=id, week__in=weeks).order_by('week'))
 
         serializer = self.get_serializer(queryset, many=True)
         return Response({'results': serializer.data})
