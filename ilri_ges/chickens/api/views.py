@@ -343,6 +343,7 @@ class chickenFeebByWeightReport(APIView):
         start_week = int(request.GET.get('start_week', 0))
         end_week = int(request.GET.get('end_week', 0))
 
+        period = request.GET.get('period') or 'daily'
         farm = request.GET.get('farm') or 0
         breed_type = request.GET.get('breed_type') or 0
         house = request.GET.get('house') or 0
@@ -368,7 +369,9 @@ class chickenFeebByWeightReport(APIView):
                 feeds = feeds.filter(chicken__house=house)
                 weights = weights.filter(chicken__house=house)
             feeds = feeds.aggregate(weight_avg=Avg('weight'))
-            feeds_dataset.append(feeds['weight_avg'])
+            fv = (feeds['weight_avg'] /
+                  7) if period == 'daily' and feeds['weight_avg'] != None else feeds['weight_avg']
+            feeds_dataset.append(fv)
             weights = weights.aggregate(weight_avg=Avg('weight'))
             weights_dataset.append(weights['weight_avg'])
 

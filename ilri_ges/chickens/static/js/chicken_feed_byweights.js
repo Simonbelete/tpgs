@@ -27,7 +27,7 @@ requirejs(
           y1: {
             type: "linear",
             display: true,
-            position: "left",
+            position: "right",
             title: {
               display: true,
               text: "Feed Intake in g",
@@ -35,11 +35,18 @@ requirejs(
                 size: 15,
               },
             },
+            min: 0,
+            // ticks: {
+            //   stepSize: 100,
+            // },
+            grid: {
+              drawOnChartArea: true,
+            },
           },
           y2: {
             type: "linear",
             display: true,
-            position: "right",
+            position: "left",
             title: {
               display: true,
               text: "Body Weight in g",
@@ -47,10 +54,14 @@ requirejs(
                 size: 15,
               },
             },
+            min: 0,
+            // ticks: {
+            //   stepSize: 10,
+            // },
 
             // grid line settings
             grid: {
-              drawOnChartArea: false, // only want the grid lines for one axis to show up
+              drawOnChartArea: true,
             },
           },
         },
@@ -64,21 +75,21 @@ requirejs(
         farm: $("#farm_select").val().join(","),
         breed_type: $("#breed_type_select").val().join(","),
         house: $("#house_select").val().join(","),
+        period: $("#plot_period").val(),
       }).done(function (response) {
         chart.data.labels = response.chartjs.labels;
         chart.data.datasets = [
-          {
-            label: "Feed Intake",
-            data: response.chartjs.y1,
-            yAxisID: "y1",
-          },
           {
             label: "Body Weight",
             data: response.chartjs.y2,
             yAxisID: "y2",
           },
+          {
+            label: "Feed Intake",
+            data: response.chartjs.y1,
+            yAxisID: "y1",
+          },
         ];
-        console.log(chart.data);
         chart.update();
       });
     }

@@ -16,7 +16,7 @@
                 <p> Note: Leaving fields emptry will consider all data</p>
             </div>
             <div class="col-sm-12 col-md-6">
-            {% include 'components/fields/farm_field.html' with multiple="multiple" %}
+                {% include 'components/fields/farm_field.html' with multiple="multiple" %}
             </div>
             <div class="col-md-6 col-sm-12">
                 {% include 'components/week_selector.html' %}
@@ -26,6 +26,13 @@
             </div>
             <div class="col-sm-12 col-md-6">
                 {% include 'components/house_select.html' with multiple="multiple" %}
+            </div>
+            <div class="col-sm-12 col-md-6">
+                <lable>Plot period</label>
+                <select id="plot_period" class="form-control select2" style="width: 100%">
+                    <option value="daily">Daily</option>
+                    <option value="weekly">Weekly</option>
+                </select>
             </div>
             <div class="col-12">
                 <button class="btn btn-primary" id="apply">Apply</button>
