@@ -20,7 +20,7 @@ requirejs(
         plugins: {
           title: {
             display: true,
-            text: "Chart.js Line Chart - Multi Axis",
+            text: "Feed consumption by Body Weight Report",
           },
         },
         scales: {
@@ -28,11 +28,25 @@ requirejs(
             type: "linear",
             display: true,
             position: "left",
+            title: {
+              display: true,
+              text: "Feed Intake in g",
+              font: {
+                size: 20,
+              },
+            },
           },
           y2: {
             type: "linear",
             display: true,
             position: "right",
+            title: {
+              display: true,
+              text: "Body Weight in g",
+              font: {
+                size: 20,
+              },
+            },
 
             // grid line settings
             grid: {
@@ -47,6 +61,9 @@ requirejs(
       $.getJSON("/api/chickens/feed-by-weight/", {
         start_week: $("#start_week").val(),
         end_week: $("#end_week").val(),
+        farm: $("#farm_select").val().join(","),
+        breed_type: $("#breed_type_select").val().join(","),
+        house: $("#house_select").val().join(","),
       }).done(function (response) {
         chart.data.labels = response.chartjs.labels;
         chart.data.datasets = [

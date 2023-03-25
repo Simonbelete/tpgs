@@ -12,17 +12,20 @@
             <h3 class="card-title">Feed consumption by Body Weight Report</h3>
         </div>
         <div class="card-body row">
+            <div class="col-12">
+                <p> Note: Leaving fields emptry will consider all data</p>
+            </div>
             <div class="col-sm-12 col-md-6">
-            {% include 'components/fields/farm_field.html' %}
+            {% include 'components/fields/farm_field.html' with multiple="multiple" %}
             </div>
             <div class="col-md-6 col-sm-12">
                 {% include 'components/week_selector.html' %}
             </div>
             <div class="col-sm-12 col-md-6">
-                {% include 'components/fields/breed_select.html' %}
+                {% include 'components/fields/breed_select.html' with multiple="multiple" %}
             </div>
             <div class="col-sm-12 col-md-6">
-                {% include 'components/house_select.html' %}
+                {% include 'components/house_select.html' with multiple="multiple" %}
             </div>
             <div class="col-12">
                 <button class="btn btn-primary" id="apply">Apply</button>

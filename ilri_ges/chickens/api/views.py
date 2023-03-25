@@ -343,9 +343,9 @@ class chickenFeebByWeightReport(APIView):
         start_week = int(request.GET.get('start_week', 0))
         end_week = int(request.GET.get('end_week', 0))
 
-        farm = request.GET.get('farm', None)
-        breed_type = request.GET.get('breed_type', None)
-        house = request.GET.get('house', None)
+        farm = request.GET.get('farm') or 0
+        breed_type = request.GET.get('breed_type') or 0
+        house = request.GET.get('house') or 0
 
         dataset = []
         labels = []
@@ -356,17 +356,20 @@ class chickenFeebByWeightReport(APIView):
         # TODO: Improve performance
         for week in range(start_week, end_week + 1):
             labels.append('Week %s' % week)
-            feeds = Feed.objects.filter(
-                # chicken__farm=farm,
-                # chicken__breed_type=breed_type,
-                # chicken__house=house,
-                week=week).aggregate(weight_avg=Avg('weight'))
+            feeds = Feed.objects.filter(week=week)
+            weights = Weight.objects.filter(week=week)
+            if farm != 0:
+                feeds = feeds.filter(chicken__farm=farm)
+                weights = weights.filter(chicken__farm=farm)
+            if breed_type != 0:
+                feeds = feeds.filter(chicken__breed_type=breed_type)
+                weights = weights.filter(chicken__breed_type=breed_type)
+            if house != 0:
+                feeds = feeds.filter(chicken__house=house)
+                weights = weights.filter(chicken__house=house)
+            feeds = feeds.aggregate(weight_avg=Avg('weight'))
             feeds_dataset.append(feeds['weight_avg'])
-            weights = Weight.objects.filter(
-                # chicken__farm=farm,
-                # chicken__breed_type=breed_type,
-                # chicken__house=house,
-                week=week).aggregate(weight_avg=Avg('weight'))
+            weights = weights.aggregate(weight_avg=Avg('weight'))
             weights_dataset.append(weights['weight_avg'])
 
         return Response({'results': dataset, 'chartjs': {'labels': labels, 'y1': feeds_dataset, 'y2': weights_dataset}})
