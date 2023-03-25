@@ -177,7 +177,10 @@ class ChickenStateView(LoginRequiredMixin, View):
             return redirect('500')
 
 
-class ChickenImportView(View):
+class ChickenImportView(LoginRequiredMixin, View):
+    login_url = '/users/login'
+    redirect_field_name = 'redirect_to'
+
     def get(self, request):
         form = ChickenImportForm
         return render(request, 'import/index.html', {'form': form})
@@ -310,7 +313,10 @@ class ChickenImportView(View):
         })
 
 
-class ChickenExportView(View):
+class ChickenExportView(LoginRequiredMixin, View):
+    login_url = '/users/login'
+    redirect_field_name = 'redirect_to'
+
     def get(self, request):
         form = ChickenExportForm
         return render(request, 'export/chicken_export.html', {'form': form})
@@ -332,8 +338,6 @@ class ChickenExportView(View):
         chickens = Chicken.objects.all().values_list(
             'tag', 'sex', 'breed_pair__sire', 'breed_pair__dam', 'hatch_date')
         data = chickens
-        print('-----------------------')
-        print(chickens)
 
         df = pd.DataFrame(data, columns=columns)
         # create excel writer object
@@ -358,6 +362,9 @@ class ChickenExportView(View):
 # Reports
 
 
-class ChickensReportFeedByWeight(View):
+class ChickensReportFeedByWeight(LoginRequiredMixin, View):
+    login_url = '/users/login'
+    redirect_field_name = 'redirect_to'
+
     def get(self, request):
         return render(request, 'reports/feed_by_weight.html')

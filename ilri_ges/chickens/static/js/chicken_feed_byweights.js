@@ -32,7 +32,7 @@ requirejs(
               display: true,
               text: "Feed Intake in g",
               font: {
-                size: 20,
+                size: 15,
               },
             },
           },
@@ -44,7 +44,7 @@ requirejs(
               display: true,
               text: "Body Weight in g",
               font: {
-                size: 20,
+                size: 15,
               },
             },
 
