@@ -21,8 +21,16 @@ class Feed(CoreModel):
     chicken = models.ForeignKey(
         'chickens.Chicken', on_delete=models.CASCADE, related_name='feeds')
     weight = models.DecimalField(
-        max_digits=10, decimal_places=3, default=0)
+        max_digits=10, decimal_places=3, default=0, null=True, blank=True)
     feed_type = models.ForeignKey(
         FeedType, on_delete=models.SET_NULL, null=True, blank=True, related_name='feeds')
+    feed_offered = models.DecimalField(
+        max_digits=10, decimal_places=3, default=0)
+    feed_refusal = models.DecimalField(
+        max_digits=10, decimal_places=3, default=0)
 
     history = HistoricalRecords()
+
+    def save(self, *args, **kwargs):
+        self.weight = self.feed_offered - self.feed_refusal
+        super(Feed, self).save(*args, **kwargs)

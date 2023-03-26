@@ -12,4 +12,5 @@ class FeedTypeForm(forms.ModelForm):
 class FeedForm(forms.ModelForm):
     class Meta:
         model = Feed
-        fields = ['week', 'chicken', 'weight', 'feed_type']
+        fields = ['week', 'chicken', 'feed_offered',
+                  'feed_refusal', 'feed_type']
