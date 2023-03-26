@@ -11,4 +11,5 @@ router.register(r'eggs/(?P<id>.+)/histories',
 urlpatterns = [
     path('', include(router.urls)),
     path('eggs/hdep', views.HHEP.as_view()),
+    path('eggs/grading', views.EggGrading.as_view()),
 ]

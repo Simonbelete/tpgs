@@ -1,0 +1,46 @@
+{% extends "plain_template.html" %}
+{% load static %}
+
+{% block page_title %}Egg Grading{% endblock %}
+{% block data_title %}Egg Grading{% endblock %}
+{% block data_menu %}Egg Grading{% endblock %}
+
+{% block contnet %}
+<div class="col-12">
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">Feed consumption by Body Weight Report</h3>
+        </div>
+        <div class="card-body row">
+            <div class="col-12">
+                <p> Note: Leaving fields emptry will consider all data</p>
+            </div>
+            <div class="col-sm-12 col-md-6">
+                {% include 'components/fields/farm_field.html' with multiple="multiple" %}
+            </div>
+            <div class="col-md-6 col-sm-12">
+                {% include 'components/week_selector.html' %}
+            </div>
+            <div class="col-sm-12 col-md-6">
+                {% include 'components/fields/breed_select.html' with multiple="multiple" %}
+            </div>
+            <div class="col-sm-12 col-md-6">
+                {% include 'components/house_select.html' with multiple="multiple" %}
+            </div>
+            <div class="col-sm-12 col-md-6">
+                <lable>Plot period</label>
+                <select id="plot_period" class="form-control select2" style="width: 100%">
+                    <option value="daily">Daily</option>
+                    <option value="weekly">Weekly</option>
+                </select>
+            </div>
+            <div class="col-12">
+                <button class="btn btn-primary" id="apply">Apply</button>
+            </div>
+            <div class="col-12" style="margin-top: 20px">
+                <canvas id="fbw_chart" style="min-height: 250px; height: 250px; max-height: 600px; max-width: 100%;"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

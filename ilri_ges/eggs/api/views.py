@@ -2,7 +2,7 @@ from rest_framework import viewsets, status
 from django_filters import rest_framework as filters
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from django.db.models import Count, Sum
+from django.db.models import Count, Sum, Avg
 import numpy as np
 
 from . import serializers
@@ -109,3 +109,54 @@ class HHEP(APIView):
                 pass
 
         return Response({'results': results})
+
+
+class EggGrading(APIView):
+    queryset = models.Egg.objects.all()
+
+    def get(self, request):
+        start_week = int(request.GET.get('start_week', 0))
+        end_week = int(request.GET.get('end_week', 0))
+
+        farm = request.GET.get('farm') or 0
+        breed_type = request.GET.get('breed_type') or 0
+        house = request.GET.get('house') or 0
+
+        data = []
+        for week in range(start_week, end_week + 1):
+            eggs = models.Egg.objects.filter(week=week)
+            # Filter by
+            if farm != 0:
+                eggs = eggs.filter(chicken__farm=farm)
+            if breed_type != 0:
+                eggs = eggs.filter(chicken__breed_type=breed_type)
+            if house != 0:
+                eggs = eggs.filter(chicken__house=house)
+
+            sum_weight = eggs.aggregate(
+                weight_sum=Sum('total_weight'))['weight_sum'] or 0
+            total_weight = sum_weight if sum_weight else 1
+            avg_weight = eggs.aggregate(weight_avg=Avg('total_weight'))[
+                'weight_avg'] or 0
+            sm_grading = eggs.filter(week__lt=53).aggregate(
+                weight_sum=Sum('total_weight'))['weight_sum'] or 0
+            m_grading = eggs.filter(
+                week__gt=52, week__lt=63).aggregate(
+                weight_sum=Sum('total_weight'))['weight_sum'] or 0
+            lg_grading = eggs.filter(
+                week__gt=62, week__lt=73).aggregate(
+                weight_sum=Sum('total_weight'))['weight_sum'] or 0
+            xl_grading = eggs.filter(
+                week__gt=72).aggregate(
+                weight_sum=Sum('total_weight'))['weight_sum'] or 0
+            data.append({
+                'week': week,
+                'avg_weight': avg_weight,
+                'sum_weight': sum_weight,
+                'sm_grading': round(sm_grading/total_weight * 100, 2),
+                'm_grading': round(m_grading/total_weight * 100, 2),
+                'lg_grading': round(lg_grading/total_weight * 100, 2),
+                'xl_grading': round(xl_grading/total_weight * 100, 2)
+            })
+
+        return Response({'results': data})
