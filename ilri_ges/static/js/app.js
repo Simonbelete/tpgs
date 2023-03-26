@@ -39,13 +39,14 @@ require.config({
       "../../../static/js/lib/admin-LTE/plugins/datatables-buttons/js/buttons.bootstrap4.min",
     jszip: "../../../static/js/lib/admin-LTE/plugins/jszip/jszip.min",
     pdfmake: "../../../static/js/lib/admin-LTE/plugins/pdfmake/pdfmake.min",
-    pdfmake_fonts: "../../../static/js/lib/admin-LTE/plugins/pdfmake/vfs_fonts",
     datatables_buttons_html5:
       "../../../static/js/lib/admin-LTE/plugins/datatables-buttons/js/buttons.html5.min",
     datatables_buttons_print:
       "../../../static/js/lib/admin-LTE/plugins/datatables-buttons/js/buttons.print.min",
     datatables_buttons_colVis:
       "../../../static/js/lib/admin-LTE/plugins/datatables-buttons/js/buttons.colVis.min",
+    datatables_buttons_flash:
+      "../../../static/js/lib/admin-LTE/plugins/datatables-buttons/js/buttons.flash.min",
     d3js: "https://d3js.org/d3.v7.min",
     d3_hierarchy: "../../../static/js/lib/d3-hierarchy/d3-hierarchy@3",
     "d3-color": "../../../static/js/lib/d3-zoom/d3-color",
@@ -77,10 +78,10 @@ define("datatables", [
   "datatablesButtonsBs4",
   "jszip",
   "pdfmake",
-  // "pdfmake_fonts",
   "datatables_buttons_html5",
   "datatables_buttons_print",
   "datatables_buttons_colVis",
+  "datatables_buttons_flash",
   "datatables.net-select",
   "datatablesSelectBs4",
   "datatables.net-searchpanes",

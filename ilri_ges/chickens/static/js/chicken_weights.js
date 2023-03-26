@@ -1,5 +1,5 @@
 requirejs(
-  ["jquery", "datatables", "lodash", "chartjs"],
+  ["jquery", "datatables", "lodash", "chartjs4"],
   function ($, DataTable, _, Chart) {
     "use strict";
 
@@ -30,8 +30,20 @@ requirejs(
           display: true,
           text: "Weights",
         },
-        backgroundColor: "#F5DEB3",
+        // backgroundColor: "#F5DEB3",
       },
+      plugins: [
+        {
+          beforeDraw: (chart, args, options) => {
+            const { ctx } = chart;
+            ctx.save();
+            ctx.globalCompositeOperation = "destination-over";
+            ctx.fillStyle = "#fff";
+            ctx.fillRect(0, 0, chart.width, chart.height);
+            ctx.restore();
+          },
+        },
+      ],
     });
 
     var table = selector.DataTable({
@@ -39,14 +51,15 @@ requirejs(
       serverSide: true,
       responsive: true,
       autoWidth: false,
-      dom: "lrt",
+      dom: "Blrt",
+      buttons: ["copy", "excel", "csv", "print"],
       ajax: {
         url: "/api/chickens/" + selector.data("id") + "/weights",
         dataSrc: function (json) {
           // For Chartjs
           var datasets = {
             data: [],
-            label: "",
+            label: "Body Weight",
             borderColor: "#c45850",
             fill: true,
           };
