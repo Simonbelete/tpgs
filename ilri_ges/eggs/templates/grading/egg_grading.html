@@ -5,7 +5,7 @@
 {% block data_title %}Egg Grading{% endblock %}
 {% block data_menu %}Egg Grading{% endblock %}
 
-{% block contnet %}
+{% block content %}
 <div class="col-12">
     <div class="card">
         <div class="card-header">
@@ -27,20 +27,54 @@
             <div class="col-sm-12 col-md-6">
                 {% include 'components/house_select.html' with multiple="multiple" %}
             </div>
-            <div class="col-sm-12 col-md-6">
-                <lable>Plot period</label>
-                <select id="plot_period" class="form-control select2" style="width: 100%">
-                    <option value="daily">Daily</option>
-                    <option value="weekly">Weekly</option>
-                </select>
-            </div>
-            <div class="col-12">
+            <div class="col-12 mt-3">
                 <button class="btn btn-primary" id="apply">Apply</button>
             </div>
+
+            <div ></div>
+
+            <!-- Tab -->
+            <div class="col-12 tab-content" style="margin-top: 30px">
+                <!-- Tab 1 -->
+                <div class="tab-pane" id="tab_1">Tab 1</div>
+                <!-- Tab 2 -->
+                <div class="tab-pane" id="tab_2"></div>
+                <!-- Tab 3 -->
+                <div class="tab-pane active" id="tab_3">
+                    <table id="data_table" class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                              <th>Week</th>
+                              <th>Average Egg Weight</th>
+                              <th>% grading S &le; 53 g</th>
+                              <th>% grading M &le; 53-63 g</th>
+                              <th>% grading L &le; 63-73 g</th>
+                              <th>% grading XL &gt; 73 g</th>
+                            </tr>
+                          </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+
             <div class="col-12" style="margin-top: 20px">
                 <canvas id="fbw_chart" style="min-height: 250px; height: 250px; max-height: 600px; max-width: 100%;"></canvas>
             </div>
         </div>
+        <div class="card-footer d-flex">
+            <ul class="nav nav-pills ml-auto">
+                <li class="nav-item"><a class="nav-link active" href="#tab_1" data-toggle="tab">Chart</a></li>
+                <li class="nav-item"><a class="nav-link" href="#tab_2" data-toggle="tab">Data</a></li>
+                <li class="nav-item"><a class="nav-link" href="#tab_3" data-toggle="tab">Table</a></li>
+            </ul>
+        </div>
     </div>
 </div>
+{% endblock %}
+
+{% block javascript %}
+<script src="{% static 'js/farm_select.js' %}"></script>
+<script src="{% static 'js/breed_type_select.js' %}"></script>
+<script src="{% static 'js/house_select.js' %}"></script>
+<script src="{% static 'js/egg_grading.js' %}"></script>
 {% endblock %}

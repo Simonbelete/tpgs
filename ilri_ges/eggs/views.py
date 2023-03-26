@@ -112,3 +112,11 @@ class EggsDeleteView(PermissionRequiredMixin, View):
             return redirect('eggs')
         except:
             return redirect(500)
+
+
+class EggGrading(LoginRequiredMixin, View):
+    login_url = '/users/login'
+    redirect_field_name = 'redirect_to'
+
+    def get(self, request):
+        return render(request, 'grading/egg_grading.html')
