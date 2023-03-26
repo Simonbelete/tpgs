@@ -2,8 +2,8 @@
 {% load static %} 
 {% load widget_tweaks %}
 
-{% block page_title %}Chicken Weekly Body Weight{% endblock %}
-{% block data_title %}Chicken Weekly Body Weight{% endblock %}
+{% block page_title %}{{ data.name }} Weekly Body Weight{% endblock %}
+{% block data_title %}{{ data.name }} - Weekly Body Weight{% endblock %}
 {% block data_description %}{% endblock %}
 {% block data_menu %}Chicken Weekly Body Weight{% endblock %}
 
@@ -13,8 +13,9 @@
         <div class="card">
           <div class="card-header row" style="align-items: center">
             <h3 class="card-title mb-3 col-sm-12 col-md-3">Weekly Body Weights</h3>
-            <div class="d-flex col-sm-12 col-md-9 justify-content-end">
-                <div class="col-sm-1 col-md-1" style="align-items: center">
+            <div class="d-flex row col-sm-12 col-md-9 justify-content-end" style="align-items: end">
+              {% include 'components/week_selector.html' %}
+                {% comment %} <div class="col-sm-12 col-md-1" style="align-items: center">
                     <input
                       type="number"
                       name="start_week"
@@ -26,7 +27,7 @@
                     />
                 </div>
                 <div>to</div>
-                <div class="col-sm-1 col-md-1">
+                <div class="col-sm-12 col-md-1">
                     <input
                       type="number"
                       name="end_week"
@@ -43,7 +44,9 @@
                       id="apply"
                     >
                       Apply
-                </button>     
+                </button> {% endcomment %}
+                <button type="button" class="btn btn-primary col-sm-12 col-md-1 ml-2 mt-3" id="apply">Apply</button>
+                <a href="{% url 'chickens_create' %}" role="button" type="button" class="btn btn-primary float-right col-sm-12 col-md-1 col-md-1 ml-2 mt-3"><i class="fas fa-plus"></i> Add</a>
             </div>  
           </div>
           <!-- /.card-header -->

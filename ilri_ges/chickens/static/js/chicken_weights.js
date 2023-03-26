@@ -51,7 +51,7 @@ requirejs(
       serverSide: true,
       responsive: true,
       autoWidth: false,
-      dom: "Blrt",
+      dom: "Brt",
       buttons: ["copy", "excel", "csv", "print"],
       ajax: {
         url: "/api/chickens/" + selector.data("id") + "/weights",
