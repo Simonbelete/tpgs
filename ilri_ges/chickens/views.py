@@ -111,7 +111,11 @@ class ChickenEgg(LoginRequiredMixin, View):
     def get(self, request, id=0):
         if id == 0:
             return redirect('404')
-        return render(request, 'chickens/chicken_eggs.html', {"id": id})
+        try:
+            data = Chicken.objects.get(pk=id)
+            return render(request, 'chickens/chicken_eggs.html', {"id": id, "data": data})
+        except:
+            return redirect(400)
 
 
 class ChickenWeights(LoginRequiredMixin, View):
@@ -135,7 +139,11 @@ class ChickenFeed(LoginRequiredMixin, View):
     def get(self, request, id=0):
         if id == 0:
             return redirect('404')
-        return render(request, 'chickens/chicken_feeds.html', {"id": id})
+        try:
+            data = Chicken.objects.get(pk=id)
+            return render(request, 'chickens/chicken_feeds.html', {"id": id, "data": data})
+        except:
+            return redirect(400)
 
 
 class ChickenPartners(LoginRequiredMixin, View):
