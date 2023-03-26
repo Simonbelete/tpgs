@@ -17,7 +17,18 @@ requirejs(["jquery", "datatables", "chartjs4"], function ($, DataTable, Chart) {
     type: "bar",
     data: {
       labels: [],
-      datasets: [],
+      datasets: [
+        // {
+        //   label: "Small (<53g)",
+        //   data: [10, 20],
+        //   backgroundColor: "#5C96A5",
+        // },
+        // {
+        //   label: "Large (<53g)",
+        //   data: [30, 40],
+        //   backgroundColor: "red",
+        // },
+      ],
     },
     options: {
       plugins: {
@@ -54,44 +65,47 @@ requirejs(["jquery", "datatables", "chartjs4"], function ($, DataTable, Chart) {
       url: "/api/eggs/grading",
       dataSrc: function (json) {
         // For Chartjs
-        var datasets = {
-          data: [
-            {
-              label: "Small (<53g)",
-              data: [10, 20],
-              backgroundColor: "#5C96A5",
-            },
-            {
-              label: "Medium (53-63g)",
-              data: [10, 20],
-              backgroundColor: "#CCCCCC",
-            },
-            {
-              label: "Large (63-73g)",
-              data: [10, 20],
-              backgroundColor: "#CCCCCC",
-            },
-            {
-              label: "Extra Large(>73g)",
-              data: [10, 20],
-              backgroundColor: "#4198D7",
-            },
-          ],
-          label: "",
-          borderColor: "#c45850",
-          fill: true,
-        };
+        var datasets = [
+          {
+            label: "Small (<53g)",
+            data: [],
+            backgroundColor: "#5C96A5",
+          },
+          {
+            label: "Medium (53-63g)",
+            data: [],
+            backgroundColor: "#CCCCCC",
+          },
+          {
+            label: "Large (63-73g)",
+            data: [],
+            backgroundColor: "#D6854C",
+          },
+          {
+            label: "Extra Large(>73g)",
+            data: [],
+            backgroundColor: "#4198D7",
+          },
+        ];
         var labels = [];
+        var sm = [];
+        var md = [];
+        var lg = [];
+        var xl = [];
         for (var i = 0; i < json["results"].length; i++) {
           labels.push("Week " + json["results"][i]["week"]);
-          datasets.data[0].data.push(json["results"][i]["sm_grading"]);
-          datasets.data[1].data.push(json["results"][i]["m_grading"]);
-          datasets.data[2].data.push(json["results"][i]["lg_grading"]);
-          datasets.data[3].data.push(json["results"][i]["xl_grading"]);
+          sm.push(json["results"][i]["sm_grading"]);
+          md.push(json["results"][i]["m_grading"]);
+          lg.push(json["results"][i]["lg_grading"]);
+          xl.push(json["results"][i]["xl_grading"]);
         }
+        datasets[0].data = sm;
+        datasets[1].data = lg;
+        datasets[2].data = md;
+        datasets[3].data = xl;
 
         percentage_chart.data.labels = labels;
-        percentage_chart.data.datasets[0] = datasets;
+        percentage_chart.data.datasets = datasets;
         percentage_chart.update();
 
         json["data"] = json["results"];
