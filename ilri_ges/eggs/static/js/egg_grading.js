@@ -1,4 +1,4 @@
-requirejs(["jquery", "datatables", "chartjs"], function ($, DataTable, Chart) {
+requirejs(["jquery", "datatables", "chartjs4"], function ($, DataTable, Chart) {
   "use strict";
 
   var selector = $("#data_table");
@@ -12,20 +12,35 @@ requirejs(["jquery", "datatables", "chartjs"], function ($, DataTable, Chart) {
     { data: "xl_grading" },
   ];
 
-  // var chartId = $("#fcre_chart").get(0).getContext("2d");
-  // var chart = new Chart(chartId, {
-  //   type: "line",
-  //   data: {
-  //     labels: [],
-  //     datasets: [],
-  //   },
-  //   options: {
-  //     title: {
-  //       display: true,
-  //       text: "Egg Grading",
-  //     },
-  //   },
-  // });
+  var percentage_chart_id = $("#percentage_chart").get(0).getContext("2d");
+  var percentage_chart = new Chart(percentage_chart_id, {
+    type: "bar",
+    data: {
+      labels: [],
+      datasets: [],
+    },
+    options: {
+      plugins: {
+        title: {
+          display: true,
+          text: "Egg Grading",
+        },
+      },
+      responsive: true,
+      scales: {
+        x: {
+          stacked: true,
+        },
+        y: {
+          stacked: true,
+          ticks: {
+            min: 0,
+            max: 100,
+          },
+        },
+      },
+    },
+  });
 
   var table = selector.DataTable({
     responsive: true,
@@ -38,22 +53,46 @@ requirejs(["jquery", "datatables", "chartjs"], function ($, DataTable, Chart) {
     ajax: {
       url: "/api/eggs/grading",
       dataSrc: function (json) {
-        // // For Chartjs
-        // var datasets = {
-        //   data: [],
-        //   label: "",
-        //   borderColor: "#c45850",
-        //   fill: true,
-        // };
-        // var labels = [];
-        // for (var i = 0; i < json["results"].length; i++) {
-        //   labels.push(json["results"][i]["week"]);
-        //   datasets.data.push(json["results"][i]["fcr"]);
-        // }
-        // chart.data.labels = labels;
-        // chart.data.datasets[0] = datasets;
-        // chart.update();
-        console.log(json);
+        // For Chartjs
+        var datasets = {
+          data: [
+            {
+              label: "Small (<53g)",
+              data: [10, 20],
+              backgroundColor: "#5C96A5",
+            },
+            {
+              label: "Medium (53-63g)",
+              data: [10, 20],
+              backgroundColor: "#CCCCCC",
+            },
+            {
+              label: "Large (63-73g)",
+              data: [10, 20],
+              backgroundColor: "#CCCCCC",
+            },
+            {
+              label: "Extra Large(>73g)",
+              data: [10, 20],
+              backgroundColor: "#4198D7",
+            },
+          ],
+          label: "",
+          borderColor: "#c45850",
+          fill: true,
+        };
+        var labels = [];
+        for (var i = 0; i < json["results"].length; i++) {
+          labels.push("Week " + json["results"][i]["week"]);
+          datasets.data[0].data.push(json["results"][i]["sm_grading"]);
+          datasets.data[1].data.push(json["results"][i]["m_grading"]);
+          datasets.data[2].data.push(json["results"][i]["lg_grading"]);
+          datasets.data[3].data.push(json["results"][i]["xl_grading"]);
+        }
+
+        percentage_chart.data.labels = labels;
+        percentage_chart.data.datasets[0] = datasets;
+        percentage_chart.update();
 
         json["data"] = json["results"];
         json["recordsTotal"] = json["count"];

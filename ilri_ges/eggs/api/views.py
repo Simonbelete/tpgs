@@ -2,7 +2,7 @@ from rest_framework import viewsets, status
 from django_filters import rest_framework as filters
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from django.db.models import Count, Sum, Avg
+from django.db.models import Count, Sum, Avg, F
 import numpy as np
 
 from . import serializers
@@ -124,7 +124,9 @@ class EggGrading(APIView):
 
         data = []
         for week in range(start_week, end_week + 1):
-            eggs = models.Egg.objects.filter(week=week)
+            eggs = models.Egg.objects.filter(week=week).annotate(
+                individual_egg_weight=F('total_weight')/F('eggs'))
+
             # Filter by
             if farm != 0:
                 eggs = eggs.filter(chicken__farm=farm)
@@ -133,30 +135,29 @@ class EggGrading(APIView):
             if house != 0:
                 eggs = eggs.filter(chicken__house=house)
 
-            sum_weight = eggs.aggregate(
-                weight_sum=Sum('total_weight'))['weight_sum'] or 0
-            total_weight = sum_weight if sum_weight else 1
-            avg_weight = eggs.aggregate(weight_avg=Avg('total_weight'))[
-                'weight_avg'] or 0
-            sm_grading = eggs.filter(week__lt=53).aggregate(
-                weight_sum=Sum('total_weight'))['weight_sum'] or 0
-            m_grading = eggs.filter(
-                week__gt=52, week__lt=63).aggregate(
-                weight_sum=Sum('total_weight'))['weight_sum'] or 0
-            lg_grading = eggs.filter(
-                week__gt=62, week__lt=73).aggregate(
-                weight_sum=Sum('total_weight'))['weight_sum'] or 0
-            xl_grading = eggs.filter(
-                week__gt=72).aggregate(
-                weight_sum=Sum('total_weight'))['weight_sum'] or 0
+            total_eggs = eggs.aggregate(eggs_count=Sum('eggs'))[
+                'eggs_count'] or 0
+            total_weight = eggs.aggregate(
+                total_eggs_weight=Sum('total_weight'))['total_eggs_weight']
+            div_total_eggs = total_eggs if total_eggs != 0 else 1
+            avg_weight = total_weight/total_eggs if total_eggs != 0 else 0
+            sm_grading = eggs.filter(individual_egg_weight__lt=53).aggregate(
+                total_eggs=Sum('eggs'))['total_eggs'] or 0
+            m_grading = eggs.filter(individual_egg_weight__gt=52, individual_egg_weight__lt=63).aggregate(
+                total_eggs=Sum('eggs'))['total_eggs'] or 0
+            lg_grading = eggs.filter(individual_egg_weight__gt=62, individual_egg_weight__lt=73).aggregate(
+                total_eggs=Sum('eggs'))['total_eggs'] or 0
+            xl_grading = eggs.filter(individual_egg_weight__gt=72).aggregate(
+                total_eggs=Sum('eggs'))['total_eggs'] or 0
             data.append({
                 'week': week,
                 'avg_weight': avg_weight,
-                'sum_weight': sum_weight,
-                'sm_grading': round(sm_grading/total_weight * 100, 2),
-                'm_grading': round(m_grading/total_weight * 100, 2),
-                'lg_grading': round(lg_grading/total_weight * 100, 2),
-                'xl_grading': round(xl_grading/total_weight * 100, 2)
+                'eggs_number': total_eggs,
+                'eggs_weight': total_weight,
+                'sm_grading': round(sm_grading/div_total_eggs * 100, 2),
+                'm_grading': round(m_grading/div_total_eggs * 100, 2),
+                'lg_grading': round(lg_grading/div_total_eggs * 100, 2),
+                'xl_grading': round(xl_grading/div_total_eggs * 100, 2)
             })
 
         return Response({'results': data})
