@@ -38,7 +38,9 @@ class WeightsCreateView(LoginRequiredMixin, View):
     redirect_field_name = 'redirect_to'
 
     def get(self, request):
-        form = WeightForm
+        week = request.GET.get('week', 0)
+        chicken = request.GET.get('chicken', None)
+        form = WeightForm(initial={'week': week, 'chicken': chicken})
         return render(request, 'weights/create.html', {'form': form})
 
     def post(self, request):

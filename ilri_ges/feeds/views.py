@@ -20,7 +20,9 @@ class FeedsCreateView(LoginRequiredMixin, View):
     redirect_field_name = 'redirect_to'
 
     def get(self, request):
-        form = FeedForm
+        week = request.GET.get('week', 0)
+        chicken = request.GET.get('chicken', None)
+        form = FeedForm(initial={'week': week, 'chicken': chicken})
         return render(request, 'feeds/create.html', {'form': form})
 
     def post(self, request):
