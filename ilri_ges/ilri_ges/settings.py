@@ -180,7 +180,8 @@ REST_FRAMEWORK = {
     # 'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'DEFAULT_PAGINATION_CLASS': 'ilri_ges.filters.LimitPageNumberPagination',
     'PAGE_SIZE': 10,
-    'DATETIME_FORMAT': "%d-%m-%Y %H:%M:%S",
+    'DATETIME_FORMAT': "%d/%m/%Y %H:%M:%S",
+    'DATE_FORMAT': "%d/%m/%Y",
     'DEFAULT_FILTER_BACKENDS': [
         'django_filters.rest_framework.DjangoFilterBackend',
         'rest_framework.filters.SearchFilter',
@@ -192,7 +193,7 @@ REST_FRAMEWORK = {
     ]
 }
 
-DATETIME_FORMAT = "%d-%m-%Y %H:%M:%S"
+# DATETIME_FORMAT = "%d-%m-%Y %H:%M:%S"
 
 MESSAGE_TAGS = {
     messages.INFO: 'info',

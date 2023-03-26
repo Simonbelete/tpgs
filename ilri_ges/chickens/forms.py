@@ -4,8 +4,8 @@ from .models import Chicken
 
 
 class ChickenForm(forms.ModelForm):
-    # hatch_date = forms.DateField(
-    #     widget=forms.widgets.DateInput(format="%d-%m-%Y"))
+    hatch_date = forms.DateField(input_formats=["%d/%m/%Y"],
+                                 widget=forms.widgets.DateInput(format="%d/%m/%Y"), required=False)
 
     class Meta:
         model = Chicken
@@ -14,8 +14,8 @@ class ChickenForm(forms.ModelForm):
 
 
 class ChickenCreateForm(forms.ModelForm):
-    # hatch_date = forms.DateField(
-    #     widget=forms.widgets.DateInput(format="%d-%m-%Y"))
+    hatch_date = forms.DateField(input_formats=["%d/%m/%Y"],
+                                 widget=forms.widgets.DateInput(format="%d/%m/%Y"), required=False)
 
     class Meta:
         model = Chicken

@@ -82,7 +82,7 @@ class ChickenEditView(LoginRequiredMixin, View):
                 form.save()
                 return redirect('chickens')
             else:
-                messages.error('Error, please check your data')
+                messages.error(request, 'Error, please check your data')
             return render(request, 'chickens/edit.html', {'form': form, "id": id})
         except Exception as ex:
             return redirect('500')

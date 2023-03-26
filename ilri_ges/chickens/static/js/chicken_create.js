@@ -10,7 +10,7 @@ requirejs(
         minYear: 1901,
         maxYear: parseInt(moment().format("YYYY"), 10),
         locale: {
-          format: "YYYY-MM-DD",
+          format: "DD/MM/YYYY",
         },
       },
       function (start, end, label) {
@@ -19,7 +19,7 @@ requirejs(
     );
 
     $("#hatch_date").on("apply.daterangepicker", function (ev, picker) {
-      $(this).val(picker.startDate.format("YYYY-MM-DD"));
+      $(this).val(picker.startDate.format("DD/MM/YYYY"));
     });
 
     // Dead date
@@ -32,7 +32,7 @@ requirejs(
         minYear: 1901,
         maxYear: parseInt(moment().format("YYYY"), 10),
         locale: {
-          format: "YYYY-MM-DD",
+          format: "DD/MM/YYYY",
         },
       },
       function (start, end, label) {
@@ -41,7 +41,7 @@ requirejs(
     );
 
     $("#dead_date").on("apply.daterangepicker", function (ev, picker) {
-      $(this).val(picker.startDate.format("YYYY-MM-DD"));
+      $(this).val(picker.startDate.format("DD/MM/YYYY"));
     });
 
     $("#dead_date").removeAttr("required");
