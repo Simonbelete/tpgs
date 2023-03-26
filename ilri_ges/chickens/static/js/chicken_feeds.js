@@ -1,5 +1,5 @@
 requirejs(
-  ["jquery", "datatables", "lodash", "chartjs"],
+  ["jquery", "datatables", "lodash", "chartjs4"],
   function ($, DataTable, _, Chart) {
     "use strict";
 
@@ -32,6 +32,18 @@ requirejs(
           text: "Feed Intake",
         },
       },
+      plugins: [
+        {
+          beforeDraw: (chart, args, options) => {
+            const { ctx } = chart;
+            ctx.save();
+            ctx.globalCompositeOperation = "destination-over";
+            ctx.fillStyle = "#fff";
+            ctx.fillRect(0, 0, chart.width, chart.height);
+            ctx.restore();
+          },
+        },
+      ],
     });
 
     var table = selector.DataTable({
@@ -96,6 +108,13 @@ requirejs(
 
     $("#apply").click(function () {
       table.ajax.reload(null, false);
+    });
+
+    $("#download_chart").click(function () {
+      var a = document.createElement("a");
+      a.href = chart.toBase64Image();
+      a.download = "feed_intake.png";
+      a.click();
     });
   }
 );
