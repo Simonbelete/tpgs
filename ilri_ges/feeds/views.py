@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.views import View
 from django.contrib import messages
+from django.db.models import Q
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 
 from .forms import FeedForm, FeedTypeForm
@@ -72,8 +73,8 @@ class FeedsEditView(LoginRequiredMixin, View):
             data = Feed.objects.get(pk=id)
             form = FeedForm(request.POST, instance=data)
             if form.is_valid():
-                record_feed = Feed.objects.filter(
-                    chicken=form.cleaned_data['chicken'], week=form.cleaned_data['week'])
+                record_feed = Feed.objects.filter(~Q(id=data.id),
+                                                  chicken=form.cleaned_data['chicken'], week=form.cleaned_data['week'])
                 if record_feed.exists():
                     previous_feed_links = ""
                     for e in record_feed.iterator():
