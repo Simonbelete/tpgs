@@ -37,12 +37,22 @@
             <div class="col-12 tab-content" style="margin-top: 30px">
                 <!-- Tab 1 -->
                 <div class="tab-pane active" id="tab_1">
+                    <button class="btn btn-app" id="download_chart">
+                        <i class="fas fa-download"></i>
+                        Download
+                        <div></div><!-- Donload href container -->
+                      </button>
+                    <canvas id="trending_chart" style="min-height: 250px; height: 250px; max-height: 600px; max-width: 100%;"></canvas>
+                    <br /><br />
+                    <button class="btn btn-app" id="download_chart_2">
+                        <i class="fas fa-download"></i>
+                        Download
+                        <div></div><!-- Donload href container -->
+                      </button>
                     <canvas id="percentage_chart" style="min-height: 250px; height: 250px; max-height: 600px; max-width: 100%;"></canvas>
                 </div>
-                <!-- Tab 2 -->
-                <div class="tab-pane" id="tab_2"></div>
                 <!-- Tab 3 -->
-                <div class="tab-pane" id="tab_3">
+                <div class="tab-pane" id="tab_2">
                     <table id="data_table" class="table table-bordered table-striped">
                         <thead>
                             <tr>
@@ -65,8 +75,7 @@
         <div class="card-footer d-flex">
             <ul class="nav nav-pills ml-auto">
                 <li class="nav-item"><a class="nav-link active" href="#tab_1" data-toggle="tab">Trend</a></li>
-                <li class="nav-item"><a class="nav-link" href="#tab_2" data-toggle="tab">Percentage</a></li>
-                <li class="nav-item"><a class="nav-link" href="#tab_3" data-toggle="tab">Table</a></li>
+                <li class="nav-item"><a class="nav-link" href="#tab_2" data-toggle="tab">Table</a></li>
             </ul>
         </div>
     </div>

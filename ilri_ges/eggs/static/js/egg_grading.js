@@ -17,18 +17,7 @@ requirejs(["jquery", "datatables", "chartjs4"], function ($, DataTable, Chart) {
     type: "bar",
     data: {
       labels: [],
-      datasets: [
-        // {
-        //   label: "Small (<53g)",
-        //   data: [10, 20],
-        //   backgroundColor: "#5C96A5",
-        // },
-        // {
-        //   label: "Large (<53g)",
-        //   data: [30, 40],
-        //   backgroundColor: "red",
-        // },
-      ],
+      datasets: [],
     },
     options: {
       plugins: {
@@ -51,6 +40,48 @@ requirejs(["jquery", "datatables", "chartjs4"], function ($, DataTable, Chart) {
         },
       },
     },
+    plugins: [
+      {
+        beforeDraw: (chart, args, options) => {
+          const { ctx } = chart;
+          ctx.save();
+          ctx.globalCompositeOperation = "destination-over";
+          ctx.fillStyle = "#fff";
+          ctx.fillRect(0, 0, chart.width, chart.height);
+          ctx.restore();
+        },
+      },
+    ],
+  });
+
+  var trending_chart_id = $("#trending_chart").get(0).getContext("2d");
+  var trending_chart = new Chart(trending_chart_id, {
+    type: "line",
+    data: {
+      labels: [],
+      datasets: [],
+    },
+    options: {
+      plugins: {
+        title: {
+          display: true,
+          text: "Egg Weight",
+        },
+      },
+      responsive: true,
+    },
+    plugins: [
+      {
+        beforeDraw: (chart, args, options) => {
+          const { ctx } = chart;
+          ctx.save();
+          ctx.globalCompositeOperation = "destination-over";
+          ctx.fillStyle = "#fff";
+          ctx.fillRect(0, 0, chart.width, chart.height);
+          ctx.restore();
+        },
+      },
+    ],
   });
 
   var table = selector.DataTable({
@@ -64,6 +95,14 @@ requirejs(["jquery", "datatables", "chartjs4"], function ($, DataTable, Chart) {
     ajax: {
       url: "/api/eggs/grading",
       dataSrc: function (json) {
+        var datasets_line_1 = {
+          data: [],
+          label: "Egg Number",
+        };
+        var datasets_line_2 = {
+          data: [],
+          label: "Egg Weight",
+        };
         // For Chartjs
         var datasets = [
           {
@@ -94,6 +133,10 @@ requirejs(["jquery", "datatables", "chartjs4"], function ($, DataTable, Chart) {
         var xl = [];
         for (var i = 0; i < json["results"].length; i++) {
           labels.push("Week " + json["results"][i]["week"]);
+          // Trend
+          datasets_line_1.data.push(json["results"][i]["eggs_number"]);
+          datasets_line_2.data.push(json["results"][i]["avg_weight"]);
+          // Percentage
           sm.push(json["results"][i]["sm_grading"]);
           md.push(json["results"][i]["m_grading"]);
           lg.push(json["results"][i]["lg_grading"]);
@@ -107,6 +150,11 @@ requirejs(["jquery", "datatables", "chartjs4"], function ($, DataTable, Chart) {
         percentage_chart.data.labels = labels;
         percentage_chart.data.datasets = datasets;
         percentage_chart.update();
+
+        trending_chart.data.labels = labels;
+        trending_chart.data.datasets[0] = datasets_line_1;
+        trending_chart.data.datasets[1] = datasets_line_2;
+        trending_chart.update();
 
         json["data"] = json["results"];
         json["recordsTotal"] = json["count"];
@@ -133,5 +181,19 @@ requirejs(["jquery", "datatables", "chartjs4"], function ($, DataTable, Chart) {
 
   $("#apply").click(function () {
     table.ajax.reload(null, false);
+  });
+
+  $("#download_chart").click(function () {
+    var a = document.createElement("a");
+    a.href = trending_chart.toBase64Image();
+    a.download = "egg_grading_wight.png";
+    a.click();
+  });
+
+  $("#download_chart_2").click(function () {
+    var a = document.createElement("a");
+    a.href = percentage_chart.toBase64Image();
+    a.download = "egg_grading_percentage.png";
+    a.click();
   });
 });

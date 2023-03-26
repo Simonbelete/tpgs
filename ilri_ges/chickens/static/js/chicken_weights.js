@@ -116,8 +116,6 @@ requirejs(
       a.href = chart.toBase64Image();
       a.download = "my_file_name.png";
       a.click();
-
-      console.log(a);
     });
   }
 );
