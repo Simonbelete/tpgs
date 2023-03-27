@@ -14,4 +14,5 @@ urlpatterns = [
          name='feeds_types_delete'),
     path('types/create', views.FeedTypesCreateView.as_view(),
          name='feeds_types_create'),
+    path('average', views.FeedAvg.as_view(), name='feed_avg_report'),
 ]

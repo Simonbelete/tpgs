@@ -17,4 +17,5 @@ router_types.register(r'(?P<id>.+)/histories',
 urlpatterns = [
     path('feeds/types/', include(router_types.urls)),
     path('feeds/', include(router.urls)),
+    path('feeds/avg', views.FeedGrading.as_view()),
 ]

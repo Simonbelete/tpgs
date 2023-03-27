@@ -1,15 +1,15 @@
 {% extends "plain_template.html" %}
 {% load static %}
 
-{% block page_title %}Egg Grading{% endblock %}
-{% block data_title %}Egg Grading{% endblock %}
-{% block data_menu %}Egg Grading{% endblock %}
+{% block page_title %}Avg. Body Weight{% endblock %}
+{% block data_title %}Avg. Body Weight{% endblock %}
+{% block data_menu %}Avg. Body Weight{% endblock %}
 
 {% block content %}
 <div class="col-12">
     <div class="card">
         <div class="card-header">
-            <h3 class="card-title">Feed consumption by Body Weight Report</h3>
+            <h3 class="card-title">Average Body Weight Report</h3>
         </div>
         <div class="card-body row">
             <div class="col-12">
@@ -43,13 +43,6 @@
                         <div></div><!-- Donload href container -->
                       </button>
                     <canvas id="trending_chart" style="min-height: 250px; height: 250px; max-height: 600px; max-width: 100%;"></canvas>
-                    <br /><br />
-                    <button class="btn btn-app" id="download_chart_2">
-                        <i class="fas fa-download"></i>
-                        Download
-                        <div></div><!-- Donload href container -->
-                      </button>
-                    <canvas id="percentage_chart" style="min-height: 250px; height: 250px; max-height: 600px; max-width: 100%;"></canvas>
                 </div>
                 <!-- Tab 3 -->
                 <div class="tab-pane" id="tab_2">
@@ -57,11 +50,7 @@
                         <thead>
                             <tr>
                               <th>Week</th>
-                              <th>Average Egg Weight</th>
-                              <th>% grading S &le; 53 g</th>
-                              <th>% grading M &le; 53-63 g</th>
-                              <th>% grading L &le; 63-73 g</th>
-                              <th>% grading XL &gt; 73 g</th>
+                              <th>Average Body Weight</th>
                             </tr>
                           </thead>
                         <tbody></tbody>
@@ -86,5 +75,5 @@
 <script src="{% static 'js/farm_select.js' %}"></script>
 <script src="{% static 'js/breed_type_select.js' %}"></script>
 <script src="{% static 'js/house_select.js' %}"></script>
-<script src="{% static 'js/egg_grading.js' %}"></script>
+<script src="{% static 'js/avg_feed.js' %}"></script>
 {% endblock %}

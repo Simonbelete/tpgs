@@ -2,8 +2,8 @@ from rest_framework import viewsets, status
 from django_filters import rest_framework as filters
 from rest_framework.response import Response
 from core.views import ModelFilterViewSet
-from django.db.models import Count, Sum
-from django.db.models import F
+from django.db.models import Count, Sum, Avg, F
+from rest_framework.views import APIView
 
 from . import serializers
 from core.views import HistoryViewSet
@@ -66,3 +66,36 @@ class FeedViewSet(viewsets.ModelViewSet):
 class FeedHistoryViewSet(HistoryViewSet):
     queryset = models.Feed.history.all()
     serializer_class = serializers.FeedHistory
+
+
+class FeedGrading(APIView):
+    queryset = models.Feed.objects.all()
+
+    def get(self, request):
+        start_week = int(request.GET.get('start_week', 0))
+        end_week = int(request.GET.get('end_week', 0))
+
+        farm = request.GET.get('farm') or 0
+        breed_type = request.GET.get('breed_type') or 0
+        house = request.GET.get('house') or 0
+
+        data = []
+        for week in range(start_week, end_week + 1):
+            feeds = models.Feed.objects.filter(week=week)
+
+            # Filter by
+            if farm != 0:
+                feeds = feeds.filter(chicken__farm=farm)
+            if breed_type != 0:
+                feeds = feeds.filter(chicken__breed_type=breed_type)
+            if house != 0:
+                feeds = feeds.filter(chicken__house=house)
+
+            avg_feed = feeds.aggregate(avg_feed_weight=Avg('weight'))[
+                'avg_feed_weight'] or 0
+            data.append({
+                'week': week,
+                'avg_feed_weight': avg_feed
+            })
+
+        return Response({'results': data})

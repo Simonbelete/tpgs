@@ -344,6 +344,20 @@
               </a>
             </li>
 
+            <li class="nav-item">
+              <a href="{% url 'feed_avg_report' %}" class="nav-link">
+                <i class="fas fa-circle nav-icon {% if request.path == '/chickens/feed-by-weight' %}active{% endif %}"></i>
+                <p>Feed Avg.</p>
+              </a>
+            </li>
+
+            <li class="nav-item">
+              <a href="{% url 'egg_grading_report' %}" class="nav-link">
+                <i class="fas fa-circle nav-icon {% if request.path == '/chickens/feed-by-weight' %}active{% endif %}"></i>
+                <p>Body Weight Avg.</p>
+              </a>
+            </li>
+
             <!-- Import Export -->
             <li class="nav-header">IMPORT & EXPORT</li>
 

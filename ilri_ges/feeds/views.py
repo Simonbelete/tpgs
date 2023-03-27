@@ -180,3 +180,11 @@ class FeedTypesDeleteView(PermissionRequiredMixin, View):
             return redirect('feeds_types')
         except:
             return redirect(500)
+
+
+class FeedAvg(LoginRequiredMixin, View):
+    login_url = '/users/login'
+    redirect_field_name = 'redirect_to'
+
+    def get(self, request):
+        return render(request, 'report/feed_avg_report.html')

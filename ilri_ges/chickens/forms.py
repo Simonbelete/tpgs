@@ -16,6 +16,8 @@ class ChickenForm(forms.ModelForm):
 class ChickenCreateForm(forms.ModelForm):
     hatch_date = forms.DateField(input_formats=["%d/%m/%Y"],
                                  widget=forms.widgets.DateInput(format="%d/%m/%Y"), required=False)
+    dead_date = forms.DateField(input_formats=["%d/%m/%Y"],
+                                widget=forms.widgets.DateInput(format="%d/%m/%Y"), required=False)
 
     class Meta:
         model = Chicken
@@ -24,9 +26,12 @@ class ChickenCreateForm(forms.ModelForm):
 
 
 class ChickenStateForm(forms.ModelForm):
+    dead_date = forms.DateField(input_formats=["%d/%m/%Y"],
+                                widget=forms.widgets.DateInput(format="%d/%m/%Y"), required=False)
+
     class Meta:
         model = Chicken
-        fields = ['is_dead', 'dead_date', 'days_alive']
+        fields = ['is_dead', 'dead_date']
 
 
 class ChickenImportForm(forms.ModelForm):
@@ -36,6 +41,9 @@ class ChickenImportForm(forms.ModelForm):
 
 
 class ChickenExportForm(forms.ModelForm):
+    # start_week = forms.IntegerField()
+    # end_week = forms.IntegerField()
+
     class Meta:
         model = Chicken
         fields = ['breed_type', 'farm', 'house']
