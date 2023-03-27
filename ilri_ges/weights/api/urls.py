@@ -12,5 +12,5 @@ urlpatterns = [
     path('', include(router.urls)),
     path('weights/growth-performance',  views.get_weight_graph,
          name='api_weights_growth_performance'),
-
+    path('weights/avg', views.WeightAvg.as_view()),
 ]

@@ -9,6 +9,9 @@ import matplotlib.pyplot as plt
 from django.views.decorators.http import require_http_methods
 from django_filters import rest_framework as filters
 from django.http import HttpResponse
+from rest_framework.views import APIView
+from django.db.models import Count, Sum, Avg, F
+
 
 from . import serializers
 from core.views import HistoryViewSet
@@ -136,3 +139,36 @@ def get_weight_graph(request):
     )
 
     return response
+
+
+class WeightAvg(APIView):
+    queryset = models.Weight.objects.all()
+
+    def get(self, request):
+        start_week = int(request.GET.get('start_week', 0))
+        end_week = int(request.GET.get('end_week', 0))
+
+        farm = request.GET.get('farm') or 0
+        breed_type = request.GET.get('breed_type') or 0
+        house = request.GET.get('house') or 0
+
+        data = []
+        for week in range(start_week, end_week + 1):
+            feeds = models.Weight.objects.filter(week=week)
+
+            # Filter by
+            if farm != 0:
+                feeds = feeds.filter(chicken__farm=farm)
+            if breed_type != 0:
+                feeds = feeds.filter(chicken__breed_type=breed_type)
+            if house != 0:
+                feeds = feeds.filter(chicken__house=house)
+
+            avg_weight = feeds.aggregate(avg_body_weight=Avg('weight'))[
+                'avg_body_weight'] or 0
+            data.append({
+                'week': week,
+                'avg_body_weight': avg_weight
+            })
+
+        return Response({'results': data})

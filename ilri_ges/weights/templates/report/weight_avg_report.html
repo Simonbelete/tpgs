@@ -1,15 +1,15 @@
 {% extends "plain_template.html" %}
 {% load static %}
 
-{% block page_title %}Avg. Feed Intake{% endblock %}
-{% block data_title %}Avg. Feed Intake{% endblock %}
-{% block data_menu %}Avg. Feed Intake{% endblock %}
+{% block page_title %}Avg. Body Weight{% endblock %}
+{% block data_title %}Avg. Body Weight{% endblock %}
+{% block data_menu %}Avg. Body Weight{% endblock %}
 
 {% block content %}
 <div class="col-12">
     <div class="card">
         <div class="card-header">
-            <h3 class="card-title">Average Feed Intake Report</h3>
+            <h3 class="card-title">Average Body Weight Report</h3>
         </div>
         <div class="card-body row">
             <div class="col-12">
@@ -75,5 +75,5 @@
 <script src="{% static 'js/farm_select.js' %}"></script>
 <script src="{% static 'js/breed_type_select.js' %}"></script>
 <script src="{% static 'js/house_select.js' %}"></script>
-<script src="{% static 'js/avg_feed.js' %}"></script>
+<script src="{% static 'js/avg_weight.js' %}"></script>
 {% endblock %}

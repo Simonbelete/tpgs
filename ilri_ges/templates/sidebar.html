@@ -339,21 +339,21 @@
             <li class="nav-header">Grading</li>
             <li class="nav-item">
               <a href="{% url 'egg_grading_report' %}" class="nav-link">
-                <i class="fas fa-circle nav-icon {% if request.path == '/chickens/feed-by-weight' %}active{% endif %}"></i>
+                <i class="fas fa-circle nav-icon {% if request.path == '/eggs/feed-by-weight' %}active{% endif %}"></i>
                 <p>Egg Grading</p>
               </a>
             </li>
 
             <li class="nav-item">
               <a href="{% url 'feed_avg_report' %}" class="nav-link">
-                <i class="fas fa-circle nav-icon {% if request.path == '/chickens/feed-by-weight' %}active{% endif %}"></i>
+                <i class="fas fa-circle nav-icon {% if request.path == '/feeds/feed-by-weight' %}active{% endif %}"></i>
                 <p>Feed Avg.</p>
               </a>
             </li>
 
             <li class="nav-item">
-              <a href="{% url 'egg_grading_report' %}" class="nav-link">
-                <i class="fas fa-circle nav-icon {% if request.path == '/chickens/feed-by-weight' %}active{% endif %}"></i>
+              <a href="{% url 'weight_avg_report' %}" class="nav-link">
+                <i class="fas fa-circle nav-icon {% if request.path == '/weights/average' %}active{% endif %}"></i>
                 <p>Body Weight Avg.</p>
               </a>
             </li>

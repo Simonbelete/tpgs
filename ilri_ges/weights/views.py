@@ -159,3 +159,11 @@ class WeightDeleteView(PermissionRequiredMixin, View):
             return redirect('weights')
         except:
             return redirect(500)
+
+
+class WeightAvg(LoginRequiredMixin, View):
+    login_url = '/users/login'
+    redirect_field_name = 'redirect_to'
+
+    def get(self, request):
+        return render(request, 'report/weight_avg_report.html')

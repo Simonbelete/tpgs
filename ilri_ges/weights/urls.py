@@ -9,5 +9,6 @@ urlpatterns = [
     path('create', views.WeightsCreateView.as_view(), name="weights_create"),
     path('import', views.WeightsImportView.as_view(), name="weights_import"),
     path('growth-performance', views.GrowthPerformanceView.as_view(),
-         name="weights_growth_performance")
+         name="weights_growth_performance"),
+    path('average', views.WeightAvg.as_view(), name='weight_avg_report'),
 ]

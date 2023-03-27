@@ -3,7 +3,7 @@ requirejs(["jquery", "datatables", "chartjs4"], function ($, DataTable, Chart) {
 
   var selector = $("#data_table");
 
-  var columns = [{ data: "week" }, { data: "avg_feed_weight" }];
+  var columns = [{ data: "week" }, { data: "avg_body_weight" }];
 
   var trending_chart_id = $("#trending_chart").get(0).getContext("2d");
   var trending_chart = new Chart(trending_chart_id, {
@@ -16,7 +16,7 @@ requirejs(["jquery", "datatables", "chartjs4"], function ($, DataTable, Chart) {
       plugins: {
         title: {
           display: true,
-          text: "Average Feed Intake",
+          text: "Average Body Weight",
         },
       },
       responsive: true,
@@ -44,7 +44,7 @@ requirejs(["jquery", "datatables", "chartjs4"], function ($, DataTable, Chart) {
     processing: true,
     serverSide: true,
     ajax: {
-      url: "/api/feeds/avg",
+      url: "/api/weights/avg",
       dataSrc: function (json) {
         // For Chartjs
         var datasets = {
@@ -56,7 +56,7 @@ requirejs(["jquery", "datatables", "chartjs4"], function ($, DataTable, Chart) {
         var labels = [];
         for (var i = 0; i < json["results"].length; i++) {
           labels.push("Week " + json["results"][i]["week"]);
-          datasets.data.push(json["results"][i]["avg_feed_weight"]);
+          datasets.data.push(json["results"][i]["avg_body_weight"]);
         }
 
         trending_chart.data.labels = labels;
