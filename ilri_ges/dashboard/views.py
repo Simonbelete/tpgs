@@ -25,16 +25,25 @@ class DashboardView(LoginRequiredMixin, View):
 
         # for chicken in chickens:
         #     chicken_current_week = chicken.age_in_weeks
-
-        context = {
-            'statics_count': {
-                'users_count': User.objects.count(),
-                'flocks_count': Flock.objects.count(),
-                'farms_count': Farm.objects.count(),
-                'chicken_count': Chicken.objects.count(),
-                'eggs_count': Egg.objects.count()
-            },
-        }
+        if request.user.is_superuser:
+            context = {
+                'statics_count': {
+                    'users_count': User.objects.filter(is_superuser=False).count(),
+                    'flocks_count': Flock.objects.count(),
+                    'farms_count': Farm.objects.count(),
+                    'chicken_count': Chicken.objects.count(),
+                },
+            }
+        else:
+            farms = request.user.farms.all()
+            context = {
+                'statics_count': {
+                    'users_count': User.objects.filter(farms__in=farms, is_superuser=False).count(),
+                    'flocks_count': Flock.objects.filter(farm__in=farms).count(),
+                    'farms_count': farms.count(),
+                    'chicken_count': Chicken.objects.filter(farm__in=farms).count(),
+                },
+            }
         return render(request, 'dashboard/index.html', context=context)
 
 
