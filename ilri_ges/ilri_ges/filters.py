@@ -20,8 +20,16 @@ class HaveFarmFilterBackend(BaseFilterBackend):
         if request.user.is_superuser:
             return queryset
         else:
-            farms = request.user.farms if request.user.farms.exists() else []
-            return queryset.filter(farm__in=farms, farms__in=farms)
+            farms = request.user.farms.all() if request.user.farms.all().exists() else []
+            # return queryset.filter(farm__in=farms, farms__in=farms)
+            filtered_queryset = queryset
+            try:
+                filtered_queryset = queryset.filter(
+                    farms__in=farms)
+            except:
+                filtered_queryset = queryset.filter(
+                    farm__in=farms)
+            return filtered_queryset
 
 
 class LimitPageNumberPagination(LimitOffsetPagination):
