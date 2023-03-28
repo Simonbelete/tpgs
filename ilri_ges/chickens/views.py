@@ -201,7 +201,16 @@ class ChickenImportView(LoginRequiredMixin, View):
         errors = []
         file_upload = request.FILES.get('file_upload')
         farm_id = request.POST.get('farm', None)
-        breed_type_id = request.POST.get('breed_type', None)
+        breed_type_id = request.GET.get('breed_type', 0)
+
+        try:
+            breed_type = BreedType.objects.get(pk=breed_type_id)
+        except:
+            breed_type = None
+        try:
+            farm = Farm.objects.get(pk=farm_id)
+        except:
+            farm = None
 
         # absolute_path = os.path.dirname(__file__)
         # full_path = os.path.join(
@@ -290,8 +299,8 @@ class ChickenImportView(LoginRequiredMixin, View):
                     tag=tag, defaults={
                         'sex': sex,
                         'breed_pair': breed_pair,
-                        'farm': farm_id,
-                        'breed_type': breed_type_id,
+                        'farm': farm,
+                        'breed_type': breed_type,
                         'house': house,
                         'flock': flock,
                         'pen': pen_name,
@@ -305,7 +314,6 @@ class ChickenImportView(LoginRequiredMixin, View):
                     feed_weight = row[week, "feed"].values[0]
                     eggs = row[week, "egg"].values[0]
                     eggs_weights = row[week, "egg weight"].values[0]
-
                     if weight != None:
                         weight, weight_created = Weight.objects.update_or_create(
                             week=week_no, chicken=chicken, defaults={'weight': Decimal(weight), 'created_by': self.request.user})

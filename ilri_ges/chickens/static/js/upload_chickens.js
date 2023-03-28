@@ -9,10 +9,18 @@ requirejs(
       },
       url:
         "/chickens/import?farm=" +
-        $("farm_select").val() +
+        $("#farm_select").val() +
         "&breed_type=" +
-        $("breed_type_select").val(),
+        $("#breed_type_select").val(),
       paramName: "file_upload",
+    });
+
+    myDropzone.on("addedfile", (file) => {
+      myDropzone.options.url =
+        "/chickens/import?farm=" +
+        $("#farm_select").val() +
+        "&breed_type=" +
+        $("#breed_type_select").val();
     });
 
     // Update the total progress bar
