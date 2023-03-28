@@ -16,7 +16,7 @@ from django.utils.encoding import force_bytes
 from django.contrib.auth.mixins import PermissionRequiredMixin
 
 
-from users.forms import LoginForm, UserForm
+from users.forms import LoginForm, UserForm, UserCredentialForm
 from .models import User
 from farms.models import Farm
 
@@ -116,11 +116,11 @@ class UsersCreateView(PermissionRequiredMixin, View):
     logger = logging.getLogger(__name__)
 
     def get(self, request):
-        form = UserForm()
+        form = UserCredentialForm()
         return render(request, 'users/create.html', {'form': form})
 
     def post(self, request):
-        form = UserForm(request.POST)
+        form = UserCredentialForm(request.POST)
         if form.is_valid():
             user = User.objects.create_user(
                 form.cleaned_data['email'], form.cleaned_data['password'], name=form.cleaned_data['name'])

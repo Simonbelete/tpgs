@@ -10,6 +10,14 @@ class LoginForm(forms.Form):
     password = forms.CharField()
 
 
+class UserCredentialForm(forms.ModelForm):
+    password = forms.PasswordInput()
+
+    class Meta:
+        model = User
+        fields = ['name', 'email', 'farms', 'password', 'groups', 'is_active']
+
+
 class UserForm(forms.ModelForm):
     class Meta:
         model = User
