@@ -12170,3 +12170,59 @@ Traceback (most recent call last):
   File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/ilri_ges/filters.py", line 26, in filter_queryset
     farms = equest.user.farms.all() if equest.user.farms.all().exists() else []
 NameError: name 'equest' is not defined
+Internal Server Error: /chickens/import
+Traceback (most recent call last):
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/venv/lib/python3.8/site-packages/django/core/handlers/exception.py", line 56, in inner
+    response = get_response(request)
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/venv/lib/python3.8/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/venv/lib/python3.8/site-packages/django/views/generic/base.py", line 103, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/venv/lib/python3.8/site-packages/django/contrib/auth/mixins.py", line 73, in dispatch
+    return super().dispatch(request, *args, **kwargs)
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/venv/lib/python3.8/site-packages/django/views/generic/base.py", line 142, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/chickens/views.py", line 338, in post
+    raise ex
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/chickens/views.py", line 318, in post
+    eggs = row[week, "egg"].values[0]
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/venv/lib/python3.8/site-packages/pandas/core/frame.py", line 3806, in __getitem__
+    return self._getitem_multilevel(key)
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/venv/lib/python3.8/site-packages/pandas/core/frame.py", line 3857, in _getitem_multilevel
+    loc = self.columns.get_loc(key)
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/venv/lib/python3.8/site-packages/pandas/core/indexes/multi.py", line 2927, in get_loc
+    return self._engine.get_loc(key)
+  File "pandas/_libs/index.pyx", line 782, in pandas._libs.index.BaseMultiIndexCodesEngine.get_loc
+  File "pandas/_libs/index.pyx", line 138, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas/_libs/index.pyx", line 165, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas/_libs/hashtable_class_helper.pxi", line 1920, in pandas._libs.hashtable.UInt64HashTable.get_item
+  File "pandas/_libs/hashtable_class_helper.pxi", line 1930, in pandas._libs.hashtable.UInt64HashTable.get_item
+KeyError: 35
+Internal Server Error: /chickens/import
+Traceback (most recent call last):
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/venv/lib/python3.8/site-packages/django/core/handlers/exception.py", line 56, in inner
+    response = get_response(request)
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/venv/lib/python3.8/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/venv/lib/python3.8/site-packages/django/views/generic/base.py", line 103, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/venv/lib/python3.8/site-packages/django/contrib/auth/mixins.py", line 73, in dispatch
+    return super().dispatch(request, *args, **kwargs)
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/venv/lib/python3.8/site-packages/django/views/generic/base.py", line 142, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/chickens/views.py", line 339, in post
+    raise ex
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/chickens/views.py", line 318, in post
+    eggs = row[week, "egg"].values[0]
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/venv/lib/python3.8/site-packages/pandas/core/frame.py", line 3806, in __getitem__
+    return self._getitem_multilevel(key)
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/venv/lib/python3.8/site-packages/pandas/core/frame.py", line 3857, in _getitem_multilevel
+    loc = self.columns.get_loc(key)
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/venv/lib/python3.8/site-packages/pandas/core/indexes/multi.py", line 2927, in get_loc
+    return self._engine.get_loc(key)
+  File "pandas/_libs/index.pyx", line 782, in pandas._libs.index.BaseMultiIndexCodesEngine.get_loc
+  File "pandas/_libs/index.pyx", line 138, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas/_libs/index.pyx", line 165, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas/_libs/hashtable_class_helper.pxi", line 1920, in pandas._libs.hashtable.UInt64HashTable.get_item
+  File "pandas/_libs/hashtable_class_helper.pxi", line 1930, in pandas._libs.hashtable.UInt64HashTable.get_item
+KeyError: 35

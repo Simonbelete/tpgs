@@ -225,7 +225,7 @@ class ChickenImportView(LoginRequiredMixin, View):
 
         df.columns.values[0:9] = 'chicken'
 
-        col_weeks = len(df.columns[9:]) / 4
+        col_weeks = len(df.columns[9:]) / 5
 
         if (len(df.columns[9:]) % 2 != 0):
             return HttpResponse("Invalid Columns")
@@ -233,8 +233,8 @@ class ChickenImportView(LoginRequiredMixin, View):
             col_weeks = int(col_weeks)
 
         for col_w in range(0, col_weeks):
-            start_col = 9 + col_w * 4
-            end_col = start_col + 4
+            start_col = 9 + col_w * 5
+            end_col = start_col + 5
             df.columns.values[start_col:end_col] = df.columns[start_col]
 
         tuple = list(zip(df.columns, df.iloc[0]))
@@ -311,7 +311,10 @@ class ChickenImportView(LoginRequiredMixin, View):
                 for week in weeks:
                     week_no = week.split(" ")[-1]
                     weight = row[week, "weight"].values[0]
-                    feed_weight = row[week, "feed"].values[0]
+                    feed_offered_weight = row[week,
+                                              "feed offered"].values[0] or 0
+                    feed_refusal_weight = row[week,
+                                              "feed refusal"].values[0] or 0
                     eggs = row[week, "egg"].values[0]
                     eggs_weights = row[week, "egg weight"].values[0]
                     if weight != None:
@@ -320,14 +323,21 @@ class ChickenImportView(LoginRequiredMixin, View):
                     if eggs != None:
                         egg, egg_created = Egg.objects.update_or_create(
                             week=week_no, chicken=chicken, defaults={'eggs': int(eggs), 'total_weight': Decimal(eggs_weights), 'created_by': self.request.user})
-                    if feed_weight != None:
+                    if feed_offered_weight != None:
+                        feed_weight = Decimal(
+                            feed_offered_weight) - Decimal(feed_refusal_weight)
                         feed, feed_created = Feed.objects.update_or_create(
                             week=week_no, chicken=chicken, defaults={'weight': Decimal(feed_weight), 'created_by': self.request.user})
             except Exception as ex:
+                print('--------------------------------------')
+                print(ex)
                 errors.append({'data': {
+                    'week': week_no,
                     'tag': tag,
                     'sex': sex
                 }, 'exception': str(ex)})
+                # raise ex
+
         return JsonResponse({
             'errors': errors,
         })

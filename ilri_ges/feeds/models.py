@@ -31,6 +31,6 @@ class Feed(CoreModel):
 
     history = HistoricalRecords()
 
-    # def save(self, *args, **kwargs):
-    #     self.weight = self.feed_offered - self.feed_refusal
-    #     super(Feed, self).save(*args, **kwargs)
+    def save(self, *args, **kwargs):
+        self.weight = self.feed_offered - self.feed_refusal
+        super(Feed, self).save(*args, **kwargs)
