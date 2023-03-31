@@ -12226,3 +12226,75 @@ Traceback (most recent call last):
   File "pandas/_libs/hashtable_class_helper.pxi", line 1920, in pandas._libs.hashtable.UInt64HashTable.get_item
   File "pandas/_libs/hashtable_class_helper.pxi", line 1930, in pandas._libs.hashtable.UInt64HashTable.get_item
 KeyError: 35
+Internal Server Error: /chickens/export
+Traceback (most recent call last):
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/venv/lib/python3.8/site-packages/pandas/core/internals/construction.py", line 969, in _finalize_columns_and_data
+    columns = _validate_or_indexify_columns(contents, columns)
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/venv/lib/python3.8/site-packages/pandas/core/internals/construction.py", line 1017, in _validate_or_indexify_columns
+    raise AssertionError(
+AssertionError: 7 columns passed, passed data had 5 columns
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/venv/lib/python3.8/site-packages/django/core/handlers/exception.py", line 56, in inner
+    response = get_response(request)
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/venv/lib/python3.8/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/venv/lib/python3.8/site-packages/django/views/generic/base.py", line 103, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/venv/lib/python3.8/site-packages/django/contrib/auth/mixins.py", line 73, in dispatch
+    return super().dispatch(request, *args, **kwargs)
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/venv/lib/python3.8/site-packages/django/views/generic/base.py", line 142, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/chickens/views.py", line 372, in post
+    df = pd.DataFrame(data, columns=columns)
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/venv/lib/python3.8/site-packages/pandas/core/frame.py", line 746, in __init__
+    arrays, columns, index = nested_data_to_arrays(
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/venv/lib/python3.8/site-packages/pandas/core/internals/construction.py", line 510, in nested_data_to_arrays
+    arrays, columns = to_arrays(data, columns, dtype=dtype)
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/venv/lib/python3.8/site-packages/pandas/core/internals/construction.py", line 875, in to_arrays
+    content, columns = _finalize_columns_and_data(arr, columns, dtype)
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/venv/lib/python3.8/site-packages/pandas/core/internals/construction.py", line 972, in _finalize_columns_and_data
+    raise ValueError(err) from err
+ValueError: 7 columns passed, passed data had 5 columns
+Not Found: /favicon.ico
+Forbidden (Permission denied): /users/2/
+Traceback (most recent call last):
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/venv/lib/python3.8/site-packages/django/core/handlers/exception.py", line 56, in inner
+    response = get_response(request)
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/venv/lib/python3.8/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/venv/lib/python3.8/site-packages/django/views/generic/base.py", line 103, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/venv/lib/python3.8/site-packages/django/contrib/auth/mixins.py", line 108, in dispatch
+    return self.handle_no_permission()
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/venv/lib/python3.8/site-packages/django/contrib/auth/mixins.py", line 48, in handle_no_permission
+    raise PermissionDenied(self.get_permission_denied_message())
+django.core.exceptions.PermissionDenied
+Forbidden (Permission denied): /users/2/
+Traceback (most recent call last):
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/venv/lib/python3.8/site-packages/django/core/handlers/exception.py", line 56, in inner
+    response = get_response(request)
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/venv/lib/python3.8/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/venv/lib/python3.8/site-packages/django/views/generic/base.py", line 103, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/venv/lib/python3.8/site-packages/django/contrib/auth/mixins.py", line 108, in dispatch
+    return self.handle_no_permission()
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/venv/lib/python3.8/site-packages/django/contrib/auth/mixins.py", line 48, in handle_no_permission
+    raise PermissionDenied(self.get_permission_denied_message())
+django.core.exceptions.PermissionDenied
+Forbidden (Permission denied): /users/2/
+Traceback (most recent call last):
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/venv/lib/python3.8/site-packages/django/core/handlers/exception.py", line 56, in inner
+    response = get_response(request)
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/venv/lib/python3.8/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/venv/lib/python3.8/site-packages/django/views/generic/base.py", line 103, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/venv/lib/python3.8/site-packages/django/contrib/auth/mixins.py", line 108, in dispatch
+    return self.handle_no_permission()
+  File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/venv/lib/python3.8/site-packages/django/contrib/auth/mixins.py", line 48, in handle_no_permission
+    raise PermissionDenied(self.get_permission_denied_message())
+django.core.exceptions.PermissionDenied

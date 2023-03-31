@@ -68,9 +68,10 @@ class ChangePassword(LoginRequiredMixin, View):
         return render(request, 'users/change_password.html', {"form": form})
 
 
-class ChangeUserPassword(LoginRequiredMixin, View):
+class ChangeUserPassword(PermissionRequiredMixin, View):
     login_url = '/users/login'
     redirect_field_name = 'redirect_to'
+    permission_required = ('users.change_user')
 
     def get(self, request, id=0):
         if id == 0:
@@ -112,7 +113,7 @@ class UsersView(PermissionRequiredMixin, View):
 class UsersCreateView(PermissionRequiredMixin, View):
     login_url = '/users/login'
     redirect_field_name = 'redirect_to'
-    permission_required = ('users.create_user', 'users.add_user',)
+    permission_required = ('users.add_user',)
     logger = logging.getLogger(__name__)
 
     def get(self, request):
@@ -140,7 +141,7 @@ class UsersCreateView(PermissionRequiredMixin, View):
 class UsersEditView(PermissionRequiredMixin, View):
     login_url = '/users/login'
     redirect_field_name = 'redirect_to'
-    permission_required = ('users.create_user', 'users.change_user',)
+    permission_required = ('users.delete_user', 'users.change_user',)
 
     def get(self, request, id=0):
         if id == 0:
