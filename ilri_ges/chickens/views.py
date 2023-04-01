@@ -200,7 +200,7 @@ class ChickenImportView(LoginRequiredMixin, View):
     def post(self, request):
         errors = []
         file_upload = request.FILES.get('file_upload')
-        farm_id = request.POST.get('farm', None)
+        farm_id = request.GET.get('farm', 0)
         breed_type_id = request.GET.get('breed_type', 0)
 
         try:
@@ -323,9 +323,6 @@ class ChickenImportView(LoginRequiredMixin, View):
                     if eggs != None:
                         egg, egg_created = Egg.objects.update_or_create(
                             week=week_no, chicken=chicken, defaults={'eggs': int(eggs), 'total_weight': Decimal(eggs_weights), 'created_by': self.request.user})
-                    print('----------------------------')
-                    print(feed_offered_weight)
-                    print(feed_refusal_weight)
                     if feed_offered_weight != None:
                         feed_weight = Decimal(
                             feed_offered_weight) - Decimal(feed_refusal_weight)
@@ -333,8 +330,6 @@ class ChickenImportView(LoginRequiredMixin, View):
                         feed, feed_created = Feed.objects.update_or_create(
                             week=week_no, chicken=chicken, defaults={'feed_offered': Decimal(feed_offered_weight), 'feed_refusal': Decimal(feed_refusal_weight), 'created_by': self.request.user})
             except Exception as ex:
-                print('--------------------------------------')
-                print(ex)
                 errors.append({'data': {
                     'week': week_no,
                     'tag': tag,
