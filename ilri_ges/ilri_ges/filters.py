@@ -10,6 +10,7 @@ from feeds.models import Feed
 from flocks.models import Flock
 from users.models import User
 from weights.models import Weight
+from locations.models import House
 
 
 class IsActiveFilterBackend(BaseFilterBackend):
@@ -36,7 +37,7 @@ class HaveFarmFilterBackend(BaseFilterBackend):
         elif User.__name__ == queryset.model.__name__:
             filtered_queryset = queryset.filter(
                 farms__in=farms)
-        elif queryset.model.__name__ in [Chicken.__name__, Flock.__name__]:
+        elif queryset.model.__name__ in [Chicken.__name__, Flock.__name__, House.__name__]:
             filtered_queryset = queryset.filter(
                 farm__in=farms)
         elif queryset.model.__name__ in [Egg.__name__, Feed.__name__, Weight.__name__]:
