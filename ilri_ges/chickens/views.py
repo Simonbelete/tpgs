@@ -323,11 +323,15 @@ class ChickenImportView(LoginRequiredMixin, View):
                     if eggs != None:
                         egg, egg_created = Egg.objects.update_or_create(
                             week=week_no, chicken=chicken, defaults={'eggs': int(eggs), 'total_weight': Decimal(eggs_weights), 'created_by': self.request.user})
+                    print('----------------------------')
+                    print(feed_offered_weight)
+                    print(feed_refusal_weight)
                     if feed_offered_weight != None:
                         feed_weight = Decimal(
                             feed_offered_weight) - Decimal(feed_refusal_weight)
+                        print(feed_weight)
                         feed, feed_created = Feed.objects.update_or_create(
-                            week=week_no, chicken=chicken, defaults={'weight': Decimal(feed_weight), 'created_by': self.request.user})
+                            week=week_no, chicken=chicken, defaults={'feed_offered': Decimal(feed_offered_weight), 'feed_refusal': Decimal(feed_refusal_weight), 'created_by': self.request.user})
             except Exception as ex:
                 print('--------------------------------------')
                 print(ex)
