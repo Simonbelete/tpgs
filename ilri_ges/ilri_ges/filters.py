@@ -3,7 +3,13 @@ from rest_framework.pagination import PageNumberPagination, LimitOffsetPaginatio
 from rest_framework.response import Response
 from collections import OrderedDict
 
+from chickens.models import Chicken
+from eggs.models import Egg
 from farms.models import Farm
+from feeds.models import Feed
+from flocks.models import Flock
+from users.models import User
+from weights.models import Weight
 
 
 class IsActiveFilterBackend(BaseFilterBackend):
@@ -23,19 +29,20 @@ class HaveFarmFilterBackend(BaseFilterBackend):
             return queryset
 
         farms = request.user.farms.all() if request.user.farms.all().exists() else []
+        filtered_queryset = queryset
 
         if Farm.__name__ == queryset.model.__name__:
-            return queryset.filter(id__in=farms)
-        else:
-            filtered_queryset = queryset
-            try:
-                filtered_queryset = queryset.filter(
-                    farms__in=farms)
-            except:
-                filtered_queryset = queryset.filter(
-                    farm__in=farms)
-            print(filtered_queryset)
-            return filtered_queryset
+            filtered_queryset = queryset.filter(id__in=farms)
+        elif User.__name__ == queryset.model.__name__:
+            filtered_queryset = queryset.filter(
+                farms__in=farms)
+        elif queryset.model.__name__ in [Chicken.__name__, Flock.__name__]:
+            filtered_queryset = queryset.filter(
+                farm__in=farms)
+        elif queryset.model.__name__ in [Egg.__name__, Feed.__name__, Weight.__name__]:
+            filtered_queryset = queryset.filter(
+                chicken__farm__in=farms)
+        return filtered_queryset
 
 
 class LimitPageNumberPagination(LimitOffsetPagination):
