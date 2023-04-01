@@ -3,6 +3,8 @@ from rest_framework.pagination import PageNumberPagination, LimitOffsetPaginatio
 from rest_framework.response import Response
 from collections import OrderedDict
 
+from farms.models import Farm
+
 
 class IsActiveFilterBackend(BaseFilterBackend):
     def filter_queryset(self, request, queryset, view):
@@ -19,9 +21,12 @@ class HaveFarmFilterBackend(BaseFilterBackend):
 
         if request.user.is_superuser:
             return queryset
+
+        farms = request.user.farms.all() if request.user.farms.all().exists() else []
+
+        if Farm.__name__ == queryset.model.__name__:
+            return queryset.filter(id__in=farms)
         else:
-            farms = request.user.farms.all() if request.user.farms.all().exists() else []
-            # return queryset.filter(farm__in=farms, farms__in=farms)
             filtered_queryset = queryset
             try:
                 filtered_queryset = queryset.filter(
@@ -29,6 +34,7 @@ class HaveFarmFilterBackend(BaseFilterBackend):
             except:
                 filtered_queryset = queryset.filter(
                     farm__in=farms)
+            print(filtered_queryset)
             return filtered_queryset
 
 
