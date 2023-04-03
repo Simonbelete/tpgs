@@ -1,3 +1,4 @@
+from datetime import datetime, timedelta
 from rest_framework import viewsets, status
 from rest_framework.response import Response
 from django_filters import rest_framework as filters
@@ -376,3 +377,26 @@ class chickenFeebByWeightReport(APIView):
             weights_dataset.append(weights['weight_avg'])
 
         return Response({'results': dataset, 'chartjs': {'labels': labels, 'y1': feeds_dataset, 'y2': weights_dataset}})
+
+
+class ChickenMortality(APIView):
+    queryset = Chicken.objects.all()
+
+    def get(self, request):
+        year = int(request.GET.get('year', datetime.today().year))
+
+        data = []
+        labels = []
+        values = []
+        for month in range(1, 12):
+            start_day = datetime(year, month, 1)
+            end_day = datetime(year, month + 1, 1) + timedelta(days=-1)
+            chicken_dead = Chicken.objects.filter(
+                dead_date__gte=start_day, dead_date__lte=end_day).count() or 0
+            data.append({
+                'month': month,
+                'dead_count': chicken_dead
+            })
+            labels.append(month)
+            values.append(chicken_dead)
+        return Response({'results': data, 'chartjs': {'labels': labels, 'data': values}})

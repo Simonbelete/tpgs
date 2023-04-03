@@ -56,7 +56,7 @@ INSTALLED_APPS = [
     'weights',
     'breeding_pairs',
     'feeds',
-    'eggs'
+    'eggs',
 ]
 
 AUTH_USER_MODEL = 'users.User'
@@ -91,7 +91,8 @@ TEMPLATES = [
             'weights/templates',
             'breeding_pairs/templates'
             'feeds/templates',
-            'eggs/templates'
+            'eggs/templates',
+            'hatchery/templates'
         ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -168,6 +169,7 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "breeding_pairs/static"),
     os.path.join(BASE_DIR, "feeds/static"),
     os.path.join(BASE_DIR, "eggs/static"),
+    os.path.join(BASE_DIR, "hatchery/static"),
 ]
 
 # Default primary key field type
