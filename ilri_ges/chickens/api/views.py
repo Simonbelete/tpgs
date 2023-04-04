@@ -397,6 +397,6 @@ class ChickenMortality(APIView):
                 'month': month,
                 'dead_count': chicken_dead
             })
-            labels.append(month)
+            labels.append(start_day.strftime("%b"))
             values.append(chicken_dead)
         return Response({'results': data, 'chartjs': {'labels': labels, 'data': values}})
