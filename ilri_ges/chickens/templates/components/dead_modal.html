@@ -13,11 +13,11 @@
         <div class="modal-body">
                 {% csrf_token %}
 
-                <div class="form-group col-md-6">
+                {% comment %} <div class="form-group col-md-6">
                   <label for="{{ state_form.is_dead.id_for_label }}">Dead</label>
                   {{ state_form.is_dead|add_class:"form-control"|add_error_class:"is-invalid"|attr:"placeholder: Enter days alive" }}
                   <span id="{{ state_form.is_dead.id_for_label }}-error" class="error invalid-feedback">{{ state_form.is_dead.errors }}</span>
-                </div>
+                </div> {% endcomment %}
 
                 {% comment %} <div class="form-group col-md-6">
                   <label for="{{ state_form.days_alive.id_for_label }}">Days Alive</label>

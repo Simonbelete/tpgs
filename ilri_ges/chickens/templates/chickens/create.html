@@ -107,12 +107,12 @@
                 <h5>Mortality</h5>
 
                 <div class="row">
-                  <div class="form-group col-md-6">
+                  {% comment %} <div class="form-group col-md-6">
                     <label for="{{ form.is_dead.id_for_label }}">Dead</label>
                     {{ form.is_dead|add_class:"form-control"|add_error_class:"is-invalid"|attr:"placeholder: Enter days alive" }}
                     <span id="{{ form.is_dead.id_for_label }}-error" class="error invalid-feedback">{{ form.is_dead.errors }}</span>
                   </div>
-                  
+                   {% endcomment %}
                   <div class="form-group col-md-6">
                     <label for="{{ form.dead_date.id_for_label }}">Date</label>
                     {{ form.dead_date|add_class:"form-control"|add_error_class:"is-invalid"|attr:"id:dead_date"|attr:"placeholder: Enter Date" }}

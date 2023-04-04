@@ -98,3 +98,7 @@ class Chicken(CoreModel):
     def morality_date(self):
         added_date = self.hatch_date + timedelta(days=self.days_alive)
         return self.dead_date if self.dead_date != None else added_date
+
+    def save(self, *args, **kwargs):
+        self.is_dead = True if self.dead_date != None else False
+        super(Chicken, self).save(*args, **kwargs)
