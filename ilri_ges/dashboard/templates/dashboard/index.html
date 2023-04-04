@@ -36,6 +36,9 @@ Dashboard - ILRI genetics Evaluation
       <div class="col-md-4">
         {% include 'components/breed_type_piechart.html' %}
       </div>
+      <div class="col-md-8">
+        {% include 'components/mortality_chart.html' %}
+      </div>
     </div>
 </div>
 
@@ -43,4 +46,5 @@ Dashboard - ILRI genetics Evaluation
 
 {% block javascript %}
 <script src="{% static 'js/breed_type_piechart.js' %}"></script>
+<script src="{% static 'js/mortality_chart.js' %}"></script>
 {% endblock%}

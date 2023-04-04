@@ -12925,3 +12925,4 @@ Traceback (most recent call last):
   File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/chickens/api/views.py", line 393, in get
     end_day = datetime(year, month + 1, 1) + timedelta(days=-1)
 ValueError: month must be in 1..12
+Not Found: /favicon.ico
