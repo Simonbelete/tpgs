@@ -43,7 +43,7 @@ class BreedTypeCountViewSet(viewsets.ModelViewSet):
     def list(self, request, *args, **kwargs):
         try:
             return Response({
-                'chicken_count': Chicken.objects.count(),
+                'chicken_count': Chicken.objects.all().count(),
                 'results': self.get_serializer(self.queryset, many=True).data
             }, status=status.HTTP_200_OK)
         except self.queryset.model.DoesNotExist:
