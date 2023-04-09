@@ -1,4 +1,5 @@
 from rest_framework import viewsets, status
+from datetime import datetime, timedelta
 from django_filters import rest_framework as filters
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -161,3 +162,19 @@ class EggGrading(APIView):
             })
 
         return Response({'results': data})
+
+
+# class LayedEggsByHatch(APIView):
+#     queryset = models.Egg.all()
+
+#     def get(self, request):
+#         year = int(request.GET.get('year', datetime.today().year))
+
+#         for month in range(1, 12):
+#             start_day = datetime(year, month, 1)
+#             end_day = datetime(year, month + 1, 1) + timedelta(days=-1)
+
+#             chickens = Chicken.objects.filter(
+#                 hatch_date__gte=start_day, hatch_date__lte=end_day).values_list('id', flat=True)
+#             eggs = models.Egg.objects.filter(chicken__in=chickens).aggregate(
+#                 total_eggs=Sum('eggs'))

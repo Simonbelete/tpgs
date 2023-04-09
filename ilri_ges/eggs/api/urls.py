@@ -12,4 +12,5 @@ urlpatterns = [
     path('', include(router.urls)),
     path('eggs/hdep', views.HHEP.as_view()),
     path('eggs/grading', views.EggGrading.as_view()),
+    # path('eggs-layed-hatch', views.EggGrading.as_view()),
 ]

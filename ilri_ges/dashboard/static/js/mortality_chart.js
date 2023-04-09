@@ -37,6 +37,7 @@ requirejs(
       chart.data.datasets[0] = {
         data: response.chartjs.data,
         label: "Mortality",
+        fill: true,
         backgroundColor: "rgba(60,141,188,0.9)",
         borderColor: "rgba(60,141,188,0.8)",
         pointRadius: false,
