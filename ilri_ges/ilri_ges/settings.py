@@ -56,7 +56,7 @@ INSTALLED_APPS = [
     'weights',
     'breeding_pairs',
     'feeds',
-    'eggs',
+    'eggs'
 ]
 
 AUTH_USER_MODEL = 'users.User'
@@ -153,6 +153,8 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
+
+STATIC_ROOT = 'static_served/'
 
 STATIC_URL = 'static/'
 

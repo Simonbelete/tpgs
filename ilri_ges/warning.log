@@ -13208,3 +13208,42 @@ Traceback (most recent call last):
   File "/home/admin-user/Documents/projects/ilri-pfm/ilri_ges/venv/lib/python3.8/site-packages/django/urls/resolvers.py", line 828, in _reverse_with_prefix
     raise NoReverseMatch(msg)
 django.urls.exceptions.NoReverseMatch: Reverse for '' not found. '' is not a valid view function or pattern name.
+Not Found: /static/js/lib/admin-LTE/plugins/fontawesome-free/css/all.min.css
+Not Found: /static/js/lib/admin-LTE/dist/css/adminlte.min.css
+Not Found: /static/images/hero_3.jpg
+Not Found: /static/js/lib/admin-LTE/plugins/jquery/jquery.min.js
+Not Found: /static/js/lib/admin-LTE/plugins/bootstrap/js/bootstrap.bundle.min.js
+Not Found: /static/js/lib/admin-LTE/dist/js/adminlte.min.js
+Not Found: /static/js/lib/admin-LTE/plugins/fontawesome-free/css/all.min.css
+Not Found: /static/js/lib/admin-LTE/dist/css/adminlte.min.css
+Not Found: /static/images/hero_3.jpg
+Not Found: /static/js/lib/admin-LTE/plugins/jquery/jquery.min.js
+Not Found: /static/js/lib/admin-LTE/plugins/bootstrap/js/bootstrap.bundle.min.js
+Not Found: /static/js/lib/admin-LTE/dist/js/adminlte.min.js
+Not Found: /static/js/lib/admin-LTE/plugins/fontawesome-free/css/all.min.css
+Not Found: /static/js/lib/admin-LTE/dist/css/adminlte.min.css
+Not Found: /static/js/lib/admin-LTE/plugins/fontawesome-free/css/all.min.css
+Not Found: /static/js/lib/admin-LTE/dist/css/adminlte.min.css
+Not Found: /static/js/lib/requirejs/require-v2.3.6-min.js
+Not Found: /static/js/app.js
+Not Found: /static/images/tpgs_full.png
+Not Found: /static/images/hero_3.jpg
+Not Found: /static/icons/favicon.ico
+Not Found: /static/js/lib/admin-LTE/plugins/fontawesome-free/css/all.min.css
+Not Found: /static/js/lib/admin-LTE/dist/css/adminlte.min.css
+Not Found: /static/js/lib/requirejs/require-v2.3.6-min.js
+Not Found: /static/js/app.js
+Not Found: /static/images/tpgs_full.png
+Not Found: /static/images/hero_3.jpg
+Not Found: /static/icons/favicon.ico
+Not Found: /static
+Not Found: /favicon.ico
+Not Found: /static/js/lib/admin-LTE/plugins/fontawesome-free/css/all.min.css
+Not Found: /static/js/lib/admin-LTE/dist/css/adminlte.min.css
+Not Found: /static/js/lib/admin-LTE/plugins/fontawesome-free/css/all.min.css
+Not Found: /static/js/lib/admin-LTE/dist/css/adminlte.min.css
+Not Found: /static/images/tpgs_full.png
+Not Found: /static/images/hero_3.jpg
+Not Found: /static/js/lib/requirejs/require-v2.3.6-min.js
+Not Found: /static/js/app.js
+Not Found: /static/icons/favicon.ico

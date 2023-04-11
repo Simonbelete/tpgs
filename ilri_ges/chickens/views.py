@@ -217,6 +217,8 @@ class ChickenImportView(LoginRequiredMixin, View):
         #     absolute_path, '../../horro_chickens_fake.xlsx')
         # file_upload = full_path
         df = pd.read_excel(file_upload, header=0)
+        print('------------------')
+        print(df.head())
 
         df = df.replace(np.nan, None)  # nan to None
 
@@ -227,10 +229,10 @@ class ChickenImportView(LoginRequiredMixin, View):
 
         col_weeks = len(df.columns[9:]) / 5
 
-        if (len(df.columns[9:]) % 2 != 0):
-            return HttpResponse("Invalid Columns")
-        else:
-            col_weeks = int(col_weeks)
+        # if (len(df.columns[9:]) % 2 != 0):
+        #     return HttpResponse("Invalid Columns")
+        # else:
+        col_weeks = int(col_weeks)
 
         for col_w in range(0, col_weeks):
             start_col = 9 + col_w * 5
