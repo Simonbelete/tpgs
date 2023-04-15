@@ -1,0 +1,14 @@
+\contentsline {section}{\numberline {1}Introduction}{1}%
+\contentsline {subsection}{\numberline {1.1}Executive Summary}{1}%
+\contentsline {subsection}{\numberline {1.2}Background}{1}%
+\contentsline {subsection}{\numberline {1.3}Problem and Solution}{1}%
+\contentsline {section}{\numberline {2}Scope Of The Project}{2}%
+\contentsline {subsection}{\numberline {2.1}Objectives}{2}%
+\contentsline {subsection}{\numberline {2.2}Scope}{2}%
+\contentsline {paragraph}{Mobile Application Features:}{2}%
+\contentsline {paragraph}{Website Features:}{3}%
+\contentsline {section}{\numberline {3}Project Estimation and Schedule}{3}%
+\contentsline {subsection}{\numberline {3.1}Cost Estimation}{3}%
+\contentsline {paragraph}{Recurring Cost}{3}%
+\contentsline {subsection}{\numberline {3.2}Schedule}{4}%
+\contentsline {section}{\numberline {4}Ownership of the Project}{5}%
