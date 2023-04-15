@@ -217,8 +217,6 @@ class ChickenImportView(LoginRequiredMixin, View):
         #     absolute_path, '../../horro_chickens_fake.xlsx')
         # file_upload = full_path
         df = pd.read_excel(file_upload, header=0)
-        print('------------------')
-        print(df.head())
 
         df = df.replace(np.nan, None)  # nan to None
 
