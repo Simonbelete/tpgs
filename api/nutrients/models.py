@@ -11,5 +11,7 @@ class Nutrient(models.Model):
         NutrientGroup, on_delete=models.SET_NULL, null=True, related_name='nutrients')
     unit = models.ForeignKey(
         Unit, on_delete=models.SET_NULL, null=True, related_name='nutrients')
-    min = models.FloatField()
-    max = models.FloatField()
+    ratio_unit = models.ForeignKey(
+        Unit, on_delete=models.SET_NULL, null=True, related_name='ratio_nutrients')
+    ratio_min = models.FloatField()
+    ratio_max = models.FloatField()
