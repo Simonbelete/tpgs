@@ -1,0 +1,44 @@
+[
+    {
+        "model": "api.NutrientGroup",
+        "pk": 1,
+        "fields": {
+            "name": "Carbohydrates"
+        }
+    },
+    {
+        "model": "api.NutrientGroup",
+        "pk": 2,
+        "fields": {
+            "name": "Proteins"
+        }
+    },
+    {
+        "model": "api.NutrientGroup",
+        "pk": 3,
+        "fields": {
+            "name": "Fats"
+        }
+    },
+    {
+        "model": "api.NutrientGroup",
+        "pk": 4,
+        "fields": {
+            "name": "Vitamins"
+        }
+    },
+    {
+        "model": "api.NutrientGroup",
+        "pk": 5,
+        "fields": {
+            "name": "Minerals"
+        }
+    },
+    {
+        "model": "api.NutrientGroup",
+        "pk": 6,
+        "fields": {
+            "name": "Water"
+        }
+    }
+]

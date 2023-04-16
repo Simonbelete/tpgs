@@ -1,13 +1,154 @@
 [
     {
-        "model": "api.Nutrients",
+        "model": "api.Nutrient",
         "pk": 1,
         "fields": {
-            "name": "Addis Ababa",
-            "code": 1,
-            "created_at": "2023-02-10T06:48:32.271721Z",
-            "updated_at": "2023-02-10T06:48:32.271721Z",
-            "created_by": 1
+            "name": "Crude Protein",
+            "code": "CP",
+            "unit": 1 
+        }
+    },
+    {
+        "model": "api.Nutrient",
+        "pk": 2,
+        "fields": {
+            "name": "Crude Fiber",
+            "code": "CF",
+            "unit": 1
+        }
+    },
+    {
+        "model": "api.Nutrient",
+        "pk": 3,
+        "fields": {
+            "name": "Acid Detergent Fiber",
+            "code": "ADF",
+            "unit": 1 
+        }
+    },
+    {
+        "model": "api.Nutrient",
+        "pk": 1,
+        "fields": {
+            "name": "Neutral Detergent Fiber",
+            "code": "NDF",
+            "unit": 1 
+        }
+    },
+    {
+        "model": "api.Nutrient",
+        "pk": 1,
+        "fields": {
+            "name": "Dry Matter",
+            "code": "DM",
+            "unit": 1 
+        }
+    },
+    {
+        "model": "api.Nutrient",
+        "pk": 1,
+        "fields": {
+            "name": "Acid Detergent Lignin",
+            "code": "ADL",
+            "unit": 1 
+        }
+    },
+    {
+        "model": "api.Nutrient",
+        "pk": 1,
+        "fields": {
+            "name": "Gross Energy",
+            "code": "GE",
+            "unit": 5 
+        }
+    },
+    {
+        "model": "api.Nutrient",
+        "pk": 1,
+        "fields": {
+            "name": "Metabolizable Energy",
+            "code": "ME",
+            "unit": 5 
+        }
+    },
+    {
+        "model": "api.Nutrient",
+        "pk": 1,
+        "fields": {
+            "name": "Calcium",
+            "code": "CA",
+            "unit": 1,
+            "nutrient_group": 5
+        }
+    },
+    {
+        "model": "api.Nutrient",
+        "pk": 1,
+        "fields": {
+            "name": "Phosphorus",
+            "code": "P",
+            "unit": 1,
+            "nutrient_group": 5
+        }
+    },
+    {
+        "model": "api.Nutrient",
+        "pk": 1,
+        "fields": {
+            "name": "Magnesium",
+            "code": "Mg",
+            "unit": 1,
+            "nutrient_group": 5
+        }
+    },
+    {
+        "model": "api.Nutrient",
+        "pk": 1,
+        "fields": {
+            "name": "Potassium",
+            "code": "K",
+            "unit": 1,
+            "nutrient_group": 5
+        }
+    },
+    {
+        "model": "api.Nutrient",
+        "pk": 1,
+        "fields": {
+            "name": "Sulfur",
+            "code": "S",
+            "unit": 1,
+            "nutrient_group": 5
+        }
+    },
+    {
+        "model": "api.Nutrient",
+        "pk": 1,
+        "fields": {
+            "name": "Sodium",
+            "code": "Na",
+            "unit": 1,
+            "nutrient_group": 5
+        }
+    },
+    {
+        "model": "api.Nutrient",
+        "pk": 1,
+        "fields": {
+            "name": "Zinc",
+            "code": "Zn",
+            "unit": 1,
+            "nutrient_group": 5
+        }
+    },
+    {
+        "model": "api.Nutrient",
+        "pk": 1,
+        "fields": {
+            "name": "Chlorine",
+            "code": "CI",
+            "unit": 1,
+            "nutrient_group": 5
         }
     }
 ]
