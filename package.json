@@ -17,5 +17,5 @@
     "@emotion/styled": "^11.10.6",
     "@mui/material": "^5.12.0"
   },
-  "workspaces": ["packages/*", "components/*"]
+  "workspaces": ["packages/*", "ui/*", "web/*"]
 }
