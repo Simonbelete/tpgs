@@ -1,7 +1,6 @@
 .docker/postgresql/db/
 .~lock.*
 
-
 # dependencies
 /node_modules
 /.pnp
