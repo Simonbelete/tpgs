@@ -21,7 +21,6 @@
 
             {% include 'components/fields/hatchery_select.html' %}
             {% include 'components/date_time_picker.html' %}
-            {% include 'components/date_picker.html' %}
 			
             <div class="form-group">
 				<label for="{{ form.temperature_celsius.id_for_label }}">Temperature (°C)</label>
@@ -58,5 +57,4 @@
 {% block javascript %}
 <script src="{% static 'js/hatchery_select.js' %}"></script>
 <script src="{% static 'js/date_time_picker.js' %}"></script>
-<script src="{% static 'js/date_picker.js' %}"></script>
 {% endblock %}
