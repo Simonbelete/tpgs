@@ -13619,3 +13619,4 @@ Traceback (most recent call last):
     raise new from exc
 django.template.exceptions.TemplateDoesNotExist: components/feed_type_select.html.html
 Not Found: /favicon.ico
+Not Found: /favicon.ico

@@ -1,0 +1,39 @@
+{% extends "list_template.html" %}
+{% load static %}
+
+{% block page_title %}Incubation{% endblock %}
+{% block data_title %}Incubation{% endblock %}
+{% block data_description %}List of Incubation{% endblock %}
+{% block data_menu %}Incubation{% endblock %}
+{% block data_url %}{% url 'hatchery_create' %}{% endblock %}
+{% block data_btn %}Create Incubation{% endblock %}
+
+{% block table %}
+<table id="incubation_data_table_list" class="table table-bordered table-striped">
+	<thead>
+		<tr>
+			<th>ID</th>
+            <th>Date of set</th>
+			<th>No of egg set</th>
+			<th>Breed Type</th>
+			<th>Created at</th>
+			<th></th>
+		</tr>
+	</thead>
+	<tbody></tbody>
+	<tfoot>
+		<tr>
+            <th>ID</th>
+            <th>Date of set</th>
+			<th>No of egg set</th>
+			<th>Breed Type</th>
+			<th>Created at</th>
+		    <th></th>
+		</tr>
+	</tfoot>
+</table>
+{% endblock %}
+
+{% block javascript %}
+<script src="{% static 'js/hatchery_list.js' %}"></script>
+{% endblock %}
