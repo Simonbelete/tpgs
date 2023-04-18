@@ -27,7 +27,7 @@ requirejs(["jquery", "datatables"], function ($, DataTable, dbs4) {
     lengthChange: true,
     buttons: ["copyHtml5", "excelHtml5", "csvHtml5", "pdfHtml5"],
     ajax: {
-      url: "/api/hatchery/",
+      url: "/api/incubation/",
       dataSrc: function (json) {
         json["data"] = json["results"];
         json["recordsTotal"] = json["count"];
@@ -54,6 +54,6 @@ requirejs(["jquery", "datatables"], function ($, DataTable, dbs4) {
   selector.on("click", "td.editor-edit, tr td ul .editor-edit", function (e) {
     e.preventDefault();
     var data = table.row(this).data();
-    window.location.href = "/hatchery/" + data.id;
+    window.location.href = "/incubation/" + data.id;
   });
 });

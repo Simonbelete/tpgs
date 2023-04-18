@@ -6,6 +6,10 @@ urlpatterns = [
     path('', views.HatcheryView.as_view(), name="hatchery"),
     path('delete/<id>/', views.HatcheryDeleteView.as_view(), name="hatchery_delete"),
     path('<id>/', views.HatcheryEditView.as_view(), name="hatchery_edit"),
+    path('<int:id>/incubation', views.HatcheryIncubation.as_view(),
+         name="hatchery_incubation"),
+    path('<int:id>/candling', views.HatcheryCandling.as_view(),
+         name="hatchery_candling"),
     path('create', views.HatcheryCreateView.as_view(),
          name="hatchery_create"),
 

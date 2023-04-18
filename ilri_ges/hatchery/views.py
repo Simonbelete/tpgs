@@ -257,3 +257,33 @@ class CandlingDeleteView(PermissionRequiredMixin, View):
             return redirect('candling')
         except:
             return redirect(500)
+
+
+# Hatchery incubation & candling
+
+class HatcheryIncubation(LoginRequiredMixin, View):
+    login_url = '/users/login'
+    redirect_field_name = 'redirect_to'
+
+    def get(self, request, id=0):
+        if id == 0:
+            return redirect('404')
+        try:
+            data = Hatchery.objects.get(pk=id)
+            return render(request, 'hatchery/hatchery_incubation.html', {"id": id, "data": data})
+        except:
+            return redirect(400)
+
+
+class HatcheryCandling(LoginRequiredMixin, View):
+    login_url = '/users/login'
+    redirect_field_name = 'redirect_to'
+
+    def get(self, request, id=0):
+        if id == 0:
+            return redirect('404')
+        try:
+            data = Hatchery.objects.get(pk=id)
+            return render(request, 'hatchery/hatchery_candling.html', {"id": id, "data": data})
+        except:
+            return redirect(400)

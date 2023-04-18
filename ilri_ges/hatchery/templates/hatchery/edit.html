@@ -9,13 +9,26 @@
 {% block content %}
 <div class="col-12">
 	<div class="row col-12">
-		<a href="/chickens/{{id}}/weights" class="col-md-3 col-sm-6 col-12">
+		<a href="/hatchery/{{id}}/incubation/" class="col-md-3 col-sm-6 col-12">
             <!-- .info-box-->
             <div class="info-box">
-              <span class="info-box-icon bg-warning"><i class="far fa-copy"></i></span>
+              <span class="info-box-icon bg-warning"><i class="fas fa-warehouse"></i></span>
 
               <div class="info-box-content">
-                <span class="info-box-text font-weight-bold">Body Weight</span>
+                <span class="info-box-text font-weight-bold">Incubation</span>
+                <span class="info-box-number" id="statics_weight">-</span>
+              </div>
+              <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+          </a>
+		  <a href="/hatchery/{{id}}/candling" class="col-md-3 col-sm-6 col-12">
+            <!-- .info-box-->
+            <div class="info-box">
+              <span class="info-box-icon bg-warning"><i class="far fa-lightbulb"></i></i></span>
+
+              <div class="info-box-content">
+                <span class="info-box-text font-weight-bold">Candling</span>
                 <span class="info-box-number" id="statics_weight">-</span>
               </div>
               <!-- /.info-box-content -->
