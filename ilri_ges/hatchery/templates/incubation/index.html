@@ -5,7 +5,7 @@
 {% block data_title %}Incubation{% endblock %}
 {% block data_description %}List of Incubation{% endblock %}
 {% block data_menu %}Incubation{% endblock %}
-{% block data_url %}{% url 'hatchery_create' %}{% endblock %}
+{% block data_url %}{% url 'incubation_create' %}{% endblock %}
 {% block data_btn %}Create Incubation{% endblock %}
 
 {% block table %}
@@ -13,9 +13,11 @@
 	<thead>
 		<tr>
 			<th>ID</th>
-            <th>Date of set</th>
-			<th>No of egg set</th>
-			<th>Breed Type</th>
+            <th>Date Time</th>
+			<th>Temperature (°C)</th>
+			<th>Humidity (°F)</th>
+			<th>Humidity (%)</th>
+			<th>Remark</th>
 			<th>Created at</th>
 			<th></th>
 		</tr>
@@ -24,9 +26,11 @@
 	<tfoot>
 		<tr>
             <th>ID</th>
-            <th>Date of set</th>
-			<th>No of egg set</th>
-			<th>Breed Type</th>
+            <th>Date Time</th>
+			<th>Temperature (°C)</th>
+			<th>Humidity (°F)</th>
+			<th>Humidity (%)</th>
+			<th>Remark</th>
 			<th>Created at</th>
 		    <th></th>
 		</tr>
@@ -35,5 +39,5 @@
 {% endblock %}
 
 {% block javascript %}
-<script src="{% static 'js/hatchery_list.js' %}"></script>
+<script src="{% static 'js/incubation_list.js' %}"></script>
 {% endblock %}

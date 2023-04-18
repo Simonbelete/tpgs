@@ -1,0 +1,45 @@
+{% extends "form_template.html" %} 
+{% load static %} 
+{% load widget_tweaks %}
+
+{% block page_title %}Incubation{% endblock %}
+{% block data_title %}Incubation{% endblock %}
+{% block data_description %}Create new Incubation Record{% endblock %}
+{% block data_menu %}Incubation Record{% endblock %}
+
+{% block contents %}
+<div class="container">
+	<form method="POST" class="card card-primary">
+        <div class="card-header">
+            <h3 class="card-title">Incubation</h3>
+        </div>
+        <div class="card-body">
+			{% include 'components/messages.html' %}
+
+			{% csrf_token %}
+			{{ form.non_field_errors }}
+
+            {% include 'components/fields/hatchery_select.html' %}
+			
+            <div class="form-group">
+				<label for="{{ form.no_egg.id_for_label }}">No of egg set</label>
+				{{ form.no_egg|add_class:"form-control"|add_error_class:"is-invalid"|attr:"placeholder: Enter no of egg set" }}
+				<span id="{{ form.no_egg.id_for_label }}-error" class="error invalid-feedback">{{ form.no_egg.errors }}</span>
+			</div>
+
+            {% include 'components/date_picker.html' %}
+            {% include 'components/breed_select.html' %}
+
+		</div>
+		<div class="card-footer">
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+	</form>
+</div>
+{% endblock %}
+
+{% block javascript %}
+<script src="{% static 'js/hatchery_select.js' %}"></script>
+<script src="{% static 'js/date_picker.js' %}"></script>
+<script src="{% static 'js/breed_type_select.js' %}"></script>
+{% endblock %}

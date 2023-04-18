@@ -1,0 +1,10 @@
+{% load widget_tweaks %}
+<div class="form-group">
+    <label for="hatchery_select">Hatchery</label>
+    {% if form.hatchery %}
+        {{ form.hatchery|attr:"id:hatchery_select"|add_class:"form-control"|add_error_class:"is-invalid" }}
+    {% else %}
+        <select id="hatchery_select" {{ multiple }} name="farm" class="form-control select2" style="width: 100%"></select>
+    {% endif %}
+    <span id="{{ form.hatchery.id_for_label }}-error" class="error invalid-feedback">{{ form.hatchery.errors }}</span>
+</div>

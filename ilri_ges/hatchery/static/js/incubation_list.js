@@ -1,14 +1,15 @@
 requirejs(["jquery", "datatables"], function ($, DataTable, dbs4) {
   "use strict";
 
-  var selector = $("#hatchery_data_table_list");
+  var selector = $("#incubation_data_table_list");
 
   var columns = [
     { data: "id", visible: false },
-    { data: "date" },
-    { data: "no_egg", defaultContent: "" },
-    { data: "breed_type.name", defaultContent: "" },
-    { data: "farm.name", defaultContent: "" },
+    { data: "date_time" },
+    { data: "temperature_celsius" },
+    { data: "humidity_fahrenheit" },
+    { data: "humidity_percent" },
+    { data: "remark" },
     { data: "created_at" },
     {
       data: null,
