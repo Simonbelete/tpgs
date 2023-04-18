@@ -27,7 +27,7 @@ class Incubation(CoreModel):
         max_digits=6, decimal_places=3, default=0)
     humidity_percent = models.DecimalField(
         max_digits=6, decimal_places=3, default=0)
-    remark = models.TextField()
+    remark = models.TextField(null=True, blank=True)
 
     history = HistoricalRecords()
 
