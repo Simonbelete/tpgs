@@ -14245,3 +14245,1016 @@ Traceback (most recent call last):
   File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/shortcuts.py", line 151, in resolve_url
     if "/" not in to and "." not in to:
 TypeError: argument of type 'int' is not iterable
+Not Found: /api/hatchery/incubation/
+Not Found: /favicon.ico
+Not Found: /api/hatchery/incubation/
+Internal Server Error: /hatchery/incubation/create
+Traceback (most recent call last):
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/core/handlers/exception.py", line 56, in inner
+    response = get_response(request)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/views/generic/base.py", line 103, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/contrib/auth/mixins.py", line 73, in dispatch
+    return super().dispatch(request, *args, **kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/views/generic/base.py", line 142, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/hatchery/views.py", line 112, in get
+    return render(request, 'incubation/create.html', {'form': form})
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/shortcuts.py", line 24, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/loader.py", line 62, in render_to_string
+    return template.render(context, request)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/backends/django.py", line 61, in render
+    return self.template.render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 175, in render
+    return self._render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 167, in _render
+    return self.nodelist.render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 1005, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 966, in render_annotated
+    return self.render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/loader_tags.py", line 157, in render
+    return compiled_parent._render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 167, in _render
+    return self.nodelist.render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 1005, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 966, in render_annotated
+    return self.render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/loader_tags.py", line 157, in render
+    return compiled_parent._render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 167, in _render
+    return self.nodelist.render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 1005, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 966, in render_annotated
+    return self.render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/loader_tags.py", line 157, in render
+    return compiled_parent._render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 167, in _render
+    return self.nodelist.render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 1005, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 966, in render_annotated
+    return self.render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/defaulttags.py", line 541, in render
+    return self.nodelist.render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 1005, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 966, in render_annotated
+    return self.render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/loader_tags.py", line 63, in render
+    result = block.nodelist.render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 1005, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 966, in render_annotated
+    return self.render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/loader_tags.py", line 63, in render
+    result = block.nodelist.render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 1005, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 966, in render_annotated
+    return self.render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/loader_tags.py", line 63, in render
+    result = block.nodelist.render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 1005, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 966, in render_annotated
+    return self.render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/loader_tags.py", line 208, in render
+    return template.render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 177, in render
+    return self._render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 167, in _render
+    return self.nodelist.render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 1005, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 966, in render_annotated
+    return self.render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/defaulttags.py", line 321, in render
+    return nodelist.render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 1005, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 966, in render_annotated
+    return self.render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 1070, in render
+    return render_value_in_context(output, context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 1047, in render_value_in_context
+    value = str(value)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/utils/html.py", line 419, in <lambda>
+    klass.__str__ = lambda self: mark_safe(klass_str(self))
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/forms/boundfield.py", line 34, in __str__
+    return self.as_widget()
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/widget_tweaks/templatetags/widget_tweaks.py", line 36, in as_widget
+    html = old_as_widget(widget, attrs, only_initial)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/widget_tweaks/templatetags/widget_tweaks.py", line 36, in as_widget
+    html = old_as_widget(widget, attrs, only_initial)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/forms/boundfield.py", line 99, in as_widget
+    return widget.render(
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/forms/widgets.py", line 280, in render
+    context = self.get_context(name, value, attrs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/forms/widgets.py", line 733, in get_context
+    context = super().get_context(name, value, attrs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/forms/widgets.py", line 692, in get_context
+    context["widget"]["optgroups"] = self.optgroups(
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/forms/widgets.py", line 632, in optgroups
+    for index, (option_value, option_label) in enumerate(self.choices):
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/forms/models.py", line 1410, in __iter__
+    yield self.choice(obj)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/forms/models.py", line 1424, in choice
+    self.field.label_from_instance(obj),
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/forms/models.py", line 1510, in label_from_instance
+    return str(obj)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/hatchery/models.py", line 20, in __str__
+    return "%s (%s)" % (self.date, self, self.no_egg)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/hatchery/models.py", line 20, in __str__
+    return "%s (%s)" % (self.date, self, self.no_egg)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/hatchery/models.py", line 20, in __str__
+    return "%s (%s)" % (self.date, self, self.no_egg)
+  [Previous line repeated 441 more times]
+RecursionError: maximum recursion depth exceeded while calling a Python object
+Internal Server Error: /hatchery/incubation/create
+Traceback (most recent call last):
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/core/handlers/exception.py", line 56, in inner
+    response = get_response(request)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/views/generic/base.py", line 103, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/contrib/auth/mixins.py", line 73, in dispatch
+    return super().dispatch(request, *args, **kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/views/generic/base.py", line 142, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/hatchery/views.py", line 112, in get
+    return render(request, 'incubation/create.html', {'form': form})
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/shortcuts.py", line 24, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/loader.py", line 62, in render_to_string
+    return template.render(context, request)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/backends/django.py", line 61, in render
+    return self.template.render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 175, in render
+    return self._render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 167, in _render
+    return self.nodelist.render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 1005, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 966, in render_annotated
+    return self.render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/loader_tags.py", line 157, in render
+    return compiled_parent._render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 167, in _render
+    return self.nodelist.render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 1005, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 966, in render_annotated
+    return self.render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/loader_tags.py", line 157, in render
+    return compiled_parent._render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 167, in _render
+    return self.nodelist.render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 1005, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 966, in render_annotated
+    return self.render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/loader_tags.py", line 157, in render
+    return compiled_parent._render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 167, in _render
+    return self.nodelist.render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 1005, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 966, in render_annotated
+    return self.render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/defaulttags.py", line 541, in render
+    return self.nodelist.render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 1005, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 966, in render_annotated
+    return self.render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/loader_tags.py", line 63, in render
+    result = block.nodelist.render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 1005, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 966, in render_annotated
+    return self.render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/loader_tags.py", line 63, in render
+    result = block.nodelist.render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 1005, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 966, in render_annotated
+    return self.render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/loader_tags.py", line 63, in render
+    result = block.nodelist.render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 1005, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 966, in render_annotated
+    return self.render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/loader_tags.py", line 208, in render
+    return template.render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 177, in render
+    return self._render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 167, in _render
+    return self.nodelist.render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 1005, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 966, in render_annotated
+    return self.render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/defaulttags.py", line 321, in render
+    return nodelist.render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 1005, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 966, in render_annotated
+    return self.render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 1070, in render
+    return render_value_in_context(output, context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 1047, in render_value_in_context
+    value = str(value)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/utils/html.py", line 419, in <lambda>
+    klass.__str__ = lambda self: mark_safe(klass_str(self))
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/forms/boundfield.py", line 34, in __str__
+    return self.as_widget()
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/widget_tweaks/templatetags/widget_tweaks.py", line 36, in as_widget
+    html = old_as_widget(widget, attrs, only_initial)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/widget_tweaks/templatetags/widget_tweaks.py", line 36, in as_widget
+    html = old_as_widget(widget, attrs, only_initial)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/forms/boundfield.py", line 99, in as_widget
+    return widget.render(
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/forms/widgets.py", line 280, in render
+    context = self.get_context(name, value, attrs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/forms/widgets.py", line 733, in get_context
+    context = super().get_context(name, value, attrs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/forms/widgets.py", line 692, in get_context
+    context["widget"]["optgroups"] = self.optgroups(
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/forms/widgets.py", line 632, in optgroups
+    for index, (option_value, option_label) in enumerate(self.choices):
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/forms/models.py", line 1410, in __iter__
+    yield self.choice(obj)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/forms/models.py", line 1424, in choice
+    self.field.label_from_instance(obj),
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/forms/models.py", line 1510, in label_from_instance
+    return str(obj)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/hatchery/models.py", line 21, in __str__
+    return "%s (%s)" % (datetime.strptime(self.date, '%d/%m/%y'), self.no_egg)
+TypeError: strptime() argument 1 must be str, not datetime.date
+Internal Server Error: /hatchery/incubation/create
+Traceback (most recent call last):
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/core/handlers/exception.py", line 56, in inner
+    response = get_response(request)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/views/generic/base.py", line 103, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/contrib/auth/mixins.py", line 73, in dispatch
+    return super().dispatch(request, *args, **kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/views/generic/base.py", line 142, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/hatchery/views.py", line 112, in get
+    return render(request, 'incubation/create.html', {'form': form})
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/shortcuts.py", line 24, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/loader.py", line 62, in render_to_string
+    return template.render(context, request)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/backends/django.py", line 61, in render
+    return self.template.render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 175, in render
+    return self._render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 167, in _render
+    return self.nodelist.render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 1005, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 966, in render_annotated
+    return self.render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/loader_tags.py", line 157, in render
+    return compiled_parent._render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 167, in _render
+    return self.nodelist.render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 1005, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 966, in render_annotated
+    return self.render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/loader_tags.py", line 157, in render
+    return compiled_parent._render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 167, in _render
+    return self.nodelist.render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 1005, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 966, in render_annotated
+    return self.render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/loader_tags.py", line 157, in render
+    return compiled_parent._render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 167, in _render
+    return self.nodelist.render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 1005, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 966, in render_annotated
+    return self.render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/defaulttags.py", line 541, in render
+    return self.nodelist.render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 1005, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 966, in render_annotated
+    return self.render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/loader_tags.py", line 63, in render
+    result = block.nodelist.render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 1005, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 966, in render_annotated
+    return self.render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/loader_tags.py", line 63, in render
+    result = block.nodelist.render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 1005, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 966, in render_annotated
+    return self.render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/loader_tags.py", line 63, in render
+    result = block.nodelist.render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 1005, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 966, in render_annotated
+    return self.render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/loader_tags.py", line 208, in render
+    return template.render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 177, in render
+    return self._render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 167, in _render
+    return self.nodelist.render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 1005, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 966, in render_annotated
+    return self.render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/defaulttags.py", line 321, in render
+    return nodelist.render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 1005, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 966, in render_annotated
+    return self.render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 1070, in render
+    return render_value_in_context(output, context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 1047, in render_value_in_context
+    value = str(value)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/utils/html.py", line 419, in <lambda>
+    klass.__str__ = lambda self: mark_safe(klass_str(self))
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/forms/boundfield.py", line 34, in __str__
+    return self.as_widget()
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/widget_tweaks/templatetags/widget_tweaks.py", line 36, in as_widget
+    html = old_as_widget(widget, attrs, only_initial)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/widget_tweaks/templatetags/widget_tweaks.py", line 36, in as_widget
+    html = old_as_widget(widget, attrs, only_initial)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/forms/boundfield.py", line 99, in as_widget
+    return widget.render(
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/forms/widgets.py", line 280, in render
+    context = self.get_context(name, value, attrs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/forms/widgets.py", line 733, in get_context
+    context = super().get_context(name, value, attrs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/forms/widgets.py", line 692, in get_context
+    context["widget"]["optgroups"] = self.optgroups(
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/forms/widgets.py", line 632, in optgroups
+    for index, (option_value, option_label) in enumerate(self.choices):
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/forms/models.py", line 1410, in __iter__
+    yield self.choice(obj)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/forms/models.py", line 1424, in choice
+    self.field.label_from_instance(obj),
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/forms/models.py", line 1510, in label_from_instance
+    return str(obj)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/hatchery/models.py", line 21, in __str__
+    return "%s (%s)" % (datetime.strptime(self.date, '%d/%m/%y'), self.no_egg)
+TypeError: strptime() argument 1 must be str, not datetime.date
+Not Found: /favicon.ico
+Internal Server Error: /api/incubation/
+Traceback (most recent call last):
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/core/handlers/exception.py", line 56, in inner
+    response = get_response(request)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/core/handlers/base.py", line 220, in _get_response
+    response = response.render()
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/response.py", line 114, in render
+    self.content = self.rendered_content
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/response.py", line 70, in rendered_content
+    ret = renderer.render(self.data, accepted_media_type, context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/renderers.py", line 723, in render
+    context = self.get_context(data, accepted_media_type, renderer_context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/renderers.py", line 695, in get_context
+    'post_form': self.get_rendered_html_form(data, view, 'POST', request),
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/renderers.py", line 510, in get_rendered_html_form
+    return self.render_form_for_serializer(serializer)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/renderers.py", line 517, in render_form_for_serializer
+    return form_renderer.render(
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/renderers.py", line 371, in render
+    return template.render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/backends/django.py", line 61, in render
+    return self.template.render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 175, in render
+    return self._render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 167, in _render
+    return self.nodelist.render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 1005, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 966, in render_annotated
+    return self.render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/defaulttags.py", line 238, in render
+    nodelist.append(node.render_annotated(context))
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 966, in render_annotated
+    return self.render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/defaulttags.py", line 321, in render
+    return nodelist.render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 1005, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 966, in render_annotated
+    return self.render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/library.py", line 237, in render
+    output = self.func(*resolved_args, **resolved_kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/templatetags/rest_framework.py", line 87, in render_field
+    return renderer.render_field(field, style)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/renderers.py", line 350, in render_field
+    return template.render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/backends/django.py", line 61, in render
+    return self.template.render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 175, in render
+    return self._render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 167, in _render
+    return self.nodelist.render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 1005, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 966, in render_annotated
+    return self.render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/defaulttags.py", line 189, in render
+    values = self.sequence.resolve(context, ignore_failures=True)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 715, in resolve
+    obj = self.var.resolve(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 847, in resolve
+    value = self._resolve_lookup(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 914, in _resolve_lookup
+    current = current()
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/relations.py", line 220, in iter_options
+    self.get_choices(cutoff=self.html_cutoff),
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/relations.py", line 202, in get_choices
+    return OrderedDict([
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/relations.py", line 205, in <listcomp>
+    self.display_value(item)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/relations.py", line 226, in display_value
+    return str(instance)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/hatchery/models.py", line 21, in __str__
+    return "%s (%s)" % (self.date.strptime("%y-%m-%d", '%d/%m/%y'), self.no_egg)
+AttributeError: 'datetime.date' object has no attribute 'strptime'
+Internal Server Error: /api/incubation/
+Traceback (most recent call last):
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/core/handlers/exception.py", line 56, in inner
+    response = get_response(request)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/core/handlers/base.py", line 220, in _get_response
+    response = response.render()
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/response.py", line 114, in render
+    self.content = self.rendered_content
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/response.py", line 70, in rendered_content
+    ret = renderer.render(self.data, accepted_media_type, context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/renderers.py", line 723, in render
+    context = self.get_context(data, accepted_media_type, renderer_context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/renderers.py", line 695, in get_context
+    'post_form': self.get_rendered_html_form(data, view, 'POST', request),
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/renderers.py", line 510, in get_rendered_html_form
+    return self.render_form_for_serializer(serializer)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/renderers.py", line 517, in render_form_for_serializer
+    return form_renderer.render(
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/renderers.py", line 371, in render
+    return template.render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/backends/django.py", line 61, in render
+    return self.template.render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 175, in render
+    return self._render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 167, in _render
+    return self.nodelist.render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 1005, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 966, in render_annotated
+    return self.render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/defaulttags.py", line 238, in render
+    nodelist.append(node.render_annotated(context))
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 966, in render_annotated
+    return self.render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/defaulttags.py", line 321, in render
+    return nodelist.render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 1005, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 966, in render_annotated
+    return self.render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/library.py", line 237, in render
+    output = self.func(*resolved_args, **resolved_kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/templatetags/rest_framework.py", line 87, in render_field
+    return renderer.render_field(field, style)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/renderers.py", line 350, in render_field
+    return template.render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/backends/django.py", line 61, in render
+    return self.template.render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 175, in render
+    return self._render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 167, in _render
+    return self.nodelist.render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 1005, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 966, in render_annotated
+    return self.render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/defaulttags.py", line 189, in render
+    values = self.sequence.resolve(context, ignore_failures=True)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 715, in resolve
+    obj = self.var.resolve(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 847, in resolve
+    value = self._resolve_lookup(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 914, in _resolve_lookup
+    current = current()
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/relations.py", line 220, in iter_options
+    self.get_choices(cutoff=self.html_cutoff),
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/relations.py", line 202, in get_choices
+    return OrderedDict([
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/relations.py", line 205, in <listcomp>
+    self.display_value(item)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/relations.py", line 226, in display_value
+    return str(instance)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/hatchery/models.py", line 21, in __str__
+    return "%s (%s)" % (self.date.strptime("%y-%m-%d", '%d/%m/%y'), self.no_egg)
+AttributeError: 'datetime.date' object has no attribute 'strptime'
+Internal Server Error: /api/incubation/
+Traceback (most recent call last):
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/core/handlers/exception.py", line 56, in inner
+    response = get_response(request)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/core/handlers/base.py", line 220, in _get_response
+    response = response.render()
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/response.py", line 114, in render
+    self.content = self.rendered_content
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/response.py", line 70, in rendered_content
+    ret = renderer.render(self.data, accepted_media_type, context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/renderers.py", line 723, in render
+    context = self.get_context(data, accepted_media_type, renderer_context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/renderers.py", line 695, in get_context
+    'post_form': self.get_rendered_html_form(data, view, 'POST', request),
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/renderers.py", line 510, in get_rendered_html_form
+    return self.render_form_for_serializer(serializer)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/renderers.py", line 517, in render_form_for_serializer
+    return form_renderer.render(
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/renderers.py", line 371, in render
+    return template.render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/backends/django.py", line 61, in render
+    return self.template.render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 175, in render
+    return self._render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 167, in _render
+    return self.nodelist.render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 1005, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 966, in render_annotated
+    return self.render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/defaulttags.py", line 238, in render
+    nodelist.append(node.render_annotated(context))
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 966, in render_annotated
+    return self.render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/defaulttags.py", line 321, in render
+    return nodelist.render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 1005, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 966, in render_annotated
+    return self.render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/library.py", line 237, in render
+    output = self.func(*resolved_args, **resolved_kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/templatetags/rest_framework.py", line 87, in render_field
+    return renderer.render_field(field, style)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/renderers.py", line 350, in render_field
+    return template.render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/backends/django.py", line 61, in render
+    return self.template.render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 175, in render
+    return self._render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 167, in _render
+    return self.nodelist.render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 1005, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 966, in render_annotated
+    return self.render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/defaulttags.py", line 189, in render
+    values = self.sequence.resolve(context, ignore_failures=True)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 715, in resolve
+    obj = self.var.resolve(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 847, in resolve
+    value = self._resolve_lookup(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 914, in _resolve_lookup
+    current = current()
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/relations.py", line 220, in iter_options
+    self.get_choices(cutoff=self.html_cutoff),
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/relations.py", line 202, in get_choices
+    return OrderedDict([
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/relations.py", line 205, in <listcomp>
+    self.display_value(item)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/relations.py", line 226, in display_value
+    return str(instance)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/hatchery/models.py", line 21, in __str__
+    return "%s (%s)" % (self.date.strptime("%y-%m-%d", '%d/%m/%y'), self.no_egg)
+AttributeError: 'datetime.date' object has no attribute 'strptime'
+Internal Server Error: /api/incubation/
+Traceback (most recent call last):
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/core/handlers/exception.py", line 56, in inner
+    response = get_response(request)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/core/handlers/base.py", line 220, in _get_response
+    response = response.render()
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/response.py", line 114, in render
+    self.content = self.rendered_content
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/response.py", line 70, in rendered_content
+    ret = renderer.render(self.data, accepted_media_type, context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/renderers.py", line 723, in render
+    context = self.get_context(data, accepted_media_type, renderer_context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/renderers.py", line 695, in get_context
+    'post_form': self.get_rendered_html_form(data, view, 'POST', request),
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/renderers.py", line 510, in get_rendered_html_form
+    return self.render_form_for_serializer(serializer)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/renderers.py", line 517, in render_form_for_serializer
+    return form_renderer.render(
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/renderers.py", line 371, in render
+    return template.render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/backends/django.py", line 61, in render
+    return self.template.render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 175, in render
+    return self._render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 167, in _render
+    return self.nodelist.render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 1005, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 966, in render_annotated
+    return self.render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/defaulttags.py", line 238, in render
+    nodelist.append(node.render_annotated(context))
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 966, in render_annotated
+    return self.render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/defaulttags.py", line 321, in render
+    return nodelist.render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 1005, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 966, in render_annotated
+    return self.render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/library.py", line 237, in render
+    output = self.func(*resolved_args, **resolved_kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/templatetags/rest_framework.py", line 87, in render_field
+    return renderer.render_field(field, style)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/renderers.py", line 350, in render_field
+    return template.render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/backends/django.py", line 61, in render
+    return self.template.render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 175, in render
+    return self._render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 167, in _render
+    return self.nodelist.render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 1005, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 966, in render_annotated
+    return self.render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/defaulttags.py", line 189, in render
+    values = self.sequence.resolve(context, ignore_failures=True)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 715, in resolve
+    obj = self.var.resolve(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 847, in resolve
+    value = self._resolve_lookup(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 914, in _resolve_lookup
+    current = current()
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/relations.py", line 220, in iter_options
+    self.get_choices(cutoff=self.html_cutoff),
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/relations.py", line 202, in get_choices
+    return OrderedDict([
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/relations.py", line 205, in <listcomp>
+    self.display_value(item)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/relations.py", line 226, in display_value
+    return str(instance)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/hatchery/models.py", line 21, in __str__
+    return "%s (%s)" % (datetime.strptime(self.date, '%d/%m/%y'), self.no_egg)
+TypeError: strptime() argument 1 must be str, not datetime.date
+Internal Server Error: /api/incubation/
+Traceback (most recent call last):
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/core/handlers/exception.py", line 56, in inner
+    response = get_response(request)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/core/handlers/base.py", line 220, in _get_response
+    response = response.render()
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/response.py", line 114, in render
+    self.content = self.rendered_content
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/response.py", line 70, in rendered_content
+    ret = renderer.render(self.data, accepted_media_type, context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/renderers.py", line 723, in render
+    context = self.get_context(data, accepted_media_type, renderer_context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/renderers.py", line 695, in get_context
+    'post_form': self.get_rendered_html_form(data, view, 'POST', request),
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/renderers.py", line 510, in get_rendered_html_form
+    return self.render_form_for_serializer(serializer)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/renderers.py", line 517, in render_form_for_serializer
+    return form_renderer.render(
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/renderers.py", line 371, in render
+    return template.render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/backends/django.py", line 61, in render
+    return self.template.render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 175, in render
+    return self._render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 167, in _render
+    return self.nodelist.render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 1005, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 966, in render_annotated
+    return self.render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/defaulttags.py", line 238, in render
+    nodelist.append(node.render_annotated(context))
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 966, in render_annotated
+    return self.render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/defaulttags.py", line 321, in render
+    return nodelist.render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 1005, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 966, in render_annotated
+    return self.render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/library.py", line 237, in render
+    output = self.func(*resolved_args, **resolved_kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/templatetags/rest_framework.py", line 87, in render_field
+    return renderer.render_field(field, style)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/renderers.py", line 350, in render_field
+    return template.render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/backends/django.py", line 61, in render
+    return self.template.render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 175, in render
+    return self._render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 167, in _render
+    return self.nodelist.render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 1005, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 966, in render_annotated
+    return self.render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/defaulttags.py", line 189, in render
+    values = self.sequence.resolve(context, ignore_failures=True)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 715, in resolve
+    obj = self.var.resolve(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 847, in resolve
+    value = self._resolve_lookup(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 914, in _resolve_lookup
+    current = current()
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/relations.py", line 220, in iter_options
+    self.get_choices(cutoff=self.html_cutoff),
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/relations.py", line 202, in get_choices
+    return OrderedDict([
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/relations.py", line 205, in <listcomp>
+    self.display_value(item)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/relations.py", line 226, in display_value
+    return str(instance)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/hatchery/models.py", line 23, in __str__
+    return "%s (%s)" % (datetime.strptime(self.date, '%d/%m/%y'), self.no_egg)
+TypeError: strptime() argument 1 must be str, not datetime.date
+Internal Server Error: /api/incubation/
+Traceback (most recent call last):
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/core/handlers/exception.py", line 56, in inner
+    response = get_response(request)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/core/handlers/base.py", line 220, in _get_response
+    response = response.render()
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/response.py", line 114, in render
+    self.content = self.rendered_content
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/response.py", line 70, in rendered_content
+    ret = renderer.render(self.data, accepted_media_type, context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/renderers.py", line 723, in render
+    context = self.get_context(data, accepted_media_type, renderer_context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/renderers.py", line 695, in get_context
+    'post_form': self.get_rendered_html_form(data, view, 'POST', request),
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/renderers.py", line 510, in get_rendered_html_form
+    return self.render_form_for_serializer(serializer)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/renderers.py", line 517, in render_form_for_serializer
+    return form_renderer.render(
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/renderers.py", line 371, in render
+    return template.render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/backends/django.py", line 61, in render
+    return self.template.render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 175, in render
+    return self._render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 167, in _render
+    return self.nodelist.render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 1005, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 966, in render_annotated
+    return self.render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/defaulttags.py", line 238, in render
+    nodelist.append(node.render_annotated(context))
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 966, in render_annotated
+    return self.render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/defaulttags.py", line 321, in render
+    return nodelist.render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 1005, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 966, in render_annotated
+    return self.render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/library.py", line 237, in render
+    output = self.func(*resolved_args, **resolved_kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/templatetags/rest_framework.py", line 87, in render_field
+    return renderer.render_field(field, style)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/renderers.py", line 350, in render_field
+    return template.render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/backends/django.py", line 61, in render
+    return self.template.render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 175, in render
+    return self._render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 167, in _render
+    return self.nodelist.render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 1005, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 966, in render_annotated
+    return self.render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/defaulttags.py", line 189, in render
+    values = self.sequence.resolve(context, ignore_failures=True)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 715, in resolve
+    obj = self.var.resolve(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 847, in resolve
+    value = self._resolve_lookup(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 914, in _resolve_lookup
+    current = current()
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/relations.py", line 220, in iter_options
+    self.get_choices(cutoff=self.html_cutoff),
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/relations.py", line 202, in get_choices
+    return OrderedDict([
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/relations.py", line 205, in <listcomp>
+    self.display_value(item)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/relations.py", line 226, in display_value
+    return str(instance)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/hatchery/models.py", line 23, in __str__
+    return "%s (%s)" % (datetime.strptime(str(self.date), '%d/%m/%y'), self.no_egg)
+  File "/usr/lib/python3.8/_strptime.py", line 568, in _strptime_datetime
+    tt, fraction, gmtoff_fraction = _strptime(data_string, format)
+  File "/usr/lib/python3.8/_strptime.py", line 349, in _strptime
+    raise ValueError("time data %r does not match format %r" %
+ValueError: time data '2023-04-18' does not match format '%d/%m/%y'
+Internal Server Error: /api/incubation/
+Traceback (most recent call last):
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/core/handlers/exception.py", line 56, in inner
+    response = get_response(request)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/core/handlers/base.py", line 220, in _get_response
+    response = response.render()
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/response.py", line 114, in render
+    self.content = self.rendered_content
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/response.py", line 70, in rendered_content
+    ret = renderer.render(self.data, accepted_media_type, context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/renderers.py", line 723, in render
+    context = self.get_context(data, accepted_media_type, renderer_context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/renderers.py", line 695, in get_context
+    'post_form': self.get_rendered_html_form(data, view, 'POST', request),
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/renderers.py", line 510, in get_rendered_html_form
+    return self.render_form_for_serializer(serializer)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/renderers.py", line 517, in render_form_for_serializer
+    return form_renderer.render(
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/renderers.py", line 371, in render
+    return template.render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/backends/django.py", line 61, in render
+    return self.template.render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 175, in render
+    return self._render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 167, in _render
+    return self.nodelist.render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 1005, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 966, in render_annotated
+    return self.render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/defaulttags.py", line 238, in render
+    nodelist.append(node.render_annotated(context))
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 966, in render_annotated
+    return self.render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/defaulttags.py", line 321, in render
+    return nodelist.render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 1005, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 966, in render_annotated
+    return self.render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/library.py", line 237, in render
+    output = self.func(*resolved_args, **resolved_kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/templatetags/rest_framework.py", line 87, in render_field
+    return renderer.render_field(field, style)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/renderers.py", line 350, in render_field
+    return template.render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/backends/django.py", line 61, in render
+    return self.template.render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 175, in render
+    return self._render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 167, in _render
+    return self.nodelist.render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 1005, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 966, in render_annotated
+    return self.render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/defaulttags.py", line 189, in render
+    values = self.sequence.resolve(context, ignore_failures=True)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 715, in resolve
+    obj = self.var.resolve(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 847, in resolve
+    value = self._resolve_lookup(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 914, in _resolve_lookup
+    current = current()
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/relations.py", line 220, in iter_options
+    self.get_choices(cutoff=self.html_cutoff),
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/relations.py", line 202, in get_choices
+    return OrderedDict([
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/relations.py", line 205, in <listcomp>
+    self.display_value(item)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/relations.py", line 226, in display_value
+    return str(instance)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/hatchery/models.py", line 23, in __str__
+    return "%s (%s)" % (datetime.strptime(str(self.date), '%d/%m/%y'), self.no_egg)
+  File "/usr/lib/python3.8/_strptime.py", line 568, in _strptime_datetime
+    tt, fraction, gmtoff_fraction = _strptime(data_string, format)
+  File "/usr/lib/python3.8/_strptime.py", line 349, in _strptime
+    raise ValueError("time data %r does not match format %r" %
+ValueError: time data '2023-04-18' does not match format '%d/%m/%y'

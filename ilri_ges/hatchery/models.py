@@ -1,4 +1,5 @@
 from django.db import models
+from datetime import datetime
 from simple_history.models import HistoricalRecords
 
 from core.models import CoreModel
@@ -15,6 +16,11 @@ class Hatchery(CoreModel):
         Farm, on_delete=models.SET_NULL, null=True, blank=True, related_name='hatchery')
 
     history = HistoricalRecords()
+
+    def __str__(self):
+        print('-------------------')
+        print(self.date)
+        return "%s (%s)" % (datetime.strptime(str(self.date), '%Y-%m-%d').strftime('%d/%m/%Y'), self.no_egg)
 
 
 class Incubation(CoreModel):

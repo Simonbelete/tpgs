@@ -125,7 +125,7 @@ class IncubationCreateView(LoginRequiredMixin, View):
         else:
             messages.error(request,
                            'Error occurred while creating, please check your data')
-            return render(request, 'hatchery/create.html', {'form': form})
+            return render(request, 'incubation/create.html', {'form': form})
         return render(request, 'incubation/index.html', {'form': form})
 
 
