@@ -3,7 +3,7 @@
 {% load widget_tweaks %}
 
 {% block page_title %}{{ data.name }} Hatchery Incubation{% endblock %}
-{% block data_title %}{{ data.date }} - Hatchery Incubation{% endblock %}
+{% block data_title %}{{ data.date }} ({{ data.no_egg }} Eggs) - Hatchery Incubation{% endblock %}
 {% block data_description %}{% endblock %}
 {% block data_menu %}Hatchery Incubation{% endblock %}
 
@@ -19,7 +19,7 @@
           </div>
           <!-- /.card-header -->
           <div class="card-body">
-            <table id="chicken_feeds" data-id="{{ id }}" class="table table-bordered table-striped">
+            <table id="hatchery_incubation" data-id="{{ id }}" class="table table-bordered table-striped">
                 <thead>
                   <tr>
                     <th>ID</th>
