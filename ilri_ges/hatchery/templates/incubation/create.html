@@ -20,15 +20,32 @@
 			{{ form.non_field_errors }}
 
             {% include 'components/fields/hatchery_select.html' %}
+            {% include 'components/date_time_picker.html' %}
+            {% include 'components/date_picker.html' %}
 			
             <div class="form-group">
-				<label for="{{ form.no_egg.id_for_label }}">No of egg set</label>
-				{{ form.no_egg|add_class:"form-control"|add_error_class:"is-invalid"|attr:"placeholder: Enter no of egg set" }}
-				<span id="{{ form.no_egg.id_for_label }}-error" class="error invalid-feedback">{{ form.no_egg.errors }}</span>
+				<label for="{{ form.temperature_celsius.id_for_label }}">Temperature (°C)</label>
+				{{ form.temperature_celsius|add_class:"form-control"|add_error_class:"is-invalid"|attr:"placeholder: Enter Temperature (°C)" }}
+				<span id="{{ form.temperature_celsius.id_for_label }}-error" class="error invalid-feedback">{{ form.temperature_celsius.errors }}</span>
 			</div>
 
-            {% include 'components/date_picker.html' %}
-            {% include 'components/breed_select.html' %}
+            <div class="form-group">
+				<label for="{{ form.humidity_fahrenheit.id_for_label }}">Humidity (°F)</label>
+				{{ form.humidity_fahrenheit|add_class:"form-control"|add_error_class:"is-invalid"|attr:"placeholder: Enter Humidity (°F)" }}
+				<span id="{{ form.humidity_fahrenheit.id_for_label }}-error" class="error invalid-feedback">{{ form.humidity_fahrenheit.errors }}</span>
+			</div>
+
+            <div class="form-group">
+				<label for="{{ form.humidity_percent.id_for_label }}">Humidity (%)</label>
+				{{ form.humidity_percent|add_class:"form-control"|add_error_class:"is-invalid"|attr:"placeholder: Enter Humidity (%)" }}
+				<span id="{{ form.humidity_percent.id_for_label }}-error" class="error invalid-feedback">{{ form.humidity_percent.errors }}</span>
+			</div>
+
+            <div class="form-group">
+				<label for="{{ form.remark.id_for_label }}">Remark</label>
+				{{ form.remark|add_class:"form-control"|add_error_class:"is-invalid"|attr:"placeholder: Enter remark" }}
+				<span id="{{ form.remark.id_for_label }}-error" class="error invalid-feedback">{{ form.remark.errors }}</span>
+			</div>
 
 		</div>
 		<div class="card-footer">
@@ -40,6 +57,6 @@
 
 {% block javascript %}
 <script src="{% static 'js/hatchery_select.js' %}"></script>
+<script src="{% static 'js/date_time_picker.js' %}"></script>
 <script src="{% static 'js/date_picker.js' %}"></script>
-<script src="{% static 'js/breed_type_select.js' %}"></script>
 {% endblock %}
