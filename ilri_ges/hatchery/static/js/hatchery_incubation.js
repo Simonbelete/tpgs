@@ -29,7 +29,7 @@ requirejs(
       dom: "Brt",
       buttons: ["copy", "excel", "csv", "print"],
       ajax: {
-        url: "/api/chickens/" + selector.data("id") + "/weights",
+        url: "/api/hatchery/" + selector.data("id") + "/incubation",
         dataSrc: function (json) {
           json["data"] = json["results"];
           json["recordsTotal"] = json["count"];

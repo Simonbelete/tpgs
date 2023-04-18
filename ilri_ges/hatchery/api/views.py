@@ -49,7 +49,7 @@ class HatcheryCandling(viewsets.ModelViewSet):
     def list(self, request, *args, **kwargs):
         id = self.kwargs['id']
         queryset = self.filter_queryset(self.get_queryset().filter(
-            hatchery=id).order_by('date_time'))
+            hatchery=id).order_by('date'))
 
         serializer = self.get_serializer(queryset, many=True)
         return Response({'results': serializer.data})
