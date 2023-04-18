@@ -1,38 +1,53 @@
-{% extends "form_template.html" %} 
+{% extends "plain_template.html" %} 
 {% load static %} 
 {% load widget_tweaks %}
 
 {% block page_title %}Hatchery{% endblock %}
 {% block data_title %}Hatchery{% endblock %}
-{% block data_description %}Edit Hatchery Record{% endblock %}
 {% block data_menu %}Hatchery Record{% endblock %}
 
-{% block contents %}
-<div class="container">
+{% block content %}
+<div class="col-12">
+	<div class="row col-12">
+		<a href="/chickens/{{id}}/weights" class="col-md-3 col-sm-6 col-12">
+            <!-- .info-box-->
+            <div class="info-box">
+              <span class="info-box-icon bg-warning"><i class="far fa-copy"></i></span>
+
+              <div class="info-box-content">
+                <span class="info-box-text font-weight-bold">Body Weight</span>
+                <span class="info-box-number" id="statics_weight">-</span>
+              </div>
+              <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+          </a>
+	</div>
+
 	<form method="POST" class="card card-primary">
-        <div class="card-header">
-            <h3 class="card-title">Hatchery</h3>
-        </div>
-        <div class="card-body">
+		<div class="card-header">
+			<h3 class="card-title">Hatchery</h3>
+		</div>
+		<div class="card-body">
 			{% include 'components/messages.html' %}
 
 			{% csrf_token %}
 			{{ form.non_field_errors }}
 			
-            <div class="form-group">
+			<div class="form-group">
 				<label for="{{ form.no_egg.id_for_label }}">No of egg set</label>
 				{{ form.no_egg|add_class:"form-control"|add_error_class:"is-invalid"|attr:"placeholder: Enter no of egg set" }}
 				<span id="{{ form.no_egg.id_for_label }}-error" class="error invalid-feedback">{{ form.no_egg.errors }}</span>
 			</div>
 
-            {% include 'components/date_picker.html' %}
-            {% include 'components/fields/breed_select.html' %}
-            {% include 'components/fields/farm_field.html' %}
+			{% include 'components/date_picker.html' %}
+			{% include 'components/fields/breed_select.html' %}
+			{% include 'components/fields/farm_field.html' %}
 
 		</div>
 		<div class="card-footer">
-            <button type="submit" class="btn btn-primary">Submit</button>
-        </div>
+			<button type="submit" class="btn btn-primary">Submit</button>
+		</div>
 	</form>
 </div>
 {% endblock %}
