@@ -236,6 +236,17 @@
 
             <li class="nav-item">
               <a
+                href="{% url 'hatchery' %}"
+                class="nav-link {% if request.path == '/hatchery/' %}active{% endif %}"
+              >
+                <i class="nav-icon fas fa-egg"></i>
+                <p>Hatchery</p>
+              </a>
+            </li>
+
+
+            <li class="nav-item">
+              <a
                 href="{% url 'breeds' %}"
                 class="nav-link {% if request.path == '/breeds/' %}active{% endif %}"
               >

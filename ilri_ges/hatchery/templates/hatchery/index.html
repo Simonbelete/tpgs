@@ -1,22 +1,23 @@
 {% extends "list_template.html" %}
 {% load static %}
 
-{% block page_title %}Egg Collection{% endblock %}
-{% block data_title %}Egg Collection{% endblock %}
-{% block data_description %}List of Egg Collection{% endblock %}
-{% block data_menu %}Egg Collection{% endblock %}
-{% block data_url %}{% url 'eggs_create' %}{% endblock %}
-{% block data_btn %}Create Egg record{% endblock %}
+{% block page_title %}Hatchery{% endblock %}
+{% block data_title %}Hatchery{% endblock %}
+{% block data_description %}List of Hatchery{% endblock %}
+{% block data_menu %}Hatchery{% endblock %}
+{% block data_url %}{% url 'hatchery_create' %}{% endblock %}
+{% block data_btn %}Create Hatchery{% endblock %}
 
 {% block table %}
 <table id="hatchery_data_table_list" class="table table-bordered table-striped">
 	<thead>
 		<tr>
-        <th>ID</th>
-        <th>Date of set</th>
-        <th>Breed</th>
-        <th>Farm</th>
-		<th></th>
+			<th>ID</th>
+            <th>Date of set</th>
+			<th>No of egg set</th>
+			<th>Breed Type</th>
+			<th>Created at</th>
+			<th></th>
 		</tr>
 	</thead>
 	<tbody></tbody>
@@ -24,8 +25,9 @@
 		<tr>
             <th>ID</th>
             <th>Date of set</th>
-            <th>Breed</th>
-            <th>Farm</th>
+			<th>No of egg set</th>
+			<th>Breed Type</th>
+			<th>Created at</th>
 		    <th></th>
 		</tr>
 	</tfoot>

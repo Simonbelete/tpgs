@@ -56,7 +56,8 @@ INSTALLED_APPS = [
     'weights',
     'breeding_pairs',
     'feeds',
-    'eggs'
+    'eggs',
+    'hatchery'
 ]
 
 AUTH_USER_MODEL = 'users.User'

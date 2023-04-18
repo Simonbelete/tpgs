@@ -3,6 +3,7 @@ from simple_history.models import HistoricalRecords
 
 from core.models import CoreModel
 from breeds.models import BreedType
+from farms.models import Farm
 
 
 class Hatchery(CoreModel):
@@ -10,6 +11,8 @@ class Hatchery(CoreModel):
     no_egg = models.IntegerField()
     breed_type = models.ForeignKey(
         BreedType, on_delete=models.SET_NULL, null=True, blank=True, related_name='hatchery')
+    farm = models.ForeignKey(
+        Farm, on_delete=models.SET_NULL, null=True, blank=True, related_name='hatchery')
 
     history = HistoricalRecords()
 
@@ -31,7 +34,7 @@ class Incubation(CoreModel):
 
 class Candling(CoreModel):
     hatchery = models.ForeignKey(
-        Hatchery, on_delete=models.CASCADE, related_name='hatchery')
+        Hatchery, on_delete=models.CASCADE, related_name='candling')
     date = models.DateField()
     no_egg = models.IntegerField()
     infertile_egg = models.IntegerField()
