@@ -8,7 +8,7 @@ requirejs(
       // minYear: 1901,
       // maxYear: parseInt(moment().format("YYYY"), 10),
       locale: {
-        format: "M/DD/YYYY hh:mm:A",
+        format: "M/DD/YYYY hh:mm:ss",
       },
     });
   }
