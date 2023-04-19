@@ -356,9 +356,8 @@ class ChickenExportView(LoginRequiredMixin, View):
         if not form.is_valid():
             return render(request, 'export/chicken_export.html', {'form': form})
 
-        # chickens = chickens.filter(
-        #     breed_type=form.cleaned_data['breed_type'], )
-        chickens = chickens.filter(tag='B-01')
+        chickens = chickens.filter(
+            breed_type=form.cleaned_data['breed_type'], farm=form.cleaned_data['farm'], house=form.cleaned_data['house'])
 
         output = io.BytesIO()
         cols = [
