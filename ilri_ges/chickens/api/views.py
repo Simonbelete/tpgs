@@ -410,3 +410,23 @@ class ChickenMortality(APIView):
             labels.append(start_day.strftime("%b"))
             values.append(chicken_dead)
         return Response({'results': data, 'chartjs': {'labels': labels, 'data': values}})
+
+
+class ChickenSexChart(APIView):
+    queryset = Chicken.objects.all()
+
+    def get(self, request):
+        chickens = self.queryset
+        farms_ids = request.GET.get('farms', "") or ""
+        if len(farms_ids) != 0:
+            farms_ids = np.array(farms_ids.split(',') or []).astype(int)
+            chickens = chickens.filter(farm__in=farms_ids)
+        elif request.user.is_superuser != True:
+            farms_ids = request.user.farms.all()
+            chickens = chickens.filter(farm__in=farms_ids)
+
+        return Response({'results': [], 'chartjs': {'labels': ['Male', 'Female', 'Unknown'], 'data': [
+            chickens.filter(sex='M').count(),
+            chickens.filter(sex='F').count(),
+            chickens.filter(~Q(sex='M') & ~Q(sex='F')).count()
+        ]}})
