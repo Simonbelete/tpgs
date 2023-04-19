@@ -64,31 +64,22 @@ requirejs(
       return parseFloat(c.toFixed(2));
     }
 
-    var pieData = {
-      labels: [],
-      datasets: [],
-    };
-
-    var pieOptions = {
-      legend: {
-        display: false,
-      },
-    };
-
-    var ctx = $("#breed_type_piechart").get(0).getContext("2d");
-
-    var pieChart = new Chart(ctx, {
-      type: "doughnut",
-      data: pieData,
-      // options: pieOptions,
-    });
-
-    var data = data || {};
+    var pieChart = new Chart(
+      $("#breed_type_piechart").get(0).getContext("2d"),
+      {
+        type: "doughnut",
+        data: {
+          labels: [],
+          datasets: [],
+        },
+        // options: pieOptions,
+      }
+    );
 
     function loadBreedType() {
       $.getJSON(
         "/api/breed-types/count/?farms=" + $("#farm_select").val().join(","),
-        data
+        {}
       ).done(function (response) {
         labels = [];
         datasets = { data: [], backgroundColor: [] };
@@ -137,17 +128,46 @@ requirejs(
       });
     }
 
+    ///
+    /// Sex
+    ///
+
+    var sex_pieChart = new Chart($("#sex_piechart").get(0).getContext("2d"), {
+      type: "doughnut",
+      data: {
+        labels: [],
+        datasets: [],
+      },
+      // options: pieOptions,
+    });
+
+    function loadSex() {
+      $.getJSON(
+        "/api/chickens-sex-chart/?farms=" + $("#farm_select").val().join(","),
+        {}
+      ).done(function (response) {
+        sex_pieChart.data.labels = response.chartjs.labels;
+        sex_pieChart.data.datasets[0] = {
+          data: response.chartjs.data,
+          label: "Sex",
+        };
+        sex_pieChart.update();
+      });
+    }
+
     //
     // init
     //
     loadData();
     loadMortality();
     loadBreedType();
+    loadSex();
 
     $("#farm_select").on("change", function (e) {
       loadData();
       loadMortality();
       loadBreedType();
+      loadSex();
     });
 
     function loadData() {
