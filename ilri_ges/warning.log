@@ -18652,3 +18652,5 @@ Traceback (most recent call last):
     return datetime.date.fromisoformat(value)
 TypeError: fromisoformat: argument must be str
 Not Found: /favicon.ico
+Forbidden (CSRF token from POST incorrect.): /users/login
+Not Found: /favicon.ico

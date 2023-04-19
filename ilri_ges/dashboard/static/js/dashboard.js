@@ -14,6 +14,8 @@ requirejs(
         datasets: [],
       },
       options: {
+        responsive: true,
+        maintainAspectRatio: false,
         title: {
           display: true,
           text: "Weights",
@@ -66,19 +68,10 @@ requirejs(
           labels: [],
           datasets: [],
         },
-        options: {},
-        // plugins: [
-        //   {
-        //     beforeDraw: (chart, args, options) => {
-        //       const { ctx } = chart;
-        //       ctx.save();
-        //       ctx.globalCompositeOperation = "destination-over";
-        //       ctx.fillStyle = "#fff";
-        //       ctx.fillRect(0, 0, chart.width, chart.height);
-        //       ctx.restore();
-        //     },
-        //   },
-        // ],
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+        },
       }
     );
 
@@ -186,7 +179,9 @@ requirejs(
         labels: [],
         datasets: [],
       },
-      // options: pieOptions,
+      // options: {
+
+      // },
     });
 
     function loadSex() {
@@ -221,6 +216,7 @@ requirejs(
             },
           },
           responsive: true,
+          maintainAspectRatio: false,
           scales: {
             y: {
               beginAtZero: true,
