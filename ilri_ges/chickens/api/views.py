@@ -1,3 +1,4 @@
+import calendar
 from datetime import datetime, timedelta, date
 from rest_framework import viewsets, status
 from rest_framework.response import Response
@@ -398,9 +399,11 @@ class ChickenMortality(APIView):
         data = []
         labels = []
         values = []
-        for month in range(1, 12):
+        for month in range(1, 13):
             start_day = datetime(year, month, 1)
-            end_day = datetime(year, month + 1, 1) + timedelta(days=-1)
+            # end_day = datetime(year, month, 1) + timedelta(days=-1)
+            end_day = calendar.monthrange(year, month)
+            end_day = datetime(year, month, end_day[1])
             chicken_dead = chickens.filter(
                 dead_date__gte=start_day, dead_date__lte=end_day).count() or 0
             data.append({
@@ -430,9 +433,11 @@ class ChickenHatchery(APIView):
         data = []
         labels = []
         values = []
-        for month in range(1, 12):
+        for month in range(1, 13):
             start_day = datetime(year, month, 1)
-            end_day = datetime(year, month + 1, 1) + timedelta(days=-1)
+            # end_day = datetime(year, month + 1, 1) + timedelta(days=-1)
+            end_day = calendar.monthrange(year, month)
+            end_day = datetime(year, month, end_day[1])
             chicken_dead = chickens.filter(
                 hatch_date__gte=start_day, hatch_date__lte=end_day).count() or 0
             data.append({
