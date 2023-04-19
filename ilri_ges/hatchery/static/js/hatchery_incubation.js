@@ -56,7 +56,7 @@ requirejs(
     selector.on("click", "td.editor-edit, tr td ul .editor-edit", function (e) {
       e.preventDefault();
       var data = table.row(this).data();
-      window.location.href = "/incubation/" + data.id;
+      window.location.href = "/hatchery/" + data.id + "/incubation/";
     });
   }
 );

@@ -15,9 +15,9 @@ urlpatterns = [
          name="hatchery_create"),
 
     path('incubation/', views.IncubationView.as_view(), name="incubation"),
-    path('incubation/delete/<id>/', views.IncubationDeleteView.as_view(),
+    path('incubation/delete/<int:id>/', views.IncubationDeleteView.as_view(),
          name="incubation_delete"),
-    path('incubation/<id>/', views.IncubationEditView.as_view(),
+    path('incubation/<int:id>/', views.IncubationEditView.as_view(),
          name="incubation_edit"),
     path('incubation/create', views.IncubationCreateView.as_view(),
          name="incubation_create"),

@@ -43,8 +43,8 @@ class HatcheryIncubation(viewsets.ModelViewSet):
 
 
 class HatcheryCandling(viewsets.ModelViewSet):
-    queryset = models.Incubation.objects.all()
-    serializer_class = serializers.IncubationSerializer_GET
+    queryset = models.Candling.objects.all()
+    serializer_class = serializers.CandlingSerializer_GET
 
     def list(self, request, *args, **kwargs):
         id = self.kwargs['id']

@@ -1,0 +1,47 @@
+{% extends "list_template.html" %}
+{% load static %}
+
+{% block page_title %}Candling{% endblock %}
+{% block data_title %}Candling{% endblock %}
+{% block data_description %}List of Candling{% endblock %}
+{% block data_menu %}Candling{% endblock %}
+{% block data_url %}{% url 'candling_create' %}{% endblock %}
+{% block data_btn %}Create Candling{% endblock %}
+
+{% block table %}
+<table id="candling_data_table_list" class="table table-bordered table-striped">
+	<thead>
+		<tr>
+			<th>ID</th>
+			<th>Date of set</th>
+            <th>Date</th>
+			<th>No of egg set</th>
+			<th>Infertile egg</th>
+			<th>No of hatched</th>
+			<th>No of chicken</th>
+			<th>Cull chicken</th>
+			<th>Created at</th>
+			<th></th>
+		</tr>
+	</thead>
+	<tbody></tbody>
+	<tfoot>
+		<tr>
+            <th>ID</th>
+			<th>Date of set</th>
+            <th>Date</th>
+			<th>No of egg set</th>
+			<th>Infertile egg</th>
+			<th>No of hatched</th>
+			<th>No of chicken</th>
+			<th>Cull chicken</th>
+			<th>Created at</th>
+		    <th></th>
+		</tr>
+	</tfoot>
+</table>
+{% endblock %}
+
+{% block javascript %}
+<script src="{% static 'js/candling_list.js' %}"></script>
+{% endblock %}

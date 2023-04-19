@@ -202,7 +202,7 @@ class CandlingCreateView(LoginRequiredMixin, View):
             form.created_by = request.user
             form.save()
             if form is not None:
-                return redirect('incubation')
+                return redirect('candling')
             else:
                 messages.error(
                     request, 'Error occurred while creating, please check your data')
@@ -266,17 +266,15 @@ class HatcheryIncubation(LoginRequiredMixin, View):
     redirect_field_name = 'redirect_to'
 
     def get(self, request, id=0):
-        data = Hatchery.objects.get(pk=id)
-        return render(request, 'hatchery/hatchery_incubation.html', {"id": id, "data": data})
-        # if id == 0:
-        #     return redirect('404')
-        # try:
-        #     data = Hatchery.objects.get(pk=id)
-        #     return render(request, 'hatchery/hatchery_incubation.html', {"id": id, "data": data})
-        # except Exception as ex:
-        #     print('-------------------------')
-        #     print(ex)
-        #     return redirect('404')
+        if id == 0:
+            return redirect('404')
+        try:
+            data = Hatchery.objects.get(pk=id)
+            return render(request, 'hatchery/hatchery_incubation.html', {"id": id, "data": data})
+        except Exception as ex:
+            print('-------------------------')
+            print(ex)
+            return redirect('404')
 
 
 class HatcheryCandling(LoginRequiredMixin, View):

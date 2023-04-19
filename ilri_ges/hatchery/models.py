@@ -41,9 +41,9 @@ class Candling(CoreModel):
         Hatchery, on_delete=models.CASCADE, related_name='candling')
     date = models.DateField()
     no_egg = models.IntegerField()
-    infertile_egg = models.IntegerField()
-    no_of_hatched = models.IntegerField()
-    no_dead = models.IntegerField()
-    no_culled = models.IntegerField()
+    infertile_egg = models.IntegerField(null=True, blank=True)
+    no_of_hatched = models.IntegerField(null=True, blank=True)
+    no_dead = models.IntegerField(null=True, blank=True)
+    no_culled = models.IntegerField(null=True, blank=True)
 
     history = HistoricalRecords()

@@ -1,0 +1,66 @@
+{% extends "form_template.html" %} 
+{% load static %} 
+{% load widget_tweaks %}
+
+{% block page_title %}Incubation{% endblock %}
+{% block data_title %}Incubation{% endblock %}
+{% block data_description %}Create new Incubation Record{% endblock %}
+{% block data_menu %}Incubation Record{% endblock %}
+
+{% block contents %}
+<div class="container">
+	<form method="POST" class="card card-primary">
+        <div class="card-header">
+            <h3 class="card-title">Incubation</h3>
+        </div>
+        <div class="card-body">
+			{% include 'components/messages.html' %}
+
+			{% csrf_token %}
+			{{ form.non_field_errors }}
+
+            {% include 'components/fields/hatchery_select.html' %}
+            {% include 'components/date_picker.html' %}
+
+            <div class="form-group">
+				<label for="{{ form.no_egg.id_for_label }}">No of egg set</label>
+				{{ form.no_egg|add_class:"form-control"|add_error_class:"is-invalid"|attr:"placeholder: Enter no of egg set" }}
+				<span id="{{ form.no_egg.id_for_label }}-error" class="error invalid-feedback">{{ form.no_egg.errors }}</span>
+			</div>
+
+            <div class="form-group">
+				<label for="{{ form.infertile_egg.id_for_label }}">Infertile egg</label>
+				{{ form.infertile_egg|add_class:"form-control"|add_error_class:"is-invalid"|attr:"placeholder: Enter Infertile egg" }}
+				<span id="{{ form.infertile_egg.id_for_label }}-error" class="error invalid-feedback">{{ form.infertile_egg.errors }}</span>
+			</div>
+
+            <div class="form-group">
+				<label for="{{ form.no_of_hatched.id_for_label }}">No of hatched</label>
+				{{ form.no_of_hatched|add_class:"form-control"|add_error_class:"is-invalid"|attr:"placeholder: Enter No of hatched" }}
+				<span id="{{ form.no_of_hatched.id_for_label }}-error" class="error invalid-feedback">{{ form.no_of_hatched.errors }}</span>
+			</div>
+
+            <div class="form-group">
+				<label for="{{ form.no_dead.id_for_label }}">No of dead chicken</label>
+				{{ form.no_dead|add_class:"form-control"|add_error_class:"is-invalid"|attr:"placeholder: Enter No of dead chicken" }}
+				<span id="{{ form.no_dead.id_for_label }}-error" class="error invalid-feedback">{{ form.no_dead.errors }}</span>
+			</div>
+
+            <div class="form-group">
+				<label for="{{ form.no_culled.id_for_label }}">Cull chicken</label>
+				{{ form.no_culled|add_class:"form-control"|add_error_class:"is-invalid"|attr:"placeholder: Enter Cull chicken" }}
+				<span id="{{ form.no_culled.id_for_label }}-error" class="error invalid-feedback">{{ form.no_culled.errors }}</span>
+			</div>
+
+		</div>
+		<div class="card-footer">
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+	</form>
+</div>
+{% endblock %}
+
+{% block javascript %}
+<script src="{% static 'js/hatchery_select.js' %}"></script>
+<script src="{% static 'js/date_picker.js' %}"></script>
+{% endblock %}

@@ -5,6 +5,7 @@ requirejs(["jquery", "datatables"], function ($, DataTable, dbs4) {
 
   var columns = [
     { data: "id", visible: false },
+    { data: "hatchery.date", defaultContent: "" },
     { data: "date_time" },
     { data: "temperature_celsius" },
     { data: "humidity_fahrenheit" },
@@ -55,6 +56,6 @@ requirejs(["jquery", "datatables"], function ($, DataTable, dbs4) {
   selector.on("click", "td.editor-edit, tr td ul .editor-edit", function (e) {
     e.preventDefault();
     var data = table.row(this).data();
-    window.location.href = "/incubation/" + data.id;
+    window.location.href = "/hatchery/" + data.id + "incubation/";
   });
 });
