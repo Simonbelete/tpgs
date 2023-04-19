@@ -3,7 +3,8 @@
       <!-- small box -->
       <div class="small-box bg-warning">
         <div class="inner">
-          <h3>{{ statics_count.users_count }}</h3>
+          <h3 id="stat_user">-</h3>
+          {% comment %} <h3 id="stat_user">{{ statics_count.users_count }}</h3> {% endcomment %}
 
           <p>Users</p>
         </div>
@@ -20,7 +21,8 @@
       <!-- small box -->
       <div class="small-box bg-info">
         <div class="inner">
-          <h3>{{ statics_count.flocks_count }}</h3>
+          <h3 id="stat_flocks">-</h3>
+          {% comment %} <h3>{{ statics_count.flocks_count }}</h3> {% endcomment %}
 
           <p>Flocks</p>
         </div>
@@ -37,7 +39,8 @@
       <!-- small box -->
       <div class="small-box bg-success">
         <div class="inner">
-          <h3>{{ statics_count.farms_count }}</h3>
+          <h3 id="stat_farms">-</h3>
+          {% comment %} <h3>{{ statics_count.farms_count }}</h3> {% endcomment %}
 
           <p>Farms</p>
         </div>
@@ -54,7 +57,8 @@
       <!-- small box -->
       <div class="small-box bg-danger">
         <div class="inner">
-          <h3>{{ statics_count.chicken_count }}</h3>
+          <h3 id="stat_chicken">-</h3>
+          {% comment %} <h3>{{ statics_count.chicken_count }}</h3> {% endcomment %}
 
           <p>Chickens</p>
         </div>

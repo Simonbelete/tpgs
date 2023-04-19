@@ -46,6 +46,7 @@ urlpatterns = [
     path('api/', include('weights.api.urls')),
     path('api/', include('flocks.api.urls')),
     path('api/', include('hatchery.api.urls')),
+    path('api/', include('dashboard.api.urls')),
 
     path('chickens/api/', include('chickens.api.urls')),
 

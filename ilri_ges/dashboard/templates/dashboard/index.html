@@ -5,20 +5,25 @@
 Dashboard - ILRI genetics Evaluation
 {% endblock %}
 
+{% block stylesheet %} 
+{% include 'components/select2_style.html' %}
+{% endblock %} 
+
 {% block body %}
 <!-- Content Header (Page header) -->
 <div class="content-header">
     <div class="container-fluid">
       <div class="row mb-2">
-        <div class="col-sm-6">
+        <div class="col">
           <h1 class="m-0">Dashboard</h1>
         </div>
         <!-- /.col -->
-        <div class="col-sm-6">
-          <ol class="breadcrumb float-sm-right">
+        <div class="col-sm-2">
+          {% comment %} <ol class="breadcrumb float-sm-right">
             <li class="breadcrumb-item"><a href="/">Home</a></li>
             <li class="breadcrumb-item active">Dashboard</li>
-          </ol>
+          </ol> {% endcomment %}
+          <select id="farm_select" multiple="multiple" name="farm" class="form-control" style="width: 100%"></select>
         </div>
         <!-- /.col -->
       </div>
@@ -47,4 +52,6 @@ Dashboard - ILRI genetics Evaluation
 {% block javascript %}
 <script src="{% static 'js/breed_type_piechart.js' %}"></script>
 <script src="{% static 'js/mortality_chart.js' %}"></script>
+<script src="{% static 'js/farm_select.js' %}"></script>
+<script src="{% static 'js/dashboard.js' %}"></script>
 {% endblock%}

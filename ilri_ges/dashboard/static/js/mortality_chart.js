@@ -32,7 +32,6 @@ requirejs(
     });
 
     $.getJSON("/api/chickens-mortality/", {}).done(function (response) {
-      console.log(response);
       chart.data.labels = response.chartjs.labels;
       chart.data.datasets[0] = {
         data: response.chartjs.data,
