@@ -6,6 +6,7 @@ from rest_framework.views import APIView
 from rest_framework.generics import GenericAPIView
 from django.db.models import Count, Sum, F, Value, Q, Avg
 from django.db.models.functions import Concat
+import numpy as np
 
 from core.views import HistoryViewSet
 from chickens.models import Chicken
@@ -384,6 +385,15 @@ class ChickenMortality(APIView):
 
     def get(self, request):
         year = int(request.GET.get('year', datetime.today().year))
+        farms_ids = request.GET.get('farms', "") or ""
+        chickens = Chicken.objects.all()
+
+        if len(farms_ids) != 0:
+            farms_ids = np.array(farms_ids.split(',') or []).astype(int)
+            chickens = chickens.filter(farm__in=farms_ids)
+        elif request.user.is_superuser != True:
+            farms_ids = request.user.farms.all()
+            chickens = chickens.filter(farm__in=farms_ids)
 
         data = []
         labels = []
@@ -391,7 +401,7 @@ class ChickenMortality(APIView):
         for month in range(1, 12):
             start_day = datetime(year, month, 1)
             end_day = datetime(year, month + 1, 1) + timedelta(days=-1)
-            chicken_dead = Chicken.objects.filter(
+            chicken_dead = chickens.filter(
                 dead_date__gte=start_day, dead_date__lte=end_day).count() or 0
             data.append({
                 'month': month,
