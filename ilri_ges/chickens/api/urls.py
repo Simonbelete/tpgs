@@ -25,6 +25,7 @@ urlpatterns = [
     path('chickens/<int:id>/fcr/eggs', views.FCrEgg.as_view()),
     path('chickens/pedigree/', views.ChickenPedigreeViewSet.as_view()),
     path('chickens-mortality/', views.ChickenMortality.as_view()),
+    path('chickens-hatchery/', views.ChickenHatchery.as_view()),
     path('chickens/feed-by-weight/', views.chickenFeebByWeightReport.as_view()),
     path('chickens-sex-chart/', views.ChickenSexChart.as_view()),
     path('chickens-age-group-chart/', views.ChickensAgeGroupChart.as_view()),

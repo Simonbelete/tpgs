@@ -55,6 +55,54 @@ requirejs(
       });
     }
 
+    //
+    // Mortality
+    //
+    var hatchery_chart = new Chart(
+      $("#hatchery-chart-canvas").get(0).getContext("2d"),
+      {
+        type: "line",
+        data: {
+          labels: [],
+          datasets: [],
+        },
+        options: {},
+        // plugins: [
+        //   {
+        //     beforeDraw: (chart, args, options) => {
+        //       const { ctx } = chart;
+        //       ctx.save();
+        //       ctx.globalCompositeOperation = "destination-over";
+        //       ctx.fillStyle = "#fff";
+        //       ctx.fillRect(0, 0, chart.width, chart.height);
+        //       ctx.restore();
+        //     },
+        //   },
+        // ],
+      }
+    );
+
+    function loadHatchery() {
+      $.getJSON("/api/chickens-hatchery/", {
+        farms: $("#farm_select").val().join(","),
+      }).done(function (response) {
+        hatchery_chart.data.labels = response.chartjs.labels;
+        hatchery_chart.data.datasets[0] = {
+          data: response.chartjs.data,
+          label: "Hatchery",
+          fill: true,
+          backgroundColor: "rgba(255, 144, 32,0.9)",
+          borderColor: "rgba(255, 144, 32,0.8)",
+          pointRadius: false,
+          pointColor: "#3b8bba",
+          pointStrokeColor: "rgba(255, 144, 32,1)",
+          pointHighlightFill: "#fff",
+          pointHighlightStroke: "rgba(255, 144, 32,1)",
+        };
+        hatchery_chart.update();
+      });
+    }
+
     ///
     /// Breed type
     ///
@@ -216,6 +264,7 @@ requirejs(
     loadBreedType();
     loadSex();
     loadAgeGroup();
+    loadHatchery();
 
     $("#farm_select").on("change", function (e) {
       loadData();
@@ -223,6 +272,7 @@ requirejs(
       loadBreedType();
       loadSex();
       loadAgeGroup();
+      loadHatchery();
     });
 
     function loadData() {
