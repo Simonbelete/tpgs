@@ -17108,3 +17108,1110 @@ Traceback (most recent call last):
     raise TypeError(f'Object of type {o.__class__.__name__} '
 TypeError: Object of type Chicken is not JSON serializable
 Not Found: /favicon.ico
+Internal Server Error: /api/chickens-age-group-chart/
+Traceback (most recent call last):
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/core/handlers/exception.py", line 56, in inner
+    response = get_response(request)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/views/decorators/csrf.py", line 55, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/views/generic/base.py", line 103, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/chickens/api/views.py", line 451, in get
+    chickens.filter(age=1).count()
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/query.py", line 1421, in filter
+    return self._filter_or_exclude(False, args, kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/query.py", line 1439, in _filter_or_exclude
+    clone._filter_or_exclude_inplace(negate, args, kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/query.py", line 1446, in _filter_or_exclude_inplace
+    self._query.add_q(Q(*args, **kwargs))
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/sql/query.py", line 1532, in add_q
+    clause, _ = self._add_q(q_object, self.used_aliases)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/sql/query.py", line 1562, in _add_q
+    child_clause, needed_inner = self.build_filter(
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/sql/query.py", line 1407, in build_filter
+    lookups, parts, reffed_expression = self.solve_lookup_type(arg)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/sql/query.py", line 1217, in solve_lookup_type
+    _, field, _, lookup_parts = self.names_to_path(lookup_splitted, self.get_meta())
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/sql/query.py", line 1709, in names_to_path
+    raise FieldError(
+django.core.exceptions.FieldError: Cannot resolve keyword 'age' into field. Choices are: breed_pair, breed_pair_id, breed_type, breed_type_id, created_at, created_by, created_by_id, days_alive, dead_date, egg_weight, eggs, farm, farm_id, father, feeds, flock, flock_id, hatch_date, house, house_id, id, is_active, is_dead, is_double_yolk, layed_place, layed_place_id, mother, pen, sex, tag, updated_at, weights
+Not Found: /favicon.ico
+Internal Server Error: /api/chickens-age-group-chart/
+Traceback (most recent call last):
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/core/handlers/exception.py", line 56, in inner
+    response = get_response(request)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/views/decorators/csrf.py", line 55, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/views/generic/base.py", line 103, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/chickens/api/views.py", line 448, in get
+    chickens.annotate(age=1)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/query.py", line 1575, in annotate
+    return self._annotate(args, kwargs, select=True)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/query.py", line 1585, in _annotate
+    self._validate_values_are_expressions(
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/query.py", line 1936, in _validate_values_are_expressions
+    raise TypeError(
+TypeError: QuerySet.annotate() received non-expression(s): 1.
+Internal Server Error: /api/chickens-age-group-chart/
+Traceback (most recent call last):
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/core/handlers/exception.py", line 56, in inner
+    response = get_response(request)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/views/decorators/csrf.py", line 55, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/views/generic/base.py", line 103, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/chickens/api/views.py", line 453, in get
+    chickens.filter(age=1).count()
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/query.py", line 1421, in filter
+    return self._filter_or_exclude(False, args, kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/query.py", line 1439, in _filter_or_exclude
+    clone._filter_or_exclude_inplace(negate, args, kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/query.py", line 1446, in _filter_or_exclude_inplace
+    self._query.add_q(Q(*args, **kwargs))
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/sql/query.py", line 1532, in add_q
+    clause, _ = self._add_q(q_object, self.used_aliases)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/sql/query.py", line 1562, in _add_q
+    child_clause, needed_inner = self.build_filter(
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/sql/query.py", line 1407, in build_filter
+    lookups, parts, reffed_expression = self.solve_lookup_type(arg)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/sql/query.py", line 1217, in solve_lookup_type
+    _, field, _, lookup_parts = self.names_to_path(lookup_splitted, self.get_meta())
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/sql/query.py", line 1709, in names_to_path
+    raise FieldError(
+django.core.exceptions.FieldError: Cannot resolve keyword 'age' into field. Choices are: breed_pair, breed_pair_id, breed_type, breed_type_id, created_at, created_by, created_by_id, days_alive, dead_date, egg_weight, eggs, farm, farm_id, father, feeds, flock, flock_id, hatch_date, house, house_id, id, is_active, is_dead, is_double_yolk, layed_place, layed_place_id, mother, pen, sex, tag, updated_at, weights
+Internal Server Error: /api/chickens-age-group-chart/
+Traceback (most recent call last):
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/core/handlers/exception.py", line 56, in inner
+    response = get_response(request)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/views/decorators/csrf.py", line 55, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/views/generic/base.py", line 103, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/chickens/api/views.py", line 449, in get
+    age=datetime.date.today() - F('hatch_date'))
+AttributeError: 'method_descriptor' object has no attribute 'today'
+Internal Server Error: /api/chickens-age-group-chart/
+Traceback (most recent call last):
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/core/handlers/exception.py", line 56, in inner
+    response = get_response(request)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/views/decorators/csrf.py", line 55, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/views/generic/base.py", line 103, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/chickens/api/views.py", line 451, in get
+    print(chickens)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/query.py", line 370, in __repr__
+    data = list(self[: REPR_OUTPUT_SIZE + 1])
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/query.py", line 376, in __len__
+    self._fetch_all()
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/query.py", line 1867, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/query.py", line 125, in __iter__
+    setattr(obj, attr_name, row[col_pos])
+AttributeError: can't set attribute
+Internal Server Error: /api/chickens-age-group-chart/
+Traceback (most recent call last):
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/core/handlers/exception.py", line 56, in inner
+    response = get_response(request)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/views/decorators/csrf.py", line 55, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/views/generic/base.py", line 103, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/chickens/api/views.py", line 456, in get
+    chickens['age']
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/query.py", line 414, in __getitem__
+    raise TypeError(
+TypeError: QuerySet indices must be integers or slices, not str.
+Internal Server Error: /api/chickens-age-group-chart/
+Traceback (most recent call last):
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/core/handlers/exception.py", line 56, in inner
+    response = get_response(request)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/views/decorators/csrf.py", line 55, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/views/generic/base.py", line 103, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/chickens/api/views.py", line 456, in get
+    chickens.filter(age_in_day=1)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/query.py", line 1421, in filter
+    return self._filter_or_exclude(False, args, kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/query.py", line 1439, in _filter_or_exclude
+    clone._filter_or_exclude_inplace(negate, args, kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/query.py", line 1446, in _filter_or_exclude_inplace
+    self._query.add_q(Q(*args, **kwargs))
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/sql/query.py", line 1532, in add_q
+    clause, _ = self._add_q(q_object, self.used_aliases)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/sql/query.py", line 1562, in _add_q
+    child_clause, needed_inner = self.build_filter(
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/sql/query.py", line 1407, in build_filter
+    lookups, parts, reffed_expression = self.solve_lookup_type(arg)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/sql/query.py", line 1217, in solve_lookup_type
+    _, field, _, lookup_parts = self.names_to_path(lookup_splitted, self.get_meta())
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/sql/query.py", line 1709, in names_to_path
+    raise FieldError(
+django.core.exceptions.FieldError: Cannot resolve keyword 'age_in_day' into field. Choices are: breed_pair, breed_pair_id, breed_type, breed_type_id, created_at, created_by, created_by_id, days_alive, dead_date, egg_weight, eggs, farm, farm_id, father, feeds, flock, flock_id, hatch_date, house, house_id, id, is_active, is_dead, is_double_yolk, layed_place, layed_place_id, mother, pen, sex, tag, updated_at, weights
+Internal Server Error: /api/chickens-age-group-chart/
+Traceback (most recent call last):
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/core/handlers/exception.py", line 56, in inner
+    response = get_response(request)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/views/decorators/csrf.py", line 55, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/views/generic/base.py", line 103, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/chickens/api/views.py", line 456, in get
+    chickens.filter(age_in_day=1).count()
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/query.py", line 1421, in filter
+    return self._filter_or_exclude(False, args, kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/query.py", line 1439, in _filter_or_exclude
+    clone._filter_or_exclude_inplace(negate, args, kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/query.py", line 1446, in _filter_or_exclude_inplace
+    self._query.add_q(Q(*args, **kwargs))
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/sql/query.py", line 1532, in add_q
+    clause, _ = self._add_q(q_object, self.used_aliases)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/sql/query.py", line 1562, in _add_q
+    child_clause, needed_inner = self.build_filter(
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/sql/query.py", line 1407, in build_filter
+    lookups, parts, reffed_expression = self.solve_lookup_type(arg)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/sql/query.py", line 1217, in solve_lookup_type
+    _, field, _, lookup_parts = self.names_to_path(lookup_splitted, self.get_meta())
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/sql/query.py", line 1709, in names_to_path
+    raise FieldError(
+django.core.exceptions.FieldError: Cannot resolve keyword 'age_in_day' into field. Choices are: breed_pair, breed_pair_id, breed_type, breed_type_id, created_at, created_by, created_by_id, days_alive, dead_date, egg_weight, eggs, farm, farm_id, father, feeds, flock, flock_id, hatch_date, house, house_id, id, is_active, is_dead, is_double_yolk, layed_place, layed_place_id, mother, pen, sex, tag, updated_at, weights
+Internal Server Error: /api/chickens-age-group-chart/
+Traceback (most recent call last):
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/core/handlers/exception.py", line 56, in inner
+    response = get_response(request)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/views/decorators/csrf.py", line 55, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/views/generic/base.py", line 103, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/chickens/api/views.py", line 456, in get
+    chickens.filter(age_in_day=1).count()
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/query.py", line 1421, in filter
+    return self._filter_or_exclude(False, args, kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/query.py", line 1439, in _filter_or_exclude
+    clone._filter_or_exclude_inplace(negate, args, kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/query.py", line 1446, in _filter_or_exclude_inplace
+    self._query.add_q(Q(*args, **kwargs))
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/sql/query.py", line 1532, in add_q
+    clause, _ = self._add_q(q_object, self.used_aliases)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/sql/query.py", line 1562, in _add_q
+    child_clause, needed_inner = self.build_filter(
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/sql/query.py", line 1407, in build_filter
+    lookups, parts, reffed_expression = self.solve_lookup_type(arg)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/sql/query.py", line 1217, in solve_lookup_type
+    _, field, _, lookup_parts = self.names_to_path(lookup_splitted, self.get_meta())
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/sql/query.py", line 1709, in names_to_path
+    raise FieldError(
+django.core.exceptions.FieldError: Cannot resolve keyword 'age_in_day' into field. Choices are: breed_pair, breed_pair_id, breed_type, breed_type_id, created_at, created_by, created_by_id, days_alive, dead_date, egg_weight, eggs, farm, farm_id, father, feeds, flock, flock_id, hatch_date, house, house_id, id, is_active, is_dead, is_double_yolk, layed_place, layed_place_id, mother, pen, sex, tag, updated_at, weights
+Internal Server Error: /api/chickens-age-group-chart/
+Traceback (most recent call last):
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/core/handlers/exception.py", line 56, in inner
+    response = get_response(request)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/views/decorators/csrf.py", line 55, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/views/generic/base.py", line 103, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/chickens/api/views.py", line 456, in get
+    chickens.filter(age_in_day=1).count()
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/query.py", line 621, in count
+    return self.query.get_count(using=self.db)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/sql/query.py", line 559, in get_count
+    return obj.get_aggregation(using, ["__count"])["__count"]
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/sql/query.py", line 544, in get_aggregation
+    result = compiler.execute_sql(SINGLE)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/sql/compiler.py", line 1385, in execute_sql
+    sql, params = self.as_sql()
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/sql/compiler.py", line 1916, in as_sql
+    inner_query_sql, inner_query_params = self.query.inner_query.get_compiler(
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/sql/compiler.py", line 618, in as_sql
+    self.compile(self.where) if self.where is not None else ("", [])
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/sql/compiler.py", line 506, in compile
+    sql, params = node.as_sql(self, self.connection)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/sql/where.py", line 112, in as_sql
+    sql, params = compiler.compile(child)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/sql/compiler.py", line 506, in compile
+    sql, params = node.as_sql(self, self.connection)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/lookups.py", line 357, in as_sql
+    return super().as_sql(compiler, connection)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/lookups.py", line 225, in as_sql
+    rhs_sql, rhs_params = self.process_rhs(compiler, connection)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/lookups.py", line 126, in process_rhs
+    return self.get_db_prep_lookup(value, connection)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/lookups.py", line 254, in get_db_prep_lookup
+    else [get_db_prep_value(value, connection, prepared=True)],
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/fields/__init__.py", line 1787, in get_db_prep_value
+    return duration_microseconds(value)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/utils/duration.py", line 46, in duration_microseconds
+    return (24 * 60 * 60 * delta.days + delta.seconds) * 1000000 + delta.microseconds
+AttributeError: 'int' object has no attribute 'days'
+Internal Server Error: /api/chickens-age-group-chart/
+Traceback (most recent call last):
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/core/handlers/exception.py", line 56, in inner
+    response = get_response(request)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/views/decorators/csrf.py", line 55, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/views/generic/base.py", line 103, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/chickens/api/views.py", line 456, in get
+    chickens.filter(age_in_day=1).count()
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/query.py", line 621, in count
+    return self.query.get_count(using=self.db)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/sql/query.py", line 559, in get_count
+    return obj.get_aggregation(using, ["__count"])["__count"]
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/sql/query.py", line 544, in get_aggregation
+    result = compiler.execute_sql(SINGLE)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/sql/compiler.py", line 1385, in execute_sql
+    sql, params = self.as_sql()
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/sql/compiler.py", line 1916, in as_sql
+    inner_query_sql, inner_query_params = self.query.inner_query.get_compiler(
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/sql/compiler.py", line 618, in as_sql
+    self.compile(self.where) if self.where is not None else ("", [])
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/sql/compiler.py", line 506, in compile
+    sql, params = node.as_sql(self, self.connection)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/sql/where.py", line 112, in as_sql
+    sql, params = compiler.compile(child)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/sql/compiler.py", line 506, in compile
+    sql, params = node.as_sql(self, self.connection)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/lookups.py", line 357, in as_sql
+    return super().as_sql(compiler, connection)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/lookups.py", line 225, in as_sql
+    rhs_sql, rhs_params = self.process_rhs(compiler, connection)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/lookups.py", line 126, in process_rhs
+    return self.get_db_prep_lookup(value, connection)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/lookups.py", line 254, in get_db_prep_lookup
+    else [get_db_prep_value(value, connection, prepared=True)],
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/fields/__init__.py", line 1787, in get_db_prep_value
+    return duration_microseconds(value)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/utils/duration.py", line 46, in duration_microseconds
+    return (24 * 60 * 60 * delta.days + delta.seconds) * 1000000 + delta.microseconds
+AttributeError: 'int' object has no attribute 'days'
+Internal Server Error: /api/chickens-age-group-chart/
+Traceback (most recent call last):
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/core/handlers/exception.py", line 56, in inner
+    response = get_response(request)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/views/decorators/csrf.py", line 55, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/views/generic/base.py", line 103, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/chickens/api/views.py", line 456, in get
+    chickens.filter(age_in_day=1).count()
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/query.py", line 621, in count
+    return self.query.get_count(using=self.db)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/sql/query.py", line 559, in get_count
+    return obj.get_aggregation(using, ["__count"])["__count"]
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/sql/query.py", line 544, in get_aggregation
+    result = compiler.execute_sql(SINGLE)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/sql/compiler.py", line 1385, in execute_sql
+    sql, params = self.as_sql()
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/sql/compiler.py", line 1916, in as_sql
+    inner_query_sql, inner_query_params = self.query.inner_query.get_compiler(
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/sql/compiler.py", line 618, in as_sql
+    self.compile(self.where) if self.where is not None else ("", [])
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/sql/compiler.py", line 506, in compile
+    sql, params = node.as_sql(self, self.connection)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/sql/where.py", line 112, in as_sql
+    sql, params = compiler.compile(child)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/sql/compiler.py", line 506, in compile
+    sql, params = node.as_sql(self, self.connection)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/lookups.py", line 357, in as_sql
+    return super().as_sql(compiler, connection)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/lookups.py", line 225, in as_sql
+    rhs_sql, rhs_params = self.process_rhs(compiler, connection)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/lookups.py", line 126, in process_rhs
+    return self.get_db_prep_lookup(value, connection)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/lookups.py", line 254, in get_db_prep_lookup
+    else [get_db_prep_value(value, connection, prepared=True)],
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/fields/__init__.py", line 1787, in get_db_prep_value
+    return duration_microseconds(value)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/utils/duration.py", line 46, in duration_microseconds
+    return (24 * 60 * 60 * delta.days + delta.seconds) * 1000000 + delta.microseconds
+AttributeError: 'int' object has no attribute 'days'
+Internal Server Error: /api/chickens-age-group-chart/
+Traceback (most recent call last):
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/core/handlers/exception.py", line 56, in inner
+    response = get_response(request)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/views/decorators/csrf.py", line 55, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/views/generic/base.py", line 103, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/chickens/api/views.py", line 456, in get
+    chickens.filter(age_in_day=1).count()
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/query.py", line 621, in count
+    return self.query.get_count(using=self.db)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/sql/query.py", line 559, in get_count
+    return obj.get_aggregation(using, ["__count"])["__count"]
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/sql/query.py", line 544, in get_aggregation
+    result = compiler.execute_sql(SINGLE)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/sql/compiler.py", line 1385, in execute_sql
+    sql, params = self.as_sql()
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/sql/compiler.py", line 1916, in as_sql
+    inner_query_sql, inner_query_params = self.query.inner_query.get_compiler(
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/sql/compiler.py", line 618, in as_sql
+    self.compile(self.where) if self.where is not None else ("", [])
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/sql/compiler.py", line 506, in compile
+    sql, params = node.as_sql(self, self.connection)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/sql/where.py", line 112, in as_sql
+    sql, params = compiler.compile(child)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/sql/compiler.py", line 506, in compile
+    sql, params = node.as_sql(self, self.connection)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/lookups.py", line 357, in as_sql
+    return super().as_sql(compiler, connection)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/lookups.py", line 225, in as_sql
+    rhs_sql, rhs_params = self.process_rhs(compiler, connection)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/lookups.py", line 126, in process_rhs
+    return self.get_db_prep_lookup(value, connection)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/lookups.py", line 254, in get_db_prep_lookup
+    else [get_db_prep_value(value, connection, prepared=True)],
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/fields/__init__.py", line 1787, in get_db_prep_value
+    return duration_microseconds(value)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/utils/duration.py", line 46, in duration_microseconds
+    return (24 * 60 * 60 * delta.days + delta.seconds) * 1000000 + delta.microseconds
+AttributeError: 'int' object has no attribute 'days'
+Internal Server Error: /api/chickens-age-group-chart/
+Traceback (most recent call last):
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/core/handlers/exception.py", line 56, in inner
+    response = get_response(request)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/views/decorators/csrf.py", line 55, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/views/generic/base.py", line 103, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/chickens/api/views.py", line 456, in get
+    chickens.filter(age_in_day=1).count()
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/query.py", line 621, in count
+    return self.query.get_count(using=self.db)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/sql/query.py", line 559, in get_count
+    return obj.get_aggregation(using, ["__count"])["__count"]
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/sql/query.py", line 544, in get_aggregation
+    result = compiler.execute_sql(SINGLE)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/sql/compiler.py", line 1385, in execute_sql
+    sql, params = self.as_sql()
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/sql/compiler.py", line 1916, in as_sql
+    inner_query_sql, inner_query_params = self.query.inner_query.get_compiler(
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/sql/compiler.py", line 618, in as_sql
+    self.compile(self.where) if self.where is not None else ("", [])
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/sql/compiler.py", line 506, in compile
+    sql, params = node.as_sql(self, self.connection)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/sql/where.py", line 112, in as_sql
+    sql, params = compiler.compile(child)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/sql/compiler.py", line 506, in compile
+    sql, params = node.as_sql(self, self.connection)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/lookups.py", line 357, in as_sql
+    return super().as_sql(compiler, connection)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/lookups.py", line 225, in as_sql
+    rhs_sql, rhs_params = self.process_rhs(compiler, connection)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/lookups.py", line 126, in process_rhs
+    return self.get_db_prep_lookup(value, connection)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/lookups.py", line 254, in get_db_prep_lookup
+    else [get_db_prep_value(value, connection, prepared=True)],
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/fields/__init__.py", line 1787, in get_db_prep_value
+    return duration_microseconds(value)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/utils/duration.py", line 46, in duration_microseconds
+    return (24 * 60 * 60 * delta.days + delta.seconds) * 1000000 + delta.microseconds
+AttributeError: 'int' object has no attribute 'days'
+Internal Server Error: /api/chickens-age-group-chart/
+Traceback (most recent call last):
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/core/handlers/exception.py", line 56, in inner
+    response = get_response(request)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/views/decorators/csrf.py", line 55, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/views/generic/base.py", line 103, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/chickens/api/views.py", line 451, in get
+    print(chickens)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/query.py", line 370, in __repr__
+    data = list(self[: REPR_OUTPUT_SIZE + 1])
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/query.py", line 376, in __len__
+    self._fetch_all()
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/query.py", line 1867, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/query.py", line 87, in __iter__
+    results = compiler.execute_sql(
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/sql/compiler.py", line 1385, in execute_sql
+    sql, params = self.as_sql()
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/sql/compiler.py", line 593, in as_sql
+    extra_select, order_by, group_by = self.pre_sql_setup()
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/sql/compiler.py", line 71, in pre_sql_setup
+    self.setup_query()
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/sql/compiler.py", line 62, in setup_query
+    self.select, self.klass_info, self.annotation_col_map = self.get_select()
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/sql/compiler.py", line 294, in get_select
+    sql, params = self.compile(col)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/sql/compiler.py", line 504, in compile
+    sql, params = vendor_impl(self, self.connection)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/expressions.py", line 28, in as_sqlite
+    sql, params = self.as_sql(compiler, connection, **extra_context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/functions/datetime.py", line 73, in as_sql
+    raise ValueError(
+ValueError: Extract requires native DurationField database support.
+Internal Server Error: /api/chickens-age-group-chart/
+Traceback (most recent call last):
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/core/handlers/exception.py", line 56, in inner
+    response = get_response(request)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/views/decorators/csrf.py", line 55, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/views/generic/base.py", line 103, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/chickens/api/views.py", line 451, in get
+    print(chickens)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/query.py", line 370, in __repr__
+    data = list(self[: REPR_OUTPUT_SIZE + 1])
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/query.py", line 376, in __len__
+    self._fetch_all()
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/query.py", line 1867, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/query.py", line 87, in __iter__
+    results = compiler.execute_sql(
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/sql/compiler.py", line 1385, in execute_sql
+    sql, params = self.as_sql()
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/sql/compiler.py", line 593, in as_sql
+    extra_select, order_by, group_by = self.pre_sql_setup()
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/sql/compiler.py", line 71, in pre_sql_setup
+    self.setup_query()
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/sql/compiler.py", line 62, in setup_query
+    self.select, self.klass_info, self.annotation_col_map = self.get_select()
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/sql/compiler.py", line 294, in get_select
+    sql, params = self.compile(col)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/sql/compiler.py", line 504, in compile
+    sql, params = vendor_impl(self, self.connection)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/expressions.py", line 28, in as_sqlite
+    sql, params = self.as_sql(compiler, connection, **extra_context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/functions/datetime.py", line 73, in as_sql
+    raise ValueError(
+ValueError: Extract requires native DurationField database support.
+Internal Server Error: /api/chickens-age-group-chart/
+Traceback (most recent call last):
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/core/handlers/exception.py", line 56, in inner
+    response = get_response(request)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/views/decorators/csrf.py", line 55, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/views/generic/base.py", line 103, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/chickens/api/views.py", line 451, in get
+    print(chickens)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/query.py", line 370, in __repr__
+    data = list(self[: REPR_OUTPUT_SIZE + 1])
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/query.py", line 376, in __len__
+    self._fetch_all()
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/query.py", line 1867, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/query.py", line 87, in __iter__
+    results = compiler.execute_sql(
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/sql/compiler.py", line 1385, in execute_sql
+    sql, params = self.as_sql()
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/sql/compiler.py", line 593, in as_sql
+    extra_select, order_by, group_by = self.pre_sql_setup()
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/sql/compiler.py", line 71, in pre_sql_setup
+    self.setup_query()
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/sql/compiler.py", line 62, in setup_query
+    self.select, self.klass_info, self.annotation_col_map = self.get_select()
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/sql/compiler.py", line 294, in get_select
+    sql, params = self.compile(col)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/sql/compiler.py", line 504, in compile
+    sql, params = vendor_impl(self, self.connection)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/expressions.py", line 28, in as_sqlite
+    sql, params = self.as_sql(compiler, connection, **extra_context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/functions/datetime.py", line 73, in as_sql
+    raise ValueError(
+ValueError: Extract requires native DurationField database support.
+Internal Server Error: /api/chickens-age-group-chart/
+Traceback (most recent call last):
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/core/handlers/exception.py", line 56, in inner
+    response = get_response(request)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/views/decorators/csrf.py", line 55, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/views/generic/base.py", line 103, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/chickens/api/views.py", line 451, in get
+    print(chickens)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/query.py", line 370, in __repr__
+    data = list(self[: REPR_OUTPUT_SIZE + 1])
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/query.py", line 376, in __len__
+    self._fetch_all()
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/query.py", line 1867, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/query.py", line 87, in __iter__
+    results = compiler.execute_sql(
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/sql/compiler.py", line 1385, in execute_sql
+    sql, params = self.as_sql()
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/sql/compiler.py", line 593, in as_sql
+    extra_select, order_by, group_by = self.pre_sql_setup()
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/sql/compiler.py", line 71, in pre_sql_setup
+    self.setup_query()
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/sql/compiler.py", line 62, in setup_query
+    self.select, self.klass_info, self.annotation_col_map = self.get_select()
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/sql/compiler.py", line 294, in get_select
+    sql, params = self.compile(col)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/sql/compiler.py", line 504, in compile
+    sql, params = vendor_impl(self, self.connection)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/expressions.py", line 28, in as_sqlite
+    sql, params = self.as_sql(compiler, connection, **extra_context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/functions/datetime.py", line 73, in as_sql
+    raise ValueError(
+ValueError: Extract requires native DurationField database support.
+Internal Server Error: /api/chickens-age-group-chart/
+Traceback (most recent call last):
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/core/handlers/exception.py", line 56, in inner
+    response = get_response(request)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/views/decorators/csrf.py", line 55, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/views/generic/base.py", line 103, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/chickens/api/views.py", line 456, in get
+    chickens.filter(age_in_day=1).count()
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/query.py", line 621, in count
+    return self.query.get_count(using=self.db)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/sql/query.py", line 559, in get_count
+    return obj.get_aggregation(using, ["__count"])["__count"]
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/sql/query.py", line 544, in get_aggregation
+    result = compiler.execute_sql(SINGLE)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/sql/compiler.py", line 1385, in execute_sql
+    sql, params = self.as_sql()
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/sql/compiler.py", line 1916, in as_sql
+    inner_query_sql, inner_query_params = self.query.inner_query.get_compiler(
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/sql/compiler.py", line 618, in as_sql
+    self.compile(self.where) if self.where is not None else ("", [])
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/sql/compiler.py", line 506, in compile
+    sql, params = node.as_sql(self, self.connection)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/sql/where.py", line 112, in as_sql
+    sql, params = compiler.compile(child)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/sql/compiler.py", line 506, in compile
+    sql, params = node.as_sql(self, self.connection)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/lookups.py", line 357, in as_sql
+    return super().as_sql(compiler, connection)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/lookups.py", line 225, in as_sql
+    rhs_sql, rhs_params = self.process_rhs(compiler, connection)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/lookups.py", line 126, in process_rhs
+    return self.get_db_prep_lookup(value, connection)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/lookups.py", line 254, in get_db_prep_lookup
+    else [get_db_prep_value(value, connection, prepared=True)],
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/fields/__init__.py", line 1787, in get_db_prep_value
+    return duration_microseconds(value)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/utils/duration.py", line 46, in duration_microseconds
+    return (24 * 60 * 60 * delta.days + delta.seconds) * 1000000 + delta.microseconds
+AttributeError: 'int' object has no attribute 'days'
+Internal Server Error: /api/chickens-age-group-chart/
+Traceback (most recent call last):
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/core/handlers/exception.py", line 56, in inner
+    response = get_response(request)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/views/decorators/csrf.py", line 55, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/views/generic/base.py", line 103, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/chickens/api/views.py", line 449, in get
+    age_in_day=(date.today() - F('hatch_date')).days)
+AttributeError: 'CombinedExpression' object has no attribute 'days'
+Internal Server Error: /api/chickens-age-group-chart/
+Traceback (most recent call last):
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/core/handlers/exception.py", line 56, in inner
+    response = get_response(request)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/views/decorators/csrf.py", line 55, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/views/generic/base.py", line 103, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/chickens/api/views.py", line 449, in get
+    age_in_day=(date.today() - F('hatch_date')).days)
+AttributeError: 'CombinedExpression' object has no attribute 'days'
+Internal Server Error: /api/chickens-age-group-chart/
+Traceback (most recent call last):
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/core/handlers/exception.py", line 56, in inner
+    response = get_response(request)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/views/decorators/csrf.py", line 55, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/views/generic/base.py", line 103, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/chickens/api/views.py", line 449, in get
+    age_in_day=(date.today() - F('hatch_date')).days)
+AttributeError: 'CombinedExpression' object has no attribute 'days'
+Internal Server Error: /api/chickens-age-group-chart/
+Traceback (most recent call last):
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/core/handlers/exception.py", line 56, in inner
+    response = get_response(request)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/views/decorators/csrf.py", line 55, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/views/generic/base.py", line 103, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/chickens/api/views.py", line 450, in get
+    age_in_day=(date.today() - F('hatch_date')).days)
+AttributeError: 'CombinedExpression' object has no attribute 'days'
+Internal Server Error: /api/chickens-age-group-chart/
+Traceback (most recent call last):
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/core/handlers/exception.py", line 56, in inner
+    response = get_response(request)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/views/decorators/csrf.py", line 55, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/views/generic/base.py", line 103, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/chickens/api/views.py", line 450, in get
+    age_in_day=(date.today() - F('hatch_date')).days)
+AttributeError: 'CombinedExpression' object has no attribute 'days'
+Internal Server Error: /api/chickens-age-group-chart/
+Traceback (most recent call last):
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/core/handlers/exception.py", line 56, in inner
+    response = get_response(request)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/views/decorators/csrf.py", line 55, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/views/generic/base.py", line 103, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/chickens/api/views.py", line 452, in get
+    age_in_day=(date.today() - F('hatch_date')).days)
+AttributeError: 'CombinedExpression' object has no attribute 'days'
+Internal Server Error: /api/chickens-age-group-chart/
+Traceback (most recent call last):
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/core/handlers/exception.py", line 56, in inner
+    response = get_response(request)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/views/decorators/csrf.py", line 55, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/views/generic/base.py", line 103, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/chickens/api/views.py", line 454, in get
+    print(chickens[0]['age_in_day'])
+TypeError: 'Chicken' object is not subscriptable
+Internal Server Error: /api/chickens-age-group-chart/
+Traceback (most recent call last):
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/core/handlers/exception.py", line 56, in inner
+    response = get_response(request)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/views/decorators/csrf.py", line 55, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/views/generic/base.py", line 103, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/chickens/api/views.py", line 458, in get
+    chickens.filter(age_in_day=120).count()
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/query.py", line 621, in count
+    return self.query.get_count(using=self.db)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/sql/query.py", line 559, in get_count
+    return obj.get_aggregation(using, ["__count"])["__count"]
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/sql/query.py", line 544, in get_aggregation
+    result = compiler.execute_sql(SINGLE)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/sql/compiler.py", line 1385, in execute_sql
+    sql, params = self.as_sql()
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/sql/compiler.py", line 1916, in as_sql
+    inner_query_sql, inner_query_params = self.query.inner_query.get_compiler(
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/sql/compiler.py", line 618, in as_sql
+    self.compile(self.where) if self.where is not None else ("", [])
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/sql/compiler.py", line 506, in compile
+    sql, params = node.as_sql(self, self.connection)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/sql/where.py", line 112, in as_sql
+    sql, params = compiler.compile(child)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/sql/compiler.py", line 506, in compile
+    sql, params = node.as_sql(self, self.connection)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/lookups.py", line 357, in as_sql
+    return super().as_sql(compiler, connection)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/lookups.py", line 225, in as_sql
+    rhs_sql, rhs_params = self.process_rhs(compiler, connection)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/lookups.py", line 126, in process_rhs
+    return self.get_db_prep_lookup(value, connection)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/lookups.py", line 254, in get_db_prep_lookup
+    else [get_db_prep_value(value, connection, prepared=True)],
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/fields/__init__.py", line 1787, in get_db_prep_value
+    return duration_microseconds(value)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/utils/duration.py", line 46, in duration_microseconds
+    return (24 * 60 * 60 * delta.days + delta.seconds) * 1000000 + delta.microseconds
+AttributeError: 'int' object has no attribute 'days'
+Internal Server Error: /api/chickens-age-group-chart/
+Traceback (most recent call last):
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/core/handlers/exception.py", line 56, in inner
+    response = get_response(request)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/views/decorators/csrf.py", line 55, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/views/generic/base.py", line 103, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/chickens/api/views.py", line 458, in get
+    chickens.filter(age_in_day=120).count()
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/query.py", line 621, in count
+    return self.query.get_count(using=self.db)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/sql/query.py", line 559, in get_count
+    return obj.get_aggregation(using, ["__count"])["__count"]
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/sql/query.py", line 544, in get_aggregation
+    result = compiler.execute_sql(SINGLE)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/sql/compiler.py", line 1385, in execute_sql
+    sql, params = self.as_sql()
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/sql/compiler.py", line 1916, in as_sql
+    inner_query_sql, inner_query_params = self.query.inner_query.get_compiler(
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/sql/compiler.py", line 618, in as_sql
+    self.compile(self.where) if self.where is not None else ("", [])
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/sql/compiler.py", line 506, in compile
+    sql, params = node.as_sql(self, self.connection)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/sql/where.py", line 112, in as_sql
+    sql, params = compiler.compile(child)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/sql/compiler.py", line 506, in compile
+    sql, params = node.as_sql(self, self.connection)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/lookups.py", line 357, in as_sql
+    return super().as_sql(compiler, connection)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/lookups.py", line 225, in as_sql
+    rhs_sql, rhs_params = self.process_rhs(compiler, connection)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/lookups.py", line 126, in process_rhs
+    return self.get_db_prep_lookup(value, connection)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/lookups.py", line 254, in get_db_prep_lookup
+    else [get_db_prep_value(value, connection, prepared=True)],
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/fields/__init__.py", line 1787, in get_db_prep_value
+    return duration_microseconds(value)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/utils/duration.py", line 46, in duration_microseconds
+    return (24 * 60 * 60 * delta.days + delta.seconds) * 1000000 + delta.microseconds
+AttributeError: 'int' object has no attribute 'days'
+Internal Server Error: /api/chickens-age-group-chart/
+Traceback (most recent call last):
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/core/handlers/exception.py", line 56, in inner
+    response = get_response(request)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/views/decorators/csrf.py", line 55, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/views/generic/base.py", line 103, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/chickens/api/views.py", line 452, in get
+    age_in_day=(date.today() - F('hatch_date')).days)
+AttributeError: 'CombinedExpression' object has no attribute 'days'
+Internal Server Error: /api/chickens-age-group-chart/
+Traceback (most recent call last):
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/core/handlers/exception.py", line 56, in inner
+    response = get_response(request)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/views/decorators/csrf.py", line 55, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/views/generic/base.py", line 103, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/chickens/api/views.py", line 454, in get
+    age_total_days=F('age_in_days').days)
+AttributeError: 'F' object has no attribute 'days'
+Internal Server Error: /api/chickens-age-group-chart/
+Traceback (most recent call last):
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/core/handlers/exception.py", line 56, in inner
+    response = get_response(request)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/views/decorators/csrf.py", line 55, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/views/generic/base.py", line 103, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/chickens/api/views.py", line 454, in get
+    age_total_days=F('age_in_days').days)
+AttributeError: 'F' object has no attribute 'days'
+Internal Server Error: /api/chickens-age-group-chart/
+Traceback (most recent call last):
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/core/handlers/exception.py", line 56, in inner
+    response = get_response(request)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/views/decorators/csrf.py", line 55, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/views/generic/base.py", line 103, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/chickens/api/views.py", line 452, in get
+    age_in_days=Extract(date.today() - F('hatch_date')))
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/functions/datetime.py", line 49, in __init__
+    raise ValueError("lookup_name must be provided")
+ValueError: lookup_name must be provided

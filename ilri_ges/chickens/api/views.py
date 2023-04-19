@@ -1,11 +1,11 @@
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, date
 from rest_framework import viewsets, status
 from rest_framework.response import Response
 from django_filters import rest_framework as filters
 from rest_framework.views import APIView
 from rest_framework.generics import GenericAPIView
-from django.db.models import Count, Sum, F, Value, Q, Avg
-from django.db.models.functions import Concat
+from django.db.models import Count, Sum, F, Value, Q, Avg, ExpressionWrapper, IntegerField, DecimalField
+from django.db.models.functions import Concat, ExtractDay, Extract
 import numpy as np
 
 from core.views import HistoryViewSet
@@ -429,4 +429,39 @@ class ChickenSexChart(APIView):
             chickens.filter(sex='M').count(),
             chickens.filter(sex='F').count(),
             chickens.filter(~Q(sex='M') & ~Q(sex='F')).count()
+        ]}})
+
+
+class ChickensAgeGroupChart(APIView):
+    queryset = Chicken.objects.all()
+
+    def get(self, request):
+        chickens = self.queryset
+        farms_ids = request.GET.get('farms', "") or ""
+        if len(farms_ids) != 0:
+            farms_ids = np.array(farms_ids.split(',') or []).astype(int)
+            chickens = chickens.filter(farm__in=farms_ids)
+        elif request.user.is_superuser != True:
+            farms_ids = request.user.farms.all()
+            chickens = chickens.filter(farm__in=farms_ids)
+
+        chickens = chickens.filter(~Q(hatch_date=None))
+        chickens = chickens.annotate(
+            age_in_microseconds=ExpressionWrapper(date.today() - F('hatch_date'), output_field=IntegerField()))
+        chickens = chickens.annotate(
+            age_in_days=ExpressionWrapper(F('age_in_microseconds')/86400000000, output_field=DecimalField()))
+
+        return Response({'results': [], 'chartjs': {'labels': [
+            '0-16 weeks', '16-20 weeks', '12 months', '12-18 months', '2+ years'
+        ], 'data': [
+            chickens.filter(age_in_days__gte=0, age_in_days__lte=112).count(),
+            chickens.filter(age_in_days__gte=113,
+                            age_in_days__lte=140).count(),
+            chickens.filter(age_in_days__gte=141,
+                            age_in_days__lte=336).count(),
+            chickens.filter(age_in_days__gte=365,
+                            age_in_days__lte=395).count(),
+            chickens.filter(age_in_days__gte=365,
+                            age_in_days__lte=547).count(),
+            chickens.filter(age_in_days__gte=730).count(),
         ]}})
