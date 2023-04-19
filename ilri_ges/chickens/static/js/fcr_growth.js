@@ -23,13 +23,26 @@ requirejs(["jquery", "datatables", "chartjs"], function ($, DataTable, Chart) {
         text: "FCR - Growth",
       },
     },
+    plugins: [
+      {
+        beforeDraw: (chart, args, options) => {
+          const { ctx } = chart;
+          ctx.save();
+          ctx.globalCompositeOperation = "destination-over";
+          ctx.fillStyle = "#fff";
+          ctx.fillRect(0, 0, chart.width, chart.height);
+          ctx.restore();
+        },
+      },
+    ],
   });
 
   var table = selector.DataTable({
     responsive: true,
     autoWidth: false,
     ordering: false,
-    dom: "lrt",
+    dom: "Blrt",
+    buttons: ["copy", "excel", "csv", "print"],
     bPaginate: false,
     processing: true,
     serverSide: true,
@@ -74,5 +87,12 @@ requirejs(["jquery", "datatables", "chartjs"], function ($, DataTable, Chart) {
 
   $("#fcrg_apply").click(function () {
     table.ajax.reload(null, false);
+  });
+
+  $("#download_chart").click(function () {
+    var a = document.createElement("a");
+    a.href = chart.toBase64Image();
+    a.download = "fcr_growth.png";
+    a.click();
   });
 });
