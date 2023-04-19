@@ -266,13 +266,17 @@ class HatcheryIncubation(LoginRequiredMixin, View):
     redirect_field_name = 'redirect_to'
 
     def get(self, request, id=0):
-        if id == 0:
-            return redirect('404')
-        try:
-            data = Hatchery.objects.get(pk=id)
-            return render(request, 'hatchery/hatchery_incubation.html', {"id": id, "data": data})
-        except:
-            return redirect(400)
+        data = Hatchery.objects.get(pk=id)
+        return render(request, 'hatchery/hatchery_incubation.html', {"id": id, "data": data})
+        # if id == 0:
+        #     return redirect('404')
+        # try:
+        #     data = Hatchery.objects.get(pk=id)
+        #     return render(request, 'hatchery/hatchery_incubation.html', {"id": id, "data": data})
+        # except Exception as ex:
+        #     print('-------------------------')
+        #     print(ex)
+        #     return redirect('404')
 
 
 class HatcheryCandling(LoginRequiredMixin, View):
@@ -286,4 +290,4 @@ class HatcheryCandling(LoginRequiredMixin, View):
             data = Hatchery.objects.get(pk=id)
             return render(request, 'hatchery/hatchery_candling.html', {"id": id, "data": data})
         except:
-            return redirect(400)
+            return redirect('404')

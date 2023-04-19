@@ -18,8 +18,6 @@ class Hatchery(CoreModel):
     history = HistoricalRecords()
 
     def __str__(self):
-        print('-------------------')
-        print(self.date)
         return "%s (%s)" % (datetime.strptime(str(self.date), '%Y-%m-%d').strftime('%d/%m/%Y'), self.no_egg)
 
 
