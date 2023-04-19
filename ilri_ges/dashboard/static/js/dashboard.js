@@ -155,6 +155,51 @@ requirejs(
       });
     }
 
+    ///
+    /// Age Group
+    var agegroup_pieChart = new Chart(
+      $("#age-group-chart-canvas").get(0).getContext("2d"),
+      {
+        type: "bar",
+        data: {
+          labels: [],
+          datasets: [],
+        },
+        options: {
+          indexAxis: "y",
+          elements: {
+            bar: {
+              borderWidth: 2,
+            },
+          },
+          responsive: true,
+        },
+      }
+    );
+
+    function loadAgeGroup() {
+      $.getJSON(
+        "/api/chickens-age-group-chart/?farms=" +
+          $("#farm_select").val().join(","),
+        {}
+      ).done(function (response) {
+        agegroup_pieChart.data.labels = response.chartjs.labels;
+        agegroup_pieChart.data.datasets[0] = {
+          data: response.chartjs.data,
+          label: "",
+          backgroundColor: [
+            "#4C90BA",
+            "#2BC2C2",
+            "#F4B811",
+            "#DE663E",
+            "#FF912B",
+            "#ebdc78",
+          ],
+        };
+        agegroup_pieChart.update();
+      });
+    }
+
     //
     // init
     //
@@ -162,12 +207,14 @@ requirejs(
     loadMortality();
     loadBreedType();
     loadSex();
+    loadAgeGroup();
 
     $("#farm_select").on("change", function (e) {
       loadData();
       loadMortality();
       loadBreedType();
       loadSex();
+      loadAgeGroup();
     });
 
     function loadData() {

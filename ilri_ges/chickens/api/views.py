@@ -445,6 +445,7 @@ class ChickensAgeGroupChart(APIView):
             farms_ids = request.user.farms.all()
             chickens = chickens.filter(farm__in=farms_ids)
 
+        unknown_chickens = chickens.filter(Q(hatch_date=None))
         chickens = chickens.filter(~Q(hatch_date=None))
         chickens = chickens.annotate(
             age_in_microseconds=ExpressionWrapper(date.today() - F('hatch_date'), output_field=IntegerField()))
@@ -452,7 +453,7 @@ class ChickensAgeGroupChart(APIView):
             age_in_days=ExpressionWrapper(F('age_in_microseconds')/86400000000, output_field=DecimalField()))
 
         return Response({'results': [], 'chartjs': {'labels': [
-            '0-16 weeks', '16-20 weeks', '12 months', '12-18 months', '2+ years'
+            '0-16 weeks', '16-20 weeks', '12 months', '12-18 months', '2+ years', 'Unknown'
         ], 'data': [
             chickens.filter(age_in_days__gte=0, age_in_days__lte=112).count(),
             chickens.filter(age_in_days__gte=113,
@@ -464,4 +465,5 @@ class ChickensAgeGroupChart(APIView):
             chickens.filter(age_in_days__gte=365,
                             age_in_days__lte=547).count(),
             chickens.filter(age_in_days__gte=730).count(),
+            unknown_chickens.count()
         ]}})
