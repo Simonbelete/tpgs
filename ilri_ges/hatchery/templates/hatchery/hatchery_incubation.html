@@ -14,7 +14,7 @@
           <div class="card-header row" style="align-items: center">
             <h3 class="card-title mb-3 col-sm-12 col-md-3">Hatchery Incubation</h3>
             <div class="d-flex row col-sm-12 col-md-9 justify-content-end" style="align-items: end">
-                <a href="{% url 'incubation' %}?hatchery={{ data.id }}" role="button" type="button" class="btn btn-primary float-right col-sm-12 col-md-1 col-md-1 ml-2 mt-3"><i class="fas fa-plus"></i> Add</a>
+                <a href="{% url 'incubation_create' %}?hatchery={{ data.id }}" role="button" type="button" class="btn btn-primary float-right col-sm-12 col-md-1 col-md-1 ml-2 mt-3"><i class="fas fa-plus"></i> Add</a>
             </div>  
           </div>
           <!-- /.card-header -->
@@ -23,8 +23,12 @@
                 <thead>
                   <tr>
                     <th>ID</th>
-                    <th>Week</th>
-                    <th>Body Weight</th>
+                    <th>Date Time</th>
+                    <th>Temperature (°C)</th>
+                    <th>Humidity (°F)</th>
+                    <th>Humidity (%)</th>
+                    <th>Remark</th>
+                    <th>Created at</th>
                     <th></th>
                   </tr>
                 </thead>
