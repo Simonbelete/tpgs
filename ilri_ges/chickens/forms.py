@@ -1,6 +1,9 @@
 from django import forms
 
 from .models import Chicken
+from breeds.models import BreedType
+from farms.models import Farm
+from locations.models import House
 
 
 class ChickenForm(forms.ModelForm):
@@ -40,10 +43,9 @@ class ChickenImportForm(forms.ModelForm):
         fields = ['breed_type', 'farm']
 
 
-class ChickenExportForm(forms.ModelForm):
-    # start_week = forms.IntegerField()
-    # end_week = forms.IntegerField()
-
-    class Meta:
-        model = Chicken
-        fields = ['breed_type', 'farm', 'house']
+class ChickenExportForm(forms.Form):
+    start_week = forms.IntegerField()
+    end_week = forms.IntegerField()
+    breed_type = forms.ModelChoiceField(queryset=BreedType.objects.all())
+    farm = forms.ModelChoiceField(queryset=Farm.objects.all())
+    house = forms.ModelChoiceField(queryset=House.objects.all())

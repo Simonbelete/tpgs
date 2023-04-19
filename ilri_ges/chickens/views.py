@@ -352,21 +352,78 @@ class ChickenExportView(LoginRequiredMixin, View):
 
     def post(self, request):
         form = ChickenExportForm(request.POST)
+        chickens = Chicken.objects.all()
         if not form.is_valid():
             return render(request, 'export/chicken_export.html', {'form': form})
 
+        # chickens = chickens.filter(
+        #     breed_type=form.cleaned_data['breed_type'], )
+        chickens = chickens.filter(tag='B-01')
+
         output = io.BytesIO()
         cols = [
-            ['chicken', 'chicken', 'chicken', 'chicken',
-                'chicken', 'week 1', 'week 1'],
-            ['ID', 'Sex', 'SIRE ID', 'DAM ID', 'HATCH DATE', 10, 20]
+            ['chicken', 'chicken', 'chicken', 'chicken', 'chicken', 'chicken',
+                'chicken', 'chicken', 'chicken'],
+            ['ID', 'SEX', 'SIRE ID', 'DAM ID', 'HATCH DATE',
+                'HOUSE', 'Pen', 'Batch', 'Mortality']
         ]
+
+        for week in range(form.cleaned_data['start_week'], form.cleaned_data['end_week'] + 1):
+            cols[0].append('Week %s' % week)
+            cols[0].append('Week %s' % week)
+            cols[0].append('Week %s' % week)
+            cols[0].append('Week %s' % week)
+            cols[0].append('Week %s' % week)
+
+            cols[1].append('Weight')
+            cols[1].append('Egg')
+            cols[1].append('Egg Weight')
+            cols[1].append('Feed Offered')
+            cols[1].append('Feed Refusal')
+
         tuples = list(zip(*cols))
         columns = pd.MultiIndex.from_tuples(tuples)
         data = []
-        chickens = Chicken.objects.all().values_list(
-            'tag', 'sex', 'breed_pair__sire', 'breed_pair__dam', 'hatch_date')
-        data = chickens
+
+        for chicken in chickens.iterator():
+            row = []
+            # chicken.values_list(
+            #     'tag', 'sex', 'breed_pair__sire', 'breed_pair__dam', 'hatch_date', 'house__name', 'pen', 'flock__name', 'dead_date', flat=True)
+            row.append(chicken.tag)
+            row.append(chicken.sex)
+            row.append(
+                chicken.breed_pair.sire if chicken.breed_pair != None else "")
+            row.append(
+                chicken.breed_pair.dam if chicken.breed_pair != None else "")
+            row.append(chicken.hatch_date.strftime('%d/%m/%Y')
+                       if chicken.hatch_date != None else "")
+            row.append(chicken.house.name if chicken.house != None else "")
+            row.append(chicken.pen)
+            row.append(chicken.flock.name if chicken.flock != None else "")
+            row.append(chicken.dead_date.strftime('%d/%m/%Y')
+                       if chicken.dead_date != None else "")
+
+            for week in range(form.cleaned_data['start_week'], form.cleaned_data['end_week'] + 1):
+                weight = Weight.objects.filter(chicken=chicken, week=week)
+                if weight.exists():
+                    row.append(weight[0].weight)
+                else:
+                    row.append("")
+                egg = Egg.objects.filter(chicken=chicken, week=week)
+                if egg.exists():
+                    row.append(egg[0].eggs)
+                    row.append(egg[0].total_weight)
+                else:
+                    row.append("")
+                    row.append("")
+                feed = Feed.objects.filter(chicken=chicken, week=week)
+                if feed.exists():
+                    row.append(feed[0].feed_offered)
+                    row.append(feed[0].feed_refusal)
+                else:
+                    row.append("")
+                    row.append("")
+            data.append(row)
 
         df = pd.DataFrame(data, columns=columns)
         # create excel writer object
