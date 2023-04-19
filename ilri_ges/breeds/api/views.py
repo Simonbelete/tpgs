@@ -6,6 +6,7 @@ from core.views import ModelFilterViewSet
 from django_filters import rest_framework as filters
 from django.db.models import Count, Sum
 from django.db.models import F
+import numpy as np
 
 from breeds.models import BreedType
 from chickens.models import Chicken
@@ -36,15 +37,31 @@ class BreedTypeViewSet(ModelFilterViewSet):
 
 
 class BreedTypeCountViewSet(viewsets.ModelViewSet):
-    queryset = BreedType.objects.annotate(
-        chicken_count=Count('chickens'))
+    queryset = BreedType.objects.all()
     serializer_class = BreedTypeSerializer_Statics
 
     def list(self, request, *args, **kwargs):
         try:
+            farms_ids = request.GET.get('farms', "") or ""
+
+            chickens = Chicken.objects.all()
+            results = self.queryset
+
+            if len(farms_ids) != 0:
+                farms_ids = np.array(farms_ids.split(',') or []).astype(int)
+                chickens = chickens.filter(farm__in=farms_ids)
+                results = results.filter(chickens__farm__in=farms_ids)
+            elif request.user.is_superuser != True:
+                farms_ids = request.user.farms.all()
+                chickens = chickens.filter(farm__in=farms_ids)
+                results = results.filter(chickens__farm__in=farms_ids)
+
+            results = results.annotate(
+                chicken_count=Count('chickens'))
+
             return Response({
-                'chicken_count': Chicken.objects.all().count(),
-                'results': self.get_serializer(self.queryset, many=True).data
+                'chicken_count': chickens.count(),
+                'results': self.get_serializer(results, many=True).data
             }, status=status.HTTP_200_OK)
         except self.queryset.model.DoesNotExist:
             raise Http404()

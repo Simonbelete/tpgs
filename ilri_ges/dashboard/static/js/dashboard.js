@@ -1,12 +1,12 @@
 requirejs(
-  ["jquery", "datatables", "lodash", "chartjs4"],
-  function ($, DataTable, _, Chart) {
+  ["jquery", "datatables", "lodash", "chartjs4", "breed_type_define"],
+  function ($, DataTable, _, Chart, breed_type_define) {
     // init
     loadData();
 
     $("#farm_select").on("change", function (e) {
-      console.log("changeeeee");
       loadData();
+      breed_type_define();
     });
 
     function loadData() {

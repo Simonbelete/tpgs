@@ -21,9 +21,7 @@ class StaticsviewSet(viewsets.ModelViewSet):
         chickens = Chicken.objects.all()
 
         farms_ids = request.GET.get('farms', "") or ""
-        print('---------------')
-        print(farms_ids == "")
-        print(farms_ids == None)
+
         if len(farms_ids) != 0:
             farms_ids = np.array(farms_ids.split(',') or []).astype(int)
 
