@@ -458,8 +458,6 @@ class ChickensAgeGroupChart(APIView):
             chickens.filter(age_in_days__gte=0, age_in_days__lte=112).count(),
             chickens.filter(age_in_days__gte=113,
                             age_in_days__lte=140).count(),
-            chickens.filter(age_in_days__gte=141,
-                            age_in_days__lte=336).count(),
             chickens.filter(age_in_days__gte=365,
                             age_in_days__lte=395).count(),
             chickens.filter(age_in_days__gte=365,

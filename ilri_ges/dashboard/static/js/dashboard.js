@@ -173,6 +173,14 @@ requirejs(
             },
           },
           responsive: true,
+          scales: {
+            y: {
+              beginAtZero: true,
+              ticks: {
+                min: 0,
+              },
+            },
+          },
         },
       }
     );
