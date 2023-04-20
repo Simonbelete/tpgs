@@ -6,8 +6,10 @@ import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
 import io
+from sklearn.ensemble import IsolationForest
 from django.views.decorators.http import require_http_methods
 from django.http import HttpResponse
+from json import loads, dumps
 
 
 from users.models import User
@@ -58,8 +60,45 @@ class StaticsviewSet(viewsets.ModelViewSet):
 
 
 # Analysis
+class AnalysisWeight(APIView):
+    queryset = Weight.objects.all()
+
+    def get(self, request):
+        start_week = request.GET.get('start_week') or 0
+        end_week = request.GET.get('end_week') or 10
+
+        plot_weeks = []
+        plot_weights = []
+
+        weights = self.queryset
+
+        df = pd.DataFrame(
+            list(weights.values('chicken__tag', 'chicken__sex', 'week', 'chicken_id', 'weight')))
+
+        week_group = df.groupby('week')
+
+        print('-------------')
+
+        for name, group in week_group:
+            isolation_model = IsolationForest(contamination=float(0.2))
+            isolation_model.fit(group[['weight']].values)
+            IF_predictions = isolation_model.predict(group[['weight']].values)
+            group['anomalies'] = IF_predictions
+            group['scores'] = isolation_model.decision_function(
+                group[['weight']].values)
+
+            df = pd.concat([df, group])
+
+        df = df[df['anomalies'] == -1]
+        df = df.sort_values(by=['scores'])
+
+        parsed = loads(df.to_json(orient="records"))
+
+        return Response({'results': parsed})
+
+
 @require_http_methods(["GET"])
-def analysis_weight(request):
+def analysis_weight_graph(request):
     start_week = request.GET.get('start_week') or 0
     end_week = request.GET.get('end_week') or 10
 
@@ -72,31 +111,8 @@ def analysis_weight(request):
 
     df = pd.DataFrame(list(weights.values('week', 'chicken_id', 'weight')))
 
-    print(df.head())
-
-    np.random.seed(1)
-
-    N = 100
-    x = np.random.rand(N)
-    y = np.random.rand(N)
-    colors = np.random.rand(N)
-    sz = np.random.rand(N) * 30
-
-    print(df['week'].values)
-    print(df['week'].max())
-
-    # fig = px.scatter(df['week'].values, y=df['weight'].values)
     fig = px.scatter(x=df['week'].values, y=df['weight'].values)
 
-    # for week in range(start_week, end_week + 1):
-    #     df_week = pd.DataFrame({
-    #         'w'
-    #     })
-    #     weights = self.queryset.filter(week=week)
-    #     weights_list = weights.values_list('weight')
-    #     p_w = []
-
-    # fig.write_image("images/fig1.png")
     img_bytes = fig.to_image(format="png")
     output.write(img_bytes)
 

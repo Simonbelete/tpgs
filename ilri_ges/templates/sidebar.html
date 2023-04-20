@@ -418,8 +418,40 @@
             </li>
 
             <!-- Analysis  -->
-            {% comment %} <li class="nav-header">IMPORT & EXPORT</li> {% endcomment %}
-            {% comment %} Data distribution {% endcomment %}
+            <li class="nav-header">Analysis</li>
+            <li class="nav-item">
+              <a
+                class="nav-link {% if request.path == '/hatchery/' %}active{% endif %}"
+              >
+              <i class="far fa-circle nav-icon"></i>
+                <p>Anomaly 
+                <i class="right fas fa-angle-left"></i>
+                </p>
+              </a>
+              <ul class="nav nav-treeview">
+                <li class="nav-item">
+                  <a  href="{% url 'analysis_anomaly' %}"
+                      class="nav-link {% if request.path == '/analysis-anomaly/' %}active{% endif %}">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Body Weight</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a  href="{% url 'incubation' %}"
+                  class="nav-link {% if request.path == '/incubation/' %}active{% endif %}">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Incubation</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="{% url 'candling' %}"
+                  class="nav-link {% if request.path == '/candling/' %}active{% endif %}">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Candling</p>
+                  </a>
+                </li>
+              </ul>
+            </li>
 
             <li class="nav-header">LOCATIONS</li>
             <li class="nav-item">

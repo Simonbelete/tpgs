@@ -19492,3 +19492,505 @@ Traceback (most recent call last):
   File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/pandas/core/generic.py", line 5902, in __getattr__
     return object.__getattribute__(self, name)
 AttributeError: 'Series' object has no attribute 'value'
+Not Found: /dashboard/analysis-anomaly/
+Not Found: /dashboard/analysis-anomaly/
+Internal Server Error: /dashboard/
+Traceback (most recent call last):
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/core/handlers/exception.py", line 56, in inner
+    response = get_response(request)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/views/generic/base.py", line 103, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/contrib/auth/mixins.py", line 73, in dispatch
+    return super().dispatch(request, *args, **kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/views/generic/base.py", line 142, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/dashboard/views.py", line 47, in get
+    return render(request, 'dashboard/index.html', context=context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/shortcuts.py", line 24, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/loader.py", line 62, in render_to_string
+    return template.render(context, request)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/backends/django.py", line 61, in render
+    return self.template.render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 175, in render
+    return self._render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 167, in _render
+    return self.nodelist.render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 1005, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 966, in render_annotated
+    return self.render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/loader_tags.py", line 157, in render
+    return compiled_parent._render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 167, in _render
+    return self.nodelist.render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 1005, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 966, in render_annotated
+    return self.render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/loader_tags.py", line 157, in render
+    return compiled_parent._render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 167, in _render
+    return self.nodelist.render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 1005, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 966, in render_annotated
+    return self.render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/defaulttags.py", line 541, in render
+    return self.nodelist.render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 1005, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 966, in render_annotated
+    return self.render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/loader_tags.py", line 63, in render
+    result = block.nodelist.render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 1005, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 966, in render_annotated
+    return self.render(context)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/defaulttags.py", line 471, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/urls/base.py", line 88, in reverse
+    return resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/urls/resolvers.py", line 828, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'dashboard_pedigree' not found. 'dashboard_pedigree' is not a valid view function or pattern name.
+Internal Server Error: /dashboard/analysis-anomaly/
+Traceback (most recent call last):
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/core/handlers/exception.py", line 56, in inner
+    response = get_response(request)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/views/generic/base.py", line 103, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/contrib/auth/mixins.py", line 73, in dispatch
+    return super().dispatch(request, *args, **kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/views/generic/base.py", line 142, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/dashboard/views.py", line 71, in get
+    return render(request, 'analysis/anomaly.html')
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/shortcuts.py", line 24, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/loader.py", line 15, in get_template
+    return engine.get_template(template_name)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/backends/django.py", line 33, in get_template
+    return Template(self.engine.get_template(template_name), self)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/engine.py", line 175, in get_template
+    template, origin = self.find_template(template_name)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/engine.py", line 157, in find_template
+    template = loader.get_template(name, skip=skip)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/loaders/cached.py", line 57, in get_template
+    template = super().get_template(template_name, skip)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/loaders/base.py", line 28, in get_template
+    return Template(
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 154, in __init__
+    self.nodelist = self.compile_nodelist()
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 200, in compile_nodelist
+    return parser.parse()
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 513, in parse
+    raise self.error(token, e)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 511, in parse
+    compiled_result = compile_func(self, token)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/loader_tags.py", line 293, in do_extends
+    nodelist = parser.parse()
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 513, in parse
+    raise self.error(token, e)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 511, in parse
+    compiled_result = compile_func(self, token)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/loader_tags.py", line 232, in do_block
+    nodelist = parser.parse(("endblock",))
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 484, in parse
+    raise self.error(token, e)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 482, in parse
+    filter_expression = self.compile_filter(token.contents)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 600, in compile_filter
+    return FilterExpression(token, self)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 698, in __init__
+    filter_func = parser.find_filter(filter_name)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/base.py", line 606, in find_filter
+    raise TemplateSyntaxError("Invalid filter: '%s'" % filter_name)
+django.template.exceptions.TemplateSyntaxError: Invalid filter: 'add_class'
+Not Found: /favicon.ico
+Not Found: /api/analysis/weights/
+Internal Server Error: /api/anomaly/weights/
+Traceback (most recent call last):
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/core/handlers/exception.py", line 56, in inner
+    response = get_response(request)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/core/handlers/base.py", line 220, in _get_response
+    response = response.render()
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/response.py", line 114, in render
+    self.content = self.rendered_content
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/response.py", line 55, in rendered_content
+    assert renderer, ".accepted_renderer not set on Response"
+AssertionError: .accepted_renderer not set on Response
+Internal Server Error: /api/anomaly/weights/
+Traceback (most recent call last):
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/core/handlers/exception.py", line 56, in inner
+    response = get_response(request)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/core/handlers/base.py", line 220, in _get_response
+    response = response.render()
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/response.py", line 114, in render
+    self.content = self.rendered_content
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/response.py", line 55, in rendered_content
+    assert renderer, ".accepted_renderer not set on Response"
+AssertionError: .accepted_renderer not set on Response
+Internal Server Error: /api/anomaly/weights/
+Traceback (most recent call last):
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/core/handlers/exception.py", line 56, in inner
+    response = get_response(request)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/core/handlers/base.py", line 220, in _get_response
+    response = response.render()
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/template/response.py", line 114, in render
+    self.content = self.rendered_content
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/response.py", line 55, in rendered_content
+    assert renderer, ".accepted_renderer not set on Response"
+AssertionError: .accepted_renderer not set on Response
+Internal Server Error: /api/anomaly/weights/
+Traceback (most recent call last):
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/core/handlers/exception.py", line 56, in inner
+    response = get_response(request)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/views/decorators/http.py", line 43, in inner
+    return func(request, *args, **kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/dashboard/api/views.py", line 83, in analysis_weight
+    isolation_model.fit(group['weight'].values)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/sklearn/ensemble/_iforest.py", line 290, in fit
+    X = self._validate_data(X, accept_sparse=["csc"], dtype=tree_dtype)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/sklearn/base.py", line 565, in _validate_data
+    X = check_array(X, input_name="X", **check_params)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/sklearn/utils/validation.py", line 902, in check_array
+    raise ValueError(
+ValueError: Expected 2D array, got 1D array instead:
+array=[10.  23.  36.3 29.3 28.4 28.4 29.8 23.7 24.9 24.4 27.8 27.2 29.7 26.8
+ 30.  25.6 28.  26.8 25.8 23.9 26.3 24.2 29.6 27.8 28.9 27.7 24.8 27.5
+ 27.7 25.5 28.2 26.1 30.1 26.5 28.2 26.1 28.7 25.2 24.2 25.2 25.1 25.9
+ 23.6 30.2 30.  31.4 31.3 29.7 31.  29.9 30.8 31.  30.1 23.8 24.  22.4
+ 31.2 27.3 28.3 24.9 24.5 28.9 28.4 29.7 26.5 27.6 27.9 28.  28.5 27.
+ 24.3 25.7 22.7 24.1 25.5 25.7 24.1 28.2 27.4 28.6 25.7 28.1 24.3 24.5
+ 24.9 25.4 29.6 31.4 29.1 30.1 28.5 27.6 26.4 26.5 28.9 27.6 27.3 27.
+ 27.3 27.7 29.8 26.9].
+Reshape your data either using array.reshape(-1, 1) if your data has a single feature or array.reshape(1, -1) if it contains a single sample.
+Internal Server Error: /api/anomaly/weights/
+Traceback (most recent call last):
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/core/handlers/exception.py", line 56, in inner
+    response = get_response(request)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/views/decorators/http.py", line 43, in inner
+    return func(request, *args, **kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/dashboard/api/views.py", line 83, in analysis_weight
+    isolation_model.fit(group['weight'].values)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/sklearn/ensemble/_iforest.py", line 290, in fit
+    X = self._validate_data(X, accept_sparse=["csc"], dtype=tree_dtype)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/sklearn/base.py", line 565, in _validate_data
+    X = check_array(X, input_name="X", **check_params)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/sklearn/utils/validation.py", line 902, in check_array
+    raise ValueError(
+ValueError: Expected 2D array, got 1D array instead:
+array=[10.  23.  36.3 29.3 28.4 28.4 29.8 23.7 24.9 24.4 27.8 27.2 29.7 26.8
+ 30.  25.6 28.  26.8 25.8 23.9 26.3 24.2 29.6 27.8 28.9 27.7 24.8 27.5
+ 27.7 25.5 28.2 26.1 30.1 26.5 28.2 26.1 28.7 25.2 24.2 25.2 25.1 25.9
+ 23.6 30.2 30.  31.4 31.3 29.7 31.  29.9 30.8 31.  30.1 23.8 24.  22.4
+ 31.2 27.3 28.3 24.9 24.5 28.9 28.4 29.7 26.5 27.6 27.9 28.  28.5 27.
+ 24.3 25.7 22.7 24.1 25.5 25.7 24.1 28.2 27.4 28.6 25.7 28.1 24.3 24.5
+ 24.9 25.4 29.6 31.4 29.1 30.1 28.5 27.6 26.4 26.5 28.9 27.6 27.3 27.
+ 27.3 27.7 29.8 26.9].
+Reshape your data either using array.reshape(-1, 1) if your data has a single feature or array.reshape(1, -1) if it contains a single sample.
+Internal Server Error: /api/anomaly/weights/
+Traceback (most recent call last):
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/core/handlers/exception.py", line 56, in inner
+    response = get_response(request)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/views/decorators/http.py", line 43, in inner
+    return func(request, *args, **kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/dashboard/api/views.py", line 83, in analysis_weight
+    isolation_model.fit(group['weight'].values)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/sklearn/ensemble/_iforest.py", line 290, in fit
+    X = self._validate_data(X, accept_sparse=["csc"], dtype=tree_dtype)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/sklearn/base.py", line 565, in _validate_data
+    X = check_array(X, input_name="X", **check_params)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/sklearn/utils/validation.py", line 902, in check_array
+    raise ValueError(
+ValueError: Expected 2D array, got 1D array instead:
+array=[10.  23.  36.3 29.3 28.4 28.4 29.8 23.7 24.9 24.4 27.8 27.2 29.7 26.8
+ 30.  25.6 28.  26.8 25.8 23.9 26.3 24.2 29.6 27.8 28.9 27.7 24.8 27.5
+ 27.7 25.5 28.2 26.1 30.1 26.5 28.2 26.1 28.7 25.2 24.2 25.2 25.1 25.9
+ 23.6 30.2 30.  31.4 31.3 29.7 31.  29.9 30.8 31.  30.1 23.8 24.  22.4
+ 31.2 27.3 28.3 24.9 24.5 28.9 28.4 29.7 26.5 27.6 27.9 28.  28.5 27.
+ 24.3 25.7 22.7 24.1 25.5 25.7 24.1 28.2 27.4 28.6 25.7 28.1 24.3 24.5
+ 24.9 25.4 29.6 31.4 29.1 30.1 28.5 27.6 26.4 26.5 28.9 27.6 27.3 27.
+ 27.3 27.7 29.8 26.9].
+Reshape your data either using array.reshape(-1, 1) if your data has a single feature or array.reshape(1, -1) if it contains a single sample.
+Internal Server Error: /api/anomaly/weights/
+Traceback (most recent call last):
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/core/handlers/exception.py", line 56, in inner
+    response = get_response(request)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/views/decorators/http.py", line 43, in inner
+    return func(request, *args, **kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/dashboard/api/views.py", line 83, in analysis_weight
+    isolation_model.fit(group['weight'].values)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/sklearn/ensemble/_iforest.py", line 290, in fit
+    X = self._validate_data(X, accept_sparse=["csc"], dtype=tree_dtype)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/sklearn/base.py", line 565, in _validate_data
+    X = check_array(X, input_name="X", **check_params)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/sklearn/utils/validation.py", line 902, in check_array
+    raise ValueError(
+ValueError: Expected 2D array, got 1D array instead:
+array=[10.  23.  36.3 29.3 28.4 28.4 29.8 23.7 24.9 24.4 27.8 27.2 29.7 26.8
+ 30.  25.6 28.  26.8 25.8 23.9 26.3 24.2 29.6 27.8 28.9 27.7 24.8 27.5
+ 27.7 25.5 28.2 26.1 30.1 26.5 28.2 26.1 28.7 25.2 24.2 25.2 25.1 25.9
+ 23.6 30.2 30.  31.4 31.3 29.7 31.  29.9 30.8 31.  30.1 23.8 24.  22.4
+ 31.2 27.3 28.3 24.9 24.5 28.9 28.4 29.7 26.5 27.6 27.9 28.  28.5 27.
+ 24.3 25.7 22.7 24.1 25.5 25.7 24.1 28.2 27.4 28.6 25.7 28.1 24.3 24.5
+ 24.9 25.4 29.6 31.4 29.1 30.1 28.5 27.6 26.4 26.5 28.9 27.6 27.3 27.
+ 27.3 27.7 29.8 26.9].
+Reshape your data either using array.reshape(-1, 1) if your data has a single feature or array.reshape(1, -1) if it contains a single sample.
+Internal Server Error: /api/anomaly/weights/
+Traceback (most recent call last):
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/core/handlers/exception.py", line 56, in inner
+    response = get_response(request)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/views/decorators/http.py", line 43, in inner
+    return func(request, *args, **kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/dashboard/api/views.py", line 83, in analysis_weight
+    isolation_model.fit(group['weight'].values)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/sklearn/ensemble/_iforest.py", line 290, in fit
+    X = self._validate_data(X, accept_sparse=["csc"], dtype=tree_dtype)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/sklearn/base.py", line 565, in _validate_data
+    X = check_array(X, input_name="X", **check_params)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/sklearn/utils/validation.py", line 902, in check_array
+    raise ValueError(
+ValueError: Expected 2D array, got 1D array instead:
+array=[10.  23.  36.3 29.3 28.4 28.4 29.8 23.7 24.9 24.4 27.8 27.2 29.7 26.8
+ 30.  25.6 28.  26.8 25.8 23.9 26.3 24.2 29.6 27.8 28.9 27.7 24.8 27.5
+ 27.7 25.5 28.2 26.1 30.1 26.5 28.2 26.1 28.7 25.2 24.2 25.2 25.1 25.9
+ 23.6 30.2 30.  31.4 31.3 29.7 31.  29.9 30.8 31.  30.1 23.8 24.  22.4
+ 31.2 27.3 28.3 24.9 24.5 28.9 28.4 29.7 26.5 27.6 27.9 28.  28.5 27.
+ 24.3 25.7 22.7 24.1 25.5 25.7 24.1 28.2 27.4 28.6 25.7 28.1 24.3 24.5
+ 24.9 25.4 29.6 31.4 29.1 30.1 28.5 27.6 26.4 26.5 28.9 27.6 27.3 27.
+ 27.3 27.7 29.8 26.9].
+Reshape your data either using array.reshape(-1, 1) if your data has a single feature or array.reshape(1, -1) if it contains a single sample.
+Internal Server Error: /api/anomaly/weights/
+Traceback (most recent call last):
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/core/handlers/exception.py", line 56, in inner
+    response = get_response(request)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/views/decorators/http.py", line 43, in inner
+    return func(request, *args, **kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/dashboard/api/views.py", line 84, in analysis_weight
+    IF_predictions = isolation_model.predict(group['weight'].values)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/sklearn/ensemble/_iforest.py", line 359, in predict
+    decision_func = self.decision_function(X)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/sklearn/ensemble/_iforest.py", line 394, in decision_function
+    return self.score_samples(X) - self.offset_
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/sklearn/ensemble/_iforest.py", line 425, in score_samples
+    X = self._validate_data(X, accept_sparse="csr", reset=False)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/sklearn/base.py", line 565, in _validate_data
+    X = check_array(X, input_name="X", **check_params)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/sklearn/utils/validation.py", line 902, in check_array
+    raise ValueError(
+ValueError: Expected 2D array, got 1D array instead:
+array=[10.  23.  36.3 29.3 28.4 28.4 29.8 23.7 24.9 24.4 27.8 27.2 29.7 26.8
+ 30.  25.6 28.  26.8 25.8 23.9 26.3 24.2 29.6 27.8 28.9 27.7 24.8 27.5
+ 27.7 25.5 28.2 26.1 30.1 26.5 28.2 26.1 28.7 25.2 24.2 25.2 25.1 25.9
+ 23.6 30.2 30.  31.4 31.3 29.7 31.  29.9 30.8 31.  30.1 23.8 24.  22.4
+ 31.2 27.3 28.3 24.9 24.5 28.9 28.4 29.7 26.5 27.6 27.9 28.  28.5 27.
+ 24.3 25.7 22.7 24.1 25.5 25.7 24.1 28.2 27.4 28.6 25.7 28.1 24.3 24.5
+ 24.9 25.4 29.6 31.4 29.1 30.1 28.5 27.6 26.4 26.5 28.9 27.6 27.3 27.
+ 27.3 27.7 29.8 26.9].
+Reshape your data either using array.reshape(-1, 1) if your data has a single feature or array.reshape(1, -1) if it contains a single sample.
+Internal Server Error: /api/anomaly/weights/
+Traceback (most recent call last):
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/core/handlers/exception.py", line 56, in inner
+    response = get_response(request)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/views/decorators/http.py", line 43, in inner
+    return func(request, *args, **kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/dashboard/api/views.py", line 86, in analysis_weight
+    group['scores'] = isolation_model.decision_function(
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/sklearn/ensemble/_iforest.py", line 394, in decision_function
+    return self.score_samples(X) - self.offset_
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/sklearn/ensemble/_iforest.py", line 425, in score_samples
+    X = self._validate_data(X, accept_sparse="csr", reset=False)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/sklearn/base.py", line 565, in _validate_data
+    X = check_array(X, input_name="X", **check_params)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/sklearn/utils/validation.py", line 902, in check_array
+    raise ValueError(
+ValueError: Expected 2D array, got 1D array instead:
+array=[10.  23.  36.3 29.3 28.4 28.4 29.8 23.7 24.9 24.4 27.8 27.2 29.7 26.8
+ 30.  25.6 28.  26.8 25.8 23.9 26.3 24.2 29.6 27.8 28.9 27.7 24.8 27.5
+ 27.7 25.5 28.2 26.1 30.1 26.5 28.2 26.1 28.7 25.2 24.2 25.2 25.1 25.9
+ 23.6 30.2 30.  31.4 31.3 29.7 31.  29.9 30.8 31.  30.1 23.8 24.  22.4
+ 31.2 27.3 28.3 24.9 24.5 28.9 28.4 29.7 26.5 27.6 27.9 28.  28.5 27.
+ 24.3 25.7 22.7 24.1 25.5 25.7 24.1 28.2 27.4 28.6 25.7 28.1 24.3 24.5
+ 24.9 25.4 29.6 31.4 29.1 30.1 28.5 27.6 26.4 26.5 28.9 27.6 27.3 27.
+ 27.3 27.7 29.8 26.9].
+Reshape your data either using array.reshape(-1, 1) if your data has a single feature or array.reshape(1, -1) if it contains a single sample.
+Internal Server Error: /api/anomaly/weights/
+Traceback (most recent call last):
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/core/handlers/exception.py", line 56, in inner
+    response = get_response(request)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/views/decorators/http.py", line 43, in inner
+    return func(request, *args, **kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/dashboard/api/views.py", line 86, in analysis_weight
+    group['scores'] = isolation_model.decision_function(
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/sklearn/ensemble/_iforest.py", line 394, in decision_function
+    return self.score_samples(X) - self.offset_
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/sklearn/ensemble/_iforest.py", line 425, in score_samples
+    X = self._validate_data(X, accept_sparse="csr", reset=False)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/sklearn/base.py", line 565, in _validate_data
+    X = check_array(X, input_name="X", **check_params)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/sklearn/utils/validation.py", line 902, in check_array
+    raise ValueError(
+ValueError: Expected 2D array, got 1D array instead:
+array=[10.  23.  36.3 29.3 28.4 28.4 29.8 23.7 24.9 24.4 27.8 27.2 29.7 26.8
+ 30.  25.6 28.  26.8 25.8 23.9 26.3 24.2 29.6 27.8 28.9 27.7 24.8 27.5
+ 27.7 25.5 28.2 26.1 30.1 26.5 28.2 26.1 28.7 25.2 24.2 25.2 25.1 25.9
+ 23.6 30.2 30.  31.4 31.3 29.7 31.  29.9 30.8 31.  30.1 23.8 24.  22.4
+ 31.2 27.3 28.3 24.9 24.5 28.9 28.4 29.7 26.5 27.6 27.9 28.  28.5 27.
+ 24.3 25.7 22.7 24.1 25.5 25.7 24.1 28.2 27.4 28.6 25.7 28.1 24.3 24.5
+ 24.9 25.4 29.6 31.4 29.1 30.1 28.5 27.6 26.4 26.5 28.9 27.6 27.3 27.
+ 27.3 27.7 29.8 26.9].
+Reshape your data either using array.reshape(-1, 1) if your data has a single feature or array.reshape(1, -1) if it contains a single sample.
+Not Found: /analysis/weights
+Internal Server Error: /api/anomaly/weights/
+Traceback (most recent call last):
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/sql/query.py", line 2142, in add_fields
+    join_info = self.setup_joins(
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/sql/query.py", line 1808, in setup_joins
+    path, final_field, targets, rest = self.names_to_path(
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/sql/query.py", line 1709, in names_to_path
+    raise FieldError(
+django.core.exceptions.FieldError: Cannot resolve keyword 'tag' into field. Choices are: chicken, chicken_id, created_at, created_by, created_by_id, id, is_active, updated_at, week, weight
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/core/handlers/exception.py", line 56, in inner
+    response = get_response(request)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/views/decorators/http.py", line 43, in inner
+    return func(request, *args, **kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/dashboard/api/views.py", line 73, in analysis_weight
+    list(weights.values('tag', 'sex', 'week', 'chicken_id', 'weight')))
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/query.py", line 1298, in values
+    clone = self._values(*fields, **expressions)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/query.py", line 1293, in _values
+    clone.query.set_values(fields)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/sql/query.py", line 2437, in set_values
+    self.add_fields(field_names, True)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/sql/query.py", line 2175, in add_fields
+    raise FieldError(
+django.core.exceptions.FieldError: Cannot resolve keyword 'tag' into field. Choices are: chicken, chicken_id, created_at, created_by, created_by_id, id, is_active, updated_at, week, weight
+Internal Server Error: /api/anomaly/weights/
+Traceback (most recent call last):
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/sql/query.py", line 2142, in add_fields
+    join_info = self.setup_joins(
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/sql/query.py", line 1808, in setup_joins
+    path, final_field, targets, rest = self.names_to_path(
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/sql/query.py", line 1709, in names_to_path
+    raise FieldError(
+django.core.exceptions.FieldError: Cannot resolve keyword 'tag' into field. Choices are: chicken, chicken_id, created_at, created_by, created_by_id, id, is_active, updated_at, week, weight
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/core/handlers/exception.py", line 56, in inner
+    response = get_response(request)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/views/decorators/http.py", line 43, in inner
+    return func(request, *args, **kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/dashboard/api/views.py", line 73, in analysis_weight
+    list(weights.values('tag', 'sex', 'week', 'chicken_id', 'weight')))
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/query.py", line 1298, in values
+    clone = self._values(*fields, **expressions)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/query.py", line 1293, in _values
+    clone.query.set_values(fields)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/sql/query.py", line 2437, in set_values
+    self.add_fields(field_names, True)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/db/models/sql/query.py", line 2175, in add_fields
+    raise FieldError(
+django.core.exceptions.FieldError: Cannot resolve keyword 'tag' into field. Choices are: chicken, chicken_id, created_at, created_by, created_by_id, id, is_active, updated_at, week, weight
+Not Found: /favicon.ico
+Internal Server Error: /api/anomaly/weights/
+Traceback (most recent call last):
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/core/handlers/exception.py", line 56, in inner
+    response = get_response(request)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/views/decorators/csrf.py", line 55, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/views/generic/base.py", line 103, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 497, in dispatch
+    self.initial(request, *args, **kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 415, in initial
+    self.check_permissions(request)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 332, in check_permissions
+    if not permission.has_permission(request, self):
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/permissions.py", line 232, in has_permission
+    queryset = self._queryset(view)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/permissions.py", line 208, in _queryset
+    assert hasattr(view, 'get_queryset') \
+AssertionError: Cannot apply DjangoModelPermissionsOrAnonReadOnly on a view that does not set `.queryset` or have a `.get_queryset()` method.
+Internal Server Error: /api/anomaly/weights/
+Traceback (most recent call last):
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/core/handlers/exception.py", line 56, in inner
+    response = get_response(request)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/views/decorators/csrf.py", line 55, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/views/generic/base.py", line 103, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 497, in dispatch
+    self.initial(request, *args, **kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 415, in initial
+    self.check_permissions(request)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/views.py", line 332, in check_permissions
+    if not permission.has_permission(request, self):
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/permissions.py", line 232, in has_permission
+    queryset = self._queryset(view)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/rest_framework/permissions.py", line 208, in _queryset
+    assert hasattr(view, 'get_queryset') \
+AssertionError: Cannot apply DjangoModelPermissionsOrAnonReadOnly on a view that does not set `.queryset` or have a `.get_queryset()` method.
+Not Found: /api/analysis/weights/graph/
+Not Found: /chickens/undefined
+Not Found: /chickens/undefined

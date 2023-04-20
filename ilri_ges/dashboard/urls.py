@@ -4,8 +4,10 @@ from . import views
 
 urlpatterns = [
     path('', views.DashboardView.as_view(), name='dashboard'),
-    path('pedigree', views.DashboardPedigreeView.as_view(),
+    path('pedigree/', views.DashboardPedigreeView.as_view(),
          name='dashboard_pedigree'),
-    path('pedigree/full', views.DashboardPedigreeFullScreenView.as_view(),
-         name='dashboard_pedigree_full')
+    path('pedigree/full/', views.DashboardPedigreeFullScreenView.as_view(),
+         name='dashboard_pedigree_full'),
+    path('analysis-anomaly/', views.AnalysisAnomaly.as_view(),
+         name='analysis_anomaly')
 ]

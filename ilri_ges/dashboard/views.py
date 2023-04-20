@@ -61,3 +61,11 @@ class DashboardPedigreeFullScreenView(LoginRequiredMixin, View):
 
     def get(self, request):
         return render(request, 'pedigree/full_screen.html')
+
+
+class AnalysisAnomaly(LoginRequiredMixin, View):
+    login_url = '/users/login'
+    redirect_field_name = 'redirect_to'
+
+    def get(self, request):
+        return render(request, 'analysis/anomaly.html')
