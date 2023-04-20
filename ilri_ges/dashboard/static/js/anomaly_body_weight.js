@@ -50,7 +50,7 @@ requirejs(["jquery", "datatables"], function ($, DataTable) {
   selector_1.on("click", "td.editor-edit, tr td ul .editor-edit", function (e) {
     e.preventDefault();
     var data = table.row(this).data();
-    window.location.href = "/chickens/" + data.id;
+    window.location.href = "/chickens/" + data.chicken_id + "/weights";
   });
 
   function loadImage() {
