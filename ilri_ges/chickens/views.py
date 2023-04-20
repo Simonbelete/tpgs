@@ -312,9 +312,9 @@ class ChickenImportView(LoginRequiredMixin, View):
                     week_no = week.split(" ")[-1]
                     weight = row[week, "weight"].values[0]
                     feed_offered_weight = row[week,
-                                              "feed offered"].values[0] or 0
+                                              "feed offered"].values[0]
                     feed_refusal_weight = row[week,
-                                              "feed refusal"].values[0] or 0
+                                              "feed refusal"].values[0]
                     eggs = row[week, "egg"].values[0]
                     eggs_weights = row[week, "egg weight"].values[0]
                     if weight != None:
