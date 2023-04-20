@@ -18,7 +18,7 @@
     <div class="container-fluid">
       <div class="row mb-2">
         <div class="col-sm-6">
-          <h1>Chicken</h1>
+          <h1>Chicken - {{form.tag.value}}</h1>
           <h6>{% if state_form.is_dead.value == True %} Dead - {{ state_form.days_alive.value }} days {{ state_form.dead_date.value }} {% else %}  {% endif %}</h6>
         </div>
         <div class="col-sm-6">
@@ -38,7 +38,7 @@
         <a href="/chickens/{{id}}/weights" class="col-md-3 col-sm-6 col-12">
             <!-- .info-box-->
             <div class="info-box">
-              <span class="info-box-icon bg-warning"><i class="far fa-copy"></i></span>
+              <span class="info-box-icon bg-warning"><i class="fas fa-weight"></i></span>
 
               <div class="info-box-content">
                 <span class="info-box-text font-weight-bold">Body Weight</span>
@@ -52,7 +52,7 @@
         <div class="col-md-3 col-sm-6 col-12">
           <!-- .info-box-->
           <div class="info-box">
-            <span class="info-box-icon bg-warning"><i class="far fa-copy"></i></span>
+            <span class="info-box-icon bg-warning"><i class="fas fa-birthday-cake"></i></span>
 
             <div class="info-box-content">
               <span class="info-box-text font-weight-bold">Age</span>
@@ -66,7 +66,7 @@
         <a href="/chickens/{{id}}/eggs" class="col-md-3 col-sm-6 col-12">
           <!-- .info-box-->
           <div class="info-box">
-            <span class="info-box-icon bg-warning"><i class="far fa-copy"></i></span>
+            <span class="info-box-icon bg-warning"><i class="fas fa-egg"></i></span>
 
             <div class="info-box-content">
               <span class="info-box-text font-weight-bold">Eggs</span>
@@ -80,7 +80,7 @@
         <a href="/chickens/{{id}}/feeds" class="col-md-3 col-sm-6 col-12">
           <!-- .info-box-->
           <div class="info-box">
-            <span class="info-box-icon bg-warning"><i class="far fa-copy"></i></span>
+            <span class="info-box-icon bg-warning"><i class="fas fa-cookie-bite"></i></span>
 
             <div class="info-box-content">
               <span class="info-box-text font-weight-bold">Feed Intake</span>
@@ -96,7 +96,7 @@
       <a href="/chickens/{{id}}/breeding" class="col-md-3 col-sm-6 col-12">
         <!-- .info-box-->
         <div class="info-box">
-          <span class="info-box-icon bg-warning"><i class="far fa-copy"></i></span>
+          <span class="info-box-icon bg-warning"><i class="fas fa-syringe"></i></span>
 
           <div class="info-box-content">
             <span class="info-box-text font-weight-bold">Breeding Pair</span>
@@ -109,7 +109,7 @@
       <a href="/chickens/{{id}}/offsprings" class="col-md-3 col-sm-6 col-12">
         <!-- .info-box-->
         <div class="info-box">
-          <span class="info-box-icon bg-warning"><i class="far fa-copy"></i></span>
+          <span class="info-box-icon bg-warning"><i class="fas fa-dna"></i></span>
 
           <div class="info-box-content">
             <span class="info-box-text font-weight-bold">Offsprings</span>
