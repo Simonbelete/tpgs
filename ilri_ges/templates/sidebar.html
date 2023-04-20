@@ -437,17 +437,17 @@
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a  href="{% url 'incubation' %}"
-                  class="nav-link {% if request.path == '/incubation/' %}active{% endif %}">
+                  <a  href="{% url 'analysis_anomaly_feed' %}"
+                  class="nav-link {% if request.path == '/analysis-anomaly-feed/' %}active{% endif %}">
                     <i class="far fa-circle nav-icon"></i>
-                    <p>Incubation</p>
+                    <p>Feed Intake</p>
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a href="{% url 'candling' %}"
-                  class="nav-link {% if request.path == '/candling/' %}active{% endif %}">
+                  <a href="{% url 'analysis_anomaly_egg' %}"
+                  class="nav-link {% if request.path == '/analysis-anomaly-egg/' %}active{% endif %}">
                     <i class="far fa-circle nav-icon"></i>
-                    <p>Candling</p>
+                    <p>Egg</p>
                   </a>
                 </li>
               </ul>

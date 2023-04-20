@@ -1,0 +1,83 @@
+{% extends "plain_template.html" %}
+{% load static %}
+{% load widget_tweaks %}
+
+{% block page_title %}Anomaly detection for eggs{% endblock %}
+{% block data_title %}Anomaly detection for eggs{% endblock %}
+{% block data_menu %}Anomaly eggs{% endblock %}
+
+{% block content %}
+<div class="col-12">
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">Anomaly detection for eggs</h3>
+        </div>
+        <div class="card-body row">
+            <div class="col-12">
+                <p> Note: Leaving fields emptry will consider all data</p>
+            </div>
+            <div class="col-sm-12 col-md-6">
+                {% include 'components/fields/farm_field.html' with multiple="multiple" %}
+            </div>
+            <div class="col-sm-12 col-md-6">
+                {% include 'components/fields/breed_select.html' with multiple="multiple" %}
+            </div>
+            <div class="col-sm-12 col-md-6">
+                <div class="form-group">
+                    <label for="sex">Sex</label>
+                    <select class="form-control" id="sex" placeholder="Sex">
+                        <option value="">----------</option>
+                        <option value="M">Male</option>
+                        <option value="F">Female</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-12">
+                <button class="btn btn-primary" id="apply">Apply</button>
+            </div>
+            <div class="col-12" style="margin-top: 20px">
+                <div class="container-fluid">
+                    <img
+                      src=""
+                      class="img-fluid"
+                      id="anomaly_image"
+                    />
+                  </div>
+            </div>
+            <div class="col-12" style="margin-top: 20px">
+                <table id="data_table" class="table table-bordered table-striped">
+                    <thead>
+                      <tr>
+                        <th>ID</th>
+                        <th>Tag</th>
+                        <th>Sex</th>
+                        <th>Week</th>
+                        <th>Weight</th>
+                        <th>Scores(0 - 1)</th>
+                        <th></th>
+                      </tr>
+                    </thead>
+                    <tbody></tbody>
+                    <tfoot>
+                        <tr>
+                            <th>ID</th>
+                            <th>Tag</th>
+                            <th>Sex</th>
+                            <th>Week</th>
+                            <th>Weight</th>
+                            <th>Scores(0 - 1)</th>
+                          <th></th>
+                        </tr>
+                      </tfoot>
+                  </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block javascript %}
+<script src="{% static 'js/farm_select.js' %}"></script>
+<script src="{% static 'js/breed_type_select.js' %}"></script>
+<script src="{% static 'js/anomaly_egg.js' %}"></script>
+{% endblock %}

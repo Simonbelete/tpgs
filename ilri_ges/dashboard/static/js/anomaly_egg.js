@@ -25,7 +25,7 @@ requirejs(["jquery", "datatables"], function ($, DataTable) {
     serverSide: true,
     dom: "lrt",
     ajax: {
-      url: "/api/anomaly/weights/",
+      url: "/api/anomaly/egg/",
       dataSrc: function (json) {
         json["data"] = json["results"];
         json["recordsTotal"] = json["count"];
@@ -51,7 +51,7 @@ requirejs(["jquery", "datatables"], function ($, DataTable) {
   selector_1.on("click", "td.editor-edit, tr td ul .editor-edit", function (e) {
     e.preventDefault();
     var data = table.row(this).data();
-    window.location.href = "/chickens/" + data.chicken_id + "/weights";
+    window.location.href = "/chickens/" + data.chicken_id + "/eggs";
   });
 
   function loadImage() {
@@ -63,13 +63,10 @@ requirejs(["jquery", "datatables"], function ($, DataTable) {
     // join(",")
     var query =
       "?breed_type=" + breed_types_select + "&farms=" + farm + "&sex=" + sex;
-    $("#anomaly_body_weight_1").attr(
-      "src",
-      "/api/anomaly/weights/graph/" + query
-    );
+    $("#anomaly_image").attr("src", "/api/anomaly/egg/graph/" + query);
     $("#anomaly_body_weight_1_download").attr(
       "href",
-      "/api/anomaly/weights/graph/" + query
+      "/api/anomaly/egg/graph/" + query
     );
   }
 

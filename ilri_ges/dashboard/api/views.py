@@ -148,6 +148,8 @@ def analysis_weight_graph(request):
     return response
 
 
+# Feed anomly
+
 @require_http_methods(["GET"])
 def analysis_feed_graph(request):
     farms_ids = request.GET.get('farms', "") or ""
@@ -185,3 +187,142 @@ def analysis_feed_graph(request):
     )
 
     return response
+
+
+class AnalysisFeed(APIView):
+    queryset = Feed.objects.all()
+
+    def get(self, request):
+        farms_ids = request.GET.get('farms', "") or ""
+        breed_types_ids = request.GET.get('breed_type', "") or ""
+        sex = request.GET.get('sex', "") or ""
+
+        feeds = self.queryset
+
+        if len(farms_ids) != 0:
+            farms_ids = np.array(farms_ids.split(',') or []).astype(int)
+            feeds = feeds.filter(chicken__farm__in=farms_ids)
+
+        if len(breed_types_ids) != 0:
+            breed_types_ids = np.array(
+                breed_types_ids.split(',') or []).astype(int)
+            feeds = feeds.filter(chicken__breed_type__in=breed_types_ids)
+
+        if len(sex) != 0:
+            feeds = feeds.filter(chicken__sex=sex)
+
+        if feeds.exists() == False:
+            return Response({'results': []})
+
+        df = pd.DataFrame(
+            list(feeds.values('chicken__tag', 'chicken__sex', 'week', 'chicken_id', 'weight')))
+
+        week_group = df.groupby('week')
+
+        for name, group in week_group:
+            isolation_model = IsolationForest(contamination=float(0.1))
+            isolation_model.fit(group[['weight']].values)
+            IF_predictions = isolation_model.predict(group[['weight']].values)
+            group['anomalies'] = IF_predictions
+            group['scores'] = isolation_model.decision_function(
+                group[['weight']].values)
+
+            df = pd.concat([df, group])
+
+        df = df[df['anomalies'] == -1]
+        df = df.sort_values(by=['scores'])
+
+        parsed = loads(df.to_json(orient="records"))
+
+        return Response({'results': parsed})
+
+
+# Eggs
+
+@require_http_methods(["GET"])
+def analysis_egg_graph(request):
+    farms_ids = request.GET.get('farms', "") or ""
+    breed_types_ids = request.GET.get('breed_type', "") or ""
+    sex = request.GET.get('sex', "") or ""
+
+    output = io.BytesIO()
+
+    eggs = Egg.objects.all()
+
+    if len(farms_ids) != 0:
+        farms_ids = np.array(farms_ids.split(',') or []).astype(int)
+        eggs = eggs.filter(chicken__farm__in=farms_ids)
+
+    if len(breed_types_ids) != 0:
+        breed_types_ids = np.array(
+            breed_types_ids.split(',') or []).astype(int)
+        eggs = eggs.filter(chicken__breed_type__in=breed_types_ids)
+
+    if len(sex) != 0:
+        eggs = eggs.filter(chicken__sex=sex)
+
+    df = pd.DataFrame(
+        list(eggs.values('week', 'chicken_id', 'eggs', 'total_weight')))
+
+    fig = px.scatter(x=df['week'].values, y=df['total_weight'].values)
+
+    img_bytes = fig.to_image(format="png")
+    output.write(img_bytes)
+
+    output.seek(0)
+
+    response = HttpResponse(
+        output,
+        content_type='image/png'
+    )
+
+    return response
+
+
+class AnalysisEgg(APIView):
+    queryset = Egg.objects.all()
+
+    def get(self, request):
+        farms_ids = request.GET.get('farms', "") or ""
+        breed_types_ids = request.GET.get('breed_type', "") or ""
+        sex = request.GET.get('sex', "") or ""
+
+        feeds = self.queryset
+
+        if len(farms_ids) != 0:
+            farms_ids = np.array(farms_ids.split(',') or []).astype(int)
+            feeds = feeds.filter(chicken__farm__in=farms_ids)
+
+        if len(breed_types_ids) != 0:
+            breed_types_ids = np.array(
+                breed_types_ids.split(',') or []).astype(int)
+            feeds = feeds.filter(chicken__breed_type__in=breed_types_ids)
+
+        if len(sex) != 0:
+            feeds = feeds.filter(chicken__sex=sex)
+
+        if feeds.exists() == False:
+            return Response({'results': []})
+
+        df = pd.DataFrame(
+            list(feeds.values('chicken__tag', 'chicken__sex', 'week', 'chicken_id', 'eggs', 'total_weight')))
+
+        week_group = df.groupby('week')
+
+        for name, group in week_group:
+            isolation_model = IsolationForest(contamination=float(0.1))
+            dataset = group[['eggs', 'total_weight']]
+            isolation_model.fit(dataset.values)
+            IF_predictions = isolation_model.predict(dataset.values)
+            group['anomalies'] = IF_predictions
+            group['scores'] = isolation_model.decision_function(
+                dataset.values)
+
+            df = pd.concat([df, group])
+
+        df = df[df['anomalies'] == -1]
+        df = df.sort_values(by=['scores'])
+
+        parsed = loads(df.to_json(orient="records"))
+
+        return Response({'results': parsed})

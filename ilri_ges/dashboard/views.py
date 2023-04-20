@@ -63,9 +63,25 @@ class DashboardPedigreeFullScreenView(LoginRequiredMixin, View):
         return render(request, 'pedigree/full_screen.html')
 
 
-class AnalysisAnomaly(LoginRequiredMixin, View):
+class AnalysisAnomalyWeight(LoginRequiredMixin, View):
     login_url = '/users/login'
     redirect_field_name = 'redirect_to'
 
     def get(self, request):
-        return render(request, 'analysis/anomaly.html')
+        return render(request, 'analysis/anomaly_feed.html')
+
+
+class AnalysisAnomalyFeed(LoginRequiredMixin, View):
+    login_url = '/users/login'
+    redirect_field_name = 'redirect_to'
+
+    def get(self, request):
+        return render(request, 'analysis/anomaly_feed.html')
+
+
+class AnalysisAnomalyEgg(LoginRequiredMixin, View):
+    login_url = '/users/login'
+    redirect_field_name = 'redirect_to'
+
+    def get(self, request):
+        return render(request, 'analysis/anomaly_egg.html')
