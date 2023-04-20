@@ -6,6 +6,7 @@ requirejs(["jquery", "datatables"], function ($, DataTable) {
     { data: "chicken__tag" },
     { data: "chicken__sex" },
     { data: "week" },
+    { data: "eggs" },
     { data: "weight" },
     { data: "scores" },
     {

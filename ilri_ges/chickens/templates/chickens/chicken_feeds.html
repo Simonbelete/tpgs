@@ -3,7 +3,7 @@
 {% load widget_tweaks %}
 
 {% block page_title %}{{ data.name }} Feed Intake{% endblock %}
-{% block data_title %}{{ data.name }} - Feed Intake{% endblock %}
+{% block data_title %}<a href="/chickens/{{data.id}}">{{ data.name }}</a> - Feed Intake{% endblock %}
 {% block data_description %}{% endblock %}
 {% block data_menu %}Feed Intake{% endblock %}
 
