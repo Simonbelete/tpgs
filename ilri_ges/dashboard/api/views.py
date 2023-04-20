@@ -10,13 +10,14 @@ from sklearn.ensemble import IsolationForest
 from django.views.decorators.http import require_http_methods
 from django.http import HttpResponse
 from json import loads, dumps
-
+from sklearn.metrics import accuracy_score
 
 from users.models import User
 from flocks.models import Flock
 from farms.models import Farm
 from chickens.models import Chicken
 from eggs.models import Egg
+from feeds.models import Feed
 from weights.models import Weight
 from farms.api.serializers import FarmSerializer_GET_V1
 
@@ -64,23 +65,34 @@ class AnalysisWeight(APIView):
     queryset = Weight.objects.all()
 
     def get(self, request):
-        start_week = request.GET.get('start_week') or 0
-        end_week = request.GET.get('end_week') or 10
-
-        plot_weeks = []
-        plot_weights = []
+        farms_ids = request.GET.get('farms', "") or ""
+        breed_types_ids = request.GET.get('breed_type', "") or ""
+        sex = request.GET.get('sex', "") or ""
 
         weights = self.queryset
+
+        if len(farms_ids) != 0:
+            farms_ids = np.array(farms_ids.split(',') or []).astype(int)
+            weights = weights.filter(chicken__farm__in=farms_ids)
+
+        if len(breed_types_ids) != 0:
+            breed_types_ids = np.array(
+                breed_types_ids.split(',') or []).astype(int)
+            weights = weights.filter(chicken__breed_type__in=breed_types_ids)
+
+        if len(sex) != 0:
+            weights = weights.filter(chicken__sex=sex)
+
+        if weights.exists() == False:
+            return Response({'results': []})
 
         df = pd.DataFrame(
             list(weights.values('chicken__tag', 'chicken__sex', 'week', 'chicken_id', 'weight')))
 
         week_group = df.groupby('week')
 
-        print('-------------')
-
         for name, group in week_group:
-            isolation_model = IsolationForest(contamination=float(0.2))
+            isolation_model = IsolationForest(contamination=float(0.1))
             isolation_model.fit(group[['weight']].values)
             IF_predictions = isolation_model.predict(group[['weight']].values)
             group['anomalies'] = IF_predictions
@@ -99,17 +111,66 @@ class AnalysisWeight(APIView):
 
 @require_http_methods(["GET"])
 def analysis_weight_graph(request):
-    start_week = request.GET.get('start_week') or 0
-    end_week = request.GET.get('end_week') or 10
-
-    plot_weeks = []
-    plot_weights = []
+    farms_ids = request.GET.get('farms', "") or ""
+    breed_types_ids = request.GET.get('breed_type', "") or ""
+    sex = request.GET.get('sex', "") or ""
 
     output = io.BytesIO()
 
     weights = Weight.objects.all()
 
+    if len(farms_ids) != 0:
+        farms_ids = np.array(farms_ids.split(',') or []).astype(int)
+        weights = weights.filter(chicken__farm__in=farms_ids)
+
+    if len(breed_types_ids) != 0:
+        breed_types_ids = np.array(
+            breed_types_ids.split(',') or []).astype(int)
+        weights = weights.filter(chicken__breed_type__in=breed_types_ids)
+
+    if len(sex) != 0:
+        weights = weights.filter(chicken__sex=sex)
+
     df = pd.DataFrame(list(weights.values('week', 'chicken_id', 'weight')))
+
+    fig = px.scatter(x=df['week'].values, y=df['weight'].values)
+
+    img_bytes = fig.to_image(format="png")
+    output.write(img_bytes)
+
+    output.seek(0)
+
+    response = HttpResponse(
+        output,
+        content_type='image/png'
+    )
+
+    return response
+
+
+@require_http_methods(["GET"])
+def analysis_feed_graph(request):
+    farms_ids = request.GET.get('farms', "") or ""
+    breed_types_ids = request.GET.get('breed_type', "") or ""
+    sex = request.GET.get('sex', "") or ""
+
+    output = io.BytesIO()
+
+    feeds = Feed.objects.all()
+
+    if len(farms_ids) != 0:
+        farms_ids = np.array(farms_ids.split(',') or []).astype(int)
+        feeds = feeds.filter(chicken__farm__in=farms_ids)
+
+    if len(breed_types_ids) != 0:
+        breed_types_ids = np.array(
+            breed_types_ids.split(',') or []).astype(int)
+        feeds = feeds.filter(chicken__breed_type__in=breed_types_ids)
+
+    if len(sex) != 0:
+        feeds = feeds.filter(chicken__sex=sex)
+
+    df = pd.DataFrame(list(feeds.values('week', 'chicken_id', 'weight')))
 
     fig = px.scatter(x=df['week'].values, y=df['weight'].values)
 

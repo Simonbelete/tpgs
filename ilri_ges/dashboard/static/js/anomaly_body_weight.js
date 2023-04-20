@@ -36,11 +36,11 @@ requirejs(["jquery", "datatables"], function ($, DataTable) {
         var sign = d.order[0].dir == "asc" ? "+" : "-";
         d.ordering = sign + columns[d.order[0].column].data;
 
-        d.start_week = $("#start_week").val();
-        d.end_week = $("#end_week").val();
-        d.farm = $("#farm_select").val().join(",");
+        d.farms = $("#farm_select").val().join(",");
         d.breed_type = $("#breed_type_select").val().join(",");
         d.sex = $("#sex").val();
+
+        delete d.columns;
       },
     },
     columns: columns,
@@ -54,23 +54,14 @@ requirejs(["jquery", "datatables"], function ($, DataTable) {
   });
 
   function loadImage() {
-    var start_week = $("#start_week").val();
-    var end_week = $("#end_week").val();
-    var farm = $("#farm_select").val();
-    var breed_types_select = $("#breed_type_select").val();
+    var farm = $("#farm_select").val().join(",");
+    var breed_types_select = $("#breed_type_select").val().join(",");
     var sex = $("#sex").val();
+    console.log($("#sex").val());
+    console.log(sex);
     // join(",")
     var query =
-      "?breed_type=" +
-      breed_types_select +
-      "&farm=" +
-      farm +
-      "&sex=" +
-      sex +
-      "&start_week=" +
-      start_week +
-      "&end_week=" +
-      end_week;
+      "?breed_type=" + breed_types_select + "&farms=" + farm + "&sex=" + sex;
     $("#anomaly_body_weight_1").attr(
       "src",
       "/api/anomaly/weights/graph/" + query
@@ -84,7 +75,7 @@ requirejs(["jquery", "datatables"], function ($, DataTable) {
   // Init
   loadImage();
 
-  $("#weight_piechart_apply").click(function () {
+  $("#apply").click(function () {
     table.ajax.reload(null, false);
     loadImage();
   });
