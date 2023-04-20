@@ -19381,3 +19381,114 @@ Traceback (most recent call last):
   File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/pandas/core/indexes/base.py", line 2193, in _drop_level_numbers
     raise ValueError(
 ValueError: Cannot remove 1 levels from an index with 1 levels: at least one level must be left.
+Not Found: /favicon.ico
+No artists with labels found to put in legend.  Note that artists whose label start with an underscore are ignored when legend() is called with no argument.
+Internal Server Error: /api/analysis/weights/
+Traceback (most recent call last):
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/core/handlers/exception.py", line 56, in inner
+    response = get_response(request)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/views/decorators/http.py", line 43, in inner
+    return func(request, *args, **kwargs)
+TypeError: analysis_weight() missing 1 required positional argument: 'request'
+Internal Server Error: /api/analysis/weights/
+Traceback (most recent call last):
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/core/handlers/exception.py", line 56, in inner
+    response = get_response(request)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/views/decorators/http.py", line 43, in inner
+    return func(request, *args, **kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/dashboard/api/views.py", line 106, in analysis_weight
+    fig.write_image("images/fig1.png")
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/plotly/basedatatypes.py", line 3821, in write_image
+    return pio.write_image(self, *args, **kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/plotly/io/_kaleido.py", line 297, in write_image
+    path.write_bytes(img_data)
+  File "/usr/lib/python3.8/pathlib.py", line 1245, in write_bytes
+    with self.open(mode='wb') as f:
+  File "/usr/lib/python3.8/pathlib.py", line 1222, in open
+    return io.open(self, mode, buffering, encoding, errors, newline,
+  File "/usr/lib/python3.8/pathlib.py", line 1078, in _opener
+    return self._accessor.open(self, flags, mode)
+FileNotFoundError: [Errno 2] No such file or directory: 'images/fig1.png'
+Internal Server Error: /api/analysis/weights/
+Traceback (most recent call last):
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/core/handlers/exception.py", line 56, in inner
+    response = get_response(request)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/views/decorators/http.py", line 43, in inner
+    return func(request, *args, **kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/dashboard/api/views.py", line 85, in analysis_weight
+    fig = px.scatter(x=df[['week']].values, y=df[['weight']].values)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/plotly/express/_chart_types.py", line 66, in scatter
+    return make_figure(args=locals(), constructor=go.Scatter)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/plotly/express/_core.py", line 1996, in make_figure
+    args = build_dataframe(args, constructor)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/plotly/express/_core.py", line 1328, in build_dataframe
+    raise ValueError(
+ValueError: Cannot accept list of column references or list of columns for both `x` and `y`.
+Internal Server Error: /api/analysis/weights/
+Traceback (most recent call last):
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/core/handlers/exception.py", line 56, in inner
+    response = get_response(request)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/views/decorators/http.py", line 43, in inner
+    return func(request, *args, **kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/dashboard/api/views.py", line 85, in analysis_weight
+    fig = px.scatter(x=df[['week']].values, y=df[['weight']].values)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/plotly/express/_chart_types.py", line 66, in scatter
+    return make_figure(args=locals(), constructor=go.Scatter)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/plotly/express/_core.py", line 1996, in make_figure
+    args = build_dataframe(args, constructor)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/plotly/express/_core.py", line 1328, in build_dataframe
+    raise ValueError(
+ValueError: Cannot accept list of column references or list of columns for both `x` and `y`.
+Internal Server Error: /api/analysis/weights/
+Traceback (most recent call last):
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/core/handlers/exception.py", line 56, in inner
+    response = get_response(request)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/views/decorators/http.py", line 43, in inner
+    return func(request, *args, **kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/dashboard/api/views.py", line 85, in analysis_weight
+    fig = px.scatter(df[['weight']].values, y=df[['week']].values)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/plotly/express/_chart_types.py", line 66, in scatter
+    return make_figure(args=locals(), constructor=go.Scatter)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/plotly/express/_core.py", line 1996, in make_figure
+    args = build_dataframe(args, constructor)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/plotly/express/_core.py", line 1409, in build_dataframe
+    df_output, wide_id_vars = process_args_into_dataframe(
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/plotly/express/_core.py", line 1246, in process_args_into_dataframe
+    raise ValueError(
+ValueError: All arguments should have the same length. The length of argument `wide_variable_0` is 1, whereas the length of  previously-processed arguments ['index'] is 1517
+Internal Server Error: /api/analysis/weights/
+Traceback (most recent call last):
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/core/handlers/exception.py", line 56, in inner
+    response = get_response(request)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/views/decorators/http.py", line 43, in inner
+    return func(request, *args, **kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/dashboard/api/views.py", line 85, in analysis_weight
+    print(df['week'].value)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/pandas/core/generic.py", line 5902, in __getattr__
+    return object.__getattribute__(self, name)
+AttributeError: 'Series' object has no attribute 'value'
+Internal Server Error: /api/analysis/weights/
+Traceback (most recent call last):
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/core/handlers/exception.py", line 56, in inner
+    response = get_response(request)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/views/decorators/http.py", line 43, in inner
+    return func(request, *args, **kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/dashboard/api/views.py", line 85, in analysis_weight
+    print(df['week'].value)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/pandas/core/generic.py", line 5902, in __getattr__
+    return object.__getattribute__(self, name)
+AttributeError: 'Series' object has no attribute 'value'
