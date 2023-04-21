@@ -87,7 +87,7 @@ class AnalysisWeight(APIView):
             return Response({'results': []})
 
         df = pd.DataFrame(
-            list(weights.values('chicken__tag', 'chicken__sex', 'week', 'chicken_id', 'weight')))
+            list(weights.values('id', 'chicken__tag', 'chicken__sex', 'week', 'chicken_id', 'weight')))
 
         week_group = df.groupby('week')
 
@@ -172,7 +172,7 @@ def analysis_feed_graph(request):
     if len(sex) != 0:
         feeds = feeds.filter(chicken__sex=sex)
 
-    df = pd.DataFrame(list(feeds.values('week', 'chicken_id', 'weight')))
+    df = pd.DataFrame(list(feeds.values('id', 'week', 'chicken_id', 'weight')))
 
     fig = px.scatter(x=df['week'].values, y=df['weight'].values)
 
@@ -215,7 +215,7 @@ class AnalysisFeed(APIView):
             return Response({'results': []})
 
         df = pd.DataFrame(
-            list(feeds.values('chicken__tag', 'chicken__sex', 'week', 'chicken_id', 'weight')))
+            list(feeds.values('id', 'chicken__tag', 'chicken__sex', 'week', 'chicken_id', 'weight')))
 
         week_group = df.groupby('week')
 
@@ -305,7 +305,7 @@ class AnalysisEgg(APIView):
             return Response({'results': []})
 
         df = pd.DataFrame(
-            list(feeds.values('chicken__tag', 'chicken__sex', 'week', 'chicken_id', 'eggs', 'total_weight')))
+            list(feeds.values('id', 'chicken__tag', 'chicken__sex', 'week', 'chicken_id', 'eggs', 'total_weight')))
 
         week_group = df.groupby('week')
 

@@ -2,7 +2,7 @@ requirejs(["jquery", "datatables"], function ($, DataTable) {
   var selector_1 = $("#data_table");
 
   var columns = [
-    { data: "chicken_id", visible: false },
+    { data: "id", visible: false },
     { data: "chicken__tag" },
     { data: "chicken__sex" },
     { data: "week" },
@@ -51,7 +51,7 @@ requirejs(["jquery", "datatables"], function ($, DataTable) {
   selector_1.on("click", "td.editor-edit, tr td ul .editor-edit", function (e) {
     e.preventDefault();
     var data = table.row(this).data();
-    window.location.href = "/chickens/" + data.chicken_id + "/feeds";
+    window.location.href = "/feeds/" + data.id;
   });
 
   function loadImage() {
