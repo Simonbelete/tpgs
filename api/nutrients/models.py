@@ -1,8 +1,10 @@
 from django.db import models
 from units.models import Unit
 
+
 class NutrientGroup(models.Model):
     name = models.CharField(max_length=100, unique=True)
+
 
 class Nutrient(models.Model):
     name = models.CharField(max_length=100)
@@ -11,7 +13,3 @@ class Nutrient(models.Model):
         NutrientGroup, on_delete=models.SET_NULL, null=True, related_name='nutrients')
     unit = models.ForeignKey(
         Unit, on_delete=models.SET_NULL, null=True, related_name='nutrients')
-    ratio_unit = models.ForeignKey(
-        Unit, on_delete=models.SET_NULL, null=True, related_name='ratio_nutrients')
-    ratio_min = models.FloatField()
-    ratio_max = models.FloatField()
