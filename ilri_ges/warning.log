@@ -20386,3 +20386,5 @@ Name: total_weight, dtype: object
     The 'size' property is a number and may be specified as:
       - An int or float in the interval [0, inf]
       - A tuple, list, or one-dimensional numpy array of the above
+Not Found: /favicon.ico
+Not Found: /eggs/1/index3.html

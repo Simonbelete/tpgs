@@ -39,7 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'djmoney',
     'core',
-    'ingredients'
+    'ingredients',
+    'units'
 ]
 
 MIDDLEWARE = [
