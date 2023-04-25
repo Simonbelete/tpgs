@@ -1,4 +1,10 @@
-import React, { ReactElement, useRef, useMemo, useEffect } from "react";
+import React, {
+  ReactElement,
+  useRef,
+  useMemo,
+  useEffect,
+  useState,
+} from "react";
 import {
   DataEditor,
   EditableGridCell,
@@ -10,6 +16,17 @@ import {
 } from "@glideapps/glide-data-grid";
 import { data } from "autoprefixer";
 import _ from "lodash";
+import {
+  BarChart,
+  Bar,
+  Cell,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+  ResponsiveContainer,
+} from "recharts";
 
 interface Ingredient {
   name: string;
@@ -41,6 +58,14 @@ const DataTable = (): ReactElement => {
       max: "",
     },
     {
+      name: "Fish meal",
+      qty: "",
+      price: "",
+      cp: "4",
+      min: "",
+      max: "",
+    },
+    {
       name: "",
       qty: "",
       price: "",
@@ -65,6 +90,8 @@ const DataTable = (): ReactElement => {
       max: "0",
     },
   ]);
+
+  const [chartData, setChartData] = useState([]);
 
   const getContent = React.useCallback((cell: Item): GridCell => {
     const [col, row] = cell;
@@ -116,35 +143,65 @@ const DataTable = (): ReactElement => {
 
       console.log(dataRef.current);
 
+      let chart_data = [];
       // Calculate Each Column indexes sum & values
       for (let i = 1; i < indexes.length; i++) {
         const col_key = indexes[i];
         let vals: any = _.map(
           dataRef.current.slice(0, recipe_index),
-          (o: Ingredient) => Number(o[col_key])
+          (o: Ingredient) => {
+            if (i == 2) return Number(o[col_key]);
+            else return (Number(o.qty) * Number(o[col_key])) / 100;
+          }
         );
 
-        console.log("----");
-        console.log(vals);
-
-        // col_values.set(indexes[i], vals);
+        col_values.set(indexes[i], vals);
 
         // Set sum
-        dataRef.current[recipe_index][col_key] = String(_.sum(vals));
+        const sum = String(_.sum(vals));
+        dataRef.current[recipe_index][col_key] = sum;
+        let per =
+          (Number(sum) / Number(dataRef.current[last_index][col_key])) * 100 ||
+          0;
+        chart_data.push({
+          name: indexes[i],
+          sum: sum,
+          // IN %
+          value: isFinite(per) ? per : 0,
+        });
       }
+
+      setChartData(chart_data as any);
     },
     []
   );
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    console.log("chart data");
+    console.log(chartData);
+  }, [chartData]);
 
   return (
-    <DataEditor
-      getCellContent={getContent}
-      onCellEdited={onCellEdited}
-      columns={columns}
-      rows={dataRef.current.length}
-    />
+    <div>
+      <DataEditor
+        getCellContent={getContent}
+        onCellEdited={onCellEdited}
+        columns={columns}
+        rows={dataRef.current.length}
+      />
+      <div style={{ marginTop: "100px" }}>
+        <ResponsiveContainer width="100%" height={500}>
+          <BarChart data={chartData}>
+            <Bar dataKey="value" fill="#8884d8" />
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="name" />
+            <YAxis />
+            {/* <Tooltip /> */}
+            <Legend />
+          </BarChart>
+        </ResponsiveContainer>
+      </div>
+    </div>
   );
 };
 
