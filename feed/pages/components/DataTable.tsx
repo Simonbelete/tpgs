@@ -27,6 +27,7 @@ import {
   Legend,
   ResponsiveContainer,
 } from "recharts";
+import IngredientModal from "./IngredientModal";
 
 interface Ingredient {
   name: string;
@@ -272,6 +273,9 @@ const DataTable = (): ReactElement => {
 
   return (
     <div>
+      <div>
+        <IngredientModal />
+      </div>
       <DataEditor
         getCellContent={getContent}
         rowMarkers={"both"}
