@@ -32,7 +32,16 @@ interface Ingredient {
   name: string;
   qty: string;
   price: string;
+  dm: string;
+  me: string;
   cp: string;
+  lys: string;
+  meth: string;
+  mc: string;
+  ee: string;
+  cf: string;
+  ca: string;
+  p: string;
   min: string;
   max: string;
 }
@@ -41,53 +50,121 @@ const DataTable = (): ReactElement => {
   const columns = useMemo<GridColumn[]>(() => {
     return [
       { title: "Name", id: "name" },
-      { title: "%", id: "qty", icon: GridColumnIcon.HeaderNumber },
-      { title: "Price/Unit", id: "price", icon: GridColumnIcon.HeaderNumber },
-      { title: "CP%", id: "cp", icon: GridColumnIcon.HeaderNumber },
-      { title: "Min%", id: "min", icon: GridColumnIcon.HeaderNumber },
-      { title: "Max%", id: "cp", icon: GridColumnIcon.HeaderNumber },
+      { title: "%", id: "qty", icon: GridColumnIcon.HeaderNumber, width: 100 },
+      {
+        title: "Price/Unit",
+        id: "price",
+        icon: GridColumnIcon.HeaderNumber,
+        width: 100,
+      },
+      { title: "DM%", id: "dm", icon: GridColumnIcon.HeaderNumber, width: 100 },
+      { title: "ME%", id: "me", icon: GridColumnIcon.HeaderNumber, width: 100 },
+      { title: "CP%", id: "cp", icon: GridColumnIcon.HeaderNumber, width: 100 },
+      {
+        title: "Lys%",
+        id: "lys",
+        icon: GridColumnIcon.HeaderNumber,
+        width: 100,
+      },
+      {
+        title: "Meth%",
+        id: "meth",
+        icon: GridColumnIcon.HeaderNumber,
+        width: 100,
+      },
+      {
+        title: "M+C%",
+        id: "mc",
+        icon: GridColumnIcon.HeaderNumber,
+        width: 100,
+      },
+      { title: "EE%", id: "ee", icon: GridColumnIcon.HeaderNumber, width: 100 },
+      { title: "CF%", id: "cf", icon: GridColumnIcon.HeaderNumber, width: 100 },
+      { title: "Ca%", id: "ca", icon: GridColumnIcon.HeaderNumber, width: 100 },
+      { title: "P%", id: "p", icon: GridColumnIcon.HeaderNumber, width: 100 },
+      {
+        title: "Min%",
+        id: "min",
+        icon: GridColumnIcon.HeaderNumber,
+        width: 100,
+      },
+      {
+        title: "Max%",
+        id: "max",
+        icon: GridColumnIcon.HeaderNumber,
+        width: 100,
+      },
     ];
   }, []);
   const dataRef = useRef([
     {
       name: "Maze",
-      qty: "",
+      qty: "10",
       price: "",
-      cp: "10",
+      dm: "",
+      me: "",
+      cp: "",
+      lys: "",
+      meth: "",
+      mc: "",
+      ee: "",
+      cf: "",
+      ca: "",
+      p: "",
       min: "",
       max: "",
     },
-    {
-      name: "Fish meal",
-      qty: "",
-      price: "",
-      cp: "4",
-      min: "",
-      max: "",
-    },
+
     {
       name: "",
       qty: "",
       price: "",
+      dm: "",
+      me: "",
       cp: "",
+      lys: "",
+      meth: "",
+      mc: "",
+      ee: "",
+      cf: "",
+      ca: "",
+      p: "",
       min: "",
       max: "",
     },
     {
       name: "Recipe",
-      qty: "0",
-      price: "0",
-      cp: "0",
-      min: "0",
-      max: "0",
+      qty: "",
+      price: "",
+      dm: "",
+      me: "",
+      cp: "",
+      lys: "",
+      meth: "",
+      mc: "",
+      ee: "",
+      cf: "",
+      ca: "",
+      p: "",
+      min: "",
+      max: "",
     },
     {
       name: "Requirement",
-      qty: "10",
-      price: "0",
-      cp: "0",
-      min: "0",
-      max: "0",
+      qty: "",
+      price: "",
+      dm: "",
+      me: "",
+      cp: "",
+      lys: "",
+      meth: "",
+      mc: "",
+      ee: "",
+      cf: "",
+      ca: "",
+      p: "",
+      min: "",
+      max: "",
     },
   ]);
 
@@ -101,7 +178,16 @@ const DataTable = (): ReactElement => {
       "name",
       "qty",
       "price",
+      "dm",
+      "me",
       "cp",
+      "lys",
+      "meth",
+      "mc",
+      "ee",
+      "cf",
+      "ca",
+      "p",
       "min",
       "max",
     ];
@@ -125,7 +211,16 @@ const DataTable = (): ReactElement => {
         "name",
         "qty",
         "price",
+        "dm",
+        "me",
         "cp",
+        "lys",
+        "meth",
+        "mc",
+        "ee",
+        "cf",
+        "ca",
+        "p",
         "min",
         "max",
       ];
@@ -140,8 +235,6 @@ const DataTable = (): ReactElement => {
       // const's
       const last_index = dataRef.current.length - 1;
       const recipe_index = last_index - 1;
-
-      console.log(dataRef.current);
 
       let chart_data = [];
       // Calculate Each Column indexes sum & values
@@ -163,6 +256,7 @@ const DataTable = (): ReactElement => {
         let per =
           (Number(sum) / Number(dataRef.current[last_index][col_key])) * 100 ||
           0;
+
         chart_data.push({
           name: indexes[i],
           sum: sum,
@@ -176,18 +270,19 @@ const DataTable = (): ReactElement => {
     []
   );
 
-  useEffect(() => {
-    console.log("chart data");
-    console.log(chartData);
-  }, [chartData]);
-
   return (
     <div>
       <DataEditor
         getCellContent={getContent}
+        rowMarkers={"both"}
         onCellEdited={onCellEdited}
         columns={columns}
         rows={dataRef.current.length}
+        trailingRowOptions={{
+          hint: "New row...",
+          sticky: true,
+          tint: true,
+        }}
       />
       <div style={{ marginTop: "100px" }}>
         <ResponsiveContainer width="100%" height={500}>
