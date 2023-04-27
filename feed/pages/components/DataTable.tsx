@@ -67,6 +67,10 @@ const DataTable = (): ReactElement => {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const [ingredients, setIngredients] = React.useState<Ingredient[]>([]);
+  const [selectedIngredients, setSelectedIngredients] = React.useState<
+    Ingredient[]
+  >([]);
+  const [selectIndexes, setSelectedIndexes] = React.useState<string[]>([]);
 
   const columns = useMemo<GridColumn[]>(() => {
     return [
@@ -281,7 +285,6 @@ const DataTable = (): ReactElement => {
     axios
       .get("http://127.0.0.1:8000/api/ingredients")
       .then(function (response) {
-        setIngredients(response.data);
         let res_data = _.map(response.data, (data) => {
           return {
             name: data["name"],
@@ -301,19 +304,32 @@ const DataTable = (): ReactElement => {
             ratio_max: String(data["ratio_max"]),
           };
         });
-        console.log(_.union(res_data, initData));
-        dataRef.current = _.union(res_data, initData);
-        // dataRef.current.push(res_data);
+        // dataRef.current = _.union(res_data, initData);
+        dataRef.current = initData;
+        setIngredients(res_data);
       })
       .catch(function (error) {
         console.log(error);
       });
   }, []);
+  const handleIngredientOnChange = (e: any) => {
+    let sel_ingred: Ingredient[] = [];
+    const values = [...e.target.selectedOptions].map((opt) => {
+      sel_ingred.push(ingredients[opt.value]);
+      return String(opt.value);
+    });
+    setSelectedIndexes(values);
+    console.log(sel_ingred);
+    dataRef.current = _.union(
+      sel_ingred,
+      dataRef.current.slice(dataRef.current.length - 3, dataRef.current.length)
+    );
+  };
 
   return (
     <div>
       <div>
-        <Button onClick={handleOpen}>Open modal</Button>
+        <Button onClick={handleOpen}>Ingredients</Button>
         <Modal
           open={open}
           onClose={handleClose}
@@ -321,7 +337,12 @@ const DataTable = (): ReactElement => {
           aria-describedby="modal-modal-description"
         >
           <Box sx={style}>
-            <select multiple size={6}>
+            <select
+              multiple
+              size={6}
+              onChange={handleIngredientOnChange}
+              value={selectIndexes}
+            >
               {ingredients.map((data, key) => (
                 <option key={key} value={key}>
                   {data.name}
