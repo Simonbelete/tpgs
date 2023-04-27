@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'djmoney',
     'core',
-    'ingredients'
+    'ingredients',
+    'recipes'
 ]
 
 MIDDLEWARE = [
