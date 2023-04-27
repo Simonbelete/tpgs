@@ -137,7 +137,7 @@ const DataTable = (): ReactElement => {
       ratio_max: "",
     },
     {
-      name: "Recipe",
+      name: "Ration",
       qty: "",
       price: "",
       dm: "",
@@ -240,7 +240,7 @@ const DataTable = (): ReactElement => {
 
       // const's
       const last_index = dataRef.current.length - 1;
-      const recipe_index = last_index - 1;
+      const recipe_index = last_index - 1; // Ration index
 
       let chart_data = [];
       // Calculate Each Column indexes sum & values
@@ -249,7 +249,8 @@ const DataTable = (): ReactElement => {
         let vals: any = _.map(
           dataRef.current.slice(0, recipe_index),
           (o: Ingredient) => {
-            if (i == 2) return Number(o[col_key]);
+            // For the first two columns return exact value
+            if (i <= 2) return Number(o[col_key]);
             else return (Number(o.qty) * Number(o[col_key])) / 100;
           }
         );
