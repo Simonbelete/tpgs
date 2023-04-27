@@ -15,6 +15,7 @@ import {
   GridColumnIcon,
 } from "@glideapps/glide-data-grid";
 import { data } from "autoprefixer";
+import { Modal, Button, Box } from "@mui/material";
 import _ from "lodash";
 import {
   BarChart,
@@ -28,8 +29,10 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import IngredientModal from "./IngredientModal";
+import axios from "axios";
 
 interface Ingredient {
+  id?: string;
   name: string;
   qty: string;
   price: string;
@@ -43,11 +46,28 @@ interface Ingredient {
   cf: string;
   ca: string;
   p: string;
-  min: string;
-  max: string;
+  ratio_min: string;
+  ratio_max: string;
 }
 
+const style = {
+  position: "absolute" as "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 400,
+  bgcolor: "background.paper",
+  border: "2px solid #000",
+  boxShadow: 24,
+  p: 4,
+};
+
 const DataTable = (): ReactElement => {
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+  const [ingredients, setIngredients] = React.useState<Ingredient[]>([]);
+
   const columns = useMemo<GridColumn[]>(() => {
     return [
       { title: "Name", id: "name" },
@@ -97,25 +117,8 @@ const DataTable = (): ReactElement => {
       },
     ];
   }, []);
-  const dataRef = useRef([
-    {
-      name: "Maze",
-      qty: "10",
-      price: "",
-      dm: "",
-      me: "",
-      cp: "",
-      lys: "",
-      meth: "",
-      mc: "",
-      ee: "",
-      cf: "",
-      ca: "",
-      p: "",
-      min: "",
-      max: "",
-    },
 
+  const initData = [
     {
       name: "",
       qty: "",
@@ -130,8 +133,8 @@ const DataTable = (): ReactElement => {
       cf: "",
       ca: "",
       p: "",
-      min: "",
-      max: "",
+      ratio_min: "",
+      ratio_max: "",
     },
     {
       name: "Recipe",
@@ -147,8 +150,8 @@ const DataTable = (): ReactElement => {
       cf: "",
       ca: "",
       p: "",
-      min: "",
-      max: "",
+      ratio_min: "",
+      ratio_max: "",
     },
     {
       name: "Requirement",
@@ -164,10 +167,12 @@ const DataTable = (): ReactElement => {
       cf: "",
       ca: "",
       p: "",
-      min: "",
-      max: "",
+      ratio_min: "",
+      ratio_max: "",
     },
-  ]);
+  ];
+
+  const dataRef = useRef<Ingredient[]>([]);
 
   const [chartData, setChartData] = useState([]);
 
@@ -189,15 +194,15 @@ const DataTable = (): ReactElement => {
       "cf",
       "ca",
       "p",
-      "min",
-      "max",
+      "ratio_min",
+      "ratio_max",
     ];
     const d = dataRow[indexes[col]];
     return {
       kind: GridCellKind.Text,
       allowOverlay: true,
-      displayData: d,
-      data: d,
+      displayData: String(d),
+      data: String(d),
     };
   }, []);
 
@@ -222,8 +227,8 @@ const DataTable = (): ReactElement => {
         "cf",
         "ca",
         "p",
-        "min",
-        "max",
+        "ratio_min",
+        "ratio_max",
       ];
       const [col, row] = cell;
       const key = indexes[col];
@@ -271,11 +276,61 @@ const DataTable = (): ReactElement => {
     []
   );
 
+  useEffect(() => {
+    axios
+      .get("http://127.0.0.1:8000/api/ingredients")
+      .then(function (response) {
+        setIngredients(response.data);
+        let res_data = _.map(response.data, (data) => {
+          return {
+            name: data["name"],
+            qty: "0",
+            price: String(data["price"]),
+            dm: String(data["dm"]),
+            me: String(data["me"]),
+            cp: String(data["cp"]),
+            lys: String(data["lys"]),
+            meth: String(data["meth"]),
+            mc: String(data["mc"]),
+            ee: String(data["ee"]),
+            cf: String(data["cf"]),
+            ca: String(data["ca"]),
+            p: String(data["p"]),
+            ratio_min: String(data["ratio_min"]),
+            ratio_max: String(data["ratio_max"]),
+          };
+        });
+        console.log(_.union(res_data, initData));
+        dataRef.current = _.union(res_data, initData);
+        // dataRef.current.push(res_data);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }, []);
+
   return (
     <div>
       <div>
-        <IngredientModal />
+        <Button onClick={handleOpen}>Open modal</Button>
+        <Modal
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+        >
+          <Box sx={style}>
+            <select multiple size={6}>
+              {ingredients.map((data, key) => (
+                <option key={key} value={key}>
+                  {data.name}
+                </option>
+              ))}
+            </select>
+          </Box>
+        </Modal>
       </div>
+
       <DataEditor
         getCellContent={getContent}
         rowMarkers={"both"}

@@ -10,7 +10,6 @@ import {
   ListItemIcon,
   ListItemText,
   Checkbox,
-  Grid,
 } from "@mui/material";
 
 const style = {
@@ -18,8 +17,7 @@ const style = {
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: "50%",
-  height: "80%",
+  width: 400,
   bgcolor: "background.paper",
   border: "2px solid #000",
   boxShadow: 24,
@@ -81,7 +79,7 @@ export default function BasicModal() {
   };
 
   const customList = (items: readonly number[]) => (
-    <Paper sx={{ width: 200, height: "auto", overflow: "auto" }}>
+    <Paper sx={{ width: 200, height: 230, overflow: "auto" }}>
       <List dense component="div" role="list">
         {items.map((value: number) => {
           const labelId = `transfer-list-item-${value}-label`;
@@ -113,68 +111,14 @@ export default function BasicModal() {
 
   return (
     <div>
-      <Button onClick={handleOpen}>Ingredients</Button>
+      <Button onClick={handleOpen}>Open modal</Button>
       <Modal
         open={open}
         onClose={handleClose}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box sx={style}>
-          <Grid
-            container
-            spacing={2}
-            justifyContent="space-between"
-            alignItems="top"
-          >
-            <Grid item>{customList(left)}</Grid>
-            <Grid item>
-              <Grid container direction="column" alignItems="center">
-                <Button
-                  sx={{ my: 0.5 }}
-                  variant="outlined"
-                  size="small"
-                  onClick={handleAllRight}
-                  disabled={left.length === 0}
-                  aria-label="move all right"
-                >
-                  ≫
-                </Button>
-                <Button
-                  sx={{ my: 0.5 }}
-                  variant="outlined"
-                  size="small"
-                  onClick={handleCheckedRight}
-                  disabled={leftChecked.length === 0}
-                  aria-label="move selected right"
-                >
-                  &gt;
-                </Button>
-                <Button
-                  sx={{ my: 0.5 }}
-                  variant="outlined"
-                  size="small"
-                  onClick={handleCheckedLeft}
-                  disabled={rightChecked.length === 0}
-                  aria-label="move selected left"
-                >
-                  &lt;
-                </Button>
-                <Button
-                  sx={{ my: 0.5 }}
-                  variant="outlined"
-                  size="small"
-                  onClick={handleAllLeft}
-                  disabled={right.length === 0}
-                  aria-label="move all left"
-                >
-                  ≪
-                </Button>
-              </Grid>
-            </Grid>
-            <Grid item>{customList(right)}</Grid>
-          </Grid>
-        </Box>
+        <Box sx={style}></Box>
       </Modal>
     </div>
   );
