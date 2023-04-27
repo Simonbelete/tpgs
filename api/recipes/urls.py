@@ -4,7 +4,7 @@ from . import views
 
 router = routers.DefaultRouter()
 router.register(r'', views.RecipeViewSet,
-                basename='api_ingredients'),
+                basename='api_recipes'),
 
 
 urlpatterns = [

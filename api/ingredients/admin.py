@@ -1,3 +1,9 @@
 from django.contrib import admin
+from . import models
 
-# Register your models here.
+
+class IngredientAdmin(admin.ModelAdmin):
+    fields = []
+
+
+admin.site.register(models.Ingredient, IngredientAdmin)
