@@ -67,9 +67,6 @@ const DataTable = (): ReactElement => {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const [ingredients, setIngredients] = React.useState<Ingredient[]>([]);
-  const [selectedIngredients, setSelectedIngredients] = React.useState<
-    Ingredient[]
-  >([]);
   const [selectIndexes, setSelectedIndexes] = React.useState<string[]>([]);
 
   const columns = useMemo<GridColumn[]>(() => {
@@ -254,7 +251,7 @@ const DataTable = (): ReactElement => {
           dataRef.current.slice(0, recipe_index),
           (o: Ingredient) => {
             // For the first two columns return exact value
-            if (i <= 2) return Number(o[col_key]);
+            if (i == 1) return Number(o[col_key]);
             else return (Number(o.qty) * Number(o[col_key])) / 100;
           }
         );
@@ -319,11 +316,18 @@ const DataTable = (): ReactElement => {
       return String(opt.value);
     });
     setSelectedIndexes(values);
-    console.log(sel_ingred);
     dataRef.current = _.union(
       sel_ingred,
       dataRef.current.slice(dataRef.current.length - 3, dataRef.current.length)
     );
+  };
+
+  const handleClearIngredinets = (e: any) => {
+    dataRef.current = dataRef.current.slice(
+      dataRef.current.length - 3,
+      dataRef.current.length
+    );
+    setSelectedIndexes([]);
   };
 
   return (
@@ -337,7 +341,9 @@ const DataTable = (): ReactElement => {
           aria-describedby="modal-modal-description"
         >
           <Box sx={style}>
+            <Button onClick={handleClearIngredinets}>Clear</Button>
             <select
+              style={{ width: "100%", height: "300px" }}
               multiple
               size={6}
               onChange={handleIngredientOnChange}
