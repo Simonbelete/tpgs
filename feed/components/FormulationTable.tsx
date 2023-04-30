@@ -10,6 +10,18 @@ import {
   GridColumnIcon,
   DataEditorProps,
 } from "@glideapps/glide-data-grid";
+import {
+  BarChart,
+  Bar,
+  Cell,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+  ResponsiveContainer,
+} from "recharts";
+import { Modal, Button, Box } from "@mui/material";
 
 interface Ingredient {
   id?: string;
@@ -152,7 +164,7 @@ const FormulationTable = (): ReactElement => {
 
   const generateCellData = (): Ingredient => {
     return {
-      name: "Name dd",
+      name: "",
       qty: "",
       price: "",
       dm: "",
@@ -172,6 +184,7 @@ const FormulationTable = (): ReactElement => {
 
   // For Forcing re-render
   const [numRows, setNumRows] = React.useState(data.current.length);
+  const [chartData, setChartData] = useState([]);
 
   const getContent = React.useCallback((cell: Item): GridCell => {
     const [col, row] = cell;
@@ -193,22 +206,86 @@ const FormulationTable = (): ReactElement => {
     setNumRows((cv) => cv + 1);
   }, [numRows]);
 
+  const onCellEdited = React.useCallback(
+    (cell: Item, newValue: EditableGridCell) => {
+      if (newValue.kind !== GridCellKind.Text) {
+        // we only have text cells, might as well just die here.
+        return;
+      }
+      const [col, row] = cell;
+      const key = indexes[col];
+
+      // Set value change
+      data.current[row][key] = newValue.data;
+
+      // const's
+      const last_index = data.current.length - 1;
+      const recipe_index = last_index - 1; // Ration index
+
+      let chart_data = [];
+      // Calculate Each Column indexes sum & values
+      for (let i = 1; i < indexes.length; i++) {
+        const col_key = indexes[i];
+        let vals: any = _.map(
+          data.current.slice(0, recipe_index),
+          (o: Ingredient) => {
+            // For the first two columns return exact value
+            if (i == 1) return Number(o[col_key]);
+            else return (Number(o.qty) * Number(o[col_key])) / 100;
+          }
+        );
+
+        // Set sum
+        const sum = String(_.sum(vals).toFixed(2));
+        data.current[recipe_index][col_key] = sum;
+
+        let per =
+          (Number(sum) / Number(data.current[last_index][col_key])) * 100 || 0;
+
+        chart_data.push({
+          name: indexes[i],
+          sum: sum,
+          // IN %
+          value: isFinite(per) ? per : 0,
+        });
+      }
+
+      setChartData(chart_data as any);
+    },
+    []
+  );
+
   return (
-    <DataEditor
-      width="100%"
-      columns={columns}
-      rows={numRows}
-      rowMarkers={"both"}
-      onPaste={true}
-      getCellContent={getContent}
-      trailingRowOptions={{
-        // How to get the trailing row to look right
-        sticky: true,
-        tint: true,
-        hint: "New row...",
-      }}
-      onRowAppended={onRowAppended}
-    />
+    <div>
+      <DataEditor
+        width="100%"
+        columns={columns}
+        rows={numRows}
+        rowMarkers={"both"}
+        onCellEdited={onCellEdited}
+        onPaste={true}
+        getCellContent={getContent}
+        trailingRowOptions={{
+          // How to get the trailing row to look right
+          sticky: true,
+          tint: true,
+          hint: "New row...",
+        }}
+        onRowAppended={onRowAppended}
+      />
+      <div style={{ marginTop: "100px" }}>
+        <ResponsiveContainer width="100%" height={500}>
+          <BarChart data={chartData}>
+            <Bar dataKey="value" fill="#8884d8" />
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="name" />
+            <YAxis />
+            {/* <Tooltip /> */}
+            <Legend />
+          </BarChart>
+        </ResponsiveContainer>
+      </div>
+    </div>
   );
 };
 
