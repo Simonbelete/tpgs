@@ -77,7 +77,6 @@ const DataTable = (): ReactElement => {
         title: "Price/Unit",
         id: "price",
         icon: GridColumnIcon.HeaderNumber,
-        width: 100,
       },
       { title: "DM%", id: "dm", icon: GridColumnIcon.HeaderNumber, width: 100 },
       { title: "ME%", id: "me", icon: GridColumnIcon.HeaderNumber, width: 100 },
@@ -330,9 +329,24 @@ const DataTable = (): ReactElement => {
     setSelectedIndexes([]);
   };
 
+  // const onRowAppended = React.useCallback(async () => {
+  //   // shift all of the existing cells down
+  //   for (let y = dataRef.current.length; y > 0; y--) {
+  //     for (let x = 0; x < 6; x++) {
+  //       setCellValueRaw([x, y], getCellContent([x, y - 1]));
+  //     }
+  //   }
+  //   for (let c = 0; c < 6; c++) {
+  //     const cell = getCellContent([c, 0]);
+  //     setCellValueRaw([c, 0], clearCell(cell));
+  //   }
+  //   setNumRows((cv) => cv + 1);
+  //   return "top" as const;
+  // }, [getCellContent, numRows, setCellValueRaw]);
+
   return (
     <div>
-      <div>
+      <Box mb={3}>
         <Button onClick={handleOpen}>Ingredients</Button>
         <Modal
           open={open}
@@ -357,9 +371,10 @@ const DataTable = (): ReactElement => {
             </select>
           </Box>
         </Modal>
-      </div>
+      </Box>
 
       <DataEditor
+        width="100%"
         getCellContent={getContent}
         rowMarkers={"both"}
         onCellEdited={onCellEdited}
@@ -370,6 +385,7 @@ const DataTable = (): ReactElement => {
           sticky: true,
           tint: true,
         }}
+        // onRowAppended={onRowAppended}
       />
       <div style={{ marginTop: "100px" }}>
         <ResponsiveContainer width="100%" height={500}>
