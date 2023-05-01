@@ -7,8 +7,9 @@ from core.models import CoreModel
 
 class Recipes(CoreModel):
     name = models.CharField(max_length=100, unique=True)
-    description = models.CharField(max_length=200)
+    description = models.CharField(max_length=200, null=True)
     price = MoneyField(max_digits=14, decimal_places=2, default_currency='ETB')
+    qty = models.FloatField(default=0)
     # Nutrients
     dm = models.FloatField()
     me = models.FloatField()

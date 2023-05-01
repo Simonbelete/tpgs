@@ -4,5 +4,5 @@ from . import models
 
 class Recipe_GET(serializers.ModelSerializer):
     class Meta:
-        models = models.Recipes
+        model = models.Recipes
         fields = '__all__'

@@ -28,7 +28,7 @@ import {
   Legend,
   ResponsiveContainer,
 } from "recharts";
-import { Modal, Button, Box } from "@mui/material";
+import { Modal, Button, Box, MenuItem, Select } from "@mui/material";
 import axios from "axios";
 
 interface Ingredient {
@@ -48,6 +48,22 @@ interface Ingredient {
   p: string;
   ratio_min: string;
   ratio_max: string;
+}
+
+interface Recipe {
+  name: string;
+  qty: string;
+  price: string;
+  dm: string;
+  me: string;
+  cp: string;
+  lys: string;
+  meth: string;
+  mc: string;
+  ee: string;
+  cf: string;
+  ca: string;
+  p: string;
 }
 
 const style = {
@@ -205,10 +221,14 @@ const FormulationTable = (): ReactElement => {
   // For Forcing re-render
   const [numRows, setNumRows] = React.useState(data.current.length);
   const [chartData, setChartData] = useState([]);
+  const [openRecipe, setOpenRecipe] = React.useState(false);
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const [ingredients, setIngredients] = React.useState<Ingredient[]>([]);
+  const [recipes, setRecipes] = React.useState<Recipe[]>([]);
+  const [selectedRecipeIndex, setSelectedRecipeIndex] =
+    React.useState<number>();
   const [selectIndexes, setSelectedIndexes] = React.useState<string[]>([]);
 
   const getContent = React.useCallback(
@@ -304,6 +324,12 @@ const FormulationTable = (): ReactElement => {
     );
   };
 
+  const handleRecipeOnChange = (e: any) => {
+    console.log(e.target);
+    setOpenRecipe(false);
+    // setSelectedRecipeIndex(e.target)
+  };
+
   const handleClearIngredinets = (e: any) => {
     data.current = data.current.slice(
       data.current.length - 3,
@@ -340,12 +366,29 @@ const FormulationTable = (): ReactElement => {
       .catch(function (error) {
         console.log(error);
       });
+    axios
+      .get("http://127.0.0.1:8000/api/recipes")
+      .then(function (response) {
+        setRecipes(response.data);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   }, []);
 
   return (
     <div>
-      <Box mb={1}>
-        <Button onClick={handleOpen}>Ingredients</Button>
+      <Box mb={3} ml={2}>
+        <Button onClick={handleOpen} variant="outlined" size="small">
+          Ingredients
+        </Button>
+        <Button
+          onClick={() => setOpenRecipe(true)}
+          variant="outlined"
+          size="small"
+        >
+          Requirements
+        </Button>
         <Modal
           open={open}
           onClose={handleClose}
@@ -367,6 +410,32 @@ const FormulationTable = (): ReactElement => {
                 </option>
               ))}
             </select>
+          </Box>
+        </Modal>
+        {/* Recipes Modal */}
+        <Modal
+          open={openRecipe}
+          onClose={() => {
+            setOpenRecipe(false);
+          }}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+        >
+          <Box sx={style}>
+            <Select
+              style={{ width: "100%" }}
+              onChange={handleRecipeOnChange}
+              value={selectedRecipeIndex}
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              label="Requirement"
+            >
+              {recipes.map((data, key) => (
+                <MenuItem key={key} value={key}>
+                  {data.name}
+                </MenuItem>
+              ))}
+            </Select>
           </Box>
         </Modal>
       </Box>
