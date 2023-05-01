@@ -413,6 +413,7 @@ const FormulationTable = (): ReactElement => {
   }, []);
 
   const onSaveRation = () => {
+    let rationName = prompt("Please enter Ration name");
     const ing = [];
     for (let i = 0; i < data.current.length; i++) {
       if (data.current[i].name.length == 0) {
@@ -447,7 +448,7 @@ const FormulationTable = (): ReactElement => {
 
     axios
       .post("http://127.0.0.1:8000/api/rations", {
-        name: "Ration Eg",
+        name: rationName,
         ingredients: ing,
       })
       .then(function (response) {
@@ -486,6 +487,7 @@ const FormulationTable = (): ReactElement => {
         open={openSnack}
         autoHideDuration={6000}
         onClose={handleSnackClose}
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
       >
         <Alert
           onClose={handleSnackClose}
