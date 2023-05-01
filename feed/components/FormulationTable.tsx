@@ -28,7 +28,15 @@ import {
   Legend,
   ResponsiveContainer,
 } from "recharts";
-import { Modal, Button, Box, MenuItem, Select } from "@mui/material";
+import {
+  Modal,
+  Button,
+  Box,
+  MenuItem,
+  Select,
+  Snackbar,
+  Alert,
+} from "@mui/material";
 import axios from "axios";
 
 interface Ingredient {
@@ -228,7 +236,7 @@ const FormulationTable = (): ReactElement => {
   const [ingredients, setIngredients] = React.useState<Ingredient[]>([]);
   const [recipes, setRecipes] = React.useState<Recipe[]>([]);
   const [selectedRecipeIndex, setSelectedRecipeIndex] =
-    React.useState<number>();
+    React.useState<number>(-1);
   const [selectIndexes, setSelectedIndexes] = React.useState<string[]>([]);
 
   const getContent = React.useCallback(
@@ -325,9 +333,15 @@ const FormulationTable = (): ReactElement => {
   };
 
   const handleRecipeOnChange = (e: any) => {
-    console.log(e.target);
+    setSelectedRecipeIndex(e.target.value);
     setOpenRecipe(false);
-    // setSelectedRecipeIndex(e.target)
+    let dt = data.current;
+    _.pullAt(dt, [dt.length - 1]);
+    let req = recipes[e.target.value] as Ingredient;
+    console.log(recipes);
+    console.log(e.target.value);
+    data.current = _.union(dt, [req]);
+    console.log(data.current);
   };
 
   const handleClearIngredinets = (e: any) => {
@@ -369,15 +383,110 @@ const FormulationTable = (): ReactElement => {
     axios
       .get("http://127.0.0.1:8000/api/recipes")
       .then(function (response) {
-        setRecipes(response.data);
+        let res_data = _.map(response.data, (data) => {
+          return {
+            name: data["name"],
+            qty: "0",
+            price: String(data["price"]),
+            dm: String(data["dm"]),
+            me: String(data["me"]),
+            cp: String(data["cp"]),
+            lys: String(data["lys"]),
+            meth: String(data["meth"]),
+            mc: String(data["mc"]),
+            ee: String(data["ee"]),
+            cf: String(data["cf"]),
+            ca: String(data["ca"]),
+            p: String(data["p"]),
+            ratio_min: String(data["ratio_min"]),
+            ratio_max: String(data["ratio_max"]),
+          };
+        });
+        setRecipes(res_data);
       })
       .catch(function (error) {
         console.log(error);
       });
   }, []);
 
+  const onSaveRation = () => {
+    const ing = [];
+    for (let i = 0; i < data.current.length; i++) {
+      if (data.current[i].name.length == 0) {
+        continue;
+      }
+
+      let cache_data = data.current[i];
+      let dat: any = {
+        name: cache_data["name"],
+        qty: Number(cache_data["qty"]),
+        price: Number(cache_data["price"]),
+        dm: Number(cache_data["dm"]),
+        me: Number(cache_data["me"]),
+        cp: Number(cache_data["cp"]),
+        lys: Number(cache_data["lys"]),
+        meth: Number(cache_data["meth"]),
+        mc: Number(cache_data["mc"]),
+        ee: Number(cache_data["ee"]),
+        cf: Number(cache_data["cf"]),
+        ca: Number(cache_data["ca"]),
+        p: Number(cache_data["p"]),
+        ratio_min: Number(cache_data["ratio_min"]),
+        ratio_max: Number(cache_data["ratio_max"]),
+      };
+      if (i == data.current.length - 1) {
+        dat["ingredient_type"] = "RQ";
+      } else if (i == data.current.length - 2) {
+        dat["ingredient_type"] = "RA";
+      }
+      ing.push(dat);
+    }
+
+    axios
+      .post("http://127.0.0.1:8000/api/rations", {
+        name: "Ration Eg",
+        ingredients: ing,
+      })
+      .then(function (response) {
+        console.log(response);
+        setOpenSnack(true);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
+
+  /**
+   * For Snack Bar
+   */
+  const [openSnack, setOpenSnack] = React.useState(false);
+
+  const handleSnackClose = (
+    event?: React.SyntheticEvent | Event,
+    reason?: string
+  ) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setOpenSnack(false);
+  };
+
   return (
     <div>
+      <Snackbar
+        open={openSnack}
+        autoHideDuration={6000}
+        onClose={handleSnackClose}
+      >
+        <Alert
+          onClose={handleSnackClose}
+          severity="success"
+          sx={{ width: "100%" }}
+        >
+          Successfully saved
+        </Alert>
+      </Snackbar>
       <Box mb={3} ml={2}>
         <Button onClick={handleOpen} variant="outlined" size="small">
           Ingredients
@@ -388,6 +497,9 @@ const FormulationTable = (): ReactElement => {
           size="small"
         >
           Requirements
+        </Button>
+        <Button onClick={onSaveRation} variant="outlined" size="small">
+          Save
         </Button>
         <Modal
           open={open}
@@ -458,7 +570,6 @@ const FormulationTable = (): ReactElement => {
         onRowAppended={onRowAppended}
         onDelete={(selection: GridSelection) => {
           _.pullAt(data.current, selection.rows.toArray());
-          console.log(data.current);
           setNumRows(data.current.length);
           return true;
         }}
