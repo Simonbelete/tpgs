@@ -279,9 +279,15 @@ class ChickenImportView(LoginRequiredMixin, View):
                     is_dead = True
                 else:
                     is_dead = False
+
+                print('---------------------------------------------')
+                print(row['chicken', "hatch date"].values)
+                print(hatch_date)
                 if hatch_date != None:
                     # hatch_date = hatch_date.strftime("%d/%m/%Y")
-                    if isinstance(hatch_date, datetime):
+                    if type(hatch_date) == np.ndarray:
+                        hatch_date = hatch_date[0].astype(datetime)
+                    elif isinstance(hatch_date, datetime):
                         hatch_date = hatch_date.strftime("%Y-%m-%d")
                     else:
                         hatch_date = datetime.strptime(hatch_date, '%d/%m/%y')
