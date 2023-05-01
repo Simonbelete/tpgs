@@ -516,9 +516,6 @@ const FormulationTable = (): ReactElement => {
         <Button onClick={onSaveRation} variant="outlined" size="small">
           Save
         </Button>
-        <Button onClick={onSaveRation} variant="outlined" size="small">
-          Save
-        </Button>
         <Modal
           open={open}
           onClose={handleClose}
@@ -526,7 +523,6 @@ const FormulationTable = (): ReactElement => {
           aria-describedby="modal-modal-description"
         >
           <Box sx={style}>
-            <Button onClick={handleClearIngredinets}>Clear</Button>
             <select
               style={{ width: "100%", height: "300px" }}
               multiple
@@ -540,6 +536,22 @@ const FormulationTable = (): ReactElement => {
                 </option>
               ))}
             </select>
+            <Button
+              variant="outlined"
+              size="small"
+              onClick={handleClearIngredinets}
+            >
+              Clear
+            </Button>
+            <Button
+              variant="outlined"
+              size="small"
+              onClick={() => {
+                setOpen(false);
+              }}
+            >
+              Close
+            </Button>
           </Box>
         </Modal>
         {/* Recipes Modal */}
@@ -566,6 +578,15 @@ const FormulationTable = (): ReactElement => {
                 </MenuItem>
               ))}
             </Select>
+            <Button
+              variant="outlined"
+              size="small"
+              onClick={() => {
+                setOpenRecipe(false);
+              }}
+            >
+              Close
+            </Button>
           </Box>
         </Modal>
       </Box>
