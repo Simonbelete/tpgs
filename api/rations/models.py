@@ -1,4 +1,5 @@
 from django.db import models
+from djmoney.models.fields import MoneyField
 
 # Saved Feed Formulations
 
@@ -24,6 +25,8 @@ class RationIngredient(models.Model):
         choices=INGREDIENT_TYPE_CHOICES,
         default=INGREDIENT,
     )
+    price = MoneyField(max_digits=14, decimal_places=2, default_currency='ETB')
+    qty = models.FloatField(default=0)
     dm = models.FloatField(null=True)
     me = models.FloatField(null=True)
     cp = models.FloatField(null=True)

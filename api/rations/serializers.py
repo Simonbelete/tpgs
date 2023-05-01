@@ -12,6 +12,8 @@ class RationIngredientSerializer_POST(serializers.ModelSerializer):
     class Meta:
         model = models.RationIngredient
         fields = ["ingredient_type",
+                  "price",
+                  "qty",
                   "dm",
                   "me",
                   "cp",
