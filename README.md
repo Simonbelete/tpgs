@@ -6,4 +6,4 @@ ILRI poultry farming management system
 - ``` cd ilri_ges ```
 - Activate venv
 - Run Migrations
-- ``` python manage.py create_permissions
+- ``` python manage.py create_permissions```
