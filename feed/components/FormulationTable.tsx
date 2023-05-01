@@ -198,9 +198,6 @@ const FormulationTable = (): ReactElement => {
       const [col, row] = cell;
       const dataRow = data.current[row];
 
-      console.log("re-render table");
-      console.log(dataRow);
-
       const d = dataRow != undefined ? dataRow[indexes[col]] : "";
       return {
         kind: GridCellKind.Text,
@@ -234,39 +231,43 @@ const FormulationTable = (): ReactElement => {
       // Set value change
       data.current[row][key] = newValue.data;
 
-      // // const's
-      // const last_index = data.current.length - 1;
-      // const recipe_index = last_index - 1; // Ration index
+      // const's
+      const last_index = data.current.length - 1;
+      const recipe_index = last_index - 1; // Ration index
 
-      // let chart_data = [];
-      // // Calculate Each Column indexes sum & values
-      // for (let i = 1; i < indexes.length; i++) {
-      //   const col_key = indexes[i];
-      //   let vals: any = _.map(
-      //     data.current.slice(0, recipe_index),
-      //     (o: Ingredient) => {
-      //       // For the first two columns return exact value
-      //       if (i == 1) return Number(o[col_key]);
-      //       else return (Number(o.qty) * Number(o[col_key])) / 100;
-      //     }
-      //   );
+      let chart_data = [];
+      // Calculate Each Column indexes sum & values
+      for (let i = 1; i < indexes.length; i++) {
+        if (data.current[recipe_index] == undefined) {
+          continue;
+        }
 
-      //   // Set sum
-      //   const sum = String(_.sum(vals).toFixed(2));
-      //   data.current[recipe_index][col_key] = sum;
+        const col_key = indexes[i];
+        let vals: any = _.map(
+          data.current.slice(0, recipe_index),
+          (o: Ingredient) => {
+            // For the first two columns return exact value
+            if (i == 1) return Number(o[col_key]);
+            else return (Number(o.qty) * Number(o[col_key])) / 100;
+          }
+        );
 
-      //   let per =
-      //     (Number(sum) / Number(data.current[last_index][col_key])) * 100 || 0;
+        // Set sum
+        const sum = String(_.sum(vals).toFixed(2));
+        data.current[recipe_index][col_key] = sum;
 
-      //   chart_data.push({
-      //     name: indexes[i],
-      //     sum: sum,
-      //     // IN %
-      //     value: isFinite(per) ? per : 0,
-      //   });
-      // }
+        let per =
+          (Number(sum) / Number(data.current[last_index][col_key])) * 100 || 0;
 
-      // setChartData(chart_data as any);
+        chart_data.push({
+          name: indexes[i],
+          sum: sum,
+          // IN %
+          value: isFinite(per) ? per : 0,
+        });
+      }
+
+      setChartData(chart_data as any);
     },
     []
   );
