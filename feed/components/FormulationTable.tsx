@@ -29,6 +29,7 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import { Modal, Button, Box } from "@mui/material";
+import axios from "axios";
 
 interface Ingredient {
   id?: string;
@@ -254,7 +255,8 @@ const FormulationTable = (): ReactElement => {
 
       let chart_data = [];
       // Calculate Each Column indexes sum & values
-      for (let i = 1; i < indexes.length; i++) {
+      // indexes.length - 2 don't include min and max ratio
+      for (let i = 1; i < indexes.length - 2; i++) {
         if (data.current[recipe_index] == undefined) {
           continue;
         }
@@ -309,6 +311,36 @@ const FormulationTable = (): ReactElement => {
     );
     setSelectedIndexes([]);
   };
+
+  useEffect(() => {
+    axios
+      .get("http://127.0.0.1:8000/api/ingredients")
+      .then(function (response) {
+        let res_data = _.map(response.data, (data) => {
+          return {
+            name: data["name"],
+            qty: "0",
+            price: String(data["price"]),
+            dm: String(data["dm"]),
+            me: String(data["me"]),
+            cp: String(data["cp"]),
+            lys: String(data["lys"]),
+            meth: String(data["meth"]),
+            mc: String(data["mc"]),
+            ee: String(data["ee"]),
+            cf: String(data["cf"]),
+            ca: String(data["ca"]),
+            p: String(data["p"]),
+            ratio_min: String(data["ratio_min"]),
+            ratio_max: String(data["ratio_max"]),
+          };
+        });
+        setIngredients(res_data);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }, []);
 
   return (
     <div>
@@ -369,7 +401,7 @@ const FormulationTable = (): ReactElement => {
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis dataKey="name" />
             <YAxis />
-            {/* <Tooltip /> */}
+            <Tooltip />
             <Legend />
           </BarChart>
         </ResponsiveContainer>
