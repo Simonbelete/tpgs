@@ -1,21 +1,38 @@
 from django.db import models
 
-# Create your models here.
+# Saved Feed Formulations
 
 
 class Ration(models.Model):
     name = models.CharField(max_length=100)
 
-# class
-#     dm = models.FloatField()
-#     me = models.FloatField()
-#     cp = models.FloatField()
-#     lys = models.FloatField()
-#     meth = models.FloatField()
-#     mc = models.FloatField()
-#     ee = models.FloatField()
-#     cf = models.FloatField()
-#     ca = models.FloatField()
-#     p = models.FloatField()
-#     ratio_min = models.FloatField()
-#     ratio_max = models.FloatField()
+
+class RationIngredient(models.Model):
+    REQUIREMENT = 'RQ'
+    RATION = 'RA'
+    INGREDIENT = 'IN'
+    INGREDIENT_TYPE_CHOICES = [
+        (REQUIREMENT, 'Requirement'),
+        (RATION, 'Ration'),
+        (INGREDIENT, 'Ingredient')
+    ]
+
+    ration = models.ForeignKey(
+        Ration, on_delete=models.CASCADE, related_name='ingredients')
+    ingredient_type = models.CharField(
+        max_length=2,
+        choices=INGREDIENT_TYPE_CHOICES,
+        default=INGREDIENT,
+    )
+    dm = models.FloatField(null=True)
+    me = models.FloatField(null=True)
+    cp = models.FloatField(null=True)
+    lys = models.FloatField(null=True)
+    meth = models.FloatField(null=True)
+    mc = models.FloatField(null=True)
+    ee = models.FloatField(null=True)
+    cf = models.FloatField(null=True)
+    ca = models.FloatField(null=True)
+    p = models.FloatField(null=True)
+    ratio_min = models.FloatField(null=True)
+    ratio_max = models.FloatField(null=True)

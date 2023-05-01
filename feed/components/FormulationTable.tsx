@@ -49,6 +49,18 @@ interface Ingredient {
   ratio_max: string;
 }
 
+const style = {
+  position: "absolute" as "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 400,
+  bgcolor: "background.paper",
+  border: "2px solid #000",
+  boxShadow: 24,
+  p: 4,
+};
+
 const FormulationTable = (): ReactElement => {
   const data = useRef<Ingredient[]>([
     {
@@ -192,6 +204,11 @@ const FormulationTable = (): ReactElement => {
   // For Forcing re-render
   const [numRows, setNumRows] = React.useState(data.current.length);
   const [chartData, setChartData] = useState([]);
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+  const [ingredients, setIngredients] = React.useState<Ingredient[]>([]);
+  const [selectIndexes, setSelectedIndexes] = React.useState<string[]>([]);
 
   const getContent = React.useCallback(
     (cell: Item): GridCell => {
@@ -272,12 +289,59 @@ const FormulationTable = (): ReactElement => {
     []
   );
 
+  const handleIngredientOnChange = (e: any) => {
+    let sel_ingred: Ingredient[] = [];
+    const values = [...e.target.selectedOptions].map((opt) => {
+      sel_ingred.push(ingredients[opt.value]);
+      return String(opt.value);
+    });
+    setSelectedIndexes(values);
+    data.current = _.union(
+      sel_ingred,
+      data.current.slice(data.current.length - 3, data.current.length)
+    );
+  };
+
+  const handleClearIngredinets = (e: any) => {
+    data.current = data.current.slice(
+      data.current.length - 3,
+      data.current.length
+    );
+    setSelectedIndexes([]);
+  };
+
   return (
     <div>
+      <Box mb={1}>
+        <Button onClick={handleOpen}>Ingredients</Button>
+        <Modal
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+        >
+          <Box sx={style}>
+            <Button onClick={handleClearIngredinets}>Clear</Button>
+            <select
+              style={{ width: "100%", height: "300px" }}
+              multiple
+              size={6}
+              onChange={handleIngredientOnChange}
+              value={selectIndexes}
+            >
+              {ingredients.map((data, key) => (
+                <option key={key} value={key}>
+                  {data.name}
+                </option>
+              ))}
+            </select>
+          </Box>
+        </Modal>
+      </Box>
       <DataEditor
         width="100%"
         columns={columns}
-        rows={numRows}
+        rows={data.current.length}
         rowMarkers={"both"}
         onCellEdited={onCellEdited}
         onPaste={true}

@@ -47,7 +47,8 @@ INSTALLED_APPS = [
     'djmoney',
     'core',
     'ingredients',
-    'recipes'
+    'recipes',
+    'rations'
 ]
 
 MIDDLEWARE = [
