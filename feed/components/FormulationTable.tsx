@@ -36,7 +36,10 @@ import {
   Select,
   Snackbar,
   Alert,
+  IconButton,
 } from "@mui/material";
+import PlaylistRemoveIcon from "@mui/icons-material/PlaylistRemove";
+
 import axios from "axios";
 
 interface Ingredient {
@@ -472,6 +475,11 @@ const FormulationTable = (): ReactElement => {
     setOpenSnack(false);
   };
 
+  const handleClearIngredients = () => {
+    if (data.current.length > 3)
+      data.current = data.current.slice(0, data.current.length - 3);
+  };
+
   return (
     <div>
       <Snackbar
@@ -488,6 +496,13 @@ const FormulationTable = (): ReactElement => {
         </Alert>
       </Snackbar>
       <Box mb={3} ml={2}>
+        <Button
+          onClick={handleClearIngredients}
+          variant="outlined"
+          size="small"
+        >
+          <PlaylistRemoveIcon />
+        </Button>
         <Button onClick={handleOpen} variant="outlined" size="small">
           Ingredients
         </Button>
@@ -497,6 +512,9 @@ const FormulationTable = (): ReactElement => {
           size="small"
         >
           Requirements
+        </Button>
+        <Button onClick={onSaveRation} variant="outlined" size="small">
+          Save
         </Button>
         <Button onClick={onSaveRation} variant="outlined" size="small">
           Save
