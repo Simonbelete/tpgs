@@ -1,4 +1,10 @@
-import React, { ReactElement, useRef, useMemo, useState } from "react";
+import React, {
+  ReactElement,
+  useRef,
+  useMemo,
+  useState,
+  useEffect,
+} from "react";
 import _ from "lodash";
 import {
   DataEditor,
@@ -9,6 +15,7 @@ import {
   Item,
   GridColumnIcon,
   DataEditorProps,
+  GridSelection,
 } from "@glideapps/glide-data-grid";
 import {
   BarChart,
@@ -80,18 +87,18 @@ const FormulationTable = (): ReactElement => {
     },
     {
       name: "Requirement",
-      qty: "",
-      price: "",
-      dm: "",
-      me: "",
-      cp: "",
-      lys: "",
-      meth: "",
-      mc: "",
-      ee: "",
-      cf: "",
-      ca: "",
-      p: "",
+      qty: "100",
+      price: "0",
+      dm: "0",
+      me: "0",
+      cp: "0",
+      lys: "0",
+      meth: "0",
+      mc: "0",
+      ee: "0",
+      cf: "0",
+      ca: "0",
+      p: "0",
       ratio_min: "",
       ratio_max: "",
     },
@@ -186,22 +193,27 @@ const FormulationTable = (): ReactElement => {
   const [numRows, setNumRows] = React.useState(data.current.length);
   const [chartData, setChartData] = useState([]);
 
-  const getContent = React.useCallback((cell: Item): GridCell => {
-    const [col, row] = cell;
-    const dataRow = data.current[row];
+  const getContent = React.useCallback(
+    (cell: Item): GridCell => {
+      const [col, row] = cell;
+      const dataRow = data.current[row];
 
-    const d = dataRow[indexes[col]];
-    return {
-      kind: GridCellKind.Text,
-      allowOverlay: true,
-      displayData: String(d),
-      data: String(d),
-    };
-  }, []);
+      console.log("re-render table");
+      console.log(dataRow);
+
+      const d = dataRow != undefined ? dataRow[indexes[col]] : "";
+      return {
+        kind: GridCellKind.Text,
+        allowOverlay: true,
+        displayData: String(d),
+        data: String(d),
+      };
+    },
+    [data.current, numRows, indexes]
+  );
 
   const onRowAppended = React.useCallback(() => {
     const newRow = data.current.length;
-    console.log("abc");
     data.current = _.union([generateCellData()], data.current);
     setNumRows((cv) => cv + 1);
   }, [numRows]);
@@ -215,42 +227,46 @@ const FormulationTable = (): ReactElement => {
       const [col, row] = cell;
       const key = indexes[col];
 
+      if (data.current[row] == undefined) {
+        return;
+      }
+
       // Set value change
       data.current[row][key] = newValue.data;
 
-      // const's
-      const last_index = data.current.length - 1;
-      const recipe_index = last_index - 1; // Ration index
+      // // const's
+      // const last_index = data.current.length - 1;
+      // const recipe_index = last_index - 1; // Ration index
 
-      let chart_data = [];
-      // Calculate Each Column indexes sum & values
-      for (let i = 1; i < indexes.length; i++) {
-        const col_key = indexes[i];
-        let vals: any = _.map(
-          data.current.slice(0, recipe_index),
-          (o: Ingredient) => {
-            // For the first two columns return exact value
-            if (i == 1) return Number(o[col_key]);
-            else return (Number(o.qty) * Number(o[col_key])) / 100;
-          }
-        );
+      // let chart_data = [];
+      // // Calculate Each Column indexes sum & values
+      // for (let i = 1; i < indexes.length; i++) {
+      //   const col_key = indexes[i];
+      //   let vals: any = _.map(
+      //     data.current.slice(0, recipe_index),
+      //     (o: Ingredient) => {
+      //       // For the first two columns return exact value
+      //       if (i == 1) return Number(o[col_key]);
+      //       else return (Number(o.qty) * Number(o[col_key])) / 100;
+      //     }
+      //   );
 
-        // Set sum
-        const sum = String(_.sum(vals).toFixed(2));
-        data.current[recipe_index][col_key] = sum;
+      //   // Set sum
+      //   const sum = String(_.sum(vals).toFixed(2));
+      //   data.current[recipe_index][col_key] = sum;
 
-        let per =
-          (Number(sum) / Number(data.current[last_index][col_key])) * 100 || 0;
+      //   let per =
+      //     (Number(sum) / Number(data.current[last_index][col_key])) * 100 || 0;
 
-        chart_data.push({
-          name: indexes[i],
-          sum: sum,
-          // IN %
-          value: isFinite(per) ? per : 0,
-        });
-      }
+      //   chart_data.push({
+      //     name: indexes[i],
+      //     sum: sum,
+      //     // IN %
+      //     value: isFinite(per) ? per : 0,
+      //   });
+      // }
 
-      setChartData(chart_data as any);
+      // setChartData(chart_data as any);
     },
     []
   );
@@ -271,7 +287,15 @@ const FormulationTable = (): ReactElement => {
           tint: true,
           hint: "New row...",
         }}
+        isDraggable={true}
+        freezeColumns={1}
         onRowAppended={onRowAppended}
+        onDelete={(selection: GridSelection) => {
+          _.pullAt(data.current, selection.rows.toArray());
+          console.log(data.current);
+          setNumRows(data.current.length);
+          return true;
+        }}
       />
       <div style={{ marginTop: "100px" }}>
         <ResponsiveContainer width="100%" height={500}>
