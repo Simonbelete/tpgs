@@ -279,12 +279,14 @@ class ChickenImportView(LoginRequiredMixin, View):
                     is_dead = True
                 else:
                     is_dead = False
+                print('-------------------------')
+                print(tag)
+                print(hatch_date)
                 if hatch_date != None:
                     if isinstance(hatch_date, datetime):
                         hatch_date = hatch_date.strftime("%Y-%m-%d")
                     else:
                         hatch_date = datetime.strptime(hatch_date, '%d/%m/%y')
-
                 sire = Chicken.objects.all().filter(tag=sire_id)
                 dam = Chicken.objects.all().filter(tag=dam_id)
                 sire = sire[0] if sire else None
