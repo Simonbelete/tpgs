@@ -273,7 +273,7 @@
         "model": "ingredients.Ingredient",
         "pk": 16,
         "fields": {
-            "ingredient_type": 2,
+            "ingredient_type": "2",
             "name": "cassava (63% starch)",
             "me": 2770,
             "cp": 2.5,
@@ -291,7 +291,7 @@
         "model": "ingredients.Ingredient",
         "pk": 17,
         "fields": {
-            "ingredient_type": 2,
+            "ingredient_type": "2",
             "name": "cassava (72% starch)",
             "me": 3090,
             "cp": 2,
@@ -309,7 +309,7 @@
         "model": "ingredients.Ingredient",
         "pk": 18,
         "fields": {
-            "ingredient_type": 2,
+            "ingredient_type": "2",
             "name": "sweet potato",
             "me": 2960,
             "cp": 3.8,
@@ -327,7 +327,7 @@
         "model": "ingredients.Ingredient",
         "pk": 19,
         "fields": {
-            "ingredient_type": 3,
+            "ingredient_type": "3",
             "name": "maize distillers",
             "me": 0,
             "cp": 27.4,
@@ -345,7 +345,7 @@
         "model": "ingredients.Ingredient",
         "pk": 20,
         "fields": {
-            "ingredient_type": 3,
+            "ingredient_type": "3",
             "name": "maize gluten 57% c.p.",
             "me": 3500,
             "cp": 57.5,
@@ -363,7 +363,7 @@
         "model": "ingredients.Ingredient",
         "pk": 21,
         "fields": {
-            "ingredient_type": 3,
+            "ingredient_type": "3",
             "name": "maize gluten feed",
             "me": 1900,
             "cp": 19.4,
@@ -381,7 +381,7 @@
         "model": "ingredients.Ingredient",
         "pk": 22,
         "fields": {
-            "ingredient_type": 3,
+            "ingredient_type": "3",
             "name": "maize germ meal",
             "me": 2000,
             "cp": 18.2,
@@ -399,7 +399,7 @@
         "model": "ingredients.Ingredient",
         "pk": 23,
         "fields": {
-            "ingredient_type": 3,
+            "ingredient_type": "3",
             "name": "maize germ expellers",
             "me": 1580,
             "cp": 22,
@@ -417,7 +417,7 @@
         "model": "ingredients.Ingredient",
         "pk": 24,
         "fields": {
-            "ingredient_type": 3,
+            "ingredient_type": "3",
             "name": "maize bran (37% starch)",
             "me": 2520,
             "cp": 12,
@@ -435,7 +435,7 @@
         "model": "ingredients.Ingredient",
         "pk": 25,
         "fields": {
-            "ingredient_type": 3,
+            "ingredient_type": "3",
             "name": "maize bran (50% starch)",
             "me": 2740,
             "cp": 8.7,
@@ -453,7 +453,7 @@
         "model": "ingredients.Ingredient",
         "pk": 26,
         "fields": {
-            "ingredient_type": 3,
+            "ingredient_type": "3",
             "name": "wheat middlings",
             "me": 1980,
             "cp": 15.6,
@@ -471,7 +471,7 @@
         "model": "ingredients.Ingredient",
         "pk": 27,
         "fields": {
-            "ingredient_type": 3,
+            "ingredient_type": "3",
             "name": "wheat bran",
             "me": 1710,
             "cp": 15.2,
@@ -489,7 +489,7 @@
         "model": "ingredients.Ingredient",
         "pk": 28,
         "fields": {
-            "ingredient_type": 3,
+            "ingredient_type": "3",
             "name": "rice bran 15-30% fibre",
             "me": 1000,
             "cp": 7,
@@ -507,7 +507,7 @@
         "model": "ingredients.Ingredient",
         "pk": 29,
         "fields": {
-            "ingredient_type": 3,
+            "ingredient_type": "3",
             "name": "rice bran 9-15% fibre",
             "me": 2200,
             "cp": 13.3,
@@ -525,7 +525,7 @@
         "model": "ingredients.Ingredient",
         "pk": 30,
         "fields": {
-            "ingredient_type": 3,
+            "ingredient_type": "3",
             "name": "rice bran 1-9% fibre",
             "me": 2950,
             "cp": 13.6,
@@ -543,7 +543,7 @@
         "model": "ingredients.Ingredient",
         "pk": 31,
         "fields": {
-            "ingredient_type": 4,
+            "ingredient_type": "4",
             "name": "soybeanmeal 44/7",
             "me": 2120,
             "cp": 43,
@@ -561,7 +561,7 @@
         "model": "ingredients.Ingredient",
         "pk": 32,
         "fields": {
-            "ingredient_type": 4,
+            "ingredient_type": "4",
             "name": "soybeanmeal 45/46",
             "me": 2180,
             "cp": 43.5,
@@ -579,7 +579,7 @@
         "model": "ingredients.Ingredient",
         "pk": 33,
         "fields": {
-            "ingredient_type": 4,
+            "ingredient_type": "4",
             "name": "soybeanmeal 49/3",
             "me": 2290,
             "cp": 47.5,
@@ -597,7 +597,7 @@
         "model": "ingredients.Ingredient",
         "pk": 34,
         "fields": {
-            "ingredient_type": 4,
+            "ingredient_type": "4",
             "name": "sesame meal (solv. extr.)",
             "me": 2010,
             "cp": 44.3,
@@ -615,7 +615,7 @@
         "model": "ingredients.Ingredient",
         "pk": 35,
         "fields": {
-            "ingredient_type": 4,
+            "ingredient_type": "4",
             "name": "sesame-expeller/cake",
             "me": 2480,
             "cp": 44.3,
@@ -633,7 +633,7 @@
         "model": "ingredients.Ingredient",
         "pk": 36,
         "fields": {
-            "ingredient_type": 4,
+            "ingredient_type": "4",
             "name": "groundnutmeal (solv. extr.)",
             "me": 1940,
             "cp": 50.3,
@@ -651,7 +651,7 @@
         "model": "ingredients.Ingredient",
         "pk": 37,
         "fields": {
-            "ingredient_type": 4,
+            "ingredient_type": "4",
             "name": "groundnut-expeller/cake",
             "me": 2580,
             "cp": 39.1,
@@ -669,7 +669,7 @@
         "model": "ingredients.Ingredient",
         "pk": 38,
         "fields": {
-            "ingredient_type": 4,
+            "ingredient_type": "4",
             "name": "cottonseedmeal (solv. extr.)",
             "me": 1510,
             "cp": 36.6,
@@ -687,7 +687,7 @@
         "model": "ingredients.Ingredient",
         "pk": 39,
         "fields": {
-            "ingredient_type": 4,
+            "ingredient_type": "4",
             "name": "cottonseed-expeller/cake",
             "me": 1840,
             "cp": 37.1,
@@ -705,7 +705,7 @@
         "model": "ingredients.Ingredient",
         "pk": 40,
         "fields": {
-            "ingredient_type": 4,
+            "ingredient_type": "4",
             "name": "coconutmeal (solv.extr.)",
             "me": 1340,
             "cp": 21.3,
@@ -723,7 +723,7 @@
         "model": "ingredients.Ingredient",
         "pk": 41,
         "fields": {
-            "ingredient_type": 4,
+            "ingredient_type": "4",
             "name": "coconut-expeller/cake",
             "me": 1850,
             "cp": 20,
@@ -741,7 +741,7 @@
         "model": "ingredients.Ingredient",
         "pk": 42,
         "fields": {
-            "ingredient_type": 4,
+            "ingredient_type": "4",
             "name": "linseedmeal (solv extr.)",
             "me": 1400,
             "cp": 32.2,
@@ -759,7 +759,7 @@
         "model": "ingredients.Ingredient",
         "pk": 43,
         "fields": {
-            "ingredient_type": 4,
+            "ingredient_type": "4",
             "name": "linseed-expeller/cake",
             "me": 1630,
             "cp": 31.5,
@@ -777,7 +777,7 @@
         "model": "ingredients.Ingredient",
         "pk": 44,
         "fields": {
-            "ingredient_type": 4,
+            "ingredient_type": "4",
             "name": "palmkernelmeal (solv. extr.)",
             "me": 0,
             "cp": 15.3,
@@ -795,7 +795,7 @@
         "model": "ingredients.Ingredient",
         "pk": 45,
         "fields": {
-            "ingredient_type": 4,
+            "ingredient_type": "4",
             "name": "palmkernel-expeller/cake",
             "me": 0,
             "cp": 13,
@@ -813,7 +813,7 @@
         "model": "ingredients.Ingredient",
         "pk": 46,
         "fields": {
-            "ingredient_type": 4,
+            "ingredient_type": "4",
             "name": "rapeseedmeal (solv. extr.)",
             "me": 1730,
             "cp": 34,
@@ -831,7 +831,7 @@
         "model": "ingredients.Ingredient",
         "pk": 47,
         "fields": {
-            "ingredient_type": 4,
+            "ingredient_type": "4",
             "name": "rapeseed-expeller/cake",
             "me": 2030,
             "cp": 34.8,
@@ -849,7 +849,7 @@
         "model": "ingredients.Ingredient",
         "pk": 48,
         "fields": {
-            "ingredient_type": 4,
+            "ingredient_type": "4",
             "name": "sunflowerseedmeal (solv. extr.)",
             "me": 1370,
             "cp": 28.5,
@@ -867,7 +867,7 @@
         "model": "ingredients.Ingredient",
         "pk": 49,
         "fields": {
-            "ingredient_type": 4,
+            "ingredient_type": "4",
             "name": "sunflowerseed-expeller/cake",
             "me": 1510,
             "cp": 29.1,
@@ -885,7 +885,7 @@
         "model": "ingredients.Ingredient",
         "pk": 50,
         "fields": {
-            "ingredient_type": 5,
+            "ingredient_type": "5",
             "name": "bonemeal",
             "me": 1500,
             "cp": 40.7,
@@ -903,7 +903,7 @@
         "model": "ingredients.Ingredient",
         "pk": 51,
         "fields": {
-            "ingredient_type": 5,
+            "ingredient_type": "5",
             "name": "bloodmeal",
             "me": 3020,
             "cp": 87.5,
@@ -921,7 +921,7 @@
         "model": "ingredients.Ingredient",
         "pk": 52,
         "fields": {
-            "ingredient_type": 5,
+            "ingredient_type": "5",
             "name": "meatmeal (50/14/26)",
             "me": 2830,
             "cp": 50,
@@ -939,7 +939,7 @@
         "model": "ingredients.Ingredient",
         "pk": 54,
         "fields": {
-            "ingredient_type": 5,
+            "ingredient_type": "5",
             "name": "meatmeal (58/13/20)",
             "me": 3090,
             "cp": 58.2,
@@ -957,7 +957,7 @@
         "model": "ingredients.Ingredient",
         "pk": 55,
         "fields": {
-            "ingredient_type": 5,
+            "ingredient_type": "5",
             "name": "skimmilkpowder",
             "me": 2490,
             "cp": 34.8,
@@ -975,7 +975,7 @@
         "model": "ingredients.Ingredient",
         "pk": 56,
         "fields": {
-            "ingredient_type": 5,
+            "ingredient_type": "5",
             "name": "feathermeal (hydrolized)",
             "me": 3170,
             "cp": 82.5,
@@ -993,7 +993,7 @@
         "model": "ingredients.Ingredient",
         "pk": 57,
         "fields": {
-            "ingredient_type": 5,
+            "ingredient_type": "5",
             "name": "fishmeal (70% c.p.)",
             "me": 3320,
             "cp": 70,
@@ -1011,7 +1011,7 @@
         "model": "ingredients.Ingredient",
         "pk": 58,
         "fields": {
-            "ingredient_type": 5,
+            "ingredient_type": "5",
             "name": "fishmeal (South American)",
             "me": 3320,
             "cp": 65.9,
@@ -1029,7 +1029,7 @@
         "model": "ingredients.Ingredient",
         "pk": 59,
         "fields": {
-            "ingredient_type": 5,
+            "ingredient_type": "5",
             "name": "wheypowder (delact. 20% c.p.)",
             "me": 1890,
             "cp": 20,
@@ -1047,7 +1047,7 @@
         "model": "ingredients.Ingredient",
         "pk": 60,
         "fields": {
-            "ingredient_type": 5,
+            "ingredient_type": "5",
             "name": "wheypowder (sweet)",
             "me": 1960,
             "cp": 3518,
@@ -1065,7 +1065,7 @@
         "model": "ingredients.Ingredient",
         "pk": 61,
         "fields": {
-            "ingredient_type": 6,
+            "ingredient_type": "6",
             "name": "soybeanoil",
             "me": 9300,
             "cp": 0,
@@ -1083,7 +1083,7 @@
         "model": "ingredients.Ingredient",
         "pk": 62,
         "fields": {
-            "ingredient_type": 6,
+            "ingredient_type": "6",
             "name": "animal fat (destructor-)",
             "me": 8500,
             "cp": 0,
@@ -1101,7 +1101,7 @@
         "model": "ingredients.Ingredient",
         "pk": 63,
         "fields": {
-            "ingredient_type": 7,
+            "ingredient_type": "7",
             "name": "citruspulp",
             "me": 0,
             "cp": 6.3,
@@ -1119,7 +1119,7 @@
         "model": "ingredients.Ingredient",
         "pk": 64,
         "fields": {
-            "ingredient_type": 7,
+            "ingredient_type": "7",
             "name": "yeast (beer)",
             "me": 2860,
             "cp": 45.3,
@@ -1137,7 +1137,7 @@
         "model": "ingredients.Ingredient",
         "pk": 65,
         "fields": {
-            "ingredient_type": 7,
+            "ingredient_type": "7",
             "name": "grassmeal (less than 16% c.p.)",
             "me": 1010,
             "cp": 13.7,
@@ -1156,7 +1156,7 @@
         "model": "ingredients.Ingredient",
         "pk": 66,
         "fields": {
-            "ingredient_type": 7,
+            "ingredient_type": "7",
             "name": "grassmeal (more than 20% c.p.)",
             "me": 1350,
             "cp": 20.8,
@@ -1174,7 +1174,7 @@
         "model": "ingredients.Ingredient",
         "pk": 67,
         "fields": {
-            "ingredient_type": 7,
+            "ingredient_type": "7",
             "name": "alfalfa meal (sundried)",
             "me": 700,
             "cp": 10.1,
@@ -1192,7 +1192,7 @@
         "model": "ingredients.Ingredient",
         "pk": 68,
         "fields": {
-            "ingredient_type": 7,
+            "ingredient_type": "7",
             "name": "molasses (beet)",
             "me": 1890,
             "cp": 9.7,
@@ -1210,7 +1210,7 @@
         "model": "ingredients.Ingredient",
         "pk": 69,
         "fields": {
-            "ingredient_type": 7,
+            "ingredient_type": "7",
             "name": "molasses (cane)",
             "me": 1800,
             "cp": 4,
@@ -1228,7 +1228,7 @@
         "model": "ingredients.Ingredient",
         "pk": 70,
         "fields": {
-            "ingredient_type": 7,
+            "ingredient_type": "7",
             "name": "sugar",
             "me": 3900,
             "cp": 0,
@@ -1246,7 +1246,7 @@
         "model": "ingredients.Ingredient",
         "pk": 71,
         "fields": {
-            "ingredient_type": 7,
+            "ingredient_type": "7",
             "name": "soybean hulls",
             "me": 0,
             "cp": 11.7,
@@ -1264,7 +1264,7 @@
         "model": "ingredients.Ingredient",
         "pk": 72,
         "fields": {
-            "ingredient_type": 8,
+            "ingredient_type": "8",
             "name": "dicalciumphosphate",
             "me": 0,
             "cp": 0,
@@ -1282,7 +1282,7 @@
         "model": "ingredients.Ingredient",
         "pk": 73,
         "fields": {
-            "ingredient_type": 8,
+            "ingredient_type": "8",
             "name": "monocalciumphosphate",
             "me": 0,
             "cp": 0,
@@ -1300,7 +1300,7 @@
         "model": "ingredients.Ingredient",
         "pk": 74,
         "fields": {
-            "ingredient_type": 8,
+            "ingredient_type": "8",
             "name": "limestone/shells",
             "me": 0,
             "cp": 0,
@@ -1318,7 +1318,7 @@
         "model": "ingredients.Ingredient",
         "pk": 75,
         "fields": {
-            "ingredient_type": 8,
+            "ingredient_type": "8",
             "name": "salt (NaCl)",
             "me": 0,
             "cp": 0,
@@ -1336,7 +1336,7 @@
         "model": "ingredients.Ingredient",
         "pk": 76,
         "fields": {
-            "ingredient_type": 8,
+            "ingredient_type": "8",
             "name": "L-lysine HCl",
             "me": 3730,
             "cp": 94.5,
@@ -1354,7 +1354,7 @@
         "model": "ingredients.Ingredient",
         "pk": 77,
         "fields": {
-            "ingredient_type": 8,
+            "ingredient_type": "8",
             "name": "DL-metionine",
             "me": 4360,
             "cp": 58.0,
