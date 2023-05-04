@@ -68,7 +68,7 @@ class AnalysisAnomalyWeight(LoginRequiredMixin, View):
     redirect_field_name = 'redirect_to'
 
     def get(self, request):
-        return render(request, 'analysis/anomaly_feed.html')
+        return render(request, 'analysis/anomaly_weight.html')
 
 
 class AnalysisAnomalyFeed(LoginRequiredMixin, View):

@@ -279,9 +279,6 @@ class ChickenImportView(LoginRequiredMixin, View):
                     is_dead = True
                 else:
                     is_dead = False
-                print('-------------------------')
-                print(tag)
-                print(hatch_date)
                 if hatch_date != None:
                     if isinstance(hatch_date, datetime):
                         hatch_date = hatch_date.strftime("%Y-%m-%d")

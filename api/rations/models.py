@@ -7,6 +7,9 @@ from djmoney.models.fields import MoneyField
 class Ration(models.Model):
     name = models.CharField(max_length=100)
 
+    def __str__(self):
+        return self.name
+
 
 class RationIngredient(models.Model):
     REQUIREMENT = 'RQ'

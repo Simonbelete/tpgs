@@ -1,0 +1,29 @@
+[
+    {
+        "model": "ingredients.Ingredient",
+        "pk": 1,
+        "fields": {
+            "name": "maize",
+            "created_at": "2023-02-10T06:48:32.271721Z",
+            "created_by": 1,
+            "description": "",
+            "price": 0,
+            "price_currency": "ETB",
+            "cp": 8.7,
+            "lys": 0.22,
+            "mc": 0.35,
+            "meth": 0.20,
+
+            
+            "dm": 99.70,
+            "me": 2360,
+            "meth": 99,
+            "ee": 0,
+            "cf": 0,
+            "ca": 0,
+            "p": 0,
+            "ratio_min": 0.1,
+            "ratio_max": 0.4
+        }
+    }
+]
