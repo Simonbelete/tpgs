@@ -23,19 +23,23 @@ class Ingredient(CoreModel):
     ingredient_type = models.ManyToManyField(
         IngredientType, blank=True, related_name='ingredients')
     description = models.CharField(max_length=200, null=True)
-    price = MoneyField(max_digits=14, decimal_places=2, default_currency='ETB')
-    ratio_min = models.FloatField()
-    ratio_max = models.FloatField()
+    price = MoneyField(max_digits=14, null=True,
+                       decimal_places=2, default_currency='ETB')
+    ratio_min = models.FloatField(default=0, null=True)
+    ratio_max = models.FloatField(default=0, null=True)
     # Nutrients
-    dm = models.FloatField(default=0)
-    me = models.FloatField(default=0)
-    cp = models.FloatField(default=0)
-    lys = models.FloatField(default=0)
-    meth = models.FloatField(default=0)
-    mc = models.FloatField(default=0)
+    dm = models.FloatField(default=0, null=True)
+    me = models.FloatField(default=0, null=True)
+    cp = models.FloatField(default=0, null=True)
+    lys = models.FloatField(default=0, null=True)
+    meth = models.FloatField(default=0, null=True)
+    mc = models.FloatField(default=0, null=True)
     # Fat
-    ee = models.FloatField(default=0)
+    ee = models.FloatField(default=0, null=True)
     # Fiber
-    cf = models.FloatField(default=0)
-    ca = models.FloatField(default=0)
-    p = models.FloatField(default=0)
+    cf = models.FloatField(default=0, null=True)
+    ca = models.FloatField(default=0, null=True)
+    p = models.FloatField(default=0, null=True)
+
+    def __str__(self) -> str:
+        return self.name

@@ -4,6 +4,7 @@
         "pk": 1,
         "fields": {
             "name": "maize",
+            "ingredient_type": "1",
             "me": 3340,
             "cp": 8.7,
             "lys": 0.22,
@@ -21,6 +22,7 @@
         "pk": 2,
         "fields": {
             "name": "sorghum",
+            "ingredient_type": "1",
             "me": 3260,
             "cp": 10,
             "lys": 0.23,
@@ -38,6 +40,7 @@
         "pk": 3,
         "fields": {
             "name": "millet",
+            "ingredient_type": "1",
             "me": 2930,
             "cp": 11.1,
             "lys": 0.2,
@@ -55,6 +58,7 @@
         "pk": 4,
         "fields": {
             "name": "barley",
+            "ingredient_type": "1",
             "me": 2790,
             "cp": 10.6,
             "lys": 0.38,
@@ -72,6 +76,7 @@
         "pk": 5,
         "fields": {
             "name": "wheat",
+            "ingredient_type": "1",
             "me": 2980,
             "cp": 12.1,
             "lys": 0.35,
@@ -89,6 +94,7 @@
         "pk": 6,
         "fields": {
             "name": "beans(Phaseolus) toasted",
+            "ingredient_type": "1",
             "me": 2520,
             "cp": 23,
             "lys": 1.52,
@@ -106,6 +112,7 @@
         "pk": 7,
         "fields": {
             "name": "beans(horse)",
+            "ingredient_type": "1",
             "me": 2550,
             "cp": 25.4,
             "lys": 1.6,
@@ -123,6 +130,7 @@
         "pk": 8,
         "fields": {
             "name": "peas",
+            "ingredient_type": "1",
             "me": 2490,
             "cp": 20.7,
             "lys": 1.49,
@@ -140,6 +148,7 @@
         "pk": 9,
         "fields": {
             "name": "lentils",
+            "ingredient_type": "1",
             "me": 2250,
             "cp": 23.2,
             "lys": 0.63,
@@ -157,6 +166,7 @@
         "pk": 10,
         "fields": {
             "name": "soybeans toasted",
+            "ingredient_type": "1",
             "me": 3310,
             "cp": 35.5,
             "lys": 2.27,
@@ -174,6 +184,7 @@
         "pk": 11,
         "fields": {
             "name": "lupin seeds",
+            "ingredient_type": "1",
             "me": 1850,
             "cp": 30.5,
             "lys": 1.43,
@@ -191,6 +202,7 @@
         "pk": 12,
         "fields": {
             "name": "linseed",
+            "ingredient_type": "1",
             "me": 0,
             "cp": 21.6,
             "lys": 0.8,
@@ -208,6 +220,7 @@
         "pk": 13,
         "fields": {
             "name": "rapeseed",
+            "ingredient_type": "1",
             "me": 4520,
             "cp": 20.6,
             "lys": 1.19,
@@ -225,6 +238,7 @@
         "pk": 14,
         "fields": {
             "name": "sunflower seed (decort.)",
+            "ingredient_type": "1",
             "me": 5500,
             "cp": 27.7,
             "lys": 0.94,
@@ -242,6 +256,7 @@
         "pk": 15,
         "fields": {
             "name": "sunflower seed (undecort.)",
+            "ingredient_type": "1",
             "me": 2550,
             "cp": 14.9,
             "lys": 0.51,
