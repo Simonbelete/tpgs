@@ -13,7 +13,7 @@ class BaseAllDataManger(models.Manager):
 
 
 class BaseTimestampedModel(models.Model):
-    created_at = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(auto_now_add=True, null=True)
     # updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
@@ -22,7 +22,7 @@ class BaseTimestampedModel(models.Model):
 
 class BaseUserTrackedModel(models.Model):
     created_by = models.ForeignKey(
-        settings.AUTH_USER_MODEL, on_delete=models.PROTECT)
+        settings.AUTH_USER_MODEL, on_delete=models.PROTECT, null=True)
 
     class Meta:
         abstract = True

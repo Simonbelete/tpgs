@@ -4,26 +4,254 @@
         "pk": 1,
         "fields": {
             "name": "maize",
-            "created_at": "2023-02-10T06:48:32.271721Z",
-            "created_by": 1,
-            "description": "",
-            "price": 0,
-            "price_currency": "ETB",
+            "me": 3340,
             "cp": 8.7,
             "lys": 0.22,
             "mc": 0.35,
-            "meth": 0.20,
-
-            
-            "dm": 99.70,
-            "me": 2360,
-            "meth": 99,
-            "ee": 0,
-            "cf": 0,
-            "ca": 0,
-            "p": 0,
-            "ratio_min": 0.1,
-            "ratio_max": 0.4
+            "meth": 0.2,
+            "ee": 3.6,
+            "cf": 2.1,
+            "ca": 0.04,
+            "p": 0.3,
+            "dm": 86.9
+        }
+    },
+    {
+        "model": "ingredients.Ingredient",
+        "pk": 2,
+        "fields": {
+            "name": "sorghum",
+            "me": 3260,
+            "cp": 10,
+            "lys": 0.23,
+            "mc": 0.35,
+            "meth": 0.16,
+            "ee": 3.1,
+            "cf": 2.1,
+            "ca": 0.03,
+            "p": 0.3,
+            "dm": 87.4
+        }
+    },
+    {
+        "model": "ingredients.Ingredient",
+        "pk": 3,
+        "fields": {
+            "name": "millet",
+            "me": 2930,
+            "cp": 11.1,
+            "lys": 0.2,
+            "mc": 0.5,
+            "meth": 0.3,
+            "ee": 3.2,
+            "cf": 8.9,
+            "ca": 0.03,
+            "p": 0.32,
+            "dm": 87.3
+        }
+    },
+    {
+        "model": "ingredients.Ingredient",
+        "pk": 4,
+        "fields": {
+            "name": "barley",
+            "me": 2790,
+            "cp": 10.6,
+            "lys": 0.38,
+            "mc": 0.42,
+            "meth": 0.2,
+            "ee": 2.4,
+            "cf": 4.5,
+            "ca": 0.07,
+            "p": 0.36,
+            "dm": 12.7
+        }
+    },
+    {
+        "model": "ingredients.Ingredient",
+        "pk": 5,
+        "fields": {
+            "name": "wheat",
+            "me": 2980,
+            "cp": 12.1,
+            "lys": 0.35,
+            "mc": 0.48,
+            "meth": 0.18,
+            "ee": 1.8,
+            "cf": 2.2,
+            "ca": 0.07,
+            "p": 0.35,
+            "dm": 86.1
+        }
+    },
+    {
+        "model": "ingredients.Ingredient",
+        "pk": 6,
+        "fields": {
+            "name": "beans(Phaseolus) toasted",
+            "me": 2520,
+            "cp": 23,
+            "lys": 1.52,
+            "mc": 0.53,
+            "meth": 0.28,
+            "ee": 1.6,
+            "cf": 4.3,
+            "ca": 0.16,
+            "p": 0.46,
+            "dm": 86.5
+        }
+    },
+    {
+        "model": "ingredients.Ingredient",
+        "pk": 7,
+        "fields": {
+            "name": "beans(horse)",
+            "me": 2550,
+            "cp": 25.4,
+            "lys": 1.6,
+            "mc": 0.53,
+            "meth": 0.21,
+            "ee": 1.3,
+            "cf": 7.3,
+            "ca": 0.11,
+            "p": 0.53,
+            "dm": 86.4
+        }
+    },
+    {
+        "model": "ingredients.Ingredient",
+        "pk": 8,
+        "fields": {
+            "name": "peas",
+            "me": 2490,
+            "cp": 20.7,
+            "lys": 1.49,
+            "mc": 0.5,
+            "meth": 0.23,
+            "ee": 1.3,
+            "cf": 5.5,
+            "ca": 0.09,
+            "p": 0.38,
+            "dm": 86.9
+        }
+    },
+    {
+        "model": "ingredients.Ingredient",
+        "pk": 9,
+        "fields": {
+            "name": "lentils",
+            "me": 2250,
+            "cp": 23.2,
+            "lys": 0.63,
+            "mc": 0.28,
+            "meth": 0.09,
+            "ee": 1.2,
+            "cf": 4.2,
+            "ca": 0.09,
+            "p": 0.41,
+            "dm": 86.9
+        }
+    },
+    {
+        "model": "ingredients.Ingredient",
+        "pk": 10,
+        "fields": {
+            "name": "soybeans toasted",
+            "me": 3310,
+            "cp": 35.5,
+            "lys": 2.27,
+            "mc": 1.03,
+            "meth": 0.51,
+            "ee": 18.8,
+            "cf": 5.8,
+            "ca": 0.23,
+            "p": 0.52,
+            "dm": 88.5
+        }
+    },
+    {
+        "model": "ingredients.Ingredient",
+        "pk": 11,
+        "fields": {
+            "name": "lupin seeds",
+            "me": 1850,
+            "cp": 30.5,
+            "lys": 1.43,
+            "mc": 0.67,
+            "meth": 0.23,
+            "ee": 5.5,
+            "cf": 14.2,
+            "ca": 0.24,
+            "p": 0.44,
+            "dm": 89.6
+        }
+    },
+    {
+        "model": "ingredients.Ingredient",
+        "pk": 12,
+        "fields": {
+            "name": "linseed",
+            "me": 0,
+            "cp": 21.6,
+            "lys": 0.8,
+            "mc": 0.84,
+            "meth": 0.43,
+            "ee": 34.3,
+            "cf": 8.1,
+            "ca": 0.28,
+            "p": 0.62,
+            "dm": 90.7
+        }
+    },
+    {
+        "model": "ingredients.Ingredient",
+        "pk": 13,
+        "fields": {
+            "name": "rapeseed",
+            "me": 4520,
+            "cp": 20.6,
+            "lys": 1.19,
+            "mc": 0.97,
+            "meth": 0.43,
+            "ee": 41.7,
+            "cf": 9.7,
+            "ca": 0.48,
+            "p": 0.76,
+            "dm": 92.8
+        }
+    },
+    {
+        "model": "ingredients.Ingredient",
+        "pk": 14,
+        "fields": {
+            "name": "sunflower seed (decort.)",
+            "me": 5500,
+            "cp": 27.7,
+            "lys": 0.94,
+            "mc": 1.08,
+            "meth": 0.42,
+            "ee": 44.7,
+            "cf": 3.6,
+            "ca": 0.18,
+            "p": 0.74,
+            "dm": 93.4
+        }
+    },
+    {
+        "model": "ingredients.Ingredient",
+        "pk": 15,
+        "fields": {
+            "name": "sunflower seed (undecort.)",
+            "me": 2550,
+            "cp": 14.9,
+            "lys": 0.51,
+            "mc": 0.58,
+            "meth": 0.22,
+            "ee": 29.3,
+            "cf": 26.9,
+            "ca": 0.18,
+            "p": 0.45,
+            "dm": 92.2
         }
     }
 ]
