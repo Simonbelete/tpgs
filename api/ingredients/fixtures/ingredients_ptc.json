@@ -268,5 +268,1104 @@
             "p": 0.45,
             "dm": 92.2
         }
+    },
+    {
+        "model": "ingredients.Ingredient",
+        "pk": 16,
+        "fields": {
+            "ingredient_type": 2,
+            "name": "cassava (63% starch)",
+            "me": 2770,
+            "cp": 2.5,
+            "lys": 0.08,
+            "mc": 0.05,
+            "meth": 0.03,
+            "ee": 0,
+            "cf": 4.5,
+            "ca": 0.15,
+            "p": 0.1,
+            "dm": 86.4
+        }
+    },
+    {
+        "model": "ingredients.Ingredient",
+        "pk": 17,
+        "fields": {
+            "ingredient_type": 2,
+            "name": "cassava (72% starch)",
+            "me": 3090,
+            "cp": 2,
+            "lys": 0.07,
+            "mc": 0.05,
+            "meth": 0.03,
+            "ee": 0,
+            "cf": 3.3,
+            "ca": 0.15,
+            "p": 0.1,
+            "dm": 87.5
+        }
+    },
+    {
+        "model": "ingredients.Ingredient",
+        "pk": 18,
+        "fields": {
+            "ingredient_type": 2,
+            "name": "sweet potato",
+            "me": 2960,
+            "cp": 3.8,
+            "lys": 0.18,
+            "mc": 0.12,
+            "meth": 0.07,
+            "ee": 0.7,
+            "cf": 2.7,
+            "ca": 0.12,
+            "p": 0.15,
+            "dm": 87.5
+        }
+    },
+    {
+        "model": "ingredients.Ingredient",
+        "pk": 19,
+        "fields": {
+            "ingredient_type": 3,
+            "name": "maize distillers",
+            "me": 0,
+            "cp": 27.4,
+            "lys": 0.66,
+            "mc": 0.93,
+            "meth": 0.53,
+            "ee": 12.2,
+            "cf": 9.3,
+            "ca": 0.17,
+            "p": 0.79,
+            "dm": 90.8
+        }
+    },
+    {
+        "model": "ingredients.Ingredient",
+        "pk": 20,
+        "fields": {
+            "ingredient_type": 3,
+            "name": "maize gluten 57% c.p.",
+            "me": 3500,
+            "cp": 57.5,
+            "lys": 0.92,
+            "mc": 2.82,
+            "meth": 1.61,
+            "ee": 3.1,
+            "cf": 1.4,
+            "ca": 0.01,
+            "p": 0.52,
+            "dm": 90
+        }
+    },
+    {
+        "model": "ingredients.Ingredient",
+        "pk": 21,
+        "fields": {
+            "ingredient_type": 3,
+            "name": "maize gluten feed",
+            "me": 1900,
+            "cp": 19.4,
+            "lys": 0.58,
+            "mc": 0.72,
+            "meth": 0.34,
+            "ee": 2.6,
+            "cf": 7.9,
+            "ca": 0.04,
+            "p": 0.87,
+            "dm": 88.2
+        }
+    },
+    {
+        "model": "ingredients.Ingredient",
+        "pk": 22,
+        "fields": {
+            "ingredient_type": 3,
+            "name": "maize germ meal",
+            "me": 2000,
+            "cp": 18.2,
+            "lys": 0.8,
+            "mc": 0.82,
+            "meth": 0.4,
+            "ee": 3,
+            "cf": 7.1,
+            "ca": 0.02,
+            "p": 0.64,
+            "dm": 87.1
+        }
+    },
+    {
+        "model": "ingredients.Ingredient",
+        "pk": 23,
+        "fields": {
+            "ingredient_type": 3,
+            "name": "maize germ expellers",
+            "me": 1580,
+            "cp": 22,
+            "lys": 0.97,
+            "mc": 0.99,
+            "meth": 0.48,
+            "ee": 9.7,
+            "cf": 11.8,
+            "ca": 0.06,
+            "p": 0.41,
+            "dm": 90
+        }
+    },
+    {
+        "model": "ingredients.Ingredient",
+        "pk": 24,
+        "fields": {
+            "ingredient_type": 3,
+            "name": "maize bran (37% starch)",
+            "me": 2520,
+            "cp": 12,
+            "lys": 0.49,
+            "mc": 0.49,
+            "meth": 0.23,
+            "ee": 5.8,
+            "cf": 6,
+            "ca": 0.1,
+            "p": 0.5,
+            "dm": 89
+        }
+    },
+    {
+        "model": "ingredients.Ingredient",
+        "pk": 25,
+        "fields": {
+            "ingredient_type": 3,
+            "name": "maize bran (50% starch)",
+            "me": 2740,
+            "cp": 8.7,
+            "lys": 0.36,
+            "mc": 0.36,
+            "meth": 0.17,
+            "ee": 6.3,
+            "cf": 5.2,
+            "ca": 0.1,
+            "p": 0.5,
+            "dm": 87.5
+        }
+    },
+    {
+        "model": "ingredients.Ingredient",
+        "pk": 26,
+        "fields": {
+            "ingredient_type": 3,
+            "name": "wheat middlings",
+            "me": 1980,
+            "cp": 15.6,
+            "lys": 0.62,
+            "mc": 0.59,
+            "meth": 0.25,
+            "ee": 3.6,
+            "cf": 9.2,
+            "ca": 0.11,
+            "p": 1.15,
+            "dm": 86
+        }
+    },
+    {
+        "model": "ingredients.Ingredient",
+        "pk": 27,
+        "fields": {
+            "ingredient_type": 3,
+            "name": "wheat bran",
+            "me": 1710,
+            "cp": 15.2,
+            "lys": 0.61,
+            "mc": 0.58,
+            "meth": 0.25,
+            "ee": 3.5,
+            "cf": 10.7,
+            "ca": 0.19,
+            "p": 1.27,
+            "dm": 86.6
+        }
+    },
+    {
+        "model": "ingredients.Ingredient",
+        "pk": 28,
+        "fields": {
+            "ingredient_type": 3,
+            "name": "rice bran 15-30% fibre",
+            "me": 1000,
+            "cp": 7,
+            "lys": 0.34,
+            "mc": 0.26,
+            "meth": 0.13,
+            "ee": 7,
+            "cf": 24,
+            "ca": 0.08,
+            "p": 1.6,
+            "dm": 89.8
+        }
+    },
+    {
+        "model": "ingredients.Ingredient",
+        "pk": 29,
+        "fields": {
+            "ingredient_type": 3,
+            "name": "rice bran 9-15% fibre",
+            "me": 2200,
+            "cp": 13.3,
+            "lys": 0.63,
+            "mc": 0.53,
+            "meth": 0.27,
+            "ee": 10.2,
+            "cf": 11.9,
+            "ca": 0.1,
+            "p": 1.58,
+            "dm": 89.2
+        }
+    },
+    {
+        "model": "ingredients.Ingredient",
+        "pk": 30,
+        "fields": {
+            "ingredient_type": 3,
+            "name": "rice bran 1-9% fibre",
+            "me": 2950,
+            "cp": 13.6,
+            "lys": 0.65,
+            "mc": 0.54,
+            "meth": 0.27,
+            "ee": 15.6,
+            "cf": 6.1,
+            "ca": 0.13,
+            "p": 1.57,
+            "dm": 89.9
+        }
+    },
+    {
+        "model": "ingredients.Ingredient",
+        "pk": 31,
+        "fields": {
+            "ingredient_type": 4,
+            "name": "soybeanmeal 44/7",
+            "me": 2120,
+            "cp": 43,
+            "lys": 2.75,
+            "mc": 1.33,
+            "meth": 0.65,
+            "ee": 1.8,
+            "cf": 6.5,
+            "ca": 0.3,
+            "p": 0.65,
+            "dm": 86.6
+        }
+    },
+    {
+        "model": "ingredients.Ingredient",
+        "pk": 32,
+        "fields": {
+            "ingredient_type": 4,
+            "name": "soybeanmeal 45/46",
+            "me": 2180,
+            "cp": 43.5,
+            "lys": 2.65,
+            "mc": 1.26,
+            "meth": 0.61,
+            "ee": 2,
+            "cf": 6.1,
+            "ca": 0.3,
+            "p": 0.65,
+            "dm": 88
+        }
+    },
+    {
+        "model": "ingredients.Ingredient",
+        "pk": 33,
+        "fields": {
+            "ingredient_type": 4,
+            "name": "soybeanmeal 49/3",
+            "me": 2290,
+            "cp": 47.5,
+            "lys": 3.04,
+            "mc": 1.47,
+            "meth": 0.71,
+            "ee": 1.9,
+            "cf": 3.4,
+            "ca": 0.33,
+            "p": 0.78,
+            "dm": 87
+        }
+    },
+    {
+        "model": "ingredients.Ingredient",
+        "pk": 34,
+        "fields": {
+            "ingredient_type": 4,
+            "name": "sesame meal (solv. extr.)",
+            "me": 2010,
+            "cp": 44.3,
+            "lys": 1.11,
+            "mc": 2.17,
+            "meth": 1.24,
+            "ee": 1.3,
+            "cf": 6.1,
+            "ca": 2.31,
+            "p": 1.29,
+            "dm": 89.5
+        }
+    },
+    {
+        "model": "ingredients.Ingredient",
+        "pk": 35,
+        "fields": {
+            "ingredient_type": 4,
+            "name": "sesame-expeller/cake",
+            "me": 2480,
+            "cp": 44.3,
+            "lys": 1.11,
+            "mc": 2.17,
+            "meth": 1.24,
+            "ee": 10.4,
+            "cf": 6.3,
+            "ca": 1.68,
+            "p": 0.94,
+            "dm": 93.3
+        }
+    },
+    {
+        "model": "ingredients.Ingredient",
+        "pk": 36,
+        "fields": {
+            "ingredient_type": 4,
+            "name": "groundnutmeal (solv. extr.)",
+            "me": 1940,
+            "cp": 50.3,
+            "lys": 1.66,
+            "mc": 1.21,
+            "meth": 0.55,
+            "ee": 0.5,
+            "cf": 12.5,
+            "ca": 0.18,
+            "p": 0.63,
+            "dm": 90
+        }
+    },
+    {
+        "model": "ingredients.Ingredient",
+        "pk": 37,
+        "fields": {
+            "ingredient_type": 4,
+            "name": "groundnut-expeller/cake",
+            "me": 2580,
+            "cp": 39.1,
+            "lys": 1.29,
+            "mc": 0.94,
+            "meth": 0.43,
+            "ee": 7.5,
+            "cf": 10,
+            "ca": 0.18,
+            "p": 0.57,
+            "dm": 91.9
+        }
+    },
+    {
+        "model": "ingredients.Ingredient",
+        "pk": 38,
+        "fields": {
+            "ingredient_type": 4,
+            "name": "cottonseedmeal (solv. extr.)",
+            "me": 1510,
+            "cp": 36.6,
+            "lys": 1.39,
+            "mc": 1.21,
+            "meth": 0.59,
+            "ee": 2.2,
+            "cf": 16.7,
+            "ca": 0.2,
+            "p": 1.03,
+            "dm": 89.9
+        }
+    },
+    {
+        "model": "ingredients.Ingredient",
+        "pk": 39,
+        "fields": {
+            "ingredient_type": 4,
+            "name": "cottonseed-expeller/cake",
+            "me": 1840,
+            "cp": 37.1,
+            "lys": 1.41,
+            "mc": 1.22,
+            "meth": 0.59,
+            "ee": 6.9,
+            "cf": 16.8,
+            "ca": 0.24,
+            "p": 1.09,
+            "dm": 92
+        }
+    },
+    {
+        "model": "ingredients.Ingredient",
+        "pk": 40,
+        "fields": {
+            "ingredient_type": 4,
+            "name": "coconutmeal (solv.extr.)",
+            "me": 1340,
+            "cp": 21.3,
+            "lys": 0.49,
+            "mc": 0.62,
+            "meth": 0.3,
+            "ee": 2.4,
+            "cf": 14.1,
+            "ca": 0.13,
+            "p": 0.58,
+            "dm": 90.1
+        }
+    },
+    {
+        "model": "ingredients.Ingredient",
+        "pk": 41,
+        "fields": {
+            "ingredient_type": 4,
+            "name": "coconut-expeller/cake",
+            "me": 1850,
+            "cp": 20,
+            "lys": 0.46,
+            "mc": 0.58,
+            "meth": 0.29,
+            "ee": 12.2,
+            "cf": 13.4,
+            "ca": 0.11,
+            "p": 0.44,
+            "dm": 92.8
+        }
+    },
+    {
+        "model": "ingredients.Ingredient",
+        "pk": 42,
+        "fields": {
+            "ingredient_type": 4,
+            "name": "linseedmeal (solv extr.)",
+            "me": 1400,
+            "cp": 32.2,
+            "lys": 1.19,
+            "mc": 1.26,
+            "meth": 0.64,
+            "ee": 3.1,
+            "cf": 10.2,
+            "ca": 0.37,
+            "p": 0.86,
+            "dm": 90.1
+        }
+    },
+    {
+        "model": "ingredients.Ingredient",
+        "pk": 43,
+        "fields": {
+            "ingredient_type": 4,
+            "name": "linseed-expeller/cake",
+            "me": 1630,
+            "cp": 31.5,
+            "lys": 1.17,
+            "mc": 1.23,
+            "meth": 0.63,
+            "ee": 6.3,
+            "cf": 10.4,
+            "ca": 0.33,
+            "p": 0.82,
+            "dm": 89.2
+        }
+    },
+    {
+        "model": "ingredients.Ingredient",
+        "pk": 44,
+        "fields": {
+            "ingredient_type": 4,
+            "name": "palmkernelmeal (solv. extr.)",
+            "me": 0,
+            "cp": 15.3,
+            "lys": 0.52,
+            "mc": 0.61,
+            "meth": 0.34,
+            "ee": 1.6,
+            "cf": 19.5,
+            "ca": 0.24,
+            "p": 0.56,
+            "dm": 87.9
+        }
+    },
+    {
+        "model": "ingredients.Ingredient",
+        "pk": 45,
+        "fields": {
+            "ingredient_type": 4,
+            "name": "palmkernel-expeller/cake",
+            "me": 0,
+            "cp": 13,
+            "lys": 0.44,
+            "mc": 0.52,
+            "meth": 0.32,
+            "ee": 8.7,
+            "cf": 25,
+            "ca": 0.18,
+            "p": 0.46,
+            "dm": 92.5
+        }
+    },
+    {
+        "model": "ingredients.Ingredient",
+        "pk": 46,
+        "fields": {
+            "ingredient_type": 4,
+            "name": "rapeseedmeal (solv. extr.)",
+            "me": 1730,
+            "cp": 34,
+            "lys": 1.7,
+            "mc": 1.56,
+            "meth": 0.73,
+            "ee": 2.3,
+            "cf": 11,
+            "ca": 0.71,
+            "p": 1.09,
+            "dm": 87.9
+        }
+    },
+    {
+        "model": "ingredients.Ingredient",
+        "pk": 47,
+        "fields": {
+            "ingredient_type": 4,
+            "name": "rapeseed-expeller/cake",
+            "me": 2030,
+            "cp": 34.8,
+            "lys": 1.74,
+            "mc": 1.6,
+            "meth": 0.73,
+            "ee": 5.8,
+            "cf": 10.8,
+            "ca": 0.68,
+            "p": 1.07,
+            "dm": 88.9
+        }
+    },
+    {
+        "model": "ingredients.Ingredient",
+        "pk": 48,
+        "fields": {
+            "ingredient_type": 4,
+            "name": "sunflowerseedmeal (solv. extr.)",
+            "me": 1370,
+            "cp": 28.5,
+            "lys": 0.97,
+            "mc": 1.11,
+            "meth": 0.63,
+            "ee": 2,
+            "cf": 24.5,
+            "ca": 0.33,
+            "p": 1.08,
+            "dm": 88.3
+        }
+    },
+    {
+        "model": "ingredients.Ingredient",
+        "pk": 49,
+        "fields": {
+            "ingredient_type": 4,
+            "name": "sunflowerseed-expeller/cake",
+            "me": 1510,
+            "cp": 29.1,
+            "lys": 0.99,
+            "mc": 1.13,
+            "meth": 0.64,
+            "ee": 3.8,
+            "cf": 25,
+            "ca": 0.36,
+            "p": 1.16,
+            "dm": 90.5
+        }
+    },
+    {
+        "model": "ingredients.Ingredient",
+        "pk": 50,
+        "fields": {
+            "ingredient_type": 5,
+            "name": "bonemeal",
+            "me": 1500,
+            "cp": 40.7,
+            "lys": 1.83,
+            "mc": 0.77,
+            "meth": 0.45,
+            "ee": 5.4,
+            "cf": 0,
+            "ca": 16.04,
+            "p": 7.42,
+            "dm": 90.5
+        }
+    },
+    {
+        "model": "ingredients.Ingredient",
+        "pk": 51,
+        "fields": {
+            "ingredient_type": 5,
+            "name": "bloodmeal",
+            "me": 3020,
+            "cp": 87.5,
+            "lys": 8.4,
+            "mc": 2.27,
+            "meth": 1.14,
+            "ee": 0.6,
+            "cf": 0,
+            "ca": 0.17,
+            "p": 0.17,
+            "dm": 90.6
+        }
+    },
+    {
+        "model": "ingredients.Ingredient",
+        "pk": 52,
+        "fields": {
+            "ingredient_type": 5,
+            "name": "meatmeal (50/14/26)",
+            "me": 2830,
+            "cp": 50,
+            "lys": 2.4,
+            "mc": 1.05,
+            "meth": 0.6,
+            "ee": 14,
+            "cf": 0,
+            "ca": 8,
+            "p": 3.9,
+            "dm": 94
+        }
+    },
+    {
+        "model": "ingredients.Ingredient",
+        "pk": 54,
+        "fields": {
+            "ingredient_type": 5,
+            "name": "meatmeal (58/13/20)",
+            "me": 3090,
+            "cp": 58.2,
+            "lys": 3.26,
+            "mc": 1.4,
+            "meth": 0.87,
+            "ee": 13,
+            "cf": 0,
+            "ca": 6,
+            "p": 2.9,
+            "dm": 94.8
+        }
+    },
+    {
+        "model": "ingredients.Ingredient",
+        "pk": 55,
+        "fields": {
+            "ingredient_type": 5,
+            "name": "skimmilkpowder",
+            "me": 2490,
+            "cp": 34.8,
+            "lys": 2.85,
+            "mc": 1.22,
+            "meth": 0.9,
+            "ee": 1.1,
+            "cf": 0,
+            "ca": 1.35,
+            "p": 1.01,
+            "dm": 95.2
+        }
+    },
+    {
+        "model": "ingredients.Ingredient",
+        "pk": 56,
+        "fields": {
+            "ingredient_type": 5,
+            "name": "feathermeal (hydrolized)",
+            "me": 3170,
+            "cp": 82.5,
+            "lys": 1.57,
+            "mc": 3.8,
+            "meth": 0.58,
+            "ee": 7.5,
+            "cf": 0,
+            "ca": 0.44,
+            "p": 0.23,
+            "dm": 91.7
+        }
+    },
+    {
+        "model": "ingredients.Ingredient",
+        "pk": 57,
+        "fields": {
+            "ingredient_type": 5,
+            "name": "fishmeal (70% c.p.)",
+            "me": 3320,
+            "cp": 70,
+            "lys": 5.39,
+            "mc": 2.66,
+            "meth": 2.03,
+            "ee": 8,
+            "cf": 0,
+            "ca": 3.5,
+            "p": 2.6,
+            "dm": 92
+        }
+    },
+    {
+        "model": "ingredients.Ingredient",
+        "pk": 58,
+        "fields": {
+            "ingredient_type": 5,
+            "name": "fishmeal (South American)",
+            "me": 3320,
+            "cp": 65.9,
+            "lys": 5.07,
+            "mc": 2.44,
+            "meth": 1.85,
+            "ee": 10.3,
+            "cf": 0,
+            "ca": 3.5,
+            "p": 2.6,
+            "dm": 91.7
+        }
+    },
+    {
+        "model": "ingredients.Ingredient",
+        "pk": 59,
+        "fields": {
+            "ingredient_type": 5,
+            "name": "wheypowder (delact. 20% c.p.)",
+            "me": 1890,
+            "cp": 20,
+            "lys": 1.44,
+            "mc": 0.72,
+            "meth": 0.32,
+            "ee": 1.7,
+            "cf": 0,
+            "ca": 5,
+            "p": 1.6,
+            "dm": 97.5
+        }
+    },
+    {
+        "model": "ingredients.Ingredient",
+        "pk": 60,
+        "fields": {
+            "ingredient_type": 5,
+            "name": "wheypowder (sweet)",
+            "me": 1960,
+            "cp": 3518,
+            "lys": 10.8,
+            "mc": 0.43,
+            "meth": 0.19,
+            "ee": 0.7,
+            "cf": 0,
+            "ca": 0.86,
+            "p": 0.66,
+            "dm": 95.6
+        }
+    },
+    {
+        "model": "ingredients.Ingredient",
+        "pk": 61,
+        "fields": {
+            "ingredient_type": 6,
+            "name": "soybeanoil",
+            "me": 9300,
+            "cp": 0,
+            "lys": 0,
+            "mc": 0,
+            "meth": 0,
+            "ee": 0,
+            "cf": 0,
+            "ca": 0,
+            "p": 0,
+            "dm": 99.5
+        }
+    },
+    {
+        "model": "ingredients.Ingredient",
+        "pk": 62,
+        "fields": {
+            "ingredient_type": 6,
+            "name": "animal fat (destructor-)",
+            "me": 8500,
+            "cp": 0,
+            "lys": 0,
+            "mc": 0,
+            "meth": 0,
+            "ee": 99.5,
+            "cf": 0,
+            "ca": 0,
+            "p": 0,
+            "dm": 99.5
+        }
+    },
+    {
+        "model": "ingredients.Ingredient",
+        "pk": 63,
+        "fields": {
+            "ingredient_type": 7,
+            "name": "citruspulp",
+            "me": 0,
+            "cp": 6.3,
+            "lys": 0.16,
+            "mc": 0.14,
+            "meth": 0.06,
+            "ee": 2.3,
+            "cf": 11.9,
+            "ca": 1.4,
+            "p": 0.12,
+            "dm": 90.1
+        }
+    },
+    {
+        "model": "ingredients.Ingredient",
+        "pk": 64,
+        "fields": {
+            "ingredient_type": 7,
+            "name": "yeast (beer)",
+            "me": 2860,
+            "cp": 45.3,
+            "lys": 3.35,
+            "mc": 1.18,
+            "meth": 0.72,
+            "ee": 1,
+            "cf": 3.1,
+            "ca": 0.26,
+            "p": 1.5,
+            "dm": 93.7
+        }
+    },
+    {
+        "model": "ingredients.Ingredient",
+        "pk": 65,
+        "fields": {
+            "ingredient_type": 7,
+            "name": "grassmeal (less than 16% c.p.)",
+            "me": 1010,
+            "cp": 13.7,
+            "lys": 0.64,
+            "mc": 0.36,
+            "meth": 0.26,
+            "ee": 3.2,
+            "cf": 25.4,
+            "ca": 0.49,
+            "p": 0.31,
+            "dm": 91.5
+        }
+    },
+
+    {
+        "model": "ingredients.Ingredient",
+        "pk": 66,
+        "fields": {
+            "ingredient_type": 7,
+            "name": "grassmeal (more than 20% c.p.)",
+            "me": 1350,
+            "cp": 20.8,
+            "lys": 0.98,
+            "mc": 0.54,
+            "meth": 0.31,
+            "ee": 3.8,
+            "cf": 21,
+            "ca": 0.49,
+            "p": 0.31,
+            "dm": 91.4
+        }
+    },
+    {
+        "model": "ingredients.Ingredient",
+        "pk": 67,
+        "fields": {
+            "ingredient_type": 7,
+            "name": "alfalfa meal (sundried)",
+            "me": 700,
+            "cp": 10.1,
+            "lys": 0.47,
+            "mc": 0.26,
+            "meth": 0.23,
+            "ee": 1.8,
+            "cf": 27.4,
+            "ca": 1.78,
+            "p": 0.25,
+            "dm": 89.6
+        }
+    },
+    {
+        "model": "ingredients.Ingredient",
+        "pk": 68,
+        "fields": {
+            "ingredient_type": 7,
+            "name": "molasses (beet)",
+            "me": 1890,
+            "cp": 9.7,
+            "lys": 0.04,
+            "mc": 0.04,
+            "meth": 0.04,
+            "ee": 0,
+            "cf": 0,
+            "ca": 0.5,
+            "p": 0.03,
+            "dm": 73.2
+        }
+    },
+    {
+        "model": "ingredients.Ingredient",
+        "pk": 69,
+        "fields": {
+            "ingredient_type": 7,
+            "name": "molasses (cane)",
+            "me": 1800,
+            "cp": 4,
+            "lys": 0.02,
+            "mc": 0.02,
+            "meth": 0.02,
+            "ee": 0,
+            "cf": 0,
+            "ca": 0.67,
+            "p": 0.05,
+            "dm": 73.3
+        }
+    },
+    {
+        "model": "ingredients.Ingredient",
+        "pk": 70,
+        "fields": {
+            "ingredient_type": 7,
+            "name": "sugar",
+            "me": 3900,
+            "cp": 0,
+            "lys": 0,
+            "mc": 0,
+            "meth": 0,
+            "ee": 0,
+            "cf": 0,
+            "ca": 0,
+            "p": 0,
+            "dm": 99.9
+        }
+    },
+    {
+        "model": "ingredients.Ingredient",
+        "pk": 71,
+        "fields": {
+            "ingredient_type": 7,
+            "name": "soybean hulls",
+            "me": 0,
+            "cp": 11.7,
+            "lys": 0.56,
+            "mc": 0.56,
+            "meth": 0.33,
+            "ee": 2.1,
+            "cf": 34.8,
+            "ca": 0.57,
+            "p": 0.14,
+            "dm": 88.2
+        }
+    },
+    {
+        "model": "ingredients.Ingredient",
+        "pk": 72,
+        "fields": {
+            "ingredient_type": 8,
+            "name": "dicalciumphosphate",
+            "me": 0,
+            "cp": 0,
+            "lys": 0,
+            "mc": 0,
+            "meth": 0,
+            "ee": 0,
+            "cf": 0,
+            "ca": 24.0,
+            "p": 18.0,
+            "dm": 99
+        }
+    },
+    {
+        "model": "ingredients.Ingredient",
+        "pk": 73,
+        "fields": {
+            "ingredient_type": 8,
+            "name": "monocalciumphosphate",
+            "me": 0,
+            "cp": 0,
+            "lys": 0,
+            "mc": 0,
+            "meth": 0,
+            "ee": 0,
+            "cf": 0,
+            "ca": 16.0,
+            "p": 22.5,
+            "dm": 99
+        }
+    },
+    {
+        "model": "ingredients.Ingredient",
+        "pk": 74,
+        "fields": {
+            "ingredient_type": 8,
+            "name": "limestone/shells",
+            "me": 0,
+            "cp": 0,
+            "lys": 0,
+            "mc": 0,
+            "meth": 0,
+            "ee": 0,
+            "cf": 0,
+            "ca": 38.0,
+            "p": 0,
+            "dm": 99
+        }
+    },
+    {
+        "model": "ingredients.Ingredient",
+        "pk": 75,
+        "fields": {
+            "ingredient_type": 8,
+            "name": "salt (NaCl)",
+            "me": 0,
+            "cp": 0,
+            "lys": 0,
+            "mc": 0,
+            "meth": 0,
+            "ee": 0,
+            "cf": 0,
+            "ca": 0,
+            "p": 0,
+            "dm": 95
+        }
+    },
+    {
+        "model": "ingredients.Ingredient",
+        "pk": 76,
+        "fields": {
+            "ingredient_type": 8,
+            "name": "L-lysine HCl",
+            "me": 3730,
+            "cp": 94.5,
+            "lys": 78.0,
+            "mc": 0,
+            "meth": 0,
+            "ee": 0,
+            "cf": 0,
+            "ca": 0,
+            "p": 0,
+            "dm": 98.5
+        }
+    },
+    {
+        "model": "ingredients.Ingredient",
+        "pk": 77,
+        "fields": {
+            "ingredient_type": 8,
+            "name": "DL-metionine",
+            "me": 4360,
+            "cp": 58.0,
+            "lys": 0,
+            "mc": 99.0,
+            "meth": 99.0,
+            "ee": 0,
+            "cf": 0,
+            "ca": 0,
+            "p": 0,
+            "dm": 99.7
+        }
     }
 ]
