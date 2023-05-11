@@ -44,9 +44,7 @@ export default function Home() {
             <Box sx={{ display: "flex" }}>
               <Logo />
               <Box sx={{ flexGrow: 1 }} />
-              <Box sx={{ display: { xs: "none", sm: "block" } }}>
-                <PrimaryMenu />
-              </Box>
+              <PrimaryMenu />
             </Box>
           </Container>
           <Stack direction="row" spacing={2}></Stack>
