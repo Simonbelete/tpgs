@@ -22,6 +22,9 @@ declare module "@mui/material/styles" {
 }
 
 const lightTheme = createTheme({
+  typography: {
+    fontFamily: ["Inter", "sans-serif"].join(","),
+  },
   palette: {
     mode: "light",
     primary: {
