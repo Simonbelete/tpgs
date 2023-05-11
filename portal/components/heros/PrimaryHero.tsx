@@ -42,7 +42,7 @@ const PrimaryHero = () => {
           </Box>
         </Grid>
         <Grid item xs={12} md={6}>
-          <img src="/images/hero_2.jpg" alt="Hero Image" height="500" />
+          <img src="/images/hero_3.png" alt="Hero Image" height="400" />
         </Grid>
       </Grid>
     </Container>

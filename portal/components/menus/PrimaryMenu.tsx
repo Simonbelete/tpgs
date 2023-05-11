@@ -59,6 +59,7 @@ const PrimaryMenu = () => {
                   <MenuItem onClick={handleClose}>Logout</MenuItem>
                 </MenuList>
               </ClickAwayListener>
+              <Button>Login</Button>
             </Paper>
           </Grow>
         )}

@@ -28,7 +28,9 @@ const lightTheme = createTheme({
   palette: {
     mode: "light",
     primary: {
-      main: purple[500],
+      light: "#6cb640",
+      main: "#008a3f",
+      dark: "#1f4841",
     },
     secondary: {
       main: green[100],

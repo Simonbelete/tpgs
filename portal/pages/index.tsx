@@ -52,8 +52,9 @@ export default function Home() {
           <Stack direction="row" spacing={2}></Stack>
         </Toolbar>
       </AppBar>
-      <Box sx={{ height: 50 }} />
-      <PrimaryHero />
+      <Box sx={{ background: "#f5faf8", py: 5 }}>
+        <PrimaryHero />
+      </Box>
       <Box sx={{ height: 50 }} />
       <SignUpNowCTA />
     </main>

@@ -6,7 +6,7 @@ const Logo = () => {
   return (
     <Link href="/">
       <Image
-        src="https://assets.maccarianagency.com/the-front/logos/logo.svg"
+        src="/images/logo_full.png"
         alt="TPGS Logo"
         width={150}
         height={150}
