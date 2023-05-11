@@ -2,18 +2,6 @@ import React from "react";
 import styled from "@emotion/styled";
 import { Container, Typography, Box, Button } from "@mui/material";
 
-// const classes = {
-//   section: {
-//     backgroundImage: 'url("nereus-assets/img/bg/pattern2.png")',
-//     backgroundRepeat: "no-repeat",
-//     backgroundSize: "cover",
-//     backgroundColor: theme.palette.primary.dark,
-//   },
-//   description: {
-//     color: theme.palette.background.secondary,
-//   },
-// };
-
 const Section = styled.section`
   background-image: url("https://placehold.co/600x400/png");
   background-repeat: no-repeat;
@@ -22,7 +10,7 @@ const Section = styled.section`
 `;
 
 const SectionDescription = styled(Typography)`
-  color: ${({ theme }) => theme.palette.primary.main};
+  color: ${({ theme }) => theme.palette.white};
 `;
 
 const SignUpNowCTA = ({ ...props }) => {

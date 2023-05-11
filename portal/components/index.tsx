@@ -4,3 +4,4 @@ export { default as Logo } from "./Logo";
 export { default as PrimaryMenu } from "./menus";
 
 export * from "./call-to-actions";
+export * from "./heros";

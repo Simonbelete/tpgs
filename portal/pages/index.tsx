@@ -1,9 +1,17 @@
 import Image from "next/image";
 import { Inter } from "next/font/google";
 import LaunchIcon from "@mui/icons-material/Launch";
-import { AppBar, Toolbar, Container, Box, Link, Stack } from "@mui/material";
+import {
+  AppBar,
+  Toolbar,
+  Container,
+  Box,
+  Link,
+  Stack,
+  Grid,
+} from "@mui/material";
 
-import { Logo, PrimaryMenu, SignUpNowCTA } from "@/components";
+import { Logo, PrimaryMenu, SignUpNowCTA, PrimaryHero } from "@/components";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -44,9 +52,10 @@ export default function Home() {
           <Stack direction="row" spacing={2}></Stack>
         </Toolbar>
       </AppBar>
-      <section>
-        <SignUpNowCTA />
-      </section>
+      <Box sx={{ height: 50 }} />
+      <PrimaryHero />
+      <Box sx={{ height: 50 }} />
+      <SignUpNowCTA />
     </main>
   );
 }
