@@ -1,14 +1,18 @@
 import NextAuth, { CookiesOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
+import axios from "axios";
 
 import "@/types/next-auth.d";
 
-async function refreshAccessToken(tokenObject) {
+async function refreshAccessToken(tokenObject: any) {
   try {
     // Get a new set of tokens with a refreshToken
-    const tokenResponse = await axios.post(YOUR_API_URL + "auth/refreshToken", {
-      token: tokenObject.refreshToken,
-    });
+    const tokenResponse = await axios.post(
+      process.env.NEXT_API_URL + "api/token/refresh/",
+      {
+        token: tokenObject.refreshToken,
+      }
+    );
 
     return {
       ...tokenObject,
@@ -40,7 +44,7 @@ const cookies: Partial<CookiesOptions> = {
 export const jwt = async ({ token, user }: { token: JWT; user?: User }) => {
   // Persist the OAuth access_token to the token right after signin
   if (user) {
-    token.accessToken = user.access_token;
+    token.accessToken = user.access;
   }
 
   // on subsequent calls, token is provided and we need to check if it's expired
@@ -86,24 +90,17 @@ export const authOptions = {
     CredentialsProvider({
       // The name to display on the sign in form (e.g. 'Sign in with...')
       name: "Credentials",
-      // The credentials is used to generate a suitable form on the sign in page.
-      // You can specify whatever fields you are expecting to be submitted.
-      // e.g. domain, username, password, 2FA token, etc.
-      // You can pass any HTML attribute to the <input> tag through the object.
       credentials: {
-        username: { label: "Username", type: "text", placeholder: "jsmith" },
+        email: { label: "Email", type: "text", placeholder: "Email Address" },
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials, req) {
-        // You need to provide your own logic here that takes the credentials
-        // submitted and returns either a object representing a user or value
-        // that is false/null if the credentials are invalid.
-        // e.g. return { id: 1, name: 'J Smith', email: 'jsmith@example.com' }
-        // You can also use the `req` object to obtain additional parameters
-        // (i.e., the request IP address)
-        const res = await fetch("/your/endpoint", {
+        const res = await fetch(process.env.NEXT_API_URL + "/api/token/", {
           method: "POST",
-          body: JSON.stringify(credentials),
+          body: JSON.stringify({
+            email: credentials?.username || "",
+            password: credentials?.password || "",
+          }),
           headers: { "Content-Type": "application/json" },
         });
         const user = await res.json();
