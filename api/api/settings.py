@@ -46,10 +46,14 @@ INSTALLED_APPS = [
     'rest_framework',
     'djmoney',
     'core',
+    'users',
+    'farms',
     'ingredients',
     'recipes',
     'rations'
 ]
+
+AUTH_USER_MODEL = 'users.User'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -60,6 +64,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'corsheaders.middleware.CorsMiddleware',
+    'core.middleware.MultitenantMiddleware'
 
 ]
 
