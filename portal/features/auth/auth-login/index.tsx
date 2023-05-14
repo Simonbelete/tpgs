@@ -1,7 +1,15 @@
 import { signIn } from "next-auth/react";
 
 const AuthLogin = () => {
-  return <button onClick={() => signIn()}>Sign in</button>;
+  const login = async () => {
+    const response = await signIn("credentials", {
+      username: "",
+      password: "",
+      redirect: false,
+    });
+    console.log(response);
+  };
+  return <button onClick={login}>Sign in</button>;
 };
 
 export default AuthLogin;
