@@ -11,7 +11,13 @@ import {
   Grid,
 } from "@mui/material";
 
-import { Logo, PrimaryMenu, SignUpNowCTA, PrimaryHero } from "@/components";
+import {
+  Logo,
+  PrimaryMenu,
+  SignUpNowCTA,
+  PrimaryHero,
+  AppIntro,
+} from "@/components";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -61,6 +67,9 @@ export default function Home() {
         </Box>
       </Box>
       <Box sx={{ height: 50 }} />
+      <AppIntro />
+      <Box sx={{ height: 50 }} />
+
       <SignUpNowCTA />
     </main>
   );

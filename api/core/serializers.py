@@ -14,19 +14,3 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
         data['groups'] = self.user.groups.values_list('name', flat=True)
 
         return data
-
-    @classmethod
-    def get_token(cls, user):
-        token = super().get_token(user)
-        print('-------------')
-        print(user.groups)
-        print(user.groups.all())
-        print(token)
-        # Add custom claims
-        token['name'] = user.name
-        token['email'] = user.email
-        token['farm'] = user.farm
-        # token['groups'] = user.groups.values_list('name', flat=True)
-        # ...
-
-        return token
