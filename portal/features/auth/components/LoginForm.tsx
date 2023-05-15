@@ -1,5 +1,7 @@
 import React from "react";
 import { signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
+
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import { TextField, Box, Grid, Button } from "@mui/material";
 
@@ -10,6 +12,8 @@ type Inputs = {
 
 // TODO: Move the logic to auth-login
 const LoginForm = () => {
+  const router = useRouter();
+
   const {
     register,
     handleSubmit,
@@ -23,7 +27,10 @@ const LoginForm = () => {
       password: data.password,
       redirect: false,
     });
-    console.log(response);
+    if (response?.error) {
+    } else {
+      router.push("dashboard");
+    }
   };
 
   return (

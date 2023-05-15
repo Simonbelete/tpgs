@@ -42,9 +42,13 @@ const cookies: Partial<CookiesOptions> = {
 };
 
 export const jwt = async ({ token, user }: { token: JWT; user?: User }) => {
-  // Persist the OAuth access_token to the token right after signin
+  // console.log("-----------------------");
+  // console.log(user);
+  // console.log("**");
+  // console.log(token);
+
   if (user) {
-    token.accessToken = user.access;
+    token.accessToken = user.access_token;
   }
 
   // on subsequent calls, token is provided and we need to check if it's expired
@@ -53,7 +57,7 @@ export const jwt = async ({ token, user }: { token: JWT; user?: User }) => {
       return { ...token, ...user };
   } else if (token?.refreshToken) return refreshAccessToken(token);
 
-  return { ...token, ...user };
+  return { token, user };
 };
 
 export const session = ({
@@ -63,25 +67,29 @@ export const session = ({
   session: Session;
   token: JWT;
 }): Promise<Session> => {
-  if (
-    Date.now() / 1000 > token?.accessTokenExpires &&
-    token?.refreshTokenExpires &&
-    Date.now() / 1000 > token?.refreshTokenExpires
-  ) {
-    return Promise.reject({
-      error: new Error(
-        "Refresh token has expired. Please log in again to get a new refresh token."
-      ),
-    });
-  }
+  // session.accessToken = token.accessToken;
+  // return session;
+  // if (
+  //   Date.now() / 1000 > token?.accessTokenExpires &&
+  //   token?.refreshTokenExpires &&
+  //   Date.now() / 1000 > token?.refreshTokenExpires
+  // ) {
+  //   return Promise.reject({
+  //     error: new Error(
+  //       "Refresh token has expired. Please log in again to get a new refresh token."
+  //     ),
+  //   });
+  // }
 
   const accessTokenData = JSON.parse(atob(token.token.split(".")?.at(1)));
-  session.user = accessTokenData;
-  token.accessTokenExpires = accessTokenData.exp;
+  console.log(accessTokenData);
+  // session.user = accessTokenData;
+  // token.accessTokenExpires = accessTokenData.exp;
 
-  session.token = token?.token;
+  session.accessToken = token.accessToken;
+  // session.token = token?.token;
 
-  return Promise.resolve(session);
+  return session;
 };
 
 export const authOptions = {
@@ -115,9 +123,34 @@ export const authOptions = {
     }),
   ],
   callbacks: {
-    jwt,
-    session,
-    cookies,
+    async jwt({ token, user }) {
+      // Persist the OAuth access_token to the token right after signin
+
+      if (user) {
+        token.accessToken = user.access;
+        console.log(user);
+      }
+      return { ...token, ...user };
+    },
+    async session(data) {
+      // Send properties to the client, like an access_token from a provider.
+      // session.accessToken = token.accessToken;
+      // console.log("seeeeeeeee");
+      // session.user = user;
+      console.log("see");
+      console.log(data);
+      return session;
+    },
+    // jwt,
+    // session,
+    // cookies,
+  },
+  pages: {
+    signIn: "/login",
+    signOut: "/auth/signout",
+    error: "/auth/error", // Error code passed in query string as ?error=
+    verifyRequest: "/auth/verify-request", // (used for check email message)
+    newUser: "/auth/new-user", // New users will be directed here on first sign in (leave the property out if not of interest)
   },
 };
 
