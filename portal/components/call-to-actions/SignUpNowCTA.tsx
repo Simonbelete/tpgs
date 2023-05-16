@@ -2,8 +2,8 @@ import React from "react";
 import styled from "@emotion/styled";
 import { Container, Typography, Box, Button } from "@mui/material";
 
+// background-image: url("https://placehold.co/600x400/png");
 const Section = styled.section`
-  background-image: url("https://placehold.co/600x400/png");
   background-repeat: no-repeat;
   background-size: cover;
   background-color: ${({ theme }) => theme.palette.primary.main};
@@ -15,8 +15,9 @@ const SectionDescription = styled(Typography)`
 
 const SignUpNowCTA = ({ ...props }) => {
   const content = {
-    "header-p1": "Donec lacinia",
-    "header-p2": "turpis non sapien lobortis pretium",
+    "header-p1": "Lorem Ipsum",
+    "header-p2":
+      " is simply dummy text of the printing and typesetting industry.",
     description:
       "But in a much more real sense, I had no idea what to do. No, no, no. I don't wanna hear moaning. This is a good day.",
     "primary-action": "Action",

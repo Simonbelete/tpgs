@@ -21634,3 +21634,55 @@ Traceback (most recent call last):
   File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/pandas/core/indexes/base.py", line 3804, in get_loc
     raise KeyError(key) from err
 KeyError: 'week'
+Internal Server Error: /api/anomaly/feed/graph/
+Traceback (most recent call last):
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/pandas/core/indexes/base.py", line 3802, in get_loc
+    return self._engine.get_loc(casted_key)
+  File "pandas/_libs/index.pyx", line 138, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas/_libs/index.pyx", line 165, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas/_libs/hashtable_class_helper.pxi", line 5745, in pandas._libs.hashtable.PyObjectHashTable.get_item
+  File "pandas/_libs/hashtable_class_helper.pxi", line 5753, in pandas._libs.hashtable.PyObjectHashTable.get_item
+KeyError: 'week'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/core/handlers/exception.py", line 56, in inner
+    response = get_response(request)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/views/decorators/http.py", line 43, in inner
+    return func(request, *args, **kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/dashboard/api/views.py", line 177, in analysis_feed_graph
+    fig = px.scatter(x=df['week'].values, y=df['weight'].values)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/pandas/core/frame.py", line 3807, in __getitem__
+    indexer = self.columns.get_loc(key)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/pandas/core/indexes/base.py", line 3804, in get_loc
+    raise KeyError(key) from err
+KeyError: 'week'
+Internal Server Error: /api/anomaly/feed/graph/
+Traceback (most recent call last):
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/pandas/core/indexes/base.py", line 3802, in get_loc
+    return self._engine.get_loc(casted_key)
+  File "pandas/_libs/index.pyx", line 138, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas/_libs/index.pyx", line 165, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas/_libs/hashtable_class_helper.pxi", line 5745, in pandas._libs.hashtable.PyObjectHashTable.get_item
+  File "pandas/_libs/hashtable_class_helper.pxi", line 5753, in pandas._libs.hashtable.PyObjectHashTable.get_item
+KeyError: 'week'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/core/handlers/exception.py", line 56, in inner
+    response = get_response(request)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/django/views/decorators/http.py", line 43, in inner
+    return func(request, *args, **kwargs)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/dashboard/api/views.py", line 177, in analysis_feed_graph
+    fig = px.scatter(x=df['week'].values, y=df['weight'].values)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/pandas/core/frame.py", line 3807, in __getitem__
+    indexer = self.columns.get_loc(key)
+  File "/home/admin-user/Documents/projects/tpgs/ilri_ges/venv/lib/python3.8/site-packages/pandas/core/indexes/base.py", line 3804, in get_loc
+    raise KeyError(key) from err
+KeyError: 'week'
