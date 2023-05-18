@@ -42,11 +42,6 @@ const cookies: Partial<CookiesOptions> = {
 };
 
 export const jwt = async ({ token, user }: { token: JWT; user?: User }) => {
-  // console.log("-----------------------");
-  // console.log(user);
-  // console.log("**");
-  // console.log(token);
-
   if (user) {
     token.accessToken = user.access_token;
   }
@@ -128,7 +123,6 @@ export const authOptions = {
 
       if (user) {
         token.accessToken = user.access;
-        console.log(user);
       }
       return { ...token, ...user };
     },
@@ -137,8 +131,6 @@ export const authOptions = {
       // session.accessToken = token.accessToken;
       // console.log("seeeeeeeee");
       // session.user = user;
-      console.log("see");
-      console.log(data);
       return session;
     },
     // jwt,
