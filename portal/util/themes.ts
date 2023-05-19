@@ -39,6 +39,15 @@ const lightTheme = createTheme({
       main: common.white,
     },
   },
+  components: {
+    MuiButton: {
+      styleOverrides: {
+        containedPrimary: {
+          backgroundColor: "#008a3f !important",
+        },
+      },
+    },
+  },
 });
 
 const darkTheme = createTheme({
