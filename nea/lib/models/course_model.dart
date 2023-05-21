@@ -11,6 +11,15 @@ class Course {
   final String? title_am;
   final String? title_sw;
 
+  final String? content_en;
+  final String? content_am;
+  final String? content_sw;
+
+  // Localized Data
+  String? image;
+  String? title;
+  String? content;
+
   Course(
       {required this.id,
       this.title_en,
@@ -19,7 +28,31 @@ class Course {
       this.coverImage,
       this.coverImage_en,
       this.coverImage_am,
-      this.coverImage_sw});
+      this.coverImage_sw,
+      this.content_en,
+      this.content_am,
+      this.content_sw,
+      this.image,
+      this.title,
+      this.content});
+
+  Course withLocal(local) {
+    if (local == 'en') {
+      image = coverImage_en;
+      title = title_en;
+      content = content_en;
+    } else if (local == 'am') {
+      image = coverImage_am;
+      title = title_am;
+      content = content_am;
+    } else if (local == 'sw') {
+      image = coverImage_sw;
+      title = title_sw;
+      content = content_sw;
+    }
+    image = coverImage_am;
+    return this;
+  }
 
   Course.fromMap(Map<String, dynamic> item)
       : id = item["id"],
@@ -29,7 +62,10 @@ class Course {
         coverImage = item['coverImage'],
         coverImage_en = item['coverImage_en'],
         coverImage_am = item['coverImage_am'],
-        coverImage_sw = item['coverImage_sw'];
+        coverImage_sw = item['coverImage_sw'],
+        content_en = item['coverImage_en'],
+        content_am = item['coverImage_am'],
+        content_sw = item['coverImage_sw'];
 
   Map<String, Object> toMap() {
     return {

@@ -1,4 +1,4 @@
-import 'package:nea/models/Course.dart';
+import 'package:nea/models/course_model.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 
@@ -58,6 +58,9 @@ class SqliteService {
         coverImage_en: maps[i]['coverImage_en'],
         coverImage_am: maps[i]['coverImage_am'],
         coverImage_sw: maps[i]['coverImage_sw'],
+        content_en: maps[i]['content_en'],
+        content_am: maps[i]['content_am'],
+        content_sw: maps[i]['content_sw'],
       );
     });
   }
