@@ -1,0 +1,27 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Course {
+  id    Int     @id @default(autoincrement())
+  title_en  String?
+  title_am  String?
+  title_sw  String?
+
+  coverImage  String?
+  coverImage_en  String?
+  coverImage_am  String?
+  coverImage_sw  String?
+
+  content_en  String?
+  content_am  String?
+  content_sw  String?
+}
