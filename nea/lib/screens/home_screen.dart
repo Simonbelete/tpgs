@@ -66,19 +66,20 @@ class HomeScreen extends StatelessWidget {
               children: [
                 HeaderLogo(),
                 // // Search Box
-                // Container(
-                //   padding: const EdgeInsets.symmetric(
-                //       horizontal: 30.0, vertical: 20.0),
-                //   child: SearchBar(
-                //     onChange: ((value) {}),
-                //     onSubmit: ((query) {
-                //       context
-                //           .read<SearchBloc>()
-                //           .add(SetSearchQuery(query: query));
-                //       Navigator.pushNamed(context, SearchScreen.routeName);
-                //     }),
-                //   ),
-                // ),
+                Container(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 30.0, vertical: 20.0),
+                    child: Container()
+                    // child: SearchBar(
+                    //   onChange: ((value) {}),
+                    //   onSubmit: ((query) {
+                    //     context
+                    //         .read<SearchBloc>()
+                    //         .add(SetSearchQuery(query: query));
+                    //     Navigator.pushNamed(context, SearchScreen.routeName);
+                    //   }),
+                    // ),
+                    ),
                 // Language Selection
                 Container(
                   padding: EdgeInsets.symmetric(horizontal: 35.0),

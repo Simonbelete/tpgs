@@ -11,14 +11,12 @@ class UpdateButton extends StatelessWidget {
     return OutlinedButton(
       onPressed: () async {
         var databasesPath = await getDatabasesPath();
-        var path = join(databasesPath, "abc.db");
+        var path = join(databasesPath);
         FlutterDownloader.enqueue(
           url: 'your download link',
           savedDir: path,
-          showNotification:
-              true, // show download progress in status bar (for Android)
-          openFileFromNotification:
-              true, // click on notification to open downloaded file (for Android)
+          showNotification: true,
+          openFileFromNotification: true,
         );
       },
       child: Text('Update'),
