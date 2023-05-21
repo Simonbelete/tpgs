@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nea/constants.dart';
+import 'package:nea/i18n/app.dart';
 import 'package:nea/models/course_model.dart';
 import 'package:nea/screens/course_screen.dart';
 import 'package:nea/service/sqlite_service.dart';
@@ -40,7 +41,7 @@ class _CourseGridState extends State<CourseGrid> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Header6(
-                  text: state.local,
+                  text: appLocale['courses']![state.local]!,
                   color: primaryColor,
                 ),
               ],
