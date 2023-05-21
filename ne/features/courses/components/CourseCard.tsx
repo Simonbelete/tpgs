@@ -21,7 +21,7 @@ const CourseCard = ({
 }) => {
   return (
     <Card sx={{ maxWidth: 345 }}>
-      <Link href={"/courses/" + id}>
+      <Link href={"/courses/edit/" + id}>
         <CardActionArea>
           <CardMedia
             component="img"
