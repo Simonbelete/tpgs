@@ -27,7 +27,10 @@ class _CourseGridState extends State<CourseGrid> {
   }
 
   void loadData() async {
-    courses = await SqliteService().courses();
+    List<Course> courseData = await SqliteService().courses();
+    setState(() {
+      courses = courseData;
+    });
   }
 
   @override
