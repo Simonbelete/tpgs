@@ -11,6 +11,7 @@ import 'package:nea/widgets/paragraph.dart';
 import 'package:nea/widgets/search_bar.dart';
 import 'package:nea/bloc/search/bloc.dart';
 import 'package:nea/bloc/search/events.dart';
+import 'package:nea/widgets/update_button.dart';
 
 import '../i18n/app.dart';
 
@@ -45,7 +46,8 @@ class HomeScreen extends StatelessWidget {
             ),
             SimpleDialogOption(
               child: Paragraph(title: '', body: appLocale['authors']![local]!),
-            )
+            ),
+            SimpleDialogOption(child: UpdateButton())
           ],
         );
       },

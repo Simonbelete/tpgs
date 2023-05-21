@@ -14,9 +14,9 @@ Map<String, Map<String, String>> appLocale = {
   'recipes': {'en': 'Recipes', 'am': 'የምግብ አዘገጃጀት', 'sw': 'Mapishi'},
   'prepared_by': {'en': 'Prepared by', 'am': 'አዘጋጆች', 'sw': 'Imetayarishwa na'},
   'authors': {
-    'en': 'Kumlachew Geremew \n\n Tadelle Dessie (Dr.)',
-    'am': 'ቁምላቸው ገረመው \n\n ታደለ ደሴ (ዶ/ር)',
-    'sw': 'Kumlachew Geremew \n\n Tadelle Dessie (Dr.)',
+    'en': 'Kumlachew Geremew \n\nTadelle Dessie (Dr.)',
+    'am': 'ቁምላቸው ገረመው \n\nታደለ ደሴ (ዶ/ር)',
+    'sw': 'Kumlachew Geremew \n\nTadelle Dessie (Dr.)',
   },
   'find_course_or_materials': {
     'en': 'Find course or materials',

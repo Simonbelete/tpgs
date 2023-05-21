@@ -4,6 +4,7 @@ import 'package:nea/bloc/local/events.dart';
 import 'package:nea/bloc/onboarding/states.dart';
 import 'package:nea/router.dart';
 import 'package:nea/screens/home_screen.dart';
+import 'package:flutter_downloader/flutter_downloader.dart';
 
 import 'utils/preferencess.dart';
 import 'utils/bloc_observer.dart';
@@ -17,6 +18,7 @@ import 'theme.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   Bloc.observer = AppBlocObserver();
+  await FlutterDownloader.initialize(debug: true, ignoreSsl: true);
   await Preferencess.init();
   runApp(const NutritionEductionApp());
 }
