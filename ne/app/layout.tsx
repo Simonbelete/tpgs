@@ -26,7 +26,7 @@ export default function RootLayout({
             <SidebarMenu />
             <div style={{ overflowY: "scroll", width: "100%" }}>
               <Navbar />
-              <div style={{ padding: "50px" }}>{children}</div>
+              <div style={{ padding: "30px" }}>{children}</div>
             </div>
           </div>
         </body>

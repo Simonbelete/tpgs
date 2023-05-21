@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { PrismaClient } from "@prisma/client";
 import Course from "@/interfaces/Course";
+import { CourseForm } from "@/features/courses";
 
 async function getData(id: number): Promise<Course | null> {
   const prisma = new PrismaClient();
@@ -16,7 +17,7 @@ export default async function Page({ params }: { params: { id: number } }) {
   return (
     <section>
       <h1>Courses</h1>
-      {data?.title_am}
+      {data && <CourseForm course={data} />}
     </section>
   );
 }
