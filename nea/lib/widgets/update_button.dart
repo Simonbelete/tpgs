@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
+import 'dart:io';
+import 'package:path_provider/path_provider.dart';
 
 class UpdateButton extends StatelessWidget {
   const UpdateButton({super.key});
@@ -10,11 +12,12 @@ class UpdateButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return OutlinedButton(
       onPressed: () async {
-        var databasesPath = await getDatabasesPath();
-        var path = join(databasesPath);
+        var dir = await getExternalStorageDirectory();
+        var path = dir?.path;
+
         FlutterDownloader.enqueue(
-          url: 'your download link',
-          savedDir: path,
+          url: 'http://192.168.8.128:3000/database.db',
+          savedDir: path ?? "",
           showNotification: true,
           openFileFromNotification: true,
         );
