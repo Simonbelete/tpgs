@@ -47,7 +47,6 @@ class HomeScreen extends StatelessWidget {
             SimpleDialogOption(
               child: Paragraph(title: '', body: appLocale['authors']![local]!),
             ),
-            SimpleDialogOption(child: UpdateButton())
           ],
         );
       },

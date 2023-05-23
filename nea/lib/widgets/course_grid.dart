@@ -1,37 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:nea/constants.dart';
-import 'package:nea/i18n/app.dart';
-import 'package:nea/models/course_model.dart';
-import 'package:nea/screens/course_screen.dart';
-import 'package:nea/service/sqlite_service.dart';
-import 'package:nea/widgets/course_card.dart';
-import 'package:nea/widgets/header_6.dart';
 import 'package:nea/bloc/local/bloc.dart';
 import 'package:nea/bloc/local/states.dart';
+import 'package:nea/constants.dart';
+import 'package:nea/i18n/app.dart';
+import 'package:nea/i18n/courses.dart';
+import 'package:nea/models/course_model.dart';
+import 'package:nea/screens/course_screen.dart';
+import 'package:nea/utils/responsive_widget.dart';
+import 'package:nea/widgets/course_card.dart';
+import 'package:nea/widgets/header_6.dart';
+import 'package:nea/widgets/sub_title.dart';
 
-class CourseGrid extends StatefulWidget {
-  const CourseGrid({super.key});
-
-  @override
-  State<CourseGrid> createState() => _CourseGridState();
-}
-
-class _CourseGridState extends State<CourseGrid> {
-  List<Course> courses = [];
-
-  @override
-  void initState() {
-    super.initState();
-    loadData();
-  }
-
-  void loadData() async {
-    List<Course> courseData = await SqliteService().courses();
-    setState(() {
-      courses = courseData;
-    });
-  }
+class CourseGrid extends StatelessWidget {
+  CourseGrid({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -54,28 +36,35 @@ class _CourseGridState extends State<CourseGrid> {
             height: 10,
           ),
           Container(
-            padding: const EdgeInsets.only(left: 10.0),
+            padding: EdgeInsets.only(left: 10.0),
             child: GridView.builder(
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  mainAxisExtent: 250,
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount:
+                      ResponsiveWidget.isSmallScreen(context) ? 2 : 4,
+                  mainAxisExtent:
+                      ResponsiveWidget.isSmallScreen(context) ? 250 : 400,
                 ),
-                physics: const NeverScrollableScrollPhysics(),
+                physics: NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
-                padding: const EdgeInsets.only(top: 16.0),
-                itemCount: courses.length,
+                padding: EdgeInsets.only(top: 16.0),
+                itemCount: courseData.length,
                 itemBuilder: (context, index) => Container(
-                    padding: const EdgeInsets.only(right: 15),
+                    padding: EdgeInsets.only(
+                        right:
+                            ResponsiveWidget.isSmallScreen(context) ? 15 : 50),
                     child: InkWell(
                       onTap: () {
                         Navigator.pushNamed(context, CourseScreen.routeName,
-                            arguments: courses[index].withLocal(state.local));
+                            arguments: courseData.values
+                                .elementAt(index)[state.local]);
                       },
                       child: CourseCard(
-                        image:
-                            courses[index].withLocal(state.local).image ?? "",
-                        title:
-                            courses[index].withLocal(state.local).title ?? "",
+                        image: courseData.values
+                            .elementAt(index)[state.local]!
+                            .coverImage,
+                        title: courseData.values
+                            .elementAt(index)[state.local]!
+                            .title,
                       ),
                     ))),
           ),

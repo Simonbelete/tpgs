@@ -4,9 +4,6 @@ import 'package:nea/bloc/local/events.dart';
 import 'package:nea/bloc/onboarding/states.dart';
 import 'package:nea/router.dart';
 import 'package:nea/screens/home_screen.dart';
-import 'package:flutter_downloader/flutter_downloader.dart';
-import 'package:nea/service/sync_database.dart';
-import 'package:permission_handler/permission_handler.dart';
 
 import 'utils/preferencess.dart';
 import 'utils/bloc_observer.dart';
@@ -17,26 +14,10 @@ import 'bloc/search/bloc.dart';
 import 'screens/onboarding_screen.dart';
 import 'theme.dart';
 
-void downloadCallback(String id, int status, int progress) {
-  print('-----------');
-  print(id);
-  print(status);
-  print(progress);
-  // syncDatabase(progress);
-}
-
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   Bloc.observer = AppBlocObserver();
-  await FlutterDownloader.initialize(debug: true, ignoreSsl: true);
   await Preferencess.init();
-
-  FlutterDownloader.registerCallback(downloadCallback);
-
-  Map<Permission, PermissionStatus> statuses = await [
-    Permission.notification,
-    Permission.storage,
-  ].request();
 
   runApp(const NutritionEductionApp());
 }

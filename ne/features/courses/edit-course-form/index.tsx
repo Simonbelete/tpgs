@@ -14,7 +14,9 @@ type Inputs = Partial<Course>;
 
 const schema = object({}).required();
 
-const CreateCourseForm = () => {
+const EditCourseForm = (props: { course: Course }) => {
+  const { course } = props;
+
   const [tabValue, setTabValue] = React.useState(0);
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
@@ -37,15 +39,42 @@ const CreateCourseForm = () => {
   const router = useRouter();
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
-    const response = await axios.post("/api/courses/", {
+    console.log("AAAAAAAAAAAAAAAAAAAAa");
+    console.log(contentRef_AM.current);
+    const response = await axios.post("/api/courses/" + course.id, {
       ...data,
-      content_en: contentRef_EN.current.getContent(),
-      content_am: contentRef_AM.current.getContent(),
-      content_sw: contentRef_SW.current.getContent(),
+      content_en:
+        contentRef_EN.current == null
+          ? course.content_en
+          : contentRef_EN.current.getContent(),
+      content_am:
+        contentRef_AM.current == null
+          ? course.content_am
+          : contentRef_AM.current.getContent(),
+      content_sw:
+        contentRef_SW.current == null
+          ? course.content_sw
+          : contentRef_SW.current.getContent(),
     });
     if (response.status == 200) router.push("/courses");
     else console.log(response);
   };
+
+  useEffect(() => {
+    setValue("title_en", course.title_en);
+    setValue("title_am", course.title_am);
+    setValue("title_sw", course.title_sw);
+
+    setValue("coverImage", course.coverImage);
+    setValue("coverImage_en", course.coverImage_en);
+    setValue("coverImage_am", course.coverImage_am);
+    setValue("coverImage_sw", course.coverImage_sw);
+
+    contentRef_EN.current = course.content_en;
+    contentRef_AM.current = course.content_am;
+    contentRef_SW.current = course.content_sw;
+  }, [course]);
+
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <Box sx={{ width: "100%" }}>
@@ -72,12 +101,13 @@ const CreateCourseForm = () => {
                   fieldState: { invalid, isTouched, isDirty, error },
                 }) => (
                   <TextField
+                    fullWidth
                     error={!!error?.message}
                     helperText={error?.message}
                     onChange={onChange}
                     value={value}
                     label={"Title - English"}
-                    fullWidth
+                    InputLabelProps={{ shrink: true }}
                   />
                 )}
               />
@@ -91,18 +121,22 @@ const CreateCourseForm = () => {
                   fieldState: { invalid, isTouched, isDirty, error },
                 }) => (
                   <TextField
+                    fullWidth
                     error={!!error?.message}
                     helperText={error?.message}
                     onChange={onChange}
                     value={value}
                     label={"Cover Image - English"}
-                    fullWidth
+                    InputLabelProps={{ shrink: true }}
                   />
                 )}
               />
             </Grid>
             <Grid item xs={12}>
-              <WYSUIWYGEditor ref={contentRef_EN} />
+              <WYSUIWYGEditor
+                ref={contentRef_EN}
+                initialValue={course.content_en}
+              />
             </Grid>
           </Grid>
         )}
@@ -118,12 +152,13 @@ const CreateCourseForm = () => {
                   fieldState: { invalid, isTouched, isDirty, error },
                 }) => (
                   <TextField
+                    fullWidth
                     error={!!error?.message}
                     helperText={error?.message}
                     onChange={onChange}
                     value={value}
                     label={"Title - Amharic"}
-                    fullWidth
+                    InputLabelProps={{ shrink: true }}
                   />
                 )}
               />
@@ -142,13 +177,16 @@ const CreateCourseForm = () => {
                     onChange={onChange}
                     value={value}
                     label={"Cover Image - Swahili"}
-                    fullWidth
+                    InputLabelProps={{ shrink: true }}
                   />
                 )}
               />
             </Grid>
             <Grid item xs={12}>
-              <WYSUIWYGEditor ref={contentRef_AM} />
+              <WYSUIWYGEditor
+                ref={contentRef_AM}
+                initialValue={course.content_am}
+              />
             </Grid>
           </Grid>
         )}
@@ -164,12 +202,13 @@ const CreateCourseForm = () => {
                   fieldState: { invalid, isTouched, isDirty, error },
                 }) => (
                   <TextField
+                    fullWidth
                     error={!!error?.message}
                     helperText={error?.message}
                     onChange={onChange}
                     value={value}
                     label={"Title - Swahili"}
-                    fullWidth
+                    InputLabelProps={{ shrink: true }}
                   />
                 )}
               />
@@ -183,18 +222,22 @@ const CreateCourseForm = () => {
                   fieldState: { invalid, isTouched, isDirty, error },
                 }) => (
                   <TextField
+                    fullWidth
                     error={!!error?.message}
                     helperText={error?.message}
                     onChange={onChange}
                     value={value}
                     label={"Cover Image - Swahili"}
-                    fullWidth
+                    InputLabelProps={{ shrink: true }}
                   />
                 )}
               />
             </Grid>
             <Grid item xs={12}>
-              <WYSUIWYGEditor ref={contentRef_SW} />
+              <WYSUIWYGEditor
+                ref={contentRef_SW}
+                initialValue={course.content_sw}
+              />
             </Grid>
           </Grid>
         )}
@@ -208,4 +251,4 @@ const CreateCourseForm = () => {
   );
 };
 
-export default CreateCourseForm;
+export default EditCourseForm;
