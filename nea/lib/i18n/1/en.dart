@@ -18,6 +18,7 @@ Course EN = Course(
       Objectives(
           title: "OBJECTIVES",
           children: ['Understand why good nutrition is important']),
+      CourseBodyImage(image: "assets/materials/images/imag_4.png"),
       KeyMessages(children: [
         'Good nutrition is important at all stages of life.',
         'Our bodies need enough food to give us energy, enable us to grow, learn, work and stay healthy.',
