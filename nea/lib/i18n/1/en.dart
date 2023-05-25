@@ -1,8 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:nea/models/course_model.dart';
 import 'package:nea/widgets/bullet.dart';
+import 'package:nea/widgets/course_body_image.dart';
 import 'package:nea/widgets/keymessages.dart';
 import 'package:nea/widgets/objectives.dart';
+import 'package:nea/widgets/paragraph.dart';
 import 'package:nea/widgets/remember.dart';
 
 Course EN = Course(
@@ -26,6 +28,11 @@ Course EN = Course(
           'The foetus and children under the age of two have high nutrient needs because their bodies are growing and changing quickly, even before birth.',
           'The three key principles of good nutrition are: \n\nAdequate diet - eating enough of the right foods.\n\nAbsence of disease - staying healthy.\n\nAppropriate caring practices – good care, rest, hygiene, and a stimulating and loving environment for young children and the whole family.',
         ]),
-        Remember(children: ['The family need a balanced meal everyday'])
+        Remember(children: ['The family need a balanced meal everyday']),
+        CourseBodyImage(
+          image: 'assets/materials/images/imag_4.png',
+          description:
+              "A poorly nourished pregnant woman is likely to give birth to an underweight baby who grows up as a weaker adolescent and likely to give birth to an underweight baby in future.",
+        ),
       ],
     ));

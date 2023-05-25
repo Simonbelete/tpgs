@@ -44,7 +44,7 @@ class Objectives extends StatelessWidget {
                 children: children
                     .map(
                       (e) => TextSpan(
-                          text: "• " + e + "\n\n",
+                          text: "• " + e + "\n",
                           style: Theme.of(context).textTheme.bodyMedium!.apply(
                                 fontSizeDelta: 1,
                                 color: Colors.white,
