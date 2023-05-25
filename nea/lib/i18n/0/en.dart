@@ -5,7 +5,7 @@ import 'package:nea/widgets/objectives.dart';
 
 Course EN = Course(
   title: "INTRODUCTION",
-  coverImage: "assets/materials/images/192.ppm",
+  coverImage: "assets/materials/images/family_nutration.png",
   body: Column(
     children: [],
   ),

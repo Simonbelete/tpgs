@@ -9,7 +9,7 @@ class ImageScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: Colors.white,
       body: Hero(
         tag: image,
         child: InteractiveViewer(

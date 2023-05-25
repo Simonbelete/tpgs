@@ -11,6 +11,7 @@ class Remember extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(bottom: 20.0),
       child: Container(
+        width: double.infinity,
         decoration: BoxDecoration(
             color: Color(0xff6DA82F),
             borderRadius: BorderRadius.circular(10.0)),
