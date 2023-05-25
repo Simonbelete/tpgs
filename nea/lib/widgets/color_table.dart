@@ -13,7 +13,7 @@ class ColorTable extends StatelessWidget {
         defaultColumnWidth:
             FixedColumnWidth((size.width * 0.9) / children[0].length),
         border: TableBorder.all(
-            color: Colors.black, style: BorderStyle.solid, width: 2),
+            color: Colors.black, style: BorderStyle.solid, width: 1),
         children: children.map((e) => TableRow(children: e)).toList(),
       )),
     );
