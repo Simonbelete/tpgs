@@ -13,6 +13,7 @@ class CourseBodyImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      margin: EdgeInsets.only(bottom: 20.0),
       decoration: BoxDecoration(
           border: Border(left: BorderSide(color: primaryColor, width: 2))),
       child: Column(

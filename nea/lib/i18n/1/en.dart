@@ -6,11 +6,14 @@ import 'package:nea/widgets/keymessages.dart';
 import 'package:nea/widgets/objectives.dart';
 import 'package:nea/widgets/paragraph.dart';
 import 'package:nea/widgets/remember.dart';
+import 'package:nea/widgets/sub_title.dart';
+import 'package:nea/widgets/sub_title_text.dart';
 
 Course EN = Course(
     title: "WHY NUTRITION MATTERS",
     coverImage: "assets/materials/images/imag_4.png",
     body: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: const [
         Objectives(
             title: "OBJECTIVES",
@@ -34,5 +37,37 @@ Course EN = Course(
           description:
               "A poorly nourished pregnant woman is likely to give birth to an underweight baby who grows up as a weaker adolescent and likely to give birth to an underweight baby in future.",
         ),
+        CourseBodyImage(
+          image: 'assets/materials/images/img_5.png',
+          description:
+              "A well-nourished pregnant woman will give birth to a healthy baby who grows up as a healthy adolescent and likely to give birth to a health baby in the future.",
+        ),
+        //
+        // Causes of malnutrition
+        //
+        SubTitleText(
+          text: 'Causes of malnutrition',
+          fontSize: 27.0,
+        ),
+        Objectives(
+            title: "OBJECTIVE",
+            children: ['Know about malnutrition and its causes']),
+        KeyMessages(children: [
+          Paragraph(
+              title: "",
+              body:
+                  "Malnutrition refers to deﬁ ciencies, excesses or imbalances in a person’s intake of nutrients."),
+          'The causes of malnutrition are diverse, interlinked and complex:',
+          Bullet(children: [
+            'Immediate causes (inadequate diet - quantity and quality, diseases)',
+            'Underlying causes (food insecurity, inadequate mother and child care, and inadequate healthcare and unhealthy environment)'
+          ]),
+          'A person who does not eat a diverse diet may lack certain vitamins and minerals (micronutrients). This can aﬀ ect health at all stages of life and prevent adequate growth and development in children. Micronutrients of public health signiﬁ cance are iron, vitamin A and iodine, lack of which aﬀ ect health and growth. A varied diet or taking special supplements can ensure people get the micronutrients they need.'
+        ]),
+        Remember(children: ['Eat a variety of foods everyday']),
+        CourseBodyImage(
+          image: 'assets/materials/images/8.png',
+          description: 'Inadequate food availability',
+        )
       ],
     ));

@@ -4,8 +4,9 @@ import 'package:nea/constants.dart';
 
 class SubTitleText extends StatelessWidget {
   final String text;
+  final double? fontSize;
 
-  const SubTitleText({super.key, required this.text});
+  const SubTitleText({super.key, required this.text, this.fontSize = 20.0});
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +16,9 @@ class SubTitleText extends StatelessWidget {
         text: TextSpan(
           text: text,
           style: GoogleFonts.mulish(
-              fontSize: 20.0, fontWeight: FontWeight.bold, color: primaryColor),
+              fontSize: fontSize,
+              fontWeight: FontWeight.bold,
+              color: primaryColor),
         ),
       ),
     );

@@ -8,14 +8,23 @@ class Bullet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
+
     return Container(
       child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: children
               .map(
-                (e) => Container(
-                    padding: EdgeInsets.only(bottom: 0),
-                    child: Paragraph(title: '', body: '• $e')),
+                (e) => Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text('•  '),
+                    Container(
+                        width: size.width * 0.85,
+                        child: Paragraph(title: '', body: '$e'))
+                  ],
+                ),
               )
               .toList()),
     );
