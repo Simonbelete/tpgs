@@ -49,24 +49,27 @@ class FoodCard extends StatelessWidget {
                     // )
                   ],
                 )),
-            const SizedBox(
-              height: 15,
-            ),
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 10.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  // FavoritButton(),
-                  Text(''),
-                  Image.asset(
-                    'assets/icons/right-arrow.png',
-                    height: 26,
-                  )
-                ],
-              ),
-            )
+            // const SizedBox(
+            //   height: 15,
+            // ),
+            // Container(
+            //   padding: const EdgeInsets.symmetric(horizontal: 10.0),
+            //   child: Row(
+            //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //     crossAxisAlignment: CrossAxisAlignment.center,
+            //     children: [
+            //       // FavoritButton(),
+            //       Text(''),
+            //       SizedBox(
+            //         height: 10,
+            //       )
+            //       // Image.asset(
+            //       //   'assets/icons/right-arrow.png',
+            //       //   height: 26,
+            //       // )
+            //     ],
+            //   ),
+            // )
           ],
         ),
       ),

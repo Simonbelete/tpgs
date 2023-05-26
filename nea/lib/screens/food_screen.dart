@@ -37,7 +37,7 @@ class FoodScreen extends StatelessWidget {
             const SizedBox(
               height: 30.0,
             ),
-            food.description,
+            food.description!,
             const SizedBox(
               height: 10.0,
             ),
@@ -45,7 +45,7 @@ class FoodScreen extends StatelessWidget {
             const SizedBox(
               height: 10.0,
             ),
-            food.body
+            food.body!
           ]),
         )
       ],
@@ -74,7 +74,7 @@ class FoodScreen extends StatelessWidget {
               const SizedBox(
                 height: 30.0,
               ),
-              food.description,
+              // food.description,
               const SizedBox(
                 height: 10.0,
               ),
@@ -82,7 +82,7 @@ class FoodScreen extends StatelessWidget {
               const SizedBox(
                 height: 10.0,
               ),
-              food.body
+              // food.body
             ]),
           )
         ],

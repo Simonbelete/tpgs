@@ -4,6 +4,7 @@ import 'package:nea/widgets/course_grid.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nea/bloc/local/bloc.dart';
 import 'package:nea/bloc/local/states.dart';
+import 'package:nea/widgets/food_grid.dart';
 import 'package:nea/widgets/header_6.dart';
 import 'package:nea/widgets/header_logo.dart';
 import 'package:nea/widgets/language_chip.dart';
@@ -96,6 +97,7 @@ class HomeScreen extends StatelessWidget {
                 const SizedBox(
                   height: 15,
                 ),
+                FoodGrid(),
               ],
             ),
           ),

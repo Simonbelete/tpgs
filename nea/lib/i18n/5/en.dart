@@ -8,7 +8,7 @@ import 'package:nea/widgets/paragraph.dart';
 import 'package:nea/widgets/sub_title_text.dart';
 
 Course EN = Course(
-  title: "SANITATION AND HYGIENE",
+  title: "HYGIENE AND SANITATION",
   coverImage: "assets/materials/images/sanittion_image.png",
   body: Column(
     crossAxisAlignment: CrossAxisAlignment.start,

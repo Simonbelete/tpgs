@@ -75,6 +75,7 @@ flutter:
     - assets/images/
     - assets/icons/
     - assets/materials/images/
+    - assets/materials/foods/
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
 

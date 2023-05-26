@@ -21,7 +21,7 @@ class FoodGridList extends StatelessWidget {
             child: GridView.builder(
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
-                  mainAxisExtent: 250,
+                  mainAxisExtent: 200,
                 ),
                 physics: NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
@@ -31,9 +31,9 @@ class FoodGridList extends StatelessWidget {
                     padding: EdgeInsets.only(right: 15),
                     child: InkWell(
                         onTap: () {
-                          Navigator.pushNamed(context, FoodScreen.routeName,
-                              arguments:
-                                  foods.values.elementAt(index)[state.local]);
+                          // Navigator.pushNamed(context, FoodScreen.routeName,
+                          //     arguments:
+                          //         foods.values.elementAt(index)[state.local]);
                         },
                         child: FoodCard(
                           image: foods.values
