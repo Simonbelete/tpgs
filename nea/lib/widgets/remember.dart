@@ -24,8 +24,8 @@ class Remember extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            RichText(
-              text: TextSpan(
+            SelectableText.rich(
+              TextSpan(
                 text: title! + " :- ",
                 style: Theme.of(context).textTheme.bodyMedium!.apply(
                       fontSizeDelta: 1,
@@ -34,13 +34,22 @@ class Remember extends StatelessWidget {
                     ),
               ),
             ),
+            // RichText(
+            //   text: TextSpan(
+            //     text: title! + " :- ",
+            //     style: Theme.of(context).textTheme.bodyMedium!.apply(
+            //           fontSizeDelta: 1,
+            //           fontWeightDelta: 500,
+            //           color: Colors.white,
+            //         ),
+            //   ),
+            // ),
             const SizedBox(
               height: 10,
             ),
             Padding(
               padding: EdgeInsets.only(left: 15),
-              child: RichText(
-                  text: TextSpan(
+              child: SelectableText.rich(TextSpan(
                 children: children
                     .map(
                       (e) => TextSpan(
@@ -52,6 +61,19 @@ class Remember extends StatelessWidget {
                     )
                     .toList(),
               )),
+              // child: RichText(
+              //     text: TextSpan(
+              //   children: children
+              //       .map(
+              //         (e) => TextSpan(
+              //             text: "• " + e + "\n",
+              //             style: Theme.of(context).textTheme.bodyMedium!.apply(
+              //                   fontSizeDelta: 1,
+              //                   color: Colors.white,
+              //                 )),
+              //       )
+              //       .toList(),
+              // )),
             ),
           ],
         ),

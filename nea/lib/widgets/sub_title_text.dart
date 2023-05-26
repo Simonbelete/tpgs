@@ -12,8 +12,8 @@ class SubTitleText extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 10.0),
-      child: RichText(
-        text: TextSpan(
+      child: SelectableText.rich(
+        TextSpan(
           text: text,
           style: GoogleFonts.mulish(
               fontSize: fontSize,
@@ -21,6 +21,15 @@ class SubTitleText extends StatelessWidget {
               color: primaryColor),
         ),
       ),
+      // child: RichText(
+      //   text: TextSpan(
+      //     text: text,
+      //     style: GoogleFonts.mulish(
+      //         fontSize: fontSize,
+      //         fontWeight: FontWeight.bold,
+      //         color: primaryColor),
+      //   ),
+      // ),
     );
   }
 }

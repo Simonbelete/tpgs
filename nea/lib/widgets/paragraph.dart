@@ -12,19 +12,18 @@ class Paragraph extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.only(bottom: 20.0),
-      child: RichText(
-          text: TextSpan(
-              text: title,
-              recognizer: route != null
-                  ? (TapGestureRecognizer()
-                    ..onTap = (() => Navigator.pushNamed(context, route!)))
-                  : null,
-              style: Theme.of(context).textTheme.bodyLarge!.apply(
-                  fontSizeDelta: 1,
-                  color: route != null
-                      ? Colors.blueAccent
-                      : Theme.of(context).textTheme.bodyLarge!.color),
-              children: [
+      child: SelectableText.rich(TextSpan(
+          text: title,
+          recognizer: route != null
+              ? (TapGestureRecognizer()
+                ..onTap = (() => Navigator.pushNamed(context, route!)))
+              : null,
+          style: Theme.of(context).textTheme.bodyLarge!.apply(
+              fontSizeDelta: 1,
+              color: route != null
+                  ? Colors.blueAccent
+                  : Theme.of(context).textTheme.bodyLarge!.color),
+          children: [
             TextSpan(
                 text: body,
                 style: Theme.of(context)

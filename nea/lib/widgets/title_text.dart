@@ -9,12 +9,19 @@ class TitleText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return RichText(
-      text: TextSpan(
+    return SelectableText.rich(
+      TextSpan(
         text: text,
         style: GoogleFonts.mulish(
             fontSize: 30.0, fontWeight: FontWeight.bold, color: primaryColor),
       ),
     );
+    // return RichText(
+    //   text: TextSpan(
+    //     text: text,
+    //     style: GoogleFonts.mulish(
+    //         fontSize: 30.0, fontWeight: FontWeight.bold, color: primaryColor),
+    //   ),
+    // );
   }
 }

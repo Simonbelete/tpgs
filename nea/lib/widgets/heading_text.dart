@@ -8,10 +8,13 @@ class HeadingText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(
-      text,
-      style:
-          TextStyle(fontSize: 25.0, color: color, fontWeight: FontWeight.bold),
-    );
+    return SelectableText(text,
+        style: TextStyle(
+            fontSize: 25.0, color: color, fontWeight: FontWeight.bold));
+    // return Text(
+    //   text,
+    //   style:
+    //       TextStyle(fontSize: 25.0, color: color, fontWeight: FontWeight.bold),
+    // );
   }
 }
