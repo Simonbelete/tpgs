@@ -10,13 +10,20 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
+import environ
 import os
 from pathlib import Path
 from django.contrib.messages import constants as messages
 
+env = environ.Env(
+    # set casting, default value
+    DEBUG=(bool, False)
+)
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
@@ -25,7 +32,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-9)f)kk#94^t(^o@zwx5b5i%7$+-b(f1v_8wo51vxqrtf!vkt(@'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = env('DEBUG')
 
 ALLOWED_HOSTS = ['*']
 # ALLOWED_HOSTS = []
@@ -115,8 +122,12 @@ WSGI_APPLICATION = 'ilri_ges.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        "NAME": env('POSTGRESQL_DB'),
+        "USER": env('POSTGRESQL_USER'),
+        "PASSWORD": env('POSTGRESQL_PASSWORD'),
+        "HOST": env('POSTGRESQL_HOST'),
+        "PORT": env('POSTGRESQL_PORT'),
     }
 }
 
