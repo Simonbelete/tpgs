@@ -8,6 +8,7 @@ import '3/all.dart' as course_3;
 import '4/all.dart' as course_4;
 import '5/all.dart' as course_5;
 import '6/all.dart' as course_6;
+import '7/all.dart' as course_7;
 
 Map<String, Map<String, Course>> courseData = {
   '0': {'en': course_0.EN},
@@ -17,4 +18,5 @@ Map<String, Map<String, Course>> courseData = {
   '4': {'en': course_4.EN},
   '5': {'en': course_5.EN},
   '6': {'en': course_6.EN},
+  '7': {'en': course_7.EN},
 };
