@@ -384,7 +384,7 @@ const FormulationTable = (): ReactElement => {
         console.log(error);
       });
     axios
-      .get("http://127.0.0.1:8000/api/recipes")
+      .get("http://172.27.1.72:9001/api/recipes")
       .then(function (response) {
         let res_data = _.map(response.data, (data) => {
           return {
