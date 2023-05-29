@@ -59,7 +59,7 @@ const data = [
 export default class Example extends PureComponent {
   render() {
     return (
-      <BarChart width={500} height={100} data={chartData}>
+      <BarChart width={500} height={100} data={[]}>
         <Bar dataKey="value" fill="#8884d8" />
       </BarChart>
     );
