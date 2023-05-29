@@ -134,7 +134,11 @@ DATABASES = {
         "PASSWORD": env('POSTGRESQL_PASSWORD'),
         "HOST": env('POSTGRESQL_HOST'),
         "PORT": env('POSTGRESQL_PORT'),
-    }
+    },
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.sqlite3',
+    #     'NAME': BASE_DIR / 'db.sqlite3',
+    # }
 }
 
 
