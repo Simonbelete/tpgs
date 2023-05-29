@@ -4,7 +4,7 @@
 require.config({
   baseUrl: "/static/js",
   enforceDefine: true,
-  waitSeconds: 0,
+  waitSeconds: 500,
   paths: {
     jquery: "../../../static/js/lib/admin-LTE/plugins/jquery/jquery.min",
     underscore: "../../../static/js/lib/underscorejs/underscore-umd-min",
