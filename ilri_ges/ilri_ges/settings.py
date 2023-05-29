@@ -166,9 +166,9 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
-STATIC_ROOT = 'ilri_ges/static'
+STATIC_ROOT = env('STATIC_ROOT')
 
-STATIC_URL = '/static-serve/'
+STATIC_URL = env('STATIC_URL')
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static")
