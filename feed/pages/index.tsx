@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 import { Inter } from "next/font/google";
 import dynamic from "next/dynamic";
 import Box from "@mui/material/Box";
-import NavBar from "./components/Navbar";
 
 const FormulationTable = dynamic(
   () => import("../components/FormulationTable"),
@@ -11,9 +10,9 @@ const FormulationTable = dynamic(
   }
 );
 
-const Formulation = dynamic(() => import("./components/Formulation"), {
-  ssr: false,
-});
+// const Formulation = dynamic(() => import("./components/Formulation"), {
+//   ssr: false,
+// });
 
 const inter = Inter({ subsets: ["latin"] });
 

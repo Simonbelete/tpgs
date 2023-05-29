@@ -1,16 +1,14 @@
 import React, { useEffect } from "react";
 import { Box, Container } from "@mui/material";
-import NavBar from "./components/Navbar";
-import IngredientForm from "./components/IngredientForm";
+// import NavBar from "./components/Navbar";
+// import IngredientForm from "./components/IngredientForm";
 
 const Ingredients = () => {
   return (
     <>
-      <NavBar />
+      {/* <NavBar /> */}
       <Box component="main" mt={5}>
-        <Container>
-          <IngredientForm />
-        </Container>
+        <Container>{/* <IngredientForm /> */}</Container>
       </Box>
     </>
   );
