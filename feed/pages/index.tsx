@@ -4,10 +4,6 @@ import dynamic from "next/dynamic";
 import Box from "@mui/material/Box";
 import NavBar from "./components/Navbar";
 
-const DataTable = dynamic(() => import("./components/DataTable"), {
-  ssr: false,
-});
-
 const FormulationTable = dynamic(
   () => import("../components/FormulationTable"),
   {
