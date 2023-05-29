@@ -357,7 +357,7 @@ const FormulationTable = (): ReactElement => {
 
   useEffect(() => {
     axios
-      .get("http://127.0.0.1:8000/api/ingredients")
+      .get("http://172.27.1.72:9001/api/ingredients")
       .then(function (response) {
         let res_data = _.map(response.data, (data) => {
           return {
