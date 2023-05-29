@@ -166,24 +166,12 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
-STATIC_ROOT = 'static_served/'
+STATIC_ROOT = 'ilri_ges/static'
 
 STATIC_URL = 'static/'
 
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "static"),
-    os.path.join(BASE_DIR, "dashboard/static"),
-    os.path.join(BASE_DIR, "breeds/static"),
-    os.path.join(BASE_DIR, "chickens/static"),
-    os.path.join(BASE_DIR, "locations/static"),
-    os.path.join(BASE_DIR, "farms/static"),
-    os.path.join(BASE_DIR, "stages/static"),
-    os.path.join(BASE_DIR, "flocks/static"),
-    os.path.join(BASE_DIR, "weights/static"),
-    os.path.join(BASE_DIR, "breeding_pairs/static"),
-    os.path.join(BASE_DIR, "feeds/static"),
-    os.path.join(BASE_DIR, "eggs/static"),
-    os.path.join(BASE_DIR, "hatchery/static"),
+    os.path.join(BASE_DIR, "static")
 ]
 
 # Default primary key field type
