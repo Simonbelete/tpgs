@@ -23,6 +23,8 @@ const IngredientTypeForm = () => {
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     const response = await ingredient_type_services.create(data);
+    // console.log("respone");
+    // console.log(response);
   };
 
   return (

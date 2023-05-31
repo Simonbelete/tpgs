@@ -8,12 +8,13 @@ const instance = axios.create({
 
 // instance.interceptors.request.use(async (config) => {
 //   const session = await getSession();
-//   if (session) {
-//     config.headers.common = {
-//       Authorization: `${session.token.accessToken}`,
-//     };
-//   }
-//   return config            ;
+//   console.log(session);
+//   // if (session) {
+//   //   config.headers.common = {
+//   //     Authorization: `${session.token.accessToken}`,
+//   //   };
+//   // }
+//   return config;
 // });
 
 // //127.0.0.1:8000/
