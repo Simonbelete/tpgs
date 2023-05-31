@@ -107,18 +107,18 @@ WSGI_APPLICATION = 'api.wsgi.application'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        "NAME": env('POSTGRESQL_DB'),
-        "USER": env('POSTGRESQL_USER'),
-        "PASSWORD": env('POSTGRESQL_PASSWORD'),
-        "HOST": env('POSTGRESQL_HOST'),
-        "PORT": env('POSTGRESQL_PORT'),
-    },
     # 'default': {
-    #     'ENGINE': 'django.db.backends.sqlite3',
-    #     'NAME': BASE_DIR / 'db.sqlite3',
-    # }
+    #     'ENGINE': 'django.db.backends.postgresql',
+    #     "NAME": env('POSTGRESQL_DB'),
+    #     "USER": env('POSTGRESQL_USER'),
+    #     "PASSWORD": env('POSTGRESQL_PASSWORD'),
+    #     "HOST": env('POSTGRESQL_HOST'),
+    #     "PORT": env('POSTGRESQL_PORT'),
+    # },
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
 }
 
 
@@ -173,6 +173,8 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ],
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
+    'PAGE_SIZE': 10
 }
 
 SIMPLE_JWT = {
