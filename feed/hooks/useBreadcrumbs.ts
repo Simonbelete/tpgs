@@ -17,11 +17,13 @@ const useBreadcrumbs = () => {
       const href = "/" + pathArray.slice(0, index + 1).join("/");
       return {
         href,
-        label: path.charAt(0).toUpperCase() + path.slice(1),
+        label: path.charAt(0).toUpperCase() + path.slice(1).replace("-", " "),
       };
     });
 
-    setBreadcrumbs(breadcrumbs);
+    const home = { href: "/", label: "Dashboard" };
+
+    setBreadcrumbs([home, ...breadcrumbs]);
   }, [router.asPath]);
 
   return { breadcrumbs };

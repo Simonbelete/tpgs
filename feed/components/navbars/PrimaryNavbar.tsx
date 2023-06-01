@@ -10,6 +10,8 @@ import {
   Typography,
 } from "@mui/material";
 import Icon from "@mui/material/Icon";
+import MenuOpenIcon from "@mui/icons-material/MenuOpen";
+import { AppsDropdown } from "../menus";
 
 const PrimaryNavbar = () => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -46,12 +48,13 @@ const PrimaryNavbar = () => {
             toggleSidebar();
           }}
         >
-          <Icon>menu</Icon>
+          <MenuOpenIcon />
         </IconButton>
         <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
           Feed Formulation
         </Typography>
         <div>
+          <AppsDropdown />
           <IconButton
             size="large"
             aria-label="account of current user"
