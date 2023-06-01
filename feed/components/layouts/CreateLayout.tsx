@@ -1,19 +1,20 @@
 import React, { ReactElement } from "react";
 import { Box, Stack } from "@mui/material";
 
-interface ListLayoutProps {
+interface CreateLayoutProps {
   breadcrumbs?: ReactElement;
   header?: ReactElement;
   actions?: ReactElement;
-  children?: ReactElement;
+
+  children: ReactElement;
 }
 
-const ListLayout = ({
+const CreateLayout = ({
+  children,
   breadcrumbs,
   header,
   actions,
-  children,
-}: ListLayoutProps) => {
+}: CreateLayoutProps) => {
   return (
     <>
       <Box mb={2}>{breadcrumbs}</Box>
@@ -29,4 +30,4 @@ const ListLayout = ({
   );
 };
 
-export default ListLayout;
+export default CreateLayout;

@@ -24,7 +24,7 @@ const IngredientTypePage = () => {
 const Actions = (): ReactElement => {
   return (
     <>
-      <Link href="create">
+      <Link href="/ingredient-types/create">
         <Button variant="contained" startIcon={<AddIcon />}>
           Create New Ingredient Type
         </Button>

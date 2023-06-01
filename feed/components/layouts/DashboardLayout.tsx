@@ -4,7 +4,7 @@ import PrimaryNavbar from "../navbars/PrimaryNavbar";
 import { Sidebar } from "../menus";
 
 interface DashboardLayoutProps {
-  children: ReactElement;
+  children: ReactElement | ReactElement[];
 }
 
 const DashboardLayout = (props: DashboardLayoutProps) => {
