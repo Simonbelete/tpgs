@@ -22,19 +22,27 @@ from rest_framework_simplejwt.views import (
     TokenRefreshView,
     TokenVerifyView
 )
+from units.urls import router
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('api-auth/', include('rest_framework.urls')),
-    path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
-    path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
-    path('api/token/verify/', TokenVerifyView.as_view(), name='token_verify'),
-    path('api/inbox/notifications/',
-         include(notifications.urls, namespace='notifications')),
+    # path('admin/', admin.site.urls),
+    # path('api-auth/', include('rest_framework.urls')),
+    # path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    # path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    # path('api/token/verify/', TokenVerifyView.as_view(), name='token_verify'),
+    # path('api/inbox/notifications/',
+    #      include(notifications.urls, namespace='notifications')),
+    # path('/api', include('units.urls'), name='units'),
     path('api/', include([
-        path('ingredients', include('ingredients.urls')),
-        path('recipes', include('recipes.urls')),
-        path('rations', include('rations.urls')),
-        path('farms', include('farms.urls')),
+        path('', include('units.urls'))
     ])),
+
+    # path('api/', include([
+    #    path('units/', include('units.urls')),
+    # path('nutrients', include('nutrients.urls')),
+    # path('ingredients', include('ingredients.urls')),
+    # path('recipes', include('recipes.urls')),
+    # path('rations', include('rations.urls')),
+    # path('farms', include('farms.urls')),
+    # ])),
 ]

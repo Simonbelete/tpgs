@@ -2,8 +2,6 @@ import NextAuth, { CookiesOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import axios from "axios";
 
-import "@/types/next-auth.d";
-
 async function refreshAccessToken(tokenObject: any) {
   try {
     // Get a new set of tokens with a refreshToken
@@ -118,21 +116,20 @@ export const authOptions = {
     }),
   ],
   callbacks: {
-    async jwt({ token, user }) {
-      // Persist the OAuth access_token to the token right after signin
-
-      if (user) {
-        token.accessToken = user.access;
-      }
-      return { ...token, ...user };
-    },
-    async session(data) {
-      // Send properties to the client, like an access_token from a provider.
-      // session.accessToken = token.accessToken;
-      // console.log("seeeeeeeee");
-      // session.user = user;
-      return session;
-    },
+    // async jwt({ token, user }) {
+    //   // Persist the OAuth access_token to the token right after signin
+    //   if (user) {
+    //     token.accessToken = user.access;
+    //   }
+    //   return { ...token, ...user };
+    // },
+    // async session(data) {
+    //   // Send properties to the client, like an access_token from a provider.
+    //   // session.accessToken = token.accessToken;
+    //   // console.log("seeeeeeeee");
+    //   // session.user = user;
+    //   return session;
+    // },
     // jwt,
     // session,
     // cookies,

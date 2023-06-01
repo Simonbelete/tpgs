@@ -15,7 +15,11 @@ const DashboardLayout = (props: DashboardLayoutProps) => {
         <Sidebar />
         <div style={{ overflowY: "scroll", width: "100%" }}>
           <PrimaryNavbar />
-          <div style={{ padding: "30px", height: "100%" }}>{children}</div>
+          <div
+            style={{ padding: "30px", height: "100%", background: "#fbfbfb" }}
+          >
+            {children}
+          </div>
         </div>
       </div>
     </ProSidebarProvider>

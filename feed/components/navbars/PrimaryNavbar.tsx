@@ -8,9 +8,11 @@ import {
   Menu,
   MenuItem,
   Typography,
+  Box,
 } from "@mui/material";
 import Icon from "@mui/material/Icon";
 import MenuOpenIcon from "@mui/icons-material/MenuOpen";
+import Image from "next/image";
 import { AppsDropdown } from "../menus";
 
 const PrimaryNavbar = () => {
@@ -32,7 +34,7 @@ const PrimaryNavbar = () => {
   return (
     <AppBar
       position="static"
-      elevation={0}
+      elevation={1}
       sx={{ borderBottom: "1px solid #e3e1e1" }}
       color="transparent"
     >
@@ -50,9 +52,10 @@ const PrimaryNavbar = () => {
         >
           <MenuOpenIcon />
         </IconButton>
-        <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-          Feed Formulation
-        </Typography>
+        <div>
+          <img src="/images/ilri_logo.png" alt="ILIR CGIAR Logo" height={25} />
+        </div>
+        <Box sx={{ flexGrow: 1 }}></Box>
         <div>
           <AppsDropdown />
           <IconButton

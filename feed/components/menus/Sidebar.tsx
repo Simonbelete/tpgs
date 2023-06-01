@@ -5,18 +5,20 @@ import Image from "next/image";
 import PeopleIcon from "@mui/icons-material/People";
 import Icon from "@mui/material/Icon";
 import BloodtypeIcon from "@mui/icons-material/Bloodtype";
+import { Grid, Typography } from "@mui/material";
+import BubbleChartIcon from "@mui/icons-material/BubbleChart";
 
 const SidebarMenu = () => {
   return (
-    <Sidebar style={{ height: "100vh" }} breakPoint="md">
-      <div>
-        <Image
-          src="/images/feed_formulation_icon.png"
-          alt=""
-          height={50}
-          width={50}
-        />
-      </div>
+    <Sidebar
+      style={{ height: "100vh" }}
+      breakPoint="md"
+      backgroundColor="#ffff"
+    >
+      <Grid container justifyContent="center" py={5}>
+        <Image src="/images/logo_icon.png" alt="" height={50} width={50} />
+        <Typography>Feed Formulation</Typography>
+      </Grid>
       <Menu
       // menuItemStyles={{
       //   button: ({ level, active, disabled }) => {
@@ -30,6 +32,12 @@ const SidebarMenu = () => {
       // }}
       >
         <MenuItem
+          component={<Link href="/nutrients" />}
+          icon={<BubbleChartIcon fontSize="large" />}
+        >
+          <Typography variant="body1">Nutrients</Typography>
+        </MenuItem>
+        {/* <MenuItem
           component={<Link href="/ingredients" />}
           icon={<BloodtypeIcon />}
         >
@@ -46,7 +54,7 @@ const SidebarMenu = () => {
         </MenuItem>
         <MenuItem component={<Link href="/legend" />} icon={<BloodtypeIcon />}>
           Legend
-        </MenuItem>
+        </MenuItem> */}
       </Menu>
     </Sidebar>
   );

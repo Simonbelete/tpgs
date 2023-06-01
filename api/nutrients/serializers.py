@@ -1,0 +1,14 @@
+from rest_framework import serializers
+from . import models
+
+
+class NutrientGroupSerializer_GET(serializers.ModelSerializer):
+    class Meta:
+        model = models.NutrientGroup
+        fields = '__all__'
+
+
+class NutrientSerializer_GET(serializers.ModelSerializer):
+    class Meta:
+        model = models.NutrientGroup
+        fields = '__all__'

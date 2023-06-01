@@ -8,6 +8,9 @@ import type { AppProps } from "next/app";
 import dynamic from "next/dynamic";
 import { Loading } from "@/components";
 import { ToastContainer } from "react-toastify";
+import { SessionProvider } from "next-auth/react";
+import { ThemeProvider } from "@mui/material/styles";
+import { lightTheme } from "@/util/themes";
 
 export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
   getLayout?: (page: ReactElement) => ReactNode;
@@ -25,13 +28,20 @@ const DashboardLayout = dynamic(
   }
 );
 
-export default function MyApp({ Component, pageProps }: AppPropsWithLayout) {
+export default function MyApp({
+  Component,
+  pageProps: { session, ...pageProps },
+}: AppPropsWithLayout) {
   // Use the layout defined at the page level, if available
   const getLayout = Component.getLayout ?? ((page) => page);
   return getLayout(
-    <DashboardLayout>
-      <ToastContainer />
-      <Component {...pageProps} />
-    </DashboardLayout>
+    <SessionProvider session={session}>
+      <ThemeProvider theme={lightTheme}>
+        <DashboardLayout>
+          <ToastContainer />
+          <Component {...pageProps} />
+        </DashboardLayout>
+      </ThemeProvider>
+    </SessionProvider>
   );
 }

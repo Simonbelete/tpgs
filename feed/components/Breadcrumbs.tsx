@@ -2,6 +2,7 @@ import { ReactNode } from "react";
 import { Breadcrumb } from "@/models";
 import MuiBreadcrumbs from "@mui/material/Breadcrumbs";
 import Link from "@mui/material/Link";
+import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 
 export type BreadcrumbsProps = {
   items: Breadcrumb[];
@@ -9,10 +10,19 @@ export type BreadcrumbsProps = {
 
 const Breadcrumbs = ({ items }: BreadcrumbsProps) => {
   return (
-    <MuiBreadcrumbs aria-label="breadcrumb">
+    <MuiBreadcrumbs
+      aria-label="breadcrumb"
+      separator={<NavigateNextIcon fontSize="small" />}
+    >
       {items &&
         items.map((e, key) => (
-          <Link key={key} underline="hover" color="inherit" href={e.href}>
+          <Link
+            variant="body2"
+            key={key}
+            underline="none"
+            color="inherit"
+            href={e.href}
+          >
             {e.label}
           </Link>
         ))}

@@ -61,6 +61,8 @@ INSTALLED_APPS = [
     'notifications',
     'cities_light',
     'core',
+    'units',
+    'nutrients',
     'users',
     'farms',
     'ingredients',

@@ -28,9 +28,9 @@ const lightTheme = createTheme({
   palette: {
     mode: "light",
     primary: {
-      light: "#6cb640",
-      main: "#008a3f",
-      dark: "#1f4841",
+      light: "#DCB211",
+      main: "#BC9810",
+      dark: "#9B6E25",
     },
     secondary: {
       main: green[100],
@@ -43,7 +43,8 @@ const lightTheme = createTheme({
     MuiButton: {
       styleOverrides: {
         containedPrimary: {
-          backgroundColor: "#008a3f !important",
+          backgroundColor: "#BC9810 !important",
+          color: "#fff",
         },
       },
     },
