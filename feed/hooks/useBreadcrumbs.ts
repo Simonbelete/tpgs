@@ -1,9 +1,10 @@
-import React, { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import { IngredientTypeForm } from "@/features/ingredient-type";
+import { Breadcrumb } from "@/models";
 
-const IngredientTypeCreatePage = () => {
+const useBreadcrumbs = () => {
   const router = useRouter();
+  const [breadcrumbs, setBreadcrumbs] = useState<Breadcrumb[]>([]);
 
   useEffect(() => {
     const pathWithoutQuery = router.asPath.split("?")[0];
@@ -12,7 +13,7 @@ const IngredientTypeCreatePage = () => {
 
     pathArray = pathArray.filter((path) => path !== "");
 
-    const breadcrumbs = pathArray.map((path, index) => {
+    const breadcrumbs: Breadcrumb[] = pathArray.map((path, index) => {
       const href = "/" + pathArray.slice(0, index + 1).join("/");
       return {
         href,
@@ -20,14 +21,10 @@ const IngredientTypeCreatePage = () => {
       };
     });
 
-    console.log(breadcrumbs);
+    setBreadcrumbs(breadcrumbs);
   }, [router.asPath]);
 
-  return (
-    <>
-      <IngredientTypeForm />
-    </>
-  );
+  return { breadcrumbs };
 };
 
-export default IngredientTypeCreatePage;
+export default useBreadcrumbs;
