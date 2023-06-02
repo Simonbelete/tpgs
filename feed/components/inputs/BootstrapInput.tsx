@@ -17,7 +17,7 @@ const BootstrapInput = styled(InputBase)(({ theme }) => ({
     border: "1px solid",
     borderColor: theme.palette.mode === "light" ? "#E0E3E7" : "#2D3843",
     fontSize: 16,
-    width: "auto",
+    width: "100%",
     padding: "10px 12px",
     transition: theme.transitions.create([
       "border-color",
@@ -46,7 +46,7 @@ const BootstrapInput = styled(InputBase)(({ theme }) => ({
 
 const BootstrapInputComponent = ({ label, ...props }: any) => {
   return (
-    <FormControl variant="standard">
+    <FormControl variant="standard" fullWidth>
       <InputLabel shrink htmlFor="bootstrap-input">
         {label}
       </InputLabel>

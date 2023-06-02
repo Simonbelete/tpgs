@@ -14,7 +14,7 @@ const NutrientsPage = () => {
   return (
     <ListLayout
       breadcrumbs={<Breadcrumbs items={breadcrumbs} />}
-      header={<Typography variant="h3">Nutrients</Typography>}
+      header={<Typography variant="title">Nutrients</Typography>}
       actions={<Actions />}
     >
       <NutrientsList />
