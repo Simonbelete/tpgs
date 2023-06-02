@@ -44,9 +44,14 @@ const BootstrapInput = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-const BootstrapInputComponent = ({ label, ...props }: any) => {
+const BootstrapInputComponent = ({
+  label,
+  error,
+  helperText,
+  ...props
+}: any) => {
   return (
-    <FormControl variant="standard" fullWidth>
+    <FormControl variant="standard" fullWidth error={error}>
       <InputLabel shrink htmlFor="bootstrap-input">
         {label}
       </InputLabel>

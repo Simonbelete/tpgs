@@ -1,7 +1,7 @@
 import React from "react";
 import { object, string } from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useForm, SubmitHandler, Controller } from "react-hook-form";
+import { useForm, SubmitHandler, Controller, Error } from "react-hook-form";
 import {
   Grid,
   TextField,
@@ -14,18 +14,23 @@ import {
 } from "@mui/material";
 import { Nutrient } from "@/models";
 import nutrient_service from "../services/nutrient_service";
-import { BootstrapInput } from "@/components/inputs";
+import { BootstrapInput, LabeledInput } from "@/components/inputs";
+import { toast } from "react-toastify";
+import { useRouter } from "next/router";
+import { alertSuccess } from "@/util/alert";
 
 type Inputs = Partial<Nutrient>;
 
 const schema = object({
   name: string().required(),
-  code: string(),
-  abbreviation: string(),
-  description: string(),
+  // code: string(),
+  // abbreviation: string(),
+  // description: string(),
 }).required();
 
 const NutrientForm = () => {
+  const router = useRouter();
+
   const {
     handleSubmit,
     control,
@@ -35,12 +40,22 @@ const NutrientForm = () => {
   });
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
-    const response = await nutrient_service.create(data);
+    console.log("Submited");
+    try {
+      const response = await nutrient_service.create(data);
+      if ((response.status = 201)) {
+        alertSuccess({});
+        router.push("/");
+      }
+    } catch (ex) {
+      toast.error("Unknown Error");
+    }
   };
 
   return (
     <Paper sx={{ px: 5, py: 5 }} elevation={6} variant="outlined" square>
-      <FormControl onSubmit={handleSubmit(onSubmit)} fullWidth>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <p>{errors.code?.message}</p>
         <Grid container spacing={4}>
           {/* Name */}
           <Grid item xs={12} md={6}>
@@ -51,7 +66,7 @@ const NutrientForm = () => {
                 field: { onChange, value },
                 fieldState: { invalid, isTouched, isDirty, error },
               }) => (
-                <BootstrapInput
+                <LabeledInput
                   error={!!error?.message}
                   helperText={error?.message}
                   onChange={onChange}
@@ -73,7 +88,7 @@ const NutrientForm = () => {
                 field: { onChange, value },
                 fieldState: { invalid, isTouched, isDirty, error },
               }) => (
-                <BootstrapInput
+                <LabeledInput
                   error={!!error?.message}
                   helperText={error?.message}
                   onChange={onChange}
@@ -95,7 +110,7 @@ const NutrientForm = () => {
                 field: { onChange, value },
                 fieldState: { invalid, isTouched, isDirty, error },
               }) => (
-                <BootstrapInput
+                <LabeledInput
                   error={!!error?.message}
                   helperText={error?.message}
                   onChange={onChange}
@@ -117,7 +132,7 @@ const NutrientForm = () => {
                 field: { onChange, value },
                 fieldState: { invalid, isTouched, isDirty, error },
               }) => (
-                <BootstrapInput
+                <LabeledInput
                   error={!!error?.message}
                   helperText={error?.message}
                   onChange={onChange}
@@ -137,7 +152,7 @@ const NutrientForm = () => {
             </Button>
           </Grid>
         </Grid>
-      </FormControl>
+      </form>
     </Paper>
   );
 };
