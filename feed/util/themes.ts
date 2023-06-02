@@ -5,25 +5,40 @@ declare module "@mui/material/styles" {
   // White
   interface Palette {
     white?: Palette["primary"];
-  }
-
-  interface PaletteOptions {
-    white?: PaletteOptions["primary"];
-  }
-
-  // neutral
-  interface Palette {
     neutral?: Palette["primary"];
   }
 
   interface PaletteOptions {
+    white?: PaletteOptions["primary"];
     neutral?: PaletteOptions["primary"];
+  }
+
+  // Typo
+  interface TypographyVariants {
+    title: React.CSSProperties;
+  }
+
+  // allow configuration using `createTheme`
+  interface TypographyVariantsOptions {
+    title?: React.CSSProperties;
+  }
+}
+
+// Update the Typography's variant prop options
+declare module "@mui/material/Typography" {
+  interface TypographyPropsVariantOverrides {
+    title: true;
   }
 }
 
 const lightTheme = createTheme({
   typography: {
     fontFamily: ["Inter", "sans-serif"].join(","),
+    title: {
+      fontSize: 40,
+      fontWeight: 700,
+      fontFamily: ["Inter", "sans-serif"].join(","),
+    },
   },
   palette: {
     mode: "light",

@@ -13,7 +13,7 @@ const NutrientCreatePage = () => {
   return (
     <CreateLayout
       breadcrumbs={<Breadcrumbs items={breadcrumbs} />}
-      header={<Typography variant="h3">Create New Nutrients</Typography>}
+      header={<Typography variant="title">Create New Nutrients</Typography>}
       actions={<Actions />}
     >
       <NutrientForm />
