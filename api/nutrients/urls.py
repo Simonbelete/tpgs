@@ -3,9 +3,9 @@ from rest_framework import routers
 from . import views
 
 router = routers.DefaultRouter()
-router.register(r'', views.NutrientViewSet,
+router.register(r'nutrients', views.NutrientViewSet,
                 basename='api_nutrients'),
-router.register(r'-groups', views.NutrientGroupViewSet,
+router.register(r'nutrient-groups', views.NutrientGroupViewSet,
                 basename='api_nutrients_groups'),
 
 urlpatterns = [

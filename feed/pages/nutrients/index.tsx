@@ -25,7 +25,7 @@ const NutrientsPage = () => {
 const Actions = (): ReactElement => {
   return (
     <>
-      <Link href="/ingredient-types/create">
+      <Link href="/nutrients/create">
         <Button variant="contained" startIcon={<AddIcon />}>
           Create New Nutrients
         </Button>
