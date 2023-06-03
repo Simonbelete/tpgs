@@ -10,5 +10,5 @@ class NutrientGroupSerializer_GET(serializers.ModelSerializer):
 
 class NutrientSerializer_GET(serializers.ModelSerializer):
     class Meta:
-        model = models.NutrientGroup
+        model = models.Nutrient
         fields = '__all__'

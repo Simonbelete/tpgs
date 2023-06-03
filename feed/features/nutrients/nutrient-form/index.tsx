@@ -40,13 +40,13 @@ const NutrientForm = () => {
   });
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
-    console.log("Submited");
     try {
       const response = await nutrient_service.create(data);
-      if ((response.status = 201)) {
-        alertSuccess({});
-        router.push("/");
-      }
+      console.log(response);
+      // if ((response.status = 201)) {
+      //   alertSuccess({});
+      //   router.push("/");
+      // }
     } catch (ex) {
       toast.error("Unknown Error");
     }

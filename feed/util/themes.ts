@@ -2,15 +2,17 @@ import { createTheme } from "@mui/material/styles";
 import { green, purple, common } from "@mui/material/colors";
 
 declare module "@mui/material/styles" {
-  // White
+  // Colors
   interface Palette {
     white?: Palette["primary"];
     neutral?: Palette["primary"];
+    link?: string;
   }
 
   interface PaletteOptions {
     white?: PaletteOptions["primary"];
     neutral?: PaletteOptions["primary"];
+    link?: string;
   }
 
   // Typo
@@ -53,6 +55,7 @@ const lightTheme = createTheme({
     white: {
       main: common.white,
     },
+    link: "#0000EE",
   },
   components: {
     MuiButton: {
