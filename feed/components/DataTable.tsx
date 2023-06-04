@@ -81,6 +81,7 @@ const DataTable = ({
 
   return (
     <StripedDataGrid
+      sx={{ background: "white" }}
       rows={rows}
       columns={[...columns, ...settingColumn]}
       getRowClassName={(params) =>

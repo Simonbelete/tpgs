@@ -21,7 +21,7 @@ const useBreadcrumbs = () => {
       };
     });
 
-    const home = { href: "/", label: "Dashboard" };
+    const home = { href: "/", label: "Home" };
 
     setBreadcrumbs([home, ...breadcrumbs]);
   }, [router.asPath]);

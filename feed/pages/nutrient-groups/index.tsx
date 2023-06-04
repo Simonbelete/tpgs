@@ -24,9 +24,9 @@ const NutrientGroupPage = () => {
 const Actions = (): ReactElement => {
   return (
     <>
-      <Link href="/nutrients/create">
+      <Link href="/nutrient-groups/create">
         <Button variant="contained" startIcon={<AddIcon />}>
-          Create New Nutrients
+          Create
         </Button>
       </Link>
     </>
