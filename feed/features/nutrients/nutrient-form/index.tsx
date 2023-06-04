@@ -1,7 +1,7 @@
 import React from "react";
 import { object, string } from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useForm, SubmitHandler, Controller, Error } from "react-hook-form";
+import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import {
   Grid,
   TextField,
@@ -15,6 +15,7 @@ import {
 import { Nutrient } from "@/models";
 import nutrient_service from "../services/nutrient_service";
 import { BootstrapInput, LabeledInput } from "@/components/inputs";
+import { Dropdown } from "@/components";
 import { toast } from "react-toastify";
 import { useRouter } from "next/router";
 import { alertSuccess } from "@/util/alert";
@@ -143,6 +144,17 @@ const NutrientForm = () => {
                   placeholder={"Description"}
                 />
               )}
+            />
+          </Grid>
+          {/* Dropdown */}
+          <Grid item xs={12} md={6}>
+            <Controller
+              name={"group"}
+              control={control}
+              render={({
+                field: { onChange, value },
+                fieldState: { invalid, isTouched, isDirty, error },
+              }) => <Dropdown url="/nutrient-groups/" value="name" key="key" />}
             />
           </Grid>
           {/* Button  */}

@@ -1,5 +1,5 @@
 import React, { ReactElement } from "react";
-import { Button, Typography, Box } from "@mui/material";
+import { Button, Typography, Box, Container } from "@mui/material";
 import { NutrientForm } from "@/features/nutrients";
 import { useBreadcrumbs } from "@/hooks";
 import { Breadcrumbs } from "@/components";
@@ -16,7 +16,9 @@ const NutrientCreatePage = () => {
       header={<Typography variant="title">Create New Nutrients</Typography>}
       actions={<Actions />}
     >
-      <NutrientForm />
+      <Container maxWidth="xl">
+        <NutrientForm />
+      </Container>
     </CreateLayout>
   );
 };

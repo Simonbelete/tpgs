@@ -27,7 +27,7 @@ const Actions = (): ReactElement => {
     <>
       <Link href="/nutrients/create">
         <Button variant="contained" startIcon={<AddIcon />}>
-          Create New Nutrients
+          Create
         </Button>
       </Link>
     </>

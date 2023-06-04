@@ -17,11 +17,6 @@ const columns: GridColDef[] = [
   { field: "description", headerName: "Description", flex: 1, minWidth: 150 },
   { field: "nutrient_group", headerName: "Type", flex: 1, minWidth: 150 },
   { field: "unit", headerName: "Unit", flex: 1, minWidth: 150 },
-  {
-    field: "Setting",
-    flex: 1,
-    minWidth: 150,
-  },
 ];
 
 const NutrientsList = () => {
