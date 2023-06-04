@@ -4,15 +4,13 @@ import { green, purple, common } from "@mui/material/colors";
 declare module "@mui/material/styles" {
   // Colors
   interface Palette {
-    white?: Palette["primary"];
-    neutral?: Palette["primary"];
-    link?: string;
+    link?: Palette["text"];
+    sidebar?: Palette["background"];
   }
 
   interface PaletteOptions {
-    white?: PaletteOptions["primary"];
-    neutral?: PaletteOptions["primary"];
-    link?: string;
+    link?: PaletteOptions["text"];
+    sidebar?: PaletteOptions["background"];
   }
 
   // Typo
@@ -39,6 +37,7 @@ const lightTheme = createTheme({
     title: {
       fontSize: 40,
       fontWeight: 700,
+      color: "#495057",
       fontFamily: ["Inter", "sans-serif"].join(","),
     },
   },
@@ -50,12 +49,22 @@ const lightTheme = createTheme({
       dark: "#9B6E25",
     },
     secondary: {
-      main: green[100],
+      main: "#313946",
+      dark: "",
     },
-    white: {
-      main: common.white,
+    text: {
+      primary: "#495056",
+      // secondary: "#63758D",
+      secondary: "#98AAC4",
     },
-    link: "#0000EE",
+    link: {
+      primary: "#88AACF",
+      secondary: "#0000EE",
+    },
+    background: {
+      default: "#F6F9FC",
+      paper: "#fff",
+    },
   },
   components: {
     MuiButton: {

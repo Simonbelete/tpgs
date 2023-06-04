@@ -6,7 +6,12 @@ import {
   GridToolbar,
   gridClasses,
 } from "@mui/x-data-grid";
+import { Box, IconButton } from "@mui/material";
 import { alpha, styled } from "@mui/material/styles";
+import CreateIcon from "@mui/icons-material/Create";
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
+import EditNoteIcon from "@mui/icons-material/EditNote";
 
 const ODD_OPACITY = 0.2;
 
@@ -46,17 +51,45 @@ const StripedDataGrid = styled(DataGrid)(({ theme }) => ({
 const DataTable = ({
   rows,
   columns,
+  ...props
 }: {
   rows: GridRowsProp;
   columns: GridColDef[];
 }) => {
+  const settingColumn: GridColDef[] = [
+    {
+      field: "Setting",
+      flex: 1,
+      minWidth: 150,
+      renderCell(params: any) {
+        return (
+          <Box>
+            <IconButton aria-label="edit">
+              <EditNoteIcon fontSize="small" color="info" />
+            </IconButton>
+            <IconButton aria-label="view">
+              <VisibilityIcon fontSize="small" color="info" />
+            </IconButton>
+            <IconButton aria-label="delete">
+              <DeleteForeverIcon fontSize="small" color="error" />
+            </IconButton>
+          </Box>
+        );
+      },
+    },
+  ];
+
   return (
     <StripedDataGrid
       rows={rows}
-      columns={columns}
+      columns={[...columns, ...settingColumn]}
       getRowClassName={(params) =>
         params.indexRelativeToCurrentPage % 2 === 0 ? "even" : "odd"
       }
+      slots={{
+        toolbar: GridToolbar,
+      }}
+      {...props}
     />
   );
 };
