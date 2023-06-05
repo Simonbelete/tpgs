@@ -16,7 +16,7 @@ const LabeledInput = (props: TextFieldProps) => {
       </Typography>
       <TextField
         {...props}
-        label={props.value ? "" : "Name"}
+        label={props.value ? "" : props.label}
         InputLabelProps={{ shrink: false }}
       />
     </Stack>

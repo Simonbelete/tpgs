@@ -1,28 +1,22 @@
 import * as React from "react";
 import TextField from "@mui/material/TextField";
-import Autocomplete from "@mui/material/Autocomplete";
+import Autocomplete, { AutocompleteProps } from "@mui/material/Autocomplete";
 import CircularProgress from "@mui/material/CircularProgress";
 import client from "@/services/client";
 
-interface Film {
-  title: string;
-  year: number;
-}
-
-function sleep(delay = 0) {
-  return new Promise((resolve) => {
-    setTimeout(resolve, delay);
-  });
-}
-
-export default function Dropdown({
+export default function AsyncDropdown({
   url,
+  key = "name",
   value,
-  key,
+  label,
+  onChange,
+  ...props
 }: {
   url: string;
-  value: string;
-  key: string;
+  key?: string;
+  value: any;
+  label: string;
+  onChange?: (event: any, newValue: string | null) => void;
 }) {
   const [open, setOpen] = React.useState(false);
   const [options, setOptions] = React.useState<readonly any[]>([]);
@@ -54,11 +48,15 @@ export default function Dropdown({
     }
   }, [open]);
 
+  React.useEffect(() => {
+    console.log("aaa");
+    console.log(value);
+  }, [value]);
+
   return (
     <Autocomplete
       fullWidth
       size="small"
-      id="asynchronous-demo"
       open={open}
       onOpen={() => {
         setOpen(true);
@@ -66,18 +64,16 @@ export default function Dropdown({
       onClose={() => {
         setOpen(false);
       }}
-      onChange={(event: any, newValue: string | null) => {
-        // setValue(newValue);
-        console.log(newValue);
-      }}
-      getOptionLabel={(option) => option[value]}
+      onChange={onChange}
+      // value={value}
+      getOptionLabel={(option) => option[key]}
       options={options}
       loading={loading}
       renderInput={(params) => (
         <TextField
           {...params}
           fullWidth
-          label="Asynchronous"
+          label={value ? "" : label}
           InputLabelProps={{ shrink: false }}
           InputProps={{
             ...params.InputProps,
@@ -92,6 +88,7 @@ export default function Dropdown({
           }}
         />
       )}
+      {...props}
     />
   );
 }

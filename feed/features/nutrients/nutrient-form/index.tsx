@@ -19,6 +19,7 @@ import { Dropdown } from "@/components";
 import { toast } from "react-toastify";
 import { useRouter } from "next/router";
 import { alertSuccess } from "@/util/alert";
+import { AsyncDropdown } from "@/components/dropdowns";
 
 type Inputs = Partial<Nutrient>;
 
@@ -41,16 +42,18 @@ const NutrientForm = () => {
   });
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
-    try {
-      const response = await nutrient_service.create(data);
-      console.log(response);
-      // if ((response.status = 201)) {
-      //   alertSuccess({});
-      //   router.push("/");
-      // }
-    } catch (ex) {
-      toast.error("Unknown Error");
-    }
+    console.log("------------------");
+    console.log(data);
+    // try {
+    //   const response = await nutrient_service.create(data);
+    //   console.log(response);
+    //   // if ((response.status = 201)) {
+    //   //   alertSuccess({});
+    //   //   router.push("/");
+    //   // }
+    // } catch (ex) {
+    //   toast.error("Unknown Error");
+    // }
   };
 
   return (
@@ -149,12 +152,20 @@ const NutrientForm = () => {
           {/* Dropdown */}
           <Grid item xs={12} md={6}>
             <Controller
-              name={"group"}
+              name={"nutrient_group"}
               control={control}
               render={({
                 field: { onChange, value },
                 fieldState: { invalid, isTouched, isDirty, error },
-              }) => <Dropdown url="/nutrient-groups/" value="name" key="key" />}
+              }) => (
+                <AsyncDropdown
+                  url="/nutrient-groups/"
+                  key="name"
+                  onChange={(_, data) => onChange(data)}
+                  value={value}
+                  label="Nutrient Group"
+                />
+              )}
             />
           </Grid>
           {/* Button  */}
