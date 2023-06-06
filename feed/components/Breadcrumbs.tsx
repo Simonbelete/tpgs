@@ -1,8 +1,9 @@
 import { ReactNode } from "react";
 import { Breadcrumb } from "@/models";
 import MuiBreadcrumbs from "@mui/material/Breadcrumbs";
-import Link from "@mui/material/Link";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
+import { Typography } from "@mui/material";
+import Link from "next/link";
 
 export type BreadcrumbsProps = {
   items: Breadcrumb[];
@@ -16,14 +17,10 @@ const Breadcrumbs = ({ items }: BreadcrumbsProps) => {
     >
       {items &&
         items.map((e, key) => (
-          <Link
-            variant="body2"
-            key={key}
-            underline="none"
-            color="inherit"
-            href={e.href}
-          >
-            {e.label}
+          <Link href={e.href} key={key} style={{ textDecoration: "none" }}>
+            <Typography variant="body2" color="text.secondary">
+              {e.label}
+            </Typography>
           </Link>
         ))}
     </MuiBreadcrumbs>
