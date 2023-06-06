@@ -2,23 +2,13 @@ import React, { useEffect } from "react";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
-import {
-  Grid,
-  TextField,
-  Button,
-  Card,
-  FormControl,
-  Paper,
-  FormGroup,
-  FormLabel,
-} from "@mui/material";
+import { Grid, Button, Paper } from "@mui/material";
 import { Nutrient } from "@/models";
 import nutrient_service from "../services/nutrient_service";
-import { BootstrapInput, LabeledInput } from "@/components/inputs";
-import { Dropdown } from "@/components";
+import { LabeledInput } from "@/components/inputs";
 import { toast } from "react-toastify";
 import { useRouter } from "next/router";
-import { alertSuccess } from "@/util/alert";
+import { alertError, alertSuccess } from "@/util/alert";
 import { AsyncDropdown } from "@/components/dropdowns";
 
 type Inputs = Partial<Nutrient>;
@@ -31,16 +21,16 @@ const schema = yup
     description: yup.string().nullable(),
     nutrient_group: yup.number().nullable(),
   })
-  .required();
+  .transform((currentValue: any) => {
+    currentValue.nutrient_group = currentValue.nutrient_group.id;
+    return currentValue;
+  });
 
 const NutrientForm = ({ nutrient }: { nutrient?: Nutrient }) => {
   const router = useRouter();
   const {
     handleSubmit,
     control,
-    setValue,
-    register,
-    getValues,
     formState: { errors },
   } = useForm<Inputs>({
     defaultValues: {
@@ -50,11 +40,12 @@ const NutrientForm = ({ nutrient }: { nutrient?: Nutrient }) => {
   });
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
+    console.log("submited");
     try {
       if (nutrient == null) await create(data);
       else await update(data);
     } catch (ex) {
-      toast.error("Unknown Error");
+      alertError({});
     }
   };
 
@@ -69,10 +60,11 @@ const NutrientForm = ({ nutrient }: { nutrient?: Nutrient }) => {
   const update = async (data: Partial<Nutrient>) => {
     console.log("Update");
     console.log(data);
+    delete data.id;
     const response = await nutrient_service.update(nutrient?.id || 0, data);
     if ((response.status = 201)) {
       alertSuccess({});
-      router.push("/nutrients/" + nutrient?.id);
+      // router.push("/nutrients/" + nutrient?.id);
     }
   };
 
@@ -184,6 +176,8 @@ const NutrientForm = ({ nutrient }: { nutrient?: Nutrient }) => {
                   onChange={(_, data) => onChange(data)}
                   value={value}
                   label="Nutrient Group"
+                  error={!!error?.message}
+                  helperText={error?.message}
                 />
               )}
             />

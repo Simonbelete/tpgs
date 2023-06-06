@@ -14,3 +14,9 @@ class NutrientSerializer_GET(serializers.ModelSerializer):
     class Meta:
         model = models.Nutrient
         fields = '__all__'
+
+
+class NutrientSerializer_POST(serializers.ModelSerializer):
+    class Meta:
+        model = models.Nutrient
+        fields = '__all__'

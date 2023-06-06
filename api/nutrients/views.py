@@ -12,3 +12,8 @@ class NutrientGroupViewSet(viewsets.ModelViewSet):
 class NutrientViewSet(viewsets.ModelViewSet):
     queryset = models.Nutrient.objects.all()
     serializer_class = serializers.NutrientSerializer_GET
+
+    def get_serializer_class(self):
+        if self.request.method == 'GET':
+            return serializers.NutrientSerializer_GET
+        return serializers.NutrientSerializer_POST

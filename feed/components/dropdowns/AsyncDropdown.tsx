@@ -16,6 +16,8 @@ export default function AsyncDropdown({
   value,
   label,
   defaultOptions,
+  error,
+  helperText,
   onChange,
   ...props
 }: {
@@ -24,6 +26,8 @@ export default function AsyncDropdown({
   value?: any;
   label: string;
   defaultOptions?: any;
+  error?: boolean;
+  helperText?: string;
   onChange?: (event: any, newValue: any) => void;
 }) {
   const [open, setOpen] = React.useState(false);
@@ -81,6 +85,8 @@ export default function AsyncDropdown({
         renderInput={(params) => (
           <TextField
             {...params}
+            error={error}
+            helperText={helperText}
             fullWidth
             label={value ? "" : label}
             InputLabelProps={{ shrink: false }}
