@@ -1,5 +1,5 @@
 import React from "react";
-import { object, string } from "yup";
+import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import {
@@ -23,12 +23,15 @@ import { AsyncDropdown } from "@/components/dropdowns";
 
 type Inputs = Partial<Nutrient>;
 
-const schema = object({
-  name: string().required(),
-  // code: string(),
-  // abbreviation: string(),
-  // description: string(),
-}).required();
+const schema = yup
+  .object({
+    name: yup.string().required(),
+    code: yup.string(),
+    abbreviation: yup.string().required(),
+    description: yup.string(),
+    nutrient_group: yup.number(),
+  })
+  .required();
 
 const NutrientForm = () => {
   const router = useRouter();
@@ -42,18 +45,16 @@ const NutrientForm = () => {
   });
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
-    console.log("------------------");
-    console.log(data);
-    // try {
-    //   const response = await nutrient_service.create(data);
-    //   console.log(response);
-    //   // if ((response.status = 201)) {
-    //   //   alertSuccess({});
-    //   //   router.push("/");
-    //   // }
-    // } catch (ex) {
-    //   toast.error("Unknown Error");
-    // }
+    try {
+      const response = await nutrient_service.create(data);
+      console.log(response);
+      if ((response.status = 201)) {
+        alertSuccess({});
+        router.push("/");
+      }
+    } catch (ex) {
+      toast.error("Unknown Error");
+    }
   };
 
   return (
@@ -161,7 +162,7 @@ const NutrientForm = () => {
                 <AsyncDropdown
                   url="/nutrient-groups/"
                   key="name"
-                  onChange={(_, data) => onChange(data)}
+                  onChange={(_, data) => onChange(data.id)}
                   value={value}
                   label="Nutrient Group"
                 />

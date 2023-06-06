@@ -6,6 +6,10 @@ import client from "@/services/client";
 import { Button, IconButton, Tooltip, Stack, Typography } from "@mui/material";
 import AddToQueueIcon from "@mui/icons-material/AddToQueue";
 
+interface Model {
+  id?: string;
+}
+
 export default function AsyncDropdown({
   url,
   key = "name",
@@ -18,7 +22,7 @@ export default function AsyncDropdown({
   key?: string;
   value: any;
   label: string;
-  onChange?: (event: any, newValue: string | null) => void;
+  onChange?: (event: any, newValue: any) => void;
 }) {
   const [open, setOpen] = React.useState(false);
   const [options, setOptions] = React.useState<readonly any[]>([]);
@@ -90,7 +94,11 @@ export default function AsyncDropdown({
                   ) : null}
                   {params.InputProps.endAdornment}
                   <Tooltip title="Create New">
-                    <IconButton sx={{ py: 0 }} size="large" color="success">
+                    <IconButton
+                      sx={{ py: 0 }}
+                      size="large"
+                      color="secondary.main"
+                    >
                       <AddToQueueIcon />
                     </IconButton>
                   </Tooltip>
