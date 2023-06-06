@@ -15,6 +15,7 @@ export default function AsyncDropdown({
   key = "name",
   value,
   label,
+  defaultOptions,
   onChange,
   ...props
 }: {
@@ -22,13 +23,12 @@ export default function AsyncDropdown({
   key?: string;
   value?: any;
   label: string;
+  defaultOptions?: any;
   onChange?: (event: any, newValue: any) => void;
 }) {
   const [open, setOpen] = React.useState(false);
   const [options, setOptions] = React.useState<readonly any[]>([]);
   const loading = open && options.length === 0;
-
-  const localValue = React.useRef<any>();
 
   React.useEffect(() => {
     let active = true;
@@ -56,11 +56,6 @@ export default function AsyncDropdown({
     }
   }, [open]);
 
-  // React.useEffect(() => {
-  //   localValue.current = value;
-  //   console.log(localValue.current);
-  // }, [value]);
-
   return (
     <Stack gap={1}>
       <Typography variant="body2" fontWeight={700}>
@@ -77,11 +72,12 @@ export default function AsyncDropdown({
           setOpen(false);
         }}
         onChange={onChange}
-        // value={localValue.current}
+        value={value}
         defaultValue={value}
         getOptionLabel={(option) => option[key]}
         options={options}
         loading={loading}
+        isOptionEqualToValue={(option, value) => option[key] === value[key]}
         renderInput={(params) => (
           <TextField
             {...params}

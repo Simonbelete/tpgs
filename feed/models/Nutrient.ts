@@ -6,6 +6,6 @@ export default interface Nutrient {
   code: string;
   abbreviation: string;
   description: string;
-  nutrient_group: number | NutrientGroup;
+  nutrient_group: NutrientGroup | number;
   unit: number;
 }

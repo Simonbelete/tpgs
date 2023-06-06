@@ -67,6 +67,8 @@ const NutrientForm = ({ nutrient }: { nutrient?: Nutrient }) => {
   };
 
   const update = async (data: Partial<Nutrient>) => {
+    console.log("Update");
+    console.log(data);
     const response = await nutrient_service.update(nutrient?.id || 0, data);
     if ((response.status = 201)) {
       alertSuccess({});
@@ -179,7 +181,7 @@ const NutrientForm = ({ nutrient }: { nutrient?: Nutrient }) => {
                 <AsyncDropdown
                   url="/nutrient-groups/"
                   key="name"
-                  onChange={(_, data) => onChange(data.id)}
+                  onChange={(_, data) => onChange(data)}
                   value={value}
                   label="Nutrient Group"
                 />
