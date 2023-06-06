@@ -5,6 +5,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 import client from "@/services/client";
 import { Button, IconButton, Tooltip, Stack, Typography } from "@mui/material";
 import AddToQueueIcon from "@mui/icons-material/AddToQueue";
+import { PlainModal } from "../modals";
 
 interface Model {
   id?: string;
@@ -18,6 +19,7 @@ export default function AsyncDropdown({
   defaultOptions,
   error,
   helperText,
+  createForm,
   onChange,
   ...props
 }: {
@@ -28,11 +30,17 @@ export default function AsyncDropdown({
   defaultOptions?: any;
   error?: boolean;
   helperText?: string;
+  createForm?: React.ReactElement;
   onChange?: (event: any, newValue: any) => void;
 }) {
   const [open, setOpen] = React.useState(false);
   const [options, setOptions] = React.useState<readonly any[]>([]);
   const loading = open && options.length === 0;
+
+  // Modal
+  const [modalOpen, setModalOpen] = React.useState(false);
+  const handleModalOpen = () => setModalOpen(true);
+  const handleModalClose = () => setModalOpen(false);
 
   React.useEffect(() => {
     let active = true;
@@ -62,6 +70,9 @@ export default function AsyncDropdown({
 
   return (
     <Stack gap={1}>
+      <PlainModal open={modalOpen} onClose={handleModalClose}>
+        {createForm}
+      </PlainModal>
       <Typography variant="body2" fontWeight={700}>
         {label}
       </Typography>
@@ -103,6 +114,7 @@ export default function AsyncDropdown({
                       sx={{ py: 0 }}
                       size="large"
                       color="secondary.main"
+                      onClick={handleModalOpen}
                     >
                       <AddToQueueIcon />
                     </IconButton>

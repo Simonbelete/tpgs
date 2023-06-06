@@ -16,7 +16,7 @@ const schema = object({
   name: string().required(),
 }).required();
 
-const NutrientGroupForm = () => {
+const NutrientGroupForm = ({ redirect }: { redirect?: boolean }) => {
   const router = useRouter();
 
   const {
@@ -32,7 +32,7 @@ const NutrientGroupForm = () => {
       const response = await service.create(data);
       if ((response.status = 201)) {
         alertSuccess({});
-        router.push("/nutrient-groups");
+        if (redirect) router.push("/nutrient-groups");
       }
     } catch (ex) {
       toast.error("Unknown Error");

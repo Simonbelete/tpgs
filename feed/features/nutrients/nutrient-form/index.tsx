@@ -10,6 +10,7 @@ import { toast } from "react-toastify";
 import { useRouter } from "next/router";
 import { alertError, alertSuccess } from "@/util/alert";
 import { AsyncDropdown } from "@/components/dropdowns";
+import { NutrientGroupForm } from "@/features/nutrient-group";
 
 type Inputs = Partial<Nutrient>;
 
@@ -178,6 +179,7 @@ const NutrientForm = ({ nutrient }: { nutrient?: Nutrient }) => {
                   label="Nutrient Group"
                   error={!!error?.message}
                   helperText={error?.message}
+                  createForm={<NutrientGroupForm />}
                 />
               )}
             />
