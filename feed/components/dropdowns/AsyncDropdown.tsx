@@ -3,6 +3,8 @@ import TextField from "@mui/material/TextField";
 import Autocomplete, { AutocompleteProps } from "@mui/material/Autocomplete";
 import CircularProgress from "@mui/material/CircularProgress";
 import client from "@/services/client";
+import { Button, IconButton, Tooltip, Stack, Typography } from "@mui/material";
+import AddToQueueIcon from "@mui/icons-material/AddToQueue";
 
 export default function AsyncDropdown({
   url,
@@ -54,41 +56,51 @@ export default function AsyncDropdown({
   }, [value]);
 
   return (
-    <Autocomplete
-      fullWidth
-      size="small"
-      open={open}
-      onOpen={() => {
-        setOpen(true);
-      }}
-      onClose={() => {
-        setOpen(false);
-      }}
-      onChange={onChange}
-      // value={value}
-      getOptionLabel={(option) => option[key]}
-      options={options}
-      loading={loading}
-      renderInput={(params) => (
-        <TextField
-          {...params}
-          fullWidth
-          label={value ? "" : label}
-          InputLabelProps={{ shrink: false }}
-          InputProps={{
-            ...params.InputProps,
-            endAdornment: (
-              <React.Fragment>
-                {loading ? (
-                  <CircularProgress color="inherit" size={20} />
-                ) : null}
-                {params.InputProps.endAdornment}
-              </React.Fragment>
-            ),
-          }}
-        />
-      )}
-      {...props}
-    />
+    <Stack gap={1}>
+      <Typography variant="body2" fontWeight={700}>
+        {label}
+      </Typography>
+      <Autocomplete
+        fullWidth
+        size="small"
+        open={open}
+        onOpen={() => {
+          setOpen(true);
+        }}
+        onClose={() => {
+          setOpen(false);
+        }}
+        onChange={onChange}
+        // value={value}
+        getOptionLabel={(option) => option[key]}
+        options={options}
+        loading={loading}
+        renderInput={(params) => (
+          <TextField
+            {...params}
+            fullWidth
+            label={value ? "" : label}
+            InputLabelProps={{ shrink: false }}
+            InputProps={{
+              ...params.InputProps,
+              endAdornment: (
+                <React.Fragment>
+                  {loading ? (
+                    <CircularProgress color="inherit" size={20} />
+                  ) : null}
+                  {params.InputProps.endAdornment}
+                  <Tooltip title="Create New">
+                    <IconButton sx={{ py: 0 }} size="large" color="success">
+                      <AddToQueueIcon />
+                    </IconButton>
+                  </Tooltip>
+                </React.Fragment>
+              ),
+            }}
+          />
+        )}
+        {...props}
+      />
+    </Stack>
   );
 }
