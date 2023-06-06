@@ -5,7 +5,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 import client from "@/services/client";
 import { Button, IconButton, Tooltip, Stack, Typography } from "@mui/material";
 import AddToQueueIcon from "@mui/icons-material/AddToQueue";
-import { PlainModal } from "../modals";
+import { PlainModal, FullScreenModal } from "../modals";
 
 interface Model {
   id?: string;
@@ -70,9 +70,9 @@ export default function AsyncDropdown({
 
   return (
     <Stack gap={1}>
-      <PlainModal open={modalOpen} onClose={handleModalClose}>
+      <FullScreenModal open={modalOpen} onClose={handleModalClose}>
         {createForm}
-      </PlainModal>
+      </FullScreenModal>
       <Typography variant="body2" fontWeight={700}>
         {label}
       </Typography>
