@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
@@ -33,27 +33,49 @@ const schema = yup
   })
   .required();
 
-const NutrientForm = () => {
+const NutrientForm = ({ nutrient }: { nutrient?: Nutrient }) => {
   const router = useRouter();
-
   const {
     handleSubmit,
     control,
+    setValue,
     formState: { errors },
   } = useForm<Inputs>({
     resolver: yupResolver(schema),
   });
 
+  useEffect(() => {
+    if (nutrient != null) {
+      setValue("name", nutrient.name);
+      setValue("code", nutrient.code);
+      setValue("abbreviation", nutrient.abbreviation);
+      setValue("description", nutrient.description);
+      setValue("nutrient_group", nutrient.nutrient_group);
+    }
+  }, [nutrient]);
+
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     try {
-      const response = await nutrient_service.create(data);
-      console.log(response);
-      if ((response.status = 201)) {
-        alertSuccess({});
-        router.push("/");
-      }
+      if (nutrient == null) await create(data);
+      else await update(data);
     } catch (ex) {
       toast.error("Unknown Error");
+    }
+  };
+
+  const create = async (data: Partial<Nutrient>) => {
+    const response = await nutrient_service.create(data);
+    if ((response.status = 201)) {
+      alertSuccess({});
+      router.push("/");
+    }
+  };
+
+  const update = async (data: Partial<Nutrient>) => {
+    const response = await nutrient_service.update(nutrient?.id || 0, data);
+    if ((response.status = 201)) {
+      alertSuccess({});
+      router.push("/");
     }
   };
 

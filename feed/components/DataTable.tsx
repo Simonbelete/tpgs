@@ -12,6 +12,8 @@ import CreateIcon from "@mui/icons-material/Create";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import EditNoteIcon from "@mui/icons-material/EditNote";
+import Link from "next/link";
+import { useRouter } from "next/router";
 
 const ODD_OPACITY = 0.2;
 
@@ -56,6 +58,8 @@ const DataTable = ({
   rows: GridRowsProp;
   columns: GridColDef[];
 }) => {
+  const router = useRouter();
+
   const settingColumn: GridColDef[] = [
     {
       field: "Setting",
@@ -64,12 +68,16 @@ const DataTable = ({
       renderCell(params: any) {
         return (
           <Box>
-            <IconButton aria-label="edit">
-              <EditNoteIcon fontSize="small" color="info" />
-            </IconButton>
-            <IconButton aria-label="view">
-              <VisibilityIcon fontSize="small" color="info" />
-            </IconButton>
+            <Link href={router.asPath + "/" + params.id + "/edit"}>
+              <IconButton aria-label="edit">
+                <EditNoteIcon fontSize="small" color="info" />
+              </IconButton>
+            </Link>
+            <Link href={router.asPath + "/" + params.id}>
+              <IconButton aria-label="view">
+                <VisibilityIcon fontSize="small" color="info" />
+              </IconButton>
+            </Link>
             <IconButton aria-label="delete">
               <DeleteForeverIcon fontSize="small" color="error" />
             </IconButton>
