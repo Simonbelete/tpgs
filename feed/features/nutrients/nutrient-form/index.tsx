@@ -26,10 +26,10 @@ type Inputs = Partial<Nutrient>;
 const schema = yup
   .object({
     name: yup.string().required(),
-    code: yup.string(),
+    code: yup.string().nullable(),
     abbreviation: yup.string().required(),
-    description: yup.string(),
-    nutrient_group: yup.number(),
+    description: yup.string().nullable(),
+    nutrient_group: yup.number().nullable(),
   })
   .required();
 
@@ -39,20 +39,15 @@ const NutrientForm = ({ nutrient }: { nutrient?: Nutrient }) => {
     handleSubmit,
     control,
     setValue,
+    register,
+    getValues,
     formState: { errors },
   } = useForm<Inputs>({
+    defaultValues: {
+      ...nutrient,
+    },
     resolver: yupResolver(schema),
   });
-
-  useEffect(() => {
-    if (nutrient != null) {
-      setValue("name", nutrient.name);
-      setValue("code", nutrient.code);
-      setValue("abbreviation", nutrient.abbreviation);
-      setValue("description", nutrient.description);
-      setValue("nutrient_group", nutrient.nutrient_group);
-    }
-  }, [nutrient]);
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     try {
@@ -67,7 +62,7 @@ const NutrientForm = ({ nutrient }: { nutrient?: Nutrient }) => {
     const response = await nutrient_service.create(data);
     if ((response.status = 201)) {
       alertSuccess({});
-      router.push("/");
+      router.push("/nutrients");
     }
   };
 
@@ -75,7 +70,7 @@ const NutrientForm = ({ nutrient }: { nutrient?: Nutrient }) => {
     const response = await nutrient_service.update(nutrient?.id || 0, data);
     if ((response.status = 201)) {
       alertSuccess({});
-      router.push("/");
+      router.push("/nutrients/" + nutrient?.id);
     }
   };
 

@@ -27,11 +27,12 @@ export async function getServerSideProps(context: NextPageContext) {
   try {
     const res = await NutrientService.getById(Number(id));
 
+    // context.resolvedUrl
     if (res.status != 200)
       return {
         redirect: {
           permanent: false,
-          destination: `/404?id=${id}&from=${context.resolvedUrl}&next=/nutrients`,
+          destination: `/${res.status}?id=${id}&from=/nutrients&next=/nutrients`,
         },
       };
 
@@ -39,10 +40,11 @@ export async function getServerSideProps(context: NextPageContext) {
 
     return { props: { data } };
   } catch (ex) {
+    console.log(ex);
     return {
       redirect: {
         permanent: false,
-        destination: `/404?id=${id}&from=${context.resolvedUrl}&next=/nutrients&error=unknown`,
+        destination: `/404?id=${id}&from=/nutrients&next=/nutrients&error=unknown`,
       },
     };
   }

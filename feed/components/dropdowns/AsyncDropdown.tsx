@@ -20,13 +20,15 @@ export default function AsyncDropdown({
 }: {
   url: string;
   key?: string;
-  value: any;
+  value?: any;
   label: string;
   onChange?: (event: any, newValue: any) => void;
 }) {
   const [open, setOpen] = React.useState(false);
   const [options, setOptions] = React.useState<readonly any[]>([]);
   const loading = open && options.length === 0;
+
+  const localValue = React.useRef<any>();
 
   React.useEffect(() => {
     let active = true;
@@ -54,10 +56,10 @@ export default function AsyncDropdown({
     }
   }, [open]);
 
-  React.useEffect(() => {
-    console.log("aaa");
-    console.log(value);
-  }, [value]);
+  // React.useEffect(() => {
+  //   localValue.current = value;
+  //   console.log(localValue.current);
+  // }, [value]);
 
   return (
     <Stack gap={1}>
@@ -75,7 +77,8 @@ export default function AsyncDropdown({
           setOpen(false);
         }}
         onChange={onChange}
-        // value={value}
+        // value={localValue.current}
+        defaultValue={value}
         getOptionLabel={(option) => option[key]}
         options={options}
         loading={loading}
