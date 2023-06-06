@@ -6,11 +6,11 @@ import { Grid, Button, Paper } from "@mui/material";
 import { Nutrient } from "@/models";
 import nutrient_service from "../services/nutrient_service";
 import { LabeledInput } from "@/components/inputs";
-import { toast } from "react-toastify";
 import { useRouter } from "next/router";
 import { alertError, alertSuccess } from "@/util/alert";
 import { AsyncDropdown } from "@/components/dropdowns";
 import { NutrientGroupForm } from "@/features/nutrient-group";
+import { useSnackbar } from "notistack";
 
 type Inputs = Partial<Nutrient>;
 
@@ -23,12 +23,15 @@ const schema = yup
     nutrient_group: yup.number().nullable(),
   })
   .transform((currentValue: any) => {
-    currentValue.nutrient_group = currentValue.nutrient_group.id;
+    if (currentValue.nutrient_group != null)
+      currentValue.nutrient_group = currentValue.nutrient_group.id;
     return currentValue;
   });
 
 const NutrientForm = ({ nutrient }: { nutrient?: Nutrient }) => {
   const router = useRouter();
+  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+
   const {
     handleSubmit,
     control,
@@ -45,14 +48,14 @@ const NutrientForm = ({ nutrient }: { nutrient?: Nutrient }) => {
       if (nutrient == null) await create(data);
       else await update(data);
     } catch (ex) {
-      alertError({});
+      enqueueSnackbar("Server Error!", { variant: "error" });
     }
   };
 
   const create = async (data: Partial<Nutrient>) => {
     const response = await nutrient_service.create(data);
     if ((response.status = 201)) {
-      alertSuccess({});
+      enqueueSnackbar("Successfully created!", { variant: "success" });
       router.push("/nutrients");
     }
   };
@@ -61,8 +64,8 @@ const NutrientForm = ({ nutrient }: { nutrient?: Nutrient }) => {
     delete data.id;
     const response = await nutrient_service.update(nutrient?.id || 0, data);
     if ((response.status = 201)) {
-      alertSuccess({});
-      // router.push("/nutrients/" + nutrient?.id);
+      enqueueSnackbar("Successfully updated!", { variant: "success" });
+      router.push("/nutrients/" + nutrient?.id);
     }
   };
 
