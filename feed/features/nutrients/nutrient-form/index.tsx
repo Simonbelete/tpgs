@@ -41,7 +41,6 @@ const NutrientForm = ({ nutrient }: { nutrient?: Nutrient }) => {
   });
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
-    console.log("submited");
     try {
       if (nutrient == null) await create(data);
       else await update(data);
@@ -59,8 +58,6 @@ const NutrientForm = ({ nutrient }: { nutrient?: Nutrient }) => {
   };
 
   const update = async (data: Partial<Nutrient>) => {
-    console.log("Update");
-    console.log(data);
     delete data.id;
     const response = await nutrient_service.update(nutrient?.id || 0, data);
     if ((response.status = 201)) {

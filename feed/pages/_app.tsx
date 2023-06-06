@@ -13,6 +13,7 @@ import { ToastContainer } from "react-toastify";
 import { SessionProvider } from "next-auth/react";
 import { ThemeProvider } from "@mui/material/styles";
 import { lightTheme } from "@/util/themes";
+import { SnackbarProvider, useSnackbar } from "notistack";
 
 export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
   getLayout?: (page: ReactElement) => ReactNode;
@@ -50,10 +51,11 @@ export default function MyApp({
   return getLayout(
     <SessionProvider session={session}>
       <ThemeProvider theme={lightTheme}>
-        <DashboardLayout>
-          <ToastContainer />
-          <Component {...pageProps} />
-        </DashboardLayout>
+        <SnackbarProvider>
+          <DashboardLayout>
+            <Component {...pageProps} />
+          </DashboardLayout>
+        </SnackbarProvider>
       </ThemeProvider>
     </SessionProvider>
   );

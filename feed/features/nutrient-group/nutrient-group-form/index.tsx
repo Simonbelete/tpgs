@@ -9,6 +9,7 @@ import { LabeledInput } from "@/components/inputs";
 import { toast } from "react-toastify";
 import { useRouter } from "next/router";
 import { alertSuccess } from "@/util/alert";
+import { useSnackbar } from "notistack";
 
 type Inputs = Partial<NutrientGroup>;
 
@@ -18,6 +19,7 @@ const schema = object({
 
 const NutrientGroupForm = ({ redirect }: { redirect?: boolean }) => {
   const router = useRouter();
+  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
   const {
     handleSubmit,
@@ -31,11 +33,11 @@ const NutrientGroupForm = ({ redirect }: { redirect?: boolean }) => {
     try {
       const response = await service.create(data);
       if ((response.status = 201)) {
-        alertSuccess({});
+        enqueueSnackbar("Successfully created!", { variant: "success" });
         if (redirect) router.push("/nutrient-groups");
       }
     } catch (ex) {
-      toast.error("Unknown Error");
+      enqueueSnackbar("Server Error!", { variant: "error" });
     }
   };
 
