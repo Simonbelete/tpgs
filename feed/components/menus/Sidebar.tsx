@@ -110,30 +110,27 @@ const SidebarMenu = () => {
           </MenuItem>
         </SubMenu>
 
-        <MenuItem
-          component={<Link href="/ingredients" />}
+        <SubMenu
+          label={<Typography variant="body1">Ingredients</Typography>}
           icon={<BubbleChartIcon />}
         >
-          <Typography variant="body1">Ingredients</Typography>
-        </MenuItem>
-        {/* <MenuItem
-          component={<Link href="/ingredients" />}
-          icon={<BloodtypeIcon />}
-        >
-          Ingredients
-        </MenuItem>
-        <MenuItem component={<Link href="/rations" />} icon={<BloodtypeIcon />}>
-          Rations
-        </MenuItem>
-        <MenuItem
-          component={<Link href="/ingredient-types" />}
-          icon={<BloodtypeIcon />}
-        >
-          Ingredient Types
-        </MenuItem>
-        <MenuItem component={<Link href="/legend" />} icon={<BloodtypeIcon />}>
-          Legend
-        </MenuItem> */}
+          <MenuItem
+            component={<Link href="/ingredients" />}
+            icon={<BubbleChartIcon fontSize="small" />}
+          >
+            <Typography variant="body1" fontSize={14}>
+              Ingredients
+            </Typography>
+          </MenuItem>
+          <MenuItem
+            component={<Link href="/ingredient-types" />}
+            icon={<WorkspacesIcon fontSize="small" />}
+          >
+            <Typography variant="body1" fontSize={14}>
+              Ingredient Type
+            </Typography>
+          </MenuItem>
+        </SubMenu>
       </Menu>
     </Sidebar>
   );

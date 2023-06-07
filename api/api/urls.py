@@ -35,6 +35,7 @@ urlpatterns = [
     path('api/', include([
         path('', include('units.urls')),
         path('', include('nutrients.urls')),
+        path('', include('ingredients.urls'))
     ])),
 
     # path('api/', include([

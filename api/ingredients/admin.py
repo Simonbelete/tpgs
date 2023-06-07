@@ -7,3 +7,5 @@ class IngredientAdmin(admin.ModelAdmin):
 
 
 admin.site.register(models.Ingredient, IngredientAdmin)
+admin.site.register(models.IngredientNutrient)
+admin.site.register(models.IngredientType)
