@@ -15,7 +15,7 @@ class IngredientViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.IngredientSerializer_GET
 
     def get_serializer_class(self):
-        if self.request.method == 'POST':
+        if self.request.method in ['POST', 'PATCH']:
             return serializers.IngredientSerializer_POST
         return serializers.IngredientSerializer_GET
 
@@ -24,15 +24,15 @@ class IngredientNutrientViewSet(viewsets.ModelViewSet):
     queryset = models.IngredientNutrient.objects.all()
     serializer_class = serializers.IngredientNutrientSerializer_GET
 
-    # def list(self, request, *args, **kwargs):
-    #     pk = self.kwargs['ingredient_pk']
+    def list(self, request, *args, **kwargs):
+        pk = self.kwargs['ingredient_pk']
 
-    #     queryset = self.paginate_queryset(
-    #         self.get_queryset().filter(ingredient=pk))
-    #     serializer = self.get_serializer(queryset, many=True)
-    #     return self.get_paginated_response(serializer.data)
+        queryset = self.paginate_queryset(
+            self.get_queryset().filter(ingredient=pk))
+        serializer = self.get_serializer(queryset, many=True)
+        return self.get_paginated_response(serializer.data)
 
-    # def get_serializer_class(self):
-    #     if self.request.method == 'GET':
-    #         return serializers.IngredientNutrientSerializer_GET
-    #     return serializers.IngredientNutrientSerializer_POST
+    def get_serializer_class(self):
+        if self.request.method in ['POST', 'PATCH']:
+            return serializers.IngredientNutrientSerializer_POST
+        return serializers.IngredientNutrientSerializer_GET

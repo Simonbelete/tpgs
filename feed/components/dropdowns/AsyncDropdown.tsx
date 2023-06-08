@@ -26,7 +26,7 @@ export default function AsyncDropdown({
   url: string;
   key?: string;
   value?: any;
-  label: string;
+  label?: string;
   defaultOptions?: any;
   error?: boolean;
   helperText?: string;
@@ -73,9 +73,11 @@ export default function AsyncDropdown({
       <FullScreenModal open={modalOpen} onClose={handleModalClose}>
         {createForm}
       </FullScreenModal>
-      <Typography variant="body2" fontWeight={700}>
-        {label}
-      </Typography>
+      {label && (
+        <Typography variant="body2" fontWeight={700}>
+          {label}
+        </Typography>
+      )}
       <Autocomplete
         fullWidth
         size="small"

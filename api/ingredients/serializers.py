@@ -21,31 +21,48 @@ class IngredientNutrientSerializer_POST(serializers.ModelSerializer):
         model = models.IngredientNutrient
         fields = ['nutrient', 'value']
 
-#     # def create(self, validated_data):
-#     #     validated_data.pop('ingredients')
-#     #     instance = super().create(validated_data)
-#     #     return instance
-
 
 class IngredientNutrientSerializer_REF_POST(serializers.Serializer):
-    id = serializers.PrimaryKeyRelatedField(queryset=Nutrient.objects.all())
+    nutrient = serializers.PrimaryKeyRelatedField(
+        queryset=Nutrient.objects.all())
     value = serializers.FloatField()
 
 
 class IngredientSerializer_POST(serializers.ModelSerializer):
-    nutrients = IngredientNutrientSerializer_REF_POST(many=True)
+    nutrients = IngredientNutrientSerializer_POST(many=True)
 
     class Meta:
         model = models.Ingredient
         fields = ['name', 'code',
                   'description', 'price', 'price_unit', 'nutrients']
 
-    def create(self, validated_data):
-        nutrients = validated_data.pop('nutrients', None)
-        instance = models.Ingredient.objects.create(**validated_data)
-        for nutrient in nutrients:
-            models.IngredientNutrient.objects.create(
-                ingredient=instance, nutrient=nutrient['id'], value=nutrient['value'])
+    # def create(self, validated_data):
+    #     nutrients = validated_data.pop('nutrients', None)
+    #     instance = models.Ingredient.objects.create(**validated_data)
+    #     for nutrient in nutrients:
+    #         models.IngredientNutrient.objects.create(
+    #             ingredient=instance, nutrient=nutrient['nutrient'], value=nutrient['value'])
+    #     return instance
+
+    def update(self, instance, validated_data):
+        # print('-------------')
+        # print('update')
+        # nutrients_data = validated_data.pop('nutrients', [])
+        # nutrients = instance.nutrients
+
+        # instance.name = validated_data.get('name', instance.name)
+        # instance.save()
+
+        # nutrients_ids = []
+        # for nu in nutrients_data:
+        #     print('=====================================')
+        #     print(nu)
+        #     nu_i, created = models.IngredientNutrient.objects.update_or_create(
+        #         pk=nu.get('id'), defaults={**nu, "ingredient": instance})
+        #     nutrients_ids.append(nu_i.pk)
+        # print(nutrients_ids)
+        # nutrients.set(nutrients_ids)
+
         return instance
 
 

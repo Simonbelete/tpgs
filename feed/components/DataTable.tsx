@@ -95,9 +95,9 @@ const DataTable = ({
       getRowClassName={(params) =>
         params.indexRelativeToCurrentPage % 2 === 0 ? "even" : "odd"
       }
-      slots={{
-        toolbar: GridToolbar,
-      }}
+      // slots={{
+      //   toolbar: GridToolbar,
+      // }}
       {...props}
     />
   );
