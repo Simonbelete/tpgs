@@ -4,26 +4,42 @@ import { green, purple, common } from "@mui/material/colors";
 declare module "@mui/material/styles" {
   // White
   interface Palette {
-    white?: Palette["primary"];
+    link?: Palette["text"];
+    sidebar?: Palette["background"];
   }
 
   interface PaletteOptions {
-    white?: PaletteOptions["primary"];
+    link?: PaletteOptions["text"];
+    sidebar?: PaletteOptions["background"];
   }
 
-  // neutral
-  interface Palette {
-    neutral?: Palette["primary"];
+  // Typo
+  interface TypographyVariants {
+    title: React.CSSProperties;
   }
 
-  interface PaletteOptions {
-    neutral?: PaletteOptions["primary"];
+  // allow configuration using `createTheme`
+  interface TypographyVariantsOptions {
+    title?: React.CSSProperties;
+  }
+}
+
+// Update the Typography's variant prop options
+declare module "@mui/material/Typography" {
+  interface TypographyPropsVariantOverrides {
+    title: true;
   }
 }
 
 const lightTheme = createTheme({
   typography: {
     fontFamily: ["Inter", "sans-serif"].join(","),
+    title: {
+      fontSize: 40,
+      fontWeight: 700,
+      color: "#495057",
+      fontFamily: ["Inter", "sans-serif"].join(","),
+    },
   },
   palette: {
     mode: "light",
@@ -33,10 +49,21 @@ const lightTheme = createTheme({
       dark: "#1f4841",
     },
     secondary: {
-      main: green[100],
+      main: "#475A64",
+      dark: "#1d262a",
     },
-    white: {
-      main: common.white,
+    text: {
+      primary: "#495056",
+      // secondary: "#63758D",
+      secondary: "#98AAC4",
+    },
+    link: {
+      primary: "#88AACF",
+      secondary: "#0000EE",
+    },
+    background: {
+      default: "#F6F9FC",
+      paper: "#fff",
     },
   },
   components: {
