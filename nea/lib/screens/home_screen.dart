@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nea/constants.dart';
+import 'package:nea/utils/responsive_widget.dart';
 import 'package:nea/widgets/course_grid.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nea/bloc/local/bloc.dart';
@@ -59,49 +60,14 @@ class HomeScreen extends StatelessWidget {
     return BlocBuilder<LocalBloc, LocalState>(builder: (context, state) {
       return Scaffold(
         body: SafeArea(
-          child: SingleChildScrollView(
-            physics: BouncingScrollPhysics(),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                HeaderLogo(),
-                // // Search Box
-                Container(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 30.0, vertical: 20.0),
-                    child: Container()
-                    // child: SearchBar(
-                    //   onChange: ((value) {}),
-                    //   onSubmit: ((query) {
-                    //     context
-                    //         .read<SearchBloc>()
-                    //         .add(SetSearchQuery(query: query));
-                    //     Navigator.pushNamed(context, SearchScreen.routeName);
-                    //   }),
-                    // ),
+            child: ResponsiveWidget.isSmallScreen(context)
+                ? body(context)
+                : Center(
+                    child: AspectRatio(
+                      aspectRatio: 12 / 9,
+                      child: body(context),
                     ),
-                // Language Selection
-                Container(
-                  padding: EdgeInsets.symmetric(horizontal: 35.0),
-                  child: LanguageChip(),
-                ),
-                // Nutrients
-                const SizedBox(
-                  height: 15,
-                ),
-                // Course List
-                const SizedBox(
-                  height: 15,
-                ),
-                CourseGrid(),
-                const SizedBox(
-                  height: 15,
-                ),
-                FoodGrid(),
-              ],
-            ),
-          ),
-        ),
+                  )),
         floatingActionButton: FloatingActionButton.small(
             backgroundColor: primaryColor,
             onPressed: () {
@@ -113,5 +79,40 @@ class HomeScreen extends StatelessWidget {
             )),
       );
     });
+  }
+
+  Widget body(BuildContext context) {
+    return SingleChildScrollView(
+      physics: BouncingScrollPhysics(),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          HeaderLogo(),
+          // // Search Box
+          Container(
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 30.0, vertical: 20.0),
+              child: Container()),
+          // Language Selection
+          Container(
+            padding: EdgeInsets.symmetric(horizontal: 35.0),
+            child: LanguageChip(),
+          ),
+          // Nutrients
+          const SizedBox(
+            height: 15,
+          ),
+          // Course List
+          const SizedBox(
+            height: 15,
+          ),
+          CourseGrid(),
+          const SizedBox(
+            height: 15,
+          ),
+          FoodGrid(),
+        ],
+      ),
+    );
   }
 }

@@ -21,18 +21,18 @@ class FoodGrid extends StatelessWidget {
     return BlocBuilder<LocalBloc, LocalState>(builder: (context, state) {
       return Column(
         children: [
-          Container(
-            padding: EdgeInsets.symmetric(horizontal: 10.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Header6(
-                  text: appLocale['food']![state.local]!,
-                  color: primaryColor,
-                ),
-              ],
-            ),
-          ),
+          // Container(
+          //   padding: EdgeInsets.symmetric(horizontal: 10.0),
+          //   child: Row(
+          //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          //     children: [
+          //       Header6(
+          //         text: appLocale['food']![state.local]!,
+          //         color: primaryColor,
+          //       ),
+          //     ],
+          //   ),
+          // ),
           const SizedBox(
             height: 10,
           ),

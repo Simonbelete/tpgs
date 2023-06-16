@@ -45,7 +45,7 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
       final match = (firstMatch!.groupCount == 1) ? firstMatch.group(1) : null;
 
       return MaterialPageRoute<void>(
-        builder: (context) => path.builder(context, match!),
+        builder: (context) => path.builder(context, match ?? ""),
         settings: routeSettings,
       );
     }
