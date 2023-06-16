@@ -4,6 +4,8 @@ import 'package:nea/bloc/local/events.dart';
 import 'package:nea/bloc/onboarding/states.dart';
 import 'package:nea/router.dart';
 import 'package:nea/screens/home_screen.dart';
+import 'package:nea/utils/responsive_widget.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'utils/preferencess.dart';
 import 'utils/bloc_observer.dart';
@@ -19,7 +21,7 @@ void main() async {
   Bloc.observer = AppBlocObserver();
   await Preferencess.init();
 
-  runApp(const NutritionEductionApp());
+  runApp(NutritionEductionApp());
 }
 
 class NutritionEductionApp extends StatelessWidget {

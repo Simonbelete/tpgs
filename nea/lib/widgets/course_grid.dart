@@ -54,9 +54,12 @@ class CourseGrid extends StatelessWidget {
                             ResponsiveWidget.isSmallScreen(context) ? 15 : 50),
                     child: InkWell(
                       onTap: () {
-                        Navigator.pushNamed(context, CourseScreen.routeName,
-                            arguments: courseData.values
-                                .elementAt(index)[state.local]);
+                        Navigator.pushNamed(context,
+                            CourseScreen.routeName + "/" + index.toString(),
+                            arguments: index);
+                        // Navigator.pushNamed(context, CourseScreen.routeName,
+                        //     arguments: courseData.values
+                        //         .elementAt(index)[state.local]);
                       },
                       child: CourseCard(
                         image: courseData.values

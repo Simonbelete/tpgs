@@ -10,4 +10,7 @@ class UnitConverter(models.Model):
         Unit, on_delete=models.CASCADE, related_name='unit_from')
     unit_to = models.ForeignKey(
         Unit, on_delete=models.CASCADE, related_name='unit_to')
-    ratio = models.FloatField(default=1)
+    factor = models.FloatField(default=1)
+
+    class Meta:
+        unique_together = ['unit_from', 'unit_to']

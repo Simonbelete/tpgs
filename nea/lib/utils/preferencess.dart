@@ -24,4 +24,8 @@ class Preferencess {
   static Future getLocal() async {
     return _preferences.getString(_LOCAL_KEY);
   }
+
+  static getLocalSync() {
+    return _preferences.getString(_LOCAL_KEY);
+  }
 }
