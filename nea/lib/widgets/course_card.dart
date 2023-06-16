@@ -32,9 +32,9 @@ class CourseCard extends StatelessWidget {
                     topRight: Radius.circular(20.0)),
                 child: Image.asset(
                   image,
-                  fit: BoxFit.fill,
-                  height: 130,
-                  width: 200,
+                  fit: BoxFit.cover,
+                  height: ResponsiveWidget.isSmallScreen(context) ? 130 : 270,
+                  width: ResponsiveWidget.isSmallScreen(context) ? 200 : 300,
                 ),
               ),
             ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nea/utils/responsive_widget.dart';
 
 class Header6 extends StatelessWidget {
   final String text;
@@ -10,10 +11,12 @@ class Header6 extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       text,
-      maxLines: 2,
+      maxLines: ResponsiveWidget.isSmallScreen(context) ? 2 : 4,
       overflow: TextOverflow.ellipsis,
-      style:
-          TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold, color: color),
+      style: TextStyle(
+          fontSize: ResponsiveWidget.isSmallScreen(context) ? 15.0 : 20.0,
+          fontWeight: FontWeight.bold,
+          color: color),
     );
   }
 }
