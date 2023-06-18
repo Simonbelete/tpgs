@@ -11,16 +11,36 @@ const columns: GridColDef[] = [
 
 const UnitsList = () => {
   const [rows, setRows] = useState<GridRowsProp<Unit>>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [paginationModel, setPaginationModel] = useState({
+    page: 0,
+    pageSize: 10,
+  });
 
   useEffect(() => {
+    setIsLoading(true);
     try {
       unit_service.get().then((response) => {
         setRows(response.data.results);
       });
-    } catch (ex) {}
-  }, []);
+    } catch (ex) {
+    } finally {
+      setIsLoading(false);
+    }
+  }, [paginationModel]);
 
-  return <DataTable rows={rows} columns={columns} />;
+  return (
+    <DataTable
+      rows={rows}
+      columns={columns}
+      rowCount={rows.length}
+      loading={isLoading}
+      pageSizeOptions={[5]}
+      paginationModel={paginationModel}
+      paginationMode="server"
+      onPaginationModelChange={setPaginationModel}
+    />
+  );
 };
 
 export default UnitsList;

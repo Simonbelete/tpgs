@@ -5,10 +5,10 @@ import {
   GridColDef,
   GridToolbar,
   gridClasses,
+  DataGridProps,
 } from "@mui/x-data-grid";
 import { Box, IconButton } from "@mui/material";
 import { alpha, styled } from "@mui/material/styles";
-import CreateIcon from "@mui/icons-material/Create";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import EditNoteIcon from "@mui/icons-material/EditNote";
@@ -50,14 +50,7 @@ const StripedDataGrid = styled(DataGrid)(({ theme }) => ({
   },
 }));
 
-const DataTable = ({
-  rows,
-  columns,
-  ...props
-}: {
-  rows: GridRowsProp;
-  columns: GridColDef[];
-}) => {
+const DataTable = ({ rows, columns, ...props }: DataGridProps) => {
   const router = useRouter();
 
   const settingColumn: GridColDef[] = [
