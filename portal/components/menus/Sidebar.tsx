@@ -9,9 +9,10 @@ import {
 } from "react-pro-sidebar";
 import Link from "next/link";
 import { Grid, Typography } from "@mui/material";
-import BubbleChartIcon from "@mui/icons-material/BubbleChart";
 import { useTheme } from "@mui/material/styles";
+import BubbleChartIcon from "@mui/icons-material/BubbleChart";
 import WorkspacesIcon from "@mui/icons-material/Workspaces";
+import BalanceIcon from "@mui/icons-material/Balance";
 
 const SidebarMenu = () => {
   const theme = useTheme();
@@ -128,6 +129,22 @@ const SidebarMenu = () => {
           >
             <Typography variant="body1" fontSize={14}>
               Ingredient Type
+            </Typography>
+          </MenuItem>
+        </SubMenu>
+
+        <SubMenu
+          label={<Typography variant="body1">Units</Typography>}
+          icon={<BalanceIcon />}
+        >
+          <MenuItem component={<Link href="/units" />}>
+            <Typography variant="body1" fontSize={14}>
+              Units
+            </Typography>
+          </MenuItem>
+          <MenuItem component={<Link href="/units" />}>
+            <Typography variant="body1" fontSize={14}>
+              Units Convertor
             </Typography>
           </MenuItem>
         </SubMenu>

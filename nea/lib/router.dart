@@ -28,7 +28,7 @@ List<Path> paths = [
       context,
       match,
     ) {
-      var local = Preferencess.getLocalSync();
+      var local = Preferencess.getLocalSync() ?? "en";
       if (match == null) return NotFound();
       var index = match == null ? 0 : int.parse(match);
       Course course = courseData.values.elementAt(index)[local] as Course;
@@ -43,7 +43,6 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
     if (regExpPattern.hasMatch(routeSettings.name!)) {
       final firstMatch = regExpPattern.firstMatch(routeSettings.name!);
       final match = (firstMatch!.groupCount == 1) ? firstMatch.group(1) : null;
-
       return MaterialPageRoute<void>(
         builder: (context) => path.builder(context, match ?? ""),
         settings: routeSettings,

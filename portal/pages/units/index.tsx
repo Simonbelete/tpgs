@@ -1,12 +1,14 @@
 import React, { ReactElement } from "react";
 import Link from "next/link";
+import dynamic from "next/dynamic";
 import { Typography, Button } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import { useBreadcrumbs } from "@/hooks";
-import { ListLayout, Breadcrumbs } from "@/components";
+import { ListLayout, Breadcrumbs, Loading } from "@/components";
+import { UnitsList } from "@/features/units";
 
 const DashboardLayout = dynamic(
-  () => import("../components/layouts/DashboardLayout"),
+  () => import("../../components/layouts/DashboardLayout"),
   {
     ssr: false,
     loading: () => <Loading />,
@@ -17,11 +19,15 @@ const UnitsPage = () => {
   const { breadcrumbs } = useBreadcrumbs();
 
   return (
-    <ListLayout
-      breadcrumbs={<Breadcrumbs items={breadcrumbs} />}
-      header={<Typography variant="title">Nutrients Group</Typography>}
-      actions={<Actions />}
-    ></ListLayout>
+    <DashboardLayout>
+      <ListLayout
+        breadcrumbs={<Breadcrumbs items={breadcrumbs} />}
+        header={<Typography variant="title">Units</Typography>}
+        actions={<Actions />}
+      >
+        <UnitsList />
+      </ListLayout>
+    </DashboardLayout>
   );
 };
 
