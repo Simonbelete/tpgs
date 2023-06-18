@@ -1,7 +1,7 @@
 import React, { ReactElement } from "react";
 import Link from "next/link";
 import dynamic from "next/dynamic";
-import { Typography, Button } from "@mui/material";
+import { Typography, Button, IconButton } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import { useBreadcrumbs } from "@/hooks";
 import { ListLayout, Breadcrumbs, Loading } from "@/components";
@@ -34,10 +34,11 @@ const UnitsPage = () => {
 const Actions = (): ReactElement => {
   return (
     <>
-      <Link href="/nutrient-groups/create">
+      <Link href="/units/create">
         <Button variant="contained" startIcon={<AddIcon />}>
           Create
         </Button>
+        <IconButton></IconButton>
       </Link>
     </>
   );

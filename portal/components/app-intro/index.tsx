@@ -30,7 +30,6 @@ const AppIntro = () => {
           <Box>
             <img
               src="https://placehold.co/400"
-              height={50}
               width={400}
               style={{ marginBottom: "20px" }}
             />

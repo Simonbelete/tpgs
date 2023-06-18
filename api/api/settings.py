@@ -54,10 +54,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
     'corsheaders',
     'rest_framework',
     'rest_framework_simplejwt',
     'djmoney',
+    'actstream',
     'notifications',
     'cities_light',
     'core',
@@ -69,6 +71,8 @@ INSTALLED_APPS = [
     'recipes',
     'rations'
 ]
+
+SITE_ID = 1
 
 AUTH_USER_MODEL = 'users.User'
 

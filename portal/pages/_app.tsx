@@ -35,7 +35,9 @@ export default function App({
   return (
     <SessionProvider session={session}>
       <ThemeProvider theme={lightTheme}>
-        <Component {...pageProps} />
+        <SnackbarProvider>
+          <Component {...pageProps} />
+        </SnackbarProvider>
       </ThemeProvider>
     </SessionProvider>
   );

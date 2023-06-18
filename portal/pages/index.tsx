@@ -45,12 +45,7 @@ export default function Home() {
             </Link>
           </Box>
         </Container>
-        <AppBar
-          position="static"
-          elevation={0}
-          color="white"
-          sx={{ background: "#f5faf8" }}
-        >
+        <AppBar position="static" elevation={0} sx={{ background: "#f5faf8" }}>
           <Toolbar>
             <Container>
               <Box sx={{ display: "flex" }}>

@@ -5,11 +5,11 @@ import { Link } from "@mui/material";
 const Logo = ({ size = 150 }: { size?: number }) => {
   return (
     <Link href="/">
-      <Image
+      <img
         src="/images/logo_full.png"
         alt="TPGS Logo"
         width={size}
-        height={size}
+        // height={size}
       />
     </Link>
   );

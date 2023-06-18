@@ -55,7 +55,7 @@ const lightTheme = createTheme({
     text: {
       primary: "#495056",
       // secondary: "#63758D",
-      secondary: "#98AAC4",
+      // secondary: "#98AAC4",
     },
     link: {
       primary: "#88AACF",
