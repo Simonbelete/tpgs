@@ -8,6 +8,9 @@ import { LabeledInput } from "@/components/inputs";
 import { useRouter } from "next/router";
 import { useSnackbar } from "notistack";
 import unit_service from "../services/unit_service";
+import { AxiosError } from "axios";
+import Message from "@/components/Message";
+import errorToForm from "@/util/errorToForm";
 
 type Inputs = Partial<Unit>;
 
@@ -22,6 +25,7 @@ const UnitForm = () => {
   const {
     handleSubmit,
     control,
+    setError,
     formState: { errors },
   } = useForm<Inputs>({
     resolver: yupResolver(schema),
@@ -34,9 +38,12 @@ const UnitForm = () => {
         enqueueSnackbar("Successfully created!", { variant: "success" });
         router.push("/units");
       }
-    } catch (ex) {
-      console.log(ex);
-      enqueueSnackbar("Server Error!", { variant: "error" });
+    } catch (ex: any) {
+      if (ex.response.status == 400) {
+        errorToForm(ex.response.data, setError);
+      } else {
+        enqueueSnackbar("Server Error!", { variant: "error" });
+      }
     }
   };
 
