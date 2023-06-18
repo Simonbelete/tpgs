@@ -142,7 +142,7 @@ const SidebarMenu = () => {
               Units
             </Typography>
           </MenuItem>
-          <MenuItem component={<Link href="/units" />}>
+          <MenuItem component={<Link href="/unit-converters" />}>
             <Typography variant="body1" fontSize={14}>
               Units Convertor
             </Typography>

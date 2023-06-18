@@ -6,5 +6,9 @@ const URL = "/units/";
 
 export default {
   get: async (): Promise<AxiosResponse<Response<Unit[]>>> => client.get(URL),
-  create: async (data: Partial<Unit>) => client.post(URL, data),
+  getById: async (id: number): Promise<AxiosResponse<Response<Unit>>> =>
+    client.get(`${URL}/${id}`),
+  create: async (data: Partial<Unit>) => client.post(`${URL}/`, data),
+  update: async (id: number, data: Partial<Unit>) =>
+    client.patch(`${URL}/${id}/`, data),
 };

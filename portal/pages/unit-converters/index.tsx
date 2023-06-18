@@ -18,7 +18,7 @@ const UnitsPage = () => {
       header={<Typography variant="title">Units</Typography>}
       actions={<Actions />}
     >
-      <UnitsList />
+      <h1>Hello</h1>
     </ListLayout>
   );
 };

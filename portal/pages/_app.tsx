@@ -8,6 +8,16 @@ import { lightTheme } from "@/util/themes";
 import NProgress from "nprogress";
 import Router from "next/router";
 import { SnackbarProvider, useSnackbar } from "notistack";
+import dynamic from "next/dynamic";
+import { Loading } from "@/components";
+
+const DashboardLayout = dynamic(
+  () => import("../components/layouts/DashboardLayout"),
+  {
+    ssr: false,
+    loading: () => <Loading />,
+  }
+);
 
 export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
   getLayout?: (page: ReactElement) => ReactNode;
@@ -31,12 +41,17 @@ Router.events.on("routeChangeError", () => NProgress.done());
 export default function App({
   Component,
   pageProps: { session, ...pageProps },
-}: AppProps) {
+}: AppPropsWithLayout) {
+  // Use the layout defined at the page level, if available
+  const getLayout =
+    Component.getLayout ??
+    ((page) => <DashboardLayout>{page}</DashboardLayout>);
+
   return (
     <SessionProvider session={session}>
       <ThemeProvider theme={lightTheme}>
         <SnackbarProvider>
-          <Component {...pageProps} />
+          {getLayout(<Component {...pageProps} />)}
         </SnackbarProvider>
       </ThemeProvider>
     </SessionProvider>

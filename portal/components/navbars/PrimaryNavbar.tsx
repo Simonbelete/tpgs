@@ -40,8 +40,8 @@ const PrimaryNavbar = () => {
           aria-label="menu"
           sx={{ mr: 2 }}
           onClick={() => {
-            collapseSidebar();
-            // toggleSidebar();
+            // collapseSidebar();
+            toggleSidebar();
           }}
         >
           <MenuOpenIcon />

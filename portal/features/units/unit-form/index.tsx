@@ -18,7 +18,7 @@ const schema = object({
   name: string().required(),
 }).required();
 
-const UnitForm = () => {
+const UnitForm = ({ unit }: { unit?: Unit }) => {
   const router = useRouter();
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
@@ -33,17 +33,31 @@ const UnitForm = () => {
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     try {
-      const response = await unit_service.create(data);
-      if ((response.status = 201)) {
-        enqueueSnackbar("Successfully created!", { variant: "success" });
-        router.push("/units");
-      }
+      if (unit == null) await create(data);
+      else await update(data);
     } catch (ex: any) {
       if (ex.response.status == 400) {
         errorToForm(ex.response.data, setError);
       } else {
         enqueueSnackbar("Server Error!", { variant: "error" });
       }
+    }
+  };
+
+  const create = async (data: Partial<Unit>) => {
+    const response = await unit_service.create(data);
+    if ((response.status = 201)) {
+      enqueueSnackbar("Successfully created!", { variant: "success" });
+      router.push("/units");
+    }
+  };
+
+  const update = async (data: Partial<Unit>) => {
+    delete data.id;
+    const response = await unit_service.update(unit?.id || 0, data);
+    if ((response.status = 201)) {
+      enqueueSnackbar("Successfully updated!", { variant: "success" });
+      router.push("/units/" + unit?.id);
     }
   };
 
