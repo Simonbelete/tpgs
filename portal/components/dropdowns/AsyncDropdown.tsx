@@ -60,7 +60,7 @@ export default function AsyncDropdown({
     return () => {
       active = false;
     };
-  }, [loading]);
+  }, [loading, url]);
 
   React.useEffect(() => {
     if (!open) {
@@ -89,7 +89,7 @@ export default function AsyncDropdown({
           setOpen(false);
         }}
         onChange={onChange}
-        value={value}
+        // value={value}
         defaultValue={value}
         getOptionLabel={(option) => option[key]}
         options={options}
@@ -115,7 +115,7 @@ export default function AsyncDropdown({
                     <IconButton
                       sx={{ py: 0 }}
                       size="large"
-                      color="secondary.main"
+                      // color="secondary.main"
                       onClick={handleModalOpen}
                     >
                       <AddToQueueIcon />
