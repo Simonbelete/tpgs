@@ -17,7 +17,7 @@ const schema = object({
   name: string().required(),
 }).required();
 
-const UnitForm = ({ unit }: { unit?: Unit }) => {
+const UnitForm = ({ unit, redirect }: { unit?: Unit; redirect?: boolean }) => {
   const router = useRouter();
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
@@ -50,7 +50,7 @@ const UnitForm = ({ unit }: { unit?: Unit }) => {
     const response = await unit_service.create(data);
     if ((response.status = 201)) {
       enqueueSnackbar("Successfully created!", { variant: "success" });
-      router.push("/units");
+      if (redirect) router.push("/units");
     }
   };
 

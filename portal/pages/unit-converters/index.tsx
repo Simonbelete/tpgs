@@ -1,24 +1,23 @@
 import React, { ReactElement } from "react";
 import Link from "next/link";
-import dynamic from "next/dynamic";
-import { Typography, Button, IconButton, Stack } from "@mui/material";
+import { Typography, Button, Stack } from "@mui/material";
 import { useBreadcrumbs } from "@/hooks";
-import { ListLayout, Breadcrumbs, Loading } from "@/components";
-import { UnitsList } from "@/features/units";
+import { ListLayout, Breadcrumbs } from "@/components";
+import { UnitConvertersList } from "@/features/unit-converters";
 import DownloadIcon from "@mui/icons-material/Download";
 import AddIcon from "@mui/icons-material/Add";
 import FileUploadIcon from "@mui/icons-material/FileUpload";
 
-const UnitsPage = () => {
+const UnitConvertersPage = () => {
   const { breadcrumbs } = useBreadcrumbs();
 
   return (
     <ListLayout
       breadcrumbs={<Breadcrumbs items={breadcrumbs} />}
-      header={<Typography variant="title">Units</Typography>}
+      header={<Typography variant="title">Unit Converters</Typography>}
       actions={<Actions />}
     >
-      <h1>Hello</h1>
+      <UnitConvertersList />
     </ListLayout>
   );
 };
@@ -31,7 +30,7 @@ const Actions = (): ReactElement => {
       justifyContent="flex-start"
       alignItems="center"
     >
-      <Link href="/units/create">
+      <Link href="/unit-converters/create">
         <Button variant="contained" startIcon={<AddIcon />}>
           Create
         </Button>
@@ -46,4 +45,4 @@ const Actions = (): ReactElement => {
   );
 };
 
-export default UnitsPage;
+export default UnitConvertersPage;
