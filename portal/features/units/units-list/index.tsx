@@ -31,14 +31,20 @@ const UnitsList = () => {
     }
   }, [paginationModel]);
 
+  const refresh = () => {
+    setPaginationModel({ page: 0, pageSize: 10 });
+  };
+
   const handleDelete = async (id: number) => {
     try {
       const response = await unit_service.delete(id);
-      if (response.status == 200)
+      if (response.status == 204)
         enqueueSnackbar("Successfully Deleted!", { variant: "success" });
       else enqueueSnackbar("Failed to Deleted!", { variant: "error" });
     } catch (ex) {
       enqueueSnackbar("Server Error!", { variant: "error" });
+    } finally {
+      refresh();
     }
   };
 

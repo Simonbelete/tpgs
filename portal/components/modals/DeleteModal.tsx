@@ -20,7 +20,7 @@ export default function DeleteModal({
     [onClose]
   );
 
-  const handleYes = React.useCallback(() => onYes, []);
+  const handleYes = React.useCallback(() => onYes(), [onYes]);
 
   return (
     <Dialog
@@ -39,7 +39,7 @@ export default function DeleteModal({
       </DialogContent>
       <DialogActions>
         <Button onClick={handleClose}>No</Button>
-        <Button onClick={handleClose} color="error" autoFocus>
+        <Button onClick={handleYes} color="error" autoFocus>
           Yes
         </Button>
       </DialogActions>

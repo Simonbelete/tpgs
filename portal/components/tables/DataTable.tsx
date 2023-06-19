@@ -137,10 +137,10 @@ const DataTable = ({
   };
   const handleDeleteModalClose = () => setDeleteOpen(false);
 
-  const handleOnDelete = useCallback(
-    () => (onDelete != undefined ? onDelete(deleteId) : {}),
-    [onDelete, deleteId]
-  );
+  const handleOnDelete = useCallback(() => {
+    onDelete != undefined ? onDelete(deleteId) : {};
+    handleDeleteModalClose();
+  }, [onDelete, deleteId]);
 
   const settingColumn: GridColDef[] = [
     {
