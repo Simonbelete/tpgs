@@ -6,11 +6,13 @@ declare module "@mui/material/styles" {
   interface Palette {
     link?: Palette["text"];
     sidebar?: Palette["background"];
+    sidebarText?: Palette["text"];
   }
 
   interface PaletteOptions {
     link?: PaletteOptions["text"];
     sidebar?: PaletteOptions["background"];
+    sidebarText?: PaletteOptions["text"];
   }
 
   // Typo
@@ -55,7 +57,7 @@ const lightTheme = createTheme({
     text: {
       primary: "#495056",
       // secondary: "#63758D",
-      // secondary: "#98AAC4",
+      secondary: "#98AAC4",
     },
     link: {
       primary: "#88AACF",

@@ -8,7 +8,7 @@ import {
   menuClasses,
 } from "react-pro-sidebar";
 import Link from "next/link";
-import { Grid, Typography } from "@mui/material";
+import { Divider, Grid, Typography, Box } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import BubbleChartIcon from "@mui/icons-material/BubbleChart";
 import WorkspacesIcon from "@mui/icons-material/Workspaces";
@@ -37,6 +37,7 @@ const SidebarMenu = () => {
 
   const menuItemStyles: MenuItemStyles = {
     root: {
+      fontFamily: theme.typography.fontFamily,
       fontSize: "13px",
       fontWeight: 400,
     },
@@ -71,23 +72,18 @@ const SidebarMenu = () => {
       style={{ height: "100vh" }}
       breakPoint="md"
       backgroundColor={sidebarTheme.sidebar.backgroundColor}
-      rootStyles={{ color: sidebarTheme.sidebar.color }}
+      rootStyles={{
+        color: sidebarTheme.sidebar.color,
+      }}
     >
-      <Grid container justifyContent="center" mt={2} mb={3} spacing={2}>
+      <Grid container justifyContent="center" mt={1} spacing={2}>
         <Grid item>
-          <img src="/images/feed_formulation_icon.png" alt="" width={35} />
-        </Grid>
-        <Grid item>
-          <Typography
-            sx={{ textDecoration: "none" }}
-            fontWeight={700}
-            fontSize={20}
-            color="primary.dark"
-          >
-            Feed Formulation
-          </Typography>
+          <img src="/images/logo_full.png" alt="" height={35} />
         </Grid>
       </Grid>
+      <Box my={1}>
+        <Divider />
+      </Box>
       <Menu menuItemStyles={menuItemStyles}>
         <SubMenu
           label={<Typography variant="body1">Nutrients</Typography>}
@@ -149,6 +145,17 @@ const SidebarMenu = () => {
           </MenuItem>
         </SubMenu>
       </Menu>
+      <div
+        style={{ padding: "0 24px", marginBottom: "8px", marginTop: "32px" }}
+      >
+        <Typography
+          variant="body2"
+          fontWeight={600}
+          style={{ opacity: 0.7, letterSpacing: "0.5px" }}
+        >
+          Feed Formulation
+        </Typography>
+      </div>
     </Sidebar>
   );
 };

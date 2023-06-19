@@ -8,27 +8,17 @@ import { CreateLayout } from "@/components/layouts";
 import SaveIcon from "@mui/icons-material/Save";
 import LibraryAddIcon from "@mui/icons-material/LibraryAdd";
 
-const DashboardLayout = dynamic(
-  () => import("../../components/layouts/DashboardLayout"),
-  {
-    ssr: false,
-    loading: () => <Loading />,
-  }
-);
-
 const UnitCreatePage = () => {
   const { breadcrumbs } = useBreadcrumbs();
 
   return (
-    <DashboardLayout>
-      <CreateLayout
-        breadcrumbs={<Breadcrumbs items={breadcrumbs} />}
-        header={<Typography variant="title">Create New Unit</Typography>}
-        actions={<Actions />}
-      >
-        <UnitForm />
-      </CreateLayout>
-    </DashboardLayout>
+    <CreateLayout
+      breadcrumbs={<Breadcrumbs items={breadcrumbs} />}
+      header={<Typography variant="title">Create New Unit</Typography>}
+      actions={<Actions />}
+    >
+      <UnitForm />
+    </CreateLayout>
   );
 };
 

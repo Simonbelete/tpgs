@@ -8,7 +8,6 @@ import { LabeledInput } from "@/components/inputs";
 import { useRouter } from "next/router";
 import { useSnackbar } from "notistack";
 import unit_service from "../services/unit_service";
-import { AxiosError } from "axios";
 import Message from "@/components/Message";
 import errorToForm from "@/util/errorToForm";
 
@@ -28,6 +27,9 @@ const UnitForm = ({ unit }: { unit?: Unit }) => {
     setError,
     formState: { errors },
   } = useForm<Inputs>({
+    defaultValues: {
+      ...unit,
+    },
     resolver: yupResolver(schema),
   });
 
