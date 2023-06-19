@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback, useState } from "react";
 import {
   DataGrid,
   GridRowsProp,
@@ -7,13 +7,14 @@ import {
   gridClasses,
   DataGridProps,
 } from "@mui/x-data-grid";
-import { Box, IconButton, LinearProgress } from "@mui/material";
+import { Box, IconButton, LinearProgress, Tooltip } from "@mui/material";
 import { alpha, styled } from "@mui/material/styles";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import EditNoteIcon from "@mui/icons-material/EditNote";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { DeleteModal } from "../modals";
 
 const ODD_OPACITY = 0.2;
 
@@ -121,8 +122,25 @@ function CustomNoRowsOverlay() {
   );
 }
 
-const DataTable = ({ rows, columns, ...props }: DataGridProps) => {
+const DataTable = ({
+  rows,
+  columns,
+  onDelete,
+  ...props
+}: DataGridProps & { onDelete?: (id: number) => void }) => {
   const router = useRouter();
+  const [deleteId, setDeleteId] = useState<number>(0);
+  const [deleteOpen, setDeleteOpen] = useState<boolean>(false);
+  const handleDeleteModalOpen = (id: number) => {
+    setDeleteId(id);
+    setDeleteOpen(true);
+  };
+  const handleDeleteModalClose = () => setDeleteOpen(false);
+
+  const handleOnDelete = useCallback(
+    () => (onDelete != undefined ? onDelete(deleteId) : {}),
+    [onDelete, deleteId]
+  );
 
   const settingColumn: GridColDef[] = [
     {
@@ -133,18 +151,27 @@ const DataTable = ({ rows, columns, ...props }: DataGridProps) => {
         return (
           <Box>
             <Link href={router.asPath + "/" + params.id + "/edit"}>
-              <IconButton aria-label="edit">
-                <EditNoteIcon fontSize="small" />
-              </IconButton>
+              <Tooltip title="Edit">
+                <IconButton aria-label="edit">
+                  <EditNoteIcon fontSize="small" />
+                </IconButton>
+              </Tooltip>
             </Link>
             <Link href={router.asPath + "/" + params.id}>
-              <IconButton aria-label="view">
-                <VisibilityIcon fontSize="small" />
-              </IconButton>
+              <Tooltip title="View">
+                <IconButton aria-label="view">
+                  <VisibilityIcon fontSize="small" />
+                </IconButton>
+              </Tooltip>
             </Link>
-            <IconButton aria-label="delete">
-              <DeleteForeverIcon fontSize="small" />
-            </IconButton>
+            <Tooltip title="Delete">
+              <IconButton
+                aria-label="delete"
+                onClick={() => handleDeleteModalOpen(params.id)}
+              >
+                <DeleteForeverIcon fontSize="small" />
+              </IconButton>
+            </Tooltip>
           </Box>
         );
       },
@@ -152,22 +179,29 @@ const DataTable = ({ rows, columns, ...props }: DataGridProps) => {
   ];
 
   return (
-    <StripedDataGrid
-      sx={{ background: "white" }}
-      rows={rows}
-      density="compact"
-      columns={[...columns, ...settingColumn]}
-      paginationMode="server"
-      checkboxSelection
-      slots={{
-        noRowsOverlay: CustomNoRowsOverlay,
-        loadingOverlay: LinearProgress,
-      }}
-      getRowClassName={(params) =>
-        params.indexRelativeToCurrentPage % 2 === 0 ? "even" : "odd"
-      }
-      {...props}
-    />
+    <>
+      <DeleteModal
+        open={deleteOpen}
+        onClose={handleDeleteModalClose}
+        onYes={handleOnDelete}
+      />
+      <StripedDataGrid
+        sx={{ background: "white" }}
+        rows={rows}
+        density="compact"
+        columns={[...columns, ...settingColumn]}
+        paginationMode="server"
+        checkboxSelection
+        slots={{
+          noRowsOverlay: CustomNoRowsOverlay,
+          loadingOverlay: LinearProgress,
+        }}
+        getRowClassName={(params) =>
+          params.indexRelativeToCurrentPage % 2 === 0 ? "even" : "odd"
+        }
+        {...props}
+      />
+    </>
   );
 };
 

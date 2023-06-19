@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { GridRowsProp, GridColDef, GridToolbar } from "@mui/x-data-grid";
+import { useSnackbar } from "notistack";
 import { DataTable } from "@/components/tables";
 import { Unit } from "@/models";
 import unit_service from "../services/unit_service";
@@ -16,6 +17,7 @@ const UnitsList = () => {
     page: 0,
     pageSize: 10,
   });
+  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
   useEffect(() => {
     setIsLoading(true);
@@ -29,8 +31,20 @@ const UnitsList = () => {
     }
   }, [paginationModel]);
 
+  const handleDelete = async (id: number) => {
+    try {
+      const response = await unit_service.delete(id);
+      if (response.status == 200)
+        enqueueSnackbar("Successfully Deleted!", { variant: "success" });
+      else enqueueSnackbar("Failed to Deleted!", { variant: "error" });
+    } catch (ex) {
+      enqueueSnackbar("Server Error!", { variant: "error" });
+    }
+  };
+
   return (
     <DataTable
+      onDelete={handleDelete}
       rows={rows}
       columns={columns}
       rowCount={rows.length}
