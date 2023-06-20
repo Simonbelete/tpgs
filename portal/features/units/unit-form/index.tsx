@@ -17,7 +17,13 @@ const schema = object({
   name: string().required(),
 }).required();
 
-const UnitForm = ({ unit, redirect }: { unit?: Unit; redirect?: boolean }) => {
+const UnitForm = ({
+  unit,
+  redirect = true,
+}: {
+  unit?: Unit;
+  redirect?: boolean;
+}) => {
   const router = useRouter();
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 

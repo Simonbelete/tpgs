@@ -12,4 +12,5 @@ export default {
   create: async (data: Partial<Nutrient>) => client.post(`${URL}/`, data),
   update: async (id: number, data: Partial<Nutrient>) =>
     client.patch(`${URL}/${id}/`, data),
+  delete: async (id: number) => client.delete(`${URL}/${id}/`),
 };

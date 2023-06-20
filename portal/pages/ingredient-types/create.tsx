@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { Typography } from "@mui/material";
 import { IngredientTypeForm } from "@/features/ingredient-types";
 import { Breadcrumbs } from "@/components";
 import { useBreadcrumbs } from "@/hooks";
@@ -8,7 +9,10 @@ const IngredientTypeCreatePage = () => {
   const { breadcrumbs } = useBreadcrumbs();
 
   return (
-    <CreateLayout breadcrumbs={<Breadcrumbs items={breadcrumbs} />}>
+    <CreateLayout
+      breadcrumbs={<Breadcrumbs items={breadcrumbs} />}
+      header={<Typography variant="title">Create Ingredient Type</Typography>}
+    >
       <IngredientTypeForm />
     </CreateLayout>
   );
