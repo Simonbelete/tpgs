@@ -6,9 +6,7 @@ import { Grid, Button, Paper, FormGroup } from "@mui/material";
 import { NutrientGroup } from "@/models";
 import service from "../services/nutrient_group_service";
 import { LabeledInput } from "@/components/inputs";
-import { toast } from "react-toastify";
 import { useRouter } from "next/router";
-import { alertSuccess } from "@/util/alert";
 import { useSnackbar } from "notistack";
 
 type Inputs = Partial<NutrientGroup>;
@@ -17,7 +15,13 @@ const schema = object({
   name: string().required(),
 }).required();
 
-const NutrientGroupForm = ({ redirect }: { redirect?: boolean }) => {
+const NutrientGroupForm = ({
+  redirect = true,
+  nutrient_group,
+}: {
+  redirect?: boolean;
+  nutrient_group?: NutrientGroup;
+}) => {
   const router = useRouter();
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
@@ -26,18 +30,35 @@ const NutrientGroupForm = ({ redirect }: { redirect?: boolean }) => {
     control,
     formState: { errors },
   } = useForm<Inputs>({
+    defaultValues: {
+      ...nutrient_group,
+    },
     resolver: yupResolver(schema),
   });
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     try {
-      const response = await service.create(data);
-      if ((response.status = 201)) {
-        enqueueSnackbar("Successfully created!", { variant: "success" });
-        if (redirect) router.push("/nutrient-groups");
-      }
+      if (nutrient_group == null) await create(data);
+      else await update(data);
     } catch (ex) {
       enqueueSnackbar("Server Error!", { variant: "error" });
+    }
+  };
+
+  const create = async (data: Partial<NutrientGroup>) => {
+    const response = await service.create(data);
+    if ((response.status = 201)) {
+      enqueueSnackbar("Successfully created!", { variant: "success" });
+      if (redirect) router.push("/nutrient-groups");
+    }
+  };
+
+  const update = async (data: Partial<NutrientGroup>) => {
+    delete data.id;
+    const response = await service.update(nutrient_group?.id || 0, data);
+    if ((response.status = 201)) {
+      enqueueSnackbar("Successfully updated!", { variant: "success" });
+      router.push("/unit-converters/" + nutrient_group?.id);
     }
   };
 

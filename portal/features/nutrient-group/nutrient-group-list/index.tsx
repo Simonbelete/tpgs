@@ -1,53 +1,65 @@
 import React, { useEffect, useState } from "react";
-import { Box, IconButton } from "@mui/material";
-import CreateIcon from "@mui/icons-material/Create";
-import VisibilityIcon from "@mui/icons-material/Visibility";
-import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import { GridRowsProp, GridColDef, GridToolbar } from "@mui/x-data-grid";
-import { DataTable } from "@/components";
-import nutrient_service from "../services/nutrient_group_service";
+import { DataTable } from "@/components/tables";
+import nutrient_group_service from "../services/nutrient_group_service";
 import { NutrientGroup } from "@/models";
+import { useSnackbar } from "notistack";
 
 const columns: GridColDef[] = [
-  { field: "id", headerName: "ID", flex: 1, minWidth: 150 },
   { field: "name", headerName: "name", flex: 1, minWidth: 150 },
-  // {
-  //   field: "Setting",
-  //   flex: 1,
-  //   minWidth: 150,
-  //   renderCell(params) {
-  //     return (
-  //       <Box>
-  //         <IconButton aria-label="edit">
-  //           <CreateIcon fontSize="small" />
-  //         </IconButton>
-  //         <IconButton aria-label="view">
-  //           <VisibilityIcon fontSize="small" />
-  //         </IconButton>
-  //         <IconButton aria-label="delete">
-  //           <DeleteForeverIcon fontSize="small" />
-  //         </IconButton>
-  //       </Box>
-  //     );
-  //   },
-  // },
 ];
 
 const NutrientGroupList = () => {
   const [rows, setRows] = useState<GridRowsProp<NutrientGroup>>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [paginationModel, setPaginationModel] = useState({
+    page: 0,
+    pageSize: 10,
+  });
+  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
   useEffect(() => {
+    setIsLoading(true);
     try {
-      nutrient_service.get().then((response) => {
-        console.log("results");
-        console.log(response.data);
+      nutrient_group_service.get().then((response) => {
         setRows(response.data.results);
       });
     } catch (ex) {
-      console.log(ex);
+    } finally {
+      setIsLoading(false);
     }
-  }, []);
-  return <DataTable rows={rows} columns={columns} />;
+  }, [paginationModel]);
+
+  const refresh = () => {
+    setPaginationModel({ page: 0, pageSize: 10 });
+  };
+
+  const handleDelete = async (id: number) => {
+    try {
+      const response = await nutrient_group_service.delete(id);
+      if (response.status == 204)
+        enqueueSnackbar("Successfully Deleted!", { variant: "success" });
+      else enqueueSnackbar("Failed to Deleted!", { variant: "error" });
+    } catch (ex) {
+      enqueueSnackbar("Server Error!", { variant: "error" });
+    } finally {
+      refresh();
+    }
+  };
+
+  return (
+    <DataTable
+      onDelete={handleDelete}
+      rows={rows}
+      columns={columns}
+      rowCount={rows.length}
+      loading={isLoading}
+      pageSizeOptions={[5]}
+      paginationModel={paginationModel}
+      paginationMode="server"
+      onPaginationModelChange={setPaginationModel}
+    />
+  );
 };
 
 export default NutrientGroupList;

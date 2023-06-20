@@ -1,13 +1,26 @@
 import React, { useEffect, useState } from "react";
 import { GridRowsProp, GridColDef, GridToolbar } from "@mui/x-data-grid";
+import Link from "next/link";
 import { useSnackbar } from "notistack";
 import { DataTable } from "@/components/tables";
 import { UnitConverter } from "@/models";
 import unit_converter_service from "../services/unit_converter_service";
 
 const columns: GridColDef[] = [
-  { field: "unit_from.name", headerName: "Unit From", flex: 1, minWidth: 150 },
-  { field: "unit_to.name", headerName: "Unit To", flex: 1, minWidth: 150 },
+  {
+    field: "unit_from",
+    headerName: "Unit From",
+    flex: 1,
+    minWidth: 150,
+    valueGetter: (params) => params.row.unit_to.name ?? "",
+  },
+  {
+    field: "unit_to",
+    headerName: "Unit To",
+    flex: 1,
+    minWidth: 150,
+    valueGetter: (params) => params.row.unit_to.name ?? "",
+  },
   { field: "factor", headerName: "Factor", flex: 1, minWidth: 150 },
 ];
 

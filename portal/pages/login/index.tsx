@@ -1,4 +1,4 @@
-import React from "react";
+import React, { ReactElement } from "react";
 import { DefaultLayout } from "@/components/layouts";
 import { AuthLogin } from "@/features/auth";
 
@@ -8,6 +8,10 @@ const LoginPage = () => {
       <AuthLogin />
     </>
   );
+};
+
+LoginPage.getLayout = function getLayout(page: ReactElement) {
+  return <>{page}</>;
 };
 
 export default LoginPage;

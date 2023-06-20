@@ -2,18 +2,21 @@ import React from "react";
 import { NextPageContext } from "next";
 import { Container } from "@mui/material";
 import { EditLayout } from "@/components/layouts";
-import { UnitForm, UnitService } from "@/features/units";
+import {
+  NutrientGroupForm,
+  NutrientGroupService,
+} from "@/features/nutrient-group";
 import { Breadcrumbs, Loading } from "@/components";
 import { useBreadcrumbs } from "@/hooks";
 import { Nutrient } from "@/models";
 
-const UnitEditPage = ({ data }: { data: Nutrient }) => {
+const NutrientGroupEditPage = ({ data }: { data: Nutrient }) => {
   const { breadcrumbs } = useBreadcrumbs();
 
   return (
     <EditLayout breadcrumbs={<Breadcrumbs items={breadcrumbs} />}>
       <Container maxWidth="xl">
-        <UnitForm unit={data} />
+        <NutrientGroupForm nutrient_group={data} />
       </Container>
     </EditLayout>
   );
@@ -23,14 +26,13 @@ export async function getServerSideProps(context: NextPageContext) {
   const { id } = context.query;
 
   try {
-    const res = await UnitService.getById(Number(id));
+    const res = await NutrientGroupService.getById(Number(id));
 
-    // context.resolvedUrl
     if (res.status != 200)
       return {
         redirect: {
           permanent: false,
-          destination: `/${res.status}?id=${id}&from=/units&next=/units`,
+          destination: `/${res.status}?id=${id}&from=/nutrient-groups&next=/units`,
         },
       };
 
@@ -41,10 +43,10 @@ export async function getServerSideProps(context: NextPageContext) {
     return {
       redirect: {
         permanent: false,
-        destination: `/404?id=${id}&from=/units&next=/units&error=unknown`,
+        destination: `/404?id=${id}&from=/nutrient-groups&next=/units&error=unknown`,
       },
     };
   }
 }
 
-export default UnitEditPage;
+export default NutrientGroupEditPage;

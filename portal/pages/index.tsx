@@ -18,6 +18,7 @@ import {
   PrimaryHero,
   AppIntro,
 } from "@/components";
+import { ReactElement } from "react";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -69,3 +70,7 @@ export default function Home() {
     </main>
   );
 }
+
+Home.getLayout = function getLayout(page: ReactElement) {
+  return <>{page}</>;
+};

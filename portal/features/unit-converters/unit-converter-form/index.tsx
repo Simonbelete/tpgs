@@ -67,7 +67,7 @@ const UnitConverterForm = ({
     const response = await unit_converter_service.create(data);
     if ((response.status = 201)) {
       enqueueSnackbar("Successfully created!", { variant: "success" });
-      router.push("/units");
+      router.push("/units-converter");
     }
   };
 
