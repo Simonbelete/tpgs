@@ -86,27 +86,33 @@ const SidebarMenu = () => {
       </Box>
       <Menu menuItemStyles={menuItemStyles}>
         <SubMenu
-          label={<Typography variant="body1">Nutrients</Typography>}
-          icon={<BubbleChartIcon />}
+          label={<Typography variant="body1">Units</Typography>}
+          icon={<BalanceIcon />}
         >
-          <MenuItem
-            component={<Link href="/nutrients" />}
-            icon={<BubbleChartIcon fontSize="small" />}
-          >
+          <MenuItem component={<Link href="/units" />}>
             <Typography variant="body1" fontSize={14}>
-              Nutrients
+              Units
             </Typography>
           </MenuItem>
-          <MenuItem
-            component={<Link href="/nutrient-groups" />}
-            icon={<WorkspacesIcon fontSize="small" />}
-          >
+          <MenuItem component={<Link href="/unit-converters" />}>
             <Typography variant="body1" fontSize={14}>
-              Nutrient Group
+              Units Convertor
             </Typography>
           </MenuItem>
         </SubMenu>
-
+      </Menu>
+      <div
+        style={{ padding: "0 24px", marginBottom: "8px", marginTop: "32px" }}
+      >
+        <Typography
+          variant="body2"
+          fontWeight={500}
+          style={{ opacity: 0.7, letterSpacing: "0.5px" }}
+        >
+          Feed Formulation
+        </Typography>
+      </div>
+      <Menu menuItemStyles={menuItemStyles}>
         <SubMenu
           label={<Typography variant="body1">Ingredients</Typography>}
           icon={<BubbleChartIcon />}
@@ -128,34 +134,28 @@ const SidebarMenu = () => {
             </Typography>
           </MenuItem>
         </SubMenu>
-
         <SubMenu
-          label={<Typography variant="body1">Units</Typography>}
-          icon={<BalanceIcon />}
+          label={<Typography variant="body1">Nutrients</Typography>}
+          icon={<BubbleChartIcon />}
         >
-          <MenuItem component={<Link href="/units" />}>
+          <MenuItem
+            component={<Link href="/nutrients" />}
+            icon={<BubbleChartIcon fontSize="small" />}
+          >
             <Typography variant="body1" fontSize={14}>
-              Units
+              Nutrients
             </Typography>
           </MenuItem>
-          <MenuItem component={<Link href="/unit-converters" />}>
+          <MenuItem
+            component={<Link href="/nutrient-groups" />}
+            icon={<WorkspacesIcon fontSize="small" />}
+          >
             <Typography variant="body1" fontSize={14}>
-              Units Convertor
+              Nutrient Group
             </Typography>
           </MenuItem>
         </SubMenu>
       </Menu>
-      <div
-        style={{ padding: "0 24px", marginBottom: "8px", marginTop: "32px" }}
-      >
-        <Typography
-          variant="body2"
-          fontWeight={600}
-          style={{ opacity: 0.7, letterSpacing: "0.5px" }}
-        >
-          Feed Formulation
-        </Typography>
-      </div>
     </Sidebar>
   );
 };

@@ -3,11 +3,14 @@ import { object, string } from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import { Grid, TextField, Button, Card, Paper, Stack } from "@mui/material";
-import { Ingredient, Nutrient, IngredientNutrient } from "@/models";
+import { Ingredient } from "@/models";
 import { LabeledInput } from "@/components/inputs";
 import { useRouter } from "next/router";
 import { useSnackbar } from "notistack";
+import ingredient_service from "../services/ingredient_service";
+import errorToForm from "@/util/errorToForm";
 import { AsyncDropdown } from "@/components/dropdowns";
+import { IngredientTypeForm } from "@/features/ingredient-types";
 
 type Inputs = Partial<Ingredient>;
 
@@ -15,29 +18,56 @@ const schema = object({
   name: string().required(),
 }).required();
 
-const IngredientForm = () => {
+const IngredientForm = ({
+  redirect = true,
+  ingredient,
+}: {
+  redirect?: boolean;
+  ingredient?: Ingredient;
+}) => {
   const router = useRouter();
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
   const {
     handleSubmit,
     control,
+    setError,
     formState: { errors },
   } = useForm<Inputs>({
+    defaultValues: {
+      ...ingredient,
+    },
     resolver: yupResolver(schema),
   });
 
-  const onSubmit: SubmitHandler<Inputs> = async (data) => {};
+  const onSubmit: SubmitHandler<Inputs> = async (data) => {
+    try {
+      if (ingredient == null) await create(data);
+      else await update(data);
+    } catch (ex: any) {
+      if (ex.response.status == 400) {
+        errorToForm(ex.response.data, setError);
+      } else {
+        enqueueSnackbar("Server Error!", { variant: "error" });
+      }
+    }
+  };
 
-  const [nutrients, setNutrients] = useState<IngredientNutrient[]>([]);
+  const create = async (data: Partial<Ingredient>) => {
+    const response = await ingredient_service.create(data);
+    if ((response.status = 201)) {
+      enqueueSnackbar("Successfully created!", { variant: "success" });
+      if (redirect) router.push("/ingredients");
+    }
+  };
 
-  const handleAddNewNutrient = () => {
-    const empty_nutrient: Partial<IngredientNutrient> = {
-      nutrient: 0,
-      ingredient: 0,
-      value: 0,
-    };
-    setNutrients([...nutrients, empty_nutrient]);
+  const update = async (data: Partial<Ingredient>) => {
+    delete data.id;
+    const response = await ingredient_service.update(ingredient?.id || 0, data);
+    if ((response.status = 201)) {
+      enqueueSnackbar("Successfully updated!", { variant: "success" });
+      router.push("/ingredients/" + ingredient?.id);
+    }
   };
 
   return (
@@ -67,29 +97,58 @@ const IngredientForm = () => {
                 )}
               />
             </Grid>
+            {/* Code */}
+            <Grid item xs={12} md={6}>
+              <Controller
+                name={"code"}
+                control={control}
+                render={({
+                  field: { onChange, value },
+                  fieldState: { invalid, isTouched, isDirty, error },
+                }) => (
+                  <LabeledInput
+                    error={!!error?.message}
+                    helperText={error?.message}
+                    onChange={onChange}
+                    fullWidth
+                    size="small"
+                    value={value}
+                    label={"Code"}
+                    placeholder={"Code"}
+                  />
+                )}
+              />
+            </Grid>
+            {/* Ingredient Type */}
+            <Grid item xs={12} md={6}>
+              <Controller
+                name={"ingredient_type"}
+                control={control}
+                render={({
+                  field: { onChange, value },
+                  fieldState: { error },
+                }) => (
+                  <AsyncDropdown
+                    multiple
+                    url="/ingredient-types/"
+                    key="name"
+                    onChange={(_, data) => onChange(data)}
+                    value={value}
+                    label="Ingredient Types"
+                    error={!!error?.message}
+                    helperText={error?.message}
+                    createForm={<IngredientTypeForm redirect={false} />}
+                  />
+                )}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <Button variant="contained" type="submit">
+                Submit
+              </Button>
+            </Grid>
           </Grid>
         </form>
-      </Paper>
-      <Paper
-        sx={{ px: 5, py: 5, mt: 10 }}
-        elevation={6}
-        variant="outlined"
-        square
-      >
-        <Button onClick={handleAddNewNutrient}>Add New</Button>
-
-        <Stack spacing={2}>
-          {nutrients.map((e, key) => (
-            <Grid container key={key}>
-              <Grid item xs={6}>
-                <AsyncDropdown url="/nutrients/" key="name" />
-              </Grid>
-              <Grid item xs={6}>
-                <LabeledInput type="number" />
-              </Grid>
-            </Grid>
-          ))}
-        </Stack>
       </Paper>
     </>
   );

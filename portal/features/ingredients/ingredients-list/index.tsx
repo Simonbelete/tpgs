@@ -1,26 +1,81 @@
-import React from "react";
-import { DataGrid, GridRowsProp, GridColDef } from "@mui/x-data-grid";
-
-const rows: GridRowsProp = [
-  { id: 1, col1: "Hello", col2: "World" },
-  { id: 2, col1: "MUI X", col2: "is awesome" },
-  { id: 3, col1: "Material UI", col2: "is amazing" },
-  { id: 4, col1: "MUI", col2: "" },
-  { id: 5, col1: "Joy UI", col2: "is awesome" },
-  { id: 6, col1: "MUI Base", col2: "is amazing" },
-];
+import React, { useEffect, useState } from "react";
+import { GridRowsProp, GridColDef, GridToolbar } from "@mui/x-data-grid";
+import { useSnackbar } from "notistack";
+import { DataTable } from "@/components/tables";
+import { Ingredient } from "@/models";
+import ingredient_service from "../services/ingredient_service";
 
 const columns: GridColDef[] = [
-  { field: "id", hide: true },
-  { field: "col1", headerName: "Column 1", width: 150 },
-  { field: "col2", headerName: "Column 2", width: 150 },
+  { field: "name", headerName: "Name", flex: 1, minWidth: 150 },
+  { field: "code", headerName: "Code", flex: 1, minWidth: 150 },
+  {
+    field: "ingredient_type",
+    headerName: "Ingredient Type",
+    flex: 1,
+    minWidth: 150,
+    valueGetter: (params) =>
+      params.row.ingredient_type ? params.row.ingredient_type.name : "",
+  },
+  { field: "description", headerName: "Description", flex: 1, minWidth: 150 },
+  {
+    field: "price",
+    headerName: "Price",
+    flex: 1,
+    minWidth: 150,
+    valueGetter: (params) => `${params.row.price} ${params.row.price_unit}`,
+  },
 ];
 
 const IngredientsList = () => {
+  const [rows, setRows] = useState<GridRowsProp<Ingredient>>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [paginationModel, setPaginationModel] = useState({
+    page: 0,
+    pageSize: 10,
+  });
+  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+
+  useEffect(() => {
+    setIsLoading(true);
+    try {
+      ingredient_service.get().then((response) => {
+        setRows(response.data.results);
+      });
+    } catch (ex) {
+    } finally {
+      setIsLoading(false);
+    }
+  }, [paginationModel]);
+
+  const refresh = () => {
+    setPaginationModel({ page: 0, pageSize: 10 });
+  };
+
+  const handleDelete = async (id: number) => {
+    try {
+      const response = await ingredient_service.delete(id);
+      if (response.status == 204)
+        enqueueSnackbar("Successfully Deleted!", { variant: "success" });
+      else enqueueSnackbar("Failed to Deleted!", { variant: "error" });
+    } catch (ex) {
+      enqueueSnackbar("Server Error!", { variant: "error" });
+    } finally {
+      refresh();
+    }
+  };
+
   return (
-    <div style={{ height: "100%", width: "100%" }}>
-      <DataGrid rows={rows} columns={columns} />
-    </div>
+    <DataTable
+      onDelete={handleDelete}
+      rows={rows}
+      columns={columns}
+      rowCount={rows.length}
+      loading={isLoading}
+      pageSizeOptions={[5]}
+      paginationModel={paginationModel}
+      paginationMode="server"
+      onPaginationModelChange={setPaginationModel}
+    />
   );
 };
 

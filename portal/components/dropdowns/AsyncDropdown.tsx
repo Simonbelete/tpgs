@@ -20,6 +20,7 @@ export default function AsyncDropdown({
   error,
   helperText,
   createForm,
+  multiple,
   onChange,
   ...props
 }: {
@@ -29,6 +30,7 @@ export default function AsyncDropdown({
   label?: string;
   defaultOptions?: any;
   error?: boolean;
+  multiple?: boolean;
   helperText?: string;
   createForm?: React.ReactElement;
   onChange?: (event: any, newValue: any) => void;
@@ -80,6 +82,7 @@ export default function AsyncDropdown({
       )}
       <Autocomplete
         fullWidth
+        multiple={multiple}
         size="small"
         open={open}
         onOpen={() => {
