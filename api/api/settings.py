@@ -64,6 +64,7 @@ INSTALLED_APPS = [
     'cities_light',
     'core',
     'units',
+    'currency',
     'nutrients',
     'users',
     'farms',
