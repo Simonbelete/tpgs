@@ -21,14 +21,16 @@ const UnitsList = () => {
 
   useEffect(() => {
     setIsLoading(true);
-    try {
-      unit_service.get().then((response) => {
+
+    unit_service
+      .get()
+      .then((response) => {
         setRows(response.data.results);
+      })
+      .catch(() => {})
+      .finally(() => {
+        setIsLoading(false);
       });
-    } catch (ex) {
-    } finally {
-      setIsLoading(false);
-    }
   }, [paginationModel]);
 
   const refresh = () => {

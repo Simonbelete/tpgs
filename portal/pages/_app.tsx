@@ -1,4 +1,6 @@
 import "@/styles/globals.css";
+import "@glideapps/glide-data-grid/dist/index.css";
+import "react-responsive-carousel/lib/styles/carousel.min.css";
 import type { AppProps } from "next/app";
 import type { NextPage } from "next";
 import type { ReactElement, ReactNode } from "react";

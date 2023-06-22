@@ -5,8 +5,8 @@ import client from "@/services/client";
 const URL = "/nutrients";
 
 export default {
-  get: async (): Promise<AxiosResponse<Response<Nutrient[]>>> =>
-    client.get(`${URL}/`),
+  get: async (query?: Object): Promise<AxiosResponse<Response<Nutrient[]>>> =>
+    client.get(`${URL}/?${query}`, { params: query }),
   getById: async (id: number): Promise<AxiosResponse<Response<Nutrient>>> =>
     client.get(`${URL}/${id}`),
   create: async (data: Partial<Nutrient>) => client.post(`${URL}/`, data),

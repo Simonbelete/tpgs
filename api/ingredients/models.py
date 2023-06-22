@@ -29,7 +29,7 @@ class Ingredient(CoreModel):
     price_unit = models.ForeignKey(
         Unit, on_delete=models.SET_NULL, null=True, blank=True, related_name='ingredients')
     nutrients = models.ManyToManyField(
-        'nutrients.Nutrient', through=IngredientNutrient)
+        'nutrients.Nutrient', null=True, blank=True, through=IngredientNutrient)
     # ratio_min = models.FloatField(default=0, null=True)
     # ratio_max = models.FloatField(default=0, null=True)
     # # Nutrients

@@ -13,6 +13,7 @@ import { useTheme } from "@mui/material/styles";
 import BubbleChartIcon from "@mui/icons-material/BubbleChart";
 import WorkspacesIcon from "@mui/icons-material/Workspaces";
 import BalanceIcon from "@mui/icons-material/Balance";
+import ScienceIcon from "@mui/icons-material/Science";
 
 const SidebarMenu = () => {
   const theme = useTheme();
@@ -87,7 +88,7 @@ const SidebarMenu = () => {
       <Menu menuItemStyles={menuItemStyles}>
         <SubMenu
           label={<Typography variant="body1">Units</Typography>}
-          icon={<BalanceIcon />}
+          icon={<BalanceIcon fontSize="small" />}
         >
           <MenuItem component={<Link href="/units" />}>
             <Typography variant="body1" fontSize={14}>
@@ -113,6 +114,14 @@ const SidebarMenu = () => {
         </Typography>
       </div>
       <Menu menuItemStyles={menuItemStyles}>
+        <MenuItem
+          component={<Link href="/formulate" />}
+          icon={<ScienceIcon fontSize="small" />}
+        >
+          <Typography variant="body1" fontSize={14}>
+            Formulate
+          </Typography>
+        </MenuItem>
         <SubMenu
           label={<Typography variant="body1">Ingredients</Typography>}
           icon={<BubbleChartIcon />}
