@@ -11,7 +11,7 @@ interface Model {
   id?: string;
 }
 
-export default function AsyncDropdown({
+export default function AsyncDropdown<T>({
   url,
   key = "name",
   value,
@@ -36,7 +36,7 @@ export default function AsyncDropdown({
   onChange?: (event: any, newValue: any) => void;
 }) {
   const [open, setOpen] = React.useState(false);
-  const [options, setOptions] = React.useState<readonly any[]>([]);
+  const [options, setOptions] = React.useState<readonly T[]>([]);
   const loading = open && options.length === 0;
 
   // Modal

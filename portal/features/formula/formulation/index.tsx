@@ -10,11 +10,25 @@ import {
   DataEditorProps,
   GridSelection,
 } from "@glideapps/glide-data-grid";
+import _ from "lodash";
 import { NutrientService } from "@/features/nutrients";
 import { Sizer } from "../components";
 
 const Formulation = () => {
-  const [columns, setColumns] = useState<GridColumn[]>([]);
+  const [columns, setColumns] = useState<GridColumn[]>([
+    {
+      title: "Min%",
+      id: "min",
+      icon: GridColumnIcon.HeaderNumber,
+      width: 100,
+    },
+    {
+      title: "Max%",
+      id: "max",
+      icon: GridColumnIcon.HeaderNumber,
+      width: 100,
+    },
+  ]);
   const rows = useRef<[]>([]);
 
   useEffect(() => {
@@ -29,10 +43,16 @@ const Formulation = () => {
             id: response.data.results[i].abbreviation,
           });
         }
-        setColumns(cols);
+        appendColumns(cols);
       })
       .catch((ex) => {});
   }, []);
+
+  const appendColumns = (cols: GridColumn[]) => {
+    setColumns(_.union(cols, columns));
+  };
+
+  const addRow = () => {};
 
   const getContent = React.useCallback(
     (cell: Item): GridCell => {
@@ -51,6 +71,8 @@ const Formulation = () => {
     [rows]
   );
 
+  const onRowAppended = React.useCallback(() => {}, []);
+
   return (
     <Sizer>
       <DataEditor
@@ -61,13 +83,14 @@ const Formulation = () => {
         rows={rows.current.length}
         isDraggable={true}
         freezeColumns={1}
-        rowMarkers={"both"}
+        rowMarkers="number"
         getCellContent={getContent}
+        onRowAppended={onRowAppended}
         trailingRowOptions={{
           // How to get the trailing row to look right
           sticky: true,
           tint: true,
-          hint: "New row...",
+          hint: "Add Ingredient",
         }}
       />
     </Sizer>

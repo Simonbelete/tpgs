@@ -114,14 +114,21 @@ const SidebarMenu = () => {
         </Typography>
       </div>
       <Menu menuItemStyles={menuItemStyles}>
-        <MenuItem
-          component={<Link href="/formulate" />}
+        <SubMenu
+          label={<Typography variant="body1">Formulate</Typography>}
           icon={<ScienceIcon fontSize="small" />}
         >
-          <Typography variant="body1" fontSize={14}>
-            Formulate
-          </Typography>
-        </MenuItem>
+          <MenuItem component={<Link href="/formulation/formulas" />}>
+            <Typography variant="body1" fontSize={14}>
+              Formula
+            </Typography>
+          </MenuItem>
+          <MenuItem component={<Link href="/formulation/experimental" />}>
+            <Typography variant="body1" fontSize={14}>
+              Experimental
+            </Typography>
+          </MenuItem>
+        </SubMenu>
         <SubMenu
           label={<Typography variant="body1">Ingredients</Typography>}
           icon={<BubbleChartIcon />}
