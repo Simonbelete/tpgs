@@ -14,6 +14,7 @@ import BubbleChartIcon from "@mui/icons-material/BubbleChart";
 import WorkspacesIcon from "@mui/icons-material/Workspaces";
 import BalanceIcon from "@mui/icons-material/Balance";
 import ScienceIcon from "@mui/icons-material/Science";
+import PeopleIcon from "@mui/icons-material/People";
 
 const SidebarMenu = () => {
   const theme = useTheme();
@@ -85,7 +86,17 @@ const SidebarMenu = () => {
       <Box my={1}>
         <Divider />
       </Box>
+
       <Menu menuItemStyles={menuItemStyles}>
+        <MenuItem
+          component={<Link href="/users" />}
+          icon={<PeopleIcon fontSize="small" />}
+        >
+          <Typography variant="body1" fontSize={14}>
+            Users
+          </Typography>
+        </MenuItem>
+
         <SubMenu
           label={<Typography variant="body1">Units</Typography>}
           icon={<BalanceIcon fontSize="small" />}
