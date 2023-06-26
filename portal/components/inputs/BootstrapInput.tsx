@@ -1,5 +1,6 @@
 import React from "react";
 import { alpha, styled } from "@mui/material/styles";
+import { InputAdornment } from "@mui/material";
 import InputBase, { InputBaseProps } from "@mui/material/InputBase";
 import InputLabel from "@mui/material/InputLabel";
 import FormControl from "@mui/material/FormControl";
@@ -48,6 +49,7 @@ const BootstrapInputComponent = ({
   label,
   error,
   helperText,
+  prefix,
   ...props
 }: InputBaseProps & any) => {
   return (
@@ -55,7 +57,12 @@ const BootstrapInputComponent = ({
       <InputLabel shrink htmlFor="bootstrap-input">
         {label}
       </InputLabel>
-      <BootstrapInput {...props} defaultValue="" id="bootstrap-input" />
+      <BootstrapInput
+        {...props}
+        defaultValue=""
+        id="bootstrap-input"
+        endAdornment={<InputAdornment position="end">{prefix}</InputAdornment>}
+      />
     </FormControl>
   );
 };

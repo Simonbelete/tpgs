@@ -1,4 +1,5 @@
 import NutrientGroup from "./NutrientGroup";
+import Unit from "./Unit";
 
 export default interface Nutrient {
   id: number;
@@ -7,5 +8,5 @@ export default interface Nutrient {
   abbreviation: string;
   description: string;
   nutrient_group: NutrientGroup | number;
-  unit: number;
+  unit: number | Unit;
 }

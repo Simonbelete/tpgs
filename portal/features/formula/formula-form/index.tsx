@@ -10,10 +10,17 @@ import {
   Typography,
   IconButton,
   Tooltip,
+  OutlinedInput,
+  TextField,
+  InputAdornment,
+  Stack,
 } from "@mui/material";
 import { NutrientListItem, NutrientSelectDialog } from "@/features/nutrients";
-import { Nutrient } from "@/models";
+import { IngredientSelectDialog } from "@/features/ingredients";
+import { Ingredient, Nutrient, Unit } from "@/models";
 import ClearIcon from "@mui/icons-material/Clear";
+import { BootstrapInput } from "@/components/inputs";
+import { DataTable } from "@/components/tables";
 
 function a11yProps(index: number) {
   return {
@@ -28,6 +35,8 @@ const FormulaForm = () => {
   const [requirementNutrients, setRequirementNutrients] = useState<Nutrient[]>(
     []
   );
+  const [openIngredientModal, setOpenIngredientModal] = useState(false);
+  const [ingredients, setIngredients] = useState<Ingredient[]>([]);
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setTabIndex(newValue);
@@ -41,13 +50,17 @@ const FormulaForm = () => {
     setRequirementNutrients(newReq);
   };
 
+  const handleOpenIngredientModal = () => setOpenIngredientModal(true);
+  const handleCloseIngredientModal = () => setOpenIngredientModal(false);
+  const handleIngredientSelected = (newValue: Ingredient) => {
+    handleCloseIngredientModal();
+    const newIng: Ingredient[] = _.concat(ingredients, newValue);
+    setIngredients(newIng);
+  };
+
   const handleRemoveNutrients = (id: number) => {
-    console.log(id);
     const newReq = [...requirementNutrients];
-    _.remove(newReq, (n) => {
-      console.log(n.id);
-      return n.id == id;
-    });
+    _.remove(newReq, (n) => n.id == id);
     setRequirementNutrients(newReq);
   };
 
@@ -58,13 +71,37 @@ const FormulaForm = () => {
         onSelected={handleNutrientSelected}
         onClose={handleCloseNutrientModal}
       />
+      <IngredientSelectDialog
+        open={openIngredientModal}
+        onSelected={handleIngredientSelected}
+        onClose={handleCloseIngredientModal}
+      />
       <Paper>
         <Tabs value={tabIndex} onChange={handleChange}>
           <Tab label="Ingredients" {...a11yProps(0)} />
           <Tab label="Requirements" {...a11yProps(0)} />
         </Tabs>
         <Box mx={2} my={4} pb={4}>
-          {tabIndex == 0 && <h1>1</h1>}
+          {tabIndex == 0 && (
+            <Box>
+              <Button onClick={handleOpenIngredientModal}>
+                Add Ingredient
+              </Button>
+              <Box>
+                {ingredients &&
+                  ingredients.map((e, key) => (
+                    <Stack key={key}>
+                      <Typography>{e.name}</Typography>
+                      <Tooltip title="Remove">
+                        <IconButton onClick={() => handleRemoveNutrients(e.id)}>
+                          <ClearIcon />
+                        </IconButton>
+                      </Tooltip>
+                    </Stack>
+                  ))}
+              </Box>
+            </Box>
+          )}
           {tabIndex == 1 && (
             <Box>
               <Button onClick={handleOpenNutrientModal}>Add Nutrient</Button>
@@ -77,7 +114,16 @@ const FormulaForm = () => {
                       </Typography>
                     </Grid>
                     <Grid item xs>
-                      Value
+                      <TextField
+                        variant="standard"
+                        InputProps={{
+                          startAdornment: (
+                            <InputAdornment position="start">
+                              {e.unit != null ? (e.unit as Unit).name : ""}
+                            </InputAdornment>
+                          ),
+                        }}
+                      />
                     </Grid>
                     <Grid item xs={1}>
                       <Tooltip title="Remove">
