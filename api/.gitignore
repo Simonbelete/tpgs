@@ -3,7 +3,7 @@ service-account-file.json
 db.sqlite3
 
 .DS_Store
-.env
+# .env
 .flaskenv
 *.pyc
 *.pyo
