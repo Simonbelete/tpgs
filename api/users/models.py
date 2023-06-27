@@ -5,6 +5,7 @@ from django.contrib.auth.base_user import BaseUserManager
 from django.contrib.auth.models import Group
 from django_multitenant.fields import *
 from django_multitenant.models import *
+from tenant_schemas.models import TenantMixin
 
 from farms.models import Farm
 
