@@ -3,6 +3,7 @@ from django.contrib.auth.models import Group, Permission
 from rest_framework import viewsets, status
 from . import models
 from . import serializers
+from core.utils import multi_farm_from_request, farm_from_request
 
 
 class PermissionViewSet(viewsets.ModelViewSet):
@@ -20,4 +21,4 @@ class UserViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.UserSerializer_GET
 
     def get_queryset(self):
-        return self.queryset.filter(farms__in=self.request.user.farms.values())
+        return multi_farm_from_request(self.request, self.queryset)
