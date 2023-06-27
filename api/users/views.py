@@ -18,3 +18,6 @@ class GroupViewSet(viewsets.ModelViewSet):
 class UserViewSet(viewsets.ModelViewSet):
     queryset = models.User.objects.all()
     serializer_class = serializers.UserSerializer_GET
+
+    def get_queryset(self):
+        return self.queryset.filter(farms__in=[1])
