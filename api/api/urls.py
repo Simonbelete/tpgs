@@ -34,6 +34,7 @@ urlpatterns = [
     path('api/inbox/notifications/',
          include(notifications.urls, namespace='notifications')),
     path('api/', include([
+        path('', include('users.urls')),
         path('', include('units.urls')),
         path('', include('nutrients.urls')),
         path('', include('ingredients.urls')),

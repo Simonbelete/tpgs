@@ -3,9 +3,6 @@ from django.utils import timezone
 from django.contrib.auth.models import AbstractUser
 from django.contrib.auth.base_user import BaseUserManager
 from django.contrib.auth.models import Group
-from django_multitenant.fields import *
-from django_multitenant.models import *
-from tenant_schemas.models import TenantMixin
 
 from farms.models import Farm
 
@@ -52,8 +49,6 @@ class User(AbstractUser):
         verbose_name='email address', max_length=255, unique=True,)
     name = models.CharField(max_length=250, null=True, blank=True)
     date_joined = models.DateTimeField(default=timezone.now)
-    # farm = TenantForeignKey(
-    #     Farm, on_delete=models.RESTRICT, null=True, blank=True)
     farms = models.ManyToManyField(Farm)
     is_active = models.BooleanField(default=True)
 
@@ -62,6 +57,3 @@ class User(AbstractUser):
 
     def __str__(self):
         return self.email
-
-    # class TenantMeta:
-    #     tenant_field_name = "farm_id"
