@@ -8,7 +8,7 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
         data = super().validate(attrs)
         data['name'] = self.user.name
         data['email'] = self.user.email
-        data['farm'] = self.user.farm
+        # data['farms'] = self.user.farms
         data['groups'] = self.user.groups.values_list('name', flat=True)
 
         return data

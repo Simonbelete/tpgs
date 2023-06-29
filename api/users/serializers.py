@@ -19,4 +19,5 @@ class GroupSerializer_GET(serializers.ModelSerializer):
 class UserSerializer_GET(serializers.ModelSerializer):
     class Meta:
         model = models.User
-        fields = '__all__'
+        fields = ['name', 'username', 'email',
+                  'first_name', 'last_name', 'last_login']

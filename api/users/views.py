@@ -20,5 +20,6 @@ class UserViewSet(viewsets.ModelViewSet):
     queryset = models.User.objects.all()
     serializer_class = serializers.UserSerializer_GET
 
-    def get_queryset(self):
-        return multi_farm_from_request(self.request, self.queryset)
+    # def get_queryset(self):
+    #     return self.queryset.filter(farms__in=[self.request.tenant.id])
+    # return multi_farm_from_request(self.request, self.queryset)
