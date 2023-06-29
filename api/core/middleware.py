@@ -7,6 +7,7 @@ from django.db import connection
 from django.http import Http404
 from django.urls import set_urlconf
 from django.utils.deprecation import MiddlewareMixin
+from django.http import JsonResponse, HttpResponse, HttpResponseForbidden
 
 from django_tenants.utils import get_tenant_model, get_tenant_domain_model
 
@@ -37,8 +38,6 @@ class FarmMiddleware(TenantMainMiddleware):
 
         # Use users avaliable farms
 
-        print('---------------------------')
-
         connection.set_schema_to_public()
         try:
             requested_farm = self.hostname_from_request(request)
@@ -59,13 +58,11 @@ class FarmMiddleware(TenantMainMiddleware):
         try:
             if (not request.user.is_anonymous and not request.user.is_superuser):
                 User.objects.get(
-                    pk=request.user, farms__in=[tenant.id])
+                    pk=request.user.id, farms__in=[tenant.id])
         except User.DoesNotExist:
-            self.no_tenant_found(request, requested_farm + "-Unauthorized")
-            return
+            return HttpResponseForbidden(JsonResponse({'error': 'Unauthorized'}))
 
         tenant.domain_url = requested_farm
         request.tenant = tenant
-        print('------')
         print(request.tenant)
         connection.set_tenant(request.tenant)
