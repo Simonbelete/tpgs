@@ -5,5 +5,8 @@
     "python.formatting.provider": "none",
     "dart.flutterSdkPaths": [
         "./nea"
+    ],
+    "cSpell.words": [
+        "avaliable"
     ]
 }

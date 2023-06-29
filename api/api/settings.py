@@ -47,7 +47,8 @@ ALLOWED_HOSTS = ['*']
 
 # Application definition
 
-INSTALLED_APPS = [
+SHARED_APPS = [
+    'django_tenants',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -59,19 +60,27 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework_simplejwt',
     'djmoney',
-    'actstream',
-    'notifications',
+    'farms',
+    'users',
     'cities_light',
     'core',
-    'units',
     'currency',
+]
+
+TENANT_APPS = [
+    'actstream',
+    'notifications',
+    'units',
     'nutrients',
-    'users',
-    'farms',
     'ingredients',
     'recipes',
     'rations'
 ]
+
+INSTALLED_APPS = list(SHARED_APPS) + \
+    [app for app in TENANT_APPS if app not in SHARED_APPS]
+
+# SHOW_PUBLIC_IF_NO_TENANT_FOUND = True
 
 SITE_ID = 1
 
@@ -86,8 +95,10 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'corsheaders.middleware.CorsMiddleware',
-    'core.middleware.MultitenantMiddleware'
+    'core.middleware.FarmMiddleware',
 
+    # 'core.middleware.MultitenantMiddleware',
+    # 'django_tenants.middleware.main.TenantMainMiddleware',
 ]
 
 ROOT_URLCONF = 'api.urls'
@@ -115,6 +126,14 @@ WSGI_APPLICATION = 'api.wsgi.application'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 DATABASES = {
+    'default': {
+        'ENGINE': 'django_tenants.postgresql_backend',
+        "NAME": env('POSTGRESQL_DB'),
+        "USER": env('POSTGRESQL_USER'),
+        "PASSWORD": env('POSTGRESQL_PASSWORD'),
+        "HOST": env('POSTGRESQL_HOST'),
+        "PORT": env('POSTGRESQL_PORT'),
+    },
     # 'default': {
     #     'ENGINE': 'django.db.backends.postgresql',
     #     "NAME": env('POSTGRESQL_DB'),
@@ -123,11 +142,19 @@ DATABASES = {
     #     "HOST": env('POSTGRESQL_HOST'),
     #     "PORT": env('POSTGRESQL_PORT'),
     # },
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.sqlite3',
+    #     'NAME': BASE_DIR / 'db.sqlite3',
+    # }
 }
+
+DATABASE_ROUTERS = (
+    'django_tenants.routers.TenantSyncRouter',
+)
+
+TENANT_MODEL = "farms.Farm"
+TENANT_DOMAIN_MODEL = "farms.Domain"
+
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
@@ -169,10 +196,6 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-MIDDLEWARE_CLASSES = (
-    'tenant_schemas.middleware.TenantMiddleware'
-)
 
 REST_FRAMEWORK = {
     # Use Django's standard `django.contrib.auth` permissions,
