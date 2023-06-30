@@ -12,6 +12,8 @@ import Router from "next/router";
 import { SnackbarProvider, useSnackbar } from "notistack";
 import dynamic from "next/dynamic";
 import { Loading } from "@/components";
+import { Provider } from "react-redux";
+import { store } from "@/store";
 
 const DashboardLayout = dynamic(
   () => import("../components/layouts/DashboardLayout"),
@@ -50,12 +52,14 @@ export default function App({
     ((page) => <DashboardLayout>{page}</DashboardLayout>);
 
   return (
-    <SessionProvider session={session}>
-      <ThemeProvider theme={lightTheme}>
-        <SnackbarProvider>
-          {getLayout(<Component {...pageProps} />)}
-        </SnackbarProvider>
-      </ThemeProvider>
-    </SessionProvider>
+    <Provider store={store}>
+      <SessionProvider session={session}>
+        <ThemeProvider theme={lightTheme}>
+          <SnackbarProvider>
+            {getLayout(<Component {...pageProps} />)}
+          </SnackbarProvider>
+        </ThemeProvider>
+      </SessionProvider>
+    </Provider>
   );
 }

@@ -8,3 +8,4 @@ export type { default as UnitConverter } from "./UnitConverter";
 export type { default as NutrientGroup } from "./NutrientGroup";
 export type { default as IngredientNutrient } from "./IngredientNutrient";
 export type { default as Farm } from "./Farm";
+export type { default as User } from "./User";
