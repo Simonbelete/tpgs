@@ -44,6 +44,13 @@ CORS_ALLOW_ALL_ORIGINS = True
 ALLOWED_HOSTS = ['*']
 # ALLOWED_HOSTS = []
 
+# Email
+EMAIL_HOST = env('EMAIL_HOST')
+EMAIL_USE_TLS = env('EMAIL_USE_TLS')
+EMAIL_PORT = env('EMAIL_PORT')
+EMAIL_HOST_USER = env('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
+
 
 # Application definition
 
@@ -60,16 +67,17 @@ SHARED_APPS = [
     'rest_framework',
     'rest_framework_simplejwt',
     'djmoney',
+    'notifications',
     'farms',
     'users',
     'cities_light',
     'core',
     'currency',
+    'invitations'
 ]
 
 TENANT_APPS = [
     'actstream',
-    'notifications',
     'units',
     'nutrients',
     'ingredients',

@@ -1,0 +1,10 @@
+[
+    {
+        "model": "farms.Farm",
+        "pk": 2,
+        "fields": {
+            "name": "Test",
+            "schema_name": "test"
+        }
+    }
+]

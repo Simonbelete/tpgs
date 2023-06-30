@@ -39,7 +39,8 @@ urlpatterns = [
         path('', include('nutrients.urls')),
         path('', include('ingredients.urls')),
         path('', include('farms.urls')),
-        path('', include('currency.urls'))
+        path('', include('currency.urls')),
+        path('', include('invitations.urls'))
     ])),
 
 
