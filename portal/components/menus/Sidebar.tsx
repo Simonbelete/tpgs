@@ -88,14 +88,21 @@ const SidebarMenu = () => {
       </Box>
 
       <Menu menuItemStyles={menuItemStyles}>
-        <MenuItem
-          component={<Link href="/users" />}
+        <SubMenu
+          label={<Typography variant="body1">Users</Typography>}
           icon={<PeopleIcon fontSize="small" />}
         >
-          <Typography variant="body1" fontSize={14}>
-            Users
-          </Typography>
-        </MenuItem>
+          <MenuItem component={<Link href="/users" />}>
+            <Typography variant="body1" fontSize={14}>
+              Users
+            </Typography>
+          </MenuItem>
+          <MenuItem component={<Link href="/invitations" />}>
+            <Typography variant="body1" fontSize={14}>
+              Invitations
+            </Typography>
+          </MenuItem>
+        </SubMenu>
 
         <SubMenu
           label={<Typography variant="body1">Units</Typography>}
