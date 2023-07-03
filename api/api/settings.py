@@ -51,6 +51,7 @@ EMAIL_PORT = env('EMAIL_PORT')
 EMAIL_HOST_USER = env('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
 
+DATETIME_FORMAT = "%d/%m/%Y %H:%M:%S"
 
 # Application definition
 
@@ -69,6 +70,7 @@ SHARED_APPS = [
     'djmoney',
     'notifications',
     'drf_spectacular',
+    'import_export',
     'farms',
     'users',
     'cities_light',

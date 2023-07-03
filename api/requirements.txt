@@ -29,3 +29,5 @@ whitenoise
 django-cities-light
 django-activity-stream
 django-filter
+drf-spectacular
+django-import-export

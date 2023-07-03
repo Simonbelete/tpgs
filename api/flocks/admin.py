@@ -1,3 +1,9 @@
 from django.contrib import admin
+from import_export import resources
 
-# Register your models here.
+from . import models
+
+
+class FlockResource(resources.ModelResource):
+    class Meta:
+        model = models.Flock
