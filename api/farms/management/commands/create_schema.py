@@ -15,7 +15,7 @@ class Command(BaseCommand):
         tenant = Farm(schema_name=options['tenant'], name=options['tenant'])
         tenant.save()
 
-        domain = Domain()
-        domain.domain = '*'
-        domain.tenant = tenant
-        domain.save()
+        # domain = Domain()
+        # domain.domain = '*'
+        # domain.tenant = tenant
+        # domain.save()

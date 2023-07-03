@@ -14,16 +14,6 @@ from django_tenants.utils import get_tenant_model, get_tenant_domain_model
 from users.models import User
 
 
-class RequestIDTenantMiddleware(TenantMainMiddleware):
-    @staticmethod
-    def hostname_from_request(request):
-        """ Extracts hostname from request. Used for custom requests filtering.
-            By default removes the request's port and common prefixes.
-        """
-        return request.headers.get('X-Request-Id', 'public')
-        # return remove_www(request.get_host().split(':')[0])
-
-
 class FarmMiddleware(TenantMainMiddleware):
     @staticmethod
     def hostname_from_request(request):

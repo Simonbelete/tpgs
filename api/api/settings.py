@@ -68,6 +68,7 @@ SHARED_APPS = [
     'rest_framework_simplejwt',
     'djmoney',
     'notifications',
+    'drf_spectacular',
     'farms',
     'users',
     'cities_light',
@@ -77,6 +78,7 @@ SHARED_APPS = [
 ]
 
 TENANT_APPS = [
+    'flocks',
     'actstream',
     'units',
     'nutrients',
@@ -111,7 +113,9 @@ ROOT_URLCONF = 'api.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [
+            'templates'
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -213,7 +217,9 @@ REST_FRAMEWORK = {
     ],
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
     'PAGE_SIZE': 10,
-    'TEST_REQUEST_DEFAULT_FORMAT': 'json'
+    'TEST_REQUEST_DEFAULT_FORMAT': 'json',
+    # 'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+    'DEFAULT_SCHEMA_CLASS': 'core.schemas.TenantHeaderSchema',
 }
 
 SIMPLE_JWT = {
@@ -222,4 +228,11 @@ SIMPLE_JWT = {
     'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
     'ROTATE_REFRESH_TOKENS': True,
     'BLACKLIST_AFTER_ROTATION': True
+}
+
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'TPGS API',
+    'DESCRIPTION': 'TPGS Platforms API',
+    'VERSION': '1.0.0',
+    'SERVE_INCLUDE_SCHEMA': False,
 }

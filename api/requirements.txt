@@ -28,3 +28,4 @@ psycopg2
 whitenoise
 django-cities-light
 django-activity-stream
+django-filter

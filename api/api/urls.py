@@ -23,6 +23,7 @@ from rest_framework_simplejwt.views import (
     TokenVerifyView
 )
 from units.urls import router
+from drf_spectacular.views import SpectacularAPIView, SpectacularRedocView, SpectacularSwaggerView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -35,6 +36,7 @@ urlpatterns = [
          include(notifications.urls, namespace='notifications')),
     path('api/', include([
         path('', include('users.urls')),
+        path('', include('flocks.urls')),
         path('', include('units.urls')),
         path('', include('nutrients.urls')),
         path('', include('ingredients.urls')),
@@ -42,6 +44,13 @@ urlpatterns = [
         path('', include('currency.urls')),
         path('', include('invitations.urls'))
     ])),
+
+    path('api/schema/', SpectacularAPIView.as_view(), name='schema'),
+    # Optional UI:
+    path('api/schema/swagger-ui/',
+         SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),
+    path('api/schema/redoc/',
+         SpectacularRedocView.as_view(url_name='schema'), name='redoc'),
 
 
     # path('api/', include([
