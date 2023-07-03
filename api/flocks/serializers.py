@@ -7,3 +7,9 @@ class FlockSerializer_GET(serializers.ModelSerializer):
     class Meta:
         model = models.Flock
         fields = '__all__'
+
+
+class FlockSerializer_POST(serializers.ModelSerializer):
+    class Meta:
+        model = models.Flock
+        fields = ['name']

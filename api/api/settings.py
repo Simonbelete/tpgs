@@ -71,6 +71,7 @@ SHARED_APPS = [
     'notifications',
     'drf_spectacular',
     'import_export',
+    'django_filters',
     'farms',
     'users',
     'cities_light',
@@ -220,8 +221,12 @@ REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
     'PAGE_SIZE': 10,
     'TEST_REQUEST_DEFAULT_FORMAT': 'json',
-    # 'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
     'DEFAULT_SCHEMA_CLASS': 'core.schemas.TenantHeaderSchema',
+    'DEFAULT_FILTER_BACKENDS': [
+        'django_filters.rest_framework.DjangoFilterBackend',
+        'rest_framework.filters.SearchFilter',
+        'rest_framework.filters.OrderingFilter',
+    ]
 }
 
 SIMPLE_JWT = {
