@@ -7,6 +7,7 @@ from datetime import date
 from django.conf import settings
 import django_filters
 
+from core.views import HistoryViewSet
 from . import models
 from . import serializers
 from . import admin
@@ -34,6 +35,11 @@ class FlockViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         serializer.save(created_by=self.request.user)
+
+
+class FlockHistoryViewSet(HistoryViewSet):
+    queryset = models.Flock.history.all()
+    serializer_class = serializers.FlockHistorySerializer
 
 
 class FlockXlsxExport(APIView):

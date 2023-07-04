@@ -57,6 +57,7 @@ DATETIME_FORMAT = "%d/%m/%Y %H:%M:%S"
 
 SHARED_APPS = [
     'django_tenants',
+    'adminactions',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -72,6 +73,7 @@ SHARED_APPS = [
     'drf_spectacular',
     'import_export',
     'django_filters',
+    'simple_history',
     'farms',
     'users',
     'cities_light',
@@ -109,6 +111,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'corsheaders.middleware.CorsMiddleware',
     'core.middleware.FarmMiddleware',
+    'simple_history.middleware.HistoryRequestMiddleware',
 ]
 
 ROOT_URLCONF = 'api.urls'

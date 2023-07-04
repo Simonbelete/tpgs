@@ -34,6 +34,7 @@ urlpatterns = [
     path('api/token/verify/', TokenVerifyView.as_view(), name='token_verify'),
     path('api/inbox/notifications/',
          include(notifications.urls, namespace='notifications')),
+    path('adminactions/', include('adminactions.urls')),
     path('api/', include([
         path('', include('users.urls')),
         path('', include('flocks.urls')),
