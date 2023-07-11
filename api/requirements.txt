@@ -33,3 +33,4 @@ drf-spectacular
 django-import-export
 django-adminactions
 django-simple-history
+pandas

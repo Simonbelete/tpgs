@@ -43,7 +43,8 @@ urlpatterns = [
         path('', include('ingredients.urls')),
         path('', include('farms.urls')),
         path('', include('currency.urls')),
-        path('', include('invitations.urls'))
+        path('', include('invitations.urls')),
+        path('', include('contact.urls')),
     ])),
 
     path('api/schema/', SpectacularAPIView.as_view(), name='schema'),

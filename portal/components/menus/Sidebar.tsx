@@ -104,6 +104,12 @@ const SidebarMenu = () => {
           </MenuItem>
         </SubMenu>
 
+        <MenuItem component={<Link href="/flocks" />}>
+          <Typography variant="body1" fontSize={14}>
+            Flocks
+          </Typography>
+        </MenuItem>
+
         <SubMenu
           label={<Typography variant="body1">Units</Typography>}
           icon={<BalanceIcon fontSize="small" />}

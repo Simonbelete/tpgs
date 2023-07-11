@@ -1,13 +1,18 @@
 import io
+import pandas as pd
+import django_filters
 from django.shortcuts import render
 from rest_framework import viewsets, status
 from rest_framework.views import APIView
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from datetime import date
 from django.conf import settings
-import django_filters
+from import_export import resources
+from rest_framework.parsers import FormParser, MultiPartParser
+
 
 from core.views import HistoryViewSet
+from core.serializers import UploadSerializer
 from . import models
 from . import serializers
 from . import admin
@@ -50,6 +55,18 @@ class FlockXlsxExport(APIView):
         response['Content-Disposition'] = 'attachment; filename="flocks_%s.xlsx"' % (
             date.today().strftime(settings.DATETIME_FORMAT))
         return response
+
+
+class FlockXlsxImport(APIView):
+    serializer_class = UploadSerializer
+    parser_classes = [FormParser, MultiPartParser]
+
+    def post(self, request):
+        file = request.FILES.get('file')
+        df = pd.read_excel(file, header=0)
+        resource = resources.modelresource_factory(model=models.Flock)()
+        resource.import_data(df, dry_run=True)
+        return JsonResponse({}, status=200)
 
 
 class FlockXlsExport(APIView):

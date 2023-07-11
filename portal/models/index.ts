@@ -10,3 +10,4 @@ export type { default as IngredientNutrient } from "./IngredientNutrient";
 export type { default as Farm } from "./Farm";
 export type { default as User } from "./User";
 export type { default as Invitation } from "./Invitation";
+export type { default as Contact } from "./Contact";

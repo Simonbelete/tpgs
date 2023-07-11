@@ -10,9 +10,10 @@ router.register(r'flocks/(?P<id>.+)/histories',
 
 urlpatterns = [
     path('', include(router.urls)),
-    path('flocks/', include(router.urls)),
     path('flocks/export/xlsx', views.FlockXlsxExport.as_view(),
          name="flocks_export_xlsx"),
+    path('flocks/import/xlsx', views.FlockXlsxImport.as_view(),
+         name="flocks_import_xlsx"),
     path('flocks/export/xls', views.FlockXlsExport.as_view(),
          name="flocks_export_xls"),
     path('flocks/export/csv', views.FlockCsvExport.as_view(),

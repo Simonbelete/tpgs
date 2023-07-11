@@ -1,4 +1,6 @@
 from django.contrib import admin
+from simple_history.admin import SimpleHistoryAdmin
+
 from . import models
 
-admin.site.register(models.Farm)
+admin.site.register(models.Farm, SimpleHistoryAdmin)

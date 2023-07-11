@@ -1,5 +1,6 @@
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
+from rest_framework import serializers
 
 
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
@@ -12,3 +13,7 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
         data['groups'] = self.user.groups.values_list('name', flat=True)
 
         return data
+
+
+class UploadSerializer(serializers.Serializer):
+    file = serializers.FileField()

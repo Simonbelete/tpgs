@@ -2,6 +2,7 @@ import uuid
 from django.db import models
 from django_multitenant.models import TenantModel
 from django_tenants.models import TenantMixin, DomainMixin
+from simple_history.models import HistoricalRecords
 
 
 class Farm(TenantModel, TenantMixin):
@@ -16,6 +17,7 @@ class Farm(TenantModel, TenantMixin):
         'cities_light.Country', on_delete=models.SET_NULL, null=True, blank=True)
     city = models.ForeignKey(
         'cities_light.City', on_delete=models.SET_NULL, null=True, blank=True)
+    history = HistoricalRecords()
 
     class TenantMeta:
         tenant_field_name = "id"

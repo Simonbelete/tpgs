@@ -17,8 +17,12 @@ import {
   SignUpNowCTA,
   PrimaryHero,
   AppIntro,
+  Copyright,
 } from "@/components";
+import { ILRILogo } from "@/components/logos";
 import { ReactElement } from "react";
+import { PrimaryFooter } from "@/components/footers";
+import { ContactUsForm } from "@/features/contact-us";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -50,7 +54,8 @@ export default function Home() {
           <Toolbar>
             <Container>
               <Box sx={{ display: "flex" }}>
-                <Logo />
+                {/* <Logo /> */}
+                <ILRILogo />
                 <Box sx={{ flexGrow: 1 }} />
                 <PrimaryMenu />
               </Box>
@@ -67,6 +72,12 @@ export default function Home() {
       <Box sx={{ height: 50 }} />
 
       <SignUpNowCTA />
+      <ContactUsForm />
+
+      <footer style={{ marginTop: "auto" }}>
+        <PrimaryFooter />
+        <Copyright />
+      </footer>
     </main>
   );
 }

@@ -5,14 +5,6 @@ import dynamic from "next/dynamic";
 import { DataTable } from "@/components/tables";
 import { GridColDef } from "@mui/x-data-grid";
 
-const DashboardLayout = dynamic(
-  () => import("../../components/layouts/DashboardLayout"),
-  {
-    ssr: false,
-    loading: () => <Loading />,
-  }
-);
-
 const columns: GridColDef[] = [
   { field: "id", headerName: "ID", flex: 1, minWidth: 150 },
   { field: "name", headerName: "name", flex: 1, minWidth: 150 },
@@ -28,13 +20,11 @@ const rows = [
 
 const DashboardPage = () => {
   return (
-    <DashboardLayout>
-      <Grid container spacing={2}>
-        <Grid item xs={12}>
-          <DataTable rows={rows} columns={columns} />
-        </Grid>
+    <Grid container spacing={2}>
+      <Grid item xs={12}>
+        {/* <DataTable rows={rows} columns={columns} /> */}
       </Grid>
-    </DashboardLayout>
+    </Grid>
   );
 };
 

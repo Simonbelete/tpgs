@@ -51,6 +51,8 @@ EMAIL_PORT = env('EMAIL_PORT')
 EMAIL_HOST_USER = env('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
 
+EMAIL_ADDRESS = env('EMAIL_ADDRESS')
+
 DATETIME_FORMAT = "%d/%m/%Y %H:%M:%S"
 
 # Application definition
@@ -79,7 +81,8 @@ SHARED_APPS = [
     'cities_light',
     'core',
     'currency',
-    'invitations'
+    'invitations',
+    'contact'
 ]
 
 TENANT_APPS = [
@@ -89,7 +92,10 @@ TENANT_APPS = [
     'nutrients',
     'ingredients',
     'recipes',
-    'rations'
+    'rations',
+    'breeds',
+    # 'stages',
+    # 'chickens'
 ]
 
 INSTALLED_APPS = list(SHARED_APPS) + \
@@ -245,4 +251,5 @@ SPECTACULAR_SETTINGS = {
     'DESCRIPTION': 'TPGS Platforms API',
     'VERSION': '1.0.0',
     'SERVE_INCLUDE_SCHEMA': False,
+    'COMPONENT_SPLIT_REQUEST': True
 }
