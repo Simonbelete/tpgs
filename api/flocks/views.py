@@ -9,6 +9,7 @@ from datetime import date
 from django.conf import settings
 from import_export import resources
 from rest_framework.parsers import FormParser, MultiPartParser
+from tablib import Dataset
 
 
 from core.views import HistoryViewSet
@@ -46,6 +47,8 @@ class FlockHistoryViewSet(HistoryViewSet):
     queryset = models.Flock.history.all()
     serializer_class = serializers.FlockHistorySerializer
 
+# Xlsx
+
 
 class FlockXlsxExport(APIView):
     def get(self, request):
@@ -59,14 +62,19 @@ class FlockXlsxExport(APIView):
 
 class FlockXlsxImport(APIView):
     serializer_class = UploadSerializer
-    parser_classes = [FormParser, MultiPartParser]
+    parser_classes = [MultiPartParser]
 
     def post(self, request):
         file = request.FILES.get('file')
         df = pd.read_excel(file, header=0)
+        dataset = Dataset().load(df)
         resource = resources.modelresource_factory(model=models.Flock)()
-        resource.import_data(df, dry_run=True)
-        return JsonResponse({}, status=200)
+        result = resource.import_data(dataset, dry_run=True, raise_errors=True)
+        if not result.has_errors():
+            return JsonResponse({'message': 'Imported Successfully'}, status=200)
+        return JsonResponse({'errors': ['Import Failed']}, status=400)
+
+# Xls
 
 
 class FlockXlsExport(APIView):
@@ -79,6 +87,23 @@ class FlockXlsExport(APIView):
         return response
 
 
+class FlockXlsImport(APIView):
+    serializer_class = UploadSerializer
+     parser_classes = [MultiPartParser]
+
+    def post(self, request):
+        file = request.FILES.get('file')
+        df = pd.read_excel(file, header=0)
+        dataset = Dataset().load(df)
+        resource = resources.modelresource_factory(model=models.Flock)()
+        result = resource.import_data(dataset, dry_run=True, raise_errors=True)
+        if not result.has_errors():
+            return JsonResponse({'message': 'Imported Successfully'}, status=200)
+        return JsonResponse({'errors': ['Import Failed']}, status=400)
+
+# Csv
+
+
 class FlockCsvExport(APIView):
     def get(self, request):
         dataset = admin.FlockResource().export()
@@ -87,3 +112,18 @@ class FlockCsvExport(APIView):
         response['Content-Disposition'] = 'attachment; filename="flocks_%s.csv"' % (
             date.today().strftime(settings.DATETIME_FORMAT))
         return response
+
+
+class FlockCsvImport(APIView):
+    serializer_class = UploadSerializer
+    parser_classes = [MultiPartParser]
+
+    def post(self, request):
+        file = request.FILES.get('file')
+        df = pd.read_csv(file, header=0)
+        dataset = Dataset().load(df)
+        resource = resources.modelresource_factory(model=models.Flock)()
+        result = resource.import_data(dataset, dry_run=True, raise_errors=True)
+        if not result.has_errors():
+            return JsonResponse({'message': 'Imported Successfully'}, status=200)
+        return JsonResponse({'errors': ['Import Failed']}, status=400)

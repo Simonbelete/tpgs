@@ -9,6 +9,7 @@ from . import models
 class FlockResource(resources.ModelResource):
     class Meta:
         model = models.Flock
+        fields = ['id', 'name']
 
 
 admin.site.register(models.Flock, SimpleHistoryAdmin)
