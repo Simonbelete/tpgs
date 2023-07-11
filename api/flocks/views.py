@@ -8,7 +8,7 @@ from django.http import HttpResponse, JsonResponse
 from datetime import date
 from django.conf import settings
 from import_export import resources
-from rest_framework.parsers import FormParser, MultiPartParser
+from rest_framework.parsers import MultiPartParser
 from tablib import Dataset
 
 
@@ -47,8 +47,8 @@ class FlockHistoryViewSet(HistoryViewSet):
     queryset = models.Flock.history.all()
     serializer_class = serializers.FlockHistorySerializer
 
-# Xlsx
 
+# Xlsx
 
 class FlockXlsxExport(APIView):
     def get(self, request):
@@ -89,7 +89,7 @@ class FlockXlsExport(APIView):
 
 class FlockXlsImport(APIView):
     serializer_class = UploadSerializer
-     parser_classes = [MultiPartParser]
+    parser_classes = [MultiPartParser]
 
     def post(self, request):
         file = request.FILES.get('file')

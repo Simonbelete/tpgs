@@ -94,7 +94,7 @@ TENANT_APPS = [
     'recipes',
     'rations',
     'breeds',
-    # 'stages',
+    'stages',
     # 'chickens'
 ]
 
