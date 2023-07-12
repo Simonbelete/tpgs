@@ -20,10 +20,6 @@ instance.interceptors.request.use(async (config) => {
   if (session) {
     config.headers.Authorization = `Bearer ${session.accessToken}`;
     config.headers["x-Request-Id"] = cookies.get("REQUEST_ID") ?? "public";
-    //  {
-    //   Authorization:
-    //   // "X-Request-ID": ,
-    // };
   }
   return config;
 });
