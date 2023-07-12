@@ -14,6 +14,7 @@ import os
 import environ
 from pathlib import Path
 from datetime import timedelta
+from corsheaders.defaults import default_headers
 
 env = environ.Env(
     # set casting, default value
@@ -40,6 +41,10 @@ DEBUG = env('DEBUG')
 #     "http://172.27.1.72:3000"
 # ]
 CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOW_HEADERS = [
+    *default_headers,
+    'x-Request-Id',
+]
 
 ALLOWED_HOSTS = ['*']
 # ALLOWED_HOSTS = []
@@ -110,12 +115,12 @@ AUTH_USER_MODEL = 'users.User'
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
     'core.middleware.FarmMiddleware',
     'simple_history.middleware.HistoryRequestMiddleware',
 ]

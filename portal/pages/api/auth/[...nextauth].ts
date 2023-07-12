@@ -139,23 +139,6 @@ export const authOptions = {
       session.accessToken = token.accessToken;
       return session;
     },
-    // async jwt({ token, user }) {
-    //   // Persist the OAuth access_token to the token right after signin
-    //   if (user) {
-    //     token.accessToken = user.access;
-    //   }
-    //   return { ...token, ...user };
-    // },
-    // async session(data) {
-    //   // Send properties to the client, like an access_token from a provider.
-    //   // session.accessToken = token.accessToken;
-    //   // console.log("seeeeeeeee");
-    //   // session.user = user;
-    //   return data;
-    // },
-    // jwt,
-    // session,
-    // cookies,
   },
   pages: {
     signIn: "/login",

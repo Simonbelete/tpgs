@@ -17,6 +17,7 @@ import {
   ListItemText,
   Divider,
   ListItemIcon,
+  Typography,
 } from "@mui/material";
 import { Farm } from "@/models";
 import farm_service from "../services/farm_service";
@@ -26,11 +27,13 @@ import Link from "next/link";
 import { useSelector, useDispatch } from "react-redux";
 import { useRouter } from "next/router";
 import { setTenant } from "../slices";
+import { RootState } from "@/store";
 
 const FarmsMenu = () => {
   const dispatch = useDispatch();
   const router = useRouter();
 
+  const tenant = useSelector((state: RootState) => state.tenant);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -60,8 +63,9 @@ const FarmsMenu = () => {
         aria-expanded={open ? "true" : undefined}
         onClick={handleClick}
         disableRipple
+        startIcon={<HouseIcon />}
       >
-        Apps
+        <Typography variant="caption">{tenant.name}</Typography>
       </Button>
       <Popper
         open={open}
