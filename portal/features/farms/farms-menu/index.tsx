@@ -1,9 +1,36 @@
-import React, { useState } from "react";
-import { Button, Menu, MenuItem, Box, MenuList, Paper } from "@mui/material";
-import HouseSidingIcon from "@mui/icons-material/HouseSiding";
+import React, { useEffect, useState } from "react";
+import {
+  Button,
+  Menu,
+  MenuItem,
+  Popper,
+  Paper,
+  Grow,
+  ClickAwayListener,
+  MenuList,
+  Box,
+  Stack,
+  List,
+  ListItem,
+  ListItemAvatar,
+  Avatar,
+  ListItemText,
+  Divider,
+  ListItemIcon,
+} from "@mui/material";
 import { Farm } from "@/models";
+import farm_service from "../services/farm_service";
+import WindowIcon from "@mui/icons-material/Window";
+import HouseIcon from "@mui/icons-material/House";
+import Link from "next/link";
+import { useSelector, useDispatch } from "react-redux";
+import { useRouter } from "next/router";
+import { setTenant } from "../slices";
 
 const FarmsMenu = () => {
+  const dispatch = useDispatch();
+  const router = useRouter();
+
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -13,56 +40,99 @@ const FarmsMenu = () => {
     setAnchorEl(null);
   };
 
-  const ITEM_HEIGHT = 48;
+  const [farms, setFarms] = useState<Farm[]>([]);
 
-  const [farms, setFarms] = useState<Farm[]>([
-    { id: 1, name: "Farm 1" },
-    { id: 1, name: "Farm 1" },
-    { id: 1, name: "Farm 1" },
-    { id: 1, name: "Farm 1" },
-    { id: 1, name: "Farm 1" },
-    { id: 1, name: "Farm 1" },
-    { id: 1, name: "Farm 1" },
-    { id: 1, name: "Farm 1" },
-  ]);
+  useEffect(() => {
+    farm_service
+      .get({ limit: 5 })
+      .then((response) => {
+        if (response.status == 200) setFarms(response.data.results);
+      })
+      .catch((ex) => {});
+  }, []);
 
   return (
-    <Box>
+    <>
       <Button
         id="basic-button"
         aria-controls={open ? "basic-menu" : undefined}
         aria-haspopup="true"
         aria-expanded={open ? "true" : undefined}
         onClick={handleClick}
+        disableRipple
       >
-        <HouseSidingIcon />
+        Apps
       </Button>
-      <Menu
-        id="basic-menu"
-        anchorEl={anchorEl}
+      <Popper
         open={open}
-        onClose={handleClose}
-        MenuListProps={{
-          "aria-labelledby": "basic-button",
-        }}
-        PaperProps={{
-          style: {
-            maxHeight: ITEM_HEIGHT * 4.5,
-            width: "20ch",
-          },
-        }}
+        anchorEl={anchorEl}
+        role={undefined}
+        placement="bottom-start"
+        transition
+        disablePortal
+        sx={{ zIndex: 999 }}
       >
-        {farms.map((farm, key) => (
-          <MenuItem
-            key={key}
-            selected={farm.name === "Pyxis"}
-            onClick={handleClose}
+        {({ TransitionProps, placement }) => (
+          <Grow
+            {...TransitionProps}
+            style={{
+              transformOrigin:
+                placement === "bottom-start" ? "left top" : "left bottom",
+            }}
           >
-            {farm.name}
-          </MenuItem>
-        ))}
-      </Menu>
-    </Box>
+            <Paper elevation={16}>
+              <ClickAwayListener onClickAway={handleClose}>
+                <MenuList
+                  autoFocusItem={open}
+                  id="composition-menu"
+                  aria-labelledby="composition-button"
+                >
+                  {/* <List
+                    sx={{
+                      width: "100%",
+                      maxWidth: 360,
+                      bgcolor: "background.paper",
+                    }}
+                  >
+                    {farms.map((e, key) => (
+                      <ListItem key={key}>
+                        <ListItemAvatar>
+                          <HouseIcon />
+                        </ListItemAvatar>
+                        <ListItemText primary={e.name} />
+                      </ListItem>
+                    ))}
+                  </List> */}
+                  {farms.map((e, key) => (
+                    <MenuItem
+                      key={key}
+                      onClick={() => {
+                        dispatch(setTenant(e.name));
+                        router.reload();
+                      }}
+                    >
+                      <ListItemIcon>
+                        <HouseIcon />
+                      </ListItemIcon>
+                      <ListItemText>{e.name}</ListItemText>
+                    </MenuItem>
+                  ))}
+                  <Divider />
+                  <Link href="/farms">
+                    <MenuItem>
+                      <ListItemIcon>
+                        <WindowIcon />
+                      </ListItemIcon>
+                      <ListItemText>Manage Farms</ListItemText>
+                    </MenuItem>
+                  </Link>
+                </MenuList>
+              </ClickAwayListener>
+            </Paper>
+          </Grow>
+        )}
+      </Popper>
+    </>
   );
 };
 

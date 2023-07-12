@@ -18,7 +18,7 @@ const DashboardLayout = (props: DashboardLayoutProps) => {
       <div style={{ height: "100vh", display: "flex" }}>
         <Sidebar />
         <div style={{ overflowY: "scroll", width: "100%" }}>
-          <SuperUserBanner />
+          {/* <SuperUserBanner /> */}
           <PrimaryNavbar />
           <div
             style={{

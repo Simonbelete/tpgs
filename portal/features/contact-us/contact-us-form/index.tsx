@@ -27,6 +27,8 @@ const ContactUsForm = () => {
     resolver: yupResolver(schema),
   });
 
+  const onSubmit: SubmitHandler<Inputs> = async (data) => {};
+
   return (
     <Box
       sx={{

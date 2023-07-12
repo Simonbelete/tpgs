@@ -1,7 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
+import { tenantReducer } from "@/features/farms";
 
 export const store = configureStore({
-  reducer: {},
+  reducer: {
+    tenant: tenantReducer,
+  },
 });
 
 export type RootState = ReturnType<typeof store.getState>;
