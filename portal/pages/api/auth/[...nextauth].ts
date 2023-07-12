@@ -1,4 +1,4 @@
-import NextAuth, { CookiesOptions } from "next-auth";
+import NextAuth, { CookiesOptions, Session, User } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import axios from "axios";
 import { JWT } from "next-auth/jwt";
@@ -102,7 +102,7 @@ export const authOptions = {
         const res = await fetch(process.env.NEXT_API_URL + "/api/token/", {
           method: "POST",
           body: JSON.stringify({
-            email: credentials?.username || "",
+            email: credentials?.email || "",
             password: credentials?.password || "",
           }),
           headers: { "Content-Type": "application/json" },
@@ -119,10 +119,25 @@ export const authOptions = {
     }),
   ],
   callbacks: {
-    async jwt(data: JWT) {
-      console.log("---------------------");
-      console.log(data);
-      return data;
+    async jwt({ token, user }: { token: JWT; user: User }) {
+      if (user) {
+        token.accessToken = user.access;
+        token.email = user.email;
+        token.name = user.name;
+      }
+      return { ...token, ...user };
+    },
+    async session({
+      session,
+      token,
+      user,
+    }: {
+      session: Session;
+      token: JWT;
+      user: User;
+    }) {
+      session.accessToken = token.accessToken;
+      return session;
     },
     // async jwt({ token, user }) {
     //   // Persist the OAuth access_token to the token right after signin

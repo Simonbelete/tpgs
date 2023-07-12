@@ -9,7 +9,7 @@ declare module "next-auth" {
     refreshTokenExpires?: number;
     accessTokenExpires?: string;
     refreshToken?: string;
-    token?: string;
+    accessToken?: string;
     error?: string;
     user?: User;
   }
@@ -19,13 +19,13 @@ declare module "next-auth" {
     name?: string;
     email?: string;
     access?: string;
+    refresh?: string;
   }
 }
 
 declare module "next-auth/jwt" {
   /** Returned by the `jwt` callback and `getToken`, when using JWT sessions */
   interface JWT {
-    /** OpenID ID Token */
-    idToken?: string;
+    accessToken?: string;
   }
 }

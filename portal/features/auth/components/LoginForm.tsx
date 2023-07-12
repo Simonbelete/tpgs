@@ -23,7 +23,7 @@ const LoginForm = () => {
   } = useForm<Inputs>();
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     const response = await signIn("credentials", {
-      username: data.email,
+      email: data.email,
       password: data.password,
       redirect: false,
     });

@@ -1,6 +1,6 @@
 import { Response } from "@/models";
 import axios, { AxiosResponse } from "axios";
-import { getSession } from "next-auth/react";
+import { getCsrfToken, getSession } from "next-auth/react";
 import NProgress from "nprogress";
 
 const calculatePercentage = (loaded: number, total: number) =>
@@ -11,16 +11,19 @@ const instance = axios.create({
   timeout: 1000,
 });
 
-// instance.interceptors.request.use(async (config) => {
-//   const session = await getSession();
-//   console.log(session);
-//   // if (session) {
-//   //   config.headers.common = {
-//   //     Authorization: `${session.token.accessToken}`,
-//   //   };
-//   // }
-//   return config;
-// });
+instance.interceptors.request.use(async (config) => {
+  const session = await getSession();
+  const token = await getCsrfToken();
+  console.log("-----------");
+  console.log(session);
+  console.log(token);
+  // if (session) {
+  //   config.headers.common = {
+  //     Authorization: `${session.token.accessToken}`,
+  //   };
+  // }
+  return config;
+});
 
 // if (typeof window !== "undefined") {
 //   instance.interceptors.request.use(

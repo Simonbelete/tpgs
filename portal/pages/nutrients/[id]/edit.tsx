@@ -40,7 +40,6 @@ export async function getServerSideProps(context: NextPageContext) {
 
     return { props: { data } };
   } catch (ex) {
-    console.log(ex);
     return {
       redirect: {
         permanent: false,
