@@ -15,6 +15,8 @@ import EditNoteIcon from "@mui/icons-material/EditNote";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { DeleteModal } from "../modals";
+import HistoryIcon from "@mui/icons-material/History";
+import EditIcon from "@mui/icons-material/Edit";
 
 const ODD_OPACITY = 0.2;
 
@@ -22,7 +24,7 @@ const StripedDataGrid = styled(DataGrid)(({ theme }) => ({
   [`& .${gridClasses.row}.even`]: {
     backgroundColor: theme.palette.grey[200],
     "&:hover, &.Mui-hovered": {
-      backgroundColor: alpha(theme.palette.primary.main, ODD_OPACITY),
+      // backgroundColor: alpha(theme.palette.primary.main, ODD_OPACITY),
       "@media (hover: none)": {
         backgroundColor: "transparent",
       },
@@ -49,13 +51,14 @@ const StripedDataGrid = styled(DataGrid)(({ theme }) => ({
       },
     },
   },
-  [`& .${gridClasses.columnHeader}`]: {
-    height: "100px !important",
-  },
-  [`& .${gridClasses.columnHeaderTitleContainer}`]: {},
   [`& .${gridClasses.columnHeaderTitle}`]: {
     fontWeight: 600,
     fontSize: "16px",
+  },
+  [`& .${gridClasses.cell}`]: {
+    "&:focus": {
+      outline: "none",
+    },
   },
 }));
 
@@ -152,9 +155,11 @@ const DataTable = ({
 
   const settingColumn: GridColDef[] = [
     {
-      field: "Setting",
+      field: "Actions",
       flex: 1,
       minWidth: 150,
+      headerAlign: "center",
+      align: "right",
       renderCell(params: any) {
         return (
           <Box>
@@ -169,6 +174,13 @@ const DataTable = ({
               <Tooltip title="View">
                 <IconButton aria-label="view">
                   <VisibilityIcon fontSize="small" />
+                </IconButton>
+              </Tooltip>
+            </Link>
+            <Link href={router.asPath + "/histories" + params.id}>
+              <Tooltip title="History">
+                <IconButton aria-label="history">
+                  <HistoryIcon fontSize="small" />
                 </IconButton>
               </Tooltip>
             </Link>
@@ -199,7 +211,7 @@ const DataTable = ({
         density="compact"
         columns={[...columns, ...settingColumn]}
         paginationMode="server"
-        checkboxSelection
+        disableRowSelectionOnClick
         slots={{
           noRowsOverlay: CustomNoRowsOverlay,
           loadingOverlay: LinearProgress,

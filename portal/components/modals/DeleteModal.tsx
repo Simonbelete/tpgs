@@ -30,7 +30,7 @@ export default function DeleteModal({
       aria-describedby="alert-dialog-description"
     >
       <DialogTitle id="alert-dialog-title">
-        {"Use Google's location service?"}
+        {"Are you sure you want to delete this record?"}
       </DialogTitle>
       <DialogContent>
         <DialogContentText id="alert-dialog-description">
