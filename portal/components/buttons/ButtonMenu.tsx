@@ -55,7 +55,10 @@ export default function CustomizedMenus({
   ...props
 }: {
   name: string;
-  menus?: { children: React.ReactElement | React.ReactElement[] }[];
+  menus?: {
+    children: React.ReactElement | React.ReactElement[];
+    onClick?: () => void;
+  }[];
   children?: React.ReactElement | React.ReactElement[];
 } & ButtonProps) {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -91,11 +94,12 @@ export default function CustomizedMenus({
         open={open}
         onClose={handleClose}
       >
-        {menus.map((e, key) => (
-          <MenuItem key={key} onClick={handleClose} disableRipple>
-            {e.children}
-          </MenuItem>
-        ))}
+        {menus &&
+          menus.map((e, key) => (
+            <MenuItem key={key} onClick={() => e.onClick()} disableRipple>
+              {e.children}
+            </MenuItem>
+          ))}
         {/* Example */}
         {/* <MenuItem onClick={handleClose} disableRipple>
           <EditIcon />
