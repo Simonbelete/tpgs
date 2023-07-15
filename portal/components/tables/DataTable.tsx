@@ -49,6 +49,14 @@ const StripedDataGrid = styled(DataGrid)(({ theme }) => ({
       },
     },
   },
+  [`& .${gridClasses.columnHeader}`]: {
+    height: "100px !important",
+  },
+  [`& .${gridClasses.columnHeaderTitleContainer}`]: {},
+  [`& .${gridClasses.columnHeaderTitle}`]: {
+    fontWeight: 600,
+    fontSize: "16px",
+  },
 }));
 
 const StyledGridOverlay = styled("div")(({ theme }) => ({
@@ -206,21 +214,3 @@ const DataTable = ({
 };
 
 export default DataTable;
-
-{
-  /* <DataGrid
-sx={{
-  boxShadow: 2,
-  border: 2,
-  borderColor: "primary.light",
-  "& .MuiDataGrid-cell:hover": {
-    color: "primary.main",
-  },
-}}
-rows={rows}
-columns={columns}
-slots={{
-  toolbar: GridToolbar,
-}}
-/> */
-}

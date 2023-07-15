@@ -1,21 +1,31 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 
 import EdiText from "react-editext";
 
-const InlineEditText = () => {
-  const [value, setValue] = useState("What is real? How do you define real?");
+const InlineEditText = ({
+  onSave,
+  value,
+  editing,
+}: {
+  onSave: (val: string) => void;
+  value?: string;
+  editing?: boolean;
+}) => {
+  const handleSave = useCallback(
+    (val: string) => {
+      onSave(val);
+    },
+    [onSave]
+  );
 
-  const handleSave = (val: any) => {
-    console.log("Edited Value -> ", val);
-    setValue(val);
-  };
   return (
     <div className="container">
       <EdiText
         type="text"
-        value={value}
+        value={value ?? ""}
         onSave={handleSave}
         startEditingOnFocus
+        editing
       />
     </div>
   );
