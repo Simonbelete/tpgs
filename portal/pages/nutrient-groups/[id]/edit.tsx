@@ -26,7 +26,7 @@ export async function getServerSideProps(context: NextPageContext) {
   const { id } = context.query;
 
   try {
-    const res = await NutrientGroupService.getById(Number(id));
+    const res = await NutrientGroupService.getByIdSSR(context, Number(id));
 
     if (res.status != 200)
       return {
