@@ -52,7 +52,7 @@ class NutrientGroupXlsxImport(APIView):
         dataset = Dataset().load(df)
         resource = resources.modelresource_factory(
             model=models.NutrientGroup)()
-        result = resource.import_data(dataset, dry_run=True, raise_errors=True)
+        result = resource.import_data(dataset, raise_errors=True)
         if not result.has_errors():
             return JsonResponse({'message': 'Imported Successfully'}, status=200)
         return JsonResponse({'errors': ['Import Failed']}, status=400)
@@ -80,7 +80,7 @@ class NutrientGroupXlsImport(APIView):
         dataset = Dataset().load(df)
         resource = resources.modelresource_factory(
             model=models.NutrientGroup)()
-        result = resource.import_data(dataset, dry_run=True, raise_errors=True)
+        result = resource.import_data(dataset, raise_errors=True)
         if not result.has_errors():
             return JsonResponse({'message': 'Imported Successfully'}, status=200)
         return JsonResponse({'errors': ['Import Failed']}, status=400)
@@ -108,7 +108,7 @@ class NutrientGroupCsvImport(APIView):
         dataset = Dataset().load(df)
         resource = resources.modelresource_factory(
             model=models.NutrientGroup)()
-        result = resource.import_data(dataset, dry_run=True, raise_errors=True)
+        result = resource.import_data(dataset, raise_errors=True)
         if not result.has_errors():
             return JsonResponse({'message': 'Imported Successfully'}, status=200)
         return JsonResponse({'errors': ['Import Failed']}, status=400)
