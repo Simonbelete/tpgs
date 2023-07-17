@@ -23,8 +23,23 @@ export default {
     csv: async () => client.get(`${EXPORT_URL}/csv`, { responseType: "blob" }),
   },
   import: {
-    xlsx: async () => client.get(`${IMPORT_URL}/xlsx`),
-    xls: async () => client.get(`${IMPORT_URL}/xls`),
-    csv: async () => client.get(`${IMPORT_URL}/csv`),
+    xlsx: async (data: FormData) =>
+      client.post(`${IMPORT_URL}/xlsx`, data, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }),
+    xls: async (data: FormData) =>
+      client.post(`${IMPORT_URL}/xls`, data, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }),
+    csv: async (data: FormData) =>
+      client.post(`${IMPORT_URL}/csv`, data, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }),
   },
 };

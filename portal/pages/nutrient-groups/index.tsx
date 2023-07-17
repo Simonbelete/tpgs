@@ -1,4 +1,4 @@
-import React, { ReactElement } from "react";
+import React, { ChangeEvent, ReactElement } from "react";
 import { AxiosResponse } from "axios";
 import Link from "next/link";
 import { ListLayout } from "@/components/layouts";
@@ -50,6 +50,43 @@ const Actions = (): ReactElement => {
     }
   };
 
+  const handleFileUpload = async (event: ChangeEvent<HTMLInputElement>) => {
+    if (event.target != null && event.target.files != null) {
+      const allowedExtensions = /(\.csv|\.xlsx|\.xls)$/i;
+      const target = event.target as HTMLInputElement;
+      const file = target.files != null ? target.files[0] : null;
+
+      if (file == null) return;
+
+      if (!allowedExtensions.test(file.name)) {
+        enqueueSnackbar(messages.exportFileTypeError(), { variant: "error" });
+        return;
+      }
+
+      const formData = new FormData();
+      formData.append("file", file);
+
+      try {
+        let response: Partial<AxiosResponse> = {};
+        if (file.name.includes(".xlsx"))
+          response = await NutrientGroupService.import.xlsx(formData);
+        if (file.name.includes(".xls"))
+          response = await NutrientGroupService.import.xls(formData);
+        if (file.name.includes(".csv"))
+          response = await NutrientGroupService.import.csv(formData);
+        if (response.status == 200) {
+          enqueueSnackbar(messages.importSuccess(), { variant: "success" });
+        } else {
+          enqueueSnackbar(messages.importError_400(), { variant: "error" });
+        }
+      } catch (ex) {
+        enqueueSnackbar(messages.importError_500(), { variant: "error" });
+      }
+    } else {
+      enqueueSnackbar(messages.fileNotSelected(), { variant: "error" });
+    }
+  };
+
   return (
     <>
       <Stack
@@ -95,8 +132,14 @@ const Actions = (): ReactElement => {
             },
           ]}
         />
-        <Button startIcon={<FileUploadIcon />} size="small">
+        <Button startIcon={<FileUploadIcon />} size="small" component="label">
           Import
+          <input
+            type="file"
+            onChange={handleFileUpload}
+            accept=".csv,.xlsx,.xls"
+            hidden
+          />
         </Button>
       </Stack>
     </>
