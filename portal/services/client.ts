@@ -16,7 +16,8 @@ const instance = axios.create({
 
 instance.interceptors.request.use(async (config) => {
   const session = await getSession();
-
+  console.log("----------");
+  console.log(session);
   if (session) {
     config.headers.Authorization = `Bearer ${session.accessToken}`;
     config.headers["x-Request-Id"] = cookies.get("REQUEST_ID") ?? "public";
