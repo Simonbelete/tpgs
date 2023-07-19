@@ -1,12 +1,13 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { ListLayout } from "@/components/layouts";
 import { useBreadcrumbs } from "@/hooks";
 import { Breadcrumbs } from "@/components";
 import { Typography } from "@mui/material";
 import { NutrientGroupHistoryList } from "@/features/nutrient-group";
 import { useRouter } from "next/router";
+import { NextPageContext } from "next";
 
-const NutrientGroupHistoryPage = () => {
+const NutrientGroupHistoryPage = ({ id }: { id: number }) => {
   const { breadcrumbs } = useBreadcrumbs();
   const router = useRouter();
 
@@ -16,7 +17,7 @@ const NutrientGroupHistoryPage = () => {
       header={<Typography variant="title">Nutrients Group</Typography>}
       actions={<Actions />}
     >
-      <NutrientGroupHistoryList id={Number(router.query.id)} />
+      <NutrientGroupHistoryList id={id} />
     </ListLayout>
   );
 };
@@ -24,5 +25,15 @@ const NutrientGroupHistoryPage = () => {
 const Actions = () => {
   return <></>;
 };
+
+export async function getServerSideProps(context: NextPageContext) {
+  const { id } = context.query;
+
+  console.log(context.query);
+
+  return {
+    props: { id },
+  };
+}
 
 export default NutrientGroupHistoryPage;
