@@ -3,9 +3,11 @@ import { GridRowsProp, GridColDef, GridToolbar } from "@mui/x-data-grid";
 import { DataTable } from "@/components/tables";
 import nutrient_group_service from "../services/nutrient_group_service";
 import { NutrientGroupHistory } from "@/models";
+import { historyColDef } from "@/components/gird-col-def";
 
 const columns: GridColDef[] = [
-  { field: "name", headerName: "name", flex: 1, minWidth: 150 },
+  ...historyColDef,
+  { field: "name", headerName: "Name", flex: 1, minWidth: 150 },
 ];
 
 const NutrientGroupHistoryList = ({ id }: { id: number }) => {
