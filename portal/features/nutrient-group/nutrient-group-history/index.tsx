@@ -44,6 +44,7 @@ const NutrientGroupHistoryList = ({ id }: { id: number }) => {
       paginationModel={paginationModel}
       paginationMode="server"
       onPaginationModelChange={setPaginationModel}
+      setting={DataTable.SETTING_COL.history}
     />
   );
 };

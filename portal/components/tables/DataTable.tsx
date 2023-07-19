@@ -133,12 +133,21 @@ function CustomNoRowsOverlay() {
   );
 }
 
+export enum SETTING_COL {
+  default = "default",
+  history = "history",
+}
+
 const DataTable = ({
   rows,
   columns,
   onDelete,
+  setting = SETTING_COL.default,
   ...props
-}: DataGridProps & { onDelete?: (id: number) => void }) => {
+}: DataGridProps & {
+  onDelete?: (id: number) => void;
+  setting?: SETTING_COL;
+}) => {
   const router = useRouter();
   const [deleteId, setDeleteId] = useState<number>(0);
   const [deleteOpen, setDeleteOpen] = useState<boolean>(false);
@@ -154,48 +163,56 @@ const DataTable = ({
   }, [onDelete, deleteId]);
 
   const settingColumn: GridColDef[] = [
-    {
-      field: "Actions",
-      flex: 1,
-      minWidth: 150,
-      headerAlign: "center",
-      align: "right",
-      renderCell(params: any) {
-        return (
-          <Box>
-            <Link href={router.asPath + "/" + params.id + "/edit"}>
-              <Tooltip title="Edit">
-                <IconButton aria-label="edit">
-                  <EditNoteIcon fontSize="small" />
-                </IconButton>
-              </Tooltip>
-            </Link>
-            <Link href={router.asPath + "/" + params.id}>
-              <Tooltip title="View">
-                <IconButton aria-label="view">
-                  <VisibilityIcon fontSize="small" />
-                </IconButton>
-              </Tooltip>
-            </Link>
-            <Link href={`${router.asPath}/${params.id}/histories`}>
-              <Tooltip title="History">
-                <IconButton aria-label="history">
-                  <HistoryIcon fontSize="small" />
-                </IconButton>
-              </Tooltip>
-            </Link>
-            <Tooltip title="Delete">
-              <IconButton
-                aria-label="delete"
-                onClick={() => handleDeleteModalOpen(params.id)}
-              >
-                <DeleteForeverIcon fontSize="small" />
-              </IconButton>
-            </Tooltip>
-          </Box>
-        );
-      },
-    },
+    setting == SETTING_COL.default
+      ? {
+          field: "Actions",
+          flex: 1,
+          minWidth: 150,
+          headerAlign: "center",
+          align: "right",
+          renderCell(params: any) {
+            return (
+              <Box>
+                <Link href={router.asPath + "/" + params.id + "/edit"}>
+                  <Tooltip title="Edit">
+                    <IconButton aria-label="edit">
+                      <EditNoteIcon fontSize="small" />
+                    </IconButton>
+                  </Tooltip>
+                </Link>
+                <Link href={router.asPath + "/" + params.id}>
+                  <Tooltip title="View">
+                    <IconButton aria-label="view">
+                      <VisibilityIcon fontSize="small" />
+                    </IconButton>
+                  </Tooltip>
+                </Link>
+                <Link href={`${router.asPath}/${params.id}/histories`}>
+                  <Tooltip title="History">
+                    <IconButton aria-label="history">
+                      <HistoryIcon fontSize="small" />
+                    </IconButton>
+                  </Tooltip>
+                </Link>
+                <Tooltip title="Delete">
+                  <IconButton
+                    aria-label="delete"
+                    onClick={() => handleDeleteModalOpen(params.id)}
+                  >
+                    <DeleteForeverIcon fontSize="small" />
+                  </IconButton>
+                </Tooltip>
+              </Box>
+            );
+          },
+        }
+      : {
+          field: "Actions",
+          flex: 1,
+          minWidth: 150,
+          headerAlign: "center",
+          align: "right",
+        },
   ];
 
   return (
@@ -224,5 +241,7 @@ const DataTable = ({
     </>
   );
 };
+
+DataTable.SETTING_COL = SETTING_COL;
 
 export default DataTable;
