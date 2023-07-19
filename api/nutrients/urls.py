@@ -7,6 +7,9 @@ router.register(r'nutrients', views.NutrientViewSet,
                 basename='api_nutrients'),
 router.register(r'nutrient-groups', views.NutrientGroupViewSet,
                 basename='api_nutrients_groups'),
+router.register(r'nutrient-groups/(?P<id>.+)/histories',
+                views.NutrientGroupHistoryViewSet, basename='api_nutrients_groups_histories'),
+
 
 urlpatterns = [
     path('', include(router.urls)),
