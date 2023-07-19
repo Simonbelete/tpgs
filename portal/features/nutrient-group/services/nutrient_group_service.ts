@@ -1,10 +1,11 @@
 import { AxiosResponse } from "axios";
-import { Response, NutrientGroup } from "@/models";
+import { Response, NutrientGroup, NutrientGroupHistory } from "@/models";
 import client from "@/services/client";
 import clientSSR from "@/services/client_ssr";
 import { NextPageContext } from "next";
 
 const URL = "/nutrient-groups";
+const HISTORY_URL = `histories`;
 const EXPORT_URL = `${URL}/export`;
 const IMPORT_URL = `${URL}/import`;
 
@@ -24,6 +25,12 @@ export default {
     id: number
   ): Promise<AxiosResponse<Response<NutrientGroup>>> =>
     clientSSR(context).get(`${URL}/${id}`),
+  history: {
+    get: async (
+      id: number
+    ): Promise<AxiosResponse<Response<NutrientGroupHistory[]>>> =>
+      client.get(`${URL}/${id}/${HISTORY_URL}/`),
+  },
   export: {
     xlsx: async () => client.get(`${EXPORT_URL}/xlsx`),
     xls: async () => client.get(`${EXPORT_URL}/xls`),

@@ -177,7 +177,7 @@ const DataTable = ({
                 </IconButton>
               </Tooltip>
             </Link>
-            <Link href={router.asPath + "/histories" + params.id}>
+            <Link href={`${router.asPath}/${params.id}/histories`}>
               <Tooltip title="History">
                 <IconButton aria-label="history">
                   <HistoryIcon fontSize="small" />
