@@ -236,6 +236,10 @@ const DataTable = ({
         getRowClassName={(params) =>
           params.indexRelativeToCurrentPage % 2 === 0 ? "even" : "odd"
         }
+        getRowId={(row: any) => {
+          if (setting == SETTING_COL.history) return row.history_id;
+          return row.id;
+        }}
         {...props}
       />
     </>
