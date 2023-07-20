@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from . import models
 from units.serializers import UnitSerializer_GET
+from users.serializers import UserSerializer_GET
 
 
 class NutrientGroupSerializer_GET(serializers.ModelSerializer):
@@ -10,6 +11,8 @@ class NutrientGroupSerializer_GET(serializers.ModelSerializer):
 
 
 class NutrientGroupHistorySerializer(serializers.ModelSerializer):
+    history_user = UserSerializer_GET()
+
     class Meta:
         model = models.NutrientGroup.history.__dict__['model']
         fields = '__all__'

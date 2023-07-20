@@ -225,7 +225,8 @@ const DataTable = ({
       <StripedDataGrid
         sx={{ background: "white" }}
         rows={rows}
-        density="compact"
+        // density="compact"
+        rowHeight={25}
         columns={[...columns, ...settingColumn]}
         paginationMode="server"
         disableRowSelectionOnClick
