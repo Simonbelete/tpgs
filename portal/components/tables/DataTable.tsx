@@ -226,7 +226,7 @@ const DataTable = ({
         sx={{ background: "white" }}
         rows={rows}
         // density="compact"
-        rowHeight={25}
+        rowHeight={40}
         columns={[...columns, ...settingColumn]}
         paginationMode="server"
         disableRowSelectionOnClick

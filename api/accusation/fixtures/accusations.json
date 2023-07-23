@@ -1,0 +1,30 @@
+[
+    {
+        "model": "accusation.Accusation",
+        "pk": 1,
+        "fields": {
+            "name": "Purchased"
+        }
+    },
+    {
+        "model": "accusation.Accusation",
+        "pk": 2,
+        "fields": {
+            "name": "Hatched on farm"
+        }
+    },
+    {
+        "model": "accusation.Accusation",
+        "pk": 3,
+        "fields": {
+            "name": "Donation"
+        }
+    },
+    {
+        "model": "accusation.Accusation",
+        "pk": 4,
+        "fields": {
+            "name": "Other"
+        }
+    }
+]

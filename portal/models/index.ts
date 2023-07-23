@@ -13,3 +13,7 @@ export type { default as User } from "./User";
 export type { default as Invitation } from "./Invitation";
 export type { default as Contact } from "./Contact";
 export type { default as Stage } from "./Stage";
+export type { default as Chicken } from "./Chicken";
+export type { default as ChickenHistory } from "./ChickenHistory";
+export type { default as Breed } from "./Breed";
+export type { default as BreedHistory } from "./BreedHistory";

@@ -87,7 +87,8 @@ SHARED_APPS = [
     'core',
     'currency',
     'invitations',
-    'contact'
+    'contact',
+    'accusation'
 ]
 
 TENANT_APPS = [

@@ -104,12 +104,6 @@ const SidebarMenu = () => {
           </MenuItem>
         </SubMenu>
 
-        <MenuItem component={<Link href="/flocks" />}>
-          <Typography variant="body1" fontSize={14}>
-            Flocks
-          </Typography>
-        </MenuItem>
-
         <SubMenu
           label={<Typography variant="body1">Units</Typography>}
           icon={<BalanceIcon fontSize="small" />}
@@ -125,6 +119,44 @@ const SidebarMenu = () => {
             </Typography>
           </MenuItem>
         </SubMenu>
+      </Menu>
+      <div
+        style={{ padding: "0 24px", marginBottom: "8px", marginTop: "32px" }}
+      >
+        <Typography
+          variant="body2"
+          fontWeight={500}
+          style={{ opacity: 0.7, letterSpacing: "0.5px" }}
+        >
+          Breeding
+        </Typography>
+      </div>
+      <Menu menuItemStyles={menuItemStyles}>
+        <SubMenu
+          label={<Typography variant="body1">Flocks</Typography>}
+          icon={<ScienceIcon fontSize="small" />}
+        >
+          <MenuItem component={<Link href="/flocks" />}>
+            <Typography variant="body1" fontSize={14}>
+              Flocks
+            </Typography>
+          </MenuItem>
+          <MenuItem component={<Link href="/flocks/reduction" />}>
+            <Typography variant="body1" fontSize={14}>
+              Reduction
+            </Typography>
+          </MenuItem>
+        </SubMenu>
+        <MenuItem component={<Link href="/chickens" />}>
+          <Typography variant="body1" fontSize={14}>
+            Chickens
+          </Typography>
+        </MenuItem>
+        <MenuItem component={<Link href="/breeds" />}>
+          <Typography variant="body1" fontSize={14}>
+            Breeds
+          </Typography>
+        </MenuItem>
       </Menu>
       <div
         style={{ padding: "0 24px", marginBottom: "8px", marginTop: "32px" }}
