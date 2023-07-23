@@ -13,8 +13,8 @@ class Flock(CoreModel):
     no_chickens = models.IntegerField(default=0)
     accusation = models.ForeignKey(
         Accusation, on_delete=models.SET_NULL, null=True, blank=True, related_name='flocks')
-    accusation = models.DateField()
-    note = models.TextField()
+    accusation_date = models.DateField(null=True, blank=True)
+    note = models.TextField(null=True, blank=True)
     history = HistoricalRecords()
 
     def __str__(self):

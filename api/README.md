@@ -8,6 +8,10 @@
 
 ```python manage.py create_schema [tenant_name]```
 
+## Migrate
+
+migrate all ```python manage.py migrate_schemas```
+
 taged and untaged
 
 Menu
