@@ -162,6 +162,11 @@ const SidebarMenu = () => {
             Eggs
           </Typography>
         </MenuItem>
+        <MenuItem component={<Link href="/feeds" />}>
+          <Typography variant="body1" fontSize={14}>
+            Feeds
+          </Typography>
+        </MenuItem>
       </Menu>
       <div
         style={{ padding: "0 24px", marginBottom: "8px", marginTop: "32px" }}
