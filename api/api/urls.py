@@ -50,6 +50,7 @@ urlpatterns = [
         path('', include('chickens.urls')),
         path('', include('eggs.urls')),
         path('', include('feeds.urls')),
+        path('', include('weights.urls')),
     ])),
 
     path('api/schema/', SpectacularAPIView.as_view(), name='schema'),
@@ -58,14 +59,4 @@ urlpatterns = [
          SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),
     path('api/schema/redoc/',
          SpectacularRedocView.as_view(url_name='schema'), name='redoc'),
-
-
-    # path('api/', include([
-    #    path('units/', include('units.urls')),
-    # path('nutrients', include('nutrients.urls')),
-    # path('ingredients', include('ingredients.urls')),
-    # path('recipes', include('recipes.urls')),
-    # path('rations', include('rations.urls')),
-    # path('farms', include('farms.urls')),
-    # ])),
 ]

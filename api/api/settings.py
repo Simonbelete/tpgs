@@ -103,7 +103,8 @@ TENANT_APPS = [
     'stages',
     'chickens',
     'eggs',
-    'feeds'
+    'feeds',
+    'weights'
 ]
 
 INSTALLED_APPS = list(SHARED_APPS) + \
