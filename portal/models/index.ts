@@ -19,3 +19,5 @@ export type { default as Breed } from "./Breed";
 export type { default as BreedHistory } from "./BreedHistory";
 export type { default as Egg } from "./Egg";
 export type { default as EggHistory } from "./EggHistory";
+export type { default as Flock } from "./Flock";
+export type { default as FlockHistory } from "./FlockHistory";
