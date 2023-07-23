@@ -23,3 +23,5 @@ export type { default as Flock } from "./Flock";
 export type { default as FlockHistory } from "./FlockHistory";
 export type { default as Feed } from "./Feed";
 export type { default as FeedHistory } from "./FeedHistory";
+export type { default as Weight } from "./Weight";
+export type { default as WeightHistory } from "./WeightHistory";
