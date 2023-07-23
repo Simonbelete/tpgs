@@ -49,6 +49,7 @@ urlpatterns = [
         path('', include('breeds.urls')),
         path('', include('chickens.urls')),
         path('', include('eggs.urls')),
+        path('', include('feeds.urls')),
     ])),
 
     path('api/schema/', SpectacularAPIView.as_view(), name='schema'),
