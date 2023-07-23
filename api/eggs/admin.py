@@ -1,3 +1,15 @@
 from django.contrib import admin
+from import_export import resources
+from django_tenants.admin import TenantAdminMixin
+from simple_history.admin import SimpleHistoryAdmin
 
-# Register your models here.
+from . import models
+
+
+class EggResource(resources.ModelResource):
+    class Meta:
+        model = models.Egg
+        fields = ['id']
+
+
+admin.site.register(models.Egg, SimpleHistoryAdmin)

@@ -17,6 +17,7 @@ class Egg(CoreModel):
     weight = models.FloatField()
     weight_unit = models.ForeignKey(
         Unit, on_delete=models.SET_NULL, null=True, blank=True, related_name='eggs')
+    history = HistoricalRecords()
 
     class Meta:
         unique_together = ['flock', 'chicken', 'week']
