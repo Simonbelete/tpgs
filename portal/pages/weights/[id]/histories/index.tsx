@@ -14,7 +14,7 @@ const WeightHistoryPage = ({ id }: { id: number }) => {
   return (
     <ListLayout
       breadcrumbs={<Breadcrumbs items={breadcrumbs} />}
-      header={<Typography variant="title">Nutrients Group</Typography>}
+      header={<Typography variant="title">Body Weight History</Typography>}
       actions={<Actions />}
     >
       <WeightHistoryList id={id} />

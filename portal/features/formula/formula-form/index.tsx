@@ -15,7 +15,11 @@ import {
   InputAdornment,
   Stack,
 } from "@mui/material";
-import { NutrientListItem, NutrientSelectDialog } from "@/features/nutrients";
+import {
+  NutrientEditableTable,
+  NutrientListItem,
+  NutrientSelectDialog,
+} from "@/features/nutrients";
 import { IngredientSelectDialog } from "@/features/ingredients";
 import { Ingredient, Nutrient, Unit } from "@/models";
 import ClearIcon from "@mui/icons-material/Clear";
@@ -66,6 +70,20 @@ const FormulaForm = () => {
 
   return (
     <>
+      <Box sx={{ mb: 5 }}>
+        <Paper sx={{ p: 2 }} elevation={0} variant="outlined" square>
+          <Stack direction="row" spacing={2}>
+            <Button variant="contained" size="small" disableElevation>
+              Formulate
+            </Button>
+          </Stack>
+        </Paper>
+      </Box>
+
+      <NutrientEditableTable />
+      <br />
+      <br />
+
       <NutrientSelectDialog
         open={openNutrientModal}
         onSelected={handleNutrientSelected}

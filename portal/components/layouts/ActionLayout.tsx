@@ -5,8 +5,8 @@ interface ActionLayoutProps {
   breadcrumbs?: ReactElement;
   header?: ReactElement;
   actions?: ReactElement;
-
   children: ReactElement;
+  toolbars?: ReactElement | ReactElement[];
 }
 
 const ActionLayout = ({
@@ -14,9 +14,10 @@ const ActionLayout = ({
   breadcrumbs,
   header,
   actions,
+  toolbars,
 }: ActionLayoutProps) => {
   return (
-    <>
+    <div>
       <Box mb={2}>{breadcrumbs}</Box>
       <Box sx={{ display: "flex" }} mb={5}>
         {header}
@@ -26,7 +27,7 @@ const ActionLayout = ({
         </Stack>
       </Box>
       <Box sx={{ height: "100%" }}>{children}</Box>
-    </>
+    </div>
   );
 };
 
