@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   DataGrid,
   GridRowsProp,
@@ -21,12 +21,14 @@ import {
   EditableTableCustomNoRowsOverlay,
 } from "@/components/tables";
 import { Nutrient } from "@/models";
+import { useSelector, useDispatch } from "react-redux";
 import NutrientSelectDialog from "../nutrient-select-dialog";
 import AddIcon from "@mui/icons-material/Add";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/DeleteOutlined";
 import SaveIcon from "@mui/icons-material/Save";
 import CancelIcon from "@mui/icons-material/Close";
+import { AnyAction } from "@reduxjs/toolkit";
 
 const EditToolbar = (props: {
   setRows: (newRows: (oldRows: GridRowsProp) => GridRowsProp) => void;
@@ -64,6 +66,7 @@ const EditToolbar = (props: {
           startIcon={<AddIcon />}
           variant="outlined"
           onClick={handleOpen}
+          size={"small"}
         >
           Add new
         </Button>
@@ -72,14 +75,23 @@ const EditToolbar = (props: {
   );
 };
 
-const NutrientEditableTable = () => {
+const NutrientEditableTable = ({
+  setter,
+}: {
+  setter: (payload: any) => AnyAction;
+}) => {
+  const dispatch = useDispatch();
+
   const [rows, setRows] = useState<
     GridRowsProp<Partial<Nutrient> & { isNew: boolean }>
   >([]);
-  const [openAddModal, setOpenAddModal] = useState(false);
   const [rowModesModel, setRowModesModel] = React.useState<GridRowModesModel>(
     {}
   );
+
+  useEffect(() => {
+    dispatch(setter(rows));
+  }, [rows, dispatch, setter]);
 
   const columns: GridColDef[] = [
     { field: "code", headerName: "Code", flex: 1, minWidth: 100 },
