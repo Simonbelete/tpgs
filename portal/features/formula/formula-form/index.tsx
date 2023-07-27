@@ -20,14 +20,24 @@ import {
   NutrientListItem,
   NutrientSelectDialog,
 } from "@/features/nutrients";
+import { useForm, SubmitHandler, Controller } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
 import { IngredientSelectDialog } from "@/features/ingredients";
-import { Ingredient, Nutrient, Unit } from "@/models";
+import { Formula, Ingredient, Nutrient, Unit } from "@/models";
 import ClearIcon from "@mui/icons-material/Clear";
 import { BootstrapInput } from "@/components/inputs";
 import { DataTable } from "@/components/tables";
 import { useSelector, useDispatch } from "react-redux";
 import { setRequirements } from "../slices";
 import { RootState } from "@/store";
+import { LabeledInput } from "@/components/inputs";
+
+type Inputs = Partial<Formula>;
+
+const schema = yup.object({
+  name: yup.string().required(),
+});
 
 function a11yProps(index: number) {
   return {
@@ -69,6 +79,18 @@ const FormulaForm = () => {
     console.log(formula);
   };
 
+  const {
+    handleSubmit,
+    control,
+    formState: { errors },
+  } = useForm<Inputs>({
+    defaultValues: {},
+    // @ts-ignore
+    resolver: yupResolver(schema),
+  });
+
+  const onSubmit: SubmitHandler<Inputs> = async (data) => {};
+
   return (
     <>
       <Box sx={{ mb: 5 }}>
@@ -82,6 +104,22 @@ const FormulaForm = () => {
             >
               Formulate
             </Button>
+            <Button
+              variant="outlined"
+              size="small"
+              disableElevation
+              onClick={handleOnFormulate}
+            >
+              Save
+            </Button>
+            <Button
+              variant="outlined"
+              size="small"
+              disableElevation
+              onClick={handleOnFormulate}
+            >
+              Print
+            </Button>
           </Stack>
         </Paper>
       </Box>
@@ -91,33 +129,134 @@ const FormulaForm = () => {
         onSelected={handleIngredientSelected}
         onClose={handleCloseIngredientModal}
       />
-      {/* <Paper> */}
-      <Tabs value={tabIndex} onChange={handleChange}>
-        <Tab label="Ingredients" {...a11yProps(0)} />
-        <Tab label="Requirements" {...a11yProps(0)} />
-      </Tabs>
-      <Box mx={2} my={4} pb={4}>
-        {tabIndex == 0 && (
-          <Box>
-            <Button onClick={handleOpenIngredientModal}>Add Ingredient</Button>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <Tabs value={tabIndex} onChange={handleChange}>
+          <Tab label="General" {...a11yProps(0)} />
+          <Tab label="Ingredients" {...a11yProps(1)} />
+          <Tab label="Requirements" {...a11yProps(2)} />
+        </Tabs>
+        <Box mx={2} my={4} pb={4}>
+          {tabIndex == 0 && (
+            <Paper
+              sx={{ px: 5, py: 5 }}
+              elevation={6}
+              variant="outlined"
+              square
+            >
+              <Grid container spacing={4}>
+                {/* Name */}
+                <Grid item xs={12} md={6}>
+                  <Controller
+                    name={"name"}
+                    control={control}
+                    render={({
+                      field: { onChange, value },
+                      fieldState: { invalid, isTouched, isDirty, error },
+                    }) => (
+                      <LabeledInput
+                        error={!!error?.message}
+                        helperText={error?.message}
+                        onChange={onChange}
+                        fullWidth
+                        size="small"
+                        value={value}
+                        label={"Name"}
+                        placeholder={"Name"}
+                      />
+                    )}
+                  />
+                </Grid>
+                {/* Purpose */}
+                <Grid item xs={12} md={6}>
+                  <Controller
+                    name={"name"}
+                    control={control}
+                    render={({
+                      field: { onChange, value },
+                      fieldState: { invalid, isTouched, isDirty, error },
+                    }) => (
+                      <LabeledInput
+                        error={!!error?.message}
+                        helperText={error?.message}
+                        onChange={onChange}
+                        fullWidth
+                        size="small"
+                        value={value}
+                        label={"Purpose"}
+                        placeholder={"Name"}
+                      />
+                    )}
+                  />
+                </Grid>
+                {/* Weight Requirement */}
+                <Grid item xs={12} md={6}>
+                  <Controller
+                    name={"weight"}
+                    control={control}
+                    render={({
+                      field: { onChange, value },
+                      fieldState: { invalid, isTouched, isDirty, error },
+                    }) => (
+                      <LabeledInput
+                        error={!!error?.message}
+                        helperText={error?.message}
+                        onChange={onChange}
+                        fullWidth
+                        size="small"
+                        value={value}
+                        label={"Weight"}
+                        placeholder={"Weight"}
+                      />
+                    )}
+                  />
+                </Grid>
+                <Grid item xs={12} md={6}>
+                  <Controller
+                    name={"note"}
+                    control={control}
+                    render={({
+                      field: { onChange, value },
+                      fieldState: { invalid, isTouched, isDirty, error },
+                    }) => (
+                      <LabeledInput
+                        error={!!error?.message}
+                        helperText={error?.message}
+                        onChange={onChange}
+                        fullWidth
+                        size="small"
+                        value={value}
+                        label={"Note"}
+                        placeholder={"Note"}
+                      />
+                    )}
+                  />
+                </Grid>
+              </Grid>
+            </Paper>
+          )}
+          {tabIndex == 1 && (
             <Box>
-              {ingredients &&
-                ingredients.map((e, key) => (
-                  <Stack key={key}>
-                    <Typography>{e.name}</Typography>
-                    <Tooltip title="Remove">
-                      <IconButton onClick={() => handleRemoveNutrients(e.id)}>
-                        <ClearIcon />
-                      </IconButton>
-                    </Tooltip>
-                  </Stack>
-                ))}
+              <Button onClick={handleOpenIngredientModal}>
+                Add Ingredient
+              </Button>
+              <Box>
+                {ingredients &&
+                  ingredients.map((e, key) => (
+                    <Stack key={key}>
+                      <Typography>{e.name}</Typography>
+                      <Tooltip title="Remove">
+                        <IconButton onClick={() => handleRemoveNutrients(e.id)}>
+                          <ClearIcon />
+                        </IconButton>
+                      </Tooltip>
+                    </Stack>
+                  ))}
+              </Box>
             </Box>
-          </Box>
-        )}
-        {tabIndex == 1 && <NutrientEditableTable setter={setRequirements} />}
-      </Box>
-      {/* </Paper> */}
+          )}
+          {tabIndex == 2 && <NutrientEditableTable setter={setRequirements} />}
+        </Box>
+      </form>
     </>
   );
 };

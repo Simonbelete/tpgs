@@ -45,6 +45,7 @@ const NutrientForm = ({
     defaultValues: {
       ...nutrient,
     },
+    // @ts-ignore
     resolver: yupResolver(schema),
   });
 
