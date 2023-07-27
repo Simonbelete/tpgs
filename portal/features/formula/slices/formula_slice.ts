@@ -16,7 +16,9 @@ export const formulaSlice = createSlice({
   name: "Formula",
   initialState,
   reducers: {
-    setRequirements: (state, action: PayloadAction<Nutrient[]>) => {},
+    setRequirements: (state, action: PayloadAction<Nutrient[]>) => {
+      state.requirements = action.payload;
+    },
   },
 });
 

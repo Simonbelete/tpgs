@@ -33,6 +33,7 @@ const NutrientGroupForm = ({
     defaultValues: {
       ...nutrient_group,
     },
+    // @ts-ignore
     resolver: yupResolver(schema),
   });
 

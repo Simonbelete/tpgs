@@ -38,7 +38,6 @@ function a11yProps(index: number) {
 
 const FormulaForm = () => {
   const [tabIndex, setTabIndex] = useState(0);
-  const [openNutrientModal, setOpenNutrientModal] = useState(false);
   const [requirementNutrients, setRequirementNutrients] = useState<Nutrient[]>(
     []
   );
@@ -47,14 +46,6 @@ const FormulaForm = () => {
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setTabIndex(newValue);
-  };
-
-  const handleOpenNutrientModal = () => setOpenNutrientModal(true);
-  const handleCloseNutrientModal = () => setOpenNutrientModal(false);
-  const handleNutrientSelected = (newValue: Nutrient) => {
-    handleCloseNutrientModal();
-    const newReq: Nutrient[] = _.concat(requirementNutrients, newValue);
-    setRequirementNutrients(newReq);
   };
 
   const handleOpenIngredientModal = () => setOpenIngredientModal(true);

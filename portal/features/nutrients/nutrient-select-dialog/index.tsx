@@ -44,8 +44,12 @@ const NutrientSelectDialog = ({
         </Box>
       </DialogContent>
       <DialogActions>
-        <Button onClick={handleClose}>Cancel</Button>
-        <Button onClick={handleOnSelected}>Ok</Button>
+        <Button onClick={handleClose} color="error">
+          Cancel
+        </Button>
+        <Button onClick={handleOnSelected} variant="outlined">
+          Ok
+        </Button>
       </DialogActions>
     </Dialog>
   );
