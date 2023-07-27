@@ -17,7 +17,7 @@ const NutrientSelectDialog = ({
   onClose,
 }: {
   open?: boolean;
-  onSelected: (value?: any) => void;
+  onSelected: (value?: Nutrient) => void;
   onClose: () => void;
 }) => {
   const [value, setValue] = useState();
