@@ -38,7 +38,7 @@ const NutrientSelectDialog = ({
               url="/nutrients/"
               onChange={(e, newValue) => setValue(newValue)}
               createFormTitle="Create new nutrient"
-              createForm={<NutrientForm />}
+              createForm={<NutrientForm redirect={false} />}
             />
           </FormControl>
         </Box>

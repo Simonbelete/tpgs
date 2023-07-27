@@ -39,7 +39,7 @@ export default function AsyncDropdown<T>({
 }) {
   const [open, setOpen] = React.useState(false);
   const [options, setOptions] = React.useState<readonly T[]>([]);
-  const [loading, setLoading] = React.useState(false);
+  const [loading, setLoading] = React.useState(true);
 
   // Modal
   const [modalOpen, setModalOpen] = React.useState(false);
@@ -67,9 +67,9 @@ export default function AsyncDropdown<T>({
       }
     })();
 
-    // return () => {
-    //   active = false;
-    // };
+    return () => {
+      active = false;
+    };
   }, [loading, url]);
 
   return (

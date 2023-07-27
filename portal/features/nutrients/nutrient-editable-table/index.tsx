@@ -48,6 +48,7 @@ const EditToolbar = (props: {
         [value.id]: { mode: GridRowModes.Edit, fieldToFocus: "name" },
       }));
     }
+    handleClose();
   };
 
   return (
