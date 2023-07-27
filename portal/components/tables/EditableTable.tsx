@@ -28,6 +28,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/DeleteOutlined";
 import SaveIcon from "@mui/icons-material/Save";
 import CancelIcon from "@mui/icons-material/Close";
+import randomId from "@/util/randomId";
 
 const ODD_OPACITY = 0.2;
 
@@ -43,7 +44,7 @@ function EditToolbar(props: EditToolbarProps) {
 
   const handleClick = () => {
     const id = randomId();
-    setRows((oldRows) => [...oldRows, { id, name: "", age: "", isNew: true }]);
+    setRows((oldRows) => [...oldRows, { id, isNew: true }]);
     setRowModesModel((oldModel) => ({
       ...oldModel,
       [id]: { mode: GridRowModes.Edit, fieldToFocus: "name" },
@@ -52,77 +53,57 @@ function EditToolbar(props: EditToolbarProps) {
 
   return (
     <GridToolbarContainer>
-      <Button color="primary" onClick={() => {}}>
-        Add record
+      <Button
+        color="primary"
+        startIcon={<AddIcon />}
+        variant="outlined"
+        onClick={handleClick}
+      >
+        Add new
       </Button>
     </GridToolbarContainer>
   );
 }
 
 const StripedDataGrid = styled(DataGrid)(({ theme }) => ({
-  // [`& .${gridClasses.row}.even`]: {
-  //   backgroundColor: theme.palette.grey[200],
-  //   "&:hover, &.Mui-hovered": {
-  //     // backgroundColor: alpha(theme.palette.primary.main, ODD_OPACITY),
-  //     "@media (hover: none)": {
-  //       backgroundColor: "transparent",
-  //     },
-  //   },
-  //   "&.Mui-selected": {
-  //     backgroundColor: alpha(
-  //       theme.palette.primary.main,
-  //       ODD_OPACITY + theme.palette.action.selectedOpacity
-  //     ),
-  //     "&:hover, &.Mui-hovered": {
-  //       backgroundColor: alpha(
-  //         theme.palette.primary.main,
-  //         ODD_OPACITY +
-  //           theme.palette.action.selectedOpacity +
-  //           theme.palette.action.hoverOpacity
-  //       ),
-  //       // Reset on touch devices, it doesn't add specificity
-  //       "@media (hover: none)": {
-  //         backgroundColor: alpha(
-  //           theme.palette.primary.main,
-  //           ODD_OPACITY + theme.palette.action.selectedOpacity
-  //         ),
-  //       },
-  //     },
-  //   },
-  // },
-  // [`& .${gridClasses.columnHeaderTitle}`]: {
-  //   fontWeight: 600,
-  //   fontSize: "16px",
-  // },
-  // [`& .${gridClasses.cell}`]: {
-  //   "&:focus": {
-  //     outline: "none",
-  //   },
-  // },
+  [`& .${gridClasses.columnHeaderTitle}`]: {
+    fontWeight: 600,
+    fontSize: "16px",
+  },
+  [`& .${gridClasses["cell--editable"]}`]: {
+    borderColor: "rgb(224, 224, 224)",
+  },
+  [`& .${gridClasses["cell--editing"]}`]: {
+    borderColor: theme.palette.primary.main,
+  },
+  [`& .${gridClasses["row--editing"]}`]: {
+    boxShadow:
+      "rgba(0, 0, 0, 0.2) 0px 3px 1px -2px, rgba(0, 0, 0, 0.14) 0px 2px 2px 0px, rgba(0, 0, 0, 0.12) 0px 1px 5px 0px;",
+  },
 }));
 
 const StyledGridOverlay = styled("div")(({ theme }) => ({
-  // display: "flex",
-  // flexDirection: "column",
-  // alignItems: "center",
-  // justifyContent: "center",
-  // height: "100%",
-  // "& .ant-empty-img-1": {
-  //   fill: theme.palette.mode === "light" ? "#aeb8c2" : "#262626",
-  // },
-  // "& .ant-empty-img-2": {
-  //   fill: theme.palette.mode === "light" ? "#f5f5f7" : "#595959",
-  // },
-  // "& .ant-empty-img-3": {
-  //   fill: theme.palette.mode === "light" ? "#dce0e6" : "#434343",
-  // },
-  // "& .ant-empty-img-4": {
-  //   fill: theme.palette.mode === "light" ? "#fff" : "#1c1c1c",
-  // },
-  // "& .ant-empty-img-5": {
-  //   fillOpacity: theme.palette.mode === "light" ? "0.8" : "0.08",
-  //   fill: theme.palette.mode === "light" ? "#f5f5f5" : "#fff",
-  // },
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "center",
+  justifyContent: "center",
+  height: "100%",
+  "& .ant-empty-img-1": {
+    fill: theme.palette.mode === "light" ? "#aeb8c2" : "#262626",
+  },
+  "& .ant-empty-img-2": {
+    fill: theme.palette.mode === "light" ? "#f5f5f7" : "#595959",
+  },
+  "& .ant-empty-img-3": {
+    fill: theme.palette.mode === "light" ? "#dce0e6" : "#434343",
+  },
+  "& .ant-empty-img-4": {
+    fill: theme.palette.mode === "light" ? "#fff" : "#1c1c1c",
+  },
+  "& .ant-empty-img-5": {
+    fillOpacity: theme.palette.mode === "light" ? "0.8" : "0.08",
+    fill: theme.palette.mode === "light" ? "#f5f5f5" : "#fff",
+  },
 }));
 
 function CustomNoRowsOverlay() {
@@ -175,12 +156,14 @@ function CustomNoRowsOverlay() {
 const EditableTable = ({
   data,
   columns,
-  onDelete,
+  onRowSave,
+  onRowDelete,
   ...props
 }: {
   data: GridRowsProp;
   columns: GridColDef[];
-  onDelete?: (id: number) => void;
+  onRowSave: (data: object) => void;
+  onRowDelete: (data: object) => void;
 }) => {
   const [rows, setRows] = useState<GridRowsProp>([]);
   const [rowModesModel, setRowModesModel] = React.useState<GridRowModesModel>(
@@ -201,14 +184,21 @@ const EditableTable = ({
   };
 
   const handleEditClick = (id: GridRowId) => () => {
-    console.log(id);
-    console.log("---");
     setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.Edit } });
   };
 
-  const handleSaveClick = (id: GridRowId) => () => {
-    setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.View } });
-  };
+  // const handleSaveClick = (id: GridRowId) => () => {
+  //   setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.View } });
+  // };
+
+  const handleSaveClick = useCallback(
+    (id: GridRowId) => {
+      console.log("---------");
+      setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.View } });
+      onRowSave({ ...rowModesModel, [id]: { mode: GridRowModes.View } });
+    },
+    [onRowSave]
+  );
 
   const handleDeleteClick = (id: GridRowId) => () => {
     setRows(rows.filter((row) => row.id !== id));
@@ -256,7 +246,7 @@ const EditableTable = ({
               sx={{
                 color: "primary.main",
               }}
-              onClick={handleSaveClick(id)}
+              onClick={() => handleSaveClick(id)}
             />,
             <GridActionsCellItem
               showInMenu={false}
@@ -296,21 +286,16 @@ const EditableTable = ({
   return (
     <>
       <StripedDataGrid
-        sx={{ background: "white" }}
+        sx={{ background: "white", minHeight: "100px" }}
         rows={rows}
         editMode="row"
-        // density="compact"
         rowHeight={40}
         columns={[...columns, ...settingColumn]}
-        disableRowSelectionOnClick
         slots={{
           toolbar: EditToolbar,
-          // noRowsOverlay: CustomNoRowsOverlay,
+          noRowsOverlay: CustomNoRowsOverlay,
           loadingOverlay: LinearProgress,
         }}
-        // getRowClassName={(params) =>
-        //   params.indexRelativeToCurrentPage % 2 === 0 ? "even" : "odd"
-        // }
         rowModesModel={rowModesModel}
         onRowModesModelChange={handleRowModesModelChange}
         onRowEditStop={handleRowEditStop}

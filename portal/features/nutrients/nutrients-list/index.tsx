@@ -12,7 +12,7 @@ import { Nutrient } from "@/models";
 import { useSnackbar } from "notistack";
 
 const columns: GridColDef[] = [
-  { field: "Code", headerName: "Code", flex: 1, minWidth: 150 },
+  { field: "code", headerName: "Code", flex: 1, minWidth: 150 },
   { field: "abbreviation", headerName: "Abbreviation", flex: 1, minWidth: 150 },
   { field: "description", headerName: "Description", flex: 1, minWidth: 150 },
   {
