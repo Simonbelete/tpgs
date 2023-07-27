@@ -28,11 +28,11 @@ const NutrientSelectDialog = ({
   );
 
   return (
-    <Dialog disableEscapeKeyDown open={open}>
+    <Dialog disableEscapeKeyDown open={open} maxWidth="md" fullWidth>
       <DialogTitle>Select Nutrient</DialogTitle>
       <DialogContent>
         <Box component="form" sx={{ display: "flex", flexWrap: "wrap" }}>
-          <FormControl sx={{ m: 1, minWidth: 200 }}>
+          <FormControl sx={{ m: 1, minWidth: 200, width: "100%" }}>
             <AsyncDropdown<Nutrient>
               url="/nutrients/"
               onChange={(e, newValue) => setValue(newValue)}

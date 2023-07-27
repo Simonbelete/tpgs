@@ -88,15 +88,15 @@ SHARED_APPS = [
     'currency',
     'invitations',
     'contact',
-    'accusation'
+    'accusation',
+    'nutrients',
+    'ingredients',
+    'units',
 ]
 
 TENANT_APPS = [
     'flocks',
     'actstream',
-    'units',
-    'nutrients',
-    'ingredients',
     'recipes',
     'rations',
     'breeds',
