@@ -10,6 +10,7 @@ import {
 } from "@mui/material";
 import { AsyncDropdown } from "@/components/dropdowns";
 import { Nutrient } from "@/models";
+import NutrientForm from "../nutrient-form";
 
 const NutrientSelectDialog = ({
   open = false,
@@ -36,6 +37,8 @@ const NutrientSelectDialog = ({
             <AsyncDropdown<Nutrient>
               url="/nutrients/"
               onChange={(e, newValue) => setValue(newValue)}
+              createFormTitle="Create new nutrient"
+              createForm={<NutrientForm />}
             />
           </FormControl>
         </Box>

@@ -27,7 +27,13 @@ const schema = yup
     return currentValue;
   });
 
-const NutrientForm = ({ nutrient }: { nutrient?: Nutrient }) => {
+const NutrientForm = ({
+  nutrient,
+  redirect = true,
+}: {
+  nutrient?: Nutrient;
+  redirect?: boolean;
+}) => {
   const router = useRouter();
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
@@ -55,7 +61,7 @@ const NutrientForm = ({ nutrient }: { nutrient?: Nutrient }) => {
     const response = await nutrient_service.create(data);
     if ((response.status = 201)) {
       enqueueSnackbar("Successfully created!", { variant: "success" });
-      router.push("/nutrients");
+      if (redirect) router.push("/nutrients");
     }
   };
 

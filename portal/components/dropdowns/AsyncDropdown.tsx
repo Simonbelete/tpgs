@@ -20,6 +20,7 @@ export default function AsyncDropdown<T>({
   error,
   helperText,
   createForm,
+  createFormTitle = "Create New",
   multiple,
   onChange,
   ...props
@@ -33,11 +34,12 @@ export default function AsyncDropdown<T>({
   multiple?: boolean;
   helperText?: string;
   createForm?: React.ReactElement;
+  createFormTitle?: string;
   onChange?: (event: any, newValue: any) => void;
 }) {
   const [open, setOpen] = React.useState(false);
   const [options, setOptions] = React.useState<readonly T[]>([]);
-  const loading = open && options.length === 0;
+  const [loading, setLoading] = React.useState(false);
 
   // Modal
   const [modalOpen, setModalOpen] = React.useState(false);
@@ -52,23 +54,23 @@ export default function AsyncDropdown<T>({
     }
 
     (async () => {
-      const response = await client.get(url);
+      try {
+        const response = await client.get(url);
 
-      if (active) {
-        setOptions(response.data.results);
+        if (active) {
+          setOptions(response.data.results);
+        }
+      } catch (ex) {
+        active = false;
+      } finally {
+        setLoading(false);
       }
     })();
 
-    return () => {
-      active = false;
-    };
+    // return () => {
+    //   active = false;
+    // };
   }, [loading, url]);
-
-  React.useEffect(() => {
-    if (!open) {
-      setOptions([]);
-    }
-  }, [open]);
 
   return (
     <Stack gap={1}>
@@ -114,7 +116,7 @@ export default function AsyncDropdown<T>({
                     <CircularProgress color="inherit" size={20} />
                   ) : null}
                   {params.InputProps.endAdornment}
-                  <Tooltip title="Create New">
+                  <Tooltip title={createFormTitle}>
                     <IconButton
                       sx={{ py: 0 }}
                       size="large"
