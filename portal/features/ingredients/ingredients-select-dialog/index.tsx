@@ -10,6 +10,7 @@ import {
 } from "@mui/material";
 import { AsyncDropdown } from "@/components/dropdowns";
 import { Ingredient } from "@/models";
+import IngredientForm from "../ingredient-form";
 
 const IngredientSelectDialog = ({
   open = false,
@@ -28,21 +29,27 @@ const IngredientSelectDialog = ({
   );
 
   return (
-    <Dialog disableEscapeKeyDown open={open}>
-      <DialogTitle>Select Nutrient</DialogTitle>
+    <Dialog disableEscapeKeyDown open={open} maxWidth="md" fullWidth>
+      <DialogTitle>Select Ingredient</DialogTitle>
       <DialogContent>
         <Box component="form" sx={{ display: "flex", flexWrap: "wrap" }}>
-          <FormControl sx={{ m: 1, minWidth: 200 }}>
+          <FormControl sx={{ m: 1, minWidth: 200, width: "100%" }}>
             <AsyncDropdown<Ingredient>
               url="/ingredients/"
               onChange={(e, newValue) => setValue(newValue)}
+              createFormTitle="Create new nutrient"
+              createForm={<IngredientForm redirect={false} />}
             />
           </FormControl>
         </Box>
       </DialogContent>
       <DialogActions>
-        <Button onClick={handleClose}>Cancel</Button>
-        <Button onClick={handleOnSelected}>Ok</Button>
+        <Button onClick={handleClose} color="error">
+          Cancel
+        </Button>
+        <Button onClick={handleOnSelected} variant="outlined">
+          Ok
+        </Button>
       </DialogActions>
     </Dialog>
   );
