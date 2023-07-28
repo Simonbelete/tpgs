@@ -15,6 +15,7 @@ import WorkspacesIcon from "@mui/icons-material/Workspaces";
 import BalanceIcon from "@mui/icons-material/Balance";
 import ScienceIcon from "@mui/icons-material/Science";
 import PeopleIcon from "@mui/icons-material/People";
+import CrisisAlertIcon from "@mui/icons-material/CrisisAlert";
 
 const SidebarMenu = () => {
   const theme = useTheme();
@@ -119,6 +120,14 @@ const SidebarMenu = () => {
             </Typography>
           </MenuItem>
         </SubMenu>
+        <MenuItem
+          component={<Link href="/purposes" />}
+          icon={<CrisisAlertIcon fontSize="small" />}
+        >
+          <Typography variant="body1" fontSize={14}>
+            Production Purpose
+          </Typography>
+        </MenuItem>
       </Menu>
       <div
         style={{ padding: "0 24px", marginBottom: "8px", marginTop: "32px" }}
