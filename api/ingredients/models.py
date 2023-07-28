@@ -40,7 +40,7 @@ class Ingredient(CoreModel):
     # meth = models.FloatField(default=0, null=True)
     # mc = models.FloatField(default=0, null=True)
     # # Fat
-    # ee = models.FloatField(default=0, null=True)
+    # ee = mrilimo2516odels.FloatField(default=0, null=True)
     # # Fiber
     # cf = models.FloatField(default=0, null=True)
     # ca = models.FloatField(default=0, null=True)

@@ -99,8 +99,8 @@ const FormulaIngredients = () => {
   const columns: GridColDef[] = [
     { field: "code", headerName: "Code", flex: 1, minWidth: 100 },
     {
-      field: "abbreviation",
-      headerName: "Abbreviation",
+      field: "name",
+      headerName: "Name",
       flex: 1,
       minWidth: 150,
     },

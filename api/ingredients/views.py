@@ -21,18 +21,15 @@ class IngredientViewSet(viewsets.ModelViewSet):
 
 
 class IngredientNutrientViewSet(viewsets.ModelViewSet):
-    queryset = models.IngredientNutrient.objects.all()
     serializer_class = serializers.IngredientNutrientSerializer_GET
 
-    def list(self, request, *args, **kwargs):
-        pk = self.kwargs['ingredient_pk']
-
-        queryset = self.paginate_queryset(
-            self.get_queryset().filter(ingredient=pk))
-        serializer = self.get_serializer(queryset, many=True)
-        return self.get_paginated_response(serializer.data)
+    def get_queryset(self):
+        return models.IngredientNutrient.objects.filter(ingredient=self.kwargs['ingredient_pk'])
 
     def get_serializer_class(self):
-        if self.request.method in ['POST', 'PATCH']:
+        print('************************')
+        if self.request.method == 'POST':
             return serializers.IngredientNutrientSerializer_POST
+        if self.request.method in ['PUT', 'PATCH']:
+            return serializers.IngredientNutrientSerializer_PATCH
         return serializers.IngredientNutrientSerializer_GET
