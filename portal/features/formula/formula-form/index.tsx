@@ -35,6 +35,7 @@ import { LabeledInput } from "@/components/inputs";
 import { AsyncDropdown } from "@/components/dropdowns";
 import { PurposeForm } from "@/features/purposes";
 import FormulaRequirements from "../formula-requirements";
+import FormulaIngredients from "../formula-ingredients";
 
 type Inputs = Partial<Formula>;
 
@@ -241,26 +242,7 @@ const FormulaForm = () => {
               </Grid>
             </Paper>
           )}
-          {tabIndex == 1 && (
-            <Box>
-              <Button onClick={handleOpenIngredientModal}>
-                Add Ingredient
-              </Button>
-              <Box>
-                {ingredients &&
-                  ingredients.map((e, key) => (
-                    <Stack key={key}>
-                      <Typography>{e.name}</Typography>
-                      <Tooltip title="Remove">
-                        <IconButton onClick={() => handleRemoveNutrients(e.id)}>
-                          <ClearIcon />
-                        </IconButton>
-                      </Tooltip>
-                    </Stack>
-                  ))}
-              </Box>
-            </Box>
-          )}
+          {tabIndex == 1 && <FormulaIngredients />}
           {tabIndex == 2 && <FormulaRequirements />}
         </Box>
       </form>
