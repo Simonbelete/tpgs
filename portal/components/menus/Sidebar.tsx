@@ -16,6 +16,7 @@ import BalanceIcon from "@mui/icons-material/Balance";
 import ScienceIcon from "@mui/icons-material/Science";
 import PeopleIcon from "@mui/icons-material/People";
 import CrisisAlertIcon from "@mui/icons-material/CrisisAlert";
+import CircleIcon from "@mui/icons-material/Circle";
 
 const SidebarMenu = () => {
   const theme = useTheme();
@@ -26,11 +27,12 @@ const SidebarMenu = () => {
       color: theme.palette.text.secondary,
     },
     menu: {
-      menuContent: theme.palette.secondary.main,
+      menuContent: theme.palette.secondary.dark,
       icon: theme.palette.text.secondary,
       hover: {
-        backgroundColor: theme.palette.secondary.dark,
-        color: theme.palette.primary.main,
+        backgroundColor: "#202d32",
+        color: "#bfd2ef",
+        fontSize: "13px",
       },
       disabled: {
         color: "#9fb6cf",
@@ -90,7 +92,11 @@ const SidebarMenu = () => {
 
       <Menu menuItemStyles={menuItemStyles}>
         <SubMenu
-          label={<Typography variant="body1">Users</Typography>}
+          label={
+            <Typography variant="body1" fontSize={14}>
+              Users
+            </Typography>
+          }
           icon={<PeopleIcon fontSize="small" />}
         >
           <MenuItem component={<Link href="/users" />}>
@@ -106,7 +112,11 @@ const SidebarMenu = () => {
         </SubMenu>
 
         <SubMenu
-          label={<Typography variant="body1">Units</Typography>}
+          label={
+            <Typography variant="body1" fontSize={14}>
+              Units
+            </Typography>
+          }
           icon={<BalanceIcon fontSize="small" />}
         >
           <MenuItem component={<Link href="/units" />}>
@@ -133,16 +143,20 @@ const SidebarMenu = () => {
         style={{ padding: "0 24px", marginBottom: "8px", marginTop: "32px" }}
       >
         <Typography
-          variant="body2"
+          variant="caption"
           fontWeight={500}
-          style={{ opacity: 0.7, letterSpacing: "0.5px" }}
+          style={{ opacity: 0.6, letterSpacing: "0.5px" }}
         >
           Breeding
         </Typography>
       </div>
       <Menu menuItemStyles={menuItemStyles}>
         <SubMenu
-          label={<Typography variant="body1">Flocks</Typography>}
+          label={
+            <Typography variant="body1" fontSize={14}>
+              Flocks
+            </Typography>
+          }
           icon={<ScienceIcon fontSize="small" />}
         >
           <MenuItem component={<Link href="/flocks" />}>
@@ -181,16 +195,20 @@ const SidebarMenu = () => {
         style={{ padding: "0 24px", marginBottom: "8px", marginTop: "32px" }}
       >
         <Typography
-          variant="body2"
+          variant="caption"
           fontWeight={500}
-          style={{ opacity: 0.7, letterSpacing: "0.5px" }}
+          style={{ opacity: 0.6, letterSpacing: "0.5px" }}
         >
           Feed Formulation
         </Typography>
       </div>
       <Menu menuItemStyles={menuItemStyles}>
         <SubMenu
-          label={<Typography variant="body1">Formulate</Typography>}
+          label={
+            <Typography variant="body1" fontSize={14}>
+              Formulate
+            </Typography>
+          }
           icon={<ScienceIcon fontSize="small" />}
         >
           <MenuItem component={<Link href="/formulation/formulas" />}>
@@ -205,7 +223,11 @@ const SidebarMenu = () => {
           </MenuItem>
         </SubMenu>
         <SubMenu
-          label={<Typography variant="body1">Ingredients</Typography>}
+          label={
+            <Typography variant="body1" fontSize={14}>
+              Ingredients
+            </Typography>
+          }
           icon={<BubbleChartIcon />}
         >
           <MenuItem
@@ -226,7 +248,11 @@ const SidebarMenu = () => {
           </MenuItem>
         </SubMenu>
         <SubMenu
-          label={<Typography variant="body1">Nutrients</Typography>}
+          label={
+            <Typography variant="body1" fontSize={14}>
+              Nutrients
+            </Typography>
+          }
           icon={<BubbleChartIcon />}
         >
           <MenuItem

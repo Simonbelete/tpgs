@@ -32,11 +32,15 @@ import { useSelector, useDispatch } from "react-redux";
 import { setRequirements } from "../slices";
 import { RootState } from "@/store";
 import { LabeledInput } from "@/components/inputs";
+import { AsyncDropdown } from "@/components/dropdowns";
+import { PurposeForm } from "@/features/purposes";
 
 type Inputs = Partial<Formula>;
 
 const schema = yup.object({
   name: yup.string().required(),
+  weight: yup.number(),
+  note: yup.string(),
 });
 
 function a11yProps(index: number) {
@@ -166,24 +170,25 @@ const FormulaForm = () => {
                     )}
                   />
                 </Grid>
-                {/* Purpose */}
+                {/* purpose */}
                 <Grid item xs={12} md={6}>
                   <Controller
-                    name={"name"}
+                    name={"purpose"}
                     control={control}
                     render={({
                       field: { onChange, value },
-                      fieldState: { invalid, isTouched, isDirty, error },
+                      fieldState: { error },
                     }) => (
-                      <LabeledInput
+                      <AsyncDropdown
+                        multiple
+                        url="/purposes/"
+                        key="name"
+                        onChange={(_, data) => onChange(data)}
+                        value={value}
+                        label="Production Purpose"
                         error={!!error?.message}
                         helperText={error?.message}
-                        onChange={onChange}
-                        fullWidth
-                        size="small"
-                        value={value}
-                        label={"Purpose"}
-                        placeholder={"Name"}
+                        createForm={<PurposeForm redirect={false} />}
                       />
                     )}
                   />

@@ -37,6 +37,7 @@ const IngredientForm = ({
     defaultValues: {
       ...ingredient,
     },
+    // @ts-ignore
     resolver: yupResolver(schema),
   });
 

@@ -50,7 +50,7 @@ const PurposeForm = ({
     const response = await service.create(data);
     if ((response.status = 201)) {
       enqueueSnackbar("Successfully created!", { variant: "success" });
-      if (redirect) router.push("/nutrient-groups");
+      if (redirect) router.push("/purposes");
     }
   };
 
@@ -59,7 +59,7 @@ const PurposeForm = ({
     const response = await service.update(purpose?.id || 0, data);
     if ((response.status = 201)) {
       enqueueSnackbar("Successfully updated!", { variant: "success" });
-      router.push("/unit-converters/" + purpose?.id);
+      router.push("/purposes/" + purpose?.id);
     }
   };
 
