@@ -22,13 +22,15 @@ import {
 } from "@/components/tables";
 import { Nutrient } from "@/models";
 import { useSelector, useDispatch } from "react-redux";
-import NutrientSelectDialog from "../nutrient-select-dialog";
+import { NutrientSelectDialog } from "@/features/nutrients";
 import AddIcon from "@mui/icons-material/Add";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/DeleteOutlined";
 import SaveIcon from "@mui/icons-material/Save";
 import CancelIcon from "@mui/icons-material/Close";
 import { AnyAction } from "@reduxjs/toolkit";
+import { RootState } from "@/store";
+import { setRequirements } from "../slices";
 
 const EditToolbar = (props: {
   setRows: (newRows: (oldRows: GridRowsProp) => GridRowsProp) => void;
@@ -75,14 +77,9 @@ const EditToolbar = (props: {
   );
 };
 
-const NutrientEditableTable = ({
-  setter,
-  data,
-}: {
-  setter: (payload: any) => AnyAction;
-  data: GridRowsProp<Partial<Nutrient> & { isNew: boolean }>;
-}) => {
+const FormulaRequirements = () => {
   const dispatch = useDispatch();
+  const formula = useSelector((state: RootState) => state.formula);
 
   const [rows, setRows] = useState<
     GridRowsProp<Partial<Nutrient> & { isNew: boolean }>
@@ -92,12 +89,12 @@ const NutrientEditableTable = ({
   );
 
   useEffect(() => {
-    dispatch(setter(rows));
+    dispatch(setRequirements(rows as any));
   }, [rows]);
 
   useEffect(() => {
-    setRows(data);
-  }, [data]);
+    setRows(formula.requirements);
+  }, []);
 
   const columns: GridColDef[] = [
     { field: "code", headerName: "Code", flex: 1, minWidth: 100 },
@@ -238,4 +235,4 @@ const NutrientEditableTable = ({
   );
 };
 
-export default NutrientEditableTable;
+export default FormulaRequirements;

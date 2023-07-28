@@ -34,6 +34,7 @@ import { RootState } from "@/store";
 import { LabeledInput } from "@/components/inputs";
 import { AsyncDropdown } from "@/components/dropdowns";
 import { PurposeForm } from "@/features/purposes";
+import FormulaRequirements from "../formula-requirements";
 
 type Inputs = Partial<Formula>;
 
@@ -57,6 +58,7 @@ const FormulaForm = () => {
   );
   const [openIngredientModal, setOpenIngredientModal] = useState(false);
   const [ingredients, setIngredients] = useState<Ingredient[]>([]);
+  const dispatch = useDispatch();
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setTabIndex(newValue);
@@ -259,7 +261,7 @@ const FormulaForm = () => {
               </Box>
             </Box>
           )}
-          {tabIndex == 2 && <NutrientEditableTable setter={setRequirements} />}
+          {tabIndex == 2 && <FormulaRequirements />}
         </Box>
       </form>
     </>

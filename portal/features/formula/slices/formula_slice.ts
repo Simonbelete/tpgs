@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 
 export interface FormulaState {
-  requirements: Nutrient[];
+  requirements: (Nutrient & { isNew: boolean })[];
   ingredients: Ingredient[];
 }
 
@@ -16,7 +16,10 @@ export const formulaSlice = createSlice({
   name: "Formula",
   initialState,
   reducers: {
-    setRequirements: (state, action: PayloadAction<Nutrient[]>) => {
+    setRequirements: (
+      state,
+      action: PayloadAction<(Nutrient & { isNew: boolean })[]>
+    ) => {
       state.requirements = action.payload;
     },
   },
