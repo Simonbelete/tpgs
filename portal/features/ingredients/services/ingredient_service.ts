@@ -15,9 +15,13 @@ export default {
     client.get(`${URL}/`),
   getById: async (id: number): Promise<AxiosResponse<Response<Ingredient>>> =>
     client.get(`${URL}/${id}`),
-  create: async (data: Partial<Ingredient>) => client.post(`${URL}/`, data),
-  update: async (id: number, data: Partial<Ingredient>) =>
-    client.patch(`${URL}/${id}/`, data),
+  create: async (
+    data: Partial<Ingredient>
+  ): Promise<AxiosResponse<Ingredient>> => client.post(`${URL}/`, data),
+  update: async (
+    id: number,
+    data: Partial<Ingredient>
+  ): Promise<AxiosResponse<Ingredient>> => client.patch(`${URL}/${id}/`, data),
   delete: async (id: number) => client.delete(`${URL}/${id}/`),
   getByIdSSR: async (
     context: NextPageContext,
@@ -61,14 +65,14 @@ export default {
     create: async (
       ingredient_id: number,
       data: Partial<IngredientNutrient>
-    ): Promise<AxiosResponse<Response<IngredientNutrient[]>>> =>
+    ): Promise<AxiosResponse<IngredientNutrient>> =>
       client.post(`${URL}/${ingredient_id}/${NUTRIENT_URL}/`, data),
     update: async (
       ingredient_id: number,
       nutrient_id: number,
       data: Partial<IngredientNutrient>
-    ): Promise<AxiosResponse<Response<IngredientNutrient[]>>> =>
-      client.post(
+    ): Promise<AxiosResponse<IngredientNutrient>> =>
+      client.patch(
         `${URL}/${ingredient_id}/${NUTRIENT_URL}/${nutrient_id}/`,
         data
       ),

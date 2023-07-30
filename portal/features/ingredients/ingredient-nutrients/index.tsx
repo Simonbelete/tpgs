@@ -33,14 +33,13 @@ import ingredient_service from "../services/ingredient_service";
 import { enqueueSnackbar } from "notistack";
 import messages from "@/util/messages";
 import randomId from "@/util/randomId";
+import { AxiosResponse } from "axios";
 
 const EditToolbar = (props: {
   setRows: (newRows: (oldRows: GridRowsProp) => GridRowsProp) => void;
-  setRowModesModel: (
-    newModel: (oldModel: GridRowModesModel) => GridRowModesModel
-  ) => void;
+  processRowUpdate: (newRow: GridRowModel) => void;
 }) => {
-  const { setRows } = props;
+  const { setRows, processRowUpdate } = props;
   const [open, setOpen] = useState(false);
 
   const handleOpen = () => setOpen(true);
@@ -50,12 +49,13 @@ const EditToolbar = (props: {
     if (value != undefined || value != null) {
       const newRow = {
         id: randomId(true),
-        name: value.name,
-        nutrient: value.id,
+        nutrient: value,
         value: 0,
         isNew: true,
       };
       setRows((oldRows) => [...oldRows, newRow]);
+      console.log(newRow);
+      processRowUpdate(newRow);
     }
     handleClose();
   };
@@ -87,7 +87,7 @@ const IngredientNutrients = ({ id }: { id?: number }) => {
   const ingredient = useSelector((state: RootState) => state.ingredient);
 
   const [rows, setRows] = useState<
-    GridRowsProp<Partial<IngredientNutrient> & { isNew: boolean }>
+    GridRowsProp<Partial<IngredientNutrient> & Partial<{ isNew: boolean }>>
   >([]);
 
   useEffect(() => {
@@ -100,28 +100,36 @@ const IngredientNutrients = ({ id }: { id?: number }) => {
       .get(id)
       .then((response) => {
         if (response.status == 200) {
-          const data = _.map(response.data.results, (e) => {
-            const val = e.nutrient instanceof Number ? {} : e.nutrient;
-            return {
-              id: (e.nutrient as Nutrient).id,
-              value: e.value,
-              ...val,
-            };
-          });
-          setRows(data as any);
+          setRows(response.data.results);
         }
       })
       .catch((ex) => {});
   }, []);
 
   const columns: GridColDef[] = [
-    { field: "code", headerName: "Code", flex: 1, minWidth: 100 },
-    { field: "name", headerName: "Name", flex: 1, minWidth: 100 },
+    {
+      field: "code",
+      headerName: "Code",
+      flex: 1,
+      minWidth: 100,
+      valueGetter: (params) =>
+        params.row.nutrient ? params.row.nutrient.code : "",
+    },
+    {
+      field: "nutrient",
+      headerName: "Name",
+      flex: 1,
+      minWidth: 100,
+      valueGetter: (params) =>
+        params.row.nutrient ? params.row.nutrient.name : "",
+    },
     {
       field: "abbreviation",
       headerName: "Abbreviation",
       flex: 1,
       minWidth: 150,
+      valueGetter: (params) =>
+        params.row.nutrient ? params.row.nutrient.abbreviation : "",
     },
     {
       field: "value",
@@ -163,29 +171,52 @@ const IngredientNutrients = ({ id }: { id?: number }) => {
     handleDelete(id);
   };
 
-  const processRowUpdate = (newRow: GridRowModel) => {
-    handleUpdate(newRow as any);
+  const processRowUpdate = async (newRow: GridRowModel) => {
+    if (id == null) return;
+
+    const bodyData: Partial<IngredientNutrient> = {
+      value: newRow.value,
+      nutrient: (newRow.nutrient as Nutrient).id,
+    };
+    if (newRow.isNew) await onCreate(newRow, bodyData);
+    else await onUpdate(newRow, bodyData);
+
     const updatedRow = { ...newRow, isNew: false };
-    setRows(rows.map((row) => (row.id === newRow.id ? updatedRow : row)));
+
     return updatedRow;
   };
 
-  const handleUpdate = async (data: Partial<Nutrient> & { isNew: boolean }) => {
+  const onCreate = async (
+    row: GridRowModel,
+    data: Partial<IngredientNutrient>
+  ) => {
     if (id == null) return;
-    let response;
-    if (data.isNew) {
-      response = await ingredient_service.nutrient.create(id, data);
-    } else {
-      response = await ingredient_service.nutrient.update(
+
+    try {
+      const response = await ingredient_service.nutrient.create(id, data);
+      if (response.status == 201) {
+        const updatedRow = { ...row, id: response.data.id, isNew: false };
+        setRows([...rows, updatedRow]);
+      }
+    } catch (ex) {
+      enqueueSnackbar("Failed", { variant: "error" });
+    }
+  };
+
+  const onUpdate = async (
+    newRow: GridRowModel,
+    data: Partial<IngredientNutrient>
+  ) => {
+    if (id == null) return;
+
+    try {
+      const response = await ingredient_service.nutrient.update(
         id,
-        data.id || 0,
+        newRow.id || 0,
         data
       );
-    }
-    if (response.status == 200 || response.status == 201) {
-      setRows(
-        rows.map((row) => (row.id === data.id ? { ...row, isNew: false } : row))
-      );
+    } catch (ex) {
+      enqueueSnackbar("Failed", { variant: "error" });
     }
   };
 
@@ -195,7 +226,7 @@ const IngredientNutrients = ({ id }: { id?: number }) => {
       id,
       Number(row_id) || 0
     );
-    if (response.status == 200)
+    if (response.status == 204)
       enqueueSnackbar(messages.deleteSuccess(), { variant: "success" });
     else enqueueSnackbar(messages.deleteError(), { variant: "error" });
   };
@@ -216,7 +247,7 @@ const IngredientNutrients = ({ id }: { id?: number }) => {
         }}
         processRowUpdate={processRowUpdate}
         slotProps={{
-          toolbar: { setRows },
+          toolbar: { setRows, processRowUpdate },
         }}
       />
     </>

@@ -59,7 +59,7 @@ class IngredientNutrientSerializer_GET(serializers.ModelSerializer):
 class IngredientNutrientSerializer_POST(serializers.ModelSerializer):
     class Meta:
         model = models.IngredientNutrient
-        fields = ['nutrient', 'value']
+        fields = ['id', 'nutrient', 'value']
 
     def create(self, validated_data):
         ingredient = models.Ingredient.objects.get(
