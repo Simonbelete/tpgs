@@ -2,7 +2,16 @@ import React, { useState } from "react";
 import { object, string } from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
-import { Grid, TextField, Button, Card, Paper, Stack } from "@mui/material";
+import {
+  Grid,
+  TextField,
+  Button,
+  Card,
+  Paper,
+  Stack,
+  Typography,
+  Box,
+} from "@mui/material";
 import { Ingredient } from "@/models";
 import { LabeledInput } from "@/components/inputs";
 import { useRouter } from "next/router";
@@ -11,6 +20,9 @@ import ingredient_service from "../services/ingredient_service";
 import errorToForm from "@/util/errorToForm";
 import { AsyncDropdown } from "@/components/dropdowns";
 import { IngredientTypeForm } from "@/features/ingredient-types";
+import IngredientNutrients from "../ingredient-nutrients";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store";
 
 type Inputs = Partial<Ingredient>;
 
@@ -28,6 +40,10 @@ const IngredientForm = ({
   const router = useRouter();
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
+  const nutrients = useSelector(
+    (state: RootState) => state.ingredient.nutrients
+  );
+
   const {
     handleSubmit,
     control,
@@ -43,11 +59,12 @@ const IngredientForm = ({
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     try {
-      if (ingredient == null) await create(data);
+      if (ingredient == null) await create({ ...data, nutrient: nutrients });
       else await update(data);
     } catch (ex: any) {
-      if (ex.response.status == 400) {
-        errorToForm(ex.response.data, setError);
+      console.log(ex);
+      if (ex.status == 400) {
+        errorToForm(ex.data, setError);
       } else {
         enqueueSnackbar("Server Error!", { variant: "error" });
       }
@@ -151,6 +168,12 @@ const IngredientForm = ({
           </Grid>
         </form>
       </Paper>
+      <Box sx={{ my: 2 }}>
+        <Typography variant="h6">Nutrients</Typography>
+      </Box>
+      <Box>
+        <IngredientNutrients />
+      </Box>
     </>
   );
 };

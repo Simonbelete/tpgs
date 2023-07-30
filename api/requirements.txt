@@ -34,3 +34,4 @@ django-import-export
 django-adminactions
 django-simple-history
 pandas
+drf-nested-routers

@@ -1,4 +1,5 @@
 import IngredientType from "./IngredientType";
+import Nutrient from "./Nutrient";
 
 export default interface Ingredient {
   id: number;
@@ -8,4 +9,5 @@ export default interface Ingredient {
   description: number;
   price: number;
   price_unit: string;
+  nutrient: number | Nutrient[];
 }

@@ -27,7 +27,6 @@ class IngredientNutrientViewSet(viewsets.ModelViewSet):
         return models.IngredientNutrient.objects.filter(ingredient=self.kwargs['ingredient_pk'])
 
     def get_serializer_class(self):
-        print('************************')
         if self.request.method == 'POST':
             return serializers.IngredientNutrientSerializer_POST
         if self.request.method in ['PUT', 'PATCH']:

@@ -9,26 +9,6 @@ class IngredientTypeSerializer_GET(serializers.ModelSerializer):
         model = models.IngredientType
         fields = '__all__'
 
-
-class IngredientSerializer_GET(serializers.ModelSerializer):
-    class Meta:
-        model = models.Ingredient
-        fields = '__all__'
-
-
-class IngredientSerializer_POST(serializers.ModelSerializer):
-    class Meta:
-        model = models.Ingredient
-        fields = ['name', 'code',
-                  'description', 'price', 'price_unit']
-
-
-class IngredientNutrientSerializer_REF_POST(serializers.Serializer):
-    nutrient = serializers.PrimaryKeyRelatedField(
-        queryset=Nutrient.objects.all())
-    value = serializers.FloatField()
-
-
 # class IngredientSerializer_POST(serializers.ModelSerializer):
 #     nutrients = IngredientNutrientSerializer_POST(many=True)
 
@@ -93,7 +73,6 @@ class IngredientNutrientSerializer_PATCH(serializers.ModelSerializer):
         fields = ['value']
 
     def create(self, validated_data):
-        print('--------------------')
         ingredient = models.Ingredient.objects.get(
             pk=self.context["view"].kwargs["ingredient_pk"])
         nutrient = Nutrient.objects.get(
@@ -101,3 +80,27 @@ class IngredientNutrientSerializer_PATCH(serializers.ModelSerializer):
         validated_data['ingredient'] = ingredient
         validated_data['nutrient'] = nutrient
         return super().create(validated_data)
+
+
+# Ingredient
+class IngredientSerializer_GET(serializers.ModelSerializer):
+    class Meta:
+        model = models.Ingredient
+        fields = '__all__'
+
+
+class IngredientSerializer_POST(serializers.ModelSerializer):
+    nutrients = IngredientNutrientSerializer_POST(many=True, required=False)
+
+    class Meta:
+        model = models.Ingredient
+        fields = ['name', 'code',
+                  'description', 'price', 'price_unit', 'nutrients']
+
+    def create(self, validated_data):
+        nutrients = validated_data.pop('nutrients', [])
+        instance = models.Ingredient.objects.create(**validated_data)
+        for nutrient in nutrients:
+            models.IngredientNutrient.objects.create(
+                ingredient=instance, nutrient=nutrient['nutrient'], value=nutrient['value'])
+        return instance
