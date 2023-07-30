@@ -4,7 +4,7 @@ import dynamic from "next/dynamic";
 import { Typography, Button, IconButton, Stack } from "@mui/material";
 import { useBreadcrumbs } from "@/hooks";
 import { ListLayout, Breadcrumbs, Loading } from "@/components";
-import { UnitsList } from "@/features/units";
+import { FormulaList } from "@/features/formula";
 import DownloadIcon from "@mui/icons-material/Download";
 import AddIcon from "@mui/icons-material/Add";
 import FileUploadIcon from "@mui/icons-material/FileUpload";
@@ -18,7 +18,7 @@ const FormulasPage = () => {
       header={<Typography variant="title">Feed Formulas</Typography>}
       actions={<Actions />}
     >
-      <UnitsList />
+      <FormulaList />
     </ListLayout>
   );
 };
