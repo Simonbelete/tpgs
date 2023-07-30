@@ -15,4 +15,6 @@ export default {
   csvExportError: () => "Failed to download csv",
   exportFileTypeError: () => "Please select file type either csv or excel",
   fileNotSelected: () => "Please select a file",
+  deleteSuccess: () => "Successfully Deleted",
+  deleteError: () => "Error deleting",
 };

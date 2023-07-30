@@ -67,6 +67,14 @@ class IngredientNutrientSerializer_POST(serializers.ModelSerializer):
         return super().create(validated_data)
 
 
+class IngredientNutrientSerializer_REF(serializers.ModelSerializer):
+    id = serializers.IntegerField()
+
+    class Meta:
+        model = models.IngredientNutrient
+        fields = ['id', 'value']
+
+
 class IngredientNutrientSerializer_PATCH(serializers.ModelSerializer):
     class Meta:
         model = models.IngredientNutrient
@@ -90,7 +98,7 @@ class IngredientSerializer_GET(serializers.ModelSerializer):
 
 
 class IngredientSerializer_POST(serializers.ModelSerializer):
-    nutrients = IngredientNutrientSerializer_POST(many=True, required=False)
+    nutrients = IngredientNutrientSerializer_REF(many=True, required=False)
 
     class Meta:
         model = models.Ingredient
@@ -101,6 +109,8 @@ class IngredientSerializer_POST(serializers.ModelSerializer):
         nutrients = validated_data.pop('nutrients', [])
         instance = models.Ingredient.objects.create(**validated_data)
         for nutrient in nutrients:
+            nutrient_model = Nutrient.objects.get(
+                pk=nutrient['id'])
             models.IngredientNutrient.objects.create(
-                ingredient=instance, nutrient=nutrient['nutrient'], value=nutrient['value'])
+                ingredient=instance, nutrient=nutrient_model, value=nutrient['value'])
         return instance

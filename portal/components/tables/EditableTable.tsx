@@ -19,11 +19,26 @@ const StripedDataGrid = styled(DataGrid)(({ theme }) => ({
     borderColor: "rgb(224, 224, 224)",
   },
   [`& .${gridClasses["cell--editing"]}`]: {
+    border: 1,
     borderColor: theme.palette.primary.main,
   },
   [`& .${gridClasses["row--editing"]}`]: {
     boxShadow:
       "rgba(0, 0, 0, 0.2) 0px 3px 1px -2px, rgba(0, 0, 0, 0.14) 0px 2px 2px 0px, rgba(0, 0, 0, 0.12) 0px 1px 5px 0px;",
+  },
+  [`& .${gridClasses.cell}`]: {
+    "&:focus, &:focus-within": {
+      outline: "none",
+    },
+  },
+  [`& .${gridClasses.columnHeader}`]: {
+    "&:focus, &:focus-within": {
+      outline: "none",
+    },
+  },
+  [`& .${gridClasses["cell--editable"]}`]: {
+    background: "rgba(0, 0, 0, 0.04)",
+    borderRadius: "3px",
   },
 }));
 

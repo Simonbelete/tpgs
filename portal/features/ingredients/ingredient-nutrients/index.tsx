@@ -31,6 +31,9 @@ import CancelIcon from "@mui/icons-material/Close";
 import { AnyAction } from "@reduxjs/toolkit";
 import { RootState } from "@/store";
 import { setNutrients } from "../slices";
+import ingredient_service from "../services/ingredient_service";
+import { enqueueSnackbar } from "notistack";
+import messages from "@/util/messages";
 
 const EditToolbar = (props: {
   setRows: (newRows: (oldRows: GridRowsProp) => GridRowsProp) => void;
@@ -38,7 +41,7 @@ const EditToolbar = (props: {
     newModel: (oldModel: GridRowModesModel) => GridRowModesModel
   ) => void;
 }) => {
-  const { setRows, setRowModesModel } = props;
+  const { setRows } = props;
   const [open, setOpen] = useState(false);
 
   const handleOpen = () => setOpen(true);
@@ -46,11 +49,7 @@ const EditToolbar = (props: {
 
   const handleSelected = (value?: Nutrient) => {
     if (value != undefined || value != null) {
-      setRows((oldRows) => [...oldRows, value]);
-      setRowModesModel((oldModel) => ({
-        ...oldModel,
-        [value.id]: { mode: GridRowModes.Edit, fieldToFocus: "name" },
-      }));
+      setRows((oldRows) => [...oldRows, { ...value, isNew: true }]);
     }
     handleClose();
   };
@@ -77,23 +76,26 @@ const EditToolbar = (props: {
   );
 };
 
-const IngredientNutrients = () => {
+const IngredientNutrients = ({ id }: { id?: number }) => {
   const dispatch = useDispatch();
   const ingredient = useSelector((state: RootState) => state.ingredient);
 
   const [rows, setRows] = useState<
     GridRowsProp<Partial<Nutrient> & { isNew: boolean }>
   >([]);
-  const [rowModesModel, setRowModesModel] = React.useState<GridRowModesModel>(
-    {}
-  );
 
   useEffect(() => {
     dispatch(setNutrients(rows as any));
   }, [rows]);
 
   useEffect(() => {
-    setRows(ingredient.nutrients);
+    if (id == null) return;
+    ingredient_service.nutrient
+      .get(id)
+      .then((response) => {
+        if (response.status == 200) setRows(response.data.results as any);
+      })
+      .catch((ex) => {});
   }, []);
 
   const columns: GridColDef[] = [
@@ -126,42 +128,7 @@ const IngredientNutrients = () => {
       width: 100,
       cellClassName: "actions",
       getActions: ({ id }) => {
-        const isInEditMode = rowModesModel[id]?.mode === GridRowModes.Edit;
-
-        if (isInEditMode) {
-          return [
-            <GridActionsCellItem
-              key={id}
-              icon={<SaveIcon />}
-              showInMenu={false}
-              label="Save"
-              sx={{
-                color: "primary.main",
-              }}
-              onClick={handleSaveClick(id)}
-            />,
-            <GridActionsCellItem
-              showInMenu={false}
-              key={id}
-              icon={<CancelIcon />}
-              label="Cancel"
-              className="textPrimary"
-              onClick={handleCancelClick(id)}
-              color="inherit"
-            />,
-          ];
-        }
-
         return [
-          <GridActionsCellItem
-            showInMenu={false}
-            key={id}
-            icon={<EditIcon />}
-            label="Edit"
-            className="textPrimary"
-            onClick={handleEditClick(id)}
-            color="inherit"
-          />,
           <GridActionsCellItem
             showInMenu={false}
             key={id}
@@ -175,68 +142,61 @@ const IngredientNutrients = () => {
     },
   ];
 
-  const handleRowEditStop: GridEventListener<"rowEditStop"> = (
-    params,
-    event
-  ) => {
-    if (params.reason === GridRowEditStopReasons.rowFocusOut) {
-      event.defaultMuiPrevented = true;
-    }
-  };
-
-  const handleEditClick = (id: GridRowId) => () => {
-    setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.Edit } });
-  };
-
-  const handleSaveClick = (id: GridRowId) => () => {
-    setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.View } });
-  };
-
   const handleDeleteClick = (id: GridRowId) => {
     setRows(rows.filter((row) => row.id !== id));
-  };
-
-  const handleCancelClick = (id: GridRowId) => () => {
-    setRowModesModel({
-      ...rowModesModel,
-      [id]: { mode: GridRowModes.View, ignoreModifications: true },
-    });
-
-    const editedRow = rows.find((row) => row.id === id);
-    if (editedRow!.isNew) {
-      setRows(rows.filter((row) => row.id !== id));
-    }
+    handleDelete(id);
   };
 
   const processRowUpdate = (newRow: GridRowModel) => {
+    handleUpdate(newRow as any);
     const updatedRow = { ...newRow, isNew: false };
     setRows(rows.map((row) => (row.id === newRow.id ? updatedRow : row)));
     return updatedRow;
   };
 
-  const handleRowModesModelChange = (newRowModesModel: GridRowModesModel) => {
-    setRowModesModel(newRowModesModel);
+  const handleUpdate = async (data: Partial<Nutrient> & { isNew: boolean }) => {
+    console.log(data);
+    if (id == null) return;
+    let response;
+    if (data.isNew) {
+      response = await ingredient_service.nutrient.create(id, data);
+    } else {
+      response = await ingredient_service.nutrient.update(
+        id,
+        data.id || 0,
+        data
+      );
+    }
+  };
+
+  const handleDelete = async (row_id: string | number) => {
+    if (id == null) return;
+    const response = await ingredient_service.nutrient.delete(
+      id,
+      Number(row_id) || 0
+    );
+    if (response.status == 200)
+      enqueueSnackbar(messages.deleteSuccess(), { variant: "success" });
+    else enqueueSnackbar(messages.deleteError(), { variant: "error" });
   };
 
   return (
     <>
       <EditableTable
-        sx={{ background: "white", minHeight: "50px" }}
+        sx={{ background: "white", minHeight: "20px" }}
         rows={rows}
         editMode="row"
         rowHeight={40}
         columns={columns}
+        disableRowSelectionOnClick
         slots={{
           toolbar: EditToolbar,
           noRowsOverlay: EditableTableCustomNoRowsOverlay,
           loadingOverlay: LinearProgress,
         }}
-        rowModesModel={rowModesModel}
-        onRowModesModelChange={handleRowModesModelChange}
-        onRowEditStop={handleRowEditStop}
         processRowUpdate={processRowUpdate}
         slotProps={{
-          toolbar: { setRows, setRowModesModel },
+          toolbar: { setRows },
         }}
       />
     </>

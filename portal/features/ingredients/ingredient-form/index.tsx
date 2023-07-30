@@ -59,7 +59,7 @@ const IngredientForm = ({
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     try {
-      if (ingredient == null) await create({ ...data, nutrient: nutrients });
+      if (ingredient == null) await create({ ...data, nutrients: nutrients });
       else await update(data);
     } catch (ex: any) {
       console.log(ex);
@@ -171,8 +171,8 @@ const IngredientForm = ({
       <Box sx={{ my: 2 }}>
         <Typography variant="h6">Nutrients</Typography>
       </Box>
-      <Box>
-        <IngredientNutrients />
+      <Box sx={{ minHeight: "50px" }}>
+        <IngredientNutrients id={ingredient?.id} />
       </Box>
     </>
   );
