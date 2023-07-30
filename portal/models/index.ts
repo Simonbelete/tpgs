@@ -28,3 +28,5 @@ export type { default as WeightHistory } from "./WeightHistory";
 export type { default as Formula } from "./Formula";
 export type { default as Purpose } from "./Purpose";
 export type { default as PurposeHistory } from "./PurposeHistory";
+export type { default as FormulaRequirement } from "./FormulaRequirement";
+export type { default as FormulaIngredient } from "./FormulaIngredient";

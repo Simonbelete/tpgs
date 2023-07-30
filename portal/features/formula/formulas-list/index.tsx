@@ -3,14 +3,14 @@ import { GridRowsProp, GridColDef, GridToolbar } from "@mui/x-data-grid";
 import { useSnackbar } from "notistack";
 import { DataTable } from "@/components/tables";
 import { Unit } from "@/models";
-import unit_service from "../services/unit_service";
+import formula_service from "../services/formula_service";
 
 const columns: GridColDef[] = [
   { field: "id", headerName: "ID", flex: 1, minWidth: 150 },
   { field: "name", headerName: "name", flex: 1, minWidth: 150 },
 ];
 
-const UnitsList = () => {
+const FormulaList = () => {
   const [rows, setRows] = useState<GridRowsProp<Unit>>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [paginationModel, setPaginationModel] = useState({
@@ -22,7 +22,7 @@ const UnitsList = () => {
   useEffect(() => {
     setIsLoading(true);
 
-    unit_service
+    formula_service
       .get()
       .then((response) => {
         setRows(response.data.results);
@@ -39,7 +39,7 @@ const UnitsList = () => {
 
   const handleDelete = async (id: number) => {
     try {
-      const response = await unit_service.delete(id);
+      const response = await formula_service.delete(id);
       if (response.status == 204)
         enqueueSnackbar("Successfully Deleted!", { variant: "success" });
       else enqueueSnackbar("Failed to Deleted!", { variant: "error" });
@@ -65,4 +65,4 @@ const UnitsList = () => {
   );
 };
 
-export default UnitsList;
+export default FormulaList;

@@ -15,19 +15,12 @@ import {
   InputAdornment,
   Stack,
 } from "@mui/material";
-import {
-  NutrientEditableTable,
-  NutrientListItem,
-  NutrientSelectDialog,
-} from "@/features/nutrients";
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { IngredientSelectDialog } from "@/features/ingredients";
-import { Formula, Ingredient, Nutrient, Unit } from "@/models";
-import ClearIcon from "@mui/icons-material/Clear";
-import { BootstrapInput } from "@/components/inputs";
-import { DataTable } from "@/components/tables";
+import { Formula, Ingredient, Nutrient } from "@/models";
+import { useSnackbar } from "notistack";
 import { useSelector, useDispatch } from "react-redux";
 import { setRequirements } from "../slices";
 import { RootState } from "@/store";
@@ -36,13 +29,14 @@ import { AsyncDropdown } from "@/components/dropdowns";
 import { PurposeForm } from "@/features/purposes";
 import FormulaRequirements from "../formula-requirements";
 import FormulaIngredients from "../formula-ingredients";
+import errorToForm from "@/util/errorToForm";
+import formula_service from "../services/formula_service";
+import { useRouter } from "next/router";
 
 type Inputs = Partial<Formula>;
 
 const schema = yup.object({
   name: yup.string().required(),
-  weight: yup.number(),
-  note: yup.string(),
 });
 
 function a11yProps(index: number) {
@@ -52,51 +46,78 @@ function a11yProps(index: number) {
   };
 }
 
-const FormulaForm = () => {
+const FormulaForm = ({
+  redirect = true,
+  formula,
+}: {
+  redirect?: boolean;
+  formula?: Formula;
+}) => {
+  const router = useRouter();
+  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   const [tabIndex, setTabIndex] = useState(0);
-  const [requirementNutrients, setRequirementNutrients] = useState<Nutrient[]>(
-    []
-  );
-  const [openIngredientModal, setOpenIngredientModal] = useState(false);
-  const [ingredients, setIngredients] = useState<Ingredient[]>([]);
   const dispatch = useDispatch();
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setTabIndex(newValue);
   };
 
-  const handleOpenIngredientModal = () => setOpenIngredientModal(true);
-  const handleCloseIngredientModal = () => setOpenIngredientModal(false);
-  const handleIngredientSelected = (newValue: Ingredient) => {
-    handleCloseIngredientModal();
-    const newIng: Ingredient[] = _.concat(ingredients, newValue);
-    setIngredients(newIng);
-  };
-
-  const handleRemoveNutrients = (id: number) => {
-    const newReq = [...requirementNutrients];
-    _.remove(newReq, (n) => n.id == id);
-    setRequirementNutrients(newReq);
-  };
-
   // States
-  const formula = useSelector((state: RootState) => state.formula);
+  const formulaState = useSelector((state: RootState) => state.formula);
 
   const handleOnFormulate = () => {
-    console.log(formula);
+    console.log("---------");
+    handleSubmit(onSubmit)();
   };
 
   const {
     handleSubmit,
     control,
+    setError,
     formState: { errors },
   } = useForm<Inputs>({
-    defaultValues: {},
+    defaultValues: {
+      ...formula,
+    },
     // @ts-ignore
     resolver: yupResolver(schema),
   });
 
-  const onSubmit: SubmitHandler<Inputs> = async (data) => {};
+  const onSubmit: SubmitHandler<Inputs> = async (data) => {
+    console.log("submited");
+    try {
+      if (formula == null)
+        await create({
+          ...data,
+          requirements: formulaState.requirements,
+          ingredients: formulaState.ingredients,
+        });
+      else await update(data);
+    } catch (ex: any) {
+      if (ex.status == 400) {
+        errorToForm(ex.data, setError);
+      } else {
+        enqueueSnackbar("Server Error!", { variant: "error" });
+      }
+    }
+  };
+
+  const create = async (data: Partial<Formula>) => {
+    const response = await formula_service.create(data);
+    if ((response.status = 201)) {
+      enqueueSnackbar("Successfully created!", { variant: "success" });
+      if (redirect) router.push("/formulation/formulas");
+    }
+  };
+
+  const update = async (data: Partial<Formula>) => {
+    delete data.id;
+    const response = await formula_service.update(formula?.id || 0, data);
+    if ((response.status = 201)) {
+      enqueueSnackbar("Successfully updated!", { variant: "success" });
+      router.push("/formulation/formulas/" + formula?.id);
+    }
+  };
 
   return (
     <>
@@ -131,11 +152,6 @@ const FormulaForm = () => {
         </Paper>
       </Box>
 
-      <IngredientSelectDialog
-        open={openIngredientModal}
-        onSelected={handleIngredientSelected}
-        onClose={handleCloseIngredientModal}
-      />
       <form onSubmit={handleSubmit(onSubmit)}>
         <Tabs value={tabIndex} onChange={handleChange}>
           <Tab label="General" {...a11yProps(0)} />
@@ -242,8 +258,13 @@ const FormulaForm = () => {
               </Grid>
             </Paper>
           )}
-          {tabIndex == 1 && <FormulaIngredients />}
-          {tabIndex == 2 && <FormulaRequirements />}
+          {tabIndex == 1 && <FormulaIngredients id={formula?.id} />}
+          {tabIndex == 2 && <FormulaRequirements id={formula?.id} />}
+        </Box>
+        <Box>
+          <Button variant="contained" type="submit">
+            Submit
+          </Button>
         </Box>
       </form>
     </>

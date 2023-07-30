@@ -1,63 +1,67 @@
 import React, { useEffect, useState } from "react";
+import _ from "lodash";
 import {
   DataGrid,
   GridRowsProp,
   GridColDef,
-  GridToolbar,
-  gridClasses,
-  DataGridProps,
-  GridRowModesModel,
-  GridRowModes,
   GridToolbarContainer,
   GridActionsCellItem,
-  GridEventListener,
   GridRowId,
   GridRowModel,
-  GridRowEditStopReasons,
 } from "@mui/x-data-grid";
 import { Button, LinearProgress } from "@mui/material";
 import {
   EditableTable,
   EditableTableCustomNoRowsOverlay,
 } from "@/components/tables";
-import { Ingredient } from "@/models";
+import { FormulaRequirement, Nutrient } from "@/models";
 import { useSelector, useDispatch } from "react-redux";
-import { IngredientSelectDialog } from "@/features/ingredients";
+import { NutrientSelectDialog } from "@/features/nutrients";
 import AddIcon from "@mui/icons-material/Add";
-import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/DeleteOutlined";
-import SaveIcon from "@mui/icons-material/Save";
-import CancelIcon from "@mui/icons-material/Close";
-import { AnyAction } from "@reduxjs/toolkit";
 import { RootState } from "@/store";
 import { setRequirements } from "../slices";
+import formula_service from "../services/formula_service";
+import { enqueueSnackbar } from "notistack";
+import messages from "@/util/messages";
+import randomId from "@/util/randomId";
 
 const EditToolbar = (props: {
+  rows: any;
   setRows: (newRows: (oldRows: GridRowsProp) => GridRowsProp) => void;
-  setRowModesModel: (
-    newModel: (oldModel: GridRowModesModel) => GridRowModesModel
-  ) => void;
+  processRowUpdate: (newRow: GridRowModel) => void;
 }) => {
-  const { setRows, setRowModesModel } = props;
+  const { setRows, processRowUpdate, rows } = props;
   const [open, setOpen] = useState(false);
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  const handleSelected = (value?: Ingredient) => {
+  const checkDuplicate = (id: any) => {
+    return rows.some((e: any) => e.nutrient.id == id);
+  };
+
+  const handleSelected = (value?: Nutrient) => {
     if (value != undefined || value != null) {
-      setRows((oldRows) => [...oldRows, value]);
-      setRowModesModel((oldModel) => ({
-        ...oldModel,
-        [value.id]: { mode: GridRowModes.Edit, fieldToFocus: "name" },
-      }));
+      const newRow = {
+        id: randomId(true),
+        nutrient: value,
+        value: 0,
+        isNew: true,
+      };
+      if (checkDuplicate(value.id))
+        enqueueSnackbar(messages.duplicateError(), { variant: "warning" });
+      else {
+        setRows((oldRows) => [...oldRows, newRow]);
+        processRowUpdate(newRow);
+      }
     }
     handleClose();
   };
 
   return (
     <>
-      <IngredientSelectDialog
+      <NutrientSelectDialog
         open={open}
         onSelected={handleSelected}
         onClose={handleClose}
@@ -77,32 +81,54 @@ const EditToolbar = (props: {
   );
 };
 
-const FormulaIngredients = () => {
+const FormulaIngredients = ({ id }: { id?: number }) => {
   const dispatch = useDispatch();
-  const formula = useSelector((state: RootState) => state.formula);
+  const ingredient = useSelector((state: RootState) => state.ingredient);
 
   const [rows, setRows] = useState<
-    GridRowsProp<Partial<Ingredient> & { isNew: boolean }>
+    GridRowsProp<Partial<FormulaRequirement> & Partial<{ isNew: boolean }>>
   >([]);
-  const [rowModesModel, setRowModesModel] = React.useState<GridRowModesModel>(
-    {}
-  );
 
   useEffect(() => {
     dispatch(setRequirements(rows as any));
   }, [rows]);
 
   useEffect(() => {
-    setRows(formula.ingredients as any);
+    if (id == null) return;
+    formula_service.requirement
+      .get(id)
+      .then((response) => {
+        if (response.status == 200) {
+          setRows(response.data.results);
+        }
+      })
+      .catch((ex) => {});
   }, []);
 
   const columns: GridColDef[] = [
-    { field: "code", headerName: "Code", flex: 1, minWidth: 100 },
     {
-      field: "name",
+      field: "code",
+      headerName: "Code",
+      flex: 1,
+      minWidth: 100,
+      valueGetter: (params) =>
+        params.row.nutrient ? params.row.nutrient.code : "",
+    },
+    {
+      field: "nutrient",
       headerName: "Name",
       flex: 1,
+      minWidth: 100,
+      valueGetter: (params) =>
+        params.row.nutrient ? params.row.nutrient.name : "",
+    },
+    {
+      field: "abbreviation",
+      headerName: "Abbreviation",
+      flex: 1,
       minWidth: 150,
+      valueGetter: (params) =>
+        params.row.nutrient ? params.row.nutrient.abbreviation : "",
     },
     {
       field: "value",
@@ -112,48 +138,20 @@ const FormulaIngredients = () => {
       editable: true,
     },
     {
+      field: "unit",
+      headerName: "Unit",
+      flex: 1,
+      minWidth: 150,
+      valueGetter: (params) => (params.row.unit ? params.row.unit.name : ""),
+    },
+    {
       field: "actions",
       type: "actions",
       headerName: "Actions",
       width: 100,
       cellClassName: "actions",
       getActions: ({ id }) => {
-        const isInEditMode = rowModesModel[id]?.mode === GridRowModes.Edit;
-
-        if (isInEditMode) {
-          return [
-            <GridActionsCellItem
-              key={id}
-              icon={<SaveIcon />}
-              showInMenu={false}
-              label="Save"
-              sx={{
-                color: "primary.main",
-              }}
-              onClick={handleSaveClick(id)}
-            />,
-            <GridActionsCellItem
-              showInMenu={false}
-              key={id}
-              icon={<CancelIcon />}
-              label="Cancel"
-              className="textPrimary"
-              onClick={handleCancelClick(id)}
-              color="inherit"
-            />,
-          ];
-        }
-
         return [
-          <GridActionsCellItem
-            showInMenu={false}
-            key={id}
-            icon={<EditIcon />}
-            label="Edit"
-            className="textPrimary"
-            onClick={handleEditClick(id)}
-            color="inherit"
-          />,
           <GridActionsCellItem
             showInMenu={false}
             key={id}
@@ -167,68 +165,88 @@ const FormulaIngredients = () => {
     },
   ];
 
-  const handleRowEditStop: GridEventListener<"rowEditStop"> = (
-    params,
-    event
-  ) => {
-    if (params.reason === GridRowEditStopReasons.rowFocusOut) {
-      event.defaultMuiPrevented = true;
-    }
-  };
-
-  const handleEditClick = (id: GridRowId) => () => {
-    setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.Edit } });
-  };
-
-  const handleSaveClick = (id: GridRowId) => () => {
-    setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.View } });
-  };
-
   const handleDeleteClick = (id: GridRowId) => {
     setRows(rows.filter((row) => row.id !== id));
+    handleDelete(id);
   };
 
-  const handleCancelClick = (id: GridRowId) => () => {
-    setRowModesModel({
-      ...rowModesModel,
-      [id]: { mode: GridRowModes.View, ignoreModifications: true },
-    });
+  const processRowUpdate = async (newRow: GridRowModel) => {
+    if (id == null) return;
 
-    const editedRow = rows.find((row) => row.id === id);
-    if (editedRow!.isNew) {
-      setRows(rows.filter((row) => row.id !== id));
-    }
-  };
+    const bodyData: Partial<FormulaRequirement> = {
+      value: newRow.value,
+      nutrient: (newRow.nutrient as Nutrient).id,
+    };
+    if (newRow.isNew) await onCreate(newRow, bodyData);
+    else await onUpdate(newRow, bodyData);
 
-  const processRowUpdate = (newRow: GridRowModel) => {
     const updatedRow = { ...newRow, isNew: false };
-    setRows(rows.map((row) => (row.id === newRow.id ? updatedRow : row)));
+
     return updatedRow;
   };
 
-  const handleRowModesModelChange = (newRowModesModel: GridRowModesModel) => {
-    setRowModesModel(newRowModesModel);
+  const onCreate = async (
+    row: GridRowModel,
+    data: Partial<FormulaRequirement>
+  ) => {
+    if (id == null) return;
+
+    try {
+      const response = await formula_service.requirement.create(id, data);
+      if (response.status == 201) {
+        const updatedRow = { ...row, id: response.data.id, isNew: false };
+        setRows([...rows, updatedRow]);
+      }
+    } catch (ex) {
+      enqueueSnackbar("Failed", { variant: "error" });
+    }
+  };
+
+  const onUpdate = async (
+    newRow: GridRowModel,
+    data: Partial<FormulaRequirement>
+  ) => {
+    if (id == null) return;
+
+    try {
+      const response = await formula_service.requirement.update(
+        id,
+        newRow.id || 0,
+        data
+      );
+    } catch (ex) {
+      enqueueSnackbar("Failed", { variant: "error" });
+    }
+  };
+
+  const handleDelete = async (row_id: string | number) => {
+    if (id == null) return;
+    const response = await formula_service.requirement.delete(
+      id,
+      Number(row_id) || 0
+    );
+    if (response.status == 204)
+      enqueueSnackbar(messages.deleteSuccess(), { variant: "success" });
+    else enqueueSnackbar(messages.deleteError(), { variant: "error" });
   };
 
   return (
     <>
       <EditableTable
-        sx={{ background: "white", minHeight: "100px" }}
+        sx={{ background: "white", minHeight: "20px" }}
         rows={rows}
         editMode="row"
         rowHeight={40}
         columns={columns}
+        disableRowSelectionOnClick
         slots={{
           toolbar: EditToolbar,
           noRowsOverlay: EditableTableCustomNoRowsOverlay,
           loadingOverlay: LinearProgress,
         }}
-        rowModesModel={rowModesModel}
-        onRowModesModelChange={handleRowModesModelChange}
-        onRowEditStop={handleRowEditStop}
         processRowUpdate={processRowUpdate}
         slotProps={{
-          toolbar: { setRows, setRowModesModel },
+          toolbar: { setRows, processRowUpdate, rows },
         }}
       />
     </>

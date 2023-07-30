@@ -15,7 +15,7 @@ const FormulasPage = () => {
   return (
     <ListLayout
       breadcrumbs={<Breadcrumbs items={breadcrumbs} />}
-      header={<Typography variant="title">Units</Typography>}
+      header={<Typography variant="title">Feed Formulas</Typography>}
       actions={<Actions />}
     >
       <UnitsList />
