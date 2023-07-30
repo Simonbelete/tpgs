@@ -17,4 +17,5 @@ export default {
   fileNotSelected: () => "Please select a file",
   deleteSuccess: () => "Successfully Deleted",
   deleteError: () => "Error deleting",
+  duplicateError: () => "Duplicate, Already exists",
 };

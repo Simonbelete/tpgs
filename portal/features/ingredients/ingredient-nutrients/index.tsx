@@ -36,14 +36,19 @@ import randomId from "@/util/randomId";
 import { AxiosResponse } from "axios";
 
 const EditToolbar = (props: {
+  rows: any;
   setRows: (newRows: (oldRows: GridRowsProp) => GridRowsProp) => void;
   processRowUpdate: (newRow: GridRowModel) => void;
 }) => {
-  const { setRows, processRowUpdate } = props;
+  const { setRows, processRowUpdate, rows } = props;
   const [open, setOpen] = useState(false);
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+
+  const checkDuplicate = (id: any) => {
+    return rows.some((e: any) => e.nutrient.id == id);
+  };
 
   const handleSelected = (value?: Nutrient) => {
     if (value != undefined || value != null) {
@@ -53,9 +58,12 @@ const EditToolbar = (props: {
         value: 0,
         isNew: true,
       };
-      setRows((oldRows) => [...oldRows, newRow]);
-      console.log(newRow);
-      processRowUpdate(newRow);
+      if (checkDuplicate(value.id))
+        enqueueSnackbar(messages.duplicateError(), { variant: "warning" });
+      else {
+        setRows((oldRows) => [...oldRows, newRow]);
+        processRowUpdate(newRow);
+      }
     }
     handleClose();
   };
@@ -247,7 +255,7 @@ const IngredientNutrients = ({ id }: { id?: number }) => {
         }}
         processRowUpdate={processRowUpdate}
         slotProps={{
-          toolbar: { setRows, processRowUpdate },
+          toolbar: { setRows, processRowUpdate, rows },
         }}
       />
     </>
