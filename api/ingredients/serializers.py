@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from . import models
-from nutrients.serializers import NutrientSerializer_POST
+from nutrients.serializers import NutrientSerializer_POST, NutrientSerializer_GET
 from nutrients.models import Nutrient
 
 
@@ -48,8 +48,9 @@ class IngredientTypeSerializer_GET(serializers.ModelSerializer):
 
 
 # Ingredient -> Nutrients
-
 class IngredientNutrientSerializer_GET(serializers.ModelSerializer):
+    nutrient = NutrientSerializer_GET()
+
     class Meta:
         model = models.IngredientNutrient
         fields = '__all__'

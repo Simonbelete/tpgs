@@ -1,5 +1,5 @@
 import { AxiosResponse } from "axios";
-import { Response, Ingredient, Nutrient } from "@/models";
+import { Response, Ingredient, Nutrient, IngredientNutrient } from "@/models";
 import client from "@/services/client";
 import clientSSR from "@/services/client_ssr";
 import { NextPageContext } from "next";
@@ -56,18 +56,18 @@ export default {
   nutrient: {
     get: async (
       ingredient_id: number
-    ): Promise<AxiosResponse<Response<Nutrient[]>>> =>
+    ): Promise<AxiosResponse<Response<IngredientNutrient[]>>> =>
       client.get(`${URL}/${ingredient_id}/${NUTRIENT_URL}/`),
     create: async (
       ingredient_id: number,
-      data: Partial<Nutrient>
-    ): Promise<AxiosResponse<Response<Nutrient[]>>> =>
+      data: Partial<IngredientNutrient>
+    ): Promise<AxiosResponse<Response<IngredientNutrient[]>>> =>
       client.post(`${URL}/${ingredient_id}/${NUTRIENT_URL}/`, data),
     update: async (
       ingredient_id: number,
       nutrient_id: number,
-      data: Partial<Nutrient>
-    ): Promise<AxiosResponse<Response<Nutrient[]>>> =>
+      data: Partial<IngredientNutrient>
+    ): Promise<AxiosResponse<Response<IngredientNutrient[]>>> =>
       client.post(
         `${URL}/${ingredient_id}/${NUTRIENT_URL}/${nutrient_id}/`,
         data

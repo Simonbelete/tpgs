@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import _ from "lodash";
 import {
   DataGrid,
   GridRowsProp,
@@ -20,20 +21,18 @@ import {
   EditableTable,
   EditableTableCustomNoRowsOverlay,
 } from "@/components/tables";
-import { Nutrient } from "@/models";
+import { IngredientNutrient, Nutrient } from "@/models";
 import { useSelector, useDispatch } from "react-redux";
 import { NutrientSelectDialog } from "@/features/nutrients";
 import AddIcon from "@mui/icons-material/Add";
-import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/DeleteOutlined";
-import SaveIcon from "@mui/icons-material/Save";
-import CancelIcon from "@mui/icons-material/Close";
 import { AnyAction } from "@reduxjs/toolkit";
 import { RootState } from "@/store";
 import { setNutrients } from "../slices";
 import ingredient_service from "../services/ingredient_service";
 import { enqueueSnackbar } from "notistack";
 import messages from "@/util/messages";
+import randomId from "@/util/randomId";
 
 const EditToolbar = (props: {
   setRows: (newRows: (oldRows: GridRowsProp) => GridRowsProp) => void;
@@ -49,7 +48,14 @@ const EditToolbar = (props: {
 
   const handleSelected = (value?: Nutrient) => {
     if (value != undefined || value != null) {
-      setRows((oldRows) => [...oldRows, { ...value, isNew: true }]);
+      const newRow = {
+        id: randomId(true),
+        name: value.name,
+        nutrient: value.id,
+        value: 0,
+        isNew: true,
+      };
+      setRows((oldRows) => [...oldRows, newRow]);
     }
     handleClose();
   };
@@ -81,7 +87,7 @@ const IngredientNutrients = ({ id }: { id?: number }) => {
   const ingredient = useSelector((state: RootState) => state.ingredient);
 
   const [rows, setRows] = useState<
-    GridRowsProp<Partial<Nutrient> & { isNew: boolean }>
+    GridRowsProp<Partial<IngredientNutrient> & { isNew: boolean }>
   >([]);
 
   useEffect(() => {
@@ -93,7 +99,17 @@ const IngredientNutrients = ({ id }: { id?: number }) => {
     ingredient_service.nutrient
       .get(id)
       .then((response) => {
-        if (response.status == 200) setRows(response.data.results as any);
+        if (response.status == 200) {
+          const data = _.map(response.data.results, (e) => {
+            const val = e.nutrient instanceof Number ? {} : e.nutrient;
+            return {
+              id: (e.nutrient as Nutrient).id,
+              value: e.value,
+              ...val,
+            };
+          });
+          setRows(data as any);
+        }
       })
       .catch((ex) => {});
   }, []);
@@ -155,7 +171,6 @@ const IngredientNutrients = ({ id }: { id?: number }) => {
   };
 
   const handleUpdate = async (data: Partial<Nutrient> & { isNew: boolean }) => {
-    console.log(data);
     if (id == null) return;
     let response;
     if (data.isNew) {
@@ -165,6 +180,11 @@ const IngredientNutrients = ({ id }: { id?: number }) => {
         id,
         data.id || 0,
         data
+      );
+    }
+    if (response.status == 200 || response.status == 201) {
+      setRows(
+        rows.map((row) => (row.id === data.id ? { ...row, isNew: false } : row))
       );
     }
   };
