@@ -24,7 +24,7 @@ class Formula(CoreModel):
     name = models.CharField(max_length=100)
     purpose = models.ForeignKey(
         Purpose, on_delete=models.SET_NULL, null=True, blank=True)
-    weight = models.FloatField()
+    weight = models.FloatField(null=True, blank=True)
     note = models.TextField(null=True, blank=True)
     requirements = models.ManyToManyField(
         'nutrients.Nutrient', null=True, blank=True, through=FormulaRequirement)

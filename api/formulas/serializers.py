@@ -84,8 +84,8 @@ class FormulaSerializer_GET(serializers.ModelSerializer):
 
 
 class FormulaSerializer_POST(serializers.ModelSerializer):
-    requirements = FormulaRequirementSerializer_POST()
-    ingredients = FormulaIngredientSerializer_POST()
+    requirements = FormulaRequirementSerializer_POST(many=True, required=False)
+    ingredients = FormulaIngredientSerializer_POST(many=True, required=False)
 
     class Meta:
         model = models.Formula
