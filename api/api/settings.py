@@ -92,7 +92,8 @@ SHARED_APPS = [
     'nutrients',
     'ingredients',
     'units',
-    'purposes'
+    'purposes',
+    'formulas'
 ]
 
 TENANT_APPS = [
