@@ -4,7 +4,20 @@ import { ChartModal } from "@/components/modals";
 import { IngredientService } from "@/features/ingredients";
 import BarChartIcon from "@mui/icons-material/BarChart";
 import DonutSmallIcon from "@mui/icons-material/DonutSmall";
-import { Nutrient } from "@/models";
+import { IngredientNutrient } from "@/models";
+import {
+  BarChart,
+  Bar,
+  Cell,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+  ResponsiveContainer,
+} from "recharts";
+import { useSelector, useDispatch } from "react-redux";
+import { RootState } from "@/store";
 
 const IngredientContributionModal = ({
   id,
@@ -15,17 +28,28 @@ const IngredientContributionModal = ({
   open?: boolean;
   onClose: () => void;
 }) => {
-  const [nutrients, setNutrients] = useState<Nutrient[]>([]);
+  const dispatch = useDispatch();
+  const [nutrients, setNutrients] = useState<IngredientNutrient[]>([]);
   const [tabIndex, setTabIndex] = useState(0);
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setTabIndex(newValue);
   };
+  const formula = useSelector((state: RootState) => state.formula);
 
   useEffect(() => {
-    IngredientService.getById(id)
-      .then((response) => {})
+    IngredientService.nutrient
+      .get(id)
+      .then((response) => {
+        if (response.status == 200) setNutrients(response.data.results);
+      })
       .catch((ex) => {});
   }, []);
+
+  // const calculateNutrientContribution = () => {
+  //   const weight = 10;
+  //   const ingredientNutrient = formula.ingredients.find((e) => e.id == id);
+  //   // ingredientNutrient.
+  // };
 
   return (
     <ChartModal open={open} onClose={onClose}>

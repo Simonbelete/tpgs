@@ -19,7 +19,7 @@ import { useSelector, useDispatch } from "react-redux";
 import AddIcon from "@mui/icons-material/Add";
 import DeleteIcon from "@mui/icons-material/DeleteOutlined";
 import { RootState } from "@/store";
-import { setRequirements } from "../slices";
+import { setIngredient } from "../slices";
 import formula_service from "../services/formula_service";
 import { enqueueSnackbar } from "notistack";
 import messages from "@/util/messages";
@@ -109,7 +109,7 @@ const FormulaIngredients = ({ id }: { id?: number }) => {
     setContributionModal({ open: false });
 
   useEffect(() => {
-    dispatch(setRequirements(rows as any));
+    dispatch(setIngredient(rows as any));
   }, [rows]);
 
   useEffect(() => {

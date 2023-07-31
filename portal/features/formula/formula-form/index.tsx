@@ -84,7 +84,6 @@ const FormulaForm = ({
   });
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
-    console.log("submited");
     try {
       if (formula == null)
         await create({

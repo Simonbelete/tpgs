@@ -3,6 +3,7 @@ from rest_framework import serializers
 from . import models
 from nutrients.models import Nutrient
 from ingredients.models import Ingredient
+from ingredients.serializers import IngredientSerializer_GET
 from nutrients.serializers import NutrientSerializer_POST, NutrientSerializer_GET
 from purposes.serializers import PurposeSerializer_GET
 
@@ -47,6 +48,8 @@ class FormulaRequirementSerializer_PATCH(serializers.ModelSerializer):
 
 
 class FormulaIngredientSerializer_GET(serializers.ModelSerializer):
+    ingredient = IngredientSerializer_GET()
+
     class Meta:
         model = models.FormulaIngredient
         fields = '__all__'

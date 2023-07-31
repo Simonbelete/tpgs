@@ -1,34 +1,34 @@
 [
     {
-        "model": "api.Unit",
+        "model": "units.Unit",
         "pk": 1,
         "fields": {
             "name": "%"
         }
     },
     {
-        "model": "api.Unit",
+        "model": "units.Unit",
         "pk": 2,
         "fields": {
             "name": "g"
         }
     },
     {
-        "model": "api.Unit",
+        "model": "units.Unit",
         "pk": 3,
         "fields": {
             "name": "kg"
         }
     },
     {
-        "model": "api.Unit",
+        "model": "units.Unit",
         "pk": 4,
         "fields": {
             "name": "t"
         }
     },
     {
-        "model": "api.Unit",
+        "model": "units.Unit",
         "pk": 5,
         "fields": {
             "name": "MJ/Kg"

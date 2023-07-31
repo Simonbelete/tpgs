@@ -49,8 +49,40 @@ class FormulaIngredientViewSet(viewsets.ModelViewSet):
 
 
 class FormulateViewSet(viewsets.ViewSet):
+    """Return computed total cost and total nutrients sum
+    """
+
     def get_queryset(self):
-        return models.Formula.objects.filter(pk=self.kwargs['formula_pk'])
+        return models.Formula.objects.get(pk=self.kwargs['formula_pk'])
 
     def create(self, request, formula_pk=None):
+        formula = self.get_queryset()
+        requirements = formula.requirements.all()
+        ingredients = formula.ingredients.all()
+        print('------')
+        print(requirements)
+        print(ingredients)
+        result = []
+        for req in requirements.iterator():
+            nu_sum = 0
+            for ing in ingredients.iterator():
+                curr_nu = ing.ingredient.nutrients.all().get(pk=req.nutrient.id)
+                nu_sum += curr_nu.value * formula.ration / 100
+            result.append({
+                {**req, 'result': nu_sum}
+            })
+        return Response(result)
+
+
+# Formula -> Ingredient -> Nutrients
+class FormulaIngredientNutrients(viewsets.ViewSet):
+    def get_queryset(self):
+        return models.FormulaIngredient.objects.get(formula=self.kwargs['formula_pk'], pk=self.kwargs['ingredient_pk'])
+
+    def list(self, request, formula_pk=None, ingredient_pk=None):
+        data = []
+        for nutrient in self.get_queryset().ingredient.nutrients.all().iterator():
+            data.append({
+                'result': self.get_queryset().ingredient.result * 1
+            })
         return Response({})
