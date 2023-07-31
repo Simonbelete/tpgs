@@ -1,6 +1,8 @@
 import { AxiosResponse } from "axios";
 import { Response, Formula, FormulaRequirement } from "@/models";
 import client from "@/services/client";
+import clientSSR from "@/services/client_ssr";
+import { NextPageContext } from "next";
 
 const URL = "/formulas";
 const HISTORY_URL = `histories`;
@@ -17,6 +19,11 @@ export default {
   update: async (id: number, data: Partial<Formula>) =>
     client.patch(`${URL}/${id}/`, data),
   delete: async (id: number) => client.delete(`${URL}/${id}/`),
+  getByIdSSR: async (
+    context: NextPageContext,
+    id: number
+  ): Promise<AxiosResponse<Response<Formula>>> =>
+    clientSSR(context).get(`${URL}/${id}`),
   requirement: {
     get: async (
       ingredient_id: number

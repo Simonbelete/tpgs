@@ -66,7 +66,6 @@ const FormulaForm = ({
   const formulaState = useSelector((state: RootState) => state.formula);
 
   const handleOnFormulate = () => {
-    console.log("---------");
     handleSubmit(onSubmit)();
   };
 
@@ -190,7 +189,7 @@ const FormulaForm = ({
                   />
                 </Grid>
                 {/* purpose */}
-                <Grid item xs={12} md={6}>
+                {/* <Grid item xs={12} md={6}>
                   <Controller
                     name={"purpose"}
                     control={control}
@@ -211,7 +210,7 @@ const FormulaForm = ({
                       />
                     )}
                   />
-                </Grid>
+                </Grid> */}
                 {/* Weight Requirement */}
                 <Grid item xs={12} md={6}>
                   <Controller
