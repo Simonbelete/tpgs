@@ -25,6 +25,11 @@ import { enqueueSnackbar } from "notistack";
 import messages from "@/util/messages";
 import randomId from "@/util/randomId";
 import { IngredientSelectDialog } from "@/features/ingredients";
+import EqualizerIcon from "@mui/icons-material/Equalizer";
+import BarChartIcon from "@mui/icons-material/BarChart";
+import TimelineIcon from "@mui/icons-material/Timeline";
+import InsertChartIcon from "@mui/icons-material/InsertChart";
+import IngredientContributionModal from "../ingredient-contribution-modal";
 
 const EditToolbar = (props: {
   rows: any;
@@ -85,10 +90,23 @@ const EditToolbar = (props: {
 const FormulaIngredients = ({ id }: { id?: number }) => {
   const dispatch = useDispatch();
   const ingredient = useSelector((state: RootState) => state.ingredient);
-
   const [rows, setRows] = useState<
     GridRowsProp<Partial<FormulaIngredient> & Partial<{ isNew: boolean }>>
   >([]);
+  const [contributionModal, setContributionModal] = useState<{
+    id?: number;
+    open?: boolean;
+  }>({
+    id: 0,
+    open: false,
+  });
+
+  const handleOpenContributionModal = () =>
+    setContributionModal({
+      open: true,
+    });
+  const handleCloseContributionModal = () =>
+    setContributionModal({ open: false });
 
   useEffect(() => {
     dispatch(setRequirements(rows as any));
@@ -147,7 +165,7 @@ const FormulaIngredients = ({ id }: { id?: number }) => {
     },
     {
       field: "value",
-      headerName: "Value",
+      headerName: "Value[%]",
       flex: 1,
       minWidth: 150,
       editable: true,
@@ -160,6 +178,14 @@ const FormulaIngredients = ({ id }: { id?: number }) => {
       cellClassName: "actions",
       getActions: ({ id }) => {
         return [
+          <GridActionsCellItem
+            showInMenu={false}
+            key={id}
+            icon={<InsertChartIcon />}
+            label="Contribution"
+            onClick={() => handleOpenContributionModal()}
+            color="inherit"
+          />,
           <GridActionsCellItem
             showInMenu={false}
             key={id}
@@ -230,7 +256,7 @@ const FormulaIngredients = ({ id }: { id?: number }) => {
 
   const handleDelete = async (row_id: string | number) => {
     if (id == null) return;
-    const response = await formula_service.requirement.delete(
+    const response = await formula_service.ingredient.delete(
       id,
       Number(row_id) || 0
     );
@@ -241,6 +267,11 @@ const FormulaIngredients = ({ id }: { id?: number }) => {
 
   return (
     <>
+      <IngredientContributionModal
+        id={contributionModal.id || 0}
+        open={contributionModal.open}
+        onClose={handleCloseContributionModal}
+      />
       <EditableTable
         sx={{ background: "white", minHeight: "20px" }}
         rows={rows}

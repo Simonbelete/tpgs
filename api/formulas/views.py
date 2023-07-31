@@ -1,6 +1,9 @@
 from django.shortcuts import render
 from rest_framework import viewsets, status
 from rest_framework.response import Response
+from rest_framework.views import APIView
+from rest_framework.response import Response
+
 from . import models
 from . import serializers
 
@@ -41,3 +44,13 @@ class FormulaIngredientViewSet(viewsets.ModelViewSet):
         if self.request.method in ['PUT', 'PATCH']:
             return serializers.FormulaIngredientSerializer_PATCH
         return serializers.FormulaIngredientSerializer_GET
+
+# Formulate Calculation
+
+
+class FormulateViewSet(viewsets.ViewSet):
+    def get_queryset(self):
+        return models.Formula.objects.filter(pk=self.kwargs['formula_pk'])
+
+    def create(self, request, formula_pk=None):
+        return Response({})
