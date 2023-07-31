@@ -54,7 +54,7 @@ class FormulaIngredientSerializer_GET(serializers.ModelSerializer):
 class FormulaIngredientSerializer_POST(serializers.ModelSerializer):
     class Meta:
         model = models.FormulaIngredient
-        fields = ['id', 'formula', 'ratio_min', 'ratio_max']
+        fields = ['id', 'ingredient', 'ratio_min', 'ratio_max']
 
     def create(self, validated_data):
         formula = models.Formula.objects.get(

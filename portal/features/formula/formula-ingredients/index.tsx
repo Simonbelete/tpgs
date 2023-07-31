@@ -14,9 +14,8 @@ import {
   EditableTable,
   EditableTableCustomNoRowsOverlay,
 } from "@/components/tables";
-import { FormulaRequirement, Nutrient } from "@/models";
+import { FormulaIngredient, Ingredient } from "@/models";
 import { useSelector, useDispatch } from "react-redux";
-import { NutrientSelectDialog } from "@/features/nutrients";
 import AddIcon from "@mui/icons-material/Add";
 import DeleteIcon from "@mui/icons-material/DeleteOutlined";
 import { RootState } from "@/store";
@@ -25,6 +24,7 @@ import formula_service from "../services/formula_service";
 import { enqueueSnackbar } from "notistack";
 import messages from "@/util/messages";
 import randomId from "@/util/randomId";
+import { IngredientSelectDialog } from "@/features/ingredients";
 
 const EditToolbar = (props: {
   rows: any;
@@ -38,15 +38,16 @@ const EditToolbar = (props: {
   const handleClose = () => setOpen(false);
 
   const checkDuplicate = (id: any) => {
-    return rows.some((e: any) => e.nutrient.id == id);
+    return rows.some((e: any) => e.ingredient.id == id);
   };
 
-  const handleSelected = (value?: Nutrient) => {
+  const handleSelected = (value?: Ingredient) => {
     if (value != undefined || value != null) {
       const newRow = {
         id: randomId(true),
-        nutrient: value,
-        value: 0,
+        ingredient: value,
+        ratio_min: 0,
+        ratio_max: 0,
         isNew: true,
       };
       if (checkDuplicate(value.id))
@@ -61,7 +62,7 @@ const EditToolbar = (props: {
 
   return (
     <>
-      <NutrientSelectDialog
+      <IngredientSelectDialog
         open={open}
         onSelected={handleSelected}
         onClose={handleClose}
@@ -86,7 +87,7 @@ const FormulaIngredients = ({ id }: { id?: number }) => {
   const ingredient = useSelector((state: RootState) => state.ingredient);
 
   const [rows, setRows] = useState<
-    GridRowsProp<Partial<FormulaRequirement> & Partial<{ isNew: boolean }>>
+    GridRowsProp<Partial<FormulaIngredient> & Partial<{ isNew: boolean }>>
   >([]);
 
   useEffect(() => {
@@ -95,7 +96,7 @@ const FormulaIngredients = ({ id }: { id?: number }) => {
 
   useEffect(() => {
     if (id == null) return;
-    formula_service.requirement
+    formula_service.ingredient
       .get(id)
       .then((response) => {
         if (response.status == 200) {
@@ -112,23 +113,37 @@ const FormulaIngredients = ({ id }: { id?: number }) => {
       flex: 1,
       minWidth: 100,
       valueGetter: (params) =>
-        params.row.nutrient ? params.row.nutrient.code : "",
+        params.row.ingredient ? params.row.ingredient.code : "",
     },
     {
-      field: "nutrient",
+      field: "ingredient",
       headerName: "Name",
       flex: 1,
       minWidth: 100,
       valueGetter: (params) =>
-        params.row.nutrient ? params.row.nutrient.name : "",
+        params.row.ingredient ? params.row.ingredient.name : "",
     },
     {
-      field: "abbreviation",
-      headerName: "Abbreviation",
+      field: "price",
+      headerName: "Price",
+      flex: 1,
+      minWidth: 100,
+      valueGetter: (params) =>
+        params.row.ingredient ? params.row.ingredient.price : "",
+    },
+    {
+      field: "ratio_min",
+      headerName: "Min[%]",
       flex: 1,
       minWidth: 150,
-      valueGetter: (params) =>
-        params.row.nutrient ? params.row.nutrient.abbreviation : "",
+      editable: true,
+    },
+    {
+      field: "ratio_max",
+      headerName: "Min[%]",
+      flex: 1,
+      minWidth: 150,
+      editable: true,
     },
     {
       field: "value",
@@ -136,13 +151,6 @@ const FormulaIngredients = ({ id }: { id?: number }) => {
       flex: 1,
       minWidth: 150,
       editable: true,
-    },
-    {
-      field: "unit",
-      headerName: "Unit",
-      flex: 1,
-      minWidth: 150,
-      valueGetter: (params) => (params.row.unit ? params.row.unit.name : ""),
     },
     {
       field: "actions",
@@ -173,9 +181,10 @@ const FormulaIngredients = ({ id }: { id?: number }) => {
   const processRowUpdate = async (newRow: GridRowModel) => {
     if (id == null) return;
 
-    const bodyData: Partial<FormulaRequirement> = {
-      value: newRow.value,
-      nutrient: (newRow.nutrient as Nutrient).id,
+    const bodyData: Partial<FormulaIngredient> = {
+      ration_min: newRow.ration_min,
+      ratio_max: newRow.ratio_max,
+      ingredient: (newRow.ingredient as Ingredient).id,
     };
     if (newRow.isNew) await onCreate(newRow, bodyData);
     else await onUpdate(newRow, bodyData);
@@ -187,12 +196,12 @@ const FormulaIngredients = ({ id }: { id?: number }) => {
 
   const onCreate = async (
     row: GridRowModel,
-    data: Partial<FormulaRequirement>
+    data: Partial<FormulaIngredient>
   ) => {
     if (id == null) return;
 
     try {
-      const response = await formula_service.requirement.create(id, data);
+      const response = await formula_service.ingredient.create(id, data);
       if (response.status == 201) {
         const updatedRow = { ...row, id: response.data.id, isNew: false };
         setRows([...rows, updatedRow]);
@@ -204,12 +213,12 @@ const FormulaIngredients = ({ id }: { id?: number }) => {
 
   const onUpdate = async (
     newRow: GridRowModel,
-    data: Partial<FormulaRequirement>
+    data: Partial<FormulaIngredient>
   ) => {
     if (id == null) return;
 
     try {
-      const response = await formula_service.requirement.update(
+      const response = await formula_service.ingredient.update(
         id,
         newRow.id || 0,
         data

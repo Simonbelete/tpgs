@@ -1,5 +1,10 @@
 import { AxiosResponse } from "axios";
-import { Response, Formula, FormulaRequirement } from "@/models";
+import {
+  Response,
+  Formula,
+  FormulaRequirement,
+  FormulaIngredient,
+} from "@/models";
 import client from "@/services/client";
 import clientSSR from "@/services/client_ssr";
 import { NextPageContext } from "next";
@@ -9,6 +14,7 @@ const HISTORY_URL = `histories`;
 const EXPORT_URL = `${URL}/export`;
 const IMPORT_URL = `${URL}/import`;
 const REQUIREMENT_URL = `requirements`;
+const INGREDIENT_URL = `ingredients`;
 
 export default {
   get: async (): Promise<AxiosResponse<Response<Formula[]>>> =>
@@ -26,26 +32,48 @@ export default {
     clientSSR(context).get(`${URL}/${id}`),
   requirement: {
     get: async (
-      ingredient_id: number
+      formula_id: number
     ): Promise<AxiosResponse<Response<FormulaRequirement[]>>> =>
-      client.get(`${URL}/${ingredient_id}/${REQUIREMENT_URL}/`),
+      client.get(`${URL}/${formula_id}/${REQUIREMENT_URL}/`),
     create: async (
-      ingredient_id: number,
+      formula_id: number,
       data: Partial<FormulaRequirement>
     ): Promise<AxiosResponse<FormulaRequirement>> =>
-      client.post(`${URL}/${ingredient_id}/${REQUIREMENT_URL}/`, data),
+      client.post(`${URL}/${formula_id}/${REQUIREMENT_URL}/`, data),
     update: async (
-      ingredient_id: number,
-      nutrient_id: number,
+      formula_id: number,
+      requirement_id: number,
       data: Partial<FormulaRequirement>
     ): Promise<AxiosResponse<FormulaRequirement>> =>
       client.patch(
-        `${URL}/${ingredient_id}/${REQUIREMENT_URL}/${nutrient_id}/`,
+        `${URL}/${formula_id}/${REQUIREMENT_URL}/${requirement_id}/`,
         data
       ),
-    delete: async (ingredient_id: number, nutrient_id: number) =>
+    delete: async (formula_id: number, requirement_id: number) =>
       client.delete(
-        `${URL}/${ingredient_id}/${REQUIREMENT_URL}/${nutrient_id}/`
+        `${URL}/${formula_id}/${REQUIREMENT_URL}/${requirement_id}/`
       ),
+  },
+  ingredient: {
+    get: async (
+      formula_id: number
+    ): Promise<AxiosResponse<Response<FormulaIngredient[]>>> =>
+      client.get(`${URL}/${formula_id}/${INGREDIENT_URL}/`),
+    create: async (
+      formula_id: number,
+      data: Partial<FormulaIngredient>
+    ): Promise<AxiosResponse<FormulaIngredient>> =>
+      client.post(`${URL}/${formula_id}/${INGREDIENT_URL}/`, data),
+    update: async (
+      formula_id: number,
+      ingredient_id: number,
+      data: Partial<FormulaIngredient>
+    ): Promise<AxiosResponse<FormulaIngredient>> =>
+      client.patch(
+        `${URL}/${formula_id}/${INGREDIENT_URL}/${ingredient_id}/`,
+        data
+      ),
+    delete: async (formula_id: number, ingredient_id: number) =>
+      client.delete(`${URL}/${formula_id}/${INGREDIENT_URL}/${ingredient_id}/`),
   },
 };
