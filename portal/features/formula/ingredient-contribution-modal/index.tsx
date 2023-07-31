@@ -22,6 +22,7 @@ import {
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "@/store";
 import formula_service from "../services/formula_service";
+import randomColor from "@/util/randomColor";
 
 const renderActiveShape = (props: any) => {
   const RADIAN = Math.PI / 180;
@@ -170,14 +171,14 @@ const IngredientContributionModal = ({
                 <YAxis />
                 <Tooltip />
                 <Legend />
-                <Bar dataKey="qty" />
+                <Bar dataKey="qty" fill={randomColor()} />
               </BarChart>
             </ResponsiveContainer>
           </>
         )}
         {tabIndex == 1 && (
           <>
-            <ResponsiveContainer width="100%" height="100%">
+            <ResponsiveContainer width="100%" height={500}>
               <PieChart width={400} height={400}>
                 <Pie
                   activeIndex={activeIndex}
@@ -187,7 +188,7 @@ const IngredientContributionModal = ({
                   cy="50%"
                   innerRadius={60}
                   outerRadius={80}
-                  fill="#8884d8"
+                  fill={randomColor()}
                   dataKey="percentage"
                   onMouseEnter={onPieEnter}
                 />
