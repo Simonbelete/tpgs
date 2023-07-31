@@ -7,5 +7,5 @@ export default interface FormulaIngredient {
   ingredient: number | Ingredient;
   ration_min: number;
   ratio_max: number;
-  value: number;
+  ration: number;
 }

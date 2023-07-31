@@ -164,7 +164,7 @@ const FormulaIngredients = ({ id }: { id?: number }) => {
       editable: true,
     },
     {
-      field: "value",
+      field: "ration",
       headerName: "Value[%]",
       flex: 1,
       minWidth: 150,
@@ -208,6 +208,7 @@ const FormulaIngredients = ({ id }: { id?: number }) => {
     if (id == null) return;
 
     const bodyData: Partial<FormulaIngredient> = {
+      ration: newRow.ration,
       ration_min: newRow.ration_min,
       ratio_max: newRow.ratio_max,
       ingredient: (newRow.ingredient as Ingredient).id,

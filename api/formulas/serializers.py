@@ -30,6 +30,14 @@ class FormulaRequirementSerializer_POST(serializers.ModelSerializer):
         return super().create(validated_data)
 
 
+class FormulaRequirementSerializer_REF(serializers.ModelSerializer):
+    id = serializers.IntegerField()
+
+    class Meta:
+        model = models.FormulaRequirement
+        fields = ['id', 'value']
+
+
 class FormulaRequirementSerializer_PATCH(serializers.ModelSerializer):
     class Meta:
         model = models.FormulaRequirement
@@ -58,7 +66,7 @@ class FormulaIngredientSerializer_GET(serializers.ModelSerializer):
 class FormulaIngredientSerializer_POST(serializers.ModelSerializer):
     class Meta:
         model = models.FormulaIngredient
-        fields = ['id', 'ingredient', 'ratio_min', 'ratio_max']
+        fields = ['id', 'ingredient', 'ratio_min', 'ratio_max', 'ration']
 
     def create(self, validated_data):
         formula = models.Formula.objects.get(
@@ -94,12 +102,12 @@ class FormulaSerializer_GET(serializers.ModelSerializer):
 
 
 class FormulaSerializer_POST(serializers.ModelSerializer):
-    requirements = FormulaRequirementSerializer_POST(many=True, required=False)
+    requirements = FormulaRequirementSerializer_REF(many=True, required=False)
     ingredients = FormulaIngredientSerializer_POST(many=True, required=False)
 
     class Meta:
         model = models.Formula
-        fields = '__all__'
+        fields = ['name', 'weight', 'requirements', 'ingredients']
 
     def create(self, validated_data):
         requirements = validated_data.pop('requirements', [])

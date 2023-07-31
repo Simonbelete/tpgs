@@ -6,6 +6,7 @@ from rest_framework.response import Response
 
 from . import models
 from . import serializers
+from ingredients.models import IngredientNutrient
 
 
 class FormulaViewSet(viewsets.ModelViewSet):
@@ -81,8 +82,15 @@ class FormulaIngredientNutrients(viewsets.ViewSet):
 
     def list(self, request, formula_pk=None, ingredient_pk=None):
         data = []
-        for nutrient in self.get_queryset().ingredient.nutrients.all().iterator():
+        print('************')
+        print(self.get_queryset().ingredient)
+        print()
+        for ingredient_nutrient in IngredientNutrient.objects.filter(
+                ingredient=self.get_queryset().ingredient).iterator():
+            print('-------------')
+            print(ingredient_nutrient.ingredient)
+            print(ingredient_nutrient.value)
             data.append({
-                'result': self.get_queryset().ingredient.result * 1
+                'qty': self.get_queryset().ration * ingredient_nutrient.value / 100
             })
-        return Response({})
+        return Response({'results': data})
