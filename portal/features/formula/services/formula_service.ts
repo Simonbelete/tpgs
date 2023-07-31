@@ -4,6 +4,7 @@ import {
   Formula,
   FormulaRequirement,
   FormulaIngredient,
+  Nutrient,
 } from "@/models";
 import client from "@/services/client";
 import clientSSR from "@/services/client_ssr";
@@ -15,6 +16,7 @@ const EXPORT_URL = `${URL}/export`;
 const IMPORT_URL = `${URL}/import`;
 const REQUIREMENT_URL = `requirements`;
 const INGREDIENT_URL = `ingredients`;
+const NUTRIENT_URL = `nutrients`;
 
 export default {
   get: async (): Promise<AxiosResponse<Response<Formula[]>>> =>
@@ -75,5 +77,20 @@ export default {
       ),
     delete: async (formula_id: number, ingredient_id: number) =>
       client.delete(`${URL}/${formula_id}/${INGREDIENT_URL}/${ingredient_id}/`),
+    nutrient: {
+      /**
+       *
+       * @param formula_id
+       * @param ingredient_id Formula's ingredient id i.e @FormulaIngredient id
+       * @returns
+       */
+      get: async (
+        formula_id: number,
+        ingredient_id: number
+      ): Promise<AxiosResponse<Response<Nutrient[]>>> =>
+        client.get(
+          `${URL}/${formula_id}/${INGREDIENT_URL}/${ingredient_id}/${NUTRIENT_URL}/`
+        ),
+    },
   },
 };

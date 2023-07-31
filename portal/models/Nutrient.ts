@@ -9,4 +9,6 @@ export default interface Nutrient {
   description: string;
   nutrient_group: NutrientGroup | number;
   unit: number | Unit;
+  qty?: number;
+  percentage?: number;
 }

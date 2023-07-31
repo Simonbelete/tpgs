@@ -101,8 +101,9 @@ const FormulaIngredients = ({ id }: { id?: number }) => {
     open: false,
   });
 
-  const handleOpenContributionModal = () =>
+  const handleOpenContributionModal = (id?: number) =>
     setContributionModal({
+      id: id,
       open: true,
     });
   const handleCloseContributionModal = () =>
@@ -183,7 +184,7 @@ const FormulaIngredients = ({ id }: { id?: number }) => {
             key={id}
             icon={<InsertChartIcon />}
             label="Contribution"
-            onClick={() => handleOpenContributionModal()}
+            onClick={() => handleOpenContributionModal(Number(id))}
             color="inherit"
           />,
           <GridActionsCellItem
