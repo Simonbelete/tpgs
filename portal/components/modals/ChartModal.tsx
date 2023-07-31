@@ -8,7 +8,7 @@ const style = {
   left: "50%",
   transform: "translate(-50%, -50%)",
   width: "60%",
-  height: "50%",
+  height: "60%",
   bgcolor: "background.paper",
   // border: "1px solid #000",
   borderRadius: "8px",
@@ -23,7 +23,7 @@ const ChartModal = ({
 }: {
   open?: boolean;
   onClose: () => void;
-  children: ReactElement;
+  children: ReactElement | ReactElement[];
 }) => {
   const handleClose = useCallback(() => onClose(), [onClose]);
 
