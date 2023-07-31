@@ -14,6 +14,7 @@ import {
   TextField,
   InputAdornment,
   Stack,
+  Chip,
 } from "@mui/material";
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -154,8 +155,18 @@ const FormulaForm = ({
       <form onSubmit={handleSubmit(onSubmit)}>
         <Tabs value={tabIndex} onChange={handleChange}>
           <Tab label="General" {...a11yProps(0)} />
-          <Tab label="Ingredients" {...a11yProps(1)} />
-          <Tab label="Requirements" {...a11yProps(2)} />
+          <Tab
+            label="Ingredients"
+            icon={<Chip label={formula?.ingredient_count} size="small" />}
+            iconPosition="end"
+            {...a11yProps(1)}
+          />
+          <Tab
+            label="Requirements"
+            icon={<Chip label={formula?.requirement_count} size="small" />}
+            iconPosition="end"
+            {...a11yProps(2)}
+          />
         </Tabs>
         <Box mx={2} my={4} pb={4}>
           {tabIndex == 0 && (

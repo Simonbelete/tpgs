@@ -4,6 +4,7 @@ from . import models
 from nutrients.models import Nutrient
 from ingredients.models import Ingredient
 from nutrients.serializers import NutrientSerializer_POST, NutrientSerializer_GET
+from purposes.serializers import PurposeSerializer_GET
 
 # Formula -> Requirements
 
@@ -81,9 +82,12 @@ class FormulaIngredientSerializer_PATCH(serializers.ModelSerializer):
 
 
 class FormulaSerializer_GET(serializers.ModelSerializer):
+    purpose = PurposeSerializer_GET()
+
     class Meta:
         model = models.Formula
-        fields = '__all__'
+        fields = ['id', 'purpose', 'weight', 'note',
+                  'requirement_count', 'ingredient_count']
 
 
 class FormulaSerializer_POST(serializers.ModelSerializer):

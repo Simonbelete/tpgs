@@ -30,3 +30,11 @@ class Formula(CoreModel):
         'nutrients.Nutrient', null=True, blank=True, through=FormulaRequirement)
     ingredients = models.ManyToManyField(
         'ingredients.Ingredient', null=True, blank=True, through=FormulaIngredient)
+
+    @property
+    def requirement_count(self):
+        return self.requirements.count()
+
+    @property
+    def ingredient_count(self):
+        return self.ingredients.count()

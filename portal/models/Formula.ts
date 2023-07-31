@@ -10,4 +10,6 @@ export default interface Formula {
   note: string;
   requirements: number[] | FormulaRequirement[];
   ingredients: number[] | FormulaIngredient[];
+  requirement_count?: number;
+  ingredient_count?: number;
 }
