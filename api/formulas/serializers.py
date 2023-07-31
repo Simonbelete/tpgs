@@ -3,11 +3,14 @@ from rest_framework import serializers
 from . import models
 from nutrients.models import Nutrient
 from ingredients.models import Ingredient
+from nutrients.serializers import NutrientSerializer_POST, NutrientSerializer_GET
 
 # Formula -> Requirements
 
 
 class FormulaRequirementSerializer_GET(serializers.ModelSerializer):
+    nutrient = NutrientSerializer_GET()
+
     class Meta:
         model = models.FormulaRequirement
         fields = '__all__'
@@ -16,7 +19,7 @@ class FormulaRequirementSerializer_GET(serializers.ModelSerializer):
 class FormulaRequirementSerializer_POST(serializers.ModelSerializer):
     class Meta:
         model = models.FormulaRequirement
-        fields = '__all__'
+        fields = ['id', 'nutrient', 'value']
 
     def create(self, validated_data):
         formula = models.Formula.objects.get(
@@ -51,7 +54,7 @@ class FormulaIngredientSerializer_GET(serializers.ModelSerializer):
 class FormulaIngredientSerializer_POST(serializers.ModelSerializer):
     class Meta:
         model = models.FormulaIngredient
-        fields = '__all__'
+        fields = ['id', 'formula', 'ratio_min', 'ratio_max']
 
     def create(self, validated_data):
         formula = models.Formula.objects.get(
