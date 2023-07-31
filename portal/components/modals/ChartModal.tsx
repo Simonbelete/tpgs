@@ -4,11 +4,11 @@ import { CloseOutlined } from "@mui/icons-material";
 
 const style = {
   position: "absolute" as "absolute",
-  top: "40%",
+  top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
   width: "60%",
-  height: "60%",
+  height: "auto",
   bgcolor: "background.paper",
   // border: "1px solid #000",
   borderRadius: "8px",

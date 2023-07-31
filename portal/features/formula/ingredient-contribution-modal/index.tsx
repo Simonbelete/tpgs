@@ -156,8 +156,8 @@ const IngredientContributionModal = ({
           <>
             <ResponsiveContainer width="100%" height={500}>
               <BarChart
-                width={500}
-                height={300}
+                // width={500}
+                // height={300}
                 data={nutrients}
                 margin={{
                   top: 5,
@@ -171,7 +171,7 @@ const IngredientContributionModal = ({
                 <YAxis />
                 <Tooltip />
                 <Legend />
-                <Bar dataKey="qty" fill={randomColor()} />
+                <Bar dataKey="qty" label={"Quantity[kg]"} fill={"#1972BC"} />
               </BarChart>
             </ResponsiveContainer>
           </>

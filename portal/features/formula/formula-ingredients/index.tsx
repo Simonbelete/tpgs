@@ -89,7 +89,7 @@ const EditToolbar = (props: {
 
 const FormulaIngredients = ({ id }: { id?: number }) => {
   const dispatch = useDispatch();
-  const ingredient = useSelector((state: RootState) => state.ingredient);
+  const formulaState = useSelector((state: RootState) => state.formula);
   const [rows, setRows] = useState<
     GridRowsProp<Partial<FormulaIngredient> & Partial<{ isNew: boolean }>>
   >([]);
@@ -115,6 +115,10 @@ const FormulaIngredients = ({ id }: { id?: number }) => {
 
   useEffect(() => {
     if (id == null) return;
+    if (formulaState.ingredients.length > 0) {
+      setRows(formulaState.ingredients);
+      return;
+    }
     formula_service.ingredient
       .get(id)
       .then((response) => {
