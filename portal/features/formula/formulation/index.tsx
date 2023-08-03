@@ -122,7 +122,7 @@ const Formulation = () => {
       rows.current[row][col] = newValue.data;
 
       const result: number[] = [];
-      rows.current.forEach((row) => {
+      rows.current.slice(0, -2).forEach((row) => {
         row.slice(1).forEach((column, index) => {
           if (index > columns.length - 2) return;
 
@@ -140,7 +140,7 @@ const Formulation = () => {
         });
       });
 
-      rows.current[rows.current.length - 1] = [
+      rows.current[rows.current.length - 2] = [
         ...rows.current[rows.current.length - 1].slice(0, 1),
         ...result,
       ];
