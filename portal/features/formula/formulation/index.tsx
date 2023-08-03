@@ -13,9 +13,31 @@ import {
 import _ from "lodash";
 import { NutrientService } from "@/features/nutrients";
 import { Sizer } from "../components";
+import { Box } from "@mui/material";
+import { IngredientSelectDialog } from "@/features/ingredients";
+import { Ingredient, Nutrient } from "@/models";
 
 const Formulation = () => {
+  const rows = useRef<Partial<Ingredient>[]>([
+    { name: "000" },
+    { name: "Ration", dm: 0 },
+    {
+      name: "Requirement",
+    },
+  ]);
   const [columns, setColumns] = useState<GridColumn[]>([
+    { title: "Name", id: "name" },
+    { title: "%", id: "value", icon: GridColumnIcon.HeaderNumber, width: 100 },
+    {
+      title: "Price",
+      id: "price",
+      icon: GridColumnIcon.HeaderNumber,
+    },
+    {
+      title: "DM",
+      id: "dm",
+      icon: GridColumnIcon.HeaderNumber,
+    },
     {
       title: "Min%",
       id: "min",
@@ -29,7 +51,8 @@ const Formulation = () => {
       width: 100,
     },
   ]);
-  const rows = useRef<[]>([]);
+
+  const indexes = useRef<string[]>(["name", "value", "price", "dm"]);
 
   useEffect(() => {
     NutrientService.get({
@@ -42,6 +65,7 @@ const Formulation = () => {
             title: response.data.results[i].abbreviation,
             id: response.data.results[i].abbreviation,
           });
+          indexes.current.push(response.data.results[i].abbreviation);
         }
         appendColumns(cols);
       })
@@ -49,51 +73,73 @@ const Formulation = () => {
   }, []);
 
   const appendColumns = (cols: GridColumn[]) => {
-    setColumns(_.union(cols, columns));
+    setColumns(_.union(_.slice(columns, 0, 4), cols, _.slice(columns, 4)));
   };
-
-  const addRow = () => {};
 
   const getContent = React.useCallback(
     (cell: Item): GridCell => {
       const [col, row] = cell;
       const dataRow = rows.current[row];
 
-      // const d = dataRow != undefined ? dataRow[columns[col]] : "";
-      const d = "";
-      return {
-        kind: GridCellKind.Text,
-        allowOverlay: true,
-        displayData: String(d),
-        data: String(d),
-      };
+      // @ts-ignore
+      let d = dataRow != undefined ? dataRow[indexes.current[col]] : "";
+
+      if (col == 0) {
+        return {
+          kind: GridCellKind.Text,
+          allowOverlay: true,
+          displayData: String(d ?? ""),
+          data: String(d ?? ""),
+        };
+      } else {
+        return {
+          kind: GridCellKind.Number,
+          allowOverlay: true,
+          displayData: String(d ?? 0),
+          data: Number(d ?? 0),
+        };
+      }
     },
     [rows]
   );
 
-  const onRowAppended = React.useCallback(() => {}, []);
+  const onRowAppended = React.useCallback(() => {
+    handleOpenIngredientDialog();
+  }, []);
+
+  const [openIngredientDialog, setOpenIngredientDialog] = useState(false);
+  const handleCloseIngredientDialog = () => setOpenIngredientDialog(false);
+  const handleOpenIngredientDialog = () => setOpenIngredientDialog(true);
+  const handleSelected = (value?: Ingredient) => {};
 
   return (
-    <Sizer>
-      <DataEditor
-        width="100%"
-        height={100}
-        experimental={{ strict: true }}
-        columns={columns}
-        rows={rows.current.length}
-        isDraggable={true}
-        freezeColumns={1}
-        rowMarkers="number"
-        getCellContent={getContent}
-        onRowAppended={onRowAppended}
-        trailingRowOptions={{
-          // How to get the trailing row to look right
-          sticky: true,
-          tint: true,
-          hint: "Add Ingredient",
-        }}
+    <>
+      <IngredientSelectDialog
+        open={openIngredientDialog}
+        onSelected={handleSelected}
+        onClose={handleCloseIngredientDialog}
       />
-    </Sizer>
+      <Box></Box>
+      <Sizer>
+        <DataEditor
+          width="100%"
+          experimental={{ strict: true }}
+          columns={columns}
+          rows={rows.current.length}
+          isDraggable={true}
+          freezeColumns={1}
+          rowMarkers="number"
+          getCellContent={getContent}
+          onRowAppended={onRowAppended}
+          trailingRowOptions={{
+            // How to get the trailing row to look right
+            sticky: true,
+            tint: true,
+            hint: "Add Ingredient",
+          }}
+        />
+      </Sizer>
+    </>
   );
 };
 

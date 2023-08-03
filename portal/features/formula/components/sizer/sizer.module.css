@@ -12,3 +12,7 @@
     transform: translateZ(0);
     height: 100%;
 }
+
+.sizer-bordered {
+   border: 1px solid #e7e7e7;
+}

@@ -10,4 +10,5 @@ export default interface Ingredient {
   price: number;
   price_unit: string;
   nutrients: number | Nutrient[];
+  dm: number;
 }

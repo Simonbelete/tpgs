@@ -4,6 +4,7 @@ from multiselectfield import MultiSelectField
 from units.models import Unit
 
 from core.models import CoreModel
+from core.validators import PERCENTAGE_VALIDATOR
 
 
 class IngredientType(CoreModel):
@@ -27,24 +28,12 @@ class Ingredient(CoreModel):
     price = MoneyField(max_digits=14, null=True, blank=True, default=0,
                        decimal_places=2, default_currency='ETB')
     price_unit = models.ForeignKey(
-        Unit, on_delete=models.SET_NULL, null=True, blank=True, related_name='ingredients')
+        Unit, default=3, on_delete=models.SET_NULL, null=True, blank=True, related_name='ingredients')
     nutrients = models.ManyToManyField(
         'nutrients.Nutrient', null=True, blank=True, through=IngredientNutrient)
-    # ratio_min = models.FloatField(default=0, null=True)
-    # ratio_max = models.FloatField(default=0, null=True)
-    # # Nutrients
-    # dm = models.FloatField(default=0, null=True)
-    # me = models.FloatField(default=0, null=True)
-    # cp = models.FloatField(default=0, null=True)
-    # lys = models.FloatField(default=0, null=True)
-    # meth = models.FloatField(default=0, null=True)
-    # mc = models.FloatField(default=0, null=True)
-    # # Fat
-    # ee = mrilimo2516odels.FloatField(default=0, null=True)
-    # # Fiber
-    # cf = models.FloatField(default=0, null=True)
-    # ca = models.FloatField(default=0, null=True)
-    # p = models.FloatField(default=0, null=True)
+    # dry material
+    dm = models.PositiveIntegerField(
+        validators=PERCENTAGE_VALIDATOR, default=0)
 
     def __str__(self) -> str:
         return self.name
