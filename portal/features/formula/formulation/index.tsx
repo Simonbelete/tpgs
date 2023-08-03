@@ -18,18 +18,16 @@ import { IngredientSelectDialog } from "@/features/ingredients";
 import { Ingredient, Nutrient } from "@/models";
 
 const Formulation = () => {
-  const rows = useRef<Partial<Ingredient>[]>([
-    { name: "000" },
-    { name: "Ration", dm: 0 },
-    {
-      name: "Requirement",
-    },
+  const rows = useRef<Array<Array<number | string>>>([
+    ["Ingredient 1", 80, 130, 98, 7],
+    ["Ration"],
+    ["Requirement"],
   ]);
   const [columns, setColumns] = useState<GridColumn[]>([
     { title: "Name", id: "name" },
     { title: "%", id: "value", icon: GridColumnIcon.HeaderNumber, width: 100 },
     {
-      title: "Price",
+      title: "Price[kg]",
       id: "price",
       icon: GridColumnIcon.HeaderNumber,
     },
@@ -39,38 +37,47 @@ const Formulation = () => {
       icon: GridColumnIcon.HeaderNumber,
     },
     {
-      title: "Min%",
+      title: "CP[%]",
+      id: "CP",
+      icon: GridColumnIcon.HeaderNumber,
+      width: 100,
+    },
+    {
+      title: "Min[%]",
       id: "min",
       icon: GridColumnIcon.HeaderNumber,
       width: 100,
     },
     {
-      title: "Max%",
+      title: "Max[%]",
       id: "max",
       icon: GridColumnIcon.HeaderNumber,
       width: 100,
     },
   ]);
+  const COL_DM_INDEX = 4;
+  const COL_NUT_INDEX = 4;
+  const COL_VALUE_INDEX = 1;
 
-  const indexes = useRef<string[]>(["name", "value", "price", "dm"]);
+  // const indexes = useRef<string[]>(["name", "value", "price", "dm"]);
 
-  useEffect(() => {
-    NutrientService.get({
-      limit: 100,
-    })
-      .then((response) => {
-        const cols: GridColumn[] = [];
-        for (let i = 0; i < response.data.results.length; i += 1) {
-          cols.push({
-            title: response.data.results[i].abbreviation,
-            id: response.data.results[i].abbreviation,
-          });
-          indexes.current.push(response.data.results[i].abbreviation);
-        }
-        appendColumns(cols);
-      })
-      .catch((ex) => {});
-  }, []);
+  // useEffect(() => {
+  //   NutrientService.get({
+  //     limit: 100,
+  //   })
+  //     .then((response) => {
+  //       const cols: GridColumn[] = [];
+  //       for (let i = 0; i < response.data.results.length; i += 1) {
+  //         cols.push({
+  //           title: response.data.results[i].abbreviation,
+  //           id: response.data.results[i].abbreviation,
+  //         });
+  //         indexes.current.push(response.data.results[i].abbreviation);
+  //       }
+  //       appendColumns(cols);
+  //     })
+  //     .catch((ex) => {});
+  // }, []);
 
   const appendColumns = (cols: GridColumn[]) => {
     setColumns(_.union(_.slice(columns, 0, 4), cols, _.slice(columns, 4)));
@@ -82,7 +89,7 @@ const Formulation = () => {
       const dataRow = rows.current[row];
 
       // @ts-ignore
-      let d = dataRow != undefined ? dataRow[indexes.current[col]] : "";
+      let d = dataRow != undefined ? dataRow[col] : "";
 
       if (col == 0) {
         return {
@@ -101,6 +108,44 @@ const Formulation = () => {
       }
     },
     [rows]
+  );
+
+  const onCellEdited = React.useCallback(
+    (cell: Item, newValue: EditableGridCell) => {
+      const [col, row] = cell;
+
+      if (rows.current[row] == undefined) {
+        return;
+      }
+
+      // @ts-ignore
+      rows.current[row][col] = newValue.data;
+
+      const result: number[] = [];
+      rows.current.forEach((row) => {
+        row.slice(1).forEach((column, index) => {
+          if (index > columns.length - 2) return;
+
+          if (result[index]) {
+            if (index == 0) result[index] += Number(column);
+            else
+              result[index] +=
+                (Number(column) * Number(row[COL_VALUE_INDEX])) / 100;
+          } else {
+            if (index == 0) result[index] = Number(column);
+            else
+              result[index] =
+                (Number(column) * Number(row[COL_VALUE_INDEX])) / 100;
+          }
+        });
+      });
+
+      rows.current[rows.current.length - 1] = [
+        ...rows.current[rows.current.length - 1].slice(0, 1),
+        ...result,
+      ];
+    },
+    []
   );
 
   const onRowAppended = React.useCallback(() => {
@@ -129,6 +174,7 @@ const Formulation = () => {
           isDraggable={true}
           freezeColumns={1}
           rowMarkers="number"
+          onCellEdited={onCellEdited}
           getCellContent={getContent}
           onRowAppended={onRowAppended}
           trailingRowOptions={{
