@@ -20,10 +20,12 @@ const schema = yup
     abbreviation: yup.string().required(),
     description: yup.string().nullable(),
     nutrient_group: yup.number().nullable(),
+    unit: yup.number().nullable(),
   })
   .transform((currentValue: any) => {
     if (currentValue.nutrient_group != null)
       currentValue.nutrient_group = currentValue.nutrient_group.id;
+    if (currentValue.unit != null) currentValue.unit = currentValue.unit.id;
     return currentValue;
   });
 
@@ -183,6 +185,28 @@ const NutrientForm = ({
                   onChange={(_, data) => onChange(data)}
                   value={value}
                   label="Nutrient Group"
+                  error={!!error?.message}
+                  helperText={error?.message}
+                  createForm={<NutrientGroupForm />}
+                />
+              )}
+            />
+          </Grid>
+          {/* Unit */}
+          <Grid item xs={12} md={6}>
+            <Controller
+              name={"unit"}
+              control={control}
+              render={({
+                field: { onChange, value },
+                fieldState: { invalid, isTouched, isDirty, error },
+              }) => (
+                <AsyncDropdown
+                  url="/units/"
+                  key="name"
+                  onChange={(_, data) => onChange(data)}
+                  value={value}
+                  label="Unit"
                   error={!!error?.message}
                   helperText={error?.message}
                   createForm={<NutrientGroupForm />}

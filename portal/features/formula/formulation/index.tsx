@@ -15,7 +15,7 @@ import { NutrientService } from "@/features/nutrients";
 import { Sizer } from "../components";
 import { Box } from "@mui/material";
 import { IngredientSelectDialog } from "@/features/ingredients";
-import { Ingredient, Nutrient } from "@/models";
+import { Ingredient, Nutrient, Unit } from "@/models";
 
 const Formulation = () => {
   const rows = useRef<Array<Array<number | string>>>([
@@ -37,12 +37,6 @@ const Formulation = () => {
       icon: GridColumnIcon.HeaderNumber,
     },
     {
-      title: "CP[%]",
-      id: "CP",
-      icon: GridColumnIcon.HeaderNumber,
-      width: 100,
-    },
-    {
       title: "Min[%]",
       id: "min",
       icon: GridColumnIcon.HeaderNumber,
@@ -59,28 +53,32 @@ const Formulation = () => {
   const COL_NUT_INDEX = 4;
   const COL_VALUE_INDEX = 1;
 
-  // const indexes = useRef<string[]>(["name", "value", "price", "dm"]);
-
-  // useEffect(() => {
-  //   NutrientService.get({
-  //     limit: 100,
-  //   })
-  //     .then((response) => {
-  //       const cols: GridColumn[] = [];
-  //       for (let i = 0; i < response.data.results.length; i += 1) {
-  //         cols.push({
-  //           title: response.data.results[i].abbreviation,
-  //           id: response.data.results[i].abbreviation,
-  //         });
-  //         indexes.current.push(response.data.results[i].abbreviation);
-  //       }
-  //       appendColumns(cols);
-  //     })
-  //     .catch((ex) => {});
-  // }, []);
+  useEffect(() => {
+    NutrientService.get({
+      limit: 100,
+    })
+      .then((response) => {
+        const cols: GridColumn[] = [];
+        for (let i = 0; i < response.data.results.length; i += 1) {
+          const u = (response.data.results[i].unit as Unit).name;
+          cols.push({
+            title: `${response.data.results[i].abbreviation}[${u}]`,
+            id: response.data.results[i].abbreviation,
+          });
+        }
+        appendColumns(cols);
+      })
+      .catch((ex) => {});
+  }, []);
 
   const appendColumns = (cols: GridColumn[]) => {
-    setColumns(_.union(_.slice(columns, 0, 4), cols, _.slice(columns, 4)));
+    setColumns(
+      _.union(
+        _.slice(columns, 0, COL_NUT_INDEX),
+        cols,
+        _.slice(columns, COL_NUT_INDEX)
+      )
+    );
   };
 
   const getContent = React.useCallback(
@@ -155,7 +153,11 @@ const Formulation = () => {
   const [openIngredientDialog, setOpenIngredientDialog] = useState(false);
   const handleCloseIngredientDialog = () => setOpenIngredientDialog(false);
   const handleOpenIngredientDialog = () => setOpenIngredientDialog(true);
-  const handleSelected = (value?: Ingredient) => {};
+
+  const handleSelected = (value?: Ingredient) => {
+    if (value == undefined || value == null) return;
+    rows.current = [[value?.name], ...rows.current];
+  };
 
   return (
     <>
