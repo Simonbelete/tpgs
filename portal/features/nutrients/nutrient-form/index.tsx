@@ -209,7 +209,7 @@ const NutrientForm = ({
                   label="Unit"
                   error={!!error?.message}
                   helperText={error?.message}
-                  createForm={<NutrientGroupForm />}
+                  createForm={<NutrienGroupForm />}
                 />
               )}
             />

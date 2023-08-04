@@ -53,6 +53,7 @@ urlpatterns = [
         path('', include('weights.urls')),
         path('', include('purposes.urls')),
         path('', include('formulas.urls')),
+        path('', include('houses.urls')),
     ])),
 
     path('api/schema/', SpectacularAPIView.as_view(), name='schema'),
