@@ -17,10 +17,12 @@ directories_router = routers.DefaultRouter()
 directories_router.register(r'directories', views.DirectoryListViewSet,
                             basename='api_directories_lists')
 
-# farm_router = NestedDefaultRouter(
-#     router, r'analyses', lookup='formula')
+hdep_router = routers.DefaultRouter()
+hdep_router.register(
+    r'analyses/(?P<farm_id>.+)/(?P<flock_id>.+)/(?P<house_id>.+)/hdep', views.HDEPViewSet, basename="api_hdep")
 
 urlpatterns = [
     # path('', include(router.urls)),
     path('', include(directories_router.urls)),
+    path('', include(hdep_router.urls)),
 ]

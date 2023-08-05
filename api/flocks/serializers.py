@@ -6,7 +6,7 @@ from . import models
 class FlockSerializer_GET(serializers.ModelSerializer):
     class Meta:
         model = models.Flock
-        fields = '__all__'
+        fields = ['id', 'name', 'total_accusation', 'total_chickens']
 
 
 class FlockSerializer_POST(serializers.ModelSerializer):
