@@ -39,3 +39,22 @@ class FlockAccusationSerializer_POST(serializers.ModelSerializer):
             pk=self.context["view"].kwargs["flock_pk"])
         validated_data['flock'] = flock
         return super().create(validated_data)
+
+
+class FlockReductionSerializer_GET(serializers.ModelSerializer):
+    class Meta:
+        model = models.FlockReduction
+        fields = '__all__'
+
+
+class FlockReductionSerializer_POST(serializers.ModelSerializer):
+    class Meta:
+        model = models.FlockReduction
+        fields = ['id', 'reduction_date',
+                  'no_chicken', 'chickens', 'reason', 'note']
+
+    def create(self, validated_data):
+        flock = models.Flock.objects.get(
+            pk=self.context["view"].kwargs["flock_pk"])
+        validated_data['flock'] = flock
+        return super().create(validated_data)

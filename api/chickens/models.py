@@ -11,6 +11,14 @@ class Chicken(CoreModel):
         ('F', 'Female',),
         ('M', 'Male',),
     )
+    REDUCTION_REASON = [
+        ('C', 'Cull'),
+        ('D', 'Death'),
+        ('S', 'Sold'),
+        ('L', 'Lost'),
+        ('T', 'Tagged'),
+        ('O', 'Other')
+    ]
 
     tag = models.CharField(max_length=250, unique=True)
     sex = models.CharField(max_length=1, choices=SEX_CHOICES,
@@ -24,6 +32,9 @@ class Chicken(CoreModel):
     house = models.ForeignKey(
         House, on_delete=models.SET_NULL, null=True, blank=True, related_name='chickens')
     pen = models.CharField(max_length=250, null=True, blank=True)
+    reduction_date = models.DateField(null=True, blank=True)
+    reduction_reason = models.CharField(max_length=1, choices=REDUCTION_REASON,
+                                        null=True, blank=True, default=None)
     history = HistoricalRecords()
 
     def __str__(self):

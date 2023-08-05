@@ -1,6 +1,6 @@
 from typing import Iterable, Optional
 from django.db import models
-
+from django.db import transaction
 from simple_history.models import HistoricalRecords
 
 from core.models import CoreModel
@@ -47,6 +47,7 @@ class FlockAccusation(CoreModel):
     no_chicken = models.PositiveIntegerField()
     chickens = models.ManyToManyField(
         Chicken, null=True, blank=True, related_name='flock_accusation')
+    note = models.TextField(null=True, blank=True)
     history = HistoricalRecords()
 
     def clean(self) -> None:
@@ -70,6 +71,7 @@ class FlockReduction(CoreModel):
     flock = models.ForeignKey(
         Flock, on_delete=models.CASCADE, related_name='reductions')
     no_chicken = models.IntegerField(default=0)
+    reduction_date = models.DateField(null=True, blank=True)
     chickens = models.ManyToManyField(
         Chicken, null=True, blank=True, related_name='flock_reduction')
     reason = models.CharField(max_length=1, choices=REDUCTION_REASON,
@@ -77,15 +79,24 @@ class FlockReduction(CoreModel):
     note = models.TextField(null=True, blank=True)
 
     def save(self, *args, **kwargs):
-        # self.is_dead = True if self.dead_date != None else False
-        super(FlockReduction, self).save(*args, **kwargs)
+        """ Make Individual chickens to dead"""
+        with transaction.atomic():
+            if (self.chickens):
+                for chicken in self.chickens:
+                    print('*****')
+                    print(chicken)
+            super(FlockReduction, self).save(*args, **kwargs)
 
     def clean(self) -> None:
         """
             - Both values cannot have data at the same time
+            - Check if the chicken is part of the current flock
         """
         if (self.no_chicken != None or self.chickens != None):
             raise ValueError('Both chickens can not have value')
+        for chicken in self.chickens:
+            if (chicken.flock.id != self.flock.id):
+                raise ValueError('Chicken is not part of the flock')
         return super().clean()
 
 # class FlockSelection():

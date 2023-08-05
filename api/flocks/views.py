@@ -145,3 +145,17 @@ class FlockAccusationViewSet(viewsets.ModelViewSet):
         if self.request.method in ['POST', 'PUT', 'PATCH']:
             return serializers.FlockAccusationSerializer_POST
         return serializers.FlockAccusationSerializer_GET
+
+# Reduction
+
+
+class FlockReductionViewSet(viewsets.ModelViewSet):
+    serializer_class = serializers.FlockReductionSerializer_GET
+
+    def get_queryset(self):
+        return models.FlockReduction.objects.filter(flock=self.kwargs['flock_pk'])
+
+    def get_serializer_class(self):
+        if self.request.method in ['POST', 'PUT', 'PATCH']:
+            return serializers.FlockReductionSerializer_POST
+        return serializers.FlockReductionSerializer_GET
