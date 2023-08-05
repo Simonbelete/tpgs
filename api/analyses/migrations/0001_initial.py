@@ -31,7 +31,8 @@ class Migration(migrations.Migration):
         migrations.RunSQL(
             """
             CREATE MATERIALIZED VIEW directory_list AS 
-                SELECT ff.schema_name AS farm_name, ff.id AS farm_id, 
+                SELECT concat(ff.id, ff2.id, hh.id) AS unique_id, 
+                    ff.schema_name AS farm_name, ff.id AS farm_id, 
                 	ff2.name AS flock_name, ff2.id AS flock_id,
                 	hh.name as house_name, hh.id AS house_id
                 FROM farms_farm ff

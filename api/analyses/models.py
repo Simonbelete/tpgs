@@ -2,6 +2,7 @@ from django.db import models
 
 
 class DirectoryList(models.Model):
+    unique_id = models.CharField(max_length=255, primary_key=True)
     farm_name = models.TextField()
     farm_id = models.IntegerField()
     flock_id = models.IntegerField()
