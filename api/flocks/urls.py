@@ -1,5 +1,7 @@
 from django.urls import path, include
 from rest_framework import routers
+from rest_framework_nested.routers import NestedDefaultRouter
+
 from . import views
 
 router = routers.DefaultRouter()
@@ -7,6 +9,10 @@ router.register(r'flocks', views.FlockViewSet,
                 basename='api_flocks')
 router.register(r'flocks/(?P<id>.+)/histories',
                 views.FlockHistoryViewSet, basename='api_flocks_histories'),
+accusation_router = NestedDefaultRouter(
+    router, r'flocks', lookup='flock')
+accusation_router.register(r'accusations', views.FlockAccusationViewSet,
+                           basename='api_flock_accusations')
 
 urlpatterns = [
     path('', include(router.urls)),
@@ -24,5 +30,6 @@ urlpatterns = [
     path('flocks/export/csv', views.FlockCsvExport.as_view(),
          name="flocks_export_csv"),
     path('flocks/import/csv', views.FlockCsvImport.as_view(),
-         name="flocks_import_csv")
+         name="flocks_import_csv"),
+    path('', include(accusation_router.urls)),
 ]

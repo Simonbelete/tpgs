@@ -22,24 +22,20 @@ class Flock(CoreModel):
 
     @property
     def total_chickens(self):
-        """ Alive Chickens """
-        accusations = self.accusations.objects.aggregate(
-            sum=models.Sum('no_chicken'), count=models.Count('chickens'))
-        accusations_total = accusations['sum'] + accusations['count']
-        return accusations_total
+        """ Total Number of Alive Chickens """
+        return self.total_accusation - self.total_reduction
 
     @property
     def total_accusation(self):
-        """ Total number chickens"""
-        result = self.accusations.objects.aggregate(
+        result = self.accusations.all().aggregate(
             sum=models.Sum('no_chicken'), count=models.Count('chickens'))
-        return result['sum'] + result['count']
+        return (result['sum'] or 0) + result['count']
 
     @property
-    def total_accusation(self):
-        """ Total number chickens"""
-        return 10
-        # return self.reductions.objects.aggregate(models.Sum('no_chicken'))
+    def total_reduction(self):
+        result = self.reductions.all().aggregate(
+            sum=models.Sum('no_chicken'), count=models.Count('chickens'))
+        return (result['sum'] or 0) + result['count']
 
 
 class FlockAccusation(CoreModel):
@@ -68,6 +64,7 @@ class FlockReduction(CoreModel):
         ('D', 'Death'),
         ('S', 'Sold'),
         ('L', 'Lost'),
+        ('T', 'Tagged'),
         ('O', 'Other')
     ]
     flock = models.ForeignKey(

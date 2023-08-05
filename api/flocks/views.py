@@ -42,6 +42,11 @@ class FlockViewSet(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         serializer.save(created_by=self.request.user)
 
+    def list(self, request, *args, **kwargs):
+        print('-----------')
+        print(self.queryset[0].total_accusation)
+        return super().list(request, *args, **kwargs)
+
 
 class FlockHistoryViewSet(HistoryViewSet):
     queryset = models.Flock.history.all()
@@ -127,3 +132,16 @@ class FlockCsvImport(APIView):
         if not result.has_errors():
             return JsonResponse({'message': 'Imported Successfully'}, status=200)
         return JsonResponse({'errors': ['Import Failed']}, status=400)
+
+
+# Accusation
+class FlockAccusationViewSet(viewsets.ModelViewSet):
+    serializer_class = serializers.FlockAccusationSerializer_GET
+
+    def get_queryset(self):
+        return models.FlockAccusation.objects.filter(flock=self.kwargs['flock_pk'])
+
+    def get_serializer_class(self):
+        if self.request.method in ['POST', 'PUT', 'PATCH']:
+            return serializers.FlockAccusationSerializer_POST
+        return serializers.FlockAccusationSerializer_GET
