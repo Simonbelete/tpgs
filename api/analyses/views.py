@@ -6,6 +6,7 @@ from rest_framework.response import Response
 from . import models
 from . import serializers
 from eggs.models import Egg
+from flocks.models import Flock
 
 
 class DirectoryListFilter(django_filters.FilterSet):
@@ -30,4 +31,18 @@ class HDEPViewSet(viewsets.ViewSet):
         return Egg.objects.all()
 
     def list(self, request, **kwargs):
+        print('---------------')
+        print(kwargs)
+        eggs = self.get_query()
+        if (kwargs['farm_id'] == 'all'):
+            return Response({
+                'errors': [
+                    'farm can not be all'
+                ]
+            })
+        if (kwargs['flock_id'] != 'all'):
+            eggs = eggs.filter(flock=kwargs['flock_id'])
+        if (kwargs['house_id'] != 'all'):
+            eggs = eggs.filter(chicken__house=kwargs['house_id'])
+
         return Response({})

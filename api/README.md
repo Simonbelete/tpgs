@@ -16,6 +16,11 @@ migrate all ```python manage.py migrate_schemas```
 
 ```python manage.py migrate_schemas analyses directory_list_initial```
 
+## Mass Data Collection
+
+Prioritizes flock data if found
+Sends notification to farm if duplicates found
+
 taged and untaged
 
 Menu
