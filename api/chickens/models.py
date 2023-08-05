@@ -4,7 +4,6 @@ from simple_history.models import HistoricalRecords
 from core.models import CoreModel
 from units.models import Unit
 from houses.models import House
-from flocks.models import Flock
 
 
 class Chicken(CoreModel):
@@ -21,7 +20,7 @@ class Chicken(CoreModel):
     dam = models.ForeignKey(
         'self', models.SET_NULL, blank=True, null=True, limit_choices_to={'sex': 'F'}, related_name='children_of_dam')
     flock = models.ForeignKey(
-        Flock, on_delete=models.SET_NULL, null=True, blank=True, related_name='chickens')
+        'flocks.Flock', on_delete=models.SET_NULL, null=True, blank=True, related_name='chickens')
     house = models.ForeignKey(
         House, on_delete=models.SET_NULL, null=True, blank=True, related_name='chickens')
     pen = models.CharField(max_length=250, null=True, blank=True)
