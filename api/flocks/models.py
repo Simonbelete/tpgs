@@ -78,15 +78,6 @@ class FlockReduction(CoreModel):
                               null=True, blank=True, default=None)
     note = models.TextField(null=True, blank=True)
 
-    def save(self, *args, **kwargs):
-        """ Make Individual chickens to dead"""
-        with transaction.atomic():
-            if (self.chickens):
-                for chicken in self.chickens:
-                    print('*****')
-                    print(chicken)
-            super(FlockReduction, self).save(*args, **kwargs)
-
     def clean(self) -> None:
         """
             - Both values cannot have data at the same time

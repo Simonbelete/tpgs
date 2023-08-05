@@ -14,7 +14,7 @@ class ChickenSerializer_GET(serializers.ModelSerializer):
 class ChickenSerializer_POST(serializers.ModelSerializer):
     class Meta:
         model = models.Chicken
-        fields = '__all__'
+        fields = ['tag', 'flock']
 
 
 class ChickenHistorySerializer(serializers.ModelSerializer):

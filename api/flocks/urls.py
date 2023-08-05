@@ -17,7 +17,7 @@ accusation_router.register(
 
 reduction_router = NestedDefaultRouter(
     router, r'flocks', lookup='flock')
-reduction_router.register(r'reduction', views.FlockReductionViewSet,
+reduction_router.register(r'reductions', views.FlockReductionViewSet,
                           basename='api_flock_reduction')
 
 urlpatterns = [
