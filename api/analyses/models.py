@@ -19,3 +19,7 @@ class DirectoryList(models.Model):
         with connection.cursor() as cursor:
             cursor.execute(
                 "REFRESH MATERIALIZED VIEW CONCURRENTLY directory_list")
+
+    @property
+    def name(self):
+        return "%s / %s / %s" % (self.farm_name, self.flock_name, self.house_name)

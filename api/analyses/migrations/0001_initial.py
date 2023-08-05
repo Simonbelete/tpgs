@@ -37,6 +37,8 @@ class Migration(migrations.Migration):
                 	hh.name as house_name, hh.id AS house_id
                 FROM farms_farm ff
                 CROSS JOIN test.flocks_flock ff2, test.houses_house hh;
+
+                CREATE UNIQUE INDEX ON directory_list(unique_id);
             """,
             """DROP VIEW directory_list"""
         )
