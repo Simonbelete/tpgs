@@ -12,6 +12,10 @@
 
 migrate all ```python manage.py migrate_schemas```
 
+## Create/Update View Table
+
+```python manage.py migrate_schemas analyses directory_list_initial```
+
 taged and untaged
 
 Menu
