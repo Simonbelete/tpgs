@@ -1,6 +1,7 @@
-from typing import Iterable, Optional
+from typing import Collection, Iterable, Optional
 from django.db import models
 from django.db import transaction
+from django.core.exceptions import ValidationError
 from simple_history.models import HistoricalRecords
 
 from core.models import CoreModel
@@ -78,16 +79,22 @@ class FlockReduction(CoreModel):
                               null=True, blank=True, default=None)
     note = models.TextField(null=True, blank=True)
 
+    def save(self,  *args, **kwargs) -> None:
+        self.clean()
+        return super().save(*args, **kwargs)
+
     def clean(self) -> None:
         """
             - Both values cannot have data at the same time
             - Check if the chicken is part of the current flock
         """
+        print('------------------')
         if (self.no_chicken != None or self.chickens != None):
             raise ValueError('Both chickens can not have value')
         for chicken in self.chickens:
             if (chicken.flock.id != self.flock.id):
-                raise ValueError('Chicken is not part of the flock')
+                raise ValidationError(
+                    {'chickens': 'Chicken is not part of the flock'})
         return super().clean()
 
 # class FlockSelection():
