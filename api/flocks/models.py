@@ -51,12 +51,19 @@ class FlockAccusation(CoreModel):
     note = models.TextField(null=True, blank=True)
     history = HistoricalRecords()
 
+    def save(self,  *args, **kwargs) -> None:
+        self.clean()
+        return super().save(*args, **kwargs)
+
     def clean(self) -> None:
         """
             - Both values cannot have data at the same time
         """
         if (self.no_chicken != None or self.chickens != None):
-            raise ValueError('Both chickens can not have value')
+            raise ValidationError({
+                'no_chickens': 'Can not have value if chickens are set',
+                'chickens': 'Can not have value if no_chickens are set'
+            })
         return super().clean()
 
 
@@ -88,9 +95,11 @@ class FlockReduction(CoreModel):
             - Both values cannot have data at the same time
             - Check if the chicken is part of the current flock
         """
-        print('------------------')
         if (self.no_chicken != None or self.chickens != None):
-            raise ValueError('Both chickens can not have value')
+            raise ValidationError({
+                'no_chickens': 'Can not have value if chickens are set',
+                'chickens': 'Can not have value if no_chickens are set'
+            })
         for chicken in self.chickens:
             if (chicken.flock.id != self.flock.id):
                 raise ValidationError(
