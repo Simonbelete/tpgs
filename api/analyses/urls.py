@@ -9,18 +9,18 @@ from . import views
     analyses/{{farm}}/{{flock}}/{{house}}/{{pen}}/*
 """
 
-router = routers.DefaultRouter()
-router.register(r'analyses', None,
-                basename='api_analyses')
+# router = routers.DefaultRouter()
+# router.register(r'analyses', None,
+#                 basename='api_analyses')
 
 directories_router = routers.DefaultRouter()
-router.register(r'analyses/directories', None,
-                basename='api_analyses_directories')
+directories_router.register(r'directories', views.DirectoryListViewSet,
+                            basename='api_directories_lists')
 
-farm_router = NestedDefaultRouter(
-    router, r'analyses', lookup='formula')
+# farm_router = NestedDefaultRouter(
+#     router, r'analyses', lookup='formula')
 
 urlpatterns = [
-    path('', include(router.urls)),
-
+    # path('', include(router.urls)),
+    path('', include(directories_router.urls)),
 ]
