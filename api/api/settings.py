@@ -93,7 +93,8 @@ SHARED_APPS = [
     'ingredients',
     'units',
     'purposes',
-    'formulas'
+    'formulas',
+    'analyses'
 ]
 
 TENANT_APPS = [
@@ -107,8 +108,7 @@ TENANT_APPS = [
     'eggs',
     'feeds',
     'weights',
-    'houses',
-    'analyses'
+    'houses'
 ]
 
 INSTALLED_APPS = list(SHARED_APPS) + \
