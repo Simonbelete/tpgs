@@ -11,12 +11,24 @@ router.register(r'breeds/(?P<id>.+)/histories',
 
 hdep_router = NestedDefaultRouter(
     router, r'breeds', lookup='breed')
-hdep_router.register(r'hdeps', views.BreedHDEPGuidViewSet,
-                     basename='api_ingredient_nutrients')
+hdep_router.register(r'hdep-guides', views.BreedHDEPGuideViewSet,
+                     basename='api_breed_hdep')
+
+hhep_router = NestedDefaultRouter(
+    router, r'breeds', lookup='breed')
+hhep_router.register(r'hhep-guides', views.BreedHHEPGuideViewSet,
+                     basename='api_breed_hhep')
+
+weight_router = NestedDefaultRouter(
+    router, r'breeds', lookup='breed')
+weight_router.register(r'weight-guides', views.BreedHHEPGuideViewSet,
+                       basename='api_breed_weight')
+
 
 urlpatterns = [
     path('', include(router.urls)),
     path('', include(hdep_router.urls)),
+    path('', include(weight_router.urls)),
 
     # Xlsx
     path('breeds/export/xlsx', views.BreedXlsxExport.as_view(),

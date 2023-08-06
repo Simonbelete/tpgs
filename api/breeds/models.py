@@ -3,6 +3,7 @@ from simple_history.models import HistoricalRecords
 
 from core.models import CoreModel
 from core.validators import WEEK_VALIDATOR, PERCENTAGE_VALIDATOR
+from units.models import Unit
 
 
 class Breed(CoreModel):
@@ -18,7 +19,7 @@ class Breed(CoreModel):
         return self.name
 
 
-class BreedHDEPGuid(CoreModel):
+class BreedHDEPGuide(CoreModel):
     """Hen-Day Egg Production (HDEP)
     """
     breed = models.ForeignKey(
@@ -28,7 +29,7 @@ class BreedHDEPGuid(CoreModel):
         validators=PERCENTAGE_VALIDATOR, default=0)
 
 
-class BreedHHEPGuid(CoreModel):
+class BreedHHEPGuide(CoreModel):
     """Hen-Housed Egg Production (HHEP)
     """
     breed = models.ForeignKey(
@@ -38,9 +39,14 @@ class BreedHHEPGuid(CoreModel):
         validators=PERCENTAGE_VALIDATOR, default=0)
 
 
-class BreedEggGuid(CoreModel):
-    pass
+class BreedWeightGuide(CoreModel):
+    breed = models.ForeignKey(
+        Breed, on_delete=models.CASCADE)
+    week = models.PositiveIntegerField(validators=WEEK_VALIDATOR)
+    weight = models.FloatField()
+    weight_unit = models.ForeignKey(
+        Unit, on_delete=models.SET_NULL, null=True, blank=True)
 
 
-class BreedWeightGuid(CoreModel):
+class BreedEggGuide(CoreModel):
     pass

@@ -114,13 +114,42 @@ class BreedCsvImport(APIView):
 # Breed HDEP Guid
 
 
-class BreedHDEPGuidViewSet(viewsets.ModelViewSet):
-    serializer_class = serializers.BreedHDEPGuidSerializer_GET
+class BreedHDEPGuideViewSet(viewsets.ModelViewSet):
+    serializer_class = serializers.BreedHDEPGuideSerializer_GET
 
     def get_queryset(self):
-        return models.BreedHDEPGuid.objects.filter(ingredient=self.kwargs['breed_pk'])
+        return models.BreedHDEPGuid.objects.filter(breed=self.kwargs['breed_pk'])
 
     def get_serializer_class(self):
         if self.request.method in ['POST', 'PUT', 'PATCH']:
-            return serializers.BreedHDEPGuidSerializer_POST
-        return serializers.BreedHDEPGuidSerializer_GET
+            return serializers.BreedHDEPGuideSerializer_POST
+        return serializers.BreedHDEPGuideSerializer_GET
+
+
+# Breed HHEP Guid
+
+
+class BreedHHEPGuideViewSet(viewsets.ModelViewSet):
+    serializer_class = serializers.BreedHHEPGuideSerializer_GET
+
+    def get_queryset(self):
+        return models.BreedHHEPGuid.objects.filter(breed=self.kwargs['breed_pk'])
+
+    def get_serializer_class(self):
+        if self.request.method in ['POST', 'PUT', 'PATCH']:
+            return serializers.BreedHHEPGuideSerializer_POST
+        return serializers.BreedHHEPGuideSerializer_GET
+
+# Breed Weight Guide
+
+
+class BreedWeightGuideViewSet(viewsets.ModelViewSet):
+    serializer_class = serializers.BreedWeightGuideSerializer_GET
+
+    def get_queryset(self):
+        return models.BreedWeightGuide.objects.filter(breed=self.kwargs['breed_pk'])
+
+    def get_serializer_class(self):
+        if self.request.method in ['POST', 'PUT', 'PATCH']:
+            return serializers.BreedWeightGuideSerializer_POST
+        return serializers.BreedWeightGuideSerializer_GET
