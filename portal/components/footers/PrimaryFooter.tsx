@@ -11,14 +11,14 @@ const PrimaryFooter = () => {
     <>
       <Box sx={{ minHeight: 50, px: 10, py: 10 }}>
         <Grid container spacing={2}>
-          <Grid item xs={4}>
+          <Grid item xs={12} md={4}>
             <img
               src="/images/ilri-cgiar.png"
               alt="ILIR CGIAR Logo"
               height={100}
             />
           </Grid>
-          <Grid item xs={4}>
+          <Grid item xs={12} md={4}>
             <Typography
               variant="h5"
               color={"white"}
@@ -64,7 +64,7 @@ const PrimaryFooter = () => {
               </Link>
             </Stack>
           </Grid>
-          <Grid item xs={4}>
+          <Grid item xs={12} md={4}>
             <Typography
               variant="h5"
               color={"white"}
