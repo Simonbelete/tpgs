@@ -12,6 +12,7 @@ from . import serializers
 from eggs.models import Egg
 from flocks.models import Flock, FlockReduction, FlockAccusation
 from farms.models import Farm
+from feeds.models import Feed
 
 
 class DirectoryListFilter(django_filters.FilterSet):
@@ -143,3 +144,47 @@ class HHEPViewSet(viewsets.ViewSet):
                     'no_eggs': weekly_no_eggs
                 })
             return Response({'results': results})
+
+
+class AverageWeight(viewsets.ViewSet):
+    def get_query(self):
+        return Feed.objects.all()
+
+    @extend_schema(
+        parameters=[
+            OpenApiParameter(
+                name='start_week', description='Start Week', location=OpenApiParameter.QUERY, required=False, type=int),
+            OpenApiParameter(
+                name='end_week', description='End Week', location=OpenApiParameter.QUERY, required=False, type=int),
+            OpenApiParameter(
+                name='sex', description='Sex', location=OpenApiParameter.QUERY, required=False, type=str),
+        ]
+    )
+    def list(self, request, **kwargs):
+        start_week = int(request.GET.get('start_week', 0))
+        end_week = int(request.GET.get('end_week', 0))
+        sex = request.GET.get('sex')
+        farm_id = kwargs['farm_id']
+        flock_id = kwargs['flock_id']
+        house_id = kwargs['house_id']
+
+        if (kwargs['farm_id'] == 'all'):
+            return Response({
+                'errors': [
+                    'farm can not be all'
+                ]
+            })
+        farm = Farm.objects.get(pk=farm_id)
+        feeds = self.get_query()
+        with tenant_context(farm):
+            if (flock_id != 'all'):
+                feeds = feeds.filter(Q(flock=flock_id) | Q(
+                    chicken__flock=kwargs['flock_id']))
+            if (house_id != 'all'):
+                feeds = feeds.filter(chicken__house=house_id)
+            if (sex and sex == 'M'):
+                feeds = feeds.filter()
+
+            flock_weight = feeds.filter(flock__isNull=False).aggregate(
+                weight_sum=Sum('weight'), )
+            weights = feeds.aggregate(avg=Avg('weight'))

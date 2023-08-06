@@ -29,8 +29,8 @@ const AppIntro = () => {
         <Grid item xs={12} md={6}>
           <Box>
             <img
-              src="https://placehold.co/400"
-              width={400}
+              src="/images/chickens_image.jpg"
+              width={"100%"}
               style={{ marginBottom: "20px" }}
             />
           </Box>

@@ -79,6 +79,12 @@ const lightTheme = createTheme({
   },
 });
 
+lightTheme.typography.title = {
+  [lightTheme.breakpoints.down("md")]: {
+    fontSize: 20,
+  },
+};
+
 const darkTheme = createTheme({
   palette: {
     mode: "dark",
