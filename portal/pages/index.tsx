@@ -9,6 +9,7 @@ import {
   Link,
   Stack,
   Grid,
+  useTheme,
 } from "@mui/material";
 
 import {
@@ -27,6 +28,7 @@ import { ContactUsForm } from "@/features/contact-us";
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
+  const theme = useTheme();
   return (
     <main>
       <Box sx={{ background: "#f5faf8" }}>
@@ -74,9 +76,16 @@ export default function Home() {
       <SignUpNowCTA />
       <ContactUsForm />
 
-      <footer style={{ marginTop: "auto" }}>
-        <PrimaryFooter />
-        <Copyright />
+      <footer
+        style={{
+          margPrimaryFooterinTop: "auto",
+          background: theme.palette.secondary.dark,
+        }}
+      >
+        <Container>
+          <PrimaryFooter />
+          <Copyright />
+        </Container>
       </footer>
     </main>
   );
