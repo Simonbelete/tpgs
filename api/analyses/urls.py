@@ -21,8 +21,14 @@ hdep_router = routers.DefaultRouter()
 hdep_router.register(
     r'analyses/(?P<farm_id>.+)/(?P<flock_id>.+)/(?P<house_id>.+)/hdep', views.HDEPViewSet, basename="api_hdep")
 
+hhep_router = routers.DefaultRouter()
+hhep_router.register(
+    r'analyses/(?P<farm_id>.+)/(?P<flock_id>.+)/(?P<house_id>.+)/hhep', views.HHEPViewSet, basename="api_hhep")
+
+
 urlpatterns = [
     # path('', include(router.urls)),
     path('', include(directories_router.urls)),
     path('', include(hdep_router.urls)),
+    path('', include(hhep_router.urls)),
 ]

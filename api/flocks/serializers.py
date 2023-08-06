@@ -32,7 +32,7 @@ class FlockAccusationSerializer_POST(serializers.ModelSerializer):
     class Meta:
         model = models.FlockAccusation
         fields = ['id', 'accusation',
-                  'accusation_date', 'no_chicken', 'chickens']
+                  'accusation_date', 'no_male_chickens', 'no_female_chickens', 'chickens']
 
     def create(self, validated_data):
         flock = models.Flock.objects.get(
@@ -51,7 +51,7 @@ class FlockReductionSerializer_POST(serializers.ModelSerializer):
     class Meta:
         model = models.FlockReduction
         fields = ['id', 'reduction_date',
-                  'no_chicken', 'chickens', 'reason', 'note']
+                  'no_male_chickens', 'no_female_chickens', 'chickens', 'reason', 'note']
 
     def create(self, validated_data):
         flock = models.Flock.objects.get(

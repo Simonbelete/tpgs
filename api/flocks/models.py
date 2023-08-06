@@ -30,14 +30,20 @@ class Flock(CoreModel):
     @property
     def total_accusation(self):
         result = self.accusations.all().aggregate(
-            male_sum=models.Sum('no_chicken'), female_sum=models.Sum('no_chicken'), count=models.Count('chickens'))
-        return (result['male_sum'] or 0)(result['female_sum'] or 0) + result['count']
+            male_sum=models.Sum('no_male_chickens'), female_sum=models.Sum('no_female_chickens'), count=models.Count('chickens'))
+        return (result['male_sum'] or 0) + (result['female_sum'] or 0) + result['count']
+
+    @property
+    def total_female_accusation(self):
+        result = self.accusations.all().aggregate(
+            sum=models.Sum('no_female_chickens'), count=models.Count('chickens'))
+        return (result['sum'] or 0) + result['count']
 
     @property
     def total_reduction(self):
         result = self.reductions.all().aggregate(
-            male_sum=models.Sum('no_chicken'), female_sum=models.Sum('no_chicken'), count=models.Count('chickens'))
-        return (result['male_sum'] or 0)(result['female_sum'] or 0) + result['count']
+            male_sum=models.Sum('no_male_chickens'), female_sum=models.Sum('no_female_chickens'), count=models.Count('chickens'))
+        return (result['male_sum'] or 0) + (result['female_sum'] or 0) + result['count']
 
 
 class FlockAccusation(CoreModel):
@@ -68,7 +74,7 @@ class FlockAccusation(CoreModel):
 
     @property
     def total_female_chickens(self):
-        return self.no_male_chicken + self.chickens.filter(sex='M').count()
+        return self.no_female_chickens + self.chickens.filter(sex='F').count()
 
     def save(self,  *args, **kwargs) -> None:
         self.clean()
@@ -121,7 +127,7 @@ class FlockReduction(CoreModel):
 
     @property
     def total_female_chickens(self):
-        return self.no_male_chicken + self.chickens.filter(sex='M').count()
+        return self.no_female_chickens + self.chickens.filter(sex='M').count()
 
     def save(self,  *args, **kwargs) -> None:
         self.clean()

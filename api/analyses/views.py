@@ -74,13 +74,13 @@ class HDEPViewSet(viewsets.ViewSet):
                 total_accusation = 0
                 for x in flock_accusation.iterator():
                     if x.accusation_week <= week:
-                        total_accusation += x.total_chickens
+                        total_accusation += x.total_female_chickens
 
                 flock_reduction = FlockReduction.objects.filter(flock=flock_id)
                 total_reduction = 0
                 for x in flock_reduction.iterator():
                     if x.reduction_week <= week:
-                        total_reduction += x.total_chickens
+                        total_reduction += x.total_female_chickens
 
                 alive_chickens = total_accusation - total_reduction
                 alive_chickens = 1 if alive_chickens == 0 else alive_chickens
@@ -130,32 +130,16 @@ class HHEPViewSet(viewsets.ViewSet):
 
             results = []
             for week in range(start_week, end_week + 1):
-                print('***')
                 weekly_no_eggs = eggs.filter(week=week).aggregate(
                     sum=Sum('eggs'))['sum'] or 0
+                total_female_chickens = Flock.objects.get(
+                    pk=flock_id).total_female_accusation
+                total_female_chickens = 1 if total_female_chickens == 0 else total_female_chickens
 
-                flock_accusation = FlockAccusation.objects.filter(
-                    flock=flock_id)
-                total_accusation = 0
-                for x in flock_accusation.iterator():
-                    if x.accusation_week <= week:
-                        total_accusation += x.total_chickens
-
-                flock_reduction = FlockReduction.objects.filter(flock=flock_id)
-                total_reduction = 0
-                for x in flock_reduction.iterator():
-                    if x.reduction_week <= week:
-                        total_reduction += x.total_chickens
-
-                alive_chickens = total_accusation - total_reduction
-                alive_chickens = 1 if alive_chickens == 0 else alive_chickens
-
-                hhep = weekly_no_eggs / alive_chickens * 100
+                hhep = weekly_no_eggs / total_female_chickens * 100
                 results.append({
                     'week': week,
                     'hhep': hhep,
-                    'accusation': total_accusation,
-                    'reduction': total_reduction,
                     'no_eggs': weekly_no_eggs
                 })
             return Response({'results': results})
