@@ -2,11 +2,13 @@ from django.shortcuts import render
 from rest_framework import viewsets, status
 import django_filters
 from rest_framework.response import Response
+from django.db.models import Q
+from django.db.models import Count, Sum, Avg, F
 
 from . import models
 from . import serializers
 from eggs.models import Egg
-from flocks.models import Flock
+from flocks.models import Flock, FlockReduction, FlockAccusation
 
 
 class DirectoryListFilter(django_filters.FilterSet):
@@ -33,6 +35,9 @@ class HDEPViewSet(viewsets.ViewSet):
     def list(self, request, **kwargs):
         print('---------------')
         print(kwargs)
+        start_week = int(request.GET.get('start_week', 0))
+        end_week = int(request.GET.get('end_week', 0))
+        flock_id = kwargs['flock_id']
         eggs = self.get_query()
         if (kwargs['farm_id'] == 'all'):
             return Response({
@@ -41,8 +46,28 @@ class HDEPViewSet(viewsets.ViewSet):
                 ]
             })
         if (kwargs['flock_id'] != 'all'):
-            eggs = eggs.filter(flock=kwargs['flock_id'])
+            eggs = eggs.filter(Q(flock=kwargs['flock_id']) | Q(
+                chicken__flock=kwargs['flock_id']))
         if (kwargs['house_id'] != 'all'):
             eggs = eggs.filter(chicken__house=kwargs['house_id'])
 
-        return Response({})
+        results = []
+        for week in range(start_week, end_week + 1):
+            weekly_no_eggs = eggs.filter(week=week).aggregate(
+                sum=Sum('eggs'))['sum'] or 0
+            flock_accusation = FlockAccusation.objects.filter(flock=flock_id)
+            total_accusation = [
+                x.total_chickens for x in flock_accusation.iterator() if x.accusation_week <= week]
+            flock_reduction = FlockReduction.objects.filter(flock=flock_id)
+            total_reduction = [
+                x.total_chickens for x in flock_reduction.iterator() if x.accusation_week <= week]
+            alive_chickens = total_accusation - total_reduction
+            hdep = weekly_no_eggs / alive_chickens * 100
+            results.append({
+                'week': week,
+                'hdep': hdep,
+                'accusation': total_accusation,
+                'reduction': total_reduction,
+                'no_eggs': weekly_no_eggs
+            })
+        return Response({'results': results})

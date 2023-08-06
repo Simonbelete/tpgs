@@ -1,3 +1,4 @@
+import math
 from typing import Collection, Iterable, Optional
 from django.db import models
 from django.db import transaction
@@ -51,6 +52,15 @@ class FlockAccusation(CoreModel):
     note = models.TextField(null=True, blank=True)
     history = HistoricalRecords()
 
+    @property
+    def accusation_week(self):
+        """ On Witch week reduction preformed """
+        return math.floor((self.accusation_date - self.flock.hatch_date).days / 7)
+
+    @property
+    def total_chickens(self):
+        return self.no_chicken + len(self.chickens)
+
     def save(self,  *args, **kwargs) -> None:
         self.clean()
         return super().save(*args, **kwargs)
@@ -86,6 +96,15 @@ class FlockReduction(CoreModel):
                               null=True, blank=True, default=None)
     note = models.TextField(null=True, blank=True)
 
+    @property
+    def reduction_week(self):
+        """ On Witch week reduction preformed """
+        return math.floor((self.reduction_date - self.flock.hatch_date).days / 7)
+
+    @property
+    def total_chickens(self):
+        return self.no_chicken + len(self.chickens)
+
     def save(self,  *args, **kwargs) -> None:
         self.clean()
         return super().save(*args, **kwargs)
@@ -104,6 +123,10 @@ class FlockReduction(CoreModel):
             if (chicken.flock.id != self.flock.id):
                 raise ValidationError(
                     {'chickens': 'Chicken is not part of the flock'})
+        if (self.reduction_date < self.flock.hatch_date):
+            return ValidationError({
+                'reduction_date': 'Cannot be less than flock hatch date'
+            })
         return super().clean()
 
 # class FlockSelection():
