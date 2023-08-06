@@ -78,13 +78,12 @@ export default function Home() {
 
       <footer
         style={{
-          margPrimaryFooterinTop: "auto",
+          marginTop: "auto",
           background: theme.palette.secondary.dark,
         }}
       >
         <Container>
           <PrimaryFooter />
-          <Copyright />
         </Container>
       </footer>
     </main>

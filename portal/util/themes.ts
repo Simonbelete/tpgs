@@ -81,7 +81,10 @@ const lightTheme = createTheme({
 
 lightTheme.typography.title = {
   [lightTheme.breakpoints.down("md")]: {
-    fontSize: 20,
+    fontSize: 30,
+    fontWeight: 700,
+    color: "#495057",
+    fontFamily: ["Inter", "sans-serif"].join(","),
   },
 };
 
