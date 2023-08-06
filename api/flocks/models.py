@@ -30,14 +30,14 @@ class Flock(CoreModel):
     @property
     def total_accusation(self):
         result = self.accusations.all().aggregate(
-            sum=models.Sum('no_chicken'), count=models.Count('chickens'))
-        return (result['sum'] or 0) + result['count']
+            male_sum=models.Sum('no_chicken'), female_sum=models.Sum('no_chicken'), count=models.Count('chickens'))
+        return (result['male_sum'] or 0)(result['female_sum'] or 0) + result['count']
 
     @property
     def total_reduction(self):
         result = self.reductions.all().aggregate(
-            sum=models.Sum('no_chicken'), count=models.Count('chickens'))
-        return (result['sum'] or 0) + result['count']
+            male_sum=models.Sum('no_chicken'), female_sum=models.Sum('no_chicken'), count=models.Count('chickens'))
+        return (result['male_sum'] or 0)(result['female_sum'] or 0) + result['count']
 
 
 class FlockAccusation(CoreModel):
@@ -46,7 +46,8 @@ class FlockAccusation(CoreModel):
     accusation = models.ForeignKey(
         Accusation, on_delete=models.SET_NULL, null=True, blank=True)
     accusation_date = models.DateField(null=True, blank=True)
-    no_chicken = models.PositiveIntegerField()
+    no_male_chickens = models.PositiveIntegerField(default=0)
+    no_female_chickens = models.PositiveIntegerField(default=0)
     chickens = models.ManyToManyField(
         Chicken, null=True, blank=True, related_name='flock_accusation')
     note = models.TextField(null=True, blank=True)
@@ -59,7 +60,15 @@ class FlockAccusation(CoreModel):
 
     @property
     def total_chickens(self):
-        return self.no_chicken + len(self.chickens)
+        return self.no_male_chickens + self.no_female_chickens + len(self.chickens)
+
+    @property
+    def total_male_chickens(self):
+        return self.no_female_chickens + self.chickens.filter(sex='M').count()
+
+    @property
+    def total_female_chickens(self):
+        return self.no_male_chicken + self.chickens.filter(sex='M').count()
 
     def save(self,  *args, **kwargs) -> None:
         self.clean()
@@ -69,9 +78,9 @@ class FlockAccusation(CoreModel):
         """
             - Both values cannot have data at the same time
         """
-        if (self.no_chicken != None or self.chickens != None):
+        if ((self.no_female_chickens != 0 or self.no_male_chickens != 0) and self.chickens != None):
             raise ValidationError({
-                'no_chickens': 'Can not have value if chickens are set',
+                'no_female_chickens': 'Can not have value if chickens are set',
                 'chickens': 'Can not have value if no_chickens are set'
             })
         return super().clean()
@@ -88,7 +97,8 @@ class FlockReduction(CoreModel):
     ]
     flock = models.ForeignKey(
         Flock, on_delete=models.CASCADE, related_name='reductions')
-    no_chicken = models.IntegerField(default=0)
+    no_male_chickens = models.PositiveIntegerField(default=0)
+    no_female_chickens = models.PositiveIntegerField(default=0)
     reduction_date = models.DateField(null=True, blank=True)
     chickens = models.ManyToManyField(
         Chicken, null=True, blank=True, related_name='flock_reduction')
@@ -103,7 +113,15 @@ class FlockReduction(CoreModel):
 
     @property
     def total_chickens(self):
-        return self.no_chicken + len(self.chickens)
+        return self.no_male_chickens + self.no_female_chickens + len(self.chickens)
+
+    @property
+    def total_male_chickens(self):
+        return self.no_female_chickens + self.chickens.filter(sex='M').count()
+
+    @property
+    def total_female_chickens(self):
+        return self.no_male_chicken + self.chickens.filter(sex='M').count()
 
     def save(self,  *args, **kwargs) -> None:
         self.clean()
@@ -114,7 +132,7 @@ class FlockReduction(CoreModel):
             - Both values cannot have data at the same time
             - Check if the chicken is part of the current flock
         """
-        if (self.no_chicken != None or self.chickens != None):
+        if ((self.no_female_chickens != 0 or self.no_male_chickens != 0) and self.chickens != None):
             raise ValidationError({
                 'no_chickens': 'Can not have value if chickens are set',
                 'chickens': 'Can not have value if no_chickens are set'
