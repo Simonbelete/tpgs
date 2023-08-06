@@ -57,7 +57,7 @@ const ContactUsForm = () => {
       }}
     >
       <Box sx={{ maxWidth: 600, mx: "auto", p: 2 }}>
-        <Typography variant="h4" align="center" mb={2}>
+        <Typography variant="h3" align="center" sx={{ fontWeight: 700 }} mb={3}>
           Contact Us
         </Typography>
         <form onSubmit={handleSubmit(onSubmit)}>

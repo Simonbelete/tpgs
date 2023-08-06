@@ -3,10 +3,15 @@ import styled from "@emotion/styled";
 import { Container, Typography, Box, Button } from "@mui/material";
 
 // background-image: url("https://placehold.co/600x400/png");
+// background-image: url("/images/chi1.jpeg");
+//   background-repeat: no-repeat;
+//   background-size: cover;
+//   background-color: ${({ theme }) => theme.palette.primary.main};
 const Section = styled.section`
   background-repeat: no-repeat;
+  background: linear-gradient(to top, #2e4639, #1f484180),
+    url("/images/chi1.jpeg");
   background-size: cover;
-  background-color: ${({ theme }) => theme.palette.primary.main};
 `;
 
 const SectionDescription = styled(Typography)`
