@@ -1,5 +1,6 @@
 from django.urls import path, include
 from rest_framework import routers
+from rest_framework_nested.routers import NestedDefaultRouter
 from . import views
 
 router = routers.DefaultRouter()
@@ -8,9 +9,14 @@ router.register(r'breeds', views.BreedViewSet,
 router.register(r'breeds/(?P<id>.+)/histories',
                 views.BreedHistoryViewSet, basename='api_breeds_histories'),
 
+hdep_router = NestedDefaultRouter(
+    router, r'breeds', lookup='breed')
+hdep_router.register(r'hdeps', views.BreedHDEPGuidViewSet,
+                     basename='api_ingredient_nutrients')
 
 urlpatterns = [
     path('', include(router.urls)),
+    path('', include(hdep_router.urls)),
 
     # Xlsx
     path('breeds/export/xlsx', views.BreedXlsxExport.as_view(),

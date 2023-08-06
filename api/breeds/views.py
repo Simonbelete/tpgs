@@ -110,3 +110,17 @@ class BreedCsvImport(APIView):
         if not result.has_errors():
             return JsonResponse({'message': 'Imported Successfully'}, status=200)
         return JsonResponse({'errors': ['Import Failed']}, status=400)
+
+# Breed HDEP Guid
+
+
+class BreedHDEPGuidViewSet(viewsets.ModelViewSet):
+    serializer_class = serializers.BreedHDEPGuidSerializer_GET
+
+    def get_queryset(self):
+        return models.BreedHDEPGuid.objects.filter(ingredient=self.kwargs['breed_pk'])
+
+    def get_serializer_class(self):
+        if self.request.method in ['POST', 'PUT', 'PATCH']:
+            return serializers.BreedHDEPGuidSerializer_POST
+        return serializers.BreedHDEPGuidSerializer_GET
