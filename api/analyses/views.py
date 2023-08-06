@@ -5,6 +5,7 @@ from rest_framework.response import Response
 from django.db.models import Q
 from django.db.models import Count, Sum, Avg, F
 from django_tenants.utils import tenant_context
+from drf_spectacular.utils import extend_schema, OpenApiParameter, OpenApiExample
 
 from . import models
 from . import serializers
@@ -34,9 +35,15 @@ class HDEPViewSet(viewsets.ViewSet):
     def get_query(self):
         return Egg.objects.all()
 
+    @extend_schema(
+        parameters=[
+            OpenApiParameter(
+                name='start_week', description='Start Week', location=OpenApiParameter.QUERY, required=False, type=int),
+            OpenApiParameter(
+                name='end_week', description='End Week', location=OpenApiParameter.QUERY, required=False, type=int),
+        ]
+    )
     def list(self, request, **kwargs):
-        print('---------------')
-        print(kwargs)
         start_week = int(request.GET.get('start_week', 0))
         end_week = int(request.GET.get('end_week', 0))
         flock_id = kwargs['flock_id']
@@ -49,7 +56,6 @@ class HDEPViewSet(viewsets.ViewSet):
                 ]
             })
         farm = Farm.objects.get(pk=farm_id)
-
         with tenant_context(farm):
             if (kwargs['flock_id'] != 'all'):
                 eggs = eggs.filter(Q(flock=kwargs['flock_id']) | Q(
@@ -59,6 +65,7 @@ class HDEPViewSet(viewsets.ViewSet):
 
             results = []
             for week in range(start_week, end_week + 1):
+                print('***')
                 weekly_no_eggs = eggs.filter(week=week).aggregate(
                     sum=Sum('eggs'))['sum'] or 0
 
