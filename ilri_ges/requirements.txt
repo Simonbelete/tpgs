@@ -42,3 +42,4 @@ django-cors-headers
 psycopg2
 whitenoise
 django-filter
+django-rest-passwordreset

@@ -37,6 +37,7 @@ urlpatterns = [
     path('adminactions/', include('adminactions.urls')),
     path('api/', include([
         path('', include('users.urls')),
+        path('', include('auths.urls')),
         path('', include('flocks.urls')),
         path('', include('units.urls')),
         path('', include('nutrients.urls')),

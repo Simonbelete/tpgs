@@ -16,7 +16,6 @@ const Layout = (props: LayoutProps) => {
       direction="row"
       alignItems="center"
       justifyContent="center"
-      style={{ minHeight: "100vh" }}
     >
       <Grid
         md={8}

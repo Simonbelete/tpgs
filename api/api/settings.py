@@ -57,6 +57,7 @@ EMAIL_HOST_USER = env('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
 
 EMAIL_ADDRESS = env('EMAIL_ADDRESS')
+NO_REPLAY_EMAIL_ADDRESS = env('NO_REPLAY_EMAIL_ADDRESS')
 
 DATETIME_FORMAT = "%d/%m/%Y %H:%M:%S"
 
@@ -81,6 +82,8 @@ SHARED_APPS = [
     'import_export',
     'django_filters',
     'simple_history',
+    'django_rest_passwordreset',
+    'auths',
     'farms',
     'users',
     'cities_light',
