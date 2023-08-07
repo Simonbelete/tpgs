@@ -15,9 +15,9 @@ class SendPasswordResetEmailThread(threading.Thread):
     def run(self):
         try:
             email_html_message = render_to_string(
-                'email/user_reset_password.html', self.context)
+                'email/reset_password/reset_password.html', self.context)
             email_plaintext_message = render_to_string(
-                'email/user_reset_password.txt', self.context)
+                'email/reset_password/reset_password.txt', self.context)
             email = EmailMultiAlternatives(
                 "Password Reset for {title}".format(
                     title="TPGS Platforms"),
