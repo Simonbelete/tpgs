@@ -31,4 +31,4 @@ def password_reset_token_created(sender, instance, reset_password_token, *args, 
             reset_password_token.key)
     }
     thread = SendPasswordResetEmailThread(context)
-    thread.send()
+    thread.start()

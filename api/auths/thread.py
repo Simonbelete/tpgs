@@ -13,6 +13,8 @@ class SendPasswordResetEmailThread(threading.Thread):
         threading.Thread.__init__(self)
 
     def run(self):
+        print('-------------------')
+        print(self.context)
         try:
             email_html_message = render_to_string(
                 'email/reset_password/reset_password.html', self.context)
