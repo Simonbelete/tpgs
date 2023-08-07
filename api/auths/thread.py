@@ -13,8 +13,6 @@ class SendPasswordResetEmailThread(threading.Thread):
         threading.Thread.__init__(self)
 
     def run(self):
-        print('-------------------')
-        print(self.context)
         try:
             email_html_message = render_to_string(
                 'email/reset_password/reset_password.html', self.context)
@@ -25,8 +23,10 @@ class SendPasswordResetEmailThread(threading.Thread):
                     title="TPGS Platforms"),
                 email_plaintext_message,
                 settings.NO_REPLAY_EMAIL_ADDRESS,
-                [self.context.to_email])
+                [self.context['to_email']])
             email.attach_alternative(email_html_message, "text/html")
             email.send()
-        except:
+        except Exception as ex:
+            # TODO: Log Error
+            print(ex)
             pass
