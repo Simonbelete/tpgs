@@ -18,7 +18,11 @@ const Layout = (props: LayoutProps) => {
       justifyContent="center"
       style={{ minHeight: "100vh" }}
     >
-      <Grid xs={8} sx={{ background: "#f5faf8" }}>
+      <Grid
+        md={8}
+        sx={{ background: "#f5faf8" }}
+        display={{ xs: "none", md: "block" }}
+      >
         <Box
           display="flex"
           justifyContent="center"
@@ -28,7 +32,7 @@ const Layout = (props: LayoutProps) => {
           <LoginBannerImage />
         </Box>
       </Grid>
-      <Grid xs={4}>
+      <Grid md={4}>
         <Box
           display="flex"
           justifyContent="center"
