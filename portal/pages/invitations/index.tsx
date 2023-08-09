@@ -8,6 +8,7 @@ import { InvitationsList } from "@/features/invitations";
 import DownloadIcon from "@mui/icons-material/Download";
 import AddIcon from "@mui/icons-material/Add";
 import FileUploadIcon from "@mui/icons-material/FileUpload";
+import SendIcon from "@mui/icons-material/Send";
 
 const UnitsPage = () => {
   const { breadcrumbs } = useBreadcrumbs();
@@ -32,7 +33,7 @@ const Actions = (): ReactElement => {
       alignItems="center"
     >
       <Link href="/units/create">
-        <Button variant="contained" startIcon={<AddIcon />}>
+        <Button variant="contained" size="small" startIcon={<SendIcon />}>
           Send Invitation
         </Button>
       </Link>

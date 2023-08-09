@@ -13,12 +13,13 @@ const Breadcrumbs = ({ items }: BreadcrumbsProps) => {
   return (
     <MuiBreadcrumbs
       aria-label="breadcrumb"
-      separator={<NavigateNextIcon fontSize="small" />}
+      // separator={<NavigateNextIcon fontSize="small" />}
+      separator="›"
     >
       {items &&
         items.map((e, key) => (
           <Link href={e.href} key={key} style={{ textDecoration: "none" }}>
-            <Typography variant="body2" color="text.secondary">
+            <Typography variant="caption" color="text.secondary">
               {e.label}
             </Typography>
           </Link>

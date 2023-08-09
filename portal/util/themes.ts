@@ -37,7 +37,7 @@ const lightTheme = createTheme({
   typography: {
     fontFamily: ["Inter", "sans-serif"].join(","),
     title: {
-      fontSize: 40,
+      fontSize: 37,
       fontWeight: 700,
       color: "#495057",
       fontFamily: ["Inter", "sans-serif"].join(","),
@@ -79,14 +79,14 @@ const lightTheme = createTheme({
   },
 });
 
-lightTheme.typography.title = {
-  [lightTheme.breakpoints.down("md")]: {
-    fontSize: 30,
-    fontWeight: 700,
-    color: "#495057",
-    fontFamily: ["Inter", "sans-serif"].join(","),
-  },
-};
+// lightTheme.typography.title = {
+//   [lightTheme.breakpoints.down("md")]: {
+//     fontSize: 30,
+//     fontWeight: 700,
+//     color: "#495057",
+//     fontFamily: ["Inter", "sans-serif"].join(","),
+//   },
+// };
 
 const darkTheme = createTheme({
   palette: {

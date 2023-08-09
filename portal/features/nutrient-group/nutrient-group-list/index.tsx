@@ -6,7 +6,7 @@ import { NutrientGroup } from "@/models";
 import { useSnackbar } from "notistack";
 
 const columns: GridColDef[] = [
-  { field: "name", headerName: "name", flex: 1, minWidth: 150 },
+  { field: "name", headerName: "Name", flex: 1, minWidth: 150 },
 ];
 
 const NutrientGroupList = () => {

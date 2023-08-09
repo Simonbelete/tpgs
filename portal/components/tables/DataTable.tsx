@@ -53,7 +53,7 @@ const StripedDataGrid = styled(DataGrid)(({ theme }) => ({
   },
   [`& .${gridClasses.columnHeaderTitle}`]: {
     fontWeight: 600,
-    fontSize: "16px",
+    fontSize: "14px",
   },
   [`& .${gridClasses.cell}`]: {
     "&:focus": {
@@ -225,7 +225,7 @@ const DataTable = ({
       <StripedDataGrid
         sx={{ background: "white" }}
         rows={rows}
-        // density="compact"
+        density="compact"
         rowHeight={40}
         columns={[...columns, ...settingColumn]}
         paginationMode="server"

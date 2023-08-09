@@ -32,7 +32,12 @@ const Actions = (): ReactElement => {
       alignItems="center"
     >
       <Link href="/users/create">
-        <Button variant="contained" startIcon={<AddIcon />}>
+        <Button
+          variant="contained"
+          size="small"
+          disableElevation
+          startIcon={<AddIcon />}
+        >
           Invite
         </Button>
       </Link>

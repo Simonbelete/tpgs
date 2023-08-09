@@ -96,7 +96,7 @@ const Actions = (): ReactElement => {
         alignItems="center"
       >
         <Link href="/nutrient-groups/create">
-          <Button variant="contained" startIcon={<AddIcon />}>
+          <Button variant="contained" size={"small"} startIcon={<AddIcon />}>
             Create
           </Button>
         </Link>

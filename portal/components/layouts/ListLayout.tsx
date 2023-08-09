@@ -16,7 +16,7 @@ const ListLayout = ({
 }: ListLayoutProps) => {
   return (
     <>
-      <Box mb={2}>{breadcrumbs}</Box>
+      <Box mb={1}>{breadcrumbs}</Box>
       <Grid container mb={5}>
         <Grid item xs={12} md={4}>
           <Box sx={{ display: "flex" }} justifyContent={"start"}>
