@@ -31,7 +31,8 @@ class CourseBodyImage extends StatelessWidget {
                 color: Colors.white,
                 child: InkWell(
                   onTap: () {
-                    Navigator.pushNamed(context, ImageScreen.routeName,
+                    Navigator.pushNamed(
+                        context, ImageScreen.routeName + "?url=" + image,
                         arguments: image);
                   },
                   child: ClipRRect(

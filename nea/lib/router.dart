@@ -35,6 +35,18 @@ List<Path> paths = [
       return CourseScreen(course: course);
     },
   ),
+  Path(
+    r'^\/image\?url=([^#]+)',
+    (
+      context,
+      match,
+    ) {
+      print('000000000000000000000');
+      print(match);
+      if (match == null) return NotFound();
+      return ImageScreen(image: match);
+    },
+  ),
 ];
 
 Route<dynamic> generateRoute(RouteSettings routeSettings) {
