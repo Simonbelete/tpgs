@@ -1,8 +1,12 @@
 from django.shortcuts import render
 from rest_framework import viewsets, status
+from rest_framework.response import Response
+from django.db import transaction
+from drf_spectacular.utils import extend_schema, OpenApiParameter, OpenApiExample
 
 from . import models
 from . import serializers
+from users.models import User
 
 
 class InvitationViewSet(viewsets.ModelViewSet):
@@ -16,3 +20,27 @@ class InvitationViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         serializer.save(inviter=self.request.user)
+
+
+class VerifyInvitationViewSet(viewsets.ViewSet):
+    serializer_class = serializers.VerifyInvitationSerializer_POST
+
+    def get_queryset(self):
+        return models.Invitation.objects.all()
+
+    @transaction.atomic
+    def create(self, request, formula_pk=None):
+        try:
+            with transaction.atomic:
+                token = request.data['password']
+                password = request.data['password']
+                name = request.data['name']
+                invitation = models.Invitation.objects.get(token=token)
+                user = User.objects.create_user(
+                    invitation.email, password, name=name)
+                for farm in invitation.farms.all().iterator():
+                    user.farms.add(farm)
+                    user.save()
+                return Response(user, status=201)
+        except Exception as ex:
+            return Response({'error': str(ex)}, status=500)

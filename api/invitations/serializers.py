@@ -12,4 +12,10 @@ class InvitationSerializer_GET(serializers.ModelSerializer):
 class InvitationSerializer_POST(serializers.ModelSerializer):
     class Meta:
         model = models.Invitation
-        fields = ['email']
+        fields = ['email', 'farms']
+
+
+class VerifyInvitationSerializer_POST(serializers.Serializer):
+    password = serializers.CharField()
+    name = serializers.CharField()
+    token = serializers.CharField()
