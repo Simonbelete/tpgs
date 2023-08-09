@@ -3,6 +3,7 @@
 1. ```python manage.py migrate_schemas --shared```
 2. ```python manage.py create_schema public```
 3. ```python manage.py loaddata */fixtures/*.json```
+4. ```python manage.py create_groups```
 
 ## Creating New Tenant
 
