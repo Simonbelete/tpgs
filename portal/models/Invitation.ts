@@ -1,3 +1,4 @@
+import Farm from "./Farm";
 import User from "./User";
 
 export default interface Invitation {
@@ -6,4 +7,5 @@ export default interface Invitation {
   email: string;
   send_date: string;
   accepted: boolean;
+  farms: number[] | Farm[];
 }
