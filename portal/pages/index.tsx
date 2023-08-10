@@ -19,6 +19,7 @@ import {
   PrimaryHero,
   AppIntro,
   Copyright,
+  AppsDescription,
 } from "@/components";
 import { ILRILogo } from "@/components/logos";
 import { ReactElement } from "react";
@@ -74,6 +75,7 @@ export default function Home() {
       <Box sx={{ height: 50 }} />
 
       <SignUpNowCTA />
+      <AppsDescription />
       <ContactUsForm />
 
       <footer
