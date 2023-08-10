@@ -1,8 +1,6 @@
 import * as React from "react";
-import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
-import Modal from "@mui/material/Modal";
+import { Modal, Box, Typography, IconButton } from "@mui/material";
+import { CloseOutlined } from "@mui/icons-material";
 
 const style = {
   position: "absolute" as "absolute",
@@ -22,13 +20,11 @@ export default function BasicModal({
   children,
 }: {
   open: boolean;
-  onClose?: () => void;
+  onClose: () => void;
   children?: React.ReactElement;
 }) {
-  const handleClose = React.useCallback(
-    () => (onClose != undefined ? onClose() : null),
-    [onClose]
-  );
+  const handleClose = React.useCallback(() => onClose(), [onClose]);
+
   return (
     <Modal
       open={open}
@@ -36,7 +32,23 @@ export default function BasicModal({
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
     >
-      <Box sx={style}>{children}</Box>
+      <Box sx={style}>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "flex-end",
+            position: "absolute",
+            right: 0,
+            top: 0,
+            padding: "10px",
+          }}
+        >
+          <IconButton onClick={handleClose}>
+            <CloseOutlined />
+          </IconButton>
+        </Box>
+        {children}
+      </Box>
     </Modal>
   );
 }
