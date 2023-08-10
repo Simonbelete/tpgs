@@ -54,7 +54,9 @@ const AppsDescription = () => {
           <Container maxWidth="lg" sx={{ my: 10, py: 5 }}>
             <Grid container spacing={10}>
               <Grid item xs={12} md={6}>
-                <img src={e.image} width={"100%"} />
+                <Link href={e.image}>
+                  <img src={e.image} width={"100%"} />
+                </Link>
               </Grid>
               <Grid item xs={12} md={6}>
                 <Typography variant="h3" component="h3">

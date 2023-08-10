@@ -65,8 +65,8 @@ const LoginForm = () => {
 
   return (
     <>
-      <Box sx={{ mb: 4 }}>
-        <Box sx={{ mb: 2 }}>
+      <Box sx={{ mb: 4 }} justifyContent={"center"} alignItems={"center"}>
+        <Box sx={{ mb: 2, display: "flex", justifyContent: "center" }}>
           <Link href="/">
             <img src="/images/ilri_logo.png" height={50} />
           </Link>
@@ -83,7 +83,7 @@ const LoginForm = () => {
         )}
       </Box>
       {/* <Box height="10vh" mr={4}> */}
-      <Box mr={4}>
+      <Box sx={{ width: "100%" }}>
         <form onSubmit={handleSubmit(onSubmit)}>
           <Grid container spacing={4} direction="column">
             <Grid item xs={12}>
