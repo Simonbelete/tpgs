@@ -16,7 +16,7 @@ const schema = object({
   message: string().required(),
 }).required();
 
-const ContactUsForm = () => {
+const ContactUsForm = ({ message }: { message?: string }) => {
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
   const {
@@ -26,6 +26,9 @@ const ContactUsForm = () => {
     formState: { errors },
   } = useForm<Inputs>({
     resolver: yupResolver(schema),
+    defaultValues: {
+      message: message,
+    },
   });
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
@@ -57,15 +60,27 @@ const ContactUsForm = () => {
       }}
     >
       <Box sx={{ maxWidth: 600, mx: "auto", p: 2 }}>
-        <Typography
-          variant="h3"
-          color={"primary.main"}
-          align="center"
-          sx={{ fontWeight: 700 }}
-          mb={3}
-        >
-          Contact Us
-        </Typography>
+        {message == null ? (
+          <Typography
+            variant="h3"
+            color={"primary.main"}
+            align="center"
+            sx={{ fontWeight: 700 }}
+            mb={3}
+          >
+            Contact Us
+          </Typography>
+        ) : (
+          <Typography
+            variant="h3"
+            color={"primary.main"}
+            align="center"
+            sx={{ fontWeight: 700 }}
+            mb={3}
+          >
+            {message}
+          </Typography>
+        )}
         <form onSubmit={handleSubmit(onSubmit)}>
           <Grid container spacing={4}>
             {/* Name */}
