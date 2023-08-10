@@ -1,21 +1,61 @@
 import React, { useEffect, useState } from "react";
-import { GridRowsProp, GridColDef, GridToolbar } from "@mui/x-data-grid";
+import {
+  GridRowsProp,
+  GridColDef,
+  GridToolbar,
+  GridRenderCellParams,
+} from "@mui/x-data-grid";
 import { useSnackbar } from "notistack";
 import { DataTable } from "@/components/tables";
-import { Invitation } from "@/models";
+import { Farm, Invitation } from "@/models";
 import invitation_service from "../services/invitation_service";
+import { Chip, Box, Stack } from "@mui/material";
 
 const columns: GridColDef[] = [
-  { field: "email", headerName: "Email", flex: 1, minWidth: 150 },
-  { field: "sent_date", headerName: "Date", flex: 1, minWidth: 150 },
   {
-    field: "unit_to",
-    headerName: "Unit To",
+    field: "invited",
+    headerName: "Invited By",
     flex: 1,
     minWidth: 150,
     valueGetter: (params) => params.row.inviter.name ?? "",
   },
-  { field: "accepted", headerName: "Accepted", flex: 1, minWidth: 150 },
+  { field: "email", headerName: "Email", flex: 1, minWidth: 150 },
+  { field: "sent_date", headerName: "Date", flex: 1, minWidth: 150 },
+  { field: "expire_date", headerName: "Expire Date", flex: 1, minWidth: 150 },
+  {
+    field: "farms",
+    headerName: "Farms",
+    flex: 1,
+    minWidth: 150,
+    renderCell: (params: GridRenderCellParams<any>) => {
+      console.log();
+      return (
+        <>
+          {params.row.farms &&
+            params.row.farms.map((e: Farm, key: any) => (
+              <Chip key={key} label={e.name} />
+            ))}
+        </>
+      );
+    },
+  },
+  {
+    field: "accepted",
+    headerName: "Accepted",
+    flex: 1,
+    minWidth: 150,
+    renderCell: (params: GridRenderCellParams<any>) => {
+      if (params.row.accepted) {
+        <Chip label="Accepted" color="success" size="small" />;
+      }
+      if (params.row.accepted == false) {
+        <Chip label="Not Accepted" color="error" size="small" />;
+      }
+      return (
+        <Chip label="Pending" color="warning" variant="outlined" size="small" />
+      );
+    },
+  },
 ];
 
 const InvitationsList = () => {

@@ -31,7 +31,7 @@ const InvitationFormModal = ({
   onClose,
 }: {
   open: boolean;
-  onClose?: () => void;
+  onClose: () => void;
 }) => {
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
@@ -45,8 +45,6 @@ const InvitationFormModal = ({
   });
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
-    console.log("-----------");
-    console.log(data);
     try {
       const response = await invitation_service.create(data);
       if (response.status == 201) {
