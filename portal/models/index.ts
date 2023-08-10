@@ -30,3 +30,5 @@ export type { default as Purpose } from "./Purpose";
 export type { default as PurposeHistory } from "./PurposeHistory";
 export type { default as FormulaRequirement } from "./FormulaRequirement";
 export type { default as FormulaIngredient } from "./FormulaIngredient";
+export type { default as ResetPassword } from "./ResetPassword";
+export type { default as ResetPasswordConfirm } from "./ResetPasswordConfirm";
