@@ -7,7 +7,6 @@ const PrimaryMenu = () => {
   return (
     <Box sx={{ display: { xs: "none", sm: "block" } }}>
       <Stack direction="row" spacing={2}>
-        <AppsDropdownMenu />
         <Link href="/login">
           <Button>Login</Button>
         </Link>
