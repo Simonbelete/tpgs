@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { LabeledInput } from "@/components/inputs";
@@ -10,33 +12,52 @@ import {
   Button,
   Container,
   Typography,
+  Alert,
 } from "@mui/material";
+import LoadingButton from "@mui/lab/LoadingButton";
+import CircularProgress from "@mui/material/CircularProgress";
 
 type Inputs = {
   email: string;
   password: string;
 };
 
+const schema = yup
+  .object({
+    email: yup.string().email().required(),
+    password: yup.string().required(),
+  })
+  .required();
+
 // TODO: Move the logic to auth-login
 const LoginForm = () => {
   const router = useRouter();
+  const [error, setError] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const {
-    register,
-    handleSubmit,
-    watch,
-    control,
-    formState: { errors },
-  } = useForm<Inputs>();
+  const { handleSubmit, watch, control } = useForm<Inputs>({
+    // @ts-ignore
+    resolver: yupResolver(schema),
+  });
+
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
-    const response = await signIn("credentials", {
-      email: data.email,
-      password: data.password,
-      redirect: false,
-    });
-    if (response?.error) {
-    } else {
-      router.push("dashboard");
+    setIsLoading(true);
+    setError(null);
+    try {
+      const response = await signIn("credentials", {
+        email: data.email,
+        password: data.password,
+        redirect: false,
+      });
+      if (response?.error) {
+        setError("Please either check your email or password!");
+      } else {
+        router.push("dashboard");
+      }
+    } catch (ex) {
+      setError("Server error, please check your connection and try again");
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -49,6 +70,13 @@ const LoginForm = () => {
         <Typography color={"primary.dark"} variant="h6" fontWeight={600}>
           Login in to your account
         </Typography>
+        {error && (
+          <Box sx={{ mt: 1 }}>
+            <Alert variant="outlined" severity="error">
+              {error}
+            </Alert>
+          </Box>
+        )}
       </Box>
       <Box height="10vh" mr={4}>
         <form onSubmit={handleSubmit(onSubmit)}>
@@ -99,9 +127,16 @@ const LoginForm = () => {
               />
             </Grid>
             <Grid item xs={12}>
-              <Button type="submit" fullWidth variant="contained">
+              <LoadingButton
+                loading={isLoading}
+                type="submit"
+                fullWidth
+                variant="contained"
+                loadingPosition="start"
+                sx={{ color: "white" }}
+              >
                 SIGN IN
-              </Button>
+              </LoadingButton>
             </Grid>
           </Grid>
         </form>
