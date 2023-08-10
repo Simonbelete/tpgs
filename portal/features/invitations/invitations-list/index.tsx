@@ -10,6 +10,7 @@ import { DataTable } from "@/components/tables";
 import { Farm, Invitation } from "@/models";
 import invitation_service from "../services/invitation_service";
 import { Chip, Box, Stack } from "@mui/material";
+import { useRouter } from "next/router";
 
 const columns: GridColDef[] = [
   {
@@ -17,7 +18,7 @@ const columns: GridColDef[] = [
     headerName: "Invited By",
     flex: 1,
     minWidth: 150,
-    valueGetter: (params) => params.row.inviter.name ?? "",
+    // valueGetter: (params) => params.row.inviter ?? "",
   },
   { field: "email", headerName: "Email", flex: 1, minWidth: 150 },
   { field: "sent_date", headerName: "Date", flex: 1, minWidth: 150 },
@@ -28,14 +29,13 @@ const columns: GridColDef[] = [
     flex: 1,
     minWidth: 150,
     renderCell: (params: GridRenderCellParams<any>) => {
-      console.log();
       return (
-        <>
+        <Stack direction="row" spacing={1}>
           {params.row.farms &&
-            params.row.farms.map((e: Farm, key: any) => (
-              <Chip key={key} label={e.name} />
+            params.row.farms.map((e: string, key: any) => (
+              <Chip key={key} label={e} size="small" />
             ))}
-        </>
+        </Stack>
       );
     },
   },
@@ -66,6 +66,7 @@ const InvitationsList = () => {
     pageSize: 10,
   });
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+  const router = useRouter();
 
   useEffect(() => {
     setIsLoading(true);
@@ -88,9 +89,10 @@ const InvitationsList = () => {
   const handleDelete = async (id: number) => {
     try {
       const response = await invitation_service.delete(id);
-      if (response.status == 204)
+      if (response.status == 204) {
         enqueueSnackbar("Successfully Deleted!", { variant: "success" });
-      else enqueueSnackbar("Failed to Deleted!", { variant: "error" });
+        // router.push("/invitation");
+      } else enqueueSnackbar("Failed to Deleted!", { variant: "error" });
     } catch (ex) {
       enqueueSnackbar("Server Error!", { variant: "error" });
     } finally {
@@ -109,6 +111,7 @@ const InvitationsList = () => {
       paginationModel={paginationModel}
       paginationMode="server"
       onPaginationModelChange={setPaginationModel}
+      setting={DataTable.SETTING_COL.delete}
     />
   );
 };

@@ -136,6 +136,7 @@ function CustomNoRowsOverlay() {
 export enum SETTING_COL {
   default = "default",
   history = "history",
+  delete = "delete",
 }
 
 const DataTable = ({
@@ -162,9 +163,11 @@ const DataTable = ({
     handleDeleteModalClose();
   }, [onDelete, deleteId]);
 
-  const settingColumn: GridColDef[] = [
-    setting == SETTING_COL.default
-      ? {
+  const generateSettingColumns = (): GridColDef[] => {
+    let col: GridColDef;
+    switch (setting) {
+      case SETTING_COL.default:
+        col = {
           field: "Actions",
           flex: 1,
           minWidth: 150,
@@ -205,15 +208,57 @@ const DataTable = ({
               </Box>
             );
           },
-        }
-      : {
+        };
+        break;
+      case SETTING_COL.delete:
+        col = {
           field: "Actions",
           flex: 1,
           minWidth: 150,
           headerAlign: "center",
           align: "right",
-        },
-  ];
+          renderCell(params: any) {
+            return (
+              <Box>
+                <Tooltip title="Delete">
+                  <IconButton
+                    aria-label="delete"
+                    onClick={() => handleDeleteModalOpen(params.id)}
+                  >
+                    <DeleteForeverIcon fontSize="small" />
+                  </IconButton>
+                </Tooltip>
+              </Box>
+            );
+          },
+        };
+        break;
+      default:
+        col = {
+          field: "Actions",
+          flex: 1,
+          minWidth: 150,
+          headerAlign: "center",
+          align: "right",
+        };
+    }
+    const result: GridColDef[] = [col];
+    console.log(result);
+    console.log(setting);
+    return result;
+  };
+
+  const settingColumn: GridColDef[] = generateSettingColumns();
+  //   setting == SETTING_COL.default
+  //     ?
+  //     : {
+  //         field: "Actions",
+  //         flex: 1,
+  //         minWidth: 150,
+  //         headerAlign: "center",
+  //         align: "right",
+  //       },
+  // ];
 
   return (
     <>

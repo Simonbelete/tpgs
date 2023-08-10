@@ -10,6 +10,7 @@ import { useSnackbar } from "notistack";
 import SendIcon from "@mui/icons-material/Send";
 import { AsyncDropdown } from "@/components/dropdowns";
 import invitation_service from "../services/invitation_service";
+import { useRouter } from "next/router";
 
 type Inputs = Partial<Invitation>;
 
@@ -33,6 +34,7 @@ const InvitationFormModal = ({
   open: boolean;
   onClose: () => void;
 }) => {
+  const router = useRouter();
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
   const {
@@ -49,6 +51,7 @@ const InvitationFormModal = ({
       const response = await invitation_service.create(data);
       if (response.status == 201) {
         enqueueSnackbar("Successfully send invitation", { variant: "success" });
+        router.push("/invitations");
       } else {
         enqueueSnackbar(
           "Failed to send invitation, please check you inputs and try again",
