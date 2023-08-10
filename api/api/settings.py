@@ -44,6 +44,7 @@ CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOW_HEADERS = [
     *default_headers,
     'x-Request-Id',
+    'X-Superuser-Mode'
 ]
 
 ALLOWED_HOSTS = ['*']

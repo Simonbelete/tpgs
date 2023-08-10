@@ -12,5 +12,11 @@ class TenantHeaderSchema(AutoSchema):
                 type=str,
                 location=OpenApiParameter.HEADER,
                 description="Tenant/Farm default `public`",
+            ),
+            OpenApiParameter(
+                name="X-Superuser-Mode",
+                type=bool,
+                location=OpenApiParameter.HEADER,
+                description="Super user mode default `false`",
             )
         ]
