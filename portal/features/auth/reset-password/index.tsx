@@ -22,16 +22,16 @@ import { isAxiosError } from "axios";
 import errorToForm from "@/util/errorToForm";
 
 type Inputs = {
-  email: string;
+  password: string;
 };
 
 const schema = yup
   .object({
-    email: yup.string().email().required(),
+    password: yup.string().required(),
   })
   .required();
 
-const AuthLogin = () => {
+const ResetPassword = () => {
   const router = useRouter();
   const [error, setErrorMessage] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
@@ -46,7 +46,10 @@ const AuthLogin = () => {
     setIsLoading(true);
     setErrorMessage(null);
     try {
-      const response = await auth_service.reset_password({ email: data.email });
+      const response = await auth_service.reset_password_confirm({
+        password: data.password,
+        token: router.query.token[0],
+      });
       if (response.status == 200) {
         setSuccess(
           "Password reset email sent, please check your email to reset your password"
@@ -98,7 +101,7 @@ const AuthLogin = () => {
             <Grid container spacing={4} direction="column">
               <Grid item xs={12}>
                 <Controller
-                  name={"email"}
+                  name={"password"}
                   control={control}
                   render={({
                     field: { onChange, value },
@@ -111,9 +114,9 @@ const AuthLogin = () => {
                       fullWidth
                       size="small"
                       value={value}
-                      label={"Email Address"}
-                      placeholder={"Email Address"}
-                      type="email"
+                      label={"New Password"}
+                      placeholder={"New Password"}
+                      type="password"
                     />
                   )}
                 />
@@ -128,7 +131,7 @@ const AuthLogin = () => {
                   loadingPosition="start"
                   sx={{ color: "white" }}
                 >
-                  Reset
+                  Reset Password
                 </LoadingButton>
               </Grid>
             </Grid>
@@ -145,4 +148,4 @@ const AuthLogin = () => {
   );
 };
 
-export default AuthLogin;
+export default ResetPassword;
