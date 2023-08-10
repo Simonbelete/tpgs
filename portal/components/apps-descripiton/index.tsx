@@ -32,6 +32,13 @@ const AppsDescription = () => {
       description: description,
       link: "/login",
     },
+    {
+      title1: "What is the Breeding",
+      title2: "Data Management app for?",
+      image: "/screenshots/breeding_data_mangement.png",
+      description: description,
+      link: "/login",
+    },
   ];
 
   return (
@@ -57,7 +64,7 @@ const AppsDescription = () => {
                   {e.title2}
                 </Typography>
                 <Typography sx={{ mt: 5 }}>{description}</Typography>
-                <Stack direction={"row"} sx={{ mt: 5 }}>
+                <Stack direction={"row"} spacing={2} sx={{ mt: 5 }}>
                   <Link href={e.link}>
                     <Button
                       variant="contained"
@@ -67,9 +74,16 @@ const AppsDescription = () => {
                     </Button>
                   </Link>
                   {e.linkAndroid && (
-                    <Link href={e.linkAndroid}>
-                      <Button variant="contained">Download Android</Button>
-                    </Link>
+                    <>
+                      <Link href={e.linkAndroid}>
+                        <Button variant="outlined">Download Android</Button>
+                      </Link>
+                      <Link href={e.linkAndroid}>
+                        <Button variant="text" size="small" color="secondary">
+                          Download apk
+                        </Button>
+                      </Link>
+                    </>
                   )}
                 </Stack>
               </Grid>
