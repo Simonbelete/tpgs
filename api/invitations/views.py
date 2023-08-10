@@ -16,6 +16,11 @@ class InvitationViewSet(viewsets.ModelViewSet):
     queryset = models.Invitation.objects.all()
     serializer_class = serializers.InvitationSerializer_GET
 
+    def get_queryset(self):
+        if (not self.request.user.is_superuser):
+            return super().get_queryset().filter(inviter=self.request.user)
+        return super().get_queryset()
+
     def get_serializer_class(self):
         if self.request.method in ['POST', 'PATCH']:
             return serializers.InvitationSerializer_POST
