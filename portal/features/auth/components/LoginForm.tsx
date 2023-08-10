@@ -13,9 +13,11 @@ import {
   Container,
   Typography,
   Alert,
+  Divider,
 } from "@mui/material";
 import LoadingButton from "@mui/lab/LoadingButton";
 import CircularProgress from "@mui/material/CircularProgress";
+import Link from "next/link";
 
 type Inputs = {
   email: string;
@@ -62,10 +64,12 @@ const LoginForm = () => {
   };
 
   return (
-    <div>
+    <>
       <Box sx={{ mb: 4 }}>
         <Box sx={{ mb: 2 }}>
-          <img src="/images/ilri_logo.png" height={50} />
+          <Link href="/">
+            <img src="/images/ilri_logo.png" height={50} />
+          </Link>
         </Box>
         <Typography color={"primary.dark"} variant="h6" fontWeight={600}>
           Login in to your account
@@ -78,7 +82,8 @@ const LoginForm = () => {
           </Box>
         )}
       </Box>
-      <Box height="10vh" mr={4}>
+      {/* <Box height="10vh" mr={4}> */}
+      <Box mr={4}>
         <form onSubmit={handleSubmit(onSubmit)}>
           <Grid container spacing={4} direction="column">
             <Grid item xs={12}>
@@ -126,6 +131,11 @@ const LoginForm = () => {
                 )}
               />
             </Grid>
+            <Grid xs={12} sx={{ textAlign: "right", mt: 1 }}>
+              <Link href="forgot-password">
+                <Typography variant="caption">Forgot Password?</Typography>
+              </Link>
+            </Grid>
             <Grid item xs={12}>
               <LoadingButton
                 loading={isLoading}
@@ -141,7 +151,7 @@ const LoginForm = () => {
           </Grid>
         </form>
       </Box>
-    </div>
+    </>
   );
 };
 
