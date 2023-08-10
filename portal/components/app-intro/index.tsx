@@ -1,5 +1,6 @@
 import React from "react";
 import { Container, Grid, Stack, Box, Typography } from "@mui/material";
+import Link from "next/link";
 import AppList from "../apps-list";
 
 const AppIntro = () => {
@@ -22,6 +23,18 @@ const AppIntro = () => {
               paragraph={true}
             >
               {content["description"]}
+            </Typography>
+            <Typography
+              variant="subtitle1"
+              color="textSecondary"
+              paragraph={true}
+            >
+              Supervised by:{" "}
+              <Link href="https://www.ilri.org/people/tadelle-dessie">
+                Dr Tadelle Dessie
+              </Link>{" "}
+              ,{" "}
+              <Link href="https://wondmenehesatu.com/">Dr Wondmeneh Esatu</Link>
             </Typography>
           </Box>
           <AppList />

@@ -53,11 +53,17 @@ const ContactUsForm = () => {
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        height: "100vh",
+        height: "80vh",
       }}
     >
       <Box sx={{ maxWidth: 600, mx: "auto", p: 2 }}>
-        <Typography variant="h3" align="center" sx={{ fontWeight: 700 }} mb={3}>
+        <Typography
+          variant="h3"
+          color={"primary.main"}
+          align="center"
+          sx={{ fontWeight: 700 }}
+          mb={3}
+        >
           Contact Us
         </Typography>
         <form onSubmit={handleSubmit(onSubmit)}>
