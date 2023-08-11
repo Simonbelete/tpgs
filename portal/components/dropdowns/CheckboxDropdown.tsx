@@ -9,8 +9,10 @@ import {
   Checkbox,
   ListItemText,
   InputBase,
+  MenuList,
+  Typography,
 } from "@mui/material";
-import { styled } from "@mui/material/styles";
+import { styled, alpha } from "@mui/material/styles";
 
 const BootstrapInput = styled(InputBase)(({ theme }) => ({
   // "label + &": {
@@ -19,13 +21,12 @@ const BootstrapInput = styled(InputBase)(({ theme }) => ({
   "& .MuiInputBase-input": {
     borderRadius: 4,
     position: "relative",
-    // backgroundColor: theme.palette.mode === "light" ? "#F3F6F9" : "#1A2027",
     backgroundColor: "#fff",
     border: "1px solid",
     borderColor: theme.palette.mode === "light" ? "#E0E3E7" : "#2D3843",
     fontSize: 14,
     width: "100%",
-    padding: "6px 10px",
+    padding: "4px 10px",
     transition: theme.transitions.create([
       "border-color",
       "background-color",
@@ -34,25 +35,23 @@ const BootstrapInput = styled(InputBase)(({ theme }) => ({
     // Use the system font instead of the default Roboto font.
     fontFamily: ["Inter", "sans-serif"].join(","),
     "&:focus": {
-      // boxShadow: `${alpha(theme.palette.primary.main, 0.25)} 0 0 0 0.2rem`,
-      borderColor: theme.palette.primary.main,
+      borderColor: alpha(theme.palette.secondary.dark, 0.3),
+      color: alpha(theme.palette.secondary.dark, 0.3),
     },
-  },
-  "& .MuiFormLabel-root": {
-    color: "red !important",
-    border: "1px solid red",
   },
 }));
 
 const CheckboxDropdown = ({
   menus,
   label,
+  onChange,
+  selected,
 }: {
   menus: { value: string; label: string }[];
   label: string;
+  onChange: (event: SelectChangeEvent) => void;
+  selected: string[];
 }) => {
-  const [selected, setSelected] = useState<string[]>([]);
-
   const handleChange = (event: SelectChangeEvent) => {
     // const {
     //   target: { value },
@@ -68,7 +67,7 @@ const CheckboxDropdown = ({
         <InputLabel
           shrink={false}
           htmlFor="demo-multiple-checkbox-label"
-          sx={{ top: "-8px" }}
+          sx={{ top: "-8px", fontSize: "13px", "&:focus": { color: "red" } }}
         >
           {label}
         </InputLabel>
@@ -77,19 +76,37 @@ const CheckboxDropdown = ({
           multiple
           // @ts-ignore
           value={selected}
-          renderValue={(selected) => <span>{label}</span>}
-          onChange={handleChange}
+          renderValue={(selected) => <></>}
+          onChange={onChange}
           input={<BootstrapInput />}
           size="small"
+          MenuProps={{
+            MenuListProps: {
+              style: {
+                paddingTop: 0,
+                paddingBottom: 0,
+              },
+            },
+          }}
         >
-          <MenuItem value={"name"}>
-            <Checkbox checked={false} size="small" />
-            <ListItemText primary={"name"} />
-          </MenuItem>
-          <MenuItem value={"name"}>
-            <Checkbox checked={false} />
-            <ListItemText primary={"name"} />
-          </MenuItem>
+          {menus.map((e, key) => (
+            <MenuItem key={key} value={"name"} sx={{ paddingLeft: "6px" }}>
+              <Checkbox
+                checked={false}
+                size="small"
+                sx={{ paddingTop: 0, paddingBottom: 0, paddingRight: "15px" }}
+              />
+              <ListItemText
+                disableTypography
+                primary={
+                  <Typography variant="body2" fontSize={14}>
+                    {e.label}
+                  </Typography>
+                }
+              />
+            </MenuItem>
+          ))}
+
           {/* {menus.map((name) => (
             <MenuItem key={name} value={name}>
               <Checkbox checked={false} />
