@@ -249,16 +249,6 @@ const DataTable = ({
   };
 
   const settingColumn: GridColDef[] = generateSettingColumns();
-  //   setting == SETTING_COL.default
-  //     ?
-  //     : {
-  //         field: "Actions",
-  //         flex: 1,
-  //         minWidth: 150,
-  //         headerAlign: "center",
-  //         align: "right",
-  //       },
-  // ];
 
   return (
     <>

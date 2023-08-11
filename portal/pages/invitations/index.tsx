@@ -1,9 +1,21 @@
 import React, { ReactElement, useState } from "react";
-import { Typography, Button, IconButton, Stack } from "@mui/material";
+import {
+  Typography,
+  Button,
+  IconButton,
+  Stack,
+  Box,
+  Grid,
+} from "@mui/material";
 import { useBreadcrumbs } from "@/hooks";
 import { ListLayout, Breadcrumbs, Loading } from "@/components";
-import { InvitationsList, InvitationFormModal } from "@/features/invitations";
+import {
+  InvitationsList,
+  InvitationFormModal,
+  InvitationFilter,
+} from "@/features/invitations";
 import SendIcon from "@mui/icons-material/Send";
+import SideFilter from "@/components/filters/SideFilter";
 
 const UnitsPage = () => {
   const { breadcrumbs } = useBreadcrumbs();
@@ -13,6 +25,7 @@ const UnitsPage = () => {
       breadcrumbs={<Breadcrumbs items={breadcrumbs} />}
       header={<Typography variant="title">Invitations</Typography>}
       actions={<Actions />}
+      filter={<InvitationFilter />}
     >
       <InvitationsList />
     </ListLayout>

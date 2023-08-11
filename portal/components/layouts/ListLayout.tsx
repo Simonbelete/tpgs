@@ -6,6 +6,7 @@ interface ListLayoutProps {
   header?: ReactElement;
   actions?: ReactElement;
   children?: ReactElement;
+  filter?: ReactElement;
 }
 
 const ListLayout = ({
@@ -13,6 +14,7 @@ const ListLayout = ({
   header,
   actions,
   children,
+  filter,
 }: ListLayoutProps) => {
   return (
     <>
@@ -35,6 +37,7 @@ const ListLayout = ({
           </Stack>
         </Grid>
       </Grid>
+      <Box sx={{ my: 5 }}>{filter}</Box>
       <Box sx={{ height: "70%" }}>{children}</Box>
     </>
   );

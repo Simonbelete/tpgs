@@ -14,13 +14,18 @@ import { useRouter } from "next/router";
 
 const columns: GridColDef[] = [
   {
-    field: "invited",
+    field: "inviter",
     headerName: "Invited By",
     flex: 1,
     minWidth: 150,
     // valueGetter: (params) => params.row.inviter ?? "",
   },
-  { field: "email", headerName: "Email", flex: 1, minWidth: 150 },
+  {
+    field: "email",
+    headerName: "Email",
+    flex: 1,
+    minWidth: 150,
+  },
   { field: "sent_date", headerName: "Date", flex: 1, minWidth: 150 },
   { field: "expire_date", headerName: "Expire Date", flex: 1, minWidth: 150 },
   {
