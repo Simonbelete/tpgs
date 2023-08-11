@@ -13,9 +13,9 @@ import {
 import { styled } from "@mui/material/styles";
 
 const BootstrapInput = styled(InputBase)(({ theme }) => ({
-  "label + &": {
-    marginTop: theme.spacing(3),
-  },
+  // "label + &": {
+  //   marginTop: theme.spacing(3),
+  // },
   "& .MuiInputBase-input": {
     borderRadius: 4,
     position: "relative",
@@ -65,7 +65,11 @@ const CheckboxDropdown = ({
   return (
     <div>
       <FormControl sx={{ minWidth: 130 }}>
-        <InputLabel htmlFor="demo-multiple-checkbox-label" sx={{ top: "15px" }}>
+        <InputLabel
+          shrink={false}
+          htmlFor="demo-multiple-checkbox-label"
+          sx={{ top: "-8px" }}
+        >
           {label}
         </InputLabel>
         <Select

@@ -49,6 +49,7 @@ const SearchInput = ({
         id="bootstrap-input"
         placeholder={label}
         endAdornment={<InputAdornment position="end">{prefix}</InputAdornment>}
+        size="small"
       />
     </FormControl>
   );
