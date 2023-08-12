@@ -273,6 +273,100 @@ const SidebarMenu = () => {
           </Typography>
         </MenuItem>
       </Menu>
+      <div
+        style={{ padding: "0 24px", marginBottom: "8px", marginTop: "32px" }}
+      >
+        <Typography
+          variant="caption"
+          fontWeight={500}
+          style={{ opacity: 0.6, letterSpacing: "0.5px" }}
+        >
+          Compare
+        </Typography>
+      </div>
+      <Menu menuItemStyles={menuItemStyles}>
+        <MenuItem component={<Link href="/chickens" />}>
+          <Typography variant="body1" fontSize={14}>
+            Body Weight
+          </Typography>
+        </MenuItem>
+        <MenuItem component={<Link href="/breeds" />}>
+          <Typography variant="body1" fontSize={14}>
+            Egg Grading
+          </Typography>
+        </MenuItem>
+        <MenuItem component={<Link href="/eggs" />}>
+          <Typography variant="body1" fontSize={14}>
+            Egg Curve
+          </Typography>
+        </MenuItem>
+        <MenuItem component={<Link href="/feeds" />}>
+          <Typography variant="body1" fontSize={14}>
+            HHEP
+          </Typography>
+        </MenuItem>
+        <MenuItem component={<Link href="/feeds" />}>
+          <Typography variant="body1" fontSize={14}>
+            HDEP
+          </Typography>
+        </MenuItem>
+      </Menu>
+      <Menu menuItemStyles={menuItemStyles}>
+        <MenuItem component={<Link href="/feeds" />}>
+          <Typography variant="body1" fontSize={14}>
+            Currencies
+          </Typography>
+        </MenuItem>
+        <MenuItem component={<Link href="/feeds" />}>
+          <Typography variant="body1" fontSize={14}>
+            Countries
+          </Typography>
+        </MenuItem>
+        <MenuItem component={<Link href="/feeds" />}>
+          <Typography variant="body1" fontSize={14}>
+            Cities
+          </Typography>
+        </MenuItem>
+        <MenuItem component={<Link href="/feeds" />}>
+          <Typography variant="body1" fontSize={14}>
+            Regions
+          </Typography>
+        </MenuItem>
+        <MenuItem component={<Link href="/feeds" />}>
+          <Typography variant="body1" fontSize={14}>
+            Notifications
+          </Typography>
+        </MenuItem>
+        <MenuItem component={<Link href="/feeds" />}>
+          <Typography variant="body1" fontSize={14}>
+            Setting
+          </Typography>
+        </MenuItem>
+        <MenuItem component={<Link href="/feeds" />}>
+          <Typography variant="body1" fontSize={14}>
+            Logout
+          </Typography>
+        </MenuItem>
+        <SubMenu
+          label={
+            <Typography variant="body1" fontSize={14}>
+              Get Help
+            </Typography>
+          }
+          icon={<ScienceIcon fontSize="small" />}
+        >
+          <MenuItem component={<Link href="/flocks" />}>
+            <Typography variant="body1" fontSize={14}>
+              User Guide
+            </Typography>
+          </MenuItem>
+          <MenuItem component={<Link href="/flocks/reduction" />}>
+            <Typography variant="body1" fontSize={14}>
+              Contact Us
+            </Typography>
+          </MenuItem>
+        </SubMenu>
+      </Menu>
     </Sidebar>
   );
 };
