@@ -13,13 +13,21 @@ import {
 import _ from "lodash";
 import { NutrientService } from "@/features/nutrients";
 import { Sizer } from "../components";
-import { Box } from "@mui/material";
-import { IngredientSelectDialog } from "@/features/ingredients";
+import { Box, Backdrop } from "@mui/material";
+import {
+  IngredientSelectDialog,
+  IngredientService,
+} from "@/features/ingredients";
 import { Ingredient, Nutrient, Unit } from "@/models";
+import { enqueueSnackbar } from "notistack";
+import CircularProgress from "@mui/material/CircularProgress";
+import { useTheme } from "@mui/material/styles";
 
 const Formulation = () => {
+  const isInitialMount = useRef(true);
+  const [loading, setLoading] = useState<boolean>(false);
+  const theme = useTheme();
   const rows = useRef<Array<Array<number | string>>>([
-    ["Ingredient 1", 80, 130, 98, 7],
     ["Ration"],
     ["Requirement"],
   ]);
@@ -53,32 +61,47 @@ const Formulation = () => {
   const COL_NUT_INDEX = 4;
   const COL_VALUE_INDEX = 1;
 
+  // Nutrients Start and end Rows
+  const COL_NU_SI = 4;
+  const COL_NU_EI = columns.length - 2;
+
   useEffect(() => {
-    NutrientService.get({
-      limit: 100,
-    })
-      .then((response) => {
-        const cols: GridColumn[] = [];
-        for (let i = 0; i < response.data.results.length; i += 1) {
-          const u = (response.data.results[i].unit as Unit).name;
-          cols.push({
-            title: `${response.data.results[i].abbreviation}[${u}]`,
-            id: response.data.results[i].abbreviation,
-          });
-        }
-        appendColumns(cols);
+    if (isInitialMount.current) {
+      setLoading(true);
+      NutrientService.get({
+        limit: 100,
       })
-      .catch((ex) => {});
+        .then((response) => {
+          const cols: GridColumn[] = [];
+
+          if (response.status == 200) {
+            for (let i = 0; i < response.data.results.length; i = i + 1) {
+              const unit_name =
+                response.data.results[i].unit != null
+                  ? (response.data.results[i].unit as Unit).name
+                  : "-";
+              cols.push({
+                title: `${response.data.results[i].abbreviation}[${unit_name}]`,
+                id: response.data.results[i].abbreviation,
+              });
+            }
+          }
+          appendColumns(cols);
+        })
+        .catch((ex) => {})
+        .finally(() => {
+          setLoading(false);
+        });
+      isInitialMount.current = false;
+    }
   }, []);
 
   const appendColumns = (cols: GridColumn[]) => {
-    setColumns(
-      _.union(
-        _.slice(columns, 0, COL_NUT_INDEX),
-        cols,
-        _.slice(columns, COL_NUT_INDEX)
-      )
-    );
+    setColumns([
+      ...columns.slice(0, COL_NU_SI),
+      ...cols,
+      ...columns.slice(COL_NU_SI),
+    ]);
   };
 
   const getContent = React.useCallback(
@@ -120,8 +143,13 @@ const Formulation = () => {
       rows.current[row][col] = newValue.data;
 
       const result: number[] = [];
+      console.log("&&&&&&&&&&&&&");
+
+      // slice out the ration and requirement
       rows.current.slice(0, -2).forEach((row) => {
+        // slice out  name and value
         row.slice(1).forEach((column, index) => {
+          // Jump Min and Max (do not calculate for those fields)
           if (index > columns.length - 2) return;
 
           if (result[index]) {
@@ -138,8 +166,12 @@ const Formulation = () => {
         });
       });
 
-      rows.current[rows.current.length - 2] = [
-        ...rows.current[rows.current.length - 1].slice(0, 1),
+      const ROW_RATION_INDEX = rows.current.length - 2;
+      let a = [...rows.current[ROW_RATION_INDEX].slice(0), ...result];
+      console.log(a);
+      // Update ration row
+      rows.current[ROW_RATION_INDEX] = [
+        ...rows.current[ROW_RATION_INDEX].slice(0),
         ...result,
       ];
     },
@@ -154,13 +186,49 @@ const Formulation = () => {
   const handleCloseIngredientDialog = () => setOpenIngredientDialog(false);
   const handleOpenIngredientDialog = () => setOpenIngredientDialog(true);
 
-  const handleSelected = (value?: Ingredient) => {
+  const generateEmptyRow = (): Array<string | number> => {
+    const emptyRow = new Array(columns.length);
+    emptyRow.fill(0, COL_NU_SI, COL_NU_EI);
+    return emptyRow;
+  };
+
+  const handleSelected = async (value?: Ingredient) => {
     if (value == undefined || value == null) return;
-    rows.current = [[value?.name], ...rows.current];
+
+    try {
+      handleCloseIngredientDialog();
+      setLoading(true);
+      const response = await IngredientService.nutrient.get(value.id);
+      const newRow = generateEmptyRow();
+      if (response.status == 200) {
+        for (let i = 0; i < response.data.results.length; i += 1) {
+          const colIndex: number = columns.findIndex(
+            (e) =>
+              e.id ==
+              (response.data.results[i].nutrient as Nutrient).abbreviation
+          );
+          newRow[colIndex] = response.data.results[i].value;
+        }
+      } else {
+        // TODO:
+      }
+      newRow[0] = value?.name;
+      rows.current = [newRow, ...rows.current];
+    } catch (ex) {
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
     <>
+      <Backdrop
+        sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open={loading}
+        onClick={() => {}}
+      >
+        <CircularProgress color="inherit" />
+      </Backdrop>
       <IngredientSelectDialog
         open={openIngredientDialog}
         onSelected={handleSelected}
