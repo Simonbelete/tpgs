@@ -2,6 +2,8 @@ from typing import Iterable, Optional
 from django.db import models
 from simple_history.models import HistoricalRecords
 from django.core.exceptions import ValidationError
+from cities_light.models import Country
+from djmoney.models.fields import MoneyField
 
 from core.models import CoreModel
 from purposes.models import Purpose
@@ -43,12 +45,31 @@ class FormulaIngredient(CoreModel):
 
 
 class Formula(CoreModel):
+    SEX_CHOICES = (
+        ('F', 'Female',),
+        ('M', 'Male',),
+    )
+    FORMULA_BASIS = (
+        ('AF', 'As-Fed Basis'),
+        ('DM', 'DM Basis')
+    )
+
     name = models.CharField(max_length=100)
     purpose = models.ForeignKey(
         Purpose, on_delete=models.SET_NULL, null=True, blank=True)
     weight = models.FloatField(null=True, blank=True, default=0)
     weight_unit = models.ForeignKey(
         Unit, on_delete=models.SET_NULL, null=True, blank=True, default=3)  # kg
+    country = models.ForeignKey(
+        Country, on_delete=models.SET_NULL, null=True, blank=True)
+    sex = models.CharField(max_length=1, choices=SEX_CHOICES,
+                           null=True, blank=True, default=None)
+    budget = MoneyField(max_digits=14, null=True, blank=True, default=0,
+                        decimal_places=2, default_currency='ETB')
+    age_from_week = models.PositiveIntegerField()
+    age_to_week = models.PositiveBigIntegerField()
+    formula_basis = models.CharField(max_length=4, choices=FORMULA_BASIS,
+                                     null=True, blank=True, default=None)
     note = models.TextField(null=True, blank=True)
     requirements = models.ManyToManyField(
         'nutrients.Nutrient', null=True, blank=True, through=FormulaRequirement)

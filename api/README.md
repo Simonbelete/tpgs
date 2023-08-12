@@ -4,6 +4,7 @@
 2. ```python manage.py create_schema public```
 3. ```python manage.py loaddata */fixtures/*.json```
 4. ```python manage.py create_groups```
+5. ```python manage.py cities_light```
 
 ## Creating New Tenant
 
@@ -13,7 +14,12 @@
 
 migrate all ```python manage.py migrate_schemas```
 
-## Create/Update View Table
+### Locations
+```python manage.py cities_light```
+
+### Directory List
+
+Update the tenant list run the below command to update the directory list
 
 ```python manage.py migrate_schemas analyses directory_list_initial```
 
