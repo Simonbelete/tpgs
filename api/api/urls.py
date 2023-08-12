@@ -36,6 +36,7 @@ urlpatterns = [
          include(notifications.urls, namespace='notifications')),
     path('adminactions/', include('adminactions.urls')),
     path('api/', include([
+        path('', include('cities_light.contrib.restframework3')),
         path('', include('users.urls')),
         path('', include('auths.urls')),
         path('', include('flocks.urls')),
