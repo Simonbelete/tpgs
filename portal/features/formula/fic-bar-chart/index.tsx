@@ -32,7 +32,7 @@ const FIcBarChart = ({
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey={displayKey} />
           <YAxis />
-          <Tooltip />
+          <Tooltip cursor={{ fill: "transparent" }} />
           <Legend />
         </BarChart>
       </ResponsiveContainer>

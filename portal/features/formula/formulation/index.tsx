@@ -60,11 +60,17 @@ const Formulation = () => {
     ["Ration"],
     ["Requirement"],
   ]);
-  const [columns, setColumns] = useState<
-    GridColumn[] & Partial<{ contribution: number }>
-  >([
-    { title: "Name", id: "name" },
-    { title: "%", id: "value", icon: GridColumnIcon.HeaderNumber, width: 100 },
+  const [columns, setColumns] = useState<GridColumn[]>([
+    {
+      title: "Name",
+      id: "name",
+    },
+    {
+      title: "%",
+      id: "value",
+      icon: GridColumnIcon.HeaderNumber,
+      width: 100,
+    },
     {
       title: "Price[kg]",
       id: "price",
@@ -143,19 +149,42 @@ const Formulation = () => {
       // @ts-ignore
       let d = dataRow != undefined ? dataRow[col] : "";
 
+      const ROW_RATION_INDEX = rows.current.length - 2;
+      const ROW_REQUIREMENT_INDEX = rows.current.length - 1;
+
       if (col == 0) {
         return {
           kind: GridCellKind.Text,
-          allowOverlay: true,
+          readonly: true,
+          allowOverlay: false,
           displayData: String(d ?? ""),
           data: String(d ?? ""),
+          style: "faded",
+          themeOverride: {
+            bgCell: "#EFEFF1",
+          },
         };
-      } else {
+      } else if (
+        (ROW_REQUIREMENT_INDEX == row || col == 1) &&
+        row != ROW_RATION_INDEX
+      ) {
         return {
           kind: GridCellKind.Number,
           allowOverlay: true,
           displayData: String(d ?? 0),
           data: Number(d ?? 0),
+        };
+      } else {
+        return {
+          kind: GridCellKind.Number,
+          allowOverlay: false,
+          readonly: true,
+          displayData: String(d ?? 0),
+          data: Number(d ?? 0),
+          style: "faded",
+          themeOverride: {
+            bgCell: "#EFEFF1",
+          },
         };
       }
     },
@@ -231,6 +260,8 @@ const Formulation = () => {
   const getColIndex = (id: string) => {
     return columns.findIndex((e) => e.id == id);
   };
+
+  const onCellActivated = React.useCallback((cell: Item) => {}, []);
 
   const onRowAppended = React.useCallback(() => {
     handleOpenIngredientDialog();
@@ -488,6 +519,7 @@ const Formulation = () => {
           onCellEdited={onCellEdited}
           getCellContent={getContent}
           onRowAppended={onRowAppended}
+          onCellActivated={onCellActivated}
           trailingRowOptions={{
             // How to get the trailing row to look right
             sticky: true,
