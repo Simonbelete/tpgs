@@ -38,6 +38,7 @@ import { LabeledInput } from "@/components/inputs";
 import { AsyncDropdown } from "@/components/dropdowns";
 import { PurposeForm } from "@/features/purposes";
 import { yupResolver } from "@hookform/resolvers/yup";
+import FIcBarChart from "../fic-bar-chart";
 
 type Inputs = Partial<Formula>;
 
@@ -54,11 +55,14 @@ const Formulation = () => {
   const isInitialMount = useRef(true);
   const [loading, setLoading] = useState<boolean>(false);
   const theme = useTheme();
+  const [contributionChartData, setContributionChartData] = useState<any[]>([]);
   const rows = useRef<Array<Array<number | string>>>([
     ["Ration"],
     ["Requirement"],
   ]);
-  const [columns, setColumns] = useState<GridColumn[]>([
+  const [columns, setColumns] = useState<
+    GridColumn[] & Partial<{ contribution: number }>
+  >([
     { title: "Name", id: "name" },
     { title: "%", id: "value", icon: GridColumnIcon.HeaderNumber, width: 100 },
     {
@@ -170,7 +174,6 @@ const Formulation = () => {
       rows.current[row][col] = newValue.data;
 
       const result: number[] = [];
-      console.log("&&&&&&&&&&&&&");
 
       // slice out the ration and requirement
       rows.current.slice(0, -2).forEach((row) => {
@@ -194,16 +197,40 @@ const Formulation = () => {
       });
 
       const ROW_RATION_INDEX = rows.current.length - 2;
-      let a = [...rows.current[ROW_RATION_INDEX].slice(0), ...result];
-      console.log(a);
+      const ROW_REQUIREMENT_INDEX = rows.current.length - 1;
+
       // Update ration row
-      rows.current[ROW_RATION_INDEX] = [
-        ...rows.current[ROW_RATION_INDEX].slice(0),
-        ...result,
-      ];
+      rows.current[ROW_RATION_INDEX] = ["Ration", ...result];
+
+      const chartData: any[] = [];
+
+      for (let i = 0; i < columns.length; i = i + 1) {
+        if (
+          [
+            getColIndex("name"),
+            getColIndex("min"),
+            getColIndex("max"),
+          ].includes(i)
+        )
+          continue;
+        chartData.push({
+          title: columns[i].title,
+          contribution: (
+            (Number(result[i] || 0) /
+              Number(rows.current[ROW_REQUIREMENT_INDEX][i])) *
+            100
+          ).toFixed(3),
+        });
+      }
+
+      setContributionChartData(chartData);
     },
-    []
+    [columns]
   );
+
+  const getColIndex = (id: string) => {
+    return columns.findIndex((e) => e.id == id);
+  };
 
   const onRowAppended = React.useCallback(() => {
     handleOpenIngredientDialog();
@@ -400,6 +427,50 @@ const Formulation = () => {
                     )}
                   />
                 </Grid>
+                <Grid item xs={12} md={6}>
+                  <Controller
+                    name={"age_from_week"}
+                    control={control}
+                    render={({
+                      field: { onChange, value },
+                      fieldState: { invalid, isTouched, isDirty, error },
+                    }) => (
+                      <LabeledInput
+                        error={!!error?.message}
+                        helperText={error?.message}
+                        onChange={onChange}
+                        fullWidth
+                        size="small"
+                        value={value}
+                        label={"Age From"}
+                        placeholder={"Age From"}
+                        type="number"
+                      />
+                    )}
+                  />
+                </Grid>
+                <Grid item xs={12} md={6}>
+                  <Controller
+                    name={"age_to_week"}
+                    control={control}
+                    render={({
+                      field: { onChange, value },
+                      fieldState: { invalid, isTouched, isDirty, error },
+                    }) => (
+                      <LabeledInput
+                        error={!!error?.message}
+                        helperText={error?.message}
+                        onChange={onChange}
+                        fullWidth
+                        size="small"
+                        value={value}
+                        label={"Age To"}
+                        placeholder={"Age To"}
+                        type="number"
+                      />
+                    )}
+                  />
+                </Grid>
               </Grid>
             </form>
           </AccordionDetails>
@@ -425,6 +496,13 @@ const Formulation = () => {
           }}
         />
       </Sizer>
+      <Box>
+        <FIcBarChart
+          data={contributionChartData}
+          dataKey="contribution"
+          displayKey={"title"}
+        />
+      </Box>
     </>
   );
 };
