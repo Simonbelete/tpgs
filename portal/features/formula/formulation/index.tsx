@@ -13,15 +13,42 @@ import {
 import _ from "lodash";
 import { NutrientService } from "@/features/nutrients";
 import { Sizer } from "../components";
-import { Box, Backdrop } from "@mui/material";
+import {
+  Box,
+  Backdrop,
+  Accordion,
+  AccordionSummary,
+  Typography,
+  AccordionDetails,
+  Grid,
+  InputAdornment,
+} from "@mui/material";
 import {
   IngredientSelectDialog,
   IngredientService,
 } from "@/features/ingredients";
-import { Ingredient, Nutrient, Unit } from "@/models";
+import { Ingredient, Nutrient, Unit, Formula } from "@/models";
 import { enqueueSnackbar } from "notistack";
 import CircularProgress from "@mui/material/CircularProgress";
 import { useTheme } from "@mui/material/styles";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import { useForm, SubmitHandler, Controller } from "react-hook-form";
+import * as yup from "yup";
+import { LabeledInput } from "@/components/inputs";
+import { AsyncDropdown } from "@/components/dropdowns";
+import { PurposeForm } from "@/features/purposes";
+import { yupResolver } from "@hookform/resolvers/yup";
+
+type Inputs = Partial<Formula>;
+
+const schema = yup.object({
+  name: yup.string().required(),
+  code: yup.string().nullable(),
+  abbreviation: yup.string().required(),
+  description: yup.string().nullable(),
+  nutrient_group: yup.number().nullable(),
+  unit: yup.number().nullable(),
+});
 
 const Formulation = () => {
   const isInitialMount = useRef(true);
@@ -220,6 +247,17 @@ const Formulation = () => {
     }
   };
 
+  const {
+    handleSubmit,
+    control,
+    formState: { errors },
+  } = useForm<Inputs>({
+    // @ts-ignore
+    resolver: yupResolver(schema),
+  });
+
+  const onSubmit: SubmitHandler<Inputs> = async (data) => {};
+
   return (
     <>
       <Backdrop
@@ -234,7 +272,139 @@ const Formulation = () => {
         onSelected={handleSelected}
         onClose={handleCloseIngredientDialog}
       />
-      <Box></Box>
+      <Box sx={{ my: 5, border: "1px solid #98AAC4" }}>
+        <Accordion elevation={0} defaultExpanded>
+          <AccordionSummary
+            expandIcon={<ExpandMoreIcon />}
+            aria-controls="panel1a-content"
+            id="panel1a-header"
+          >
+            <Typography fontWeight={600}>General</Typography>
+          </AccordionSummary>
+          <AccordionDetails>
+            <form onSubmit={handleSubmit(onSubmit)}>
+              <Grid container spacing={4}>
+                {/* Name */}
+                <Grid item xs={12} md={6}>
+                  <Controller
+                    name={"name"}
+                    control={control}
+                    render={({
+                      field: { onChange, value },
+                      fieldState: { invalid, isTouched, isDirty, error },
+                    }) => (
+                      <LabeledInput
+                        error={!!error?.message}
+                        helperText={error?.message}
+                        onChange={onChange}
+                        fullWidth
+                        size="small"
+                        value={value}
+                        label={"Name"}
+                        placeholder={"Name"}
+                      />
+                    )}
+                  />
+                </Grid>
+                {/* Purpose */}
+                <Grid item xs={12} md={6}>
+                  <Controller
+                    name={"purpose"}
+                    control={control}
+                    render={({
+                      field: { onChange, value },
+                      fieldState: { invalid, isTouched, isDirty, error },
+                    }) => (
+                      <AsyncDropdown
+                        url="/purposes/"
+                        key="name"
+                        onChange={(_, data) => onChange(data)}
+                        value={value}
+                        label="Purpose"
+                        error={!!error?.message}
+                        helperText={error?.message}
+                        createForm={<PurposeForm />}
+                      />
+                    )}
+                  />
+                </Grid>
+                {/* Weight */}
+                <Grid item xs={12} md={6}>
+                  <Controller
+                    name={"budget"}
+                    control={control}
+                    render={({
+                      field: { onChange, value },
+                      fieldState: { invalid, isTouched, isDirty, error },
+                    }) => (
+                      <LabeledInput
+                        error={!!error?.message}
+                        helperText={error?.message}
+                        onChange={onChange}
+                        fullWidth
+                        size="small"
+                        value={value}
+                        label={"Budget"}
+                        placeholder={"budget"}
+                        type="number"
+                      />
+                    )}
+                  />
+                </Grid>
+                {/* Weight */}
+                <Grid item xs={12} md={6}>
+                  <Controller
+                    name={"weight"}
+                    control={control}
+                    render={({
+                      field: { onChange, value },
+                      fieldState: { invalid, isTouched, isDirty, error },
+                    }) => (
+                      <LabeledInput
+                        error={!!error?.message}
+                        helperText={error?.message}
+                        onChange={onChange}
+                        fullWidth
+                        size="small"
+                        value={value}
+                        label={"Weight [Kg]"}
+                        placeholder={"Weight per Kg"}
+                        type="number"
+                        InputProps={{
+                          startAdornment: (
+                            <InputAdornment position="start">kg</InputAdornment>
+                          ),
+                        }}
+                      />
+                    )}
+                  />
+                </Grid>
+                {/* Country */}
+                <Grid item xs={12} md={6}>
+                  <Controller
+                    name={"country"}
+                    control={control}
+                    render={({
+                      field: { onChange, value },
+                      fieldState: { invalid, isTouched, isDirty, error },
+                    }) => (
+                      <AsyncDropdown
+                        url="/countries/"
+                        key="name"
+                        onChange={(_, data) => onChange(data)}
+                        value={value}
+                        label="Country"
+                        error={!!error?.message}
+                        helperText={error?.message}
+                      />
+                    )}
+                  />
+                </Grid>
+              </Grid>
+            </form>
+          </AccordionDetails>
+        </Accordion>
+      </Box>
       <Sizer>
         <DataEditor
           width="100%"

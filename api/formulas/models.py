@@ -64,6 +64,7 @@ class Formula(CoreModel):
         Country, on_delete=models.SET_NULL, null=True, blank=True)
     sex = models.CharField(max_length=1, choices=SEX_CHOICES,
                            null=True, blank=True, default=None)
+    # per kg
     budget = MoneyField(max_digits=14, null=True, blank=True, default=0,
                         decimal_places=2, default_currency='ETB')
     age_from_week = models.PositiveIntegerField()
