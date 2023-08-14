@@ -46,31 +46,43 @@ export default function AsyncDropdown<T>({
   const handleModalOpen = () => setModalOpen(true);
   const handleModalClose = () => setModalOpen(false);
 
-  React.useEffect(() => {
-    let active = true;
+  // React.useEffect(() => {
+  //   let active = true;
 
-    if (!loading) {
-      return undefined;
+  //   if (!loading) {
+  //     return undefined;
+  //   }
+
+  //   (async () => {
+  //     try {
+  //       const response = await client.get(url);
+
+  //       if (active) {
+  //         setOptions(response.data.results);
+  //       }
+  //     } catch (ex) {
+  //       active = false;
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   })();
+
+  //   return () => {
+  //     active = false;
+  //   };
+  // }, [loading, url]);
+
+  const handleOpen = async () => {
+    setOpen(true);
+    try {
+      const response = await client.get(url);
+
+      setOptions(response.data.results);
+    } catch (ex) {
+    } finally {
+      setLoading(false);
     }
-
-    (async () => {
-      try {
-        const response = await client.get(url);
-
-        if (active) {
-          setOptions(response.data.results);
-        }
-      } catch (ex) {
-        active = false;
-      } finally {
-        setLoading(false);
-      }
-    })();
-
-    return () => {
-      active = false;
-    };
-  }, [loading, url]);
+  };
 
   return (
     <Stack gap={1}>
@@ -87,9 +99,7 @@ export default function AsyncDropdown<T>({
         multiple={multiple}
         size="small"
         open={open}
-        onOpen={() => {
-          setOpen(true);
-        }}
+        onOpen={handleOpen}
         onClose={() => {
           setOpen(false);
         }}

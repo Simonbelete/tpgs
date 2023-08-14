@@ -163,6 +163,17 @@ const Formulation = () => {
             bgCell: "#EFEFF1",
           },
         };
+      } else if (col == columns.length - 1) {
+        return {
+          kind: GridCellKind.Custom,
+          allowOverlay: true,
+          copyData: "4",
+          data: {
+            kind: "dropdown-cell",
+            allowedValues: ["Good", "Better", "Best"],
+            value: "Good",
+          },
+        };
       } else if (
         (ROW_REQUIREMENT_INDEX == row || col == 1) &&
         row != ROW_RATION_INDEX
@@ -207,8 +218,7 @@ const Formulation = () => {
       rows.current.slice(0, -2).forEach((row) => {
         // slice out  name and value
         row.slice(1).forEach((column, index) => {
-          // Jump Min and Max (do not calculate for those fields)
-          if (index > columns.length - 2) return;
+          if ([getColIndex("min"), getColIndex("max")].includes(index)) return;
 
           if (result[index]) {
             if (index == 0) result[index] += Number(column);
