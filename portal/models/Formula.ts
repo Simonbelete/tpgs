@@ -8,6 +8,7 @@ export default interface Formula {
   id: number;
   name: string;
   purpose: number | Purpose;
+  sex: string;
   weight: number;
   weight_unit: number | Unit;
   country: number | Country;

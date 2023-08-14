@@ -1,4 +1,10 @@
-import React, { useState, useMemo, useRef, useEffect } from "react";
+import React, {
+  useState,
+  useMemo,
+  useRef,
+  useEffect,
+  useImperativeHandle,
+} from "react";
 import {
   DataEditor,
   EditableGridCell,
@@ -35,23 +41,34 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import * as yup from "yup";
 import { LabeledInput } from "@/components/inputs";
-import { AsyncDropdown } from "@/components/dropdowns";
+import { AsyncDropdown, Dropdown } from "@/components/dropdowns";
 import { PurposeForm } from "@/features/purposes";
 import { yupResolver } from "@hookform/resolvers/yup";
 import FIcBarChart from "../fic-bar-chart";
 
 type Inputs = Partial<Formula>;
 
-const schema = yup.object({
-  name: yup.string().required(),
-  code: yup.string().nullable(),
-  abbreviation: yup.string().required(),
-  description: yup.string().nullable(),
-  nutrient_group: yup.number().nullable(),
-  unit: yup.number().nullable(),
-});
+const schema = yup
+  .object({
+    name: yup.string().required(),
+    purpose: yup.string().nullable(),
+    weight: yup.number().required(),
+    country: yup.string().nullable(),
+    sex: yup.string().nullable(),
+    age_from_week: yup.number().nullable(),
+    age_to_week: yup.number().nullable(),
+    formula_basis: yup.string().required(),
+    note: yup.string().nullable(),
+  })
+  .transform((currentValue: any) => {
+    if (currentValue.purpose != null)
+      currentValue.purpose = currentValue.purpose.id;
+    if (currentValue.country != null)
+      currentValue.country = currentValue.country.id;
+    return currentValue;
+  });
 
-const Formulation = () => {
+const Formulation = ({ saveRef }: { saveRef: React.Ref<unknown> }) => {
   const isInitialMount = useRef(true);
   const [loading, setLoading] = useState<boolean>(false);
   const theme = useTheme();
@@ -329,6 +346,12 @@ const Formulation = () => {
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {};
 
+  useImperativeHandle(saveRef, () => ({
+    save() {
+      handleSubmit(onSubmit)();
+    },
+  }));
+
   return (
     <>
       <Backdrop
@@ -399,25 +422,50 @@ const Formulation = () => {
                     )}
                   />
                 </Grid>
-                {/* Weight */}
+                {/* Sex */}
                 <Grid item xs={12} md={6}>
                   <Controller
-                    name={"budget"}
+                    name={"sex"}
                     control={control}
                     render={({
                       field: { onChange, value },
                       fieldState: { invalid, isTouched, isDirty, error },
                     }) => (
-                      <LabeledInput
+                      <Dropdown
+                        options={[
+                          { value: "M", name: "Male" },
+                          { value: "F", name: "Female" },
+                        ]}
+                        key="name"
+                        onChange={(_, data) => onChange(data)}
+                        value={value}
+                        label="Sex"
                         error={!!error?.message}
                         helperText={error?.message}
-                        onChange={onChange}
-                        fullWidth
-                        size="small"
+                      />
+                    )}
+                  />
+                </Grid>
+                {/* Formula Basis */}
+                <Grid item xs={12} md={6}>
+                  <Controller
+                    name={"formula_basis"}
+                    control={control}
+                    render={({
+                      field: { onChange, value },
+                      fieldState: { invalid, isTouched, isDirty, error },
+                    }) => (
+                      <Dropdown
+                        options={[
+                          { value: "AF", name: "As-Fed Basis" },
+                          { value: "DM", name: "DM Basis" },
+                        ]}
+                        key="name"
+                        onChange={(_, data) => onChange(data)}
                         value={value}
-                        label={"Budget"}
-                        placeholder={"budget"}
-                        type="number"
+                        label="Feed Basis"
+                        error={!!error?.message}
+                        helperText={error?.message}
                       />
                     )}
                   />
@@ -442,8 +490,8 @@ const Formulation = () => {
                         placeholder={"Weight per Kg"}
                         type="number"
                         InputProps={{
-                          startAdornment: (
-                            <InputAdornment position="start">kg</InputAdornment>
+                          endAdornment: (
+                            <InputAdornment position="start">Kg</InputAdornment>
                           ),
                         }}
                       />
@@ -511,6 +559,28 @@ const Formulation = () => {
                         label={"Age To"}
                         placeholder={"Age To"}
                         type="number"
+                      />
+                    )}
+                  />
+                </Grid>
+                {/* Name */}
+                <Grid item xs={12} md={6}>
+                  <Controller
+                    name={"note"}
+                    control={control}
+                    render={({
+                      field: { onChange, value },
+                      fieldState: { invalid, isTouched, isDirty, error },
+                    }) => (
+                      <LabeledInput
+                        error={!!error?.message}
+                        helperText={error?.message}
+                        onChange={onChange}
+                        fullWidth
+                        size="small"
+                        value={value}
+                        label={"Remark"}
+                        placeholder={"Remark"}
                       />
                     )}
                   />
