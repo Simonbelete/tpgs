@@ -48,6 +48,7 @@ export default function AsyncDropdown<T>({
           setOpen(false);
         }}
         onChange={onChange}
+        value={value}
         defaultValue={value}
         getOptionLabel={(option) => option[key]}
         options={options}

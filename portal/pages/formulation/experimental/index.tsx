@@ -7,7 +7,7 @@ import { Formulation } from "@/features/formula";
 
 const FormulationExperimentalPage = () => {
   const { breadcrumbs } = useBreadcrumbs();
-  const createRef = useRef();
+  const saveRef = useRef();
 
   return (
     <ActionLayout
@@ -25,8 +25,9 @@ const FormulationExperimentalPage = () => {
               variant="contained"
               size="small"
               onClick={() => {
-                if (createRef.current != undefined)
-                  (createRef.current as any).save();
+                console.log("ddd");
+                if (saveRef.current != undefined)
+                  (saveRef.current as any).save();
               }}
             >
               Save
@@ -35,7 +36,7 @@ const FormulationExperimentalPage = () => {
         </>
       }
     >
-      <Formulation />
+      <Formulation saveRef={saveRef} />
     </ActionLayout>
   );
 };

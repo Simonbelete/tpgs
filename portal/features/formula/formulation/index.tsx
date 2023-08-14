@@ -33,7 +33,15 @@ import {
   IngredientSelectDialog,
   IngredientService,
 } from "@/features/ingredients";
-import { Ingredient, Nutrient, Unit, Formula } from "@/models";
+import {
+  Ingredient,
+  Nutrient,
+  Unit,
+  Formula,
+  FormulaRation,
+  FormulaRequirement,
+  FormulaIngredient,
+} from "@/models";
 import { enqueueSnackbar } from "notistack";
 import CircularProgress from "@mui/material/CircularProgress";
 import { useTheme } from "@mui/material/styles";
@@ -45,6 +53,7 @@ import { AsyncDropdown, Dropdown } from "@/components/dropdowns";
 import { PurposeForm } from "@/features/purposes";
 import { yupResolver } from "@hookform/resolvers/yup";
 import FIcBarChart from "../fic-bar-chart";
+import formula_service from "../services/formula_service";
 
 type Inputs = Partial<Formula>;
 
@@ -57,7 +66,7 @@ const schema = yup
     sex: yup.string().nullable(),
     age_from_week: yup.number().nullable(),
     age_to_week: yup.number().nullable(),
-    formula_basis: yup.string().required(),
+    formula_basis: yup.string().nullable(),
     note: yup.string().nullable(),
   })
   .transform((currentValue: any) => {
@@ -65,6 +74,8 @@ const schema = yup
       currentValue.purpose = currentValue.purpose.id;
     if (currentValue.country != null)
       currentValue.country = currentValue.country.id;
+    if (currentValue.formula_basis != null)
+      currentValue.formula_basis = currentValue.formula_basis.value;
     return currentValue;
   });
 
@@ -78,7 +89,9 @@ const Formulation = ({ saveRef }: { saveRef: React.Ref<unknown> }) => {
     ["Ration"],
     ["Requirement"],
   ]);
-  const [columns, setColumns] = useState<GridColumn[]>([
+  const [columns, setColumns] = useState<
+    Array<GridColumn & { nutrient_id?: number }>
+  >([
     {
       title: "Name",
       id: "name",
@@ -125,7 +138,7 @@ const Formulation = ({ saveRef }: { saveRef: React.Ref<unknown> }) => {
         limit: 100,
       })
         .then((response) => {
-          const cols: GridColumn[] = [];
+          const cols: any = [];
 
           if (response.status == 200) {
             for (let i = 0; i < response.data.results.length; i = i + 1) {
@@ -136,6 +149,7 @@ const Formulation = ({ saveRef }: { saveRef: React.Ref<unknown> }) => {
               cols.push({
                 title: `${response.data.results[i].abbreviation}[${unit_name}]`,
                 id: response.data.results[i].abbreviation,
+                nutrient_id: response.data.results[i].id,
               });
             }
           }
@@ -178,17 +192,6 @@ const Formulation = ({ saveRef }: { saveRef: React.Ref<unknown> }) => {
           style: "faded",
           themeOverride: {
             bgCell: "#EFEFF1",
-          },
-        };
-      } else if (col == columns.length - 1) {
-        return {
-          kind: GridCellKind.Custom,
-          allowOverlay: true,
-          copyData: "4",
-          data: {
-            kind: "dropdown-cell",
-            allowedValues: ["Good", "Better", "Best"],
-            value: "Good",
           },
         };
       } else if (
@@ -344,10 +347,93 @@ const Formulation = ({ saveRef }: { saveRef: React.Ref<unknown> }) => {
     resolver: yupResolver(schema),
   });
 
-  const onSubmit: SubmitHandler<Inputs> = async (data) => {};
+  const onSubmit: SubmitHandler<Inputs> = async (data) => {
+    const rations: Partial<FormulaRation>[] = [];
+    let ration_price,
+      ration_ratio,
+      ration_dm = 0;
+
+    const requirements: Partial<FormulaRequirement>[] = [];
+    let req_budget,
+      req_desired_ratio,
+      req_desired_dm = 0;
+
+    const ing: Partial<FormulaIngredient>[] = [];
+
+    const ROW_RATION_INDEX = rows.current.length - 2;
+    const ROW_REQUIREMENT_INDEX = rows.current.length - 1;
+
+    const COL_MIN_INDEX = getColIndex("min");
+    const COL_VALUE_INDEX = getColIndex("value");
+    const COL_PRICE_INDEX = COL_VALUE_INDEX + 1;
+    const COL_DM_INDEX = COL_PRICE_INDEX + 1;
+
+    rows.current.forEach((row, index) => {
+      const ing_id: number =
+        ingredients.current.find((e) => e.name == row[0])?.id || 0;
+      ing.push({
+        ingredient: ing_id,
+        ration_min: Number(row[COL_MIN_INDEX]),
+        ratio_max: Number(row[getColIndex("min")]),
+        ration: Number(row[getColIndex("value")]),
+      });
+
+      if (index == ROW_RATION_INDEX) {
+        row.forEach((col, j) => {
+          if (COL_DM_INDEX <= j || COL_MIN_INDEX >= j) return;
+
+          if (Number(col) != 0) {
+            rations.push({
+              nutrient: columns[j].nutrient_id,
+              value: Number(col),
+            });
+          }
+        });
+        ration_ratio = Number(row[COL_VALUE_INDEX]) || 0;
+        ration_dm = Number(row[COL_DM_INDEX]) || 0;
+        ration_price = Number(row[COL_PRICE_INDEX]) || 0;
+      }
+
+      if (index == ROW_REQUIREMENT_INDEX) {
+        row.forEach((col, j) => {
+          if (COL_DM_INDEX <= j || COL_MIN_INDEX >= j) return;
+
+          if (Number(col) != 0) {
+            requirements.push({
+              nutrient: columns[j].nutrient_id,
+              value: Number(col),
+            });
+          }
+        });
+        req_desired_ratio = Number(row[COL_VALUE_INDEX]);
+        req_desired_dm = Number(row[COL_DM_INDEX]);
+        req_budget = Number(row[COL_PRICE_INDEX]);
+      }
+    });
+
+    try {
+      const formula: Partial<Formula> = {
+        requirements: requirements as any,
+        budget: req_budget,
+        desired_ratio: req_desired_ratio,
+        desired_dm: req_desired_dm,
+        rations: rations as any,
+        ration_price: ration_price,
+        ration_ratio: ration_ratio,
+        ration_dm: ration_dm,
+      };
+
+      console.log("-------");
+      console.log(formula);
+      // const response = await formula_service.create()
+    } catch (ex) {
+    } finally {
+    }
+  };
 
   useImperativeHandle(saveRef, () => ({
     save() {
+      console.log("saveclie");
       handleSubmit(onSubmit)();
     },
   }));

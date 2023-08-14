@@ -91,11 +91,11 @@ class Formula(CoreModel):
     # Rations
     rations = models.ManyToManyField(
         'nutrients.Nutrient', null=True, blank=True, through=FormulaRation)
-    ratio_price = MoneyField(max_digits=14, null=True, blank=True, default=0,
-                             decimal_places=2, default_currency='ETB')
+    ration_price = MoneyField(max_digits=14, null=True, blank=True, default=0,
+                              decimal_places=2, default_currency='ETB')
     ration_ratio = models.PositiveIntegerField(
         validators=PERCENTAGE_VALIDATOR)
-    ratio_dm = models.PositiveIntegerField(
+    ration_dm = models.PositiveIntegerField(
         validators=PERCENTAGE_VALIDATOR, default=0)
 
     @property
