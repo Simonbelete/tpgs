@@ -8,9 +8,17 @@ from djmoney.models.fields import MoneyField
 from core.models import CoreModel
 from purposes.models import Purpose
 from units.models import Unit
+from core.validators import PERCENTAGE_VALIDATOR
 
 
 class FormulaRequirement(CoreModel):
+    formula = models.ForeignKey('formulas.Formula', on_delete=models.CASCADE)
+    nutrient = models.ForeignKey(
+        'nutrients.Nutrient', on_delete=models.CASCADE)
+    value = models.FloatField(default=0, null=True, blank=True)
+
+
+class FormulaRation(CoreModel):
     formula = models.ForeignKey('formulas.Formula', on_delete=models.CASCADE)
     nutrient = models.ForeignKey(
         'nutrients.Nutrient', on_delete=models.CASCADE)
@@ -64,18 +72,31 @@ class Formula(CoreModel):
         Country, on_delete=models.SET_NULL, null=True, blank=True)
     sex = models.CharField(max_length=1, choices=SEX_CHOICES,
                            null=True, blank=True, default=None)
-    # per kg
-    budget = MoneyField(max_digits=14, null=True, blank=True, default=0,
-                        decimal_places=2, default_currency='ETB')
     age_from_week = models.PositiveIntegerField()
     age_to_week = models.PositiveBigIntegerField()
     formula_basis = models.CharField(max_length=4, choices=FORMULA_BASIS,
                                      null=True, blank=True, default=None)
     note = models.TextField(null=True, blank=True)
-    requirements = models.ManyToManyField(
-        'nutrients.Nutrient', null=True, blank=True, through=FormulaRequirement)
     ingredients = models.ManyToManyField(
         'ingredients.Ingredient', null=True, blank=True, through=FormulaIngredient)
+    # Requirements
+    requirements = models.ManyToManyField(
+        'nutrients.Nutrient', null=True, blank=True, through=FormulaRequirement)
+    budget = MoneyField(max_digits=14, null=True, blank=True, default=0,
+                        decimal_places=2, default_currency='ETB')  # per kg
+    desired_ratio = models.PositiveIntegerField(
+        validators=PERCENTAGE_VALIDATOR, default=100)
+    desired_dm = models.PositiveIntegerField(
+        validators=PERCENTAGE_VALIDATOR, default=0)
+    # Rations
+    rations = models.ManyToManyField(
+        'nutrients.Nutrient', null=True, blank=True, through=FormulaRation)
+    ratio_price = MoneyField(max_digits=14, null=True, blank=True, default=0,
+                             decimal_places=2, default_currency='ETB')
+    ration_ratio = models.PositiveIntegerField(
+        validators=PERCENTAGE_VALIDATOR)
+    ratio_dm = models.PositiveIntegerField(
+        validators=PERCENTAGE_VALIDATOR, default=0)
 
     @property
     def requirement_count(self):

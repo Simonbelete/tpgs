@@ -520,6 +520,7 @@ const Formulation = () => {
           getCellContent={getContent}
           onRowAppended={onRowAppended}
           onCellActivated={onCellActivated}
+          freezeColumns={1}
           trailingRowOptions={{
             // How to get the trailing row to look right
             sticky: true,
