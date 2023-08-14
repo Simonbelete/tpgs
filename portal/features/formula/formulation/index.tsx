@@ -56,6 +56,7 @@ const Formulation = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const theme = useTheme();
   const [contributionChartData, setContributionChartData] = useState<any[]>([]);
+  const ingredients = useRef<Ingredient[]>([]);
   const rows = useRef<Array<Array<number | string>>>([
     ["Ration"],
     ["Requirement"],
@@ -94,8 +95,6 @@ const Formulation = () => {
       width: 100,
     },
   ]);
-  const COL_DM_INDEX = 4;
-  const COL_NUT_INDEX = 4;
   const COL_VALUE_INDEX = 1;
 
   // Nutrients Start and end Rows
@@ -279,6 +278,10 @@ const Formulation = () => {
 
   const handleSelected = async (value?: Ingredient) => {
     if (value == undefined || value == null) return;
+
+    // Check if ingredient already exists
+    if (ingredients.current.findIndex((e) => e.id == value.id) != -1) return;
+    ingredients.current = [...ingredients.current, value];
 
     try {
       handleCloseIngredientDialog();
@@ -520,7 +523,6 @@ const Formulation = () => {
           getCellContent={getContent}
           onRowAppended={onRowAppended}
           onCellActivated={onCellActivated}
-          freezeColumns={1}
           trailingRowOptions={{
             // How to get the trailing row to look right
             sticky: true,
