@@ -405,9 +405,9 @@ const Formulation = ({ saveRef }: { saveRef: React.Ref<unknown> }) => {
             });
           }
         });
-        req_desired_ratio = Number(row[COL_VALUE_INDEX]);
-        req_desired_dm = Number(row[COL_DM_INDEX]);
-        req_budget = Number(row[COL_PRICE_INDEX]);
+        req_desired_ratio = Number(row[COL_VALUE_INDEX]) || 0;
+        req_desired_dm = Number(row[COL_DM_INDEX]) || 0;
+        req_budget = Number(row[COL_PRICE_INDEX]) || 0;
       }
     });
 

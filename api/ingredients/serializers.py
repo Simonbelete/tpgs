@@ -2,6 +2,7 @@ from rest_framework import serializers
 from . import models
 from nutrients.serializers import NutrientSerializer_POST, NutrientSerializer_GET
 from nutrients.models import Nutrient
+from django.db import transaction
 
 
 class IngredientTypeSerializer_GET(serializers.ModelSerializer):
@@ -106,6 +107,7 @@ class IngredientSerializer_POST(serializers.ModelSerializer):
         fields = ['name', 'code',
                   'description', 'price', 'price_unit', 'nutrients']
 
+    @transaction.atomic
     def create(self, validated_data):
         nutrients = validated_data.pop('nutrients', [])
         instance = models.Ingredient.objects.create(**validated_data)

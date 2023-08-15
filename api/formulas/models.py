@@ -72,8 +72,8 @@ class Formula(CoreModel):
         Country, on_delete=models.SET_NULL, null=True, blank=True)
     sex = models.CharField(max_length=1, choices=SEX_CHOICES,
                            null=True, blank=True, default=None)
-    age_from_week = models.PositiveIntegerField()
-    age_to_week = models.PositiveBigIntegerField()
+    age_from_week = models.PositiveIntegerField(null=True, blank=True)
+    age_to_week = models.PositiveBigIntegerField(null=True, blank=True)
     formula_basis = models.CharField(max_length=4, choices=FORMULA_BASIS,
                                      null=True, blank=True, default=None)
     note = models.TextField(null=True, blank=True)
@@ -81,7 +81,7 @@ class Formula(CoreModel):
         'ingredients.Ingredient', null=True, blank=True, through=FormulaIngredient)
     # Requirements
     requirements = models.ManyToManyField(
-        'nutrients.Nutrient', null=True, blank=True, through=FormulaRequirement)
+        'nutrients.Nutrient', null=True, blank=True, through=FormulaRequirement, related_name='formula_requirements')
     budget = MoneyField(max_digits=14, null=True, blank=True, default=0,
                         decimal_places=2, default_currency='ETB')  # per kg
     desired_ratio = models.PositiveIntegerField(
@@ -90,11 +90,11 @@ class Formula(CoreModel):
         validators=PERCENTAGE_VALIDATOR, default=0)
     # Rations
     rations = models.ManyToManyField(
-        'nutrients.Nutrient', null=True, blank=True, through=FormulaRation)
+        'nutrients.Nutrient', null=True, blank=True, through=FormulaRation, related_name='formula_rations')
     ration_price = MoneyField(max_digits=14, null=True, blank=True, default=0,
                               decimal_places=2, default_currency='ETB')
     ration_ratio = models.PositiveIntegerField(
-        validators=PERCENTAGE_VALIDATOR)
+        validators=PERCENTAGE_VALIDATOR, default=0)
     ration_dm = models.PositiveIntegerField(
         validators=PERCENTAGE_VALIDATOR, default=0)
 

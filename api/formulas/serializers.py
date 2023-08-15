@@ -52,9 +52,54 @@ class FormulaRequirementSerializer_PATCH(serializers.ModelSerializer):
         validated_data['nutrient'] = nutrient
         return super().create(validated_data)
 
+
+# Formula -> Ration
+
+
+class FormulaRationSerializer_GET(serializers.ModelSerializer):
+    nutrient = NutrientSerializer_GET()
+
+    class Meta:
+        model = models.FormulaRation
+        fields = '__all__'
+
+
+class FormulaRationSerializer_POST(serializers.ModelSerializer):
+    class Meta:
+        model = models.FormulaRation
+        fields = ['id', 'nutrient', 'value']
+
+    def create(self, validated_data):
+        formula = models.Formula.objects.get(
+            pk=self.context["view"].kwargs["formula_pk"])
+        validated_data['formula'] = formula
+        return super().create(validated_data)
+
+
+class FormulaRationSerializer_REF(serializers.ModelSerializer):
+    id = serializers.IntegerField()
+
+    class Meta:
+        model = models.FormulaRation
+        fields = ['id', 'value']
+
+
+class FormulaRationSerializer_PATCH(serializers.ModelSerializer):
+    class Meta:
+        model = models.FormulaRation
+        fields = '__all__'
+
+    def create(self, validated_data):
+        formula = models.Formula.objects.get(
+            pk=self.context["view"].kwargs["formula_pk"])
+        nutrient = Nutrient.objects.get(
+            pk=self.context["view"].kwargs["id"])
+        validated_data['formula'] = formula
+        validated_data['nutrient'] = nutrient
+        return super().create(validated_data)
+
+
 # Formula -> Ingredient
-
-
 class FormulaIngredientSerializer_GET(serializers.ModelSerializer):
     ingredient = IngredientSerializer_GET()
 
