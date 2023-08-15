@@ -16,6 +16,7 @@ import MenuOpenIcon from "@mui/icons-material/MenuOpen";
 import Image from "next/image";
 import ILRILogo from "../logos/ILRILogo";
 import { FarmsMenu } from "@/features/farms";
+import { AccountMenu } from "../menus";
 
 const PrimaryNavbar = () => {
   const { collapseSidebar, toggleSidebar } = useProSidebar();
@@ -57,6 +58,7 @@ const PrimaryNavbar = () => {
           alignItems="center"
         >
           <FarmsMenu />
+          <AccountMenu />
         </Stack>
       </Toolbar>
     </AppBar>

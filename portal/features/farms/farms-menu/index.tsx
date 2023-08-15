@@ -8,16 +8,11 @@ import {
   Grow,
   ClickAwayListener,
   MenuList,
-  Box,
-  Stack,
-  List,
-  ListItem,
-  ListItemAvatar,
-  Avatar,
   ListItemText,
   Divider,
   ListItemIcon,
   Typography,
+  IconButton,
 } from "@mui/material";
 import { Farm } from "@/models";
 import farm_service from "../services/farm_service";
@@ -46,13 +41,15 @@ const FarmsMenu = () => {
   const [farms, setFarms] = useState<Farm[]>([]);
 
   useEffect(() => {
-    farm_service
-      .get({ limit: 5 })
-      .then((response) => {
-        if (response.status == 200) setFarms(response.data.results);
-      })
-      .catch((ex) => {});
-  }, []);
+    if (open && farms.length == 0) {
+      farm_service
+        .get({ limit: 5 })
+        .then((response) => {
+          if (response.status == 200) setFarms(response.data.results);
+        })
+        .catch((ex) => {});
+    }
+  }, [open]);
 
   return (
     <>
@@ -65,7 +62,9 @@ const FarmsMenu = () => {
         disableRipple
         startIcon={<HouseIcon />}
       >
-        <Typography variant="caption">{tenant.name}</Typography>
+        <Typography variant="caption" color="text.primary">
+          {tenant.name}
+        </Typography>
       </Button>
       <Popper
         open={open}
@@ -91,22 +90,6 @@ const FarmsMenu = () => {
                   id="composition-menu"
                   aria-labelledby="composition-button"
                 >
-                  {/* <List
-                    sx={{
-                      width: "100%",
-                      maxWidth: 360,
-                      bgcolor: "background.paper",
-                    }}
-                  >
-                    {farms.map((e, key) => (
-                      <ListItem key={key}>
-                        <ListItemAvatar>
-                          <HouseIcon />
-                        </ListItemAvatar>
-                        <ListItemText primary={e.name} />
-                      </ListItem>
-                    ))}
-                  </List> */}
                   {farms.map((e, key) => (
                     <MenuItem
                       key={key}

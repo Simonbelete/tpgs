@@ -33,9 +33,6 @@ class Formulate:
             self.ration_price += (ing_nutr.ingredient.price or 0) * \
                 fing.ration / 100
             self.ration_ratio += fing.ratio
-
-        print("------------------")
-        print({})
         return {'rations': self.rations, 'ration_dm': self.ration_dm, 'ration_price': self.ration_price, 'ration_ratio': self.ration_ratio}
 
     def save(self):
