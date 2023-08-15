@@ -24,9 +24,6 @@ class Formulate:
         formula_ingredients = models.FormulaIngredient.objects.filter(
             formula=self.formula.id)
         self.rations = dict.fromkeys(headers, 0)
-        self.ration_dm
-        self.ration_price
-        self.ration_ratio
         for fing in formula_ingredients.iterator():
             ing_nutr = IngredientNutrient.objects.filter(ingredient=fing.id)
             for n in ing_nutr.iterator():
@@ -41,12 +38,8 @@ class Formulate:
     def save(self):
         for key in self.rations:
             nutrient = Nutrient.objects.get(abbreviation=key)
-            print('-----------------')
-            print(nutrient)
-            print(self.formula)
-            print(self.rations[key])
             models.FormulaRation.objects.update_or_create(
-                formula=self.formula.id, nutrient=nutrient.id, defaults={'value': self.rations[key]})
+                formula=self.formula, nutrient=nutrient, defaults={'value': self.rations[key]})
         # TODO: Sync currency
         self.formula.ration_price = Money(self.ration_price, 'ETB')
         self.formula.ration_ratio = self.ration_ratio
