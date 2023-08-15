@@ -8,4 +8,7 @@ from .formulate import Formulate
 
 @receiver(post_save, sender=Formula)
 def compute_formula(sender, instance, **kwargs):
-    formulate = Formulate()
+    # formulate = Formulate(instance)
+    # formulate.compute()
+    # formulate.save()
+    pass

@@ -87,9 +87,9 @@ class FormulateViewSet(viewsets.ViewSet):
 
     def create(self, request, formula_pk=None):
         formula = self.get_queryset()
-        result = []
         f = Formulate(formula)
-        fr = f.compute()
+        f.compute()
+        f.save()
         # requirements = formula.requirements.all()
         # ingredients = formula.ingredients.all()
         # result = []
@@ -101,7 +101,8 @@ class FormulateViewSet(viewsets.ViewSet):
         #     result.append({
         #         {**req, 'result': nu_sum}
         #     })
-        return Response(fr)
+        data = serializers.FormulateSerializer_POST(self.get_queryset())
+        return Response({'results': data.data})
 
 
 # Formula -> Ingredient -> Nutrients

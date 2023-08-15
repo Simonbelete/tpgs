@@ -2,6 +2,9 @@ import pandas as pd
 from nutrients.models import Nutrient
 from ingredients.models import Ingredient, IngredientNutrient
 from . import models
+from djmoney.money import Money
+from decimal import Decimal
+from django.db.models.signals import post_save
 
 
 class Formulate:
@@ -29,13 +32,23 @@ class Formulate:
             for n in ing_nutr.iterator():
                 self.rations[n.nutrient.abbreviation] += fing.ration * \
                     n.value / 100
-            self.ration_dm += (ing_nutr.ingredient.dm or 0) * fing.ration / 100
-            self.ration_price += (ing_nutr.ingredient.price or 0) * \
+            self.ration_dm += (fing.ingredient.dm or 0) * fing.ration / 100
+            self.ration_price += float(fing.ingredient.price.amount or 0) * \
                 fing.ration / 100
-            self.ration_ratio += fing.ratio
+            self.ration_ratio += fing.ration
         return {'rations': self.rations, 'ration_dm': self.ration_dm, 'ration_price': self.ration_price, 'ration_ratio': self.ration_ratio}
 
     def save(self):
         for key in self.rations:
             nutrient = Nutrient.objects.get(abbreviation=key)
-        return models.FormulaRation.objects.create(formula=self.formula, nutrient=nutrient, value=self.ration[key])
+            print('-----------------')
+            print(nutrient)
+            print(self.formula)
+            print(self.rations[key])
+            models.FormulaRation.objects.update_or_create(
+                formula=self.formula.id, nutrient=nutrient.id, defaults={'value': self.rations[key]})
+        # TODO: Sync currency
+        self.formula.ration_price = Money(self.ration_price, 'ETB')
+        self.formula.ration_ratio = self.ration_ratio
+        self.formula.ration_dm = self.ration_dm
+        return self.formula.save()

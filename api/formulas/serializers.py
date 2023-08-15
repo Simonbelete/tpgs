@@ -169,3 +169,13 @@ class FormulaSerializer_POST(serializers.ModelSerializer):
             models.FormulaIngredient(
                 formula=instance, ingredient=ingredient_model, **ingredient)
         return instance
+
+
+class FormulateSerializer_POST(serializers.ModelSerializer):
+    requirements = FormulaRequirementSerializer_REF(many=True)
+    rations = FormulaRationSerializer_REF(many=True)
+
+    class Meta:
+        model = models.Formula
+        fields = ['id', 'requirements', 'rations',
+                  'ration_price', 'ration_ratio', 'ration_dm']
