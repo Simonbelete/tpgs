@@ -19,6 +19,12 @@ import CrisisAlertIcon from "@mui/icons-material/CrisisAlert";
 import CircleIcon from "@mui/icons-material/Circle";
 import AdjustIcon from "@mui/icons-material/Adjust";
 import LocalDiningIcon from "@mui/icons-material/LocalDining";
+import PublicIcon from "@mui/icons-material/Public";
+import PaidIcon from "@mui/icons-material/Paid";
+import NotificationsIcon from "@mui/icons-material/Notifications";
+import SettingsIcon from "@mui/icons-material/Settings";
+import LogoutIcon from "@mui/icons-material/Logout";
+import HelpIcon from "@mui/icons-material/Help";
 
 const SidebarMenu = () => {
   const theme = useTheme();
@@ -313,38 +319,81 @@ const SidebarMenu = () => {
           </Typography>
         </MenuItem>
       </Menu> */}
+      <div
+        style={{ padding: "0 24px", marginBottom: "8px", marginTop: "32px" }}
+      >
+        <Typography
+          variant="caption"
+          fontWeight={500}
+          style={{ opacity: 0.6, letterSpacing: "0.5px" }}
+        >
+          Settings
+        </Typography>
+      </div>
       <Menu menuItemStyles={menuItemStyles}>
-        <MenuItem component={<Link href="/feeds" />}>
+        <MenuItem
+          component={<Link href="/feeds" />}
+          icon={<PaidIcon fontSize="small" />}
+        >
           <Typography variant="body1" fontSize={14}>
             Currencies
           </Typography>
         </MenuItem>
-        <MenuItem component={<Link href="/feeds" />}>
-          <Typography variant="body1" fontSize={14}>
-            Countries
-          </Typography>
-        </MenuItem>
-        <MenuItem component={<Link href="/feeds" />}>
-          <Typography variant="body1" fontSize={14}>
-            Cities
-          </Typography>
-        </MenuItem>
-        <MenuItem component={<Link href="/feeds" />}>
-          <Typography variant="body1" fontSize={14}>
-            Regions
-          </Typography>
-        </MenuItem>
-        <MenuItem component={<Link href="/notifications" />}>
+        {/* Country */}
+        <SubMenu
+          label={
+            <Typography variant="body1" fontSize={14}>
+              Countries
+            </Typography>
+          }
+          icon={<PublicIcon fontSize="small" />}
+        >
+          <MenuItem
+            component={<Link href="/flocks" />}
+            icon={<AdjustIcon fontSize="small" />}
+          >
+            <Typography variant="body1" fontSize={14}>
+              Countries
+            </Typography>
+          </MenuItem>
+          <MenuItem
+            component={<Link href="/flocks/reduction" />}
+            icon={<AdjustIcon fontSize="small" />}
+          >
+            <Typography variant="body1" fontSize={14}>
+              Cities
+            </Typography>
+          </MenuItem>
+          <MenuItem
+            component={<Link href="/flocks/reduction" />}
+            icon={<AdjustIcon fontSize="small" />}
+          >
+            <Typography variant="body1" fontSize={14}>
+              Regions
+            </Typography>
+          </MenuItem>
+        </SubMenu>
+
+        <MenuItem
+          component={<Link href="/notifications" />}
+          icon={<NotificationsIcon fontSize="small" />}
+        >
           <Typography variant="body1" fontSize={14}>
             Notifications
           </Typography>
         </MenuItem>
-        <MenuItem component={<Link href="/settings" />}>
+        <MenuItem
+          component={<Link href="/settings" />}
+          icon={<SettingsIcon fontSize="small" />}
+        >
           <Typography variant="body1" fontSize={14}>
             Setting
           </Typography>
         </MenuItem>
-        <MenuItem component={<Link href="/api/logout" />}>
+        <MenuItem
+          component={<Link href="/api/logout" />}
+          icon={<LogoutIcon fontSize="small" />}
+        >
           <Typography variant="body1" fontSize={14}>
             Logout
           </Typography>
@@ -355,7 +404,7 @@ const SidebarMenu = () => {
               Get Help
             </Typography>
           }
-          icon={<ScienceIcon fontSize="small" />}
+          icon={<HelpIcon fontSize="small" />}
         >
           <MenuItem component={<Link href="/flocks" />}>
             <Typography variant="body1" fontSize={14}>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useImperativeHandle } from "react";
 import { object, string } from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
@@ -16,11 +16,13 @@ const schema = object({
 }).required();
 
 const NutrientGroupForm = ({
+  actionRef,
   redirect = true,
   nutrient_group,
 }: {
   redirect?: boolean;
   nutrient_group?: NutrientGroup;
+  actionRef?: React.Ref<unknown>;
 }) => {
   const router = useRouter();
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
@@ -45,6 +47,17 @@ const NutrientGroupForm = ({
       enqueueSnackbar("Server Error!", { variant: "error" });
     }
   };
+
+  useImperativeHandle(actionRef, () => ({
+    create() {
+      handleSubmit(onSubmit)();
+    },
+    createAndNew() {
+      handleSubmit(onSubmit)().finally(() =>
+        router.push("/nutrient-groups/create")
+      );
+    },
+  }));
 
   const create = async (data: Partial<NutrientGroup>) => {
     const response = await service.create(data);
