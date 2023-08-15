@@ -17,6 +17,8 @@ import ScienceIcon from "@mui/icons-material/Science";
 import PeopleIcon from "@mui/icons-material/People";
 import CrisisAlertIcon from "@mui/icons-material/CrisisAlert";
 import CircleIcon from "@mui/icons-material/Circle";
+import AdjustIcon from "@mui/icons-material/Adjust";
+import LocalDiningIcon from "@mui/icons-material/LocalDining";
 
 const SidebarMenu = () => {
   const theme = useTheme();
@@ -176,11 +178,11 @@ const SidebarMenu = () => {
               Ingredients
             </Typography>
           }
-          icon={<BubbleChartIcon />}
+          icon={<LocalDiningIcon />}
         >
           <MenuItem
             component={<Link href="/ingredients" />}
-            icon={<BubbleChartIcon fontSize="small" />}
+            icon={<AdjustIcon fontSize="small" />}
           >
             <Typography variant="body1" fontSize={14}>
               Ingredients
@@ -188,7 +190,7 @@ const SidebarMenu = () => {
           </MenuItem>
           <MenuItem
             component={<Link href="/ingredient-types" />}
-            icon={<WorkspacesIcon fontSize="small" />}
+            icon={<AdjustIcon fontSize="small" />}
           >
             <Typography variant="body1" fontSize={14}>
               Ingredient Type
@@ -205,7 +207,7 @@ const SidebarMenu = () => {
         >
           <MenuItem
             component={<Link href="/nutrients" />}
-            icon={<BubbleChartIcon fontSize="small" />}
+            icon={<AdjustIcon fontSize="small" />}
           >
             <Typography variant="body1" fontSize={14}>
               Nutrients
@@ -213,7 +215,7 @@ const SidebarMenu = () => {
           </MenuItem>
           <MenuItem
             component={<Link href="/nutrient-groups" />}
-            icon={<WorkspacesIcon fontSize="small" />}
+            icon={<AdjustIcon fontSize="small" />}
           >
             <Typography variant="body1" fontSize={14}>
               Nutrient Group
@@ -221,7 +223,7 @@ const SidebarMenu = () => {
           </MenuItem>
         </SubMenu>
       </Menu>
-      <div
+      {/* <div
         style={{ padding: "0 24px", marginBottom: "8px", marginTop: "32px" }}
       >
         <Typography
@@ -231,8 +233,8 @@ const SidebarMenu = () => {
         >
           Breeding
         </Typography>
-      </div>
-      <Menu menuItemStyles={menuItemStyles}>
+      </div> */}
+      {/* <Menu menuItemStyles={menuItemStyles}>
         <SubMenu
           label={
             <Typography variant="body1" fontSize={14}>
@@ -272,8 +274,8 @@ const SidebarMenu = () => {
             Feeds
           </Typography>
         </MenuItem>
-      </Menu>
-      <div
+      </Menu> */}
+      {/* <div
         style={{ padding: "0 24px", marginBottom: "8px", marginTop: "32px" }}
       >
         <Typography
@@ -283,8 +285,8 @@ const SidebarMenu = () => {
         >
           Compare
         </Typography>
-      </div>
-      <Menu menuItemStyles={menuItemStyles}>
+      </div> */}
+      {/* <Menu menuItemStyles={menuItemStyles}>
         <MenuItem component={<Link href="/chickens" />}>
           <Typography variant="body1" fontSize={14}>
             Body Weight
@@ -310,7 +312,7 @@ const SidebarMenu = () => {
             HDEP
           </Typography>
         </MenuItem>
-      </Menu>
+      </Menu> */}
       <Menu menuItemStyles={menuItemStyles}>
         <MenuItem component={<Link href="/feeds" />}>
           <Typography variant="body1" fontSize={14}>
@@ -332,17 +334,17 @@ const SidebarMenu = () => {
             Regions
           </Typography>
         </MenuItem>
-        <MenuItem component={<Link href="/feeds" />}>
+        <MenuItem component={<Link href="/notifications" />}>
           <Typography variant="body1" fontSize={14}>
             Notifications
           </Typography>
         </MenuItem>
-        <MenuItem component={<Link href="/feeds" />}>
+        <MenuItem component={<Link href="/settings" />}>
           <Typography variant="body1" fontSize={14}>
             Setting
           </Typography>
         </MenuItem>
-        <MenuItem component={<Link href="/feeds" />}>
+        <MenuItem component={<Link href="/api/logout" />}>
           <Typography variant="body1" fontSize={14}>
             Logout
           </Typography>
