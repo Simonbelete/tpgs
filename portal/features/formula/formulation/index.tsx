@@ -54,6 +54,7 @@ import { PurposeForm } from "@/features/purposes";
 import { yupResolver } from "@hookform/resolvers/yup";
 import FIcBarChart from "../fic-bar-chart";
 import formula_service from "../services/formula_service";
+import { useRouter } from "next/router";
 
 type Inputs = Partial<Formula>;
 
@@ -83,6 +84,7 @@ const Formulation = ({ saveRef }: { saveRef: React.Ref<unknown> }) => {
   const isInitialMount = useRef(true);
   const [loading, setLoading] = useState<boolean>(false);
   const theme = useTheme();
+  const router = useRouter();
   const [contributionChartData, setContributionChartData] = useState<any[]>([]);
   const ingredients = useRef<Ingredient[]>([]);
   const rows = useRef<Array<Array<number | string>>>([
@@ -369,22 +371,13 @@ const Formulation = ({ saveRef }: { saveRef: React.Ref<unknown> }) => {
     const COL_DM_INDEX = COL_PRICE_INDEX + 1;
 
     rows.current.forEach((row, index) => {
-      const ing_id: number =
-        ingredients.current.find((e) => e.name == row[0])?.id || 0;
-      ing.push({
-        ingredient: ing_id,
-        ration_min: Number(row[COL_MIN_INDEX]),
-        ratio_max: Number(row[getColIndex("min")]),
-        ration: Number(row[getColIndex("value")]),
-      });
-
       if (index == ROW_RATION_INDEX) {
         row.forEach((col, j) => {
-          if (COL_DM_INDEX <= j || COL_MIN_INDEX >= j) return;
+          if (j <= COL_DM_INDEX || j >= COL_MIN_INDEX) return;
 
           if (Number(col) != 0) {
             rations.push({
-              nutrient: columns[j].nutrient_id,
+              id: columns[j].nutrient_id,
               value: Number(col),
             });
           }
@@ -392,15 +385,13 @@ const Formulation = ({ saveRef }: { saveRef: React.Ref<unknown> }) => {
         ration_ratio = Number(row[COL_VALUE_INDEX]) || 0;
         ration_dm = Number(row[COL_DM_INDEX]) || 0;
         ration_price = Number(row[COL_PRICE_INDEX]) || 0;
-      }
-
-      if (index == ROW_REQUIREMENT_INDEX) {
+      } else if (index == ROW_REQUIREMENT_INDEX) {
         row.forEach((col, j) => {
-          if (COL_DM_INDEX <= j || COL_MIN_INDEX >= j) return;
+          if (j <= COL_DM_INDEX || j >= COL_MIN_INDEX) return;
 
           if (Number(col) != 0) {
             requirements.push({
-              nutrient: columns[j].nutrient_id,
+              id: columns[j].nutrient_id,
               value: Number(col),
             });
           }
@@ -408,11 +399,22 @@ const Formulation = ({ saveRef }: { saveRef: React.Ref<unknown> }) => {
         req_desired_ratio = Number(row[COL_VALUE_INDEX]) || 0;
         req_desired_dm = Number(row[COL_DM_INDEX]) || 0;
         req_budget = Number(row[COL_PRICE_INDEX]) || 0;
+      } else {
+        const ing_id: number =
+          ingredients.current.find((e) => e.name == row[0])?.id || 0;
+        ing.push({
+          id: ing_id,
+          ration_min: Number(row[COL_MIN_INDEX]),
+          ratio_max: Number(row[getColIndex("min")]),
+          ration: Number(row[getColIndex("value")]),
+        });
       }
     });
 
     try {
       const formula: Partial<Formula> = {
+        ...data,
+        ingredients: ing as any,
         requirements: requirements as any,
         budget: req_budget,
         desired_ratio: req_desired_ratio,
@@ -423,17 +425,29 @@ const Formulation = ({ saveRef }: { saveRef: React.Ref<unknown> }) => {
         ration_dm: ration_dm,
       };
 
-      console.log("-------");
       console.log(formula);
-      // const response = await formula_service.create()
+
+      const response = await formula_service.create(formula);
+      if (response.status == 201) {
+        enqueueSnackbar("Formula Created", { variant: "success" });
+        // router.push("/formulation/formula");
+      } else {
+        enqueueSnackbar(
+          "Failed to save formula, please check you inputs and try again",
+          { variant: "error" }
+        );
+      }
     } catch (ex) {
+      enqueueSnackbar(
+        "Server Error, please check you connection and try again",
+        { variant: "error" }
+      );
     } finally {
     }
   };
 
   useImperativeHandle(saveRef, () => ({
     save() {
-      console.log("saveclie");
       handleSubmit(onSubmit)();
     },
   }));

@@ -1,4 +1,5 @@
 from rest_framework import serializers
+from django.db import transaction
 
 from . import models
 from nutrients.models import Nutrient
@@ -31,6 +32,9 @@ class FormulaRequirementSerializer_POST(serializers.ModelSerializer):
 
 
 class FormulaRequirementSerializer_REF(serializers.ModelSerializer):
+    # nutrient = serializers.PrimaryKeyRelatedField(
+    #     queryset=Nutrient.objects.all(), read_only=False)
+    # Nutrient Id
     id = serializers.IntegerField()
 
     class Meta:
@@ -77,6 +81,8 @@ class FormulaRationSerializer_POST(serializers.ModelSerializer):
 
 
 class FormulaRationSerializer_REF(serializers.ModelSerializer):
+    # nutrient = serializers.PrimaryKeyRelatedField(read_only=True)
+    # Nutrient Id
     id = serializers.IntegerField()
 
     class Meta:
@@ -120,6 +126,15 @@ class FormulaIngredientSerializer_POST(serializers.ModelSerializer):
         return super().create(validated_data)
 
 
+class FormulaIngredientSerializer_REF(serializers.ModelSerializer):
+    # Ingredient Id
+    id = serializers.IntegerField()
+
+    class Meta:
+        model = models.FormulaIngredient
+        fields = ['id', 'ratio_min', 'ratio_max', 'ration']
+
+
 class FormulaIngredientSerializer_PATCH(serializers.ModelSerializer):
     class Meta:
         model = models.FormulaIngredient
@@ -148,24 +163,34 @@ class FormulaSerializer_GET(serializers.ModelSerializer):
 
 class FormulaSerializer_POST(serializers.ModelSerializer):
     requirements = FormulaRequirementSerializer_REF(many=True, required=False)
-    ingredients = FormulaIngredientSerializer_POST(many=True, required=False)
+    rations = FormulaRationSerializer_REF(many=True, required=False)
+    ingredients = FormulaIngredientSerializer_REF(many=True, required=False)
 
     class Meta:
         model = models.Formula
-        fields = ['name', 'weight', 'requirements', 'ingredients']
+        fields = ['name', 'weight', 'requirements', 'budget', 'desired_ratio', 'desired_dm', 'ingredients',
+                  'rations', 'ration_price', 'ration_ratio', 'ration_dm',  'age_from_week', 'age_to_week']
 
+    @transaction.atomic
     def create(self, validated_data):
         requirements = validated_data.pop('requirements', [])
+        rations = validated_data.pop('rations', [])
         ingredients = validated_data.pop('ingredients', [])
         instance = models.Formula.objects.create(**validated_data)
         for requirement in requirements:
             nutrient_model = Nutrient.objects.get(
-                pk=requirement['nutrient'])
+                pk=requirement['id'])
             models.FormulaRequirement.objects.create(
                 formula=instance, nutrient=nutrient_model, value=requirement['value'])
+        for ration in rations:
+            nutrient_model = Nutrient.objects.get(
+                pk=ration['id'])
+            models.FormulaRation.objects.create(
+                formula=instance, nutrient=nutrient_model, value=ration['value'])
         for ingredient in ingredients:
-            ingredient_model = Ingredient.objects.create(
-                pk=ingredient['ingredient'])
+            inp = ingredient.pop('id')
+            ingredient_model = Ingredient.objects.get(
+                pk=inp)
             models.FormulaIngredient(
                 formula=instance, ingredient=ingredient_model, **ingredient)
         return instance
