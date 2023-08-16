@@ -1,17 +1,67 @@
-import React from "react";
+import React, { useRef } from "react";
 import { NextPageContext } from "next";
-import { Container } from "@mui/material";
+import { Container, Typography, Stack, Button, Box } from "@mui/material";
 import { EditLayout } from "@/components/layouts";
 import { FormulaForm, FormulaService } from "@/features/formula";
 import { Breadcrumbs, Loading } from "@/components";
 import { useBreadcrumbs } from "@/hooks";
 import { Formula } from "@/models";
+import { useRouter } from "next/router";
+import SaveIcon from "@mui/icons-material/Save";
+import CloseIcon from "@mui/icons-material/Close";
+import LibraryAddIcon from "@mui/icons-material/LibraryAdd";
 
 const IngredientEditPage = ({ data }: { data: Formula }) => {
   const { breadcrumbs } = useBreadcrumbs();
+  const router = useRouter();
+  const actionRef = useRef();
 
   return (
-    <EditLayout breadcrumbs={<Breadcrumbs items={breadcrumbs} />}>
+    <EditLayout
+      breadcrumbs={<Breadcrumbs items={breadcrumbs} />}
+      header={<Typography variant="title">{data.name}</Typography>}
+      actions={
+        <>
+          <Stack
+            spacing={2}
+            direction={"row"}
+            justifyContent="flex-start"
+            alignItems="center"
+          >
+            <Box>
+              <Button variant="contained" startIcon={<SaveIcon />} size="small">
+                Formulate
+              </Button>
+            </Box>
+            <Box>
+              <Button
+                variant="outlined"
+                size="small"
+                startIcon={<LibraryAddIcon />}
+                onClick={() => {
+                  console.log("ddd");
+                  if (actionRef.current != undefined)
+                    (actionRef.current as any).createAndNew();
+                }}
+              >
+                Save
+              </Button>
+            </Box>
+            <Box>
+              <Button
+                variant="outlined"
+                color="error"
+                size="small"
+                startIcon={<CloseIcon />}
+                onClick={() => router.push("/nutrient-groups")}
+              >
+                Cancel
+              </Button>
+            </Box>
+          </Stack>
+        </>
+      }
+    >
       <Container maxWidth="xl">
         <FormulaForm formula={data} />
       </Container>

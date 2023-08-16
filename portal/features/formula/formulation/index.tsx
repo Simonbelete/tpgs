@@ -28,6 +28,7 @@ import {
   AccordionDetails,
   Grid,
   InputAdornment,
+  Paper,
 } from "@mui/material";
 import {
   IngredientSelectDialog,
@@ -55,6 +56,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import FIcBarChart from "../fic-bar-chart";
 import formula_service from "../services/formula_service";
 import { useRouter } from "next/router";
+import FicPieChart from "../fic-pie-chart";
 
 type Inputs = Partial<Formula>;
 
@@ -234,6 +236,20 @@ const Formulation = ({ saveRef }: { saveRef: React.Ref<unknown> }) => {
       // @ts-ignore
       rows.current[row][col] = newValue.data;
 
+      const ROW_RATION_INDEX = rows.current.length - 2;
+      const ROW_REQUIREMENT_INDEX = rows.current.length - 1;
+
+      if (
+        col == getColIndex("value") &&
+        [ROW_RATION_INDEX, ROW_REQUIREMENT_INDEX].includes(row) == false
+      ) {
+        const k = ingredients.current.findIndex(
+          (e) => e.name == rows.current[row][0]
+        );
+        // @ts-ignore
+        ingredients.current[k]["ratio"] = Number(newValue.data);
+      }
+
       const result: number[] = [];
 
       // slice out the ration and requirement
@@ -255,9 +271,6 @@ const Formulation = ({ saveRef }: { saveRef: React.Ref<unknown> }) => {
           }
         });
       });
-
-      const ROW_RATION_INDEX = rows.current.length - 2;
-      const ROW_REQUIREMENT_INDEX = rows.current.length - 1;
 
       // Update ration row
       rows.current[ROW_RATION_INDEX] = ["Ration", ...result];
@@ -711,6 +724,14 @@ const Formulation = ({ saveRef }: { saveRef: React.Ref<unknown> }) => {
           }}
         />
       </Sizer>
+      <Grid container spacing={2} sx={{ my: 5 }}>
+        <Grid item xs={4}></Grid>
+        <Grid item xs={4}>
+          <Paper>
+            <FicPieChart data={ingredients.current} dataKey="ratio" />
+          </Paper>
+        </Grid>
+      </Grid>
       <Box>
         <FIcBarChart
           data={contributionChartData}

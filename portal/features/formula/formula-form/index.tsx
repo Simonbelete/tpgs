@@ -402,7 +402,6 @@ const FormulaForm = ({
           {tabIndex == 2 && <FormulaRequirements id={formula?.id} />}
         </Box>
       </form>
-
       <Box>
         <Button variant="contained" type="submit">
           Submit
