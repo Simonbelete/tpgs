@@ -25,7 +25,7 @@ const CreateLayout = ({
           {actions}
         </Stack>
       </Box>
-      <Box sx={{ height: "100%" }}>{children}</Box>
+      <Box sx={{ height: "auto" }}>{children}</Box>
     </>
   );
 };

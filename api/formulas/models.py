@@ -51,6 +51,14 @@ class FormulaIngredient(CoreModel):
     def qty(self):
         return self.formula.weight * self.ration / 100
 
+    @property
+    def total_weight(self):
+        return self.formula.weight * self.ration / 100
+
+    @property
+    def total_price(self):
+        return self.total_weight * self.ingredient.price
+
 
 class Formula(CoreModel):
     SEX_CHOICES = (

@@ -23,7 +23,7 @@ const DashboardLayout = (props: DashboardLayoutProps) => {
           <div
             style={{
               padding: "30px",
-              height: "100%",
+              height: "auto",
               background: theme.palette.background.default,
             }}
           >

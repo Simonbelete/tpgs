@@ -57,6 +57,7 @@ import FIcBarChart from "../fic-bar-chart";
 import formula_service from "../services/formula_service";
 import { useRouter } from "next/router";
 import FicPieChart from "../fic-pie-chart";
+import FormulaResultTable from "../formula-result-table";
 
 type Inputs = Partial<Formula>;
 
@@ -248,6 +249,13 @@ const Formulation = ({ saveRef }: { saveRef: React.Ref<unknown> }) => {
         );
         // @ts-ignore
         ingredients.current[k]["ratio"] = Number(newValue.data);
+        // @ts-ignore
+        ingredients.current[k]["total_weight"] =
+          (getValues("weight") * Number(newValue.data)) / 100;
+        // @ts-ignore
+        ingredients.current[k]["total_price"] =
+          ingredients.current[k].price *
+          ((getValues("weight") * Number(newValue.data)) / 100);
       }
 
       const result: number[] = [];
@@ -357,6 +365,7 @@ const Formulation = ({ saveRef }: { saveRef: React.Ref<unknown> }) => {
     handleSubmit,
     control,
     formState: { errors },
+    getValues,
   } = useForm<Inputs>({
     // @ts-ignore
     resolver: yupResolver(schema),
@@ -437,8 +446,6 @@ const Formulation = ({ saveRef }: { saveRef: React.Ref<unknown> }) => {
         ration_ratio: ration_ratio,
         ration_dm: ration_dm,
       };
-
-      console.log(formula);
 
       const response = await formula_service.create(formula);
       if (response.status == 201) {
@@ -724,14 +731,6 @@ const Formulation = ({ saveRef }: { saveRef: React.Ref<unknown> }) => {
           }}
         />
       </Sizer>
-      <Grid container spacing={2} sx={{ my: 5 }}>
-        <Grid item xs={4}></Grid>
-        <Grid item xs={4}>
-          <Paper>
-            <FicPieChart data={ingredients.current} dataKey="ratio" />
-          </Paper>
-        </Grid>
-      </Grid>
       <Box>
         <FIcBarChart
           data={contributionChartData}
@@ -739,6 +738,14 @@ const Formulation = ({ saveRef }: { saveRef: React.Ref<unknown> }) => {
           displayKey={"title"}
         />
       </Box>
+      <Grid container spacing={2} sx={{ my: 5 }}>
+        <Grid item xs={8}>
+          <FormulaResultTable rows={ingredients.current} />
+        </Grid>
+        <Grid item xs={4}>
+          {/* <FicPieChart data={ingredients.current} dataKey="ratio" /> */}
+        </Grid>
+      </Grid>
     </>
   );
 };

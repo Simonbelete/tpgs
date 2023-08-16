@@ -8,4 +8,6 @@ export default interface FormulaIngredient {
   ration_min: number;
   ratio_max: number;
   ration: number;
+  total_weight: number;
+  total_price: number;
 }
