@@ -157,7 +157,7 @@ class FormulaSerializer_GET(serializers.ModelSerializer):
 
     class Meta:
         model = models.Formula
-        fields = ['id', 'purpose', 'weight', 'note',
+        fields = ['id', 'name', 'purpose', 'weight', 'note',
                   'requirement_count', 'ingredient_count']
 
 

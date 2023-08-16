@@ -6,8 +6,7 @@ import { Unit } from "@/models";
 import formula_service from "../services/formula_service";
 
 const columns: GridColDef[] = [
-  { field: "id", headerName: "ID", flex: 1, minWidth: 150 },
-  { field: "name", headerName: "name", flex: 1, minWidth: 150 },
+  { field: "name", headerName: "Name", flex: 1, minWidth: 150 },
 ];
 
 const FormulaList = () => {

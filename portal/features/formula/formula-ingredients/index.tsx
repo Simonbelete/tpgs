@@ -279,7 +279,7 @@ const FormulaIngredients = ({ id }: { id?: number }) => {
         onClose={handleCloseContributionModal}
       />
       <EditableTable
-        sx={{ background: "white", minHeight: "20px" }}
+        sx={{ background: "white", minHeight: "100px" }}
         rows={rows}
         editMode="row"
         rowHeight={40}

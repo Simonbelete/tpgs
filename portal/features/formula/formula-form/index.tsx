@@ -26,7 +26,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { setRequirements } from "../slices";
 import { RootState } from "@/store";
 import { LabeledInput } from "@/components/inputs";
-import { AsyncDropdown } from "@/components/dropdowns";
+import { AsyncDropdown, Dropdown } from "@/components/dropdowns";
 import { PurposeForm } from "@/features/purposes";
 import FormulaRequirements from "../formula-requirements";
 import FormulaIngredients from "../formula-ingredients";
@@ -36,9 +36,27 @@ import { useRouter } from "next/router";
 
 type Inputs = Partial<Formula>;
 
-const schema = yup.object({
-  name: yup.string().required(),
-});
+const schema = yup
+  .object({
+    name: yup.string().required(),
+    purpose: yup.string().nullable(),
+    weight: yup.number().required(),
+    country: yup.string().nullable(),
+    sex: yup.string().nullable(),
+    age_from_week: yup.number().nullable(),
+    age_to_week: yup.number().nullable(),
+    formula_basis: yup.string().nullable(),
+    note: yup.string().nullable(),
+  })
+  .transform((currentValue: any) => {
+    if (currentValue.purpose != null)
+      currentValue.purpose = currentValue.purpose.id;
+    if (currentValue.country != null)
+      currentValue.country = currentValue.country.id;
+    if (currentValue.formula_basis != null)
+      currentValue.formula_basis = currentValue.formula_basis.value;
+    return currentValue;
+  });
 
 function a11yProps(index: number) {
   return {
@@ -84,6 +102,7 @@ const FormulaForm = ({
   });
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
+    console.log(data);
     try {
       if (formula == null)
         await create({
@@ -114,7 +133,7 @@ const FormulaForm = ({
     const response = await formula_service.update(formula?.id || 0, data);
     if ((response.status = 201)) {
       enqueueSnackbar("Successfully updated!", { variant: "success" });
-      router.push("/formulation/formulas/" + formula?.id);
+      router.push("/formulation/formulas");
     }
   };
 
@@ -151,22 +170,22 @@ const FormulaForm = ({
         </Paper>
       </Box>
 
+      <Tabs value={tabIndex} onChange={handleChange}>
+        <Tab label="General" {...a11yProps(0)} />
+        <Tab
+          label="Ingredients"
+          icon={<Chip label={formula?.ingredient_count} size="small" />}
+          iconPosition="end"
+          {...a11yProps(1)}
+        />
+        <Tab
+          label="Requirements"
+          icon={<Chip label={formula?.requirement_count} size="small" />}
+          iconPosition="end"
+          {...a11yProps(2)}
+        />
+      </Tabs>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <Tabs value={tabIndex} onChange={handleChange}>
-          <Tab label="General" {...a11yProps(0)} />
-          <Tab
-            label="Ingredients"
-            icon={<Chip label={formula?.ingredient_count} size="small" />}
-            iconPosition="end"
-            {...a11yProps(1)}
-          />
-          <Tab
-            label="Requirements"
-            icon={<Chip label={formula?.requirement_count} size="small" />}
-            iconPosition="end"
-            {...a11yProps(2)}
-          />
-        </Tabs>
         <Box mx={2} my={4} pb={4}>
           {tabIndex == 0 && (
             <Paper
@@ -198,29 +217,76 @@ const FormulaForm = ({
                     )}
                   />
                 </Grid>
-                {/* purpose */}
-                {/* <Grid item xs={12} md={6}>
+                {/* Purpose */}
+                <Grid item xs={12} md={6}>
                   <Controller
                     name={"purpose"}
                     control={control}
                     render={({
                       field: { onChange, value },
-                      fieldState: { error },
+                      fieldState: { invalid, isTouched, isDirty, error },
                     }) => (
                       <AsyncDropdown
-                        multiple
                         url="/purposes/"
                         key="name"
                         onChange={(_, data) => onChange(data)}
                         value={value}
-                        label="Production Purpose"
+                        label="Purpose"
                         error={!!error?.message}
                         helperText={error?.message}
-                        createForm={<PurposeForm redirect={false} />}
+                        createForm={<PurposeForm />}
                       />
                     )}
                   />
-                </Grid> */}
+                </Grid>
+                {/* Sex */}
+                <Grid item xs={12} md={6}>
+                  <Controller
+                    name={"sex"}
+                    control={control}
+                    render={({
+                      field: { onChange, value },
+                      fieldState: { invalid, isTouched, isDirty, error },
+                    }) => (
+                      <Dropdown
+                        options={[
+                          { value: "M", name: "Male" },
+                          { value: "F", name: "Female" },
+                        ]}
+                        key="name"
+                        onChange={(_, data) => onChange(data)}
+                        value={value}
+                        label="Sex"
+                        error={!!error?.message}
+                        helperText={error?.message}
+                      />
+                    )}
+                  />
+                </Grid>
+                {/* Formula Basis */}
+                <Grid item xs={12} md={6}>
+                  <Controller
+                    name={"formula_basis"}
+                    control={control}
+                    render={({
+                      field: { onChange, value },
+                      fieldState: { invalid, isTouched, isDirty, error },
+                    }) => (
+                      <Dropdown
+                        options={[
+                          { value: "AF", name: "As-Fed Basis" },
+                          { value: "DM", name: "DM Basis" },
+                        ]}
+                        key="name"
+                        onChange={(_, data) => onChange(data)}
+                        value={value}
+                        label="Feed Basis"
+                        error={!!error?.message}
+                        helperText={error?.message}
+                      />
+                    )}
+                  />
+                </Grid>
                 {/* Weight Requirement */}
                 <Grid item xs={12} md={6}>
                   <Controller
@@ -239,6 +305,71 @@ const FormulaForm = ({
                         value={value}
                         label={"Weight"}
                         placeholder={"Weight"}
+                      />
+                    )}
+                  />
+                </Grid>
+                {/* Country */}
+                <Grid item xs={12} md={6}>
+                  <Controller
+                    name={"country"}
+                    control={control}
+                    render={({
+                      field: { onChange, value },
+                      fieldState: { invalid, isTouched, isDirty, error },
+                    }) => (
+                      <AsyncDropdown
+                        url="/countries/"
+                        key="name"
+                        onChange={(_, data) => onChange(data)}
+                        value={value}
+                        label="Country"
+                        error={!!error?.message}
+                        helperText={error?.message}
+                      />
+                    )}
+                  />
+                </Grid>
+                <Grid item xs={12} md={6}>
+                  <Controller
+                    name={"age_from_week"}
+                    control={control}
+                    render={({
+                      field: { onChange, value },
+                      fieldState: { invalid, isTouched, isDirty, error },
+                    }) => (
+                      <LabeledInput
+                        error={!!error?.message}
+                        helperText={error?.message}
+                        onChange={onChange}
+                        fullWidth
+                        size="small"
+                        value={value}
+                        label={"Age From"}
+                        placeholder={"Age From"}
+                        type="number"
+                      />
+                    )}
+                  />
+                </Grid>
+                <Grid item xs={12} md={6}>
+                  <Controller
+                    name={"age_to_week"}
+                    control={control}
+                    render={({
+                      field: { onChange, value },
+                      fieldState: { invalid, isTouched, isDirty, error },
+                    }) => (
+                      <LabeledInput
+                        error={!!error?.message}
+                        helperText={error?.message}
+                        onChange={onChange}
+                        fullWidth
+                        size="small"
+                        value={value}
+                        label={"Age To"}
+                        placeholder={"Age To"}
+                        type="number"
                       />
                     )}
                   />
@@ -270,12 +401,13 @@ const FormulaForm = ({
           {tabIndex == 1 && <FormulaIngredients id={formula?.id} />}
           {tabIndex == 2 && <FormulaRequirements id={formula?.id} />}
         </Box>
-        <Box>
-          <Button variant="contained" type="submit">
-            Submit
-          </Button>
-        </Box>
       </form>
+
+      <Box>
+        <Button variant="contained" type="submit">
+          Submit
+        </Button>
+      </Box>
     </>
   );
 };
