@@ -4,8 +4,10 @@ import 'package:nea/widgets/sub_title_text.dart';
 
 class KeyMessages extends StatelessWidget {
   final List<dynamic> children;
+  final String? title;
 
-  const KeyMessages({super.key, required this.children});
+  const KeyMessages(
+      {super.key, required this.children, this.title = 'Key Messages'});
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +16,7 @@ class KeyMessages extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const SubTitleText(text: 'Key Messages'),
+          SubTitleText(text: title!),
           Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: children.map((e) {

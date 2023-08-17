@@ -159,12 +159,12 @@ Course EN = Course(
         "Beriberi",
         "muscle weakness",
         "anorexia",
-        "oedema-body ﬂ uid retentions",
+        "Oedema-body fluid retentions",
         "enlarged heart",
         "confusion"
       ]),
       SubTitleText(
-        text: "Vitamin B2 (Riboﬂ avin)",
+        text: "Vitamin B2 (Ribofi avin)",
       ),
       SubTitleText(text: "Vitamin B2 - Functions", fontSize: 16.0),
       Bullet(children: [
@@ -180,7 +180,7 @@ Course EN = Course(
       Bullet(children: [
         "Inflammation of the tongue",
         "swollen stomach",
-        "oedema-body ﬂ uid retention"
+        "oedema-body fluid retention"
       ]),
       SubTitleText(
         text: "Folate - Folic Acid",
