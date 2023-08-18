@@ -21,7 +21,7 @@ class Bullet extends StatelessWidget {
                   children: [
                     Text('•  '),
                     Container(
-                        width: size.width * 0.85,
+                        // width: size.width * 0.85,
                         child: Paragraph(title: '', body: '$e'))
                   ],
                 ),

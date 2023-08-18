@@ -16,7 +16,7 @@ Food EN = Food(
       body:
           'Eggs are among the most nutritious foods on the planet. A whole egg contains all the nutrients required to turn a single cell into a baby chicken A single large, boiled egg contains',
     ),
-    facts: Column(children: [
+    facts: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
       Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: const [

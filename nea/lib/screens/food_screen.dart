@@ -82,7 +82,7 @@ class FoodScreen extends StatelessWidget {
               const SizedBox(
                 height: 10.0,
               ),
-              // food.body
+              food.body!,
             ]),
           )
         ],
