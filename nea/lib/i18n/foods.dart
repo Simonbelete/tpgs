@@ -4,6 +4,8 @@ import 'egg/all.dart' as egg;
 Map<String, Map<String, Food>> foodData = {
   'egg': {
     'en': egg.EN,
+    'am': egg.AM,
+    'sw': egg.SW,
   },
 };
 

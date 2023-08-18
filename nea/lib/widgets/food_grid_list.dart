@@ -4,6 +4,7 @@ import 'package:nea/bloc/local/bloc.dart';
 import 'package:nea/bloc/local/states.dart';
 import 'package:nea/models/food_model.dart';
 import 'package:nea/screens/food_screen.dart';
+import 'package:nea/utils/responsive_widget.dart';
 import 'package:nea/widgets/food_card.dart';
 
 class FoodGridList extends StatelessWidget {
@@ -19,9 +20,11 @@ class FoodGridList extends StatelessWidget {
           Container(
             padding: EdgeInsets.only(left: 0.0),
             child: GridView.builder(
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  mainAxisExtent: 200,
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount:
+                      ResponsiveWidget.isSmallScreen(context) ? 2 : 6,
+                  mainAxisExtent:
+                      ResponsiveWidget.isSmallScreen(context) ? 200 : 300,
                 ),
                 physics: NeverScrollableScrollPhysics(),
                 shrinkWrap: true,

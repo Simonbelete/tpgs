@@ -41,8 +41,6 @@ List<Path> paths = [
       context,
       match,
     ) {
-      print('000000000000000000000');
-      print(match);
       if (match == null) return NotFound();
       return ImageScreen(image: match);
     },
