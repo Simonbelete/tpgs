@@ -123,7 +123,7 @@ Course EN = Course(
       const Paragraph(
           title: "Minerals ",
           body:
-              "Minerals are solid, inorganic groups of compounds like essential building blocks of different types of cells. Essential minerals include iron, zinc, calcium, and iodine. For example, iron is part of red blood cells, which transport oxygen through the body. Zinc has many critical functions in the body, including the make-up of cells and body systems, including immune function."),
+              "are solid, inorganic groups of compounds like essential building blocks of different types of cells. Essential minerals include iron, zinc, calcium, and iodine. For example, iron is part of red blood cells, which transport oxygen through the body. Zinc has many critical functions in the body, including the make-up of cells and body systems, including immune function."),
       const CourseBodyImage(
         image: "assets/materials/images/minerals.png",
         description: "Sources of Minerals",
