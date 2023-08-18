@@ -55,9 +55,9 @@ class FoodGrid extends StatelessWidget {
                             ResponsiveWidget.isSmallScreen(context) ? 15 : 50),
                     child: InkWell(
                         onTap: () {
-                          Navigator.pushNamed(context, FoodScreen.routeName,
-                              arguments: foodData.values
-                                  .elementAt(index)[state.local]);
+                          Navigator.pushNamed(
+                              context, "${FoodScreen.routeName}/$index",
+                              arguments: index);
                         },
                         child: FoodCard(
                           image: foodData.values

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nea/i18n/courses.dart';
+import 'package:nea/i18n/foods.dart';
 import 'package:nea/models/course_model.dart';
 import 'package:nea/models/food_model.dart';
 import 'package:nea/screens/food_screen.dart';
@@ -33,6 +34,19 @@ List<Path> paths = [
       var index = match == null ? 0 : int.parse(match);
       Course course = courseData.values.elementAt(index)[local] as Course;
       return CourseScreen(course: course);
+    },
+  ),
+  Path(
+    r'^/food/([\w-]+)$',
+    (
+      context,
+      match,
+    ) {
+      var local = Preferencess.getLocalSync() ?? "en";
+      if (match == null) return NotFound();
+      var index = match == null ? 0 : int.parse(match);
+      Food food = foodData.values.elementAt(index)[local] as Food;
+      return FoodScreen(food: food);
     },
   ),
   Path(
