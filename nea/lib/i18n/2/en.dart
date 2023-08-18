@@ -95,8 +95,8 @@ Course EN = Course(
       ]),
       KeyMessages(children: [
         Bullet(children: [
-          'To have a healthy and balanced diet means eating a variety of foods that supply nutrients that are important for the body. It does not mean eating expensive food.'
-              'The nutrients a person\'s body needs to function, grow and stay healthy can be found in many locally available foods.',
+          'To have a healthy and balanced diet means eating a variety of foods that supply nutrients that are important for the body. It does not mean eating expensive food.',
+          'The nutrients a person\'s body needs to function, grow and stay healthy can be found in many locally available foods.',
           'Pick food items from each of the food groups daily that are locally available: Staple foods (cereals/grains, roots and tubers); vegetables and fruits (diﬀ erent types - leaves, fruits and tubers - and colors - green, red, yellow/orange); meat/animal products and legumes/nuts (proteins); fats etc.',
           'Use simple and careful cooking methods to ensure maximum nutrients are obtained from foods.',
           'For instance the best way of cooking vegetables is by steaming them with a little water instead of boiling them. Leaves from vegetables such as spinach can be steamed for about ﬁ ve minutes in a sieve over rapidly boiling water.'
@@ -133,7 +133,7 @@ Course EN = Course(
       Paragraph(
           title: "",
           body:
-              "Liver, eggs, ﬁ sh oil, whole milk mango, pawpaw, orange-fleshed sweet potato, pumpkin, carrot, red palm oil, dark green leafy vegetables"),
+              "Liver, eggs, fish oil, whole milk mango, pawpaw, orange-fleshed sweet potato, pumpkin, carrot, red palm oil, dark green leafy vegetables"),
       SubTitleText(text: "Vitamin A - Nutritional disorder", fontSize: 16.0),
       Bullet(children: [
         'Poor dark adaptation night blindness',
@@ -153,7 +153,7 @@ Course EN = Course(
       Paragraph(
           title: "",
           body:
-              "Whole-grain cereals, beans, meat, ﬁ sh, chicken, egg, milk, oil, seeds, legumes"),
+              "Whole-grain cereals, beans, meat, fish, chicken, egg, milk, oil, seeds, legumes"),
       SubTitleText(text: "Vitamin B1 - Nutritional disorder", fontSize: 16.0),
       Bullet(children: [
         "Beriberi",
@@ -175,7 +175,7 @@ Course EN = Course(
       Paragraph(
           title: "",
           body:
-              "Milk, Egg, liver, yoghurt, meat, dark green leafy vegetables, whole-grain cereals, ﬁ sh , beans"),
+              "Milk, Egg, liver, yoghurt, meat, dark green leafy vegetables, whole-grain cereals, fish , beans"),
       SubTitleText(text: "Vitamin B2 - Nutritional disorder", fontSize: 16.0),
       Bullet(children: [
         "Inflammation of the tongue",
@@ -282,7 +282,7 @@ Course EN = Course(
       Paragraph(
           title: "",
           body:
-              "Organs and meat of mammals, fowl, fish, poultry, whole grain cereals, milk, yoghurt, vegetables, corn, guavas, pumpkin seeds, shell ﬁ sh, eggs, dairy products, nuts and seed, cereals, legumes"),
+              "Organs and meat of mammals, fowl, fish, poultry, whole grain cereals, milk, yoghurt, vegetables, corn, guavas, pumpkin seeds, shell fish, eggs, dairy products, nuts and seed, cereals, legumes"),
       SubTitleText(text: "Vitamin Zinc - Nutritional disorder", fontSize: 16.0),
       Bullet(children: [
         "Reduced resistance to infection",

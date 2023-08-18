@@ -10,7 +10,7 @@ import 'package:nea/widgets/remember.dart';
 import 'package:nea/widgets/sub_title.dart';
 import 'package:nea/widgets/sub_title_text.dart';
 
-Course EN = Course(
+Course AM = Course(
   title: "የቤተሰብ ስርዓተ ምግብ",
   coverImage: "assets/materials/images/family_nutration.png",
   body: Column(
