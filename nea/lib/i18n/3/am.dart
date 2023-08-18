@@ -6,7 +6,7 @@ import 'package:nea/widgets/keymessages.dart';
 import 'package:nea/widgets/objectives.dart';
 import 'package:nea/widgets/sub_title_text.dart';
 
-Course EN = Course(
+Course AM = Course(
   title: "የእናቶች ስርዓተ ምግብ",
   coverImage: "assets/materials/images/13.png",
   body: Column(
