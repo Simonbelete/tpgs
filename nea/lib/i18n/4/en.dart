@@ -22,7 +22,7 @@ Course EN = Course(
       SubTitleText(text: "Child feeding from birth to age 6 months"),
       KeyMessages(children: [
         "Put your baby to the breast within the first 30 minutes of birth. Initiating breastfeeding facilitates milk production and helps your uterus to go back to shape faster and controls bleeding after delivery.",
-        "Feed your baby breast milk only, not even water, during the ﬁ rst six months after birth. Each feed-ing session should take between 20 and 45 minutes.",
+        "Feed your baby breast milk only, not even water, during the first six months after birth. Each feed-ing session should take between 20 and 45 minutes.",
         "Exclusive breastfeeding promotes the child’s adequate growth and development. It is always clean; contains antibodies that protect against diseases. Breast milk is always ready and at the right temperature and is easy to digest. It contains enough water for the baby’s needs.",
         "Breastfeed as often as your child wants especially at night. Your child might be hungry if he/she is fussing, sucking fingers, or moving lips.",
         "Look into your babies eyes, gently stroke their face and body and sing songs as they breastfeed. Wash your hands with soap before breastfeeding and keep your nails trimmed.",

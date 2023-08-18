@@ -52,7 +52,7 @@ Course EN = Course(
       Bullet(children: [
         "Keep animals and insects away from the food processing area",
         "Grains, legumes, nuts and oilseeds need to be well dried and usually need their shells removed.",
-        "Tubers, vegetables, fruits and like coconut and avocado should be cleaned whole ﬁ rst",
+        "Tubers, vegetables, fruits and like coconut and avocado should be cleaned whole first",
         "WASH (Water, Sanitation and Hygiene) is very important with vegetables and fruits. It is best to process these inside as they attract insects. The sweeter the food is the more it will attract insects when cutting it up (pumpkins, tomatoes, bananas, papayas etc.). Animal foods need care as germs can thrive in these products.",
       ]),
       SubTitleText(text: "DURING COOKING"),
@@ -156,7 +156,7 @@ Course EN = Course(
       KeyMessages(children: [
         "Dispose all children’s faecal matter into a latrine.",
         "If your child is old enough, let them use a potty (bought/made) and dispose this oﬀ in a toilet. Small children’s faecal matter is as dangerous as an adults faecal matter.",
-        "Use a sanitary latrine, and teach your children how to use it. Using an improved sanitation facility helps prevent the spread of illness by preventing waste from coming into contact with water sources, open ﬁ elds, and ﬂ ies.",
+        "Use a sanitary latrine, and teach your children how to use it. Using an improved sanitation facility helps prevent the spread of illness by preventing waste from coming into contact with water sources, open ﬁ elds, and flies.",
         "Keep your latrine clean to protect your environment, the water around your house, and your ﬁ elds. Ensure that the path way to the toilet is clear",
         "Provide your child with clean toys to avoid picking of dirty things from the ground, like chicken poop and other animals.",
         "Keep chicken droppings away from the reach of the children. A “ protective play space” keeps children away from animal feces and other dirty objects on the ground.",
