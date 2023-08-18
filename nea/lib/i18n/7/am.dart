@@ -6,7 +6,7 @@ import 'package:nea/widgets/course_body_image.dart';
 import 'package:nea/widgets/paragraph.dart';
 import 'package:nea/widgets/sub_title_text.dart';
 
-Course EN = Course(
+Course AM = Course(
   coverImage: 'assets/materials/images/image1057.png',
   title: 'የምግብ ዝግጅት የጥንቃቄ መስፈርቶች',
   body: Column(crossAxisAlignment: CrossAxisAlignment.start, children: const [

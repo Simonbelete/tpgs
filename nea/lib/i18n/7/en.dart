@@ -51,7 +51,7 @@ Course EN = Course(
         body: ''),
     CourseBodyImage(image: 'assets/materials/images/image1134.png'),
     Paragraph(
-        title: 'always use apron',
+        title: 'Always use apron',
         body: 'Wash apron regularly to keep it clean when you cook.'),
     CourseBodyImage(image: 'assets/materials/images/image1135.png'),
     Paragraph(
