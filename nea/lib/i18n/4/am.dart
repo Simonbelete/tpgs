@@ -9,7 +9,7 @@ import 'package:nea/widgets/remember.dart';
 import 'package:nea/widgets/sub_title.dart';
 import 'package:nea/widgets/sub_title_text.dart';
 
-Course EN = Course(
+Course AM = Course(
   title: "የህጻናት ምግባ",
   coverImage: "assets/materials/images/14.png",
   body: Column(

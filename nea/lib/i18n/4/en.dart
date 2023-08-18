@@ -44,7 +44,7 @@ Course EN = Course(
         "Add other animal milk to prepared soft food.",
         "Food should be thick enough so that it does not run oﬀ the spoon.",
         "Feed your child slowly and patiently, make eye contact, encourage and motivate the child to eat. Never force-feed children.",
-        "Look for cues that show your child is hungry before s/he starts to cry (e.g. puts fingers in the mouth, spits, looks what others are eating)",
+        "Look for cues that show your child is hungry before she/he starts to cry (e.g. puts fingers in the mouth, spits, looks what others are eating)",
         "Do not use bottles to feed your baby. They are very difficult to keep clean and can make your baby sick with diarrhea.",
         "Breast milk continues to be very important for your baby. Breastfeed your baby first before giving other foods.",
         "Breastfeed until your baby is two years or older. Continue breastfeeding your baby whenever he or she wants, day and night, for good health."
