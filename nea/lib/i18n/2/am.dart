@@ -216,94 +216,88 @@ Course EN = Course(
       Bullet(children: ["ደም ማነስ", "ዘገምተኛ ጨቅላ ህጻናት"]),
 
       SubTitleText(
-        text: "Vitamin C (Ascorbic acid)",
+        text: "ቫይታሚን ሲ",
       ),
-      SubTitleText(text: "Vitamin C - Functions", fontSize: 16.0),
+      SubTitleText(text: "ቫይታሚን ሲ - ጥቅም", fontSize: 16.0),
       Bullet(children: [
-        "Contributes to the formation of defenses against infections",
-        "Helps with the healing of wounds",
-        "Helps the body to use calcium and other nutrients to build bones and blood vessel walls",
-        "Important for protein metabolism"
+        "ካልተመገብነው ምን ጉዳት ያስከትላል",
+        "ቁስል ቶሎ እንዲያገግም ያደርጋል",
+        "የአጥንት ግንባታን ያፋጥናል",
+        "የፕሮቲን ግንባታን ያፋጥናል"
       ]),
-      SubTitleText(text: "Vitamin C - Food sources", fontSize: 16.0),
+      SubTitleText(text: "ቫይታሚን ሲ - የምግብ ምንጭ", fontSize: 16.0),
       Paragraph(
           title: "",
           body:
-              "Orange, lemon, tangerine, mangoes, guava, tomato, spinach, fresh peas, cabbage, green leaves, tomatoes, peppers, potatoes, yams, fresh milk"),
-      SubTitleText(text: "Vitamin C - Nutritional disorder", fontSize: 16.0),
+              "ብርቱካን፡ ሎሚ፡ መንደሪን፡ ማንጎ፣ጓቫ፣ቲማቲም፣ ስፒናች ፣ ትኩስ አተር ፣ ጎመን ፣ አረንጓዴ ቅጠሎች፡ ቲማቲሞች፡በርበሬ ፣ ድንች ፣ እንጆሪ ፣ ትኩስ ወተት"),
+      SubTitleText(text: "ቫይታሚን ሲ - ካልተመገብነው ምን ጉዳት ያስከትላል", fontSize: 16.0),
       Bullet(children: [
-        "Scurvy",
-        "poor appetite",
-        "fatigue",
-        "retarded wound healing",
-        "bleeding gums"
+        "የድድ መድማት",
+        "የምግብ ፍላጎት መቀነስ",
+        "ድካም",
       ]),
       //
       // Essential food based micronutrients: minerals
       //
       SubTitleText(
-        text: 'Essential food based micronutrients: minerals',
+        text: 'አስፈላጊ የንጥረ ምግብ አይነቶች፡ ማዕድናት',
         fontSize: 27.0,
       ),
       SubTitleText(
         text: "Iron",
       ),
-      SubTitleText(text: "Vitamin Iron - Functions", fontSize: 16.0),
+      SubTitleText(text: "ብረት - ጥቅም", fontSize: 16.0),
       Bullet(children: [
-        "Transports oxygen to the blood.",
-        "Eliminates old red blood cells and",
-        "builds new cells"
+        "ኦክስጅንን ወደ ደም ያስተላልፋል",
+        "አሮጌ ቀይ የደም ሴሎችን ያስወግዳል",
+        "አዳዲስ ሴሎችን ይገነባል።"
       ]),
-      SubTitleText(text: "Vitamin Iron - Food sources", fontSize: 16.0),
+      SubTitleText(text: "ብረት - የምግብ ምንጭ", fontSize: 16.0),
       Paragraph(
           title: "",
           body:
-              "Red meat, Liver, Poultry, Shellfish, Egg, Ground nuts, Leafy vegetables, Lentils, Beans, Cowpeas, Soybean, Cereals Dried fruits"),
-      SubTitleText(text: "Vitamin Iron - Nutritional disorder", fontSize: 16.0),
-      Bullet(children: ["Anaemia", "Low Iron stores", "Extreme tiredness"]),
+              "ቀይ ሥጋ፣ ጉበት፣ የዶሮ ፣ እንቁላል፣ የተፈጨ ለውዝ ፣ ቅጠላማ አትክልቶች ፣ ምስር ፣ባቄላ፣ አተር፣ አኩሪ አተር፣ ጥራጥሬዎች፤ የደረቁ ፍራፍሬዎች"),
+      SubTitleText(text: "ብረት - ካልተመገብነው ምን ጉዳት ያስከትላል", fontSize: 16.0),
+      Bullet(children: ["ደም ማነስ", "ከፍተኛ ድካም"]),
+
       SubTitleText(
-        text: "Iodine",
+        text: "አዮዲን",
       ),
-      SubTitleText(text: "Vitamin Iodine - Functions", fontSize: 16.0),
+      SubTitleText(text: "አዮዲን - ጥቅም", fontSize: 16.0),
       Bullet(children: [
-        "Ensures the development and proper functioning of the brain and of the nervous system.",
-        "Important for growth and metabolism",
-        "Accelerate the combustion of nutrients that provide energy."
+        "አንጎል እና የነርቭ ስርዓትን ማስተካከል",
+        "ለእድገት እና ለሜታቦሊዝም መስተካከል",
+        "የተመጣጠነ ንጥረ ነገር ዑደትን ማፋጠን"
       ]),
-      SubTitleText(text: "Vitamin Iodine - Food sources", fontSize: 16.0),
+      SubTitleText(text: "አዮዲን - የምግብ ምንጭ", fontSize: 16.0),
       Paragraph(
           title: "",
           body:
-              "Fish and other seafood, animal products, plants from soil rich in iodine, Iodized salt"),
+              "ዓሳ እና ሌሎች የባህር ምግቦች ፣ የእንስሳት ተዋጽኦ፣ በአዮዲን የበለፀጉ ተክሎች ፡ የአዮዲድ ጨው"),
+      SubTitleText(text: "አዮዲን - ካልተመገብነው ምን ጉዳት ያስከትላል", fontSize: 16.0),
+      Bullet(children: ["እንቅርት"]),
+
       SubTitleText(
-          text: "Vitamin Iodine - Nutritional disorder", fontSize: 16.0),
-      Bullet(children: ["Goitre"]),
-      SubTitleText(
-        text: "Zinc",
+        text: "ዚንክ",
       ),
-      SubTitleText(text: "Vitamin Zinc - Functions", fontSize: 16.0),
+      SubTitleText(text: "ዚንክ - ጥቅም", fontSize: 16.0),
       Bullet(children: [
-        "Tissue growth, maintenance",
-        "healing and development.",
-        "Metabolism of carbohydrates,",
-        "proteins and fats.",
-        "Important in cell division.",
-        "Immune system function.",
-        "Smell and taste acuity.",
-        "Wound healing.",
-        "Helps in diarrheal management"
+        "የሕብረ ሕዋሳት እድገት ማፋጠን",
+        "የካርቦሃይድሬትን ወደ ሀይል መቀየር",
+        "የፕሮቲኖች እና ቅባቶች ምንጭ በመሆን",
+        "ለሴል ክፍፍል አስተዋጽኦ ማድረግ",
+        "የበሽታ መከላከያ ስርዓት ማስተካከል",
+        "ለተስተካከለ ማሽተት እና ጥሩ ጣዕም",
+        "ቁስልን መፈወስ",
+        "ተቅማጥን ለመቆጣጠር ይረዳል"
       ]),
-      SubTitleText(text: "Vitamin Zinc - Food sources", fontSize: 16.0),
+      SubTitleText(text: "ዚንክ - የምግብ ምንጭ", fontSize: 16.0),
       Paragraph(
           title: "",
           body:
-              "Organs and meat of mammals, fowl, fish, poultry, whole grain cereals, milk, yoghurt, vegetables, corn, guavas, pumpkin seeds, shell ﬁ sh, eggs, dairy products, nuts and seed, cereals, legumes"),
-      SubTitleText(text: "Vitamin Zinc - Nutritional disorder", fontSize: 16.0),
-      Bullet(children: [
-        "Reduced resistance to infection",
-        "skin ulceration",
-        "Stunted growth"
-      ]),
+              "ቀይ ሥጋ፣ ጉበት፣ የዶሮ ፣ አሳ ፤ እንቁላል፣ የብርዕ እህሎች፤ አይብ፤ ፣ ለውዝ፤ ጥራጥሬ፤ የቅባት እህሎች፤ ዱባ ፤የወተት ተዋጽኦ"),
+      SubTitleText(text: "ዚንክ - ካልተመገብነው ምን ጉዳት ያስከትላል", fontSize: 16.0),
+      Bullet(children: ["በሽታ የመከላከል አቅም መቀነስ", "የቆዳ ህመም", "መቀንጨር"]),
     ],
   ),
 );
