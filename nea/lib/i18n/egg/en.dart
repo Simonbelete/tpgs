@@ -123,6 +123,12 @@ Food EN = Food(
           '50% of your daily folate requirements',
           '25% of your daily riboflavin (Vitamin B2) requirements',
           '40% of your daily selenium requirements',
+        ]),
+        SubTitleText(text: 'To prepare the egg'),
+        Bullet(children: [
+          'Add oil.',
+          'Break the egg carefully',
+          'Cook it well, then mix it with the rice and serve it'
         ])
       ],
     ));
