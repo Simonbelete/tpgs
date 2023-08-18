@@ -21,7 +21,7 @@ Course EN = Course(
       ]),
       SubTitleText(text: "Child feeding from birth to age 6 months"),
       KeyMessages(children: [
-        "Put your baby to the breast within the ﬁ rst 30 minutes of birth. Initiating breastfeeding facilitates milk production and helps your uterus to go back to shape faster and controls bleeding after delivery.",
+        "Put your baby to the breast within the first 30 minutes of birth. Initiating breastfeeding facilitates milk production and helps your uterus to go back to shape faster and controls bleeding after delivery.",
         "Feed your baby breast milk only, not even water, during the ﬁ rst six months after birth. Each feed-ing session should take between 20 and 45 minutes.",
         "Exclusive breastfeeding promotes the child’s adequate growth and development. It is always clean; contains antibodies that protect against diseases. Breast milk is always ready and at the right temperature and is easy to digest. It contains enough water for the baby’s needs.",
         "Breastfeed as often as your child wants especially at night. Your child might be hungry if he/she is fussing, sucking fingers, or moving lips.",
@@ -30,7 +30,7 @@ Course EN = Course(
         "When the child is 5 months old, begin to think and prepare for timely introduction of optimal complementary feeds."
       ]),
       Remember(children: [
-        "Feed your baby breast milk only during the fi rst six months after birth, do not give any fl uid, not even water"
+        "Feed your baby breast milk only during the first six months after birth, do not give any fluid, not even water"
       ]),
       SubTitleText(text: "Initiation of complementary feeding after 6 months"),
       Objectives(children: [
@@ -46,7 +46,7 @@ Course EN = Course(
         "Feed your child slowly and patiently, make eye contact, encourage and motivate the child to eat. Never force-feed children.",
         "Look for cues that show your child is hungry before s/he starts to cry (e.g. puts fingers in the mouth, spits, looks what others are eating)",
         "Do not use bottles to feed your baby. They are very difficult to keep clean and can make your baby sick with diarrhea.",
-        "Breastmilk continues to be very important for your baby. Breastfeed your baby first before giving other foods.",
+        "Breast milk continues to be very important for your baby. Breastfeed your baby first before giving other foods.",
         "Breastfeed until your baby is two years or older. Continue breastfeeding your baby whenever he or she wants, day and night, for good health."
       ]),
       Remember(children: [
@@ -59,10 +59,10 @@ Course EN = Course(
       CourseBodyImage(image: "assets/materials/images/16.png"),
       KeyMessages(children: [
         "Continue breastfeeding your baby day and night to keep him or her healthy.",
-        "Breastmilk is very important for your baby. Continue to breastfeed until your baby is two years older.",
+        "Breast milk is very important for your baby. Continue to breastfeed until your baby is two years older.",
         "From 7 months onwards, feed your baby 3 times a day. Give 1 to 2 snacks in between meals.",
         "Gradually increase the amount of food to ½ of a 250 ml cup. Babies have small stomachs and can only eat small amounts at each meal.",
-        "Mash and soften the foods so the baby can easily chew and swallow; use breastmilk or other animal milk to prepare soft food.",
+        "Mash and soften the foods so the baby can easily chew and swallow; use breast milk or other animal milk to prepare soft food.",
         "Thicken your baby’s food as the baby grows older, making sure that he or she is still able to easily swallow without choking.",
         "Try to include at food from at least 5 food groups every day",
         "Add small amounts of oil or margarine, mashed vegetables, mashed fruits, to your baby’s porridge. Animal milks (goat, cow, etc.) are also good food to add.",
@@ -108,9 +108,9 @@ Course EN = Course(
         "Wash your hands with soap before preparing food and feeding your child. REMEMBER to wash your baby’s hands before and after giving them food.",
         "Continue breastfeeding your young child until they are two years old to maintain his/her health and strength."
       ]),
-      Remember(children: [
-        "Safe preparation and storage of complementary foods: Store food in a covered, clean container and give it to your baby within 2 hours after cooking (if you don’t have a refrigerator)"
-      ]),
+      // Remember(children: [
+      //   "Safe preparation and storage of complementary foods: Store food in a covered, clean container and give it to your baby within 2 hours after cooking (if you don’t have a refrigerator)"
+      // ]),
       SubTitleText(text: "Feeding during and after illness"),
       Objectives(children: [
         "Enhance an understanding of the breastfeeding problems and possible remedies"
@@ -118,7 +118,7 @@ Course EN = Course(
       CourseBodyImage(image: "assets/materials/images/19.png"),
       KeyMessages(children: [
         "When the child is sick continue to breastfeed often, to help quick recovery and regain the weight lost. Even if your baby has diarrhea it is important to keep breastfeeding.",
-        "If your baby is too weak to suckle, express breastmilk to give to the baby, either by cup or by expressing directly into the baby’s mouth. This will help you keep up making milk for your baby and prevent breast problems (engorgement).",
+        "If your baby is too weak to suckle, express breast milk to give to the baby, either by cup or by expressing directly into the baby’s mouth. This will help you keep up making milk for your baby and prevent breast problems (engorgement).",
         "For a child aged 0-6 months breastfeed more frequently during and after illness.",
         "For a child aged 6-24 months, increase breastfeeding frequency and also feed small amounts of enriched meals/ porridge more frequently",
         "Follow treatment recommendation given by the medical practitioner.",
