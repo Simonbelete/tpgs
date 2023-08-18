@@ -13,11 +13,11 @@ Course SW = Course(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: const [
       SubTitleText(text: "Lishe ya mama wakati wa ujauzito na lactation"),
-      Objectives(children: [
+      Objectives(title: "MALENGO", children: [
         'Onyesha mahitaji ya kimsingi ya lishe kwa wajawazito na mama wanaonyonyesha'
       ]),
       CourseBodyImage(image: "assets/materials/images/13.png"),
-      KeyMessages(children: [
+      KeyMessages(title: "Ujumbe Muhimu", children: [
         "Kula mlo mmoja wa ziada au vitafunio kila siku pamoja na milo mitatu ili kutoa nishati na lishe kwako na kwa mtoto anayekua.",
         "Kula mlo wa aina mbalimbali ili kuhakikisha aina mbalimbali za chaguzi za chakula kwa kutumia vyakula vinavyopatikana nchini. Chagua vyakula kutoka kwa angalau vikundi 5 vya chakula katika kila mlo.",
         "Kula vyakula vyenye vitamini A kwa wingi na madini ya chuma kama vile maharagwe, nyama, samaki, mayai, nyanya, malenge na mboga za majani. Vyakula vyenye madini ya chuma husaidia kuzuia upungufu wa damu; Vyakula vyenye vitamini A huongeza kinga yako",

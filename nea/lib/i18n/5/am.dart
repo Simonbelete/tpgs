@@ -7,7 +7,7 @@ import 'package:nea/widgets/objectives.dart';
 import 'package:nea/widgets/paragraph.dart';
 import 'package:nea/widgets/sub_title_text.dart';
 
-Course EN = Course(
+Course AM = Course(
   title: "የግልና የአካባቢ ንጽህና",
   coverImage: "assets/materials/images/sanittion_image.png",
   body: Column(

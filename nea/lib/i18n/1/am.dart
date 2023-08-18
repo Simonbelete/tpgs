@@ -70,7 +70,7 @@ Course AM = Course(
         image: 'assets/materials/images/9.png',
         description: 'በቂ የምግብ አቅርቦት',
       ),
-      Remember(children: ['በየቀኑ የተለያዩ ምግቦችን ይመገቡ']),
+      Remember(title: 'ያስታውሱ', children: ['በየቀኑ የተለያዩ ምግቦችን ይመገቡ']),
 
       SubTitleText(text: "የተመጣጠነ ምግብ እጥረት ዓይነቶች"),
       Paragraph(

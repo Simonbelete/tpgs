@@ -16,11 +16,11 @@ Course SW = Course(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: const [
       CourseBodyImage(image: "assets/materials/images/14.png"),
-      Objectives(children: [
+      Objectives(title: "MALENGO", children: [
         'Kutoa ufahamu juu ya faida za kunyonyesha watoto wachanga na watoto wachanga pekee'
       ]),
       SubTitleText(text: "Kulisha mtoto kutoka kuzaliwa hadi umri wa miezi 6"),
-      KeyMessages(children: [
+      KeyMessages(title: "Ujumbe Muhimu", children: [
         "Weka mtoto kwenye titi ndani ya dakika 30 za kwanza za kuzaliwa. Kuanza kunyonyesha hurahisisha uzalishwaji wa maziwa na husaidia uterasi yako kurudi kwenye umbo haraka na kudhibiti uvujaji wa damu baada ya kujifungua.",
         "Mnyonyeshe mtoto wako maziwa ya mama pekee, hata maji, katika miezi sita ya kwanza baada ya kuzaliwa. Kila kipindi cha kulisha kinapaswa kuchukua kati ya dakika 20 na 45.",
         "Unyonyeshaji wa maziwa ya mama pekee huchangia ukuaji na ukuaji wa kutosha wa mtoto. Daima ni safi; ina antibodies ambayo hulinda dhidi ya magonjwa. Maziwa ya mama huwa tayari na kwa joto sahihi na ni rahisi kuyeyushwa. Ina maji ya kutosha kwa mahitaji ya mtoto.",
@@ -29,15 +29,15 @@ Course SW = Course(
         "Ikiwa una VVU, wasiliana na daktari mara moja kwa mwongozo (angalia Mwongozo wa Kitaifa) wa jinsi ya kumlisha mtoto wako.",
         "Mtoto anapokuwa na umri wa miezi 5, anza kufikiria na kujiandaa kwa kuanzishwa kwa wakati unaofaa kwa malisho bora ya ziada."
       ]),
-      Remember(children: [
+      Remember(title: "KUMBUKA", children: [
         "Lisha mtoto wako maziwa ya mama pekee katika miezi sita ya kwanza baada ya kuzaliwa, usimpe maji yoyote, hata maji"
       ]),
       SubTitleText(text: "Kuanzishwa kwa lishe ya ziada baada ya miezi 6"),
-      Objectives(children: [
+      Objectives(title: "MALENGO", children: [
         "Jenga ujuzi wa jinsi ya kuanzisha vyakula vya ziada kwa mtoto wa miezi 7"
       ]),
       CourseBodyImage(image: "assets/materials/images/3.png"),
-      KeyMessages(children: [
+      KeyMessages(title: "Ujumbe Muhimu", children: [
         "Mtoto anapofikisha miezi 7, anahitaji virutubisho zaidi kutoka kwa vyakula vingine",
         "Anza kutoa chakula laini cha usawa katika umri wa miezi 7, mara 2 hadi 3 kwa siku.",
         "Anza na vijiko 2-3 kwa kila chakula.",
@@ -49,15 +49,15 @@ Course SW = Course(
         "Maziwa ya mama yanaendelea kuwa muhimu sana kwa mtoto wako. Mnyonyeshe mtoto wako kwanza kabla ya kumpa vyakula vingine.",
         "Mnyonyeshe hadi mtoto wako afikishe miaka miwili au zaidi. Endelea kumnyonyesha mtoto wako wakati wowote anapotaka, mchana na usiku, kwa afya njema."
       ]),
-      Remember(children: [
+      Remember(title: "KUMBUKA", children: [
         "Chakula cha ziada huanza kwa miezi 7 kwa mara 2-3 kwa siku"
       ]),
       SubTitleText(text: "Lishe ya ziada katika umri wa miezi 7-8"),
-      Objectives(children: [
+      Objectives(title: "MALENGO", children: [
         "Kuimarisha uelewa juu ya nini na jinsi ya kulisha mtoto wa umri wa miezi 7 - 8"
       ]),
       CourseBodyImage(image: "assets/materials/images/16.png"),
-      KeyMessages(children: [
+      KeyMessages(title: "Ujumbe Muhimu", children: [
         "Endelea kumnyonyesha mtoto wako usiku na mchana ili kumfanya awe na afya njema.",
         "Maziwa ya mama ni muhimu sana kwa mtoto wako. Endelea kunyonyesha hadi mtoto wako atakapokuwa na umri wa miaka miwili.",
         "Kuanzia miezi 7 na kuendelea, lisha mtoto wako mara 3 kwa siku. Toa vitafunio 1 hadi 2 kati ya milo.",
@@ -70,15 +70,15 @@ Course SW = Course(
         "Kuwa mvumilivu, tazama macho na umtie moyo mtoto wako kula. Kamwe usilazimishe mtoto wako kula.",
         "Tafuta vidokezo vinavyoonyesha mtoto wako ana njaa kabla hajaanza kulia (k.m. kuweka vidole mdomoni, kutema mate, kuangalia kile ambacho wengine wanakula)"
       ]),
-      Remember(children: [
+      Remember(title: "KUMBUKA", children: [
         "Kuanzia miezi 7 na kuendelea, lisha mtoto wako mara 3 kwa siku. Toa vitafunio 1 hadi 2 (matunda, karanga) kati ya milo"
       ]),
       SubTitleText(text: "Kulisha kwa nyongeza katika miezi 9-11"),
-      Objectives(children: [
+      Objectives(title: "MALENGO", children: [
         "Kuimarisha uelewa juu ya nini na jinsi ya kulisha mtoto wa umri wa miezi 9 - 11"
       ]),
       CourseBodyImage(image: "assets/materials/images/17.png"),
-      KeyMessages(children: [
+      KeyMessages(title: "Ujumbe Muhimu", children: [
         "Kuanzia miezi 9 na kuendelea, lisha mtoto wako mdogo mara 4 kwa siku (milo 3 na vitafunio 1 - 2). Mpe mtoto wako 3/4 ya kikombe/bakuli ya mililita 250 katika kila malisho.",
         "Kufikia miezi 9 mtoto anapaswa kuanza kula vyakula vya vidole kama vile vipande vya embe mbivu na papai, ndizi na mboga.",
         "Jaribu kujumuisha katika chakula kutoka angalau vikundi 5 vya chakula kila siku",
@@ -89,15 +89,15 @@ Course SW = Course(
         "Osha mikono yako kwa sabuni kabla ya kuandaa chakula na kulisha mtoto wako. KUMBUKA kunawa mikono ya mtoto wako kabla na baada ya kumpa chakula.",
         "Endelea kumnyonyesha mtoto wako hadi mtoto wako afikishe miaka miwili au zaidi ili kudumisha afya na nguvu zake."
       ]),
-      Remember(children: [
+      Remember(title: "KUMBUKA", children: [
         "Utayarishaji na uhifadhi salama wa vyakula vya nyongeza: Hifadhi chakula kwenye chombo kilichofunikwa, safi na mpe mtoto wako ndani ya saa 2 baada ya kupika (ikiwa huna jokofu)"
       ]),
       SubTitleText(text: "Lishe ya ziada katika umri wa miezi 12 - 24"),
-      Objectives(children: [
+      Objectives(title: "MALENGO", children: [
         "Kuongeza ufahamu juu ya nini na jinsi ya kulisha mtoto wa umri wa miezi 12 - 24"
       ]),
       CourseBodyImage(image: "assets/materials/images/18.png"),
-      KeyMessages(children: [
+      KeyMessages(title: "Ujumbe Muhimu", children: [
         "Katika umri wa miezi 12 mpe mtoto chakula kutoka kwenye mlo wa familia. Watoto hula polepole zaidi kuliko watu wazima, kwa hivyo mpe mtoto bakuli lake mwenyewe ili kuhakikisha kuwa anakula chakula cha kutosha.",
         "Kuwa na subira na kuhimiza mtoto wako kula. Kamwe usiwalazimishe watoto.",
         "Mtoto anapaswa kulishwa mara 3 - 4 kwa siku (kikombe kilichojaa) + 1 - 2 vitafunio Mpe mtoto wako mchanga ¾ hadi kikombe kimoja cha mililita 250 kwa kila bakuli.",
@@ -108,15 +108,15 @@ Course SW = Course(
         "Osha mikono yako kwa sabuni kabla ya kuandaa chakula na kulisha mtoto wako. KUMBUKA kunawa mikono ya mtoto wako kabla na baada ya kumpa chakula.",
         "Endelea kumnyonyesha mtoto wako mdogo hadi afikishe umri wa miaka miwili ili kudumisha afya na nguvu zake."
       ]),
-      // Remember(children: [
+      // Remember(title: "KUMBUKA",children: [
       //   "Safe preparation and storage of complementary foods: Store food in a covered, clean container and give it to your baby within 2 hours after cooking (if you don’t have a refrigerator)"
       // ]),
       SubTitleText(text: "Kulisha wakati na baada ya ugonjwa"),
-      Objectives(children: [
+      Objectives(title: "MALENGO", children: [
         "Kuboresha uelewa wa matatizo ya kunyonyesha na tiba zinazowezekana"
       ]),
       CourseBodyImage(image: "assets/materials/images/19.png"),
-      KeyMessages(children: [
+      KeyMessages(title: "Ujumbe Muhimu", children: [
         "Mtoto anapokuwa mgonjwa endelea kunyonyesha mara kwa mara, ili kusaidia kupona haraka na kurejesha uzito uliopotea. Hata kama mtoto wako ana kuhara ni muhimu kuendelea kunyonyesha.",
         "Ikiwa mtoto wako ni dhaifu sana kunyonya, mnyonyeshe maziwa ya mama ili kumpa mtoto, ama kwa kikombe au kwa kuelezea moja kwa moja kwenye kinywa cha mtoto. Hii itakusaidia kuendelea kutengeneza maziwa kwa ajili ya mtoto wako na kuzuia matatizo ya matiti (engorgement).",
         "Kwa mtoto mwenye umri wa miezi 0-6 kunyonyesha mara nyingi zaidi wakati na baada ya ugonjwa.",
@@ -127,15 +127,15 @@ Course SW = Course(
         "Kunyonyesha mara nyingi zaidi katika wiki mbili baada ya kupona.",
         "Ikiwa wewe ni mgonjwa bado unaweza kunyonyesha."
       ]),
-      Remember(children: [
+      Remember(title: "KUMBUKA", children: [
         "Kumbuka kuendelea kumnyonyesha mtoto na kumpa chakula kidogo mara nyingi zaidi (angalau mara 8 kwa siku zaidi)"
       ]),
       SubTitleText(text: "Huduma za lishe ya watoto zinahitajika"),
-      Objectives(children: [
+      Objectives(title: "MALENGO", children: [
         "Boresha uelewa wa huduma za lishe zinazohitajika tangu kuzaliwa hadi miaka 2"
       ]),
       CourseBodyImage(image: "assets/materials/images/20.png"),
-      KeyMessages(children: [
+      KeyMessages(title: "Ujumbe Muhimu", children: [
         Paragraph(title: "Kuanzia kuzaliwa hadi miezi 6", body: ""),
         "Matunzo ya watoto wachanga - kukata kamba safi na utunzaji, kuosha watoto wachanga katika maji ya joto, kunyonyesha mara moja, na kuwaweka watoto wachanga joto, unyonyeshaji wa mapema na wa kipekee.",
         "Utunzaji baada ya kuzaa - ufuatiliaji wa chanjo na ukuaji (kulingana na mwongozo wa MoH) na kukuza (kupima uzito wa mtoto, kugundua dalili za hatari za mtoto/mama n.k).",
@@ -144,7 +144,7 @@ Course SW = Course(
         "Kuongezewa kwa vitamini A De-worming (kutoka miezi 12)",
         "Ufuatiliaji na ukuzaji wa ukuaji"
       ]),
-      Remember(children: [
+      Remember(title: "KUMBUKA", children: [
         "Daima kumbuka kumpeleka mtoto wako chini ya umri wa miaka 5 hadi chini ya miaka mitano kliniki ili ukuaji na ukuaji wake ufuatiliwe"
       ])
     ],

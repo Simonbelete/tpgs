@@ -19,7 +19,7 @@ Course SW = Course(
           title: "MALENGO",
           children: ['Kuelewa kwa nini lishe bora ni muhimu']),
       CourseBodyImage(image: "assets/materials/images/imag_4.png"),
-      KeyMessages(children: [
+      KeyMessages(title: "Ujumbe Muhimu", children: [
         'Lishe bora ni muhimu katika hatua zote za maisha.',
         'Miili yetu inahitaji chakula cha kutosha ili kutupa nguvu, kutuwezesha kukua, kujifunza, kufanya kazi na kuwa na afya njema.',
         'Afya na lishe vina uhusiano wa karibu - mtu lazima apate lishe bora ili kuwa na afya njema, wakati afya mbaya inaweza kuathiri hali ya lishe.',
@@ -27,7 +27,9 @@ Course SW = Course(
         'Kijusi na watoto walio chini ya umri wa miaka miwili wana mahitaji makubwa ya virutubishi kwa sababu miili yao inakua na kubadilika haraka, hata kabla ya kuzaliwa.',
         'Kanuni tatu kuu za lishe bora ni: \n\nMlo wa kutosha - kula vyakula vinavyofaa vya kutosha.\n\nKutokuwepo kwa ugonjwa - kuwa na afya njema.\n\nMatendo yanayofaa ya utunzaji - utunzaji mzuri, kupumzika, usafi, na kusisimua na mazingira ya upendo kwa watoto wadogo na familia nzima.',
       ]),
-      Remember(children: ['Familia inahitaji chakula cha usawa kila siku']),
+      Remember(
+          title: "KUMBUKA",
+          children: ['Familia inahitaji chakula cha usawa kila siku']),
       CourseBodyImage(
         image: 'assets/materials/images/imag_4.png',
         description:
@@ -50,7 +52,7 @@ Course SW = Course(
           body: "ni neno linalojumuisha utapiamlo na utapiamlo. "),
       Objectives(
           title: "LENGO", children: ['Jua kuhusu utapiamlo na sababu zake']),
-      KeyMessages(children: [
+      KeyMessages(title: "Ujumbe Muhimu", children: [
         Paragraph(
             title: "",
             body:
@@ -70,7 +72,8 @@ Course SW = Course(
         image: 'assets/materials/images/9.png',
         description: 'Upatikanaji wa chakula cha kutosha',
       ),
-      Remember(children: ['Kula vyakula mbalimbali kila siku']),
+      Remember(
+          title: "KUMBUKA", children: ['Kula vyakula mbalimbali kila siku']),
 
       SubTitleText(text: "Aina za utapiamlo"),
       Paragraph(

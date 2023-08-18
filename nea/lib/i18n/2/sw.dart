@@ -16,14 +16,14 @@ Course SW = Course(
   body: Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: const [
-      Objectives(children: [
+      Objectives(title: "MALENGO", children: [
         'Boresha uelewa juu ya vikundi vya chakula kwa mseto wa lishe'
       ]),
       CourseBodyImage(
         image: 'assets/materials/images/10.png',
         description: "Vikundi sita vya chakula",
       ),
-      KeyMessages(children: [
+      KeyMessages(title: "Ujumbe Muhimu", children: [
         Bullet(children: [
           "Kuwa na lishe bora na yenye uwiano kunamaanisha kula vyakula mbalimbali vinavyotoa virutubisho ambavyo ni muhimu kwa mwili. Haimaanishi kula chakula cha gharama kubwa. Chakula tunachokula kimegawanywa katika vikundi 5"
         ])
@@ -79,7 +79,7 @@ Course SW = Course(
           title: "",
           body:
               "Mafuta ni pamoja na mafuta ya kupikia, mbegu za mafuta, parachichi na mbegu za mafuta. Baadhi ya vyakula, kama vile bidhaa za wanyama (nyama, maziwa, na bidhaa za maziwa kama siagi na mtindi), pia hutoa mafuta."),
-      Remember(children: [
+      Remember(title: "KUMBUKA", children: [
         'Hakuna chakula kinachotoa virutubisho vyote.',
         'Kula aina mbalimbali za vyakula vyenye virutubishi vingi.'
       ]),
@@ -90,8 +90,10 @@ Course SW = Course(
         text: 'Utofauti wa vyakula',
         fontSize: 27.0,
       ),
-      Objectives(children: ['Boresha uelewa juu ya faida za mseto wa lishe']),
-      KeyMessages(children: [
+      Objectives(
+          title: "MALENGO",
+          children: ['Boresha uelewa juu ya faida za mseto wa lishe']),
+      KeyMessages(title: "Ujumbe Muhimu", children: [
         Bullet(children: [
           'Kuwa na lishe bora na yenye uwiano kunamaanisha kula vyakula mbalimbali vinavyotoa virutubisho ambavyo ni muhimu kwa mwili. Haimaanishi kula chakula cha gharama kubwa.',
           'Virutubisho ambavyo mwili wa mtu unahitaji kufanya kazi, kukua na kuwa na afya nzuri vinaweza kupatikana katika vyakula vingi vinavyopatikana ndani ya nchi.',
@@ -102,7 +104,7 @@ Course SW = Course(
       ]),
       CourseBodyImage(image: "assets/materials/images/11.png"),
 
-      Remember(children: [
+      Remember(title: "KUMBUKA", children: [
         'Kuwa na lishe yenye afya haimaanishi kula chakula cha bei ghali. Tumia vyakula vinavyopatikana ndani ya nchi'
       ]),
 
@@ -113,7 +115,7 @@ Course SW = Course(
         text: 'Chakula muhimu cha micronutrients: vitamini',
         fontSize: 27.0,
       ),
-      Objectives(children: [
+      Objectives(title: "MALENGO", children: [
         'Boresha uelewa juu ya vyanzo na faida za virutubishi vidogo'
       ]),
       CourseBodyImage(image: "assets/materials/images/12.png"),

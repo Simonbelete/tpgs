@@ -13,13 +13,13 @@ Course SW = Course(
   body: Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: const [
-      Objectives(children: [
+      Objectives(title: "MALENGO", children: [
         "Kuongeza uelewa wa wanaume juu ya jukumu lao katika kukuza lishe bora ya familia na Kuwawezesha wanawake kufanya maamuzi kuhusu rasilimali za familia ili kupata lishe bora."
       ]),
       CourseBodyImage(
         image: "assets/materials/images/4.png",
       ),
-      KeyMessages(children: [
+      KeyMessages(title: "Ujumbe Muhimu", children: [
         "Mume na mke wanapaswa kujadiliana kwa pamoja jinsi ya kutumia mapato yanayopatikana kunufaisha lishe ya familia",
         "Mume anapaswa kuhakikisha kuwa familia ina vyakula vya kutosha vya aina mbalimbali ndani ya nyumba",
         "Mume anapaswa kutegemeza mzigo wa kazi wa mke inapohitajika ili kumsaidia mke wake kutumia wakati na nguvu zake ili awe na wakati wa kutosha wa kuandaa milo ya familia yenye lishe.",
