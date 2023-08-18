@@ -9,7 +9,7 @@ import 'package:nea/widgets/remember.dart';
 import 'package:nea/widgets/sub_title.dart';
 import 'package:nea/widgets/sub_title_text.dart';
 
-Course EN = Course(
+Course AM = Course(
   title: "ስርዓተ ምግብ ለምን ያስፈልጋል?",
   coverImage: "assets/materials/images/imag_4.png",
   body: Column(
@@ -27,16 +27,16 @@ Course EN = Course(
         'የስርዓተ ምግብ ሶስት ቁልፍ መርሆዎች፡- \n\nየተመጣጠነ ምግብ - በቂ ምግቦችን መመገብ.\n\nበበሽታ አለመጠቃት- ጤናማ መሆን.\n\nተገቢ የእንክብካቤ ልምዶች - ጥሩ እንክብካቤ፡ እረፍት ፡ንፅህና፡ ጤናማ የመኖሪያ አካባቢን መፍጠር'
       ]),
       Remember(title: 'ያስታውሱ', children: ['ቤተሰቡ በየቀኑ የተመጣጠነ ምግብ ያስፈልገዋል']),
-      CourseBodyImage(
-        image: 'assets/materials/images/imag_4.png',
-        description:
-            "A poorly nourished pregnant woman is likely to give birth to an underweight baby who grows up as a weaker adolescent and likely to give birth to an underweight baby in future.",
-      ),
-      CourseBodyImage(
-        image: 'assets/materials/images/img_5.png',
-        description:
-            "A well-nourished pregnant woman will give birth to a healthy baby who grows up as a healthy adolescent and likely to give birth to a health baby in the future.",
-      ),
+      // CourseBodyImage(
+      //   image: 'assets/materials/images/imag_4.png',
+      //   description:
+      //       "A poorly nourished pregnant woman is likely to give birth to an underweight baby who grows up as a weaker adolescent and likely to give birth to an underweight baby in future.",
+      // ),
+      // CourseBodyImage(
+      //   image: 'assets/materials/images/img_5.png',
+      //   description:
+      //       "A well-nourished pregnant woman will give birth to a healthy baby who grows up as a healthy adolescent and likely to give birth to a health baby in the future.",
+      // ),
       //
       // Causes of malnutrition
       //
