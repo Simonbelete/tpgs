@@ -20,6 +20,7 @@ declare module "next-auth" {
     email?: string;
     access?: string;
     refresh?: string;
+    groups?: string[];
   }
 }
 

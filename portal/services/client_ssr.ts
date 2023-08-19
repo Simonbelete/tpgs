@@ -21,8 +21,6 @@ const instance = (context: NextPageContext) => {
     // @ts-ignore
     const cookies = new Cookies(context.req.headers.cookie);
 
-    console.log(cookies);
-
     if (session) {
       config.headers.Authorization = `Bearer ${session.accessToken}`;
       config.headers["x-Request-Id"] = cookies.get("REQUEST_ID") ?? "public";
