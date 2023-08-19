@@ -6,6 +6,7 @@ import 'package:nea/models/food_model.dart';
 import 'package:nea/screens/food_screen.dart';
 import 'package:nea/utils/responsive_widget.dart';
 import 'package:nea/widgets/food_card.dart';
+import 'package:nea/widgets/food_card_plain.dart';
 
 class FoodGridList extends StatelessWidget {
   final Map<String, Map<String, Food>> foods;
@@ -24,7 +25,7 @@ class FoodGridList extends StatelessWidget {
                   crossAxisCount:
                       ResponsiveWidget.isSmallScreen(context) ? 2 : 6,
                   mainAxisExtent:
-                      ResponsiveWidget.isSmallScreen(context) ? 200 : 300,
+                      ResponsiveWidget.isSmallScreen(context) ? 200 : 210,
                 ),
                 physics: NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
@@ -38,7 +39,7 @@ class FoodGridList extends StatelessWidget {
                           //     arguments:
                           //         foods.values.elementAt(index)[state.local]);
                         },
-                        child: FoodCard(
+                        child: FoodCardPlain(
                           image: foods.values
                               .elementAt(index)[state.local]!
                               .coverImage,

@@ -40,10 +40,20 @@ class FoodGrid extends StatelessWidget {
             padding: EdgeInsets.only(left: 10.0),
             child: GridView.builder(
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount:
-                      ResponsiveWidget.isSmallScreen(context) ? 2 : 6,
+                  crossAxisCount: (() {
+                    if (ResponsiveWidget.isMediumScreen(context))
+                      return 3;
+                    else if (ResponsiveWidget.isLargeScreen(context))
+                      return 4;
+                    else
+                      return 2;
+                  }()),
                   mainAxisExtent:
                       ResponsiveWidget.isSmallScreen(context) ? 250 : 250,
+                  // crossAxisCount:
+                  //     ResponsiveWidget.isSmallScreen(context) ? 2 : 6,
+                  // mainAxisExtent:
+                  //     ResponsiveWidget.isSmallScreen(context) ? 250 : 250,
                 ),
                 physics: NeverScrollableScrollPhysics(),
                 shrinkWrap: true,

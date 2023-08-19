@@ -3,10 +3,10 @@ import 'package:nea/constants.dart';
 import 'package:nea/utils/responsive_widget.dart';
 import 'package:nea/widgets/header_6.dart';
 
-class FoodCard extends StatelessWidget {
+class FoodCardPlain extends StatelessWidget {
   final String image, title;
 
-  const FoodCard({super.key, required this.image, required this.title});
+  const FoodCardPlain({super.key, required this.image, required this.title});
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +14,7 @@ class FoodCard extends StatelessWidget {
       padding: const EdgeInsets.only(bottom: 20.0),
       width: 170,
       child: Card(
-        elevation: 5,
+        elevation: 1,
         shape:
             RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
         color: Colors.white,

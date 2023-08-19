@@ -22,6 +22,7 @@ class KeyMessages extends StatelessWidget {
               children: children.map((e) {
                 if (e is String) {
                   return Container(
+                      // width: size.width * 0.85,
                       padding: EdgeInsets.only(bottom: 0),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.start,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nea/utils/responsive_widget.dart';
 import 'package:nea/widgets/paragraph.dart';
 
 class Bullet extends StatelessWidget {
@@ -21,7 +22,7 @@ class Bullet extends StatelessWidget {
                   children: [
                     Text('•  '),
                     Container(
-                        // width: size.width * 0.85,
+                        width: size.width * 0.85,
                         child: Paragraph(title: '', body: '$e'))
                   ],
                 ),
