@@ -37,7 +37,7 @@ const lightTheme = createTheme({
   typography: {
     fontFamily: ["Inter", "sans-serif"].join(","),
     title: {
-      fontSize: 37,
+      fontSize: 30,
       fontWeight: 700,
       color: "#495057",
       fontFamily: ["Inter", "sans-serif"].join(","),
