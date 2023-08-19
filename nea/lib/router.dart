@@ -9,6 +9,7 @@ import 'package:nea/screens/course_screen.dart';
 import 'package:nea/screens/image_screen.dart';
 import 'package:nea/screens/not_found_screen.dart';
 import 'package:nea/utils/preferencess.dart';
+import 'package:nea/widgets/title_text.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Path {
@@ -76,7 +77,12 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
 
   return MaterialPageRoute(
       settings: routeSettings,
-      builder: (_) => const Center(child: Text('Error: Page Not Found')));
+      builder: (_) => const Scaffold(
+            body: SafeArea(
+                child: Center(
+              child: TitleText(text: '404! Page not found'),
+            )),
+          ));
 
   // switch (routeSettings.name) {
   //   case HomeScreen.routeName:
