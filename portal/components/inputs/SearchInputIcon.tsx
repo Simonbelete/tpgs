@@ -13,36 +13,38 @@ const BootstrapInput = styled(InputBase)(({ theme }) => ({
   },
   "& .MuiInputBase-input": {
     borderRadius: 4,
+    borderTopLeftRadius: 0,
+    borderBottomLeftRadius: 0,
     position: "relative",
-    // backgroundColor: theme.palette.mode === "light" ? "#F3F6F9" : "#1A2027",
-    backgroundColor: "#F5F6F8",
+    backgroundColor: "white",
     border: "1px solid",
+    borderLeft: 0,
     borderColor: theme.palette.mode === "light" ? "#E0E3E7" : "#2D3843",
     fontSize: 14,
     width: "100%",
-    padding: "6px 12px",
-    // transition: theme.transitions.create([
-    //   "border-color",
-    //   "background-color",
-    //   "box-shadow",
-    // ]),
-    // Use the system font instead of the default Roboto font.
+    paddingTop: "6px",
+    paddingBottom: "6px",
+    paddingLeft: "4px",
+    paddingRight: "12px",
     fontFamily: ["Inter", "sans-serif"].join(","),
-    "&:focus": {
-      // boxShadow: `${alpha(theme.palette.primary.main, 0.25)} 0 0 0 0.2rem`,
-      borderColor: alpha(theme.palette.secondary.dark, 0.3),
-    },
+    // "&:focus": {
+    //   borderColor: alpha(theme.palette.secondary.dark, 0.3),
+    // },
   },
   "& .MuiInputAdornment-positionStart" : {
     borderRadius: 4,
+    borderTopRightRadius: 0,
+    borderBottomRightRadius: 0,
     position: "relative",
-    // backgroundColor: theme.palette.mode === "light" ? "#F3F6F9" : "#1A2027",
-    backgroundColor: "#F5F6F8",
+    backgroundColor: "white",
     border: "1px solid",
     borderRight: 0,
     borderColor: theme.palette.mode === "light" ? "#E0E3E7" : "#2D3843",
     fontSize: 14,
-    padding: "5px 2px",
+    paddingTop: "5px",
+    paddingBottom: "5px",
+    paddingLeft: "10px",
+    paddingRight: "2px",
     fontFamily: ["Inter", "sans-serif"].join(","),
     margin: 0,
     height: 'auto',
@@ -50,7 +52,7 @@ const BootstrapInput = styled(InputBase)(({ theme }) => ({
   }
 }));
 
-const SearchInput = ({
+const SearchInputIcon = ({
   label,
   error,
   helperText,
@@ -64,12 +66,12 @@ const SearchInput = ({
         defaultValue=""
         id="bootstrap-input"
         placeholder={label}
-        endAdornment={<InputAdornment position="end">{prefix}</InputAdornment>}
-        // startAdornment={<InputAdornment position="start"><SearchIcon fontSize="small" /></InputAdornment>}
+        // endAdornment={<InputAdornment position="end">{prefix}</InputAdornment>}
+        startAdornment={<InputAdornment position="start"><SearchIcon fontSize="small" /></InputAdornment>}
         size="small"
       />
     </FormControl>
   );
 };
 
-export default SearchInput;
+export default SearchInputIcon;

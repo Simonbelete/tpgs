@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import {
   FormControl,
   InputLabel,
@@ -11,8 +11,11 @@ import {
   InputBase,
   MenuList,
   Typography,
+  TextField,
+  Box
 } from "@mui/material";
 import { styled, alpha } from "@mui/material/styles";
+import { SearchInputIcon } from "../inputs";
 
 const BootstrapInput = styled(InputBase)(({ theme }) => ({
   // "label + &": {
@@ -47,11 +50,12 @@ const CheckboxDropdown = ({
   onChange,
   selected,
 }: {
-  menus: { value: string; label: string }[];
+  menus: { value: string | number; label: string }[];
   label: string;
   onChange: (event: SelectChangeEvent) => void;
   selected: string[];
 }) => {
+  const inputRef = useRef<any>();
   const handleChange = (event: SelectChangeEvent) => {
     // const {
     //   target: { value },
@@ -71,9 +75,10 @@ const CheckboxDropdown = ({
         >
           {label}
         </InputLabel>
-        <Select
+        <Select      
           labelId="demo-multiple-checkbox-label"
           multiple
+          open
           // @ts-ignore
           value={selected}
           renderValue={(selected) => <></>}
@@ -88,7 +93,13 @@ const CheckboxDropdown = ({
               },
             },
           }}
+          // onAnimationEndCapture={() => inputRef.current.focus()}
         >
+          <Box display="flex" justifyContent="center" alignItems="center" sx={{width: 130}}>
+            <Box sx={{py: 1, px: 1}}>
+              <SearchInputIcon ref={inputRef} label="Search..."/>
+            </Box>
+          </Box>
           {menus.map((e, key) => (
             <MenuItem key={key} value={"name"} sx={{ paddingLeft: "6px" }}>
               <Checkbox

@@ -6,7 +6,7 @@ import { useBreadcrumbs } from "@/hooks";
 import { Breadcrumbs } from "@/components";
 import { Button, Typography } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
-import { NutrientsList, NutrientListActions } from "@/features/nutrients";
+import { NutrientsList, NutrientListActions, NutrientFilter } from "@/features/nutrients";
 
 const NutrientsPage = () => {
   const { breadcrumbs } = useBreadcrumbs();
@@ -16,6 +16,7 @@ const NutrientsPage = () => {
       breadcrumbs={<Breadcrumbs items={breadcrumbs} />}
       header={<Typography variant="title">Nutrients</Typography>}
       actions={<NutrientListActions />}
+      filter={<NutrientFilter />}
     >
       <NutrientsList />
     </ListLayout>
