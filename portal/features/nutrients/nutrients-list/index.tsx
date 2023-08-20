@@ -28,7 +28,7 @@ const columns: GridColDef[] = [
       console.log(params);
       if (params.row.nutrient_group == null) return <></>;
       return (
-        <Typography color={"link.primary"}>
+        <Typography color={"link.primary"} variant="body2">
           <Link href={`/nutrient-groups/${params.row.nutrient_group.id}`}>
             {params.row.nutrient_group.name}
           </Link>

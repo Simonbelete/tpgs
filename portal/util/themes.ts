@@ -60,7 +60,7 @@ const lightTheme = createTheme({
       secondary: "#98AAC4",
     },
     link: {
-      primary: "#88AACF",
+      primary: "#0077AF",
       secondary: "#0000EE",
     },
     background: {

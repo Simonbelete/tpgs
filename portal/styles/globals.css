@@ -3,10 +3,10 @@ body {
   margin: 0;
 }
 
-a:link { text-decoration: none; }
-a:visited { text-decoration: none; }
-a:hover { text-decoration: none; }
-a:active { text-decoration: none; }
+a:link { text-decoration: none; color: #0077AF; }
+a:visited { text-decoration: none; color: #0077AF;}
+a:hover { text-decoration: none; color: #0077AF;}
+a:active { text-decoration: none; color: #0077AF;}
 
 
  /* Make clicks pass-through */
