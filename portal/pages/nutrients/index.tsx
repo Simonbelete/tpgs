@@ -6,7 +6,7 @@ import { useBreadcrumbs } from "@/hooks";
 import { Breadcrumbs } from "@/components";
 import { Button, Typography } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
-import { NutrientsList } from "@/features/nutrients";
+import { NutrientsList, NutrientListActions } from "@/features/nutrients";
 
 const NutrientsPage = () => {
   const { breadcrumbs } = useBreadcrumbs();
@@ -15,22 +15,10 @@ const NutrientsPage = () => {
     <ListLayout
       breadcrumbs={<Breadcrumbs items={breadcrumbs} />}
       header={<Typography variant="title">Nutrients</Typography>}
-      actions={<Actions />}
+      actions={<NutrientListActions />}
     >
       <NutrientsList />
     </ListLayout>
-  );
-};
-
-const Actions = (): ReactElement => {
-  return (
-    <>
-      <Link href="/nutrients/create">
-        <Button variant="contained" startIcon={<AddIcon />}>
-          Create
-        </Button>
-      </Link>
-    </>
   );
 };
 

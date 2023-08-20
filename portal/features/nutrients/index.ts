@@ -5,3 +5,4 @@ export { default as NutrientService } from "./services/nutrient_service";
 export { default as NutrientListItem } from "./nutrient-list-item";
 export { default as NutrientSelectDialog } from "./nutrient-select-dialog";
 export { default as NutrientEditableTable } from "./nutrient-editable-table";
+export { default as NutrientListActions } from "./nutrient-list-actions";
