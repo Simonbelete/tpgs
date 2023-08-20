@@ -1,6 +1,6 @@
 import React from "react";
 import { NextPageContext } from "next";
-import { Container } from "@mui/material";
+import { Container, Typography } from "@mui/material";
 import { EditLayout } from "@/components/layouts";
 import {
   NutrientGroupForm,
@@ -14,7 +14,10 @@ const NutrientGroupEditPage = ({ data }: { data: Nutrient }) => {
   const { breadcrumbs } = useBreadcrumbs();
 
   return (
-    <EditLayout breadcrumbs={<Breadcrumbs items={breadcrumbs} />}>
+    <EditLayout
+      breadcrumbs={<Breadcrumbs items={breadcrumbs} />}
+      header={<Typography variant="title">{data.name} - Edit</Typography>}
+    >
       <Container maxWidth="xl">
         <NutrientGroupForm nutrient_group={data} />
       </Container>

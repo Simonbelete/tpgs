@@ -56,7 +56,12 @@ const StripedDataGrid = styled(DataGrid)(({ theme }) => ({
     fontSize: "14px",
   },
   [`& .${gridClasses.cell}`]: {
-    "&:focus": {
+    "&:focus, &:focus-within": {
+      outline: "none",
+    },
+  },
+  [`& .${gridClasses.columnHeader}`]: {
+    "&:focus, &:focus-within": {
       outline: "none",
     },
   },
@@ -243,8 +248,6 @@ const DataTable = ({
         };
     }
     const result: GridColDef[] = [col];
-    console.log(result);
-    console.log(setting);
     return result;
   };
 

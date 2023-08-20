@@ -55,6 +55,9 @@ const NutrientGroupList = () => {
       rowCount={rows.length}
       loading={isLoading}
       pageSizeOptions={[5]}
+      initialState={{
+        pagination: { paginationModel: paginationModel },
+      }}
       paginationModel={paginationModel}
       paginationMode="server"
       onPaginationModelChange={setPaginationModel}
