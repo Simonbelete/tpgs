@@ -13,23 +13,42 @@ router.register(r'nutrient-groups/(?P<id>.+)/histories',
 
 urlpatterns = [
     path('', include(router.urls)),
-    #
-    # Nutrient Group
-    #
 
-    # Xlsx
-    path('nutrient-groups/export/xlsx', views.NutrientGroupXlsxExport.as_view(),
-         name="nutrient_groups_export_xlsx"),
-    path('nutrient-groups/import/xlsx', views.NutrientGroupXlsxImport.as_view(),
-         name="nutrient_groups_import_xlsx"),
-    # Xls
-    path('nutrient-groups/export/xls', views.NutrientGroupXlsExport.as_view(),
-         name="nutrient_groups_export_xls"),
-    path('nutrient-groups/import/xls', views.NutrientGroupXlsImport.as_view(),
-         name="nutrient_groups_import_xls"),
-    # Csv
-    path('nutrient-groups/export/csv', views.NutrientGroupCsvExport.as_view(),
-         name="nutrient_groups_export_csv"),
-    path('nutrient-groups/import/csv', views.NutrientGroupCsvImport.as_view(),
-         name="nutrient_groups_import_csv")
+    # Nutrient Group
+    path('nutrient-groups/export/', include([
+        path('xlsx', views.NutrientGroupXlsxExport.as_view(),
+             name="nutrient_groups_export_xlsx"),
+        path('xls', views.NutrientGroupXlsExport.as_view(),
+             name="nutrient_groups_export_xls"),
+        path('csv', views.NutrientGroupCsvExport.as_view(),
+             name="nutrient_groups_export_csv"),
+    ])),
+
+    path('nutrient-groups/import/', include([
+        path('xlsx', views.NutrientGroupXlsxImport.as_view(),
+             name="nutrient_groups_import_xlsx"),
+        path('xls', views.NutrientGroupXlsImport.as_view(),
+             name="nutrient_groups_import_xls"),
+        path('csv', views.NutrientGroupCsvImport.as_view(),
+             name="nutrient_groups_import_csv")
+    ])),
+
+    # Nutrients
+    path('nutrients/export/', include([
+         path('xlsx', views.NutrientXlsxExport.as_view(),
+              name="nutrients_export_xlsx"),
+         path('xls', views.NutrientXlsExport.as_view(),
+              name="nutrients_export_xls"),
+         path('csv', views.NutrientCsvExport.as_view(),
+              name="nutrients_export_csv"),
+         ])),
+
+    path('nutrients/import/', include([
+        path('xlsx', views.NutrientXlsxImport.as_view(),
+             name="nutrients_import_xlsx"),
+        path('xls', views.NutrientXlsImport.as_view(),
+             name="nutrients_import_xls"),
+        path('csv', views.NutrientCsvImport.as_view(),
+             name="nutrients_import_csv")
+    ]))
 ]

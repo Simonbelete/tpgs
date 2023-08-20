@@ -11,5 +11,12 @@ class NutrientGroupResource(resources.ModelResource):
         fields = ['id', 'name']
 
 
-admin.site.register(models.Nutrient)
+class NutrientResource(resources.ModelResource):
+    class Meta:
+        model = models.Nutrient
+        fields = ['id', 'code', 'name', 'abbreviation',
+                  'unit__name', 'nutrient_group__name', 'description']
+
+
+admin.site.register(models.Nutrient, SimpleHistoryAdmin)
 admin.site.register(models.NutrientGroup, SimpleHistoryAdmin)
