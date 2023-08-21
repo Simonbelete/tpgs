@@ -62,13 +62,12 @@ const SearchInputIcon = ({
   return (
     <FormControl variant="standard" fullWidth error={error}>
       <BootstrapInput
-        {...props}
-        defaultValue=""
         id="bootstrap-input"
         placeholder={label}
         // endAdornment={<InputAdornment position="end">{prefix}</InputAdornment>}
         startAdornment={<InputAdornment position="start"><SearchIcon fontSize="small" /></InputAdornment>}
         size="small"
+        {...props}
       />
     </FormControl>
   );

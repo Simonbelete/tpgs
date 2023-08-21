@@ -67,7 +67,7 @@ const CheckboxDropdown = ({
   const [open, setOpen] = useState<boolean>(false);
   const [data, setData] = useState<object[]>([...(menus || [])])
   const inputRef = useRef<any>();
-  const [searchInput, setSearchInput] = useState<string | null>();
+  const [searchInput, setSearchInput] = useState<string>("");
   const handleChange = (event: SelectChangeEvent) => {
     // const {
     //   target: { value },
