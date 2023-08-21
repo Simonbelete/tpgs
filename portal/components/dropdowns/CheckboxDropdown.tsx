@@ -135,19 +135,16 @@ const CheckboxDropdown = ({
           }}
           // onAnimationEndCapture={() => inputRef.current.focus()}
         >
-          {/* <ListSubheader className=""> */}
           <li aria-selected="false" role="option">
-          <Box display="flex" aria-label="None" onClick={(e: any) => {
-              e.preventDefault(); 
-              e.stopPropagation();
-              console.log('clikced');
-            }} justifyContent="center" alignItems="center" sx={{width: WIDTH}}>
-            <Box sx={{py: 1, px: 1}}>
-              <SearchInputIcon label="Search..." value={searchInput} onChange={handleSearchInput}/>
+            <Box display="flex" aria-label="None" onClick={(e: any) => {
+                e.preventDefault(); 
+                e.stopPropagation();
+              }} justifyContent="center" alignItems="center" sx={{width: WIDTH}}>
+              <Box sx={{py: 1, px: 1}}>
+                <SearchInputIcon label="Search..." value={searchInput} onChange={handleSearchInput}/>
+              </Box>
             </Box>
-          </Box>
           </li>
-          {/* </ListSubheader> */}
           {data.map((e, key) => (
             // @ts-ignore
             <MenuItem key={key} value={e} sx={{ paddingLeft: "6px" }}>
