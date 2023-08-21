@@ -8,10 +8,15 @@ import {
   Divider,
   SelectChangeEvent,
   Button,
+  ListItem,
+  Chip
 } from "@mui/material";
+import { useSelector, useDispatch } from "react-redux";
 import { SearchInput } from "@/components/inputs";
 import { CheckboxDropdown } from "@/components/dropdowns";
 import { NutrientGroup } from "@/models";
+import { setNutrientGroups, removeNutrientGroupById } from "../slices";
+import { RootState } from "@/store";
 
 interface FilterMenu {
   data: {
@@ -22,13 +27,16 @@ interface FilterMenu {
 }
 
 const NutrientFilter = () => {
-  const [nutrientGroups, setNutrientGroups] = useState<NutrientGroup[]>([]);
+  const dispatch = useDispatch();
+  const nutrientGroups = useSelector((state: RootState) => state.nutrientFilter.nutrient_groups);
 
   const handleOnNutrientGroupChange = (event: SelectChangeEvent) => {
-    console.log('****')
-    console.log(event.target.value)
-    // if(event.target.value[0] != undefined)
-      setNutrientGroups(event.target.value as any);
+      dispatch(setNutrientGroups(event.target.value as any))
+      // setNutrientGroups(event.target.value as any);
+  }
+
+  const handleDeleteNutrientGroup = (data: NutrientGroup) => () => {
+    dispatch(removeNutrientGroupById(data.id));
   }
   
   return (
@@ -87,6 +95,19 @@ const NutrientFilter = () => {
         </Grid>
         <Grid item xs={12}>
           <Divider />
+        </Grid>
+        <Grid item xs={12}>
+          <Stack>
+            {nutrientGroups.map((e, key) => 
+              <ListItem key={key}>
+                <Chip
+                  label={e.name}
+                  size="small"
+                  onDelete={handleDeleteNutrientGroup(e)}
+                />
+              </ListItem>
+            )}
+          </Stack>
         </Grid>
       </Grid>
     </Paper>

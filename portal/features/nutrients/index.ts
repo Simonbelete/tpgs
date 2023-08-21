@@ -7,3 +7,4 @@ export { default as NutrientSelectDialog } from "./nutrient-select-dialog";
 export { default as NutrientEditableTable } from "./nutrient-editable-table";
 export { default as NutrientListActions } from "./nutrient-list-actions";
 export { default as NutrientFilter } from './nutrient-filter';
+export * from "./slices";

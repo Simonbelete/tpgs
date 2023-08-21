@@ -12,6 +12,9 @@ import nutrient_service from "../services/nutrient_service";
 import { Nutrient } from "@/models";
 import { useSnackbar } from "notistack";
 import Link from "next/link";
+import { useSelector, useDispatch } from "react-redux";
+import { RootState } from "@/store";
+
 
 const columns: GridColDef[] = [
   { field: "code", headerName: "Code", flex: 1, minWidth: 100 },
@@ -40,24 +43,34 @@ const columns: GridColDef[] = [
 
 const NutrientsList = () => {
   const [rows, setRows] = useState<GridRowsProp<Nutrient>>([]);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [loading, setLoading] = useState<boolean>(true);
   const [paginationModel, setPaginationModel] = useState({
     page: 0,
     pageSize: 10,
   });
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
+  const nutrientGroupsFilter = useSelector((state: RootState) => state.nutrientFilter.nutrient_groups);
+
   useEffect(() => {
-    setIsLoading(true);
-    try {
-      nutrient_service.get().then((response) => {
-        setRows(response.data.results);
-      });
-    } catch (ex) {
-    } finally {
-      setIsLoading(false);
-    }
+    setLoading(true);
+    loadData().finally(() => {
+      setLoading(false)
+    })
+    
   }, [paginationModel]);
+
+  const loadData = async () => {
+    // Build Filters
+    let filters = ""
+
+    if(nutrientGroupsFilter.length != 0) {
+      filters += "nutrient_group=" 
+    }
+    const response = await nutrient_service.get()
+    if(response.status == 200)
+      setRows(response.data.results);
+  }
 
   const refresh = () => {
     setPaginationModel({ page: 0, pageSize: 10 });
@@ -82,8 +95,8 @@ const NutrientsList = () => {
       rows={rows}
       columns={columns}
       rowCount={rows.length}
-      loading={isLoading}
-      pageSizeOptions={[5]}
+      loading={loading}
+      // pageSizeOptions={[5]}
       paginationModel={paginationModel}
       paginationMode="server"
       onPaginationModelChange={setPaginationModel}

@@ -1,4 +1,3 @@
-import django_filters
 from django.shortcuts import render
 from rest_framework import viewsets, status
 from rest_framework.views import APIView
@@ -15,22 +14,16 @@ from core.serializers import UploadSerializer
 from . import models
 from . import serializers
 from . import admin
+from . import filters
 
 #
 # Nutrient Group
 #
-class NutrientGroupFilter(django_filters.FilterSet):
-    name = django_filters.CharFilter(
-        field_name='name', lookup_expr='contains')
-
-    class Meta:
-        model = models.NutrientGroup
-        fields = ['name']
 
 class NutrientGroupViewSet(viewsets.ModelViewSet):
     queryset = models.NutrientGroup.objects.all()
     serializer_class = serializers.NutrientGroupSerializer_GET
-    filterset_class = NutrientGroupFilter
+    filterset_class = filters.NutrientGroupFilter
     search_fields = ['name']
     ordering_fields = '__all__'
 
@@ -131,6 +124,9 @@ class NutrientGroupCsvImport(APIView):
 class NutrientViewSet(viewsets.ModelViewSet):
     queryset = models.Nutrient.objects.all()
     serializer_class = serializers.NutrientSerializer_GET
+    filterset_class = filters.NutrientFilter
+    search_fields = ['code', 'name', 'abbreviation']
+    ordering_fields = '__all__'
 
     def get_serializer_class(self):
         if self.request.method == 'GET':
