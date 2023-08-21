@@ -4,15 +4,13 @@ import {
   InputLabel,
   Select,
   MenuItem,
-  OutlinedInput,
   SelectChangeEvent,
   Checkbox,
   ListItemText,
   InputBase,
-  MenuList,
   Typography,
-  TextField,
   Box,
+  LinearProgress
 } from "@mui/material";
 import { styled, alpha } from "@mui/material/styles";
 import { SearchInputIcon } from "../inputs";
@@ -66,6 +64,7 @@ const CheckboxDropdown = ({
 }) => {
   const [open, setOpen] = useState<boolean>(false);
   const [data, setData] = useState<object[]>([...(menus || [])])
+  const [loading, setLoading] = useState(false);
   const inputRef = useRef<any>();
   const [searchInput, setSearchInput] = useState<string>("");
   const handleChange = (event: SelectChangeEvent) => {
@@ -95,12 +94,15 @@ const CheckboxDropdown = ({
 
   const loadData = async (search?: string) => {
     if(url == null) return;
-     
+    
+    setLoading(true)
     try{
       const response = await client.get(url, {params: {limit: 10, search: search}});
       setData(response.data.results);
     }catch(ex){
 
+    }finally {
+      setLoading(false);
     }
   }
 
@@ -145,10 +147,13 @@ const CheckboxDropdown = ({
               </Box>
             </Box>
           </li>
+          {loading && <LinearProgress />}
+          
           {data.map((e, key) => (
             // @ts-ignore
             <MenuItem key={key} value={e} sx={{ paddingLeft: "6px" }}>
               <Checkbox
+                // @ts-ignore
                 checked={selected && selected.some((d) => d[dataValueKey] == e[dataValueKey])}
                 size="small"
                 sx={{ paddingTop: 0, paddingBottom: 0, paddingRight: "15px" }}
