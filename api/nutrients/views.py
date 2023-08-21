@@ -1,3 +1,4 @@
+import django_filters
 from django.shortcuts import render
 from rest_framework import viewsets, status
 from rest_framework.views import APIView
@@ -18,11 +19,20 @@ from . import admin
 #
 # Nutrient Group
 #
+class NutrientGroupFilter(django_filters.FilterSet):
+    name = django_filters.CharFilter(
+        field_name='name', lookup_expr='contains')
 
+    class Meta:
+        model = models.NutrientGroup
+        fields = ['name']
 
 class NutrientGroupViewSet(viewsets.ModelViewSet):
     queryset = models.NutrientGroup.objects.all()
     serializer_class = serializers.NutrientGroupSerializer_GET
+    filterset_class = NutrientGroupFilter
+    search_fields = ['name']
+    ordering_fields = '__all__'
 
 
 class NutrientGroupHistoryViewSet(HistoryViewSet):
