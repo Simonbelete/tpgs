@@ -25,8 +25,10 @@ const NutrientFilter = () => {
   const [nutrientGroups, setNutrientGroups] = useState<NutrientGroup[]>([]);
 
   const handleOnNutrientGroupChange = (event: SelectChangeEvent) => {
-    console.log(event.target.value);
-    setNutrientGroups(event.target.value as any);
+    console.log('****')
+    console.log(event.target.value)
+    // if(event.target.value[0] != undefined)
+      setNutrientGroups(event.target.value as any);
   }
   
   return (
@@ -75,7 +77,8 @@ const NutrientFilter = () => {
           <Stack direction={"row"}>
             <CheckboxDropdown
               url="/nutrient-groups"
-              displayKey="name"
+              dataValueKey="id"
+              dataLableKey="name"
               label={"Nutrient Group"}
               selected={nutrientGroups}
               onChange={handleOnNutrientGroupChange}

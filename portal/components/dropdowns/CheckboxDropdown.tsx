@@ -12,7 +12,7 @@ import {
   MenuList,
   Typography,
   TextField,
-  Box
+  Box,
 } from "@mui/material";
 import { styled, alpha } from "@mui/material/styles";
 import { SearchInputIcon } from "../inputs";
@@ -49,14 +49,16 @@ const BootstrapInput = styled(InputBase)(({ theme }) => ({
 
 const CheckboxDropdown = ({
   url,
-  displayKey,
   menus,
   label,
   onChange,
   selected,
+  dataValueKey,
+  dataLableKey
 }: {
   url?: string,
-  displayKey: string;
+  dataValueKey: string;
+  dataLableKey: string;
   menus?: object[];
   label: string;
   onChange: (event: SelectChangeEvent) => void;
@@ -65,6 +67,7 @@ const CheckboxDropdown = ({
   const [open, setOpen] = useState<boolean>(false);
   const [data, setData] = useState<object[]>([...(menus || [])])
   const inputRef = useRef<any>();
+  const [searchInput, setSearchInput] = useState<string | null>();
   const handleChange = (event: SelectChangeEvent) => {
     // const {
     //   target: { value },
@@ -86,6 +89,7 @@ const CheckboxDropdown = ({
   }
 
   const handleSearchInput = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchInput(event.target.value)
     loadData(event.target.value);
   }
 
@@ -131,15 +135,24 @@ const CheckboxDropdown = ({
           }}
           // onAnimationEndCapture={() => inputRef.current.focus()}
         >
-          <Box display="flex" justifyContent="center" alignItems="center" sx={{width: WIDTH}}>
+          {/* <ListSubheader className=""> */}
+          <li aria-selected="false" role="option">
+          <Box display="flex" aria-label="None" onClick={(e: any) => {
+              e.preventDefault(); 
+              e.stopPropagation();
+              console.log('clikced');
+            }} justifyContent="center" alignItems="center" sx={{width: WIDTH}}>
             <Box sx={{py: 1, px: 1}}>
-              <SearchInputIcon label="Search..." onChange={handleSearchInput}/>
+              <SearchInputIcon label="Search..." value={searchInput} onChange={handleSearchInput}/>
             </Box>
           </Box>
+          </li>
+          {/* </ListSubheader> */}
           {data.map((e, key) => (
-            <MenuItem key={key} value={"name"} sx={{ paddingLeft: "6px" }}>
+            // @ts-ignore
+            <MenuItem key={key} value={e} sx={{ paddingLeft: "6px" }}>
               <Checkbox
-                checked={false}
+                checked={selected && selected.some((d) => d[dataValueKey] == e[dataValueKey])}
                 size="small"
                 sx={{ paddingTop: 0, paddingBottom: 0, paddingRight: "15px" }}
               />
@@ -148,7 +161,7 @@ const CheckboxDropdown = ({
                 primary={
                   <Typography variant="body2" fontSize={14}>
                     {/* @ts-ignore */}
-                    {e[displayKey]}
+                    {e[dataLableKey]}
                   </Typography>
                 }
               />

@@ -25,7 +25,6 @@ const columns: GridColDef[] = [
     valueGetter: (params) =>
       params.row.nutrient_group ? params.row.nutrient_group.name : "",
     renderCell: (params: GridRenderCellParams<any>) => {
-      console.log(params);
       if (params.row.nutrient_group == null) return <></>;
       return (
         <Typography color={"link.primary"} variant="body2">
