@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import {
   FormControl,
   InputLabel,
@@ -16,6 +16,9 @@ import {
 } from "@mui/material";
 import { styled, alpha } from "@mui/material/styles";
 import { SearchInputIcon } from "../inputs";
+import client from "@/services/client";
+
+const WIDTH = 150
 
 const BootstrapInput = styled(InputBase)(({ theme }) => ({
   // "label + &": {
@@ -45,16 +48,22 @@ const BootstrapInput = styled(InputBase)(({ theme }) => ({
 }));
 
 const CheckboxDropdown = ({
+  url,
+  displayKey,
   menus,
   label,
   onChange,
   selected,
 }: {
-  menus: { value: string | number; label: string }[];
+  url?: string,
+  displayKey: string;
+  menus?: object[];
   label: string;
   onChange: (event: SelectChangeEvent) => void;
   selected: string[];
 }) => {
+  const [open, setOpen] = useState<boolean>(false);
+  const [data, setData] = useState<object[]>([...(menus || [])])
   const inputRef = useRef<any>();
   const handleChange = (event: SelectChangeEvent) => {
     // const {
@@ -65,9 +74,35 @@ const CheckboxDropdown = ({
     //   typeof value === 'string' ? value.split(',') : value,
     // );
   };
+
+
+  const handleOpen = async () => {
+    setOpen(true);
+    if(url != null && data.length == 0) loadData();
+  }
+
+  const handleClose = () => {
+    setOpen(false);
+  }
+
+  const handleSearchInput = (event: React.ChangeEvent<HTMLInputElement>) => {
+    loadData(event.target.value);
+  }
+
+  const loadData = async (search?: string) => {
+    if(url == null) return;
+     
+    try{
+      const response = await client.get(url, {params: {limit: 10, search: search}});
+      setData(response.data.results);
+    }catch(ex){
+
+    }
+  }
+
   return (
     <div>
-      <FormControl sx={{ minWidth: 130 }}>
+      <FormControl sx={{ minWidth: WIDTH }}>
         <InputLabel
           shrink={false}
           htmlFor="demo-multiple-checkbox-label"
@@ -76,9 +111,10 @@ const CheckboxDropdown = ({
           {label}
         </InputLabel>
         <Select      
-          labelId="demo-multiple-checkbox-label"
+          open={open}
+          onOpen={handleOpen}
+          onClose={handleClose}
           multiple
-          open
           // @ts-ignore
           value={selected}
           renderValue={(selected) => <></>}
@@ -89,18 +125,18 @@ const CheckboxDropdown = ({
             MenuListProps: {
               style: {
                 paddingTop: 0,
-                paddingBottom: 0,
+                paddingBottom: 10,
               },
             },
           }}
           // onAnimationEndCapture={() => inputRef.current.focus()}
         >
-          <Box display="flex" justifyContent="center" alignItems="center" sx={{width: 130}}>
+          <Box display="flex" justifyContent="center" alignItems="center" sx={{width: WIDTH}}>
             <Box sx={{py: 1, px: 1}}>
-              <SearchInputIcon ref={inputRef} label="Search..."/>
+              <SearchInputIcon label="Search..." onChange={handleSearchInput}/>
             </Box>
           </Box>
-          {menus.map((e, key) => (
+          {data.map((e, key) => (
             <MenuItem key={key} value={"name"} sx={{ paddingLeft: "6px" }}>
               <Checkbox
                 checked={false}
@@ -111,19 +147,13 @@ const CheckboxDropdown = ({
                 disableTypography
                 primary={
                   <Typography variant="body2" fontSize={14}>
-                    {e.label}
+                    {/* @ts-ignore */}
+                    {e[displayKey]}
                   </Typography>
                 }
               />
             </MenuItem>
           ))}
-
-          {/* {menus.map((name) => (
-            <MenuItem key={name} value={name}>
-              <Checkbox checked={false} />
-              <ListItemText primary={name} />
-            </MenuItem>
-          ))} */}
         </Select>
       </FormControl>
     </div>

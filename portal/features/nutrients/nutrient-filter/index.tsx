@@ -9,7 +9,7 @@ import {
   SelectChangeEvent,
   Button,
 } from "@mui/material";
-import { SearchInput, SearchInputIcon } from "@/components/inputs";
+import { SearchInput } from "@/components/inputs";
 import { CheckboxDropdown } from "@/components/dropdowns";
 
 interface FilterMenu {
@@ -21,21 +21,9 @@ interface FilterMenu {
 }
 
 const NutrientFilter = () => {
-  const [states, setStates] = useState<FilterMenu>({
-    data: [
-      {
-        value: 1,
-        label: "Name",
-      },
-      {
-        value: 2,
-        label: "Name",
-      },
-    ],
-    selected: [],
-  });
 
   const handleOnStatesChange = (event: SelectChangeEvent) => {};
+  
   return (
     <Paper sx={{ p: 2 }} elevation={0} variant="outlined" square>
       <Grid container alignItems={"center"}>
@@ -51,8 +39,7 @@ const NutrientFilter = () => {
             justifyContent={{ xs: "start", md: "end" }}
             spacing={2}
           >
-            {/* <SearchInput label="Search..." /> */}
-            <SearchInputIcon label="Search..." />
+            <SearchInput label="Search..." />
 
             <Box>
               <Button
@@ -82,9 +69,10 @@ const NutrientFilter = () => {
         <Grid item xs={12}>
           <Stack direction={"row"}>
             <CheckboxDropdown
-              menus={states.data}
-              label={"State"}
-              selected={states.selected}
+              url="/nutrient-groups"
+              displayKey="name"
+              label={"Nutrient Group"}
+              selected={[]}
               onChange={handleOnStatesChange}
             />
           </Stack>
