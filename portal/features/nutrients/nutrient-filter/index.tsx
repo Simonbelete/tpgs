@@ -11,6 +11,7 @@ import {
 } from "@mui/material";
 import { SearchInput } from "@/components/inputs";
 import { CheckboxDropdown } from "@/components/dropdowns";
+import { NutrientGroup } from "@/models";
 
 interface FilterMenu {
   data: {
@@ -21,8 +22,12 @@ interface FilterMenu {
 }
 
 const NutrientFilter = () => {
+  const [nutrientGroups, setNutrientGroups] = useState<NutrientGroup[]>([]);
 
-  const handleOnStatesChange = (event: SelectChangeEvent) => {};
+  const handleOnNutrientGroupChange = (event: SelectChangeEvent) => {
+    console.log(event.target.value);
+    setNutrientGroups(event.target.value as any);
+  }
   
   return (
     <Paper sx={{ p: 2 }} elevation={0} variant="outlined" square>
@@ -72,8 +77,8 @@ const NutrientFilter = () => {
               url="/nutrient-groups"
               displayKey="name"
               label={"Nutrient Group"}
-              selected={[]}
-              onChange={handleOnStatesChange}
+              selected={nutrientGroups}
+              onChange={handleOnNutrientGroupChange}
             />
           </Stack>
         </Grid>

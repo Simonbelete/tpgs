@@ -17,6 +17,7 @@ const NutrientGroupEditPage = ({ data }: { data: Nutrient }) => {
     <EditLayout
       breadcrumbs={<Breadcrumbs items={breadcrumbs} />}
       header={<Typography variant="title">{data.name} - Edit</Typography>}
+      actions={}
     >
       <Container maxWidth="xl">
         <NutrientGroupForm nutrient_group={data} />

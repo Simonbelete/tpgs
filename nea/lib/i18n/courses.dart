@@ -9,6 +9,7 @@ import '4/all.dart' as course_4;
 import '5/all.dart' as course_5;
 import '6/all.dart' as course_6;
 import '7/all.dart' as course_7;
+import 'chicken_meat/all.dart' as chicken_meat;
 
 Map<String, Map<String, Course>> courseData = {
   '0': {'en': course_0.EN, 'am': course_0.AM, 'sw': course_0.SW},
@@ -19,4 +20,5 @@ Map<String, Map<String, Course>> courseData = {
   '5': {'en': course_5.EN, 'am': course_5.AM, 'sw': course_5.SW},
   '6': {'en': course_6.EN, 'am': course_6.AM, 'sw': course_6.SW},
   '7': {'en': course_7.EN, 'am': course_7.AM, 'sw': course_7.SW},
+  '8': {'en': chicken_meat.EN, 'am': chicken_meat.AM, 'sw': chicken_meat.SW},
 };

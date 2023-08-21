@@ -60,7 +60,7 @@ const CheckboxDropdown = ({
   menus?: object[];
   label: string;
   onChange: (event: SelectChangeEvent) => void;
-  selected: string[];
+  selected: object[];
 }) => {
   const [open, setOpen] = useState<boolean>(false);
   const [data, setData] = useState<object[]>([...(menus || [])])
