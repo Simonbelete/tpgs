@@ -10,6 +10,7 @@ import '5/all.dart' as course_5;
 import '6/all.dart' as course_6;
 import '7/all.dart' as course_7;
 import 'chicken_meat/all.dart' as chicken_meat;
+import 'egg_c/all.dart' as egg;
 
 Map<String, Map<String, Course>> courseData = {
   '0': {'en': course_0.EN, 'am': course_0.AM, 'sw': course_0.SW},
@@ -18,6 +19,7 @@ Map<String, Map<String, Course>> courseData = {
   '3': {'en': course_3.EN, 'am': course_3.AM, 'sw': course_3.SW},
   '4': {'en': course_4.EN, 'am': course_4.AM, 'sw': course_4.SW},
   '5': {'en': chicken_meat.EN, 'am': chicken_meat.AM, 'sw': chicken_meat.SW},
+  'egg': {'en': egg.EN, 'am': chicken_meat.AM, 'sw': chicken_meat.SW},
   '6': {'en': course_5.EN, 'am': course_5.AM, 'sw': course_5.SW},
   '7': {'en': course_6.EN, 'am': course_6.AM, 'sw': course_6.SW},
   '8': {'en': course_7.EN, 'am': course_7.AM, 'sw': course_7.SW},
