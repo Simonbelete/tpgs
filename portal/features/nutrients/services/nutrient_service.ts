@@ -1,6 +1,8 @@
 import { AxiosResponse } from "axios";
-import { Response, Nutrient } from "@/models";
+import { Response, Nutrient, NutrientHistory } from "@/models";
 import client from "@/services/client";
+import clientSSR from "@/services/client_ssr";
+import { NextPageContext } from "next";
 
 const URL = "/nutrients";
 const HISTORY_URL = `histories`;
@@ -16,6 +18,17 @@ export default {
   update: async (id: number, data: Partial<Nutrient>) =>
     client.patch(`${URL}/${id}/`, data),
   delete: async (id: number) => client.delete(`${URL}/${id}/`),
+  getByIdSSR: async (
+    context: NextPageContext,
+    id: number
+  ): Promise<AxiosResponse<Response<Nutrient>>> =>
+    clientSSR(context).get(`${URL}/${id}`),
+  history: {
+    get: async (
+      id: number
+    ): Promise<AxiosResponse<Response<NutrientHistory[]>>> =>
+      client.get(`${URL}/${id}/${HISTORY_URL}/`),
+  },
   export: {
     xlsx: async () => client.get(`${EXPORT_URL}/xlsx`),
     xls: async () => client.get(`${EXPORT_URL}/xls`),

@@ -33,3 +33,4 @@ export type { default as FormulaIngredient } from "./FormulaIngredient";
 export type { default as ResetPassword } from "./ResetPassword";
 export type { default as ResetPasswordConfirm } from "./ResetPasswordConfirm";
 export type { default as FormulaRation } from "./FormulaRation";
+export type { default as NutrientHistory } from './NutrientHistory';

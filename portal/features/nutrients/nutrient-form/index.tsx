@@ -10,6 +10,7 @@ import { useRouter } from "next/router";
 import { AsyncDropdown } from "@/components/dropdowns";
 import { NutrientGroupForm } from "@/features/nutrient-group";
 import { useSnackbar } from "notistack";
+import { UnitForm } from "@/features/units";
 
 type Inputs = Partial<Nutrient>;
 
@@ -209,7 +210,7 @@ const NutrientForm = ({
                   label="Unit"
                   error={!!error?.message}
                   helperText={error?.message}
-                  createForm={<NutrienGroupForm />}
+                  createForm={<UnitForm />}
                 />
               )}
             />

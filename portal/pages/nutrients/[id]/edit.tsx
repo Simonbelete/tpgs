@@ -13,7 +13,8 @@ const NutrientEditPage = ({ data }: { data: Nutrient }) => {
   const { breadcrumbs } = useBreadcrumbs();
 
   return (
-    <EditLayout breadcrumbs={<Breadcrumbs items={breadcrumbs} />}>
+    <EditLayout breadcrumbs={<Breadcrumbs items={breadcrumbs} />}
+      header={<Typography variant="title">{data.name} - Edit</Typography>}>
       <Container maxWidth="xl">
         <NutrientForm nutrient={data} />
       </Container>
@@ -25,7 +26,7 @@ export async function getServerSideProps(context: NextPageContext) {
   const { id } = context.query;
 
   try {
-    const res = await NutrientService.getById(Number(id));
+    const res = await NutrientService.getByIdSSR(context, Number(id));
 
     // context.resolvedUrl
     if (res.status != 200)
