@@ -26,6 +26,13 @@ class NutrientSerializer_GET(serializers.ModelSerializer):
         model = models.Nutrient
         fields = '__all__'
 
+class NutrientSerializer_SLUG(serializers.ModelSerializer):
+    nutrient_group = serializers.SlugRelatedField(read_only=True, slug_field='name')
+    unit = serializers.SlugRelatedField(read_only=True, slug_field='name')
+
+    class Meta:
+        model = models.Nutrient
+        fields = '__all__'
 
 class NutrientSerializer_POST(serializers.ModelSerializer):
     class Meta:

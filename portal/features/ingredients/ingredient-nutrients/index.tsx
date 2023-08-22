@@ -142,7 +142,7 @@ const IngredientNutrients = ({ id }: { id?: number }) => {
       headerName: "Unit",
       flex: 1,
       minWidth: 150,
-      valueGetter: (params) => (params.row.unit ? params.row.unit.name : ""),
+      valueGetter: (params) => params.row.nutrient.unit
     },
     {
       field: "actions",

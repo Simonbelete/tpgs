@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from . import models
-from nutrients.serializers import NutrientSerializer_POST, NutrientSerializer_GET
+from nutrients.serializers import NutrientSerializer_POST, NutrientSerializer_GET, NutrientSerializer_SLUG
 from nutrients.models import Nutrient
 from django.db import transaction
 
@@ -50,7 +50,7 @@ class IngredientTypeSerializer_GET(serializers.ModelSerializer):
 
 # Ingredient -> Nutrients
 class IngredientNutrientSerializer_GET(serializers.ModelSerializer):
-    nutrient = NutrientSerializer_GET()
+    nutrient = NutrientSerializer_SLUG()
 
     class Meta:
         model = models.IngredientNutrient
