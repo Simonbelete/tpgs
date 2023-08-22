@@ -17,10 +17,7 @@ Course SW = Course(
       text: "Faida za Kiafya za Kula Nyama ya Kuku",
       fontSize: 27.0,
     ),
-    Paragraph(
-        title: "",
-        body:
-            "Faida za Kiafya za Kula Nyama ya Kuku"),
+    Paragraph(title: "", body: "Faida za Kiafya za Kula Nyama ya Kuku"),
     // SubTitleText(text: ""),
     Paragraph(
         title: "Husaidia kujenga misuli ",
@@ -208,7 +205,7 @@ Course SW = Course(
         title: "",
         body:
             "Madhara ya kukaanga kwa kina kwenye vitu vilivyopakwa ni kwamba uso hutiwa muhuri kwa kuganda kwa protini na kunyonya kwa kiwango cha chini cha mafuta na kubakisha virutubishi na ladha ya chakula. Lakini kwa vitu visivyofunikwa, chakula kinachukua kiasi kikubwa cha mafuta, hivyo huathiri texture na maudhui ya lishe."),
-    Remember(title: "General Rules", children: [
+    Remember(title: "Kanuni za Jumla", children: [
       "Kamwe usijaze vikaango kwa mafuta au mafuta au chakula cha kupikwa.",
       "Joto la kawaida la kukaanga ni kati ya 175 0 C na 195 0 C; hii inaonyeshwa na haze kidogo ya joto inayoongezeka kutoka kwa mafuta.",
       "Usijaribu kukaanga chakula kingi kwa wakati mmoja.",

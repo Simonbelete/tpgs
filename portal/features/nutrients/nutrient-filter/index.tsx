@@ -15,7 +15,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { SearchInput } from "@/components/inputs";
 import { CheckboxDropdown } from "@/components/dropdowns";
 import { NutrientGroup } from "@/models";
-import { setNutrientGroups, removeNutrientGroupById } from "../slices";
+import { setNutrientGroups, removeNutrientGroupById, setSearch, clearAll } from "../slices";
 import { RootState } from "@/store";
 
 interface FilterMenu {
@@ -38,6 +38,10 @@ const NutrientFilter = () => {
   const handleDeleteNutrientGroup = (data: NutrientGroup) => () => {
     dispatch(removeNutrientGroupById(data.id));
   }
+
+  const handleSearchButton = () => {
+
+  }
   
   return (
     <Paper sx={{ p: 2 }} elevation={0} variant="outlined" square>
@@ -54,7 +58,7 @@ const NutrientFilter = () => {
             justifyContent={{ xs: "start", md: "end" }}
             spacing={2}
           >
-            <SearchInput label="Search..." />
+            <SearchInput label="Search..."  onChange={(event: React.ChangeEvent<HTMLInputElement>) => dispatch(setSearch(event.target.value)) }/>
 
             <Box>
               <Button
@@ -62,8 +66,9 @@ const NutrientFilter = () => {
                 color="secondary"
                 size="small"
                 disableElevation
+                onClick={handleSearchButton}
               >
-                Apply
+                Search
               </Button>
             </Box>
             <Box>
@@ -72,6 +77,7 @@ const NutrientFilter = () => {
                 color="secondary"
                 size="small"
                 disableElevation
+                onClick={() => dispatch(clearAll())}
               >
                 Clear
               </Button>
