@@ -59,7 +59,8 @@ const IngredientsList = () => {
     let filterQuery: any = {}
 
     // Page Builder
-    const pageQuery = {...{page: paginationModel.page + 1, limit: paginationModel.pageSize}, ...(_.isEmpty(filterQuery) ? {}: {page: 0})}
+    const offset = paginationModel.page * paginationModel.pageSize;
+    const pageQuery = {...{limit: paginationModel.pageSize, offset: offset}, ...(_.isEmpty(filterQuery) ? {}: {offset: null, limit: null})}
     const searchQuery = ingredientFilter.search != "" ? {search: ingredientFilter.search} : {}
 
     const response = await ingredient_service.get({...pageQuery, ...filterQuery, ...searchQuery})
