@@ -14,6 +14,8 @@ import { useSnackbar } from "notistack";
 import Link from "next/link";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "@/store";
+import _ from "lodash";
+
 
 
 const columns: GridColDef[] = [
@@ -50,7 +52,7 @@ const NutrientsList = () => {
   });
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
-  const nutrientGroupsFilter = useSelector((state: RootState) => state.nutrientFilter.nutrient_groups);
+  const nutrientFilter = useSelector((state: RootState) => state.nutrientFilter);
 
   useEffect(() => {
     setLoading(true);
@@ -58,16 +60,23 @@ const NutrientsList = () => {
       setLoading(false)
     })
     
-  }, [paginationModel]);
+  }, [paginationModel, nutrientFilter]);
 
   const loadData = async () => {
     // Build Filters
-    let filters = ""
+    let filterQuery: any = {}
 
-    if(nutrientGroupsFilter.length != 0) {
-      filters += "nutrient_group=" 
+    if(nutrientFilter.nutrient_groups.length != 0) {
+      filterQuery['nutrient_group__in'] = nutrientFilter.nutrient_groups.map((e) => e.id).join(',') 
     }
-    const response = await nutrient_service.get()
+
+    // Page Builder
+    const pageQuery = {...paginationModel, ...(_.isEmpty(filterQuery) ? {}: {page: 0})}
+
+    console.log(pageQuery);
+    console.log(filterQuery)
+
+    const response = await nutrient_service.get({...pageQuery, ...filterQuery})
     if(response.status == 200)
       setRows(response.data.results);
   }

@@ -24,8 +24,14 @@ class FoodGridList extends StatelessWidget {
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount:
                       ResponsiveWidget.isSmallScreen(context) ? 2 : 6,
-                  mainAxisExtent:
-                      ResponsiveWidget.isSmallScreen(context) ? 200 : 210,
+                  mainAxisExtent: (() {
+                    if (ResponsiveWidget.isMediumScreen(context))
+                      return 200.0;
+                    else if (ResponsiveWidget.isLargeScreen(context))
+                      return 210.0;
+                    else
+                      return 200.0;
+                  }()),
                 ),
                 physics: NeverScrollableScrollPhysics(),
                 shrinkWrap: true,

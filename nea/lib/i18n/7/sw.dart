@@ -8,7 +8,7 @@ import 'package:nea/widgets/sub_title_text.dart';
 
 Course SW = Course(
   coverImage: 'assets/materials/images/image1057.png',
-  title: 'Viwango vya usalama wa chakula',
+  title: 'VIWANGO VYA USALAMA WA CHAKULA',
   body: Column(crossAxisAlignment: CrossAxisAlignment.start, children: const [
     CourseBodyImage(image: 'assets/materials/images/image1057.png'),
     SubTitleText(

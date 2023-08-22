@@ -9,7 +9,7 @@ import 'package:nea/widgets/sub_title_text.dart';
 
 Course EN = Course(
   coverImage: 'assets/materials/images/206.png',
-  title: 'Chicken Meat',
+  title: 'CHICKEN MEAT',
   body: Column(crossAxisAlignment: CrossAxisAlignment.start, children: const [
     CourseBodyImage(image: 'assets/materials/images/203.jpg'),
 

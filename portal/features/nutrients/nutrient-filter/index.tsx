@@ -101,7 +101,7 @@ const NutrientFilter = () => {
             {nutrientGroups.map((e, key) => 
               <ListItem key={key}>
                 <Chip
-                  label={e.name}
+                  label={`Nutrient Group: ${e.name}`}
                   size="small"
                   onDelete={handleDeleteNutrientGroup(e)}
                 />
