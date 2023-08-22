@@ -56,11 +56,15 @@ const NutrientsList = () => {
   const nutrientFilter = useSelector((state: RootState) => state.nutrientFilter);
 
   useEffect(() => {
+    const controller = new AbortController();
     setLoading(true);
     loadData().finally(() => {
       setLoading(false)
     })
-    
+
+    return () => {
+      controller.abort()
+    }
   }, [paginationModel, nutrientFilter]);
 
   const loadData = async () => {
