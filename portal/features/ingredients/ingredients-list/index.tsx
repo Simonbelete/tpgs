@@ -3,7 +3,10 @@ import { GridRowsProp, GridColDef, GridToolbar } from "@mui/x-data-grid";
 import { useSnackbar } from "notistack";
 import { DataTable } from "@/components/tables";
 import { Ingredient } from "@/models";
+import { useSelector, useDispatch } from "react-redux";
 import ingredient_service from "../services/ingredient_service";
+import { RootState } from "@/store";
+import _ from "lodash";
 
 const columns: GridColDef[] = [
   { field: "name", headerName: "Name", flex: 1, minWidth: 150 },
@@ -29,41 +32,41 @@ const columns: GridColDef[] = [
 const IngredientsList = () => {
   const [rows, setRows] = useState<GridRowsProp<Ingredient>>([]);
   const [rowCount, setRowCount] = useState<number>(0);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [loading, setLoading] = useState<boolean>(true);
   const [paginationModel, setPaginationModel] = useState({
-    page: 0,
+    page: 1,
     pageSize: 10,
   });
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
+  const ingredientFilter = useSelector((state: RootState) => state.ingredientFilter);
+
   useEffect(() => {
-    setIsLoading(true);
-    try {
-      ingredient_service.get().then((response) => {
-        if()
-        setRows(response.data.results);
-      });
-    } catch (ex) {
-    } finally {
-      setIsLoading(false);
+    const controller = new AbortController();
+
+    setLoading(true);
+     loadData().finally(() => {
+      setLoading(false);
+     })
+
+     return () => {
+      controller.abort()
     }
-  }, [paginationModel]);
+  }, [paginationModel, ingredientFilter]);
 
   const loadData = async () => {
     // Build Filters
     let filterQuery: any = {}
 
-    if(nutrientFilter.nutrient_groups.length != 0) {
-      filterQuery['nutrient_group__in'] = nutrientFilter.nutrient_groups.map((e) => e.id).join(',') 
-    }
-
     // Page Builder
-    const pageQuery = {...paginationModel, ...(_.isEmpty(filterQuery) ? {}: {page: 0})}
-    const searchQuery = nutrientFilter.search != "" ? {search: nutrientFilter.search} : {}
+    const pageQuery = {...{page: paginationModel.page + 1, limit: paginationModel.pageSize}, ...(_.isEmpty(filterQuery) ? {}: {page: 0})}
+    const searchQuery = ingredientFilter.search != "" ? {search: ingredientFilter.search} : {}
 
     const response = await ingredient_service.get({...pageQuery, ...filterQuery, ...searchQuery})
-    if(response.status == 200)
+    if(response.status == 200) {
       setRows(response.data.results);
+      setRowCount(response.data.count || 0);
+    }
   }
 
   const refresh = () => {
@@ -89,8 +92,8 @@ const IngredientsList = () => {
       rows={rows}
       columns={columns}
       rowCount={rowCount}
-      loading={isLoading}
-      pageSizeOptions={[5, 10, 25]}
+      loading={loading}
+      pageSizeOptions={[5, 10, 25, 50, 100]}
       paginationModel={paginationModel}
       paginationMode="server"
       onPaginationModelChange={setPaginationModel}

@@ -11,8 +11,8 @@ const IMPORT_URL = `${URL}/import`;
 const NUTRIENT_URL = `nutrients`;
 
 export default {
-  get: async (): Promise<AxiosResponse<Response<Ingredient[]>>> =>
-    client.get(`${URL}/`),
+  get: async (query?: Object): Promise<AxiosResponse<Response<Ingredient[]>>> =>
+    client.get(`${URL}/`, { params: query }),
   getById: async (id: number): Promise<AxiosResponse<Response<Ingredient>>> =>
     client.get(`${URL}/${id}`),
   create: async (
