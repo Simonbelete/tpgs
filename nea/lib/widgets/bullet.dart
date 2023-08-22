@@ -11,7 +11,7 @@ class Bullet extends StatelessWidget {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
 
-    return Container(
+    return SizedBox(
       child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: children
@@ -21,8 +21,8 @@ class Bullet extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text('•  '),
-                    Container(
-                        width: size.width * 0.85,
+                    Expanded(
+                        // width: size.width * 0.85,
                         child: Paragraph(title: '', body: '$e'))
                   ],
                 ),

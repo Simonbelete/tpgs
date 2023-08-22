@@ -27,8 +27,8 @@ class FoodCardPlain extends StatelessWidget {
                   topRight: Radius.circular(20.0)),
               child: Image.asset(
                 image,
-                fit: BoxFit.fill,
-                height: 130,
+                fit: BoxFit.contain,
+                height: 100,
                 width: 170,
               ),
             ),

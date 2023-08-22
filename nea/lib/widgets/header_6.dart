@@ -14,7 +14,7 @@ class Header6 extends StatelessWidget {
       maxLines: ResponsiveWidget.isSmallScreen(context) ? 2 : 4,
       overflow: TextOverflow.ellipsis,
       style: TextStyle(
-          fontSize: ResponsiveWidget.isSmallScreen(context) ? 15.0 : 20.0,
+          fontSize: ResponsiveWidget.isSmallScreen(context) ? 15.0 : 17.0,
           fontWeight: FontWeight.bold,
           color: color),
     );

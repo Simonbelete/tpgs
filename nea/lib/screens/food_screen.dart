@@ -20,7 +20,7 @@ class FoodScreen extends StatelessWidget {
         ),
         body: ResponsiveWidget.isSmallScreen(context)
             ? body(size)
-            : desktopBody(size));
+            : desktopBody(context));
   }
 
   Widget body(Size size) {
@@ -52,10 +52,19 @@ class FoodScreen extends StatelessWidget {
     ));
   }
 
-  Widget desktopBody(Size size) {
+  Widget desktopBody(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
+
     return Center(
-        child: AspectRatio(
-      aspectRatio: 12 / 9,
+        child: SizedBox(
+      width: (() {
+        if (ResponsiveWidget.isMediumScreen(context))
+          return size.width * 0.75;
+        else if (ResponsiveWidget.isLargeScreen(context))
+          return size.width * 0.6;
+        else
+          return size.width;
+      }()),
       child: SingleChildScrollView(
           child: Column(
         children: [
@@ -89,4 +98,42 @@ class FoodScreen extends StatelessWidget {
       )),
     ));
   }
+
+  // Widget desktopBody(Size size) {
+  //   return Center(
+  //       child: AspectRatio(
+  //     aspectRatio: 12 / 9,
+  //     child: SingleChildScrollView(
+  //         child: Column(
+  //       children: [
+  //         Image.asset(
+  //           food.coverImage,
+  //           width: 300,
+  //           height: 250,
+  //           fit: BoxFit.fill,
+  //         ),
+  //         Container(
+  //           padding:
+  //               const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
+  //           child:
+  //               Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+  //             TitleText(text: food.title),
+  //             const SizedBox(
+  //               height: 30.0,
+  //             ),
+  //             // food.description,
+  //             const SizedBox(
+  //               height: 10.0,
+  //             ),
+  //             Container(width: size.width * 1, child: food.facts),
+  //             const SizedBox(
+  //               height: 10.0,
+  //             ),
+  //             food.body!,
+  //           ]),
+  //         )
+  //       ],
+  //     )),
+  //   ));
+  // }
 }

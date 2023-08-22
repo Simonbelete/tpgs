@@ -28,6 +28,7 @@ const columns: GridColDef[] = [
 
 const IngredientsList = () => {
   const [rows, setRows] = useState<GridRowsProp<Ingredient>>([]);
+  const [rowCount, setRowCount] = useState<number>(0);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [paginationModel, setPaginationModel] = useState({
     page: 0,
@@ -39,6 +40,7 @@ const IngredientsList = () => {
     setIsLoading(true);
     try {
       ingredient_service.get().then((response) => {
+        if()
         setRows(response.data.results);
       });
     } catch (ex) {
@@ -46,6 +48,23 @@ const IngredientsList = () => {
       setIsLoading(false);
     }
   }, [paginationModel]);
+
+  const loadData = async () => {
+    // Build Filters
+    let filterQuery: any = {}
+
+    if(nutrientFilter.nutrient_groups.length != 0) {
+      filterQuery['nutrient_group__in'] = nutrientFilter.nutrient_groups.map((e) => e.id).join(',') 
+    }
+
+    // Page Builder
+    const pageQuery = {...paginationModel, ...(_.isEmpty(filterQuery) ? {}: {page: 0})}
+    const searchQuery = nutrientFilter.search != "" ? {search: nutrientFilter.search} : {}
+
+    const response = await ingredient_service.get({...pageQuery, ...filterQuery, ...searchQuery})
+    if(response.status == 200)
+      setRows(response.data.results);
+  }
 
   const refresh = () => {
     setPaginationModel({ page: 0, pageSize: 10 });
@@ -69,9 +88,9 @@ const IngredientsList = () => {
       onDelete={handleDelete}
       rows={rows}
       columns={columns}
-      rowCount={rows.length}
+      rowCount={rowCount}
       loading={isLoading}
-      pageSizeOptions={[5]}
+      pageSizeOptions={[5, 10, 25]}
       paginationModel={paginationModel}
       paginationMode="server"
       onPaginationModelChange={setPaginationModel}

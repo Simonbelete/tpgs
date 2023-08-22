@@ -7,19 +7,25 @@ import { Breadcrumbs } from "@/components";
 import { Button, Typography } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import { NutrientsList, NutrientListActions, NutrientFilter } from "@/features/nutrients";
+import Head from "next/head";
 
 const NutrientsPage = () => {
   const { breadcrumbs } = useBreadcrumbs();
 
   return (
-    <ListLayout
-      breadcrumbs={<Breadcrumbs items={breadcrumbs} />}
-      header={<Typography variant="title">Nutrients</Typography>}
-      actions={<NutrientListActions />}
-      filter={<NutrientFilter />}
-    >
-      <NutrientsList />
-    </ListLayout>
+    <>
+      <Head>
+        <title>ILRI TPGS - Nutrients</title>
+      </Head>
+      <ListLayout
+        breadcrumbs={<Breadcrumbs items={breadcrumbs} />}
+        header={<Typography variant="title">Nutrients</Typography>}
+        actions={<NutrientListActions />}
+        filter={<NutrientFilter />}
+      >
+        <NutrientsList />
+      </ListLayout>
+    </>
   );
 };
 

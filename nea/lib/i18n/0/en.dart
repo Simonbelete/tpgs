@@ -43,7 +43,7 @@ Course EN = Course(
               "What major food sources of carbohydrates does a diet include?"),
       const CourseBodyImage(
         image: "assets/materials/images/carbohydrates.png",
-        description: "Sources of carbohydrates",
+        // description: "Sources of carbohydrates",
       ),
       const SubTitleText(
         text: "Source of Carbohydrates",
@@ -63,7 +63,7 @@ Course EN = Course(
           body: "What major food sources of proteins does a diet include?"),
       const CourseBodyImage(
         image: "assets/materials/images/proteins.png",
-        description: "Sources of proteins",
+        // description: "Sources of proteins",
       ),
       // Fats
       const SubTitleText(
@@ -79,7 +79,7 @@ Course EN = Course(
           body: "What major food sources of fats does a diet include?"),
       const CourseBodyImage(
         image: "assets/materials/images/fats.png",
-        description: "Sources of Fats",
+        // description: "Sources of Fats",
       ),
       const SubTitleText(
         text: "Source of Fats",
@@ -108,7 +108,7 @@ Course EN = Course(
               "play different roles in helping the body in important ways. Some examples include building protein and cells, protecting cells from damage, building bones, protecting vision, metabolizing macronutrients, and helping to heal wounds. Without essential vitamins, multiple nutritional diseases can result."),
       const CourseBodyImage(
         image: "assets/materials/images/vitamins.png",
-        description: "Sources of Vitamins",
+        // description: "Sources of Vitamins",
       ),
       const SubTitleText(
         text: "Source of Vitamins",
@@ -126,7 +126,7 @@ Course EN = Course(
               "are solid, inorganic groups of compounds like essential building blocks of different types of cells. Essential minerals include iron, zinc, calcium, and iodine. For example, iron is part of red blood cells, which transport oxygen through the body. Zinc has many critical functions in the body, including the make-up of cells and body systems, including immune function."),
       const CourseBodyImage(
         image: "assets/materials/images/minerals.png",
-        description: "Sources of Minerals",
+        // description: "Sources of Minerals",
       ),
       const SubTitleText(
         text: "Source of Minerals",

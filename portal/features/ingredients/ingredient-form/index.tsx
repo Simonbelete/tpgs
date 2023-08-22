@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { object, string } from "yup";
+import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import {
@@ -11,6 +11,7 @@ import {
   Stack,
   Typography,
   Box,
+  InputAdornment
 } from "@mui/material";
 import { Ingredient } from "@/models";
 import { LabeledInput } from "@/components/inputs";
@@ -26,9 +27,18 @@ import { RootState } from "@/store";
 
 type Inputs = Partial<Ingredient>;
 
-const schema = object({
-  name: string().required(),
-}).required();
+const schema = yup.object({
+  name: yup.string().required(),
+  code: yup.string().nullable(),
+  ingredient_type: yup.number().nullable(),
+  dm: yup.number(),
+  price: yup.number(),
+  description: yup.string().nullable()
+}).transform((currentValue: any) => {
+  if (currentValue.ingredient_type != null)
+    currentValue.ingredient_type = currentValue.ingredient_type.id;
+  return currentValue;
+});
 
 const IngredientForm = ({
   redirect = true,
@@ -51,7 +61,12 @@ const IngredientForm = ({
     formState: { errors },
   } = useForm<Inputs>({
     defaultValues: {
-      ...ingredient,
+      name: ingredient?.name,
+      code: ingredient?.code,
+      ingredient_type: ingredient?.ingredient_type,
+      dm: ingredient?.dm,
+      price: ingredient?.price,
+      description: ingredient?.description
     },
     // @ts-ignore
     resolver: yupResolver(schema),
@@ -62,7 +77,6 @@ const IngredientForm = ({
       if (ingredient == null) await create({ ...data, nutrients: nutrients });
       else await update(data);
     } catch (ex: any) {
-      console.log(ex);
       if (ex.status == 400) {
         errorToForm(ex.data, setError);
       } else {
@@ -79,12 +93,11 @@ const IngredientForm = ({
     }
   };
 
-  const update = async (data: Partial<Ingredient>) => {
-    delete data.id;
+  const update = async (data: Partial<Ingredient>) => {   
     const response = await ingredient_service.update(ingredient?.id || 0, data);
     if ((response.status = 201)) {
       enqueueSnackbar("Successfully updated!", { variant: "success" });
-      router.push("/ingredients/" + ingredient?.id);
+      router.push("/ingredients/");
     }
   };
 
@@ -156,6 +169,84 @@ const IngredientForm = ({
                     error={!!error?.message}
                     helperText={error?.message}
                     createForm={<IngredientTypeForm redirect={false} />}
+                  />
+                )}
+              />
+            </Grid>
+            {/* Price */}
+            <Grid item xs={12} md={6}>
+              <Controller
+                name={"price"}
+                control={control}
+                render={({
+                  field: { onChange, value },
+                  fieldState: { invalid, isTouched, isDirty, error },
+                }) => (
+                  <LabeledInput
+                    error={!!error?.message}
+                    helperText={error?.message}
+                    onChange={onChange}
+                    fullWidth
+                    size="small"
+                    value={value}
+                    label={"Price [Kg]"}
+                    placeholder={"Price per Kg"}
+                    InputProps={{
+                      endAdornment: (
+                        <InputAdornment position="start">Kg</InputAdornment>
+                      ),
+                    }}
+                  />
+                )}
+              />
+            </Grid>
+            {/* dry material */}
+            <Grid item xs={12} md={6}>
+              <Controller
+                name={"dm"}
+                control={control}
+                render={({
+                  field: { onChange, value },
+                  fieldState: { invalid, isTouched, isDirty, error },
+                }) => (
+                  <LabeledInput
+                    error={!!error?.message}
+                    helperText={error?.message}
+                    onChange={onChange}
+                    fullWidth
+                    size="small"
+                    value={value}
+                    label={"DM [%]"}
+                    placeholder={"DM in %"}
+                    InputProps={{
+                      endAdornment: (
+                        <InputAdornment position="start">%</InputAdornment>
+                      ),
+                    }}
+                  />
+                )}
+              />
+            </Grid>
+            {/* description */}
+            <Grid item xs={12} md={6}>
+              <Controller
+                name={"description"}
+                control={control}
+                render={({
+                  field: { onChange, value },
+                  fieldState: { invalid, isTouched, isDirty, error },
+                }) => (
+                  <LabeledInput
+                    error={!!error?.message}
+                    helperText={error?.message}
+                    onChange={onChange}
+                    fullWidth
+                    size="small"
+                    value={value}
+                    label={"Description [%]"}
+                    placeholder={"Description in %"}
+                    type="string"
+          
                   />
                 )}
               />

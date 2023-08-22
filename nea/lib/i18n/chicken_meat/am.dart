@@ -9,7 +9,7 @@ import 'package:nea/widgets/sub_title_text.dart';
 
 Course AM = Course(
   coverImage: 'assets/materials/images/206.png',
-  title: 'የዶሮ ስጋን',
+  title: 'የዶሮ ስጋ',
   body: Column(crossAxisAlignment: CrossAxisAlignment.start, children: const [
     CourseBodyImage(image: 'assets/materials/images/203.jpg'),
 

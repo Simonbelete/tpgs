@@ -1,6 +1,6 @@
 import React from "react";
 import { NextPageContext } from "next";
-import { Container } from "@mui/material";
+import { Container, Typography } from "@mui/material";
 import { EditLayout } from "@/components/layouts";
 import { IngredientForm, IngredientService } from "@/features/ingredients";
 import { Breadcrumbs, Loading } from "@/components";
@@ -11,7 +11,9 @@ const IngredientEditPage = ({ data }: { data: Ingredient }) => {
   const { breadcrumbs } = useBreadcrumbs();
 
   return (
-    <EditLayout breadcrumbs={<Breadcrumbs items={breadcrumbs} />}>
+    <EditLayout breadcrumbs={<Breadcrumbs items={breadcrumbs} />}
+    header={<Typography variant="title">{data.name} - Edit</Typography>}
+    >
       <Container maxWidth="xl">
         <IngredientForm ingredient={data} />
       </Container>

@@ -56,8 +56,16 @@ class CourseGrid extends StatelessWidget {
                 itemCount: courseData.length,
                 itemBuilder: (context, index) => Container(
                     padding: EdgeInsets.only(
-                        right:
-                            ResponsiveWidget.isSmallScreen(context) ? 15 : 50),
+                      right: (() {
+                        if (ResponsiveWidget.isMediumScreen(context))
+                          return 20.0;
+                        else if (ResponsiveWidget.isLargeScreen(context))
+                          return 50.0;
+                        else
+                          return 15.0;
+                      }()),
+                      // ResponsiveWidget.isSmallScreen(context) ? 15 : 50
+                    ),
                     child: InkWell(
                       onTap: () {
                         Navigator.pushNamed(context,

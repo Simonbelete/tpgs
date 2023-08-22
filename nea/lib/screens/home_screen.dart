@@ -57,17 +57,40 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
+
     return BlocBuilder<LocalBloc, LocalState>(builder: (context, state) {
       return Scaffold(
         body: SafeArea(
-            child: ResponsiveWidget.isSmallScreen(context)
-                ? body(context)
-                : Center(
-                    child: AspectRatio(
-                      aspectRatio: 12 / 9,
-                      child: body(context),
-                    ),
-                  )),
+          child: Center(
+              child: Container(
+                  width: (() {
+                    if (ResponsiveWidget.isMediumScreen(context))
+                      return size.width * 0.75;
+                    else if (ResponsiveWidget.isLargeScreen(context))
+                      return size.width * 0.8;
+                    else
+                      return size.width;
+                  }()),
+                  child: body(context))),
+        ),
+        // child: ResponsiveWidget.isSmallScreen(context)
+        //     ? body(context)
+        //     : Center(
+        //         child: SizedBox(
+        //           width: size.width * 0.3,
+        //           child: body(context),
+        //         ),
+        //       )),
+        // Center(
+        //     child: AspectRatio(
+        //       // aspectRatio: 12 / 9,
+        //       aspectRatio: ResponsiveWidget.isLargeScreen(context)
+        //           ? 12 / 9
+        //           : 12 / 9,
+        //       child: body(context),
+        //     ),
+        //   ),
         floatingActionButton: FloatingActionButton.small(
             backgroundColor: primaryColor,
             onPressed: () {

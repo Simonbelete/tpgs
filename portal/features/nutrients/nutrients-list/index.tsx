@@ -6,7 +6,7 @@ import {
   GridToolbar,
   GridRenderCellParams,
 } from "@mui/x-data-grid";
-import { Card, Chip, Typography } from "@mui/material";
+import { Card, Chip, Typography, Tooltip } from "@mui/material";
 import { DataTable } from "@/components/tables";
 import nutrient_service from "../services/nutrient_service";
 import { Nutrient } from "@/models";
@@ -41,7 +41,20 @@ const columns: GridColDef[] = [
       );
     },
   },
-  { field: "unit", headerName: "Unit", flex: 1, minWidth: 150 },
+  { field: "unit", headerName: "Unit", flex: 1, minWidth: 150,
+    valueGetter: (params) =>
+    params.row.unit ? params.row.unit.name : "", 
+    renderCell: (params: GridRenderCellParams<any>) => {
+      if (params.row.nutrient_group == null) return <></>;
+      return (
+        <Typography color={"link.primary"} variant="body2">
+          <Link href={`/units/${params.row.unit.id}`}>
+            {params.row.unit.name}
+          </Link>
+        </Typography>
+      );
+    },
+  },
 ];
 
 const NutrientsList = () => {

@@ -18,7 +18,9 @@ class CourseScreen extends StatelessWidget {
           elevation: 0,
           iconTheme: const IconThemeData(color: Colors.black),
         ),
-        body: ResponsiveWidget.isSmallScreen(context) ? body() : desktopBody());
+        body: ResponsiveWidget.isSmallScreen(context)
+            ? body()
+            : desktopBody(context));
   }
 
   Widget body() {
@@ -40,10 +42,19 @@ class CourseScreen extends StatelessWidget {
     );
   }
 
-  Widget desktopBody() {
+  Widget desktopBody(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
+
     return Center(
-      child: AspectRatio(
-        aspectRatio: 15 / 9,
+      child: SizedBox(
+        width: (() {
+          if (ResponsiveWidget.isMediumScreen(context))
+            return size.width * 0.75;
+          else if (ResponsiveWidget.isLargeScreen(context))
+            return size.width * 0.6;
+          else
+            return size.width;
+        }()),
         child: SingleChildScrollView(
           child: Container(
             padding:
@@ -64,4 +75,29 @@ class CourseScreen extends StatelessWidget {
       ),
     );
   }
+
+  // Widget desktopBody() {
+  //   return Center(
+  //     child: AspectRatio(
+  //       aspectRatio: 15 / 9,
+  //       child: SingleChildScrollView(
+  //         child: Container(
+  //           padding:
+  //               const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
+  //           child: Column(
+  //             crossAxisAlignment: CrossAxisAlignment.start,
+  //             children: [
+  //               // Titile
+  //               TitleText(text: course.title),
+  //               const SizedBox(
+  //                 height: 30.0,
+  //               ),
+  //               course.body,
+  //             ],
+  //           ),
+  //         ),
+  //       ),
+  //     ),
+  //   );
+  // }
 }
