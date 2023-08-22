@@ -40,12 +40,15 @@ class CourseGrid extends StatelessWidget {
             child: GridView.builder(
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: (() {
-                    if (ResponsiveWidget.isMediumScreen(context))
-                      return 3;
-                    else if (ResponsiveWidget.isLargeScreen(context))
-                      return 4;
-                    else
+                    if (ResponsiveWidget.isSmallScreen(context)) {
                       return 2;
+                    } else if (ResponsiveWidget.isMediumScreen(context)) {
+                      return 3;
+                    } else if (ResponsiveWidget.isLargeScreen(context)) {
+                      return 3;
+                    } else {
+                      return 2;
+                    }
                   }()),
                   mainAxisExtent:
                       ResponsiveWidget.isSmallScreen(context) ? 250 : 400,
@@ -57,12 +60,15 @@ class CourseGrid extends StatelessWidget {
                 itemBuilder: (context, index) => Container(
                     padding: EdgeInsets.only(
                       right: (() {
-                        if (ResponsiveWidget.isMediumScreen(context))
-                          return 20.0;
-                        else if (ResponsiveWidget.isLargeScreen(context))
-                          return 50.0;
-                        else
+                        if (ResponsiveWidget.isSmallScreen(context)) {
                           return 15.0;
+                        } else if (ResponsiveWidget.isMediumScreen(context)) {
+                          return 20.0;
+                        } else if (ResponsiveWidget.isLargeScreen(context)) {
+                          return 40.0;
+                        } else {
+                          return 50.0;
+                        }
                       }()),
                       // ResponsiveWidget.isSmallScreen(context) ? 15 : 50
                     ),

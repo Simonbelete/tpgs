@@ -58,19 +58,21 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-
     return BlocBuilder<LocalBloc, LocalState>(builder: (context, state) {
       return Scaffold(
         body: SafeArea(
           child: Center(
               child: Container(
                   width: (() {
-                    if (ResponsiveWidget.isMediumScreen(context))
-                      return size.width * 0.75;
-                    else if (ResponsiveWidget.isLargeScreen(context))
-                      return size.width * 0.8;
-                    else
+                    if (ResponsiveWidget.isSmallScreen(context)) {
                       return size.width;
+                    } else if (ResponsiveWidget.isMediumScreen(context)) {
+                      return size.width * 0.85;
+                    } else if (ResponsiveWidget.isLargeScreen(context)) {
+                      return size.width * 0.7;
+                    } else {
+                      return size.width;
+                    }
                   }()),
                   child: body(context))),
         ),
