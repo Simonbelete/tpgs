@@ -1,5 +1,5 @@
+import IngredientNutrient from "./IngredientNutrient";
 import IngredientType from "./IngredientType";
-import Nutrient from "./Nutrient";
 
 export default interface Ingredient {
   id: number;
@@ -9,6 +9,6 @@ export default interface Ingredient {
   description: number;
   price: number;
   price_unit: string;
-  nutrients: number | Nutrient[];
+  nutrients: number | IngredientNutrient[];
   dm: number;
 }

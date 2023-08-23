@@ -1,14 +1,14 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { tenantReducer } from "@/features/farms";
 import { formulaReducer } from "@/features/formula";
-import { ingredientReducer, ingredientFilterReducer } from "@/features/ingredients";
+import { ingredientFormReducer, ingredientFilterReducer } from "@/features/ingredients";
 import { nutrientFilterReducer } from "@/features/nutrients"; 
 
 export const store = configureStore({
   reducer: {
     tenant: tenantReducer,
     formula: formulaReducer,
-    ingredient: ingredientReducer,
+    ingredientForm: ingredientFormReducer,
     ingredientFilter: ingredientFilterReducer,
     nutrientFilter: nutrientFilterReducer
   },

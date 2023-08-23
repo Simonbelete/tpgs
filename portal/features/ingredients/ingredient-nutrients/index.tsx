@@ -20,18 +20,19 @@ import { NutrientSelectDialog } from "@/features/nutrients";
 import AddIcon from "@mui/icons-material/Add";
 import DeleteIcon from "@mui/icons-material/DeleteOutlined";
 import { RootState } from "@/store";
-import { setNutrients } from "../slices";
+import { setNutrients, removeNutrientById, updateNutrient } from "../slices";
 import ingredient_service from "../services/ingredient_service";
 import { enqueueSnackbar } from "notistack";
 import messages from "@/util/messages";
 import randomId from "@/util/randomId";
 
 const EditToolbar = (props: {
-  rows: any;
-  setRows: (newRows: (oldRows: GridRowsProp) => GridRowsProp) => void;
   processRowUpdate: (newRow: GridRowModel) => void;
 }) => {
-  const { setRows, processRowUpdate, rows } = props;
+  const { processRowUpdate } = props;
+  const dispatch = useDispatch();
+  const rows: GridRowsProp<Partial<IngredientNutrient> & Partial<{ isNew?: boolean }>> = useSelector((state: RootState) => state.ingredientForm.nutrients);
+
   const [open, setOpen] = useState(false);
 
   const handleOpen = () => setOpen(true);
@@ -43,7 +44,7 @@ const EditToolbar = (props: {
 
   const handleSelected = (value?: Nutrient) => {
     if (value != undefined || value != null) {
-      const newRow = {
+      const newRow: any = {
         id: randomId(true),
         nutrient: value,
         value: 0,
@@ -52,8 +53,8 @@ const EditToolbar = (props: {
       if (checkDuplicate(value.id))
         enqueueSnackbar(messages.duplicateError(), { variant: "warning" });
       else {
-        setRows((oldRows) => [...oldRows, newRow]);
-        processRowUpdate(newRow);
+        dispatch(setNutrients([...rows, newRow]))
+        // processRowUpdate(newRow);
       }
     }
     handleClose();
@@ -83,15 +84,7 @@ const EditToolbar = (props: {
 
 const IngredientNutrients = ({ id }: { id?: number }) => {
   const dispatch = useDispatch();
-  const ingredient = useSelector((state: RootState) => state.ingredient);
-
-  const [rows, setRows] = useState<
-    GridRowsProp<Partial<IngredientNutrient> & Partial<{ isNew: boolean }>>
-  >([]);
-
-  useEffect(() => {
-    dispatch(setNutrients(rows as any));
-  }, [rows]);
+  const rows: GridRowsProp<Partial<IngredientNutrient> & Partial<{ isNew?: boolean }>> = useSelector((state: RootState) => state.ingredientForm.nutrients);
 
   useEffect(() => {
     if (id == null) return;
@@ -99,7 +92,7 @@ const IngredientNutrients = ({ id }: { id?: number }) => {
       .get(id)
       .then((response) => {
         if (response.status == 200) {
-          setRows(response.data.results);
+          dispatch(setNutrients(response.data.results))
         }
       })
       .catch((ex) => {});
@@ -166,24 +159,29 @@ const IngredientNutrients = ({ id }: { id?: number }) => {
   ];
 
   const handleDeleteClick = (id: GridRowId) => {
-    setRows(rows.filter((row) => row.id !== id));
+    dispatch(removeNutrientById(Number(id)));
     handleDelete(id);
   };
 
-  const processRowUpdate = async (newRow: GridRowModel) => {
-    if (id == null) return;
-
+  const processRowUpdate = async (updatedRow: GridRowModel, originalRow: GridRowModel) => {
     const bodyData: Partial<IngredientNutrient> = {
-      value: newRow.value,
-      nutrient: (newRow.nutrient as Nutrient).id,
+      value: updatedRow.value,
+      nutrient: (updatedRow.nutrient as Nutrient).id,
     };
-    if (newRow.isNew) await onCreate(newRow, bodyData);
-    else await onUpdate(newRow, bodyData);
 
-    const updatedRow = { ...newRow, isNew: false };
+    if (id != null && updatedRow.isNew) await onCreate(updatedRow, bodyData);
+    else if(id != null) await onUpdate(updatedRow, bodyData);
 
-    return updatedRow;
+    const newRow = { ...updatedRow, isNew: false };
+
+    dispatch(updateNutrient(newRow as any))
+
+    return newRow;
   };
+
+  const handleOnProcessRowUpdateError = (error: any) => {
+    console.log(error);
+  }
 
   const onCreate = async (
     row: GridRowModel,
@@ -194,8 +192,8 @@ const IngredientNutrients = ({ id }: { id?: number }) => {
     try {
       const response = await ingredient_service.nutrient.create(id, data);
       if (response.status == 201) {
-        const updatedRow = { ...row, id: response.data.id, isNew: false };
-        setRows([...rows, updatedRow]);
+        const updatedRow: any = { ...row, id: response.data.id, isNew: false };
+        dispatch(setNutrients([...rows, updatedRow]))
       }
     } catch (ex) {
       enqueueSnackbar("Failed", { variant: "error" });
@@ -235,7 +233,7 @@ const IngredientNutrients = ({ id }: { id?: number }) => {
       <EditableTable
         sx={{ background: "white", minHeight: "20px" }}
         rows={rows}
-        editMode="row"
+        // editMode="row"
         rowHeight={40}
         columns={columns}
         disableRowSelectionOnClick
@@ -246,8 +244,9 @@ const IngredientNutrients = ({ id }: { id?: number }) => {
         }}
         processRowUpdate={processRowUpdate}
         slotProps={{
-          toolbar: { setRows, processRowUpdate, rows },
+          toolbar: { processRowUpdate },
         }}
+        onProcessRowUpdateError={handleOnProcessRowUpdateError}
       />
     </>
   );
