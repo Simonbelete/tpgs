@@ -14,6 +14,7 @@ class Formulate:
         self.ration_dm = 0
         self.ration_price = 0
         self.ration_ratio = 0
+        self.ration_weight = 0
 
     def get_ingredients(self):
         return self.formula.ingredients.all()
@@ -29,10 +30,11 @@ class Formulate:
             for n in ing_nutr.iterator():
                 self.rations[n.nutrient.abbreviation] += fing.ration * \
                     n.value / 100
+            ing_contri_per_kg = self.formula * fing.ration / 100
             self.ration_dm += (fing.ingredient.dm or 0) * fing.ration / 100
-            self.ration_price += float(fing.ingredient.price or 0) * \
-                fing.ration / 100
+            self.ration_price += fing.ingredient.price or 0 * ing_contri_per_kg
             self.ration_ratio += fing.ration
+            self.ration_weight = ing_contri_per_kg
         return {'rations': self.rations, 'ration_dm': self.ration_dm, 'ration_price': self.ration_price, 'ration_ratio': self.ration_ratio}
 
     def save(self):
@@ -40,8 +42,8 @@ class Formulate:
             nutrient = Nutrient.objects.get(abbreviation=key)
             models.FormulaRation.objects.update_or_create(
                 formula=self.formula, nutrient=nutrient, defaults={'value': self.rations[key]})
-        # TODO: Sync currency
-        self.formula.ration_price = Money(self.ration_price, 'ETB')
+        self.formula.ration_price = self.ration_price
         self.formula.ration_ratio = self.ration_ratio
         self.formula.ration_dm = self.ration_dm
+        self.formula.ration_weight = self.ration_weight
         return self.formula.save()

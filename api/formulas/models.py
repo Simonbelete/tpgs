@@ -18,14 +18,14 @@ class FormulaRequirement(CoreModel):
     formula = models.ForeignKey('formulas.Formula', on_delete=models.CASCADE)
     nutrient = models.ForeignKey(
         'nutrients.Nutrient', on_delete=models.CASCADE)
-    value = models.FloatField(default=0, null=True, blank=True)
+    value = models.DecimalField(max_digits=7, decimal_places=3,null=True, blank=True, default=0)
 
 
 class FormulaRation(CoreModel):
     formula = models.ForeignKey('formulas.Formula', on_delete=models.CASCADE)
     nutrient = models.ForeignKey(
         'nutrients.Nutrient', on_delete=models.CASCADE)
-    value = models.FloatField(default=0, null=True, blank=True)
+    value =  models.DecimalField(max_digits=7, decimal_places=3,null=True, blank=True, default=0)
 
 
 class FormulaIngredient(CoreModel):
@@ -96,19 +96,18 @@ class Formula(CoreModel):
     # Requirements
     requirements = models.ManyToManyField(
         'nutrients.Nutrient', null=True, blank=True, through=FormulaRequirement, related_name='formula_requirements')
-    budget = MoneyField(max_digits=14, null=True, blank=True, default=0,
-                        decimal_places=2, default_currency='ETB')  # per kg
+    budget = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True, default=0) # per kg
     desired_ratio = models.DecimalField(
         validators=PERCENTAGE_VALIDATOR, max_digits=15, decimal_places=5, default=100)
     desired_dm = models.DecimalField(
         validators=PERCENTAGE_VALIDATOR, max_digits=15, decimal_places=5, default=0)
-    # Rations
+    # Rations - rations are computed based on the given weight
     rations = models.ManyToManyField(
         'nutrients.Nutrient', null=True, blank=True, through=FormulaRation, related_name='formula_rations')
-    ration_price = MoneyField(max_digits=14, null=True, blank=True, default=0,
-                              decimal_places=2, default_currency='ETB')
+    ration_price = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True, default=0)
     ration_ratio = models.DecimalField(
         validators=PERCENTAGE_VALIDATOR, max_digits=15, decimal_places=5, default=0)
+    ration_weight = models.DecimalField(max_digits=7, decimal_places=3,null=True, blank=True, default=0)
     ration_dm = models.DecimalField(
         validators=PERCENTAGE_VALIDATOR, max_digits=15, decimal_places=5, default=0)
 
@@ -120,11 +119,10 @@ class Formula(CoreModel):
     def ingredient_count(self):
         return self.ingredients.count()
 
-    @property
-    def total_ingredient_weight(self):
-        return self.ingredients.through.objects.all().annotate(ann_weight=F('formula__weight')*F('ration')/100).aggregate(ann_total_weight=Sum('ann_weight'))['ann_total_weight'] or 0
-
-    @property
-    def total_ingredient_price(self):
-        # return self.ingredients.through.objects.all().annotate(ann_weight=F('formula__weight')*F('ration')/100).annotate(ann_price=F('ann_weight')*F('ingredient__price')).aggregate(ann_total_price=Sum('ann_price'))['ann_total_price'] or 0
-        return self.ingredients.through.objects.all().annotate(ann_price=F('formula__weight')*F('ration')/100 *F('ingredient__price')).aggregate(ann_total_price=Sum('ann_price'))['ann_total_price'] or 0
+    # Compute ingredient based on value
+    # @property
+    # def total_ingredient_weight(self):
+    #     return self.ingredients.through.objects.all().annotate(ann_weight=F('formula__weight')*F('ration')/100).aggregate(ann_total_weight=Sum('ann_weight'))['ann_total_weight'] or 0
+    # @property
+    # def total_ingredient_price(self):
+    #     return self.ingredients.through.objects.all().annotate(ann_price=F('formula__weight')*F('ration')/100 *F('ingredient__price')).aggregate(ann_total_price=Sum('ann_price'))['ann_total_price'] or 0

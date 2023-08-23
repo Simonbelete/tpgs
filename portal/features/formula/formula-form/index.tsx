@@ -15,6 +15,7 @@ import {
   InputAdornment,
   Stack,
   Chip,
+  Divider
 } from "@mui/material";
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -78,6 +79,7 @@ const FormulaForm = ({
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   const [tabIndex, setTabIndex] = useState(0);
   const dispatch = useDispatch();
+  const [formulated, setRormulated] = useState<Formula>();
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setTabIndex(newValue);
@@ -114,7 +116,8 @@ const FormulaForm = ({
 
   const startFormulating = async () => {
     const response = await formula_service.formulateById(formula == undefined ? 0: formula.id);
-    console.log(response.data);
+    if(response.status == 200)
+      setRormulated(response.data.results)
   }
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
@@ -156,31 +159,23 @@ const FormulaForm = ({
     <>
       <Box sx={{ mb: 5 }}>
         <Paper sx={{ p: 2 }} elevation={0} variant="outlined" square>
-          <Stack direction="row" spacing={2}>
-            <Button
-              variant="contained"
-              size="small"
-              disableElevation
-              onClick={handleOnFormulate}
-            >
-              Formulate
-            </Button>
-            <Button
-              variant="outlined"
-              size="small"
-              disableElevation
-              onClick={handleOnFormulate}
-            >
-              Save
-            </Button>
-            <Button
-              variant="outlined"
-              size="small"
-              disableElevation
-              onClick={handleOnFormulate}
-            >
-              Print
-            </Button>
+          <Stack direction="row"
+            justifyContent="space-between"
+            alignItems="center"
+            spacing={0}
+            divider={<Divider orientation="vertical" flexItem />}>
+              <Stack>
+                <Typography>Total [per Kg]: </Typography>
+                <Typography>{formulated && formulated.ration_price}</Typography>
+              </Stack>
+              <Stack>
+                <Typography>Total Ratio [%]: </Typography>
+                <Typography>{formulated && formulated.ration_ratio}</Typography>
+              </Stack>
+              <Stack>
+                <Typography>Total DM: </Typography>
+                <Typography>{formulated && formulated.ration_ratio}</Typography>
+              </Stack>
           </Stack>
         </Paper>
       </Box>
