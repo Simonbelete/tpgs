@@ -22,15 +22,29 @@ class FoodGridList extends StatelessWidget {
             padding: EdgeInsets.only(left: 0.0),
             child: GridView.builder(
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount:
-                      ResponsiveWidget.isSmallScreen(context) ? 2 : 6,
+                  crossAxisCount: (() {
+                    if (ResponsiveWidget.isSmallScreen(context)) {
+                      return 2;
+                    } else if (ResponsiveWidget.isTabletScreen(context)) {
+                      return 4;
+                    } else if (ResponsiveWidget.isMediumScreen(context)) {
+                      return 3;
+                    } else if (ResponsiveWidget.isLargeScreen(context)) {
+                      return 4;
+                    } else {
+                      return 6;
+                    }
+                  }()),
+                  // ResponsiveWidget.isSmallScreen(context) ? 2 : 6,
+
                   mainAxisExtent: (() {
-                    if (ResponsiveWidget.isMediumScreen(context))
+                    if (ResponsiveWidget.isMediumScreen(context)) {
                       return 200.0;
-                    else if (ResponsiveWidget.isLargeScreen(context))
+                    } else if (ResponsiveWidget.isLargeScreen(context)) {
                       return 210.0;
-                    else
+                    } else {
                       return 200.0;
+                    }
                   }()),
                 ),
                 physics: NeverScrollableScrollPhysics(),
