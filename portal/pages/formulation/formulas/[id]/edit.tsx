@@ -29,7 +29,11 @@ const IngredientEditPage = ({ data }: { data: Formula }) => {
             alignItems="center"
           >
             <Box>
-              <Button variant="contained" startIcon={<SaveIcon />} size="small">
+              <Button variant="contained" startIcon={<SaveIcon />} size="small" onClick={() => {
+                  console.log("ddd");
+                  if (actionRef.current != undefined)
+                    (actionRef.current as any).formulate();
+                }}>
                 Formulate
               </Button>
             </Box>
@@ -63,7 +67,7 @@ const IngredientEditPage = ({ data }: { data: Formula }) => {
       }
     >
       <Container maxWidth="xl">
-        <FormulaForm formula={data} />
+        <FormulaForm formula={data} actionRef={actionRef}/>
       </Container>
     </EditLayout>
   );

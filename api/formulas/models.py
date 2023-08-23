@@ -4,6 +4,9 @@ from simple_history.models import HistoricalRecords
 from django.core.exceptions import ValidationError
 from cities_light.models import Country
 from djmoney.models.fields import MoneyField
+from django.db.models import Count, Sum, Avg, F
+from djmoney.money import Money
+from decimal import Decimal
 
 from core.models import CoreModel
 from purposes.models import Purpose
@@ -29,9 +32,12 @@ class FormulaIngredient(CoreModel):
     formula = models.ForeignKey('formulas.Formula', on_delete=models.CASCADE)
     ingredient = models.ForeignKey(
         'ingredients.Ingredient', on_delete=models.CASCADE)
-    ratio_min = models.FloatField(default=0, null=True)  # %
-    ratio_max = models.FloatField(default=0, null=True)  # %
-    ration = models.FloatField(default=0, null=True, blank=True)  # %
+    ratio_min = models.DecimalField(
+        validators=PERCENTAGE_VALIDATOR, max_digits=6, decimal_places=3, default=0, null=True, blank=True)
+    ratio_max = models.DecimalField(
+        validators=PERCENTAGE_VALIDATOR, max_digits=6, decimal_places=3, default=0, null=True, blank=True)
+    ration = models.DecimalField(
+        validators=PERCENTAGE_VALIDATOR, max_digits=6, decimal_places=3, default=0, null=True, blank=True)
 
     class Meta:
         unique_together = ['formula', 'ingredient']
@@ -52,12 +58,12 @@ class FormulaIngredient(CoreModel):
         return self.formula.weight * self.ration / 100
 
     @property
-    def total_weight(self):
+    def ration_weight(self):
         return self.formula.weight * self.ration / 100
 
     @property
-    def total_price(self):
-        return self.total_weight * self.ingredient.price
+    def ration_price(self):
+        return self.ration_weight * self.ingredient.price
 
 
 class Formula(CoreModel):
@@ -73,7 +79,7 @@ class Formula(CoreModel):
     name = models.CharField(max_length=100)
     purpose = models.ForeignKey(
         Purpose, on_delete=models.SET_NULL, null=True, blank=True)
-    weight = models.FloatField(null=True, blank=True, default=0)
+    weight = models.DecimalField(max_digits=7, decimal_places=3,null=True, blank=True, default=0)
     weight_unit = models.ForeignKey(
         Unit, on_delete=models.SET_NULL, null=True, blank=True, default=3)  # kg
     country = models.ForeignKey(
@@ -113,3 +119,12 @@ class Formula(CoreModel):
     @property
     def ingredient_count(self):
         return self.ingredients.count()
+
+    @property
+    def total_ingredient_weight(self):
+        return self.ingredients.through.objects.all().annotate(ann_weight=F('formula__weight')*F('ration')/100).aggregate(ann_total_weight=Sum('ann_weight'))['ann_total_weight'] or 0
+
+    @property
+    def total_ingredient_price(self):
+        # return self.ingredients.through.objects.all().annotate(ann_weight=F('formula__weight')*F('ration')/100).annotate(ann_price=F('ann_weight')*F('ingredient__price')).aggregate(ann_total_price=Sum('ann_price'))['ann_total_price'] or 0
+        return self.ingredients.through.objects.all().annotate(ann_price=F('formula__weight')*F('ration')/100 *F('ingredient__price')).aggregate(ann_total_price=Sum('ann_price'))['ann_total_price'] or 0

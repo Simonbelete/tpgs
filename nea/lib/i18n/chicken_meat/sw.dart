@@ -15,7 +15,6 @@ Course SW = Course(
 
     SubTitleText(
       text: "Faida za Kiafya za Kula Nyama ya Kuku",
-      fontSize: 27.0,
     ),
     Paragraph(title: "", body: "Faida za Kiafya za Kula Nyama ya Kuku"),
     // SubTitleText(text: ""),
@@ -49,7 +48,6 @@ Course SW = Course(
             "Kuku, aliye na vitamini B6 kwa wingi, ni muhimu katika kuzuia mashambulizi ya moyo. Vitamini B6 husaidia kwa kupunguza viwango vya homocysteine, moja ya vipengele muhimu vinavyohusishwa na hatari ya kuongezeka kwa mashambulizi ya moyo. Mbali na hilo, kuku pia ni chanzo kizuri cha niasini ambayo husaidia kupunguza cholesterol, sababu ya hatari kwa maendeleo ya ugonjwa wa moyo. Jumuiya ya Moyo ya Marekani pia inapendekeza kuku juu ya nyama nyekundu kwa vile ina mafuta kidogo yaliyojaa na ni chanzo kizuri cha asidi ya mafuta ya omega-3 ambayo huonyesha madhara ya moyo na mishipa."),
     SubTitleText(
       text: "Maandalizi ya kuku - Njia ya joto kavu",
-      fontSize: 27.0,
     ),
     Paragraph(
         title: "",

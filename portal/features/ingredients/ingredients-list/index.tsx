@@ -34,7 +34,7 @@ const IngredientsList = () => {
   const [rowCount, setRowCount] = useState<number>(0);
   const [loading, setLoading] = useState<boolean>(true);
   const [paginationModel, setPaginationModel] = useState({
-    page: 1,
+    page: 0,
     pageSize: 10,
   });
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();

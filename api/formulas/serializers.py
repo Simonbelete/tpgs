@@ -5,14 +5,14 @@ from . import models
 from nutrients.models import Nutrient
 from ingredients.models import Ingredient
 from ingredients.serializers import IngredientSerializer_GET
-from nutrients.serializers import NutrientSerializer_POST, NutrientSerializer_GET
+from nutrients.serializers import NutrientSerializer_POST, NutrientSerializer_GET, NutrientSerializer_SLUG
 from purposes.serializers import PurposeSerializer_GET
 
 # Formula -> Requirements
 
 
 class FormulaRequirementSerializer_GET(serializers.ModelSerializer):
-    nutrient = NutrientSerializer_GET()
+    nutrient = NutrientSerializer_SLUG()
 
     class Meta:
         model = models.FormulaRequirement
@@ -111,7 +111,7 @@ class FormulaIngredientSerializer_GET(serializers.ModelSerializer):
 
     class Meta:
         model = models.FormulaIngredient
-        fields = '__all__'
+        fields = ['formula', 'ingredient', 'ratio_min', 'ratio_max', 'ration', 'ration_weight', 'ration_price']
 
 
 class FormulaIngredientSerializer_POST(serializers.ModelSerializer):
@@ -158,7 +158,7 @@ class FormulaSerializer_GET(serializers.ModelSerializer):
     class Meta:
         model = models.Formula
         fields = ['id', 'name', 'purpose', 'weight', 'note',
-                  'requirement_count', 'ingredient_count']
+                  'requirement_count', 'ingredient_count', 'total_ingredient_weight', 'total_ingredient_price']
 
 
 class FormulaSerializer_POST(serializers.ModelSerializer):

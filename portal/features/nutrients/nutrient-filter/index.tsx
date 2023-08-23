@@ -18,14 +18,6 @@ import { NutrientGroup } from "@/models";
 import { setNutrientGroups, removeNutrientGroupById, setSearch, clearAll } from "../slices";
 import { RootState } from "@/store";
 
-interface FilterMenu {
-  data: {
-    value: number;
-    label: string;
-  }[];
-  selected: string[];
-}
-
 const NutrientFilter = () => {
   const dispatch = useDispatch();
   const nutrientGroups = useSelector((state: RootState) => state.nutrientFilter.nutrient_groups);

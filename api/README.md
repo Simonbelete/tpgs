@@ -1,3 +1,9 @@
+## Inputs Decimal place
+- For weights max 9999 with a decimal place of three
+eg 9999.999
+- For price 10 digits with 2 decimal place
+
+
 ## Setup
 
 1. ```python manage.py migrate_schemas --shared```

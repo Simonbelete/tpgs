@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useImperativeHandle} from "react";
 import _ from "lodash";
 import {
   Paper,
@@ -68,9 +68,11 @@ function a11yProps(index: number) {
 const FormulaForm = ({
   redirect = true,
   formula,
+  actionRef
 }: {
   redirect?: boolean;
   formula?: Formula;
+  actionRef?: React.Ref<unknown>;
 }) => {
   const router = useRouter();
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
@@ -101,8 +103,21 @@ const FormulaForm = ({
     resolver: yupResolver(schema),
   });
 
+  useImperativeHandle(actionRef, () => ({
+    formulate() {
+      startFormulating();
+    },
+    createAndNew() {
+      
+    },
+  }));
+
+  const startFormulating = async () => {
+    const response = await formula_service.formulateById(formula == undefined ? 0: formula.id);
+    console.log(response.data);
+  }
+
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
-    console.log(data);
     try {
       if (formula == null)
         await create({

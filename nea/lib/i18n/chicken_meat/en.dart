@@ -15,7 +15,6 @@ Course EN = Course(
 
     SubTitleText(
       text: "Health Benefits of Eating Chicken Meat",
-      fontSize: 27.0,
     ),
     Paragraph(
         title: "",
@@ -52,7 +51,6 @@ Course EN = Course(
             "Chicken, rich in vitamin B6, is important in preventing heart attacks. Vitamin B6 helps by lowering the levels of homocysteine, one of the key components linked to an increased risk of heart attack. Besides, chicken is also a good source of niacin which helps lower cholesterol, a risk factor for heart disease development. The American Heart Association also recommends chicken over red meat since it contains less saturated fats and is a good source of omega-3 fatty acids that exhibit beneficial cardiovascular effects."),
     SubTitleText(
       text: "Chicken preparation - Dry heat Method",
-      fontSize: 27.0,
     ),
     Paragraph(
         title: "",

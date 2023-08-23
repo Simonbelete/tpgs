@@ -30,7 +30,7 @@ class Formulate:
                 self.rations[n.nutrient.abbreviation] += fing.ration * \
                     n.value / 100
             self.ration_dm += (fing.ingredient.dm or 0) * fing.ration / 100
-            self.ration_price += float(fing.ingredient.price.amount or 0) * \
+            self.ration_price += float(fing.ingredient.price or 0) * \
                 fing.ration / 100
             self.ration_ratio += fing.ration
         return {'rations': self.rations, 'ration_dm': self.ration_dm, 'ration_price': self.ration_price, 'ration_ratio': self.ration_ratio}

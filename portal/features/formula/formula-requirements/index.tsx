@@ -95,6 +95,8 @@ const FormulaRequirements = ({ id }: { id?: number }) => {
 
   useEffect(() => {
     if (id == null) return;
+    const controller = new AbortController();
+
     formula_service.requirement
       .get(id)
       .then((response) => {
@@ -103,6 +105,10 @@ const FormulaRequirements = ({ id }: { id?: number }) => {
         }
       })
       .catch((ex) => {});
+
+      return () => {
+        controller.abort()
+      }
   }, []);
 
   const columns: GridColDef[] = [
@@ -142,7 +148,7 @@ const FormulaRequirements = ({ id }: { id?: number }) => {
       headerName: "Unit",
       flex: 1,
       minWidth: 150,
-      valueGetter: (params) => (params.row.unit ? params.row.unit.name : ""),
+      valueGetter: (params) => params.row.nutrient.unit,
     },
     {
       field: "actions",

@@ -32,6 +32,8 @@ export default {
     id: number
   ): Promise<AxiosResponse<Response<Formula>>> =>
     clientSSR(context).get(`${URL}/${id}`),
+  formulateById: async (id: number): Promise<AxiosResponse<Response<Formula>>> =>
+    client.post(`${URL}/${id}/formulate/`),
   requirement: {
     get: async (
       formula_id: number
