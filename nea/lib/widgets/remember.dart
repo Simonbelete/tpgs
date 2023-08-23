@@ -13,7 +13,8 @@ class Remember extends StatelessWidget {
       child: Container(
         width: double.infinity,
         decoration: BoxDecoration(
-            color: Color(0xff6DA82F),
+            // color: Color(0xff6DA82F),
+            color: const Color(0xffF7A56D),
             borderRadius: BorderRadius.circular(10.0)),
         padding: const EdgeInsets.only(
           bottom: 0,
@@ -34,16 +35,6 @@ class Remember extends StatelessWidget {
                     ),
               ),
             ),
-            // RichText(
-            //   text: TextSpan(
-            //     text: title! + " :- ",
-            //     style: Theme.of(context).textTheme.bodyMedium!.apply(
-            //           fontSizeDelta: 1,
-            //           fontWeightDelta: 500,
-            //           color: Colors.white,
-            //         ),
-            //   ),
-            // ),
             const SizedBox(
               height: 10,
             ),
@@ -61,19 +52,6 @@ class Remember extends StatelessWidget {
                     )
                     .toList(),
               )),
-              // child: RichText(
-              //     text: TextSpan(
-              //   children: children
-              //       .map(
-              //         (e) => TextSpan(
-              //             text: "• " + e + "\n",
-              //             style: Theme.of(context).textTheme.bodyMedium!.apply(
-              //                   fontSizeDelta: 1,
-              //                   color: Colors.white,
-              //                 )),
-              //       )
-              //       .toList(),
-              // )),
             ),
           ],
         ),

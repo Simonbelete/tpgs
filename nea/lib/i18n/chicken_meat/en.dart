@@ -101,7 +101,7 @@ Course EN = Course(
     SubTitleText(text: "Time and Temperature Control"),
     Bullet(children: [
       "Ovens must be preheated",
-      "oven temperature and shelf settings in recipes must be followed.",
+      "Oven temperature and shelf settings in recipes must be followed.",
       "Shape, size, type, bone proportion, and quantity of food will affect the cooking time.",
       "Meat thermometers can be inserted to determine the exact temperature in the center of the joint.",
     ]),

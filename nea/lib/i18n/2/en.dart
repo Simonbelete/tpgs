@@ -218,10 +218,10 @@ Course EN = Course(
       SubTitleText(text: "Vitamin C - Nutritional disorder", fontSize: 16.0),
       Bullet(children: [
         "Scurvy",
-        "poor appetite",
-        "fatigue",
-        "retarded wound healing",
-        "bleeding gums"
+        "Poor appetite",
+        "Fatigue",
+        "Retarded wound healing",
+        "Bleeding gums"
       ]),
       //
       // Essential food based micronutrients: minerals
@@ -235,9 +235,9 @@ Course EN = Course(
       ),
       SubTitleText(text: "Vitamin Iron - Functions", fontSize: 16.0),
       Bullet(children: [
-        "Transports oxygen to the blood.",
+        "Transports oxygen to the blood",
         "Eliminates old red blood cells and",
-        "builds new cells"
+        "Builds new cells"
       ]),
       SubTitleText(text: "Vitamin Iron - Food sources", fontSize: 16.0),
       Paragraph(
@@ -286,7 +286,7 @@ Course EN = Course(
       SubTitleText(text: "Vitamin Zinc - Nutritional disorder", fontSize: 16.0),
       Bullet(children: [
         "Reduced resistance to infection",
-        "skin ulceration",
+        "Skin ulceration",
         "Stunted growth"
       ]),
     ],
