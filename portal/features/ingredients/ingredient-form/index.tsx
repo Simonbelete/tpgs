@@ -51,7 +51,7 @@ const IngredientForm = ({
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
   const ingredientFormState = useSelector(
-    (state: RootState) => state.ingredientForm.nutrients
+    (state: RootState) => state.ingredientForm
   );
 
   const {
@@ -74,8 +74,9 @@ const IngredientForm = ({
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     try {
-      if (ingredient == null) await create({ ...data, ...ingredientFormState });
-      else await update(data);
+      if (ingredient == null) { 
+        await create({ ...data, ...{nutrients: ingredientFormState.nutrients} }); 
+      }else await update(data);
     } catch (ex: any) {
       if (ex.status == 400) {
         errorToForm(ex.data, setError);
@@ -86,11 +87,10 @@ const IngredientForm = ({
   };
 
   const create = async (data: Partial<Ingredient>) => {
-    console.log(data);
     const response = await ingredient_service.create(data);
     if ((response.status = 201)) {
       enqueueSnackbar("Successfully created!", { variant: "success" });
-      // if (redirect) router.push("/ingredients");
+      if (redirect) router.push("/ingredients");
     }
   };
 

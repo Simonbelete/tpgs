@@ -111,7 +111,7 @@ class FormulaIngredientSerializer_GET(serializers.ModelSerializer):
 
     class Meta:
         model = models.FormulaIngredient
-        fields = ['formula', 'ingredient', 'ratio_min', 'ratio_max', 'ration', 'ration_weight', 'ration_price']
+        fields = ['id', 'formula', 'ingredient', 'ratio_min', 'ratio_max', 'ration', 'ration_weight', 'ration_price']
 
 
 class FormulaIngredientSerializer_POST(serializers.ModelSerializer):

@@ -27,8 +27,11 @@ export const ingredientFormSlice = createSlice({
     removeNutrientById: (state, action: PayloadAction<number>) => {
       state.nutrients = state.nutrients.filter((e) => e.id != action.payload)
     },
+    clearAll: (state) => {
+      state = initialState;
+    }
   },
 });
 
-export const { setNutrients, removeNutrientById, updateNutrient } = ingredientFormSlice.actions;
+export const { setNutrients, removeNutrientById, updateNutrient,clearAll } = ingredientFormSlice.actions;
 export default ingredientFormSlice.reducer;

@@ -30,7 +30,9 @@ class Formulate:
             for n in ing_nutr.iterator():
                 self.rations[n.nutrient.abbreviation] += fing.ration * \
                     n.value / 100
-            ing_contri_per_kg = self.formula * fing.ration / 100
+            ing_contri_per_kg = self.formula.weight * fing.ration / 100
+            print('-----------------------')
+            print(ing_contri_per_kg)
             self.ration_dm += (fing.ingredient.dm or 0) * fing.ration / 100
             self.ration_price += fing.ingredient.price or 0 * ing_contri_per_kg
             self.ration_ratio += fing.ration

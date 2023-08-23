@@ -20,7 +20,7 @@ import { NutrientSelectDialog } from "@/features/nutrients";
 import AddIcon from "@mui/icons-material/Add";
 import DeleteIcon from "@mui/icons-material/DeleteOutlined";
 import { RootState } from "@/store";
-import { setNutrients, removeNutrientById, updateNutrient } from "../slices";
+import { setNutrients, removeNutrientById, updateNutrient, clearAll } from "../slices";
 import ingredient_service from "../services/ingredient_service";
 import { enqueueSnackbar } from "notistack";
 import messages from "@/util/messages";
@@ -45,7 +45,7 @@ const EditToolbar = (props: {
   const handleSelected = (value?: Nutrient) => {
     if (value != undefined || value != null) {
       const newRow: any = {
-        id: randomId(true),
+        id: value.id,
         nutrient: value,
         value: 0,
         isNew: true,
@@ -87,7 +87,11 @@ const IngredientNutrients = ({ id }: { id?: number }) => {
   const rows: GridRowsProp<Partial<IngredientNutrient> & Partial<{ isNew?: boolean }>> = useSelector((state: RootState) => state.ingredientForm.nutrients);
 
   useEffect(() => {
+    const controller = new AbortController();
+    dispatch(clearAll())
+
     if (id == null) return;
+
     ingredient_service.nutrient
       .get(id)
       .then((response) => {
@@ -96,6 +100,10 @@ const IngredientNutrients = ({ id }: { id?: number }) => {
         }
       })
       .catch((ex) => {});
+
+      return () => {
+        controller.abort()
+      }
   }, []);
 
   const columns: GridColDef[] = [
@@ -129,6 +137,7 @@ const IngredientNutrients = ({ id }: { id?: number }) => {
       flex: 1,
       minWidth: 150,
       editable: true,
+      type: 'number',
     },
     {
       field: "unit",
@@ -180,7 +189,6 @@ const IngredientNutrients = ({ id }: { id?: number }) => {
   };
 
   const handleOnProcessRowUpdateError = (error: any) => {
-    console.log(error);
   }
 
   const onCreate = async (
