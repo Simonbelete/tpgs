@@ -13,21 +13,22 @@ class Bullet extends StatelessWidget {
 
     return SizedBox(
       child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: children
-              .map(
-                (e) => Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text('•  '),
-                    Expanded(
-                        // width: size.width * 0.85,
-                        child: Paragraph(title: '', body: '$e'))
-                  ],
-                ),
-              )
-              .toList()),
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: children
+            .map(
+              (e) => Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text('•  '),
+                  Expanded(
+                      // width: size.width * 0.85,
+                      child: Paragraph(title: '', body: '$e'))
+                ],
+              ),
+            )
+            .toList(),
+      ),
     );
   }
 }
