@@ -12,7 +12,7 @@ class KeyMessages extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    return Container(
+    return SizedBox(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -23,14 +23,14 @@ class KeyMessages extends StatelessWidget {
                 if (e is String) {
                   return Container(
                       // width: size.width * 0.85,
-                      padding: EdgeInsets.only(bottom: 0),
+                      padding: const EdgeInsets.only(bottom: 0),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text('•  '),
-                          Container(
-                              width: size.width * 0.85,
+                          const Text('•  '),
+                          Expanded(
+                              // width: size.width * 0.85,
                               child: Paragraph(title: '', body: '$e'))
                         ],
                       ));
