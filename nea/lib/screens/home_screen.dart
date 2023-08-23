@@ -66,12 +66,15 @@ class HomeScreen extends StatelessWidget {
                   width: (() {
                     if (ResponsiveWidget.isSmallScreen(context)) {
                       return size.width;
+                    } else if (ResponsiveWidget.isTabletScreen(context)) {
+                      return size.width * 0.85;
                     } else if (ResponsiveWidget.isMediumScreen(context)) {
                       return size.width * 0.85;
                     } else if (ResponsiveWidget.isLargeScreen(context)) {
                       return size.width * 0.7;
                     } else {
-                      return size.width;
+                      // Extra Large
+                      return size.width * 0.7;
                     }
                   }()),
                   child: body(context))),

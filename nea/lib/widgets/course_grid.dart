@@ -42,12 +42,14 @@ class CourseGrid extends StatelessWidget {
                   crossAxisCount: (() {
                     if (ResponsiveWidget.isSmallScreen(context)) {
                       return 2;
+                    } else if (ResponsiveWidget.isTabletScreen(context)) {
+                      return 2;
                     } else if (ResponsiveWidget.isMediumScreen(context)) {
                       return 3;
                     } else if (ResponsiveWidget.isLargeScreen(context)) {
                       return 3;
                     } else {
-                      return 2;
+                      return 4;
                     }
                   }()),
                   mainAxisExtent:

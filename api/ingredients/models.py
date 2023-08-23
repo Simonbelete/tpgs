@@ -25,8 +25,7 @@ class Ingredient(CoreModel):
     ingredient_type = models.ManyToManyField(
         IngredientType, null=True, blank=True, related_name='ingredients')
     description = models.CharField(max_length=200, null=True, blank=True)
-    price = models.DecimalField(max_digits=14, null=True, blank=True, default=0,
-                       decimal_places=4)
+    price = models.DecimalField(max_digits=10, decimal_places=3, null=True, blank=True, default=0)
     # price = MoneyField(max_digits=14, null=True, blank=True, default=0,
     #                    decimal_places=2, default_currency='ETB')
     price_unit = models.ForeignKey(
