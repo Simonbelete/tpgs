@@ -43,7 +43,6 @@ const IngredientEditPage = ({ data }: { data: Formula }) => {
                 size="small"
                 startIcon={<LibraryAddIcon />}
                 onClick={() => {
-                  console.log("ddd");
                   if (actionRef.current != undefined)
                     (actionRef.current as any).createAndNew();
                 }}

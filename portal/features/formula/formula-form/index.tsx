@@ -220,7 +220,7 @@ const FormulaForm = ({
               <Stack>
                 <Typography variant="caption" color="text.secondary">TOTAL Ratio [%]</Typography>
                 <Stack direction={"row"} spacing={2}>
-                  <Tooltip title="Achived Cost">
+                  <Tooltip title="Achived Ration">
                     <Typography variant="body2" fontWeight={600} color="secondary">{formulated == null ? formula?.ration_ratio : formulated.ration_ratio}</Typography>
                   </Tooltip>
                   <Tooltip title="Achivement">
@@ -235,7 +235,7 @@ const FormulaForm = ({
               <Stack>
                 <Typography variant="caption" color="text.secondary">TOTAL WEIGHT [kg]</Typography>
                 <Stack direction={"row"} spacing={2}>
-                  <Tooltip title="Achived Cost">
+                  <Tooltip title="Achived Weight">
                     <Typography variant="body2" fontWeight={600} color="secondary">{formulated == null ? formula?.ration_weight : formulated.ration_weight}</Typography>
                   </Tooltip>
                   <Tooltip title="Achivement">
@@ -250,7 +250,7 @@ const FormulaForm = ({
               <Stack>
                 <Typography variant="caption" color="text.secondary">TOTAL DM [%]</Typography>
                 <Stack direction={"row"} spacing={2}>
-                  <Tooltip title="Achived Cost">
+                  <Tooltip title="Achived DM">
                     <Typography variant="body2" fontWeight={600} color="secondary">{formulated == null ? formula?.ration_dm : formulated.ration_dm}</Typography>
                   </Tooltip>
                   <Tooltip title="Achivement">
@@ -270,13 +270,13 @@ const FormulaForm = ({
         <Tab label="General" {...a11yProps(0)} />
         <Tab
           label="Ingredients"
-          icon={<Chip label={formula?.ingredient_count} size="small" />}
+          icon={<Chip label={formula?.ingredient_count || 0} size="small" />}
           iconPosition="end"
           {...a11yProps(1)}
         />
         <Tab
           label="Requirements"
-          icon={<Chip label={formula?.requirement_count} size="small" />}
+          icon={<Chip label={formula?.requirement_count || 0} size="small" />}
           iconPosition="end"
           {...a11yProps(2)}
         />
