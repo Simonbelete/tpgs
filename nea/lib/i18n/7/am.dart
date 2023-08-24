@@ -44,16 +44,24 @@ Course AM = Course(
             'በቤት ውስጥ እና ውጭ የምናደርጋቸው እንቅስቃሴዎቻችን ከተለያዩ ቦታዎቸ ለሚመጡ ጀርሞች እና ተሃዋሲያን ተጋላጭ ያደርጉናል፡፡ ይህን ለመከላከል ማድ ቤታችን ከጭስ፡ ከቆሻሻና ከተባይ የጸዳ መሆን አለበት፡፡'),
     Paragraph(title: 'ምግብ በሚበሰልበት ጊዜ የሚከተሉት ጥንቃቄዎች መወሰድ አለባቸው', body: ''),
     CourseBodyImage(image: 'assets/materials/images/image1134.png'),
-    Paragraph(
-        title: 'የማብሰያ ልብስ ለብሰዉ ያብስሉ',
-        body: 'ለማብሰያነት የሚጠቀሙበትን ጋዋን ዘወትር በማጠብ ንጹህ ያድርጉ'),
+    SubTitleText(
+      text: "የማብሰያ ልብስ ለብሰዉ ያብስሉ",
+      fontSize: 16.0,
+    ),
+    Paragraph(title: '', body: 'ለማብሰያነት የሚጠቀሙበትን ጋዋን ዘወትር በማጠብ ንጹህ ያድርጉ'),
     CourseBodyImage(image: 'assets/materials/images/image1135.png'),
-    Paragraph(
-        title: 'ጸጉርዎን በመጠቅለያ ይሰሩ',
-        body: 'የምግብ ብክለትን ለመከላከል ጸጉርወትን በመጠቅለያ ይጠቅሉ'),
+    SubTitleText(
+      text: "ጸጉርዎን በመጠቅለያ ይሰሩ",
+      fontSize: 16.0,
+    ),
+    Paragraph(title: '', body: 'የምግብ ብክለትን ለመከላከል ጸጉርወትን በመጠቅለያ ይጠቅሉ'),
     CourseBodyImage(image: 'assets/materials/images/image1133.png'),
+    SubTitleText(
+      text: "እጅዎትን በውሃና በሳሙና ይታጠቡ",
+      fontSize: 16.0,
+    ),
     Paragraph(
-        title: 'እጅዎትን በውሃና በሳሙና ይታጠቡ',
+        title: '',
         body:
             'ምግብዎትን ከጀርሞች ለመከላከል እጅወትን ከምግብ በፊትና ከምግብ በኋላ ለ 60 ሰከንድ በውሃና በሳሙና ይታጠቡ')
   ]),

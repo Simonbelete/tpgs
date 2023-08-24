@@ -27,5 +27,6 @@ export default interface Formula {
   rations: number[] | FormulaRation[];
   ration_price: number;
   ration_ratio: number;
+  ration_weight: number;
   ration_dm: number;
 }

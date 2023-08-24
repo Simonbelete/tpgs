@@ -157,7 +157,8 @@ class FormulaSerializer_GET(serializers.ModelSerializer):
 
     class Meta:
         model = models.Formula
-        fields = ['id', 'name', 'purpose', 'weight', 'note',
+        fields = ['id', 'name', 'purpose', 'weight', 'note', 'budget', 'desired_ratio', 'desired_dm',
+                    'ration_price', 'ration_ratio', 'ration_weight', 'ration_dm',
                   'requirement_count', 'ingredient_count']
 
 
@@ -202,5 +203,7 @@ class FormulateSerializer_POST(serializers.ModelSerializer):
 
     class Meta:
         model = models.Formula
-        fields = ['id', 'requirements', 'rations',
-                  'ration_price', 'ration_ratio', 'ration_dm']
+        fields = ['id', 'requirements', 'rations', 'weight',
+                'budget', 'desired_ratio', 'desired_dm', 
+                  'ration_price', 'ration_ratio', 'ration_weight', 'ration_dm',
+                  'requirement_count', 'ingredient_count']

@@ -1,4 +1,4 @@
-import React, { useState, useImperativeHandle} from "react";
+import React, { useState, useImperativeHandle, useEffect} from "react";
 import _ from "lodash";
 import {
   Paper,
@@ -155,27 +155,113 @@ const FormulaForm = ({
     }
   };
 
+  const [goalAchivements, setGoalAchivements] = useState({
+    'total_cost': 0,
+    'total_ratio': 0,
+    'total_weight': 0,
+    'total_dm': 0
+  }); 
+
+  useEffect(() => {
+    const cost_achived: number = (formulated == null ? formula?.ration_price : formulated.ration_price) || 0
+    const cost_goal: number = (formulated == null ? formula?.budget : formulated.budget) || 0
+
+    const ratio_achived: number = (formulated == null ? formula?.ration_ratio : formulated.ration_ratio) || 0
+    const ratio_goal: number = (formulated == null ? formula?.desired_ratio : formulated.desired_ratio) || 0
+
+    const weight_achived: number = (formulated == null ? formula?.ration_weight : formulated.ration_weight) || 0
+    const weight_goal: number = (formulated == null ? formula?.weight : formulated.weight) || 0
+
+    const dm_achived: number = (formulated == null ? formula?.ration_dm : formulated.ration_dm) || 0
+    const dm_goal: number = (formulated == null ? formula?.desired_dm : formulated.desired_dm) || 0
+
+    setGoalAchivements({
+      total_cost: cost_achived / (cost_goal == 0 ? 1: cost_goal) * 100,
+      total_ratio: ratio_achived / (ratio_goal == 0 ? 1: ratio_goal) * 100,
+      total_weight: weight_achived / (weight_goal == 0 ? 1: weight_goal) * 100,
+      total_dm: dm_achived / (dm_goal == 0 ? 1: dm_goal) * 100,
+    })
+  }, [formula, formulated]);
+
+  const computeAchivementGradeLabel = (achived: number) => {
+    if(achived <= 0 || achived > 100) {
+      return "error";
+    } else if(achived >= 90 && achived <= 100) {
+      return "success";
+    } else {
+      return "warning";
+    }
+  }
+
   return (
     <>
       <Box sx={{ mb: 5 }}>
-        <Paper sx={{ p: 2 }} elevation={0} variant="outlined" square>
+        <Paper sx={{ py: 1, px: 5 }} elevation={0} variant="outlined" square>
           <Stack direction="row"
             justifyContent="space-between"
             alignItems="center"
             spacing={0}
             divider={<Divider orientation="vertical" flexItem />}>
               <Stack>
-                <Typography>Total [per Kg]: </Typography>
-                <Typography>{formulated && formulated.ration_price}</Typography>
+                <Typography variant="caption" color="text.secondary">TOTAL COST</Typography>
+                <Stack direction={"row"} spacing={2}>
+                  <Tooltip title="Achived Cost">
+                    <Typography variant="body2" fontWeight={600} color="secondary">{formulated == null ? formula?.ration_price : formulated.ration_price}</Typography>
+                  </Tooltip>
+                  <Tooltip title="Achivement">
+                    <Chip size="small" variant="outlined" color={computeAchivementGradeLabel(goalAchivements.total_cost)} label={`${goalAchivements.total_cost} %`} />
+                  </Tooltip>
+                </Stack>
+                <Tooltip title="Desired Cost">
+                  <Typography variant="caption" color="text.secondary">{formulated == null ? formula?.budget : formulated.budget}</Typography>
+                </Tooltip>
               </Stack>
+
               <Stack>
-                <Typography>Total Ratio [%]: </Typography>
-                <Typography>{formulated && formulated.ration_ratio}</Typography>
+                <Typography variant="caption" color="text.secondary">TOTAL Ratio [%]</Typography>
+                <Stack direction={"row"} spacing={2}>
+                  <Tooltip title="Achived Cost">
+                    <Typography variant="body2" fontWeight={600} color="secondary">{formulated == null ? formula?.ration_ratio : formulated.ration_ratio}</Typography>
+                  </Tooltip>
+                  <Tooltip title="Achivement">
+                    <Chip size="small" variant="outlined" color={computeAchivementGradeLabel(goalAchivements.total_ratio)} label={`${goalAchivements.total_ratio} %`} />
+                  </Tooltip>
+                </Stack>
+                <Tooltip title="Desired Cost">
+                  <Typography variant="caption" color="text.secondary">{formulated == null ? formula?.desired_ratio : formulated.desired_ratio}</Typography>
+                </Tooltip>
               </Stack>
+
               <Stack>
-                <Typography>Total DM: </Typography>
-                <Typography>{formulated && formulated.ration_ratio}</Typography>
+                <Typography variant="caption" color="text.secondary">TOTAL WEIGHT [kg]</Typography>
+                <Stack direction={"row"} spacing={2}>
+                  <Tooltip title="Achived Cost">
+                    <Typography variant="body2" fontWeight={600} color="secondary">{formulated == null ? formula?.ration_weight : formulated.ration_weight}</Typography>
+                  </Tooltip>
+                  <Tooltip title="Achivement">
+                    <Chip size="small" variant="outlined" color={computeAchivementGradeLabel(goalAchivements.total_weight)} label={`${goalAchivements.total_weight} %`} />
+                  </Tooltip>
+                </Stack>
+                <Tooltip title="Desired Cost">
+                  <Typography variant="caption" color="text.secondary">{formulated == null ? formula?.weight : formulated.weight}</Typography>
+                </Tooltip>
               </Stack>
+
+              <Stack>
+                <Typography variant="caption" color="text.secondary">TOTAL DM [%]</Typography>
+                <Stack direction={"row"} spacing={2}>
+                  <Tooltip title="Achived Cost">
+                    <Typography variant="body2" fontWeight={600} color="secondary">{formulated == null ? formula?.ration_dm : formulated.ration_dm}</Typography>
+                  </Tooltip>
+                  <Tooltip title="Achivement">
+                    <Chip size="small" variant="outlined" color={computeAchivementGradeLabel(goalAchivements.total_dm)} label={`${goalAchivements.total_dm} %`} />
+                  </Tooltip>
+                </Stack>
+                <Tooltip title="Desired Cost">
+                  <Typography variant="caption" color="text.secondary">{formulated == null ? formula?.desired_dm : formulated.desired_dm}</Typography>
+                </Tooltip>
+              </Stack>
+
           </Stack>
         </Paper>
       </Box>

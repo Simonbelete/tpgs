@@ -92,7 +92,7 @@ Course EN = Course(
         "Have a handwashing station that has soap near the latrine for immediate use after visiting the toilet. A locally made tippy tap or basin and jug with water can be used."
       ]),
       SubTitleText(
-        text: "STEPS TO THOROUGH HAND WASHING",
+        text: "STEPS TO THOROUGH HANDWASHING",
         fontSize: 16.0,
       ),
       CourseBodyImage(

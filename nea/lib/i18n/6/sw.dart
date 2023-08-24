@@ -8,7 +8,7 @@ import 'package:nea/widgets/paragraph.dart';
 import 'package:nea/widgets/sub_title_text.dart';
 
 Course SW = Course(
-  title: "UWEZESHAJI WA WANAWAKE NA", // UCHUMBA
+  title: "UWEZESHAJI WA WANAWAKE", // UCHUMBA
   coverImage: "assets/materials/images/4.png",
   body: Column(
     crossAxisAlignment: CrossAxisAlignment.start,

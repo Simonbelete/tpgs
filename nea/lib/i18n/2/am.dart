@@ -199,20 +199,20 @@ Course AM = Course(
       Bullet(children: ["የምላስ መቁስል", "የሆድ መነፋት", "የሰውነት ማበጥ"]),
 
       SubTitleText(
-        text: "ማዕድን ብረት",
+        text: "ብረት",
       ),
-      SubTitleText(text: "ማዕድን ብረት - ጥቅም", fontSize: 16.0),
+      SubTitleText(text: "ብረት - ጥቅም", fontSize: 16.0),
       Bullet(children: [
         "አዲስ ሴል ለመገንባት ያስፈልጋል",
         "ቀይ የደም ሴልን ለመገንባት ይረዳል",
         "በጨጓራ በሽታ እንዳንጋለጥ ይረዳል"
       ]),
-      SubTitleText(text: "ማዕድን ብረት - የምግብ ምንጭ", fontSize: 16.0),
+      SubTitleText(text: "ብረት - የምግብ ምንጭ", fontSize: 16.0),
       Paragraph(
           title: "",
           body:
               "ጉበት : ቀይ ሥጋ: አረንጓዴ ቅጠል አትክልቶች ፣ አሳ ፣ ጥራጥሬዎች ፣ለውዝ: የብርዕ እህሎች: ጥራጥሬዎች: የእንቁላል አስኳሎች: አቮካዶ"),
-      SubTitleText(text: "ማዕድን ብረት - ካልተመገብነው ምን ጉዳት ያስከትላል", fontSize: 16.0),
+      SubTitleText(text: "ብረት - ካልተመገብነው ምን ጉዳት ያስከትላል", fontSize: 16.0),
       Bullet(children: ["ደም ማነስ", "ዘገምተኛ ጨቅላ ህጻናት"]),
 
       SubTitleText(
@@ -244,7 +244,7 @@ Course AM = Course(
         fontSize: 27.0,
       ),
       SubTitleText(
-        text: "Iron",
+        text: "ብረት",
       ),
       SubTitleText(text: "ብረት - ጥቅም", fontSize: 16.0),
       Bullet(children: [

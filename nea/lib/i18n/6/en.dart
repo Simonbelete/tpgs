@@ -8,7 +8,7 @@ import 'package:nea/widgets/paragraph.dart';
 import 'package:nea/widgets/sub_title_text.dart';
 
 Course EN = Course(
-  title: "WOMEN EMPOWERMENT AND ", // MALE ENGAGEMENT
+  title: "WOMEN EMPOWERMENT", // MALE ENGAGEMENT
   coverImage: "assets/materials/images/4.png",
   body: Column(
     crossAxisAlignment: CrossAxisAlignment.start,

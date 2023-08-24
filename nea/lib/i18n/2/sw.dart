@@ -183,21 +183,18 @@ Course SW = Course(
         "edema - uhifadhi wa maji mwilini"
       ]),
       SubTitleText(
-        text: "Folate - Asidi ya Folic",
+        text: "Asidi ya Folic",
       ),
-      SubTitleText(text: "Vitamin Folate Folic Acid - Kazi", fontSize: 16.0),
+      SubTitleText(text: "Asidi ya Folic - Kazi", fontSize: 16.0),
       Bullet(children: [
         "Inahitajika kwa ajili ya kujenga seli mpya, hasa seli nyekundu za damu na seli za utumbo"
       ]),
-      SubTitleText(
-          text: "Vitamin Folate Folic Acid - Vyanzo vya chakula",
-          fontSize: 16.0),
+      SubTitleText(text: "Asidi ya Folic - Vyanzo vya chakula", fontSize: 16.0),
       Paragraph(
           title: "",
           body:
               "Ini, nyama nyekundu, mboga za majani, samaki, kunde, karanga, nafaka zisizokobolewa, viini vya mayai, parachichi."),
-      SubTitleText(
-          text: "Vitamin Folate Folic Acid - Ugonjwa wa lishe", fontSize: 16.0),
+      SubTitleText(text: "Asidi ya Folic - Ugonjwa wa lishe", fontSize: 16.0),
       Bullet(children: [
         "Upungufu wa damu",
         "Kasoro za bomba la Neural kwa watoto wachanga."
@@ -235,18 +232,18 @@ Course SW = Course(
       SubTitleText(
         text: "Chuma",
       ),
-      SubTitleText(text: "Vitamini Iron - Kazi", fontSize: 16.0),
+      SubTitleText(text: "Iron - Kazi", fontSize: 16.0),
       Bullet(children: [
         "Husafirisha oksijeni kwa damu.",
         "Huondoa seli nyekundu za damu za zamani na",
         "hutengeneza seli mpya"
       ]),
-      SubTitleText(text: "Vitamini Iron - Vyanzo vya chakula", fontSize: 16.0),
+      SubTitleText(text: "Iron - Vyanzo vya chakula", fontSize: 16.0),
       Paragraph(
           title: "",
           body:
               "Nyama nyekundu, Ini, Kuku, Samaki, Mayai, Karanga, Mboga za majani, Dengu, Maharage, Kunde, Soya, Nafaka Matunda yaliyokaushwa"),
-      SubTitleText(text: "Vitamini Iron - Ugonjwa wa lishe", fontSize: 16.0),
+      SubTitleText(text: "Iron - Ugonjwa wa lishe", fontSize: 16.0),
       Bullet(children: [
         "Upungufu wa damu",
         "Maduka ya Chuma cha Chini",
@@ -255,24 +252,23 @@ Course SW = Course(
       SubTitleText(
         text: "Iodini",
       ),
-      SubTitleText(text: "Vitamini Iodini - Kazi", fontSize: 16.0),
+      SubTitleText(text: "Iodini - Kazi", fontSize: 16.0),
       Bullet(children: [
         "Inahakikisha maendeleo na utendaji mzuri wa ubongo na mfumo wa neva.",
         "Muhimu kwa ukuaji na kimetaboliki",
         "Kuharakisha mwako wa virutubisho vinavyotoa nishati."
       ]),
-      SubTitleText(
-          text: "Vitamini Iodini - Vyanzo vya chakula", fontSize: 16.0),
+      SubTitleText(text: "Iodini - Vyanzo vya chakula", fontSize: 16.0),
       Paragraph(
           title: "",
           body:
               "Samaki na dagaa wengine, bidhaa za wanyama, mimea kutoka kwa udongo matajiri katika iodini, chumvi ya Iodized"),
-      SubTitleText(text: "Vitamini Iodini - Ugonjwa wa lishe", fontSize: 16.0),
+      SubTitleText(text: "Iodini - Ugonjwa wa lishe", fontSize: 16.0),
       Bullet(children: ["Goiter"]),
       SubTitleText(
         text: "Zinki",
       ),
-      SubTitleText(text: "Vitamini Zinc - Kazi", fontSize: 16.0),
+      SubTitleText(text: "Zinc - Kazi", fontSize: 16.0),
       Bullet(children: [
         "Ukuaji wa tishu, matengenezo",
         "uponyaji na maendeleo.",
@@ -284,12 +280,12 @@ Course SW = Course(
         "Uponyaji wa jeraha.",
         "Husaidia katika udhibiti wa kuhara"
       ]),
-      SubTitleText(text: "Vitamini Zinc - Vyanzo vya chakula", fontSize: 16.0),
+      SubTitleText(text: "Zinc - Vyanzo vya chakula", fontSize: 16.0),
       Paragraph(
           title: "",
           body:
               "Viungo na nyama ya mamalia, ndege, samaki, kuku, nafaka nzima, maziwa, mtindi, mboga, mahindi, mapera, mbegu za malenge, samaki wa ganda, mayai, bidhaa za maziwa, karanga na mbegu, nafaka, kunde."),
-      SubTitleText(text: "Vitamini Zinc - Ugonjwa wa lishe", fontSize: 16.0),
+      SubTitleText(text: "Zinc - Ugonjwa wa lishe", fontSize: 16.0),
       Bullet(children: [
         "Kupunguza upinzani dhidi ya maambukizi",
         "vidonda vya ngozi",

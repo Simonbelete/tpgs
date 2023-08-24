@@ -51,17 +51,28 @@ Course SW = Course(
         title: 'Tahadhari zifuatazo zinapaswa kuchukuliwa wakati wa kupikia',
         body: ''),
     CourseBodyImage(image: 'assets/materials/images/image1134.png'),
+    SubTitleText(
+      text: "Tumia apron kila wakati",
+      fontSize: 16.0,
+    ),
     Paragraph(
-        title: 'Tumia apron kila wakati',
-        body: 'Osha aproni mara kwa mara ili iwe safi unapopika.'),
+        title: '', body: 'Osha aproni mara kwa mara ili iwe safi unapopika.'),
     CourseBodyImage(image: 'assets/materials/images/image1135.png'),
+    SubTitleText(
+      text: "Funga nywele zako",
+      fontSize: 16.0,
+    ),
     Paragraph(
-        title: 'Funga nywele zako',
+        title: '',
         body:
             'Vaa vizuizi vya nywele kila wakati ili kuzuia uchafuzi wa chakula.'),
     CourseBodyImage(image: 'assets/materials/images/image1133.png'),
+    SubTitleText(
+      text: "Nawa mikono kwa sabuni",
+      fontSize: 16.0,
+    ),
     Paragraph(
-        title: 'Nawa mikono kwa sabuni',
+        title: '',
         body:
             'Nawa mikono kwa maji yanayotiririka kwa sekunde 60 kabla na baada ya kupika ili kuepuka vijidudu na bakteria kutoka kwenye chakula.')
   ]),

@@ -50,17 +50,29 @@ Course EN = Course(
         title: 'The following precautions should be taken while cooking',
         body: ''),
     CourseBodyImage(image: 'assets/materials/images/image1134.png'),
+    SubTitleText(
+      text: "Always use apron",
+      fontSize: 16.0,
+    ),
     Paragraph(
-        title: 'Always use apron',
+        title: '',
         body: 'Wash apron regularly to keep it clean when you cook.'),
     CourseBodyImage(image: 'assets/materials/images/image1135.png'),
+    SubTitleText(
+      text: "Wrap your hair",
+      fontSize: 16.0,
+    ),
     Paragraph(
-        title: 'Wrap your hair',
+        title: '',
         body:
             'Always wear hair restraints to avoid cross-contamination with food.'),
     CourseBodyImage(image: 'assets/materials/images/image1133.png'),
+    SubTitleText(
+      text: "Wash hands with soap",
+      fontSize: 16.0,
+    ),
     Paragraph(
-        title: 'Wash hands with soap',
+        title: '',
         body:
             'Wash hands with running water for 60 seconds before and after cooking to avoid germs and bacteria from food.')
   ]),

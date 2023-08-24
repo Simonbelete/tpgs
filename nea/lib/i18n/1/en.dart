@@ -46,7 +46,7 @@ Course EN = Course(
         fontSize: 27.0,
       ),
       Paragraph(
-          title: "Malnutrition",
+          title: "Malnutrition ",
           body: "is a term that includes overnutrition and undernutrition."),
       Objectives(
           title: "OBJECTIVE",
@@ -97,7 +97,7 @@ Course EN = Course(
       Paragraph(
           title: "Underweight ",
           body:
-              "an indicator assessing the adequacy of weight-for-age. The causes can be short-term or long-term and are difficult to define. "),
+              "is an indicator assessing the adequacy of weight-for-age. The causes can be short-term or long-term and are difficult to define. "),
       SubTitleText(
         text: "Wasting",
         fontSize: 16.0,

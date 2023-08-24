@@ -183,22 +183,18 @@ Course EN = Course(
         "Oedema-body fluid retention"
       ]),
       SubTitleText(
-        text: "Folate - Folic Acid",
+        text: "Folic Acid",
       ),
-      SubTitleText(
-          text: "Vitamin Folate Folic Acid - Functions", fontSize: 16.0),
+      SubTitleText(text: "Folic Acid - Functions", fontSize: 16.0),
       Bullet(children: [
         "Required for building new cells, especially red blood cells and gastrointestinal cells"
       ]),
-      SubTitleText(
-          text: "Vitamin Folate Folic Acid - Food sources", fontSize: 16.0),
+      SubTitleText(text: "Folic Acid - Food sources", fontSize: 16.0),
       Paragraph(
           title: "",
           body:
               "Liver, red meat, green leafy vegetables, fish, legumes, groundnuts, whole-grain cereals, egg yolks, avocado"),
-      SubTitleText(
-          text: "Vitamin Folate Folic Acid - Nutritional disorder",
-          fontSize: 16.0),
+      SubTitleText(text: "Folic Acid - Nutritional disorder", fontSize: 16.0),
       Bullet(children: ["Anaemia", "Neural tube defects in new-borns."]),
       SubTitleText(
         text: "Vitamin C (Ascorbic acid)",
@@ -233,40 +229,39 @@ Course EN = Course(
       SubTitleText(
         text: "Iron",
       ),
-      SubTitleText(text: "Vitamin Iron - Functions", fontSize: 16.0),
+      SubTitleText(text: "Iron - Functions", fontSize: 16.0),
       Bullet(children: [
         "Transports oxygen to the blood",
         "Eliminates old red blood cells and",
         "Builds new cells"
       ]),
-      SubTitleText(text: "Vitamin Iron - Food sources", fontSize: 16.0),
+      SubTitleText(text: "Iron - Food sources", fontSize: 16.0),
       Paragraph(
           title: "",
           body:
               "Red meat, Liver, Poultry, Shellfish, Egg, Ground nuts, Leafy vegetables, Lentils, Beans, Cowpeas, Soybean, Cereals Dried fruits"),
-      SubTitleText(text: "Vitamin Iron - Nutritional disorder", fontSize: 16.0),
+      SubTitleText(text: "Iron - Nutritional disorder", fontSize: 16.0),
       Bullet(children: ["Anaemia", "Low Iron stores", "Extreme tiredness"]),
       SubTitleText(
         text: "Iodine",
       ),
-      SubTitleText(text: "Vitamin Iodine - Functions", fontSize: 16.0),
+      SubTitleText(text: "Iodine - Functions", fontSize: 16.0),
       Bullet(children: [
         "Ensures the development and proper functioning of the brain and of the nervous system.",
         "Important for growth and metabolism",
         "Accelerate the combustion of nutrients that provide energy."
       ]),
-      SubTitleText(text: "Vitamin Iodine - Food sources", fontSize: 16.0),
+      SubTitleText(text: "Iodine - Food sources", fontSize: 16.0),
       Paragraph(
           title: "",
           body:
               "Fish and other seafood, animal products, plants from soil rich in iodine, Iodized salt"),
-      SubTitleText(
-          text: "Vitamin Iodine - Nutritional disorder", fontSize: 16.0),
+      SubTitleText(text: "Iodine - Nutritional disorder", fontSize: 16.0),
       Bullet(children: ["Goitre"]),
       SubTitleText(
         text: "Zinc",
       ),
-      SubTitleText(text: "Vitamin Zinc - Functions", fontSize: 16.0),
+      SubTitleText(text: "Zinc - Functions", fontSize: 16.0),
       Bullet(children: [
         "Tissue growth, maintenance",
         "Healing and development",
@@ -278,12 +273,12 @@ Course EN = Course(
         "Wound healing",
         "Helps in diarrheal management"
       ]),
-      SubTitleText(text: "Vitamin Zinc - Food sources", fontSize: 16.0),
+      SubTitleText(text: "Zinc - Food sources", fontSize: 16.0),
       Paragraph(
           title: "",
           body:
               "Organs and meat of mammals, fowl, fish, poultry, whole grain cereals, milk, yoghurt, vegetables, corn, guavas, pumpkin seeds, shell fish, eggs, dairy products, nuts and seed, cereals, legumes"),
-      SubTitleText(text: "Vitamin Zinc - Nutritional disorder", fontSize: 16.0),
+      SubTitleText(text: "Zinc - Nutritional disorder", fontSize: 16.0),
       Bullet(children: [
         "Reduced resistance to infection",
         "Skin ulceration",
