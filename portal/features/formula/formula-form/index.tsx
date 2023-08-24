@@ -48,6 +48,7 @@ const schema = yup
     age_to_week: yup.number().nullable(),
     formula_basis: yup.string().nullable(),
     note: yup.string().nullable(),
+    desired_dm: yup.string().nullable()
   })
   .transform((currentValue: any) => {
     if (currentValue.purpose != null)
@@ -184,13 +185,9 @@ const FormulaForm = ({
   }, [formula, formulated]);
 
   const computeAchivementGradeLabel = (achived: number) => {
-    if(achived <= 0 || achived > 100) {
-      return "error";
-    } else if(achived >= 90 && achived <= 100) {
-      return "success";
-    } else {
-      return "warning";
-    }
+    if(achived <= 0 || achived > 100) return "error";
+    else if(achived >= 90 && achived <= 100)return "success";
+    return "warning";
   }
 
   return (
@@ -306,7 +303,7 @@ const FormulaForm = ({
                         onChange={onChange}
                         fullWidth
                         size="small"
-                        value={value}
+                        value={value || ""}
                         label={"Name"}
                         placeholder={"Name"}
                       />
@@ -399,8 +396,13 @@ const FormulaForm = ({
                         fullWidth
                         size="small"
                         value={value}
-                        label={"Weight"}
+                        label={"Weight [Kg]"}
                         placeholder={"Weight"}
+                        InputProps={{
+                          endAdornment: (
+                            <InputAdornment position="start">Kg</InputAdornment>
+                          ),
+                        }}
                       />
                     )}
                   />
@@ -487,6 +489,27 @@ const FormulaForm = ({
                         value={value}
                         label={"Note"}
                         placeholder={"Note"}
+                      />
+                    )}
+                  />
+                </Grid>
+                <Grid item xs={12} md={6}>
+                  <Controller
+                    name={"desired_dm"}
+                    control={control}
+                    render={({
+                      field: { onChange, value },
+                      fieldState: { invalid, isTouched, isDirty, error },
+                    }) => (
+                      <LabeledInput
+                        error={!!error?.message}
+                        helperText={error?.message}
+                        onChange={onChange}
+                        fullWidth
+                        size="small"
+                        value={value}
+                        label={"Dry Material"}
+                        placeholder={"Dry Material"}
                       />
                     )}
                   />

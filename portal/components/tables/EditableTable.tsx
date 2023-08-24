@@ -9,6 +9,7 @@ import {
 } from "@mui/x-data-grid";
 import { Box, IconButton, LinearProgress, Tooltip } from "@mui/material";
 import { alpha, styled } from "@mui/material/styles";
+import { red } from "@mui/material/colors";
 
 const StripedDataGrid = styled(DataGrid)(({ theme }) => ({
   [`& .${gridClasses.columnHeaderTitle}`]: {
@@ -39,6 +40,12 @@ const StripedDataGrid = styled(DataGrid)(({ theme }) => ({
   [`& .${gridClasses["cell--editable"]}`]: {
     background: "rgba(0, 0, 0, 0.04)",
     borderRadius: "3px",
+  },
+  [`& .${gridClasses.overlayWrapper}`]: {
+    height: "100%"
+  },
+  [`& .${gridClasses.overlayWrapperInner}`]: {
+    height: "100% !important"
   },
 }));
 
