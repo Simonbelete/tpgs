@@ -29,12 +29,23 @@ export const formulaSlice = createSlice({
     },
     setIngredient: (
       state,
-      action: PayloadAction<(FormulaIngredient & { isNew: boolean })[]>
+      action: PayloadAction<(FormulaIngredient & { isNew?: boolean })[]>
     ) => {
       state.ingredients = action.payload;
     },
+    removeIngredientById: (state, action: PayloadAction<number>) => {
+      state.ingredients = state.ingredients.filter((e) => e.id != action.payload);
+    },
+    updateIngredient: (state, action: PayloadAction<FormulaIngredient & { isNew?: boolean }>) => {
+      const index = state.ingredients.findIndex((e) => e.id == action.payload.id)
+      if(index != -1) state.ingredients[index] = action.payload;
+    },
+    clearAll: (state) => {
+      state.ingredients = [];
+      state.requirements = [];
+    }
   },
 });
 
-export const { setRequirements, setIngredient } = formulaSlice.actions;
+export const { setRequirements, setIngredient, clearAll, removeIngredientById, updateIngredient } = formulaSlice.actions;
 export default formulaSlice.reducer;

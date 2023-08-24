@@ -19,24 +19,22 @@ import { useSelector, useDispatch } from "react-redux";
 import AddIcon from "@mui/icons-material/Add";
 import DeleteIcon from "@mui/icons-material/DeleteOutlined";
 import { RootState } from "@/store";
-import { setIngredient } from "../slices";
+import { setIngredient, clearAll, removeIngredientById, updateIngredient } from "../slices";
 import formula_service from "../services/formula_service";
 import { enqueueSnackbar } from "notistack";
 import messages from "@/util/messages";
 import randomId from "@/util/randomId";
 import { IngredientSelectDialog } from "@/features/ingredients";
-import EqualizerIcon from "@mui/icons-material/Equalizer";
-import BarChartIcon from "@mui/icons-material/BarChart";
-import TimelineIcon from "@mui/icons-material/Timeline";
 import InsertChartIcon from "@mui/icons-material/InsertChart";
 import IngredientContributionModal from "../ingredient-contribution-modal";
 
 const EditToolbar = (props: {
-  rows: any;
-  setRows: (newRows: (oldRows: GridRowsProp) => GridRowsProp) => void;
   processRowUpdate: (newRow: GridRowModel) => void;
 }) => {
-  const { setRows, processRowUpdate, rows } = props;
+  const { processRowUpdate } = props;
+  const dispatch = useDispatch();
+  const rows: GridRowsProp<Partial<FormulaIngredient> & Partial<{ isNew: boolean }>> = useSelector((state: RootState) => state.formula.ingredients);
+
   const [open, setOpen] = useState(false);
 
   const handleOpen = () => setOpen(true);
@@ -48,8 +46,8 @@ const EditToolbar = (props: {
 
   const handleSelected = (value?: Ingredient) => {
     if (value != undefined || value != null) {
-      const newRow = {
-        id: randomId(true),
+      const newRow: any = {
+        id: value.id,
         ingredient: value,
         ratio_min: 0,
         ratio_max: 0,
@@ -58,8 +56,8 @@ const EditToolbar = (props: {
       if (checkDuplicate(value.id))
         enqueueSnackbar(messages.duplicateError(), { variant: "warning" });
       else {
-        setRows((oldRows) => [...oldRows, newRow]);
-        processRowUpdate(newRow);
+        dispatch(setIngredient([...rows, newRow]))
+        // processRowUpdate(newRow);
       }
     }
     handleClose();
@@ -90,9 +88,7 @@ const EditToolbar = (props: {
 const FormulaIngredients = ({ id }: { id?: number }) => {
   const dispatch = useDispatch();
   const formulaState = useSelector((state: RootState) => state.formula);
-  const [rows, setRows] = useState<
-    GridRowsProp<Partial<FormulaIngredient> & Partial<{ isNew: boolean }>>
-  >([]);
+  const rows: GridRowsProp<Partial<FormulaIngredient> & Partial<{ isNew: boolean }>> = useSelector((state: RootState) => state.formula.ingredients);
   const [contributionModal, setContributionModal] = useState<{
     id?: number;
     open?: boolean;
@@ -114,19 +110,22 @@ const FormulaIngredients = ({ id }: { id?: number }) => {
   }, [rows]);
 
   useEffect(() => {
+    const controller = new AbortController();
+    dispatch(clearAll())
     if (id == null) return;
-    if (formulaState.ingredients.length > 0) {
-      setRows(formulaState.ingredients);
-      return;
-    }
+
     formula_service.ingredient
       .get(id)
       .then((response) => {
         if (response.status == 200) {
-          setRows(response.data.results);
+          dispatch(setIngredient(response.data.results));
         }
       })
       .catch((ex) => {});
+
+      return () => {
+        controller.abort()
+      }
   }, []);
 
   const columns: GridColDef[] = [
@@ -205,23 +204,23 @@ const FormulaIngredients = ({ id }: { id?: number }) => {
   ];
 
   const handleDeleteClick = (id: GridRowId) => {
-    setRows(rows.filter((row) => row.id !== id));
+    dispatch(removeIngredientById(Number(id)));
     handleDelete(id);
   };
 
   const processRowUpdate = async (newRow: GridRowModel) => {
-    if (id == null) return;
-
     const bodyData: Partial<FormulaIngredient> = {
       ration: newRow.ration,
       ration_min: newRow.ration_min,
       ratio_max: newRow.ratio_max,
       ingredient: (newRow.ingredient as Ingredient).id,
     };
-    if (newRow.isNew) await onCreate(newRow, bodyData);
-    else await onUpdate(newRow, bodyData);
+    if (id != null && newRow.isNew) await onCreate(newRow, bodyData);
+    else if(id != null) await onUpdate(newRow, bodyData);
 
     const updatedRow = { ...newRow, isNew: false };
+
+    dispatch(updateIngredient(newRow as any))
 
     return updatedRow;
   };
@@ -235,8 +234,8 @@ const FormulaIngredients = ({ id }: { id?: number }) => {
     try {
       const response = await formula_service.ingredient.create(id, data);
       if (response.status == 201) {
-        const updatedRow = { ...row, id: response.data.id, isNew: false };
-        setRows([...rows, updatedRow]);
+        const updatedRow: any = { ...row, id: response.data.id, isNew: false };
+        dispatch(setIngredient([...rows, updatedRow]))
       }
     } catch (ex) {
       enqueueSnackbar("Failed", { variant: "error" });
@@ -293,7 +292,7 @@ const FormulaIngredients = ({ id }: { id?: number }) => {
         }}
         processRowUpdate={processRowUpdate}
         slotProps={{
-          toolbar: { setRows, processRowUpdate, rows },
+          toolbar: { processRowUpdate, rows },
         }}
       />
     </>
