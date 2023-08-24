@@ -12,7 +12,6 @@ Course EN = Course(
   title: 'CHICKEN MEAT',
   body: Column(crossAxisAlignment: CrossAxisAlignment.start, children: const [
     CourseBodyImage(image: 'assets/materials/images/203.jpg'),
-
     SubTitleText(
       text: "Health Benefits of Eating Chicken Meat",
     ),
@@ -20,33 +19,60 @@ Course EN = Course(
         title: "",
         body:
             "Chicken is one of the most valued foods among people of all ages throughout the world. Not only it forms a crucial part of various culinary traditions, but it is also highly nutritious and delicious to taste. A great source of protein, chicken has been linked to a long list of health benefits :-"),
-    // SubTitleText(text: ""),
+    SubTitleText(
+      text: "Helps build muscles",
+      fontSize: 16.0,
+    ),
     Paragraph(
-        title: "Helps build muscles ",
+        title: "",
         body:
             "Chicken is one of the best non-vegetarian sources of protein. It is lean meat, which means that it contains more amount of proteins and less amount of fat. A 100g serving of roasted chicken offers 31g of protein, making it great for those who want to bulk up and build muscles."),
+    SubTitleText(
+      text: "Keeps your bones healthy",
+      fontSize: 16.0,
+    ),
     Paragraph(
-        title: "Keeps your bones healthy ",
+        title: "",
         body:
             "Apart from protein, chicken is rich in minerals like phosphorus and calcium, which help keep bones in mint condition. Also, it has selenium known to cut the risk of arthritis."),
+    SubTitleText(
+      text: "Relieves stress",
+      fontSize: 16.0,
+    ),
     Paragraph(
-        title: "Relieves stress ",
+        title: "",
         body:
             "Chicken has two nutrients that are great for reducing stress: tryptophan and Vitamin B5. Both have a calming effect on your body, making chicken an excellent option after a stressful day. Also, it tastes great and that too adds to its stress-releasing, happiness-inducing properties. Read our mega guide on how to deal with stress."),
+    SubTitleText(
+      text: "Reduces pre-menstrual syndrome symptoms",
+      fontSize: 16.0,
+    ),
     Paragraph(
-        title: "Reduces pre-menstrual syndrome symptoms ",
+        title: "",
         body:
             "Magnesium, a nutrient in chicken, helps soothe symptoms of pre-menstrual syndrome and fight the various mood changes a woman might experience during her periods. Here are more tips on dealing with PMS."),
+    SubTitleText(
+      text: "Helps boost testosterone levels",
+      fontSize: 16.0,
+    ),
     Paragraph(
-        title: "Helps boost testosterone levels ",
+        title: "",
         body:
             "Men should consume foods rich in zinc as it helps regulate testosterone levels and boost sperm production."),
+    SubTitleText(
+      text: "Boosts immunity",
+      fontSize: 16.0,
+    ),
     Paragraph(
-        title: "Boosts immunity ",
+        title: "",
         body:
             "Chicken soup has long been a home remedy for relieving colds, flu, and other common respiratory infections. The hot steam of chicken soup helps clear nasal and throat congestion while the thick fluid coats the throat to prevent invasion of respiratory linings by microbes to cause infection. A study evaluating this effect suggested that chicken soup inhibits the migration of neutrophils, a type of immune cell, thereby preventing inflammation during common infections and boosting immunity."),
+    SubTitleText(
+      text: "Promotes heart health",
+      fontSize: 16.0,
+    ),
     Paragraph(
-        title: "Promotes heart health ",
+        title: "",
         body:
             "Chicken, rich in vitamin B6, is important in preventing heart attacks. Vitamin B6 helps by lowering the levels of homocysteine, one of the key components linked to an increased risk of heart attack. Besides, chicken is also a good source of niacin which helps lower cholesterol, a risk factor for heart disease development. The American Heart Association also recommends chicken over red meat since it contains less saturated fats and is a good source of omega-3 fatty acids that exhibit beneficial cardiovascular effects."),
     SubTitleText(
@@ -55,7 +81,7 @@ Course EN = Course(
     Paragraph(
         title: "",
         body:
-            "It is a cooking method without getting wet in the heating process. Higher temperatures than those used in moist heat cooking methods are employed in dry heat cooking, which has different effects on food&#39;s nutritive value and physical appearance. All heat-sensitive nutrients, except for most of the mineral elements, are affected to some extent by dry heat methods."),
+            "It is a cooking method without getting wet in the heating process. Higher temperatures than those used in moist heat cooking methods are employed in dry heat cooking, which has different effects on food & nutritive value and physical appearance. All heat-sensitive nutrients, except for most of the mineral elements, are affected to some extent by dry heat methods."),
     SubTitleText(text: "1. Roasting"),
     CourseBodyImage(image: 'assets/materials/images/206.png'),
     Paragraph(
@@ -64,7 +90,7 @@ Course EN = Course(
             "Roasting is cooking in dry heat with the aid of fat or oil in an oven or on a spit. It is cooking meat or vegetables in the oven, basting them with hot fat to prevent drying and develop color and flavor. Radiant heat is the means of cooking when using a spit; oven roasting combines convection and radiation."),
     SubTitleText(text: "1.1 Oven Roasting"),
     Paragraph(
-        title: "Oven Roasting",
+        title: "Oven Roasting ",
         body:
             "is cooking in an oven with the aid of fat and is applied to first-class meat, poultry, and certain vegetables."),
     Remember(
@@ -75,7 +101,7 @@ Course EN = Course(
     ),
     SubTitleText(text: "1.2 Spit Roasting"),
     Paragraph(
-        title: "Spit Roasting",
+        title: "Spit Roasting ",
         body:
             "is cooking by direct (radiated) heat with the aid of fat in the form of basting (the spit must constantly revolve). It is applied to first-quality joints of meat and game, and poultry. It is the original form of roasting, but because of many disadvantages in practice, oven roasting has developed in its place."),
     Remember(title: "NOTE", children: [

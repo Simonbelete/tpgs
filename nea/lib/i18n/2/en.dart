@@ -126,7 +126,7 @@ Course EN = Course(
       Bullet(children: [
         "Normal functioning of the visual System",
         "Growth and development",
-        "immune function and reproduction",
+        "Immune function and reproduction",
         "Ensures proper bone growth."
       ]),
       SubTitleText(text: "Vitamin A - Food sources", fontSize: 16.0),
@@ -137,8 +137,8 @@ Course EN = Course(
       SubTitleText(text: "Vitamin A - Nutritional disorder", fontSize: 16.0),
       Bullet(children: [
         'Poor dark adaptation night blindness',
-        'growth failure - stunting',
-        'reduced resistance to infection'
+        'Growth failure - stunting',
+        'Reduced resistance to infection'
       ]),
       SubTitleText(
         text: "Water Soluble Vitamins Vitamin B1 (Thiamine)",
@@ -157,11 +157,11 @@ Course EN = Course(
       SubTitleText(text: "Vitamin B1 - Nutritional disorder", fontSize: 16.0),
       Bullet(children: [
         "Beriberi",
-        "muscle weakness",
-        "anorexia",
+        "Muscle weakness",
+        "Anorexia",
         "Oedema-body fluid retentions",
-        "enlarged heart",
-        "confusion"
+        "Enlarged heart",
+        "Confusion"
       ]),
       SubTitleText(
         text: "Vitamin B2 (Ribofi avin)",
@@ -179,8 +179,8 @@ Course EN = Course(
       SubTitleText(text: "Vitamin B2 - Nutritional disorder", fontSize: 16.0),
       Bullet(children: [
         "Inflammation of the tongue",
-        "swollen stomach",
-        "oedema-body fluid retention"
+        "Swollen stomach",
+        "Oedema-body fluid retention"
       ]),
       SubTitleText(
         text: "Folate - Folic Acid",
@@ -269,13 +269,13 @@ Course EN = Course(
       SubTitleText(text: "Vitamin Zinc - Functions", fontSize: 16.0),
       Bullet(children: [
         "Tissue growth, maintenance",
-        "healing and development.",
-        "Metabolism of carbohydrates,",
-        "proteins and fats.",
-        "Important in cell division.",
-        "Immune system function.",
-        "Smell and taste acuity.",
-        "Wound healing.",
+        "Healing and development",
+        "Metabolism of carbohydrates",
+        "Proteins and fats",
+        "Important in cell division",
+        "Immune system function",
+        "Smell and taste acuity",
+        "Wound healing",
         "Helps in diarrheal management"
       ]),
       SubTitleText(text: "Vitamin Zinc - Food sources", fontSize: 16.0),

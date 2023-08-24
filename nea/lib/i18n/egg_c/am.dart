@@ -17,7 +17,6 @@ Course AM = Course(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const CourseBodyImage(image: 'assets/materials/foods/egg.png'),
-        const TitleText(text: "እንቁላል"),
         const SizedBox(
           height: 30.0,
         ),
@@ -139,7 +138,7 @@ Course AM = Course(
         const Bullet(children: [
           'ዘይት ያቁላሉ::',
           'እንቁላሉን በጥንቃቄ ይስበሩ::',
-          'በሚገባ ያብስሉት, ከዛም ከሩዙ ጋር ቀላቅለው ያቅርቡት፡'
+          'በደንብ ያበስሉት እና በዳቦ፣ በሩዝ ወይም በማንኛውም የሚገኝ ምግብ ያቅርቡት::'
         ])
       ],
     ));

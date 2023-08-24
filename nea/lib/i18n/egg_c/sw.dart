@@ -16,9 +16,17 @@ Course SW = Course(
     body: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        CourseBodyImage(image: 'assets/materials/foods/egg.png'),
-        TitleText(text: "Yai"),
-        SizedBox(
+        const CourseBodyImage(image: 'assets/materials/foods/egg.png'),
+        const SizedBox(
+          height: 30.0,
+        ),
+        const Paragraph(
+          title: '',
+          body:
+              'Mayai ni miongoni mwa vyakula vyenye lishe  zaidi duniani. Yai zima lina virutubisho vyote vinavyohitajika ili kugeuza seli moja kuwa mtoto wa kuku.',
+        ),
+        const Paragraph(title: "Yai moja kubwa lililochemshwa lina", body: ""),
+        const SizedBox(
           height: 30.0,
         ),
         Column(children: [
@@ -81,14 +89,6 @@ Course SW = Course(
             ],
           )
         ]),
-        const SizedBox(
-          height: 30.0,
-        ),
-        const Paragraph(
-          title: '',
-          body:
-              'Mayai ni miongoni mwa vyakula vyenye lishe  zaidi duniani. Yai zima lina virutubisho vyote vinavyohitajika ili kugeuza seli moja kuwa mtoto wa kuku. Yai moja kubwa lililochemshwa lina',
-        ),
         const Paragraph(
             title: '',
             body:
@@ -97,7 +97,8 @@ Course SW = Course(
         const Paragraph(
             title: '',
             body:
-                'Hiyo inamaanisha kuwa mayai yana virutubisho zaidi -- vitamini, madini, amino asidi -- kwa kalori kuliko vyakula vingine vingi. Kuwa na yai, na utapata yafuatayo:'),
+                'Mayai yana virutubisho zaidi, kama vile vitamini, madini, na amino asidi kwa kalori, kuliko vyakula vingine vingi. Zina kiasi kikubwa cha mafuta ya omega-3 na ni nyingi zaidi katika vitamini A na E. Mayai mazima ni miongoni mwa vyakula bora zaidi duniani, vyenye kiasi kidogo cha karibu kila kirutubisho tunachohitaji.'),
+        const Paragraph(title: "", body: "Kuwa na yai, na utapata yafuatayo:"),
         const Bullet(children: [
           'Protini yenye ubora wa juu',
           'Selenium',
@@ -138,9 +139,9 @@ Course SW = Course(
         ]),
         const SubTitleText(text: 'Ili kuandaa yai'),
         const Bullet(children: [
-          'Ongeza mafuta.',
+          'Ongeza mafuta',
           'Vunja yai kwa uangalifu',
-          'Pika vizuri, kisha changanya na wali na uitumie'
+          'Ipikie vizuri na uitumie pamoja na mkate, wali au na chakula chochote kinachopatikana'
         ])
       ],
     ));

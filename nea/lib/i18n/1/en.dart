@@ -132,7 +132,7 @@ Course EN = Course(
         fontSize: 16.0,
       ),
       Paragraph(
-          title: "Deficiencies in vitamins and minerals",
+          title: "Deficiencies in vitamins and minerals ",
           body:
               "result from a poor-quality diet. Micronutrient deficiencies can also result from frequent illness, which may increase requirement, utilization, or loss of nutrients. "),
       Paragraph(

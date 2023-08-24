@@ -33,7 +33,7 @@ Course EN = Course(
       Bullet(children: [
         "Pregnant and lactating woman’s diet should include a substantial increase in calories, protein, calcium, folic acid, and iron.",
         "Pregnant women at particular risk for nutritional deficiencies are adolescents, underweight women, obese women, women with chronic nutritional problems, women who smoke or ingest alcohol or drugs, low-income women, and ",
-        "women with chronic illnesses such as diabetes or anemia"
+        "Women with chronic illnesses such as diabetes or anemia"
       ]),
       SubTitleText(text: "Recommendations for mothers during pregnancy"),
       Bullet(children: [

@@ -12,38 +12,64 @@ Course SW = Course(
   title: 'NYAMA YA KUKU',
   body: Column(crossAxisAlignment: CrossAxisAlignment.start, children: const [
     CourseBodyImage(image: 'assets/materials/images/203.jpg'),
-
     SubTitleText(
       text: "Faida za Kiafya za Kula Nyama ya Kuku",
     ),
     Paragraph(title: "", body: "Faida za Kiafya za Kula Nyama ya Kuku"),
-    // SubTitleText(text: ""),
+    SubTitleText(
+      text: "Husaidia kujenga misuli",
+      fontSize: 16.0,
+    ),
     Paragraph(
-        title: "Husaidia kujenga misuli ",
+        title: "",
         body:
             "Kuku ni moja ya vyanzo bora vya protini visivyo vya mboga. Ni nyama konda, ambayo ina maana kwamba ina kiasi kikubwa cha protini na kiasi kidogo cha mafuta. Gramu 100 za kuku wa kukaanga hutoa 31g ya protini, na kuifanya kuwa nzuri kwa wale ambao wanataka kujilimbikiza na kujenga misuli."),
+    SubTitleText(
+      text: "Huweka mifupa yako yenye afya",
+      fontSize: 16.0,
+    ),
     Paragraph(
-        title: "Huweka mifupa yako yenye afya ",
+        title: "",
         body:
             "Mbali na protini, kuku ina madini mengi kama fosforasi na kalsiamu, ambayo husaidia kuweka mifupa katika hali ya mint. Pia, ina seleniamu inayojulikana kupunguza hatari ya ugonjwa wa arthritis."),
+    SubTitleText(
+      text: "Huondoa msongo wa mawazo",
+      fontSize: 16.0,
+    ),
     Paragraph(
-        title: "Huondoa msongo wa mawazo ",
+        title: "",
         body:
             "Kuku ina virutubisho viwili ambavyo ni nzuri kwa kupunguza msongo wa mawazo: tryptophan na Vitamin B5. Wote wawili wana athari ya kutuliza mwili wako, na kufanya kuku chaguo bora baada ya siku ya shida. Pia, ina ladha nzuri na hiyo pia inaongeza sifa zake za kutoa mkazo, za kuleta furaha. Soma mwongozo wetu wa jinsi ya kukabiliana na mafadhaiko."),
+    SubTitleText(
+      text: "Hupunguza dalili za ugonjwa wa kabla ya hedhi",
+      fontSize: 16.0,
+    ),
     Paragraph(
-        title: "Hupunguza dalili za ugonjwa wa kabla ya hedhi ",
+        title: "",
         body:
             "Magnesiamu, kirutubisho katika kuku, husaidia kutuliza dalili za ugonjwa wa kabla ya hedhi na kupambana na mabadiliko mbalimbali ya hisia ambayo mwanamke anaweza kupata wakati wa siku zake. Hapa kuna vidokezo zaidi vya kushughulika na PMS."),
+    SubTitleText(
+      text: "Husaidia kuongeza viwango vya testosterone",
+      fontSize: 16.0,
+    ),
     Paragraph(
-        title: "Husaidia kuongeza viwango vya testosterone ",
+        title: "",
         body:
             "Wanaume wanapaswa kutumia vyakula vyenye zinki nyingi kwani husaidia kudhibiti viwango vya testosterone na kuongeza uzalishaji wa manii."),
+    SubTitleText(
+      text: "Huongeza kinga",
+      fontSize: 16.0,
+    ),
     Paragraph(
-        title: "Huongeza kinga ",
+        title: "",
         body:
             "Supu ya kuku kwa muda mrefu imekuwa dawa ya nyumbani kwa kupunguza homa, mafua, na magonjwa mengine ya kawaida ya kupumua. Mvuke wa moto wa supu ya kuku husaidia kuondoa msongamano wa pua na koo huku umajimaji huo ukiwa unafunika koo ili kuzuia uvamizi wa kuta za upumuaji na vijidudu kusababisha maambukizi. Utafiti wa kutathmini athari hii ulipendekeza kuwa supu ya kuku huzuia uhamaji wa neutrophils, aina ya seli ya kinga, na hivyo kuzuia kuvimba wakati wa maambukizi ya kawaida na kuongeza kinga.."),
+    SubTitleText(
+      text: "Inakuza afya ya moyo",
+      fontSize: 16.0,
+    ),
     Paragraph(
-        title: "Inakuza afya ya moyo ",
+        title: "",
         body:
             "Kuku, aliye na vitamini B6 kwa wingi, ni muhimu katika kuzuia mashambulizi ya moyo. Vitamini B6 husaidia kwa kupunguza viwango vya homocysteine, moja ya vipengele muhimu vinavyohusishwa na hatari ya kuongezeka kwa mashambulizi ya moyo. Mbali na hilo, kuku pia ni chanzo kizuri cha niasini ambayo husaidia kupunguza cholesterol, sababu ya hatari kwa maendeleo ya ugonjwa wa moyo. Jumuiya ya Moyo ya Marekani pia inapendekeza kuku juu ya nyama nyekundu kwa vile ina mafuta kidogo yaliyojaa na ni chanzo kizuri cha asidi ya mafuta ya omega-3 ambayo huonyesha madhara ya moyo na mishipa."),
     SubTitleText(

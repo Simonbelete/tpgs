@@ -22,7 +22,7 @@ Course EN = Course(
         "If boiling, bring your water to a complete boil for at least 1 minute.",
         "To treat your water with chlorine, use one of the locally available treatment products such as waterguard and follow the instructions.",
         "Use a safe storage container when collecting water. Do not use leaves or other materials to cover the container as they may contaminate the water.",
-        "if scooping water from a storage container, use a long-handled ladle so hands do not come into contact with water."
+        "If scooping water from a storage container, use a long-handled ladle so hands do not come into contact with water."
       ]),
       SubTitleText(text: "Food safety"),
       KeyMessages(children: [
