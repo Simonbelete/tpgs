@@ -104,7 +104,7 @@ const IngredientForm = ({
 
   return (
     <>
-      <Paper sx={{ px: 5, py: 5 }} elevation={6} variant="outlined" square>
+      <Paper sx={{ px: 5, py: 5 }} elevation={6} variant="outlined" square>000
         <form onSubmit={handleSubmit(onSubmit)}>
           <Grid container spacing={4}>
             {/* Name */}

@@ -520,12 +520,12 @@ const FormulaForm = ({
           {tabIndex == 1 && <FormulaIngredients id={formula?.id} />}
           {tabIndex == 2 && <FormulaRequirements id={formula?.id} />}
         </Box>
+      </form>
       <Box>
-        <Button variant="contained" type="submit" size="small">
+        <Button variant="contained" type="submit" onClick={() => handleSubmit(onSubmit)()}>
           Submit
         </Button>
       </Box>
-      </form>
     </>
   );
 };

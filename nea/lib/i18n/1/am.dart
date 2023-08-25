@@ -83,7 +83,7 @@ Course AM = Course(
               "ከመጠን በላይ የተመጣጠነ ምግብ መመገብ ከሚያስከትላቸው ውጤቶች መካከል የስኳር በሽታ፣ የልብና የደም ሥር (cardiovascular) በሽታ፣ ከመጠን ያለፈ ውፍረት እና ካንሰርን ጨምሮ ሥር የሰደዱ በሽታዎችን የመጋለጥ እድላቸው ይጨምራል። "),
       CourseBodyImage(
         image: 'assets/materials/images/c_4.png',
-        description: "The Above child is Obese",
+        description: "ከላይ ያለው ልጅ ወፍራም ነው።",
       ),
       Paragraph(
           title: "የተመጣጠነ ምግብ እጥረት ",
@@ -102,7 +102,7 @@ Course AM = Course(
       //     body:
       //         "an indicator assessing the adequacy of weight-for-age. The causes can be short-term or long-term and are difficult to define. "),
       SubTitleText(
-        text: "Wasting",
+        text: "መመንመን",
         fontSize: 16.0,
       ),
       Paragraph(
@@ -114,20 +114,20 @@ Course AM = Course(
         description: "ከላይ ያለው ልጅ የመመንመነ አና ከክብደት በታች ነው",
       ),
       SubTitleText(
-        text: "Stunting",
+        text: "መቀንጨር",
         fontSize: 16.0,
       ),
       Paragraph(
           title: "መቀንጨር ",
           body:
-              "መቀንጨር ማለት ልጆችን በተመጣጠነ ምግብ እጥረት፣ በተደጋጋሚ ለብሽታ በመጋለጥ እና በቂ ያልሆነ የስነ-ልቦና እንክብካቤ ምክንያት የሚያጋጥማቸው የዕድገት ውስንነት ነው፡፡ መቀንጨር ለአእምሮ እድገት ውስንነት ያጋልጣል፡፡ ይህን ለመከላከል የተመጣጠነ ምግብ መመገብ ያስፈልጋል፡፡"),
+              "ማለት ልጆችን በተመጣጠነ ምግብ እጥረት፣ በተደጋጋሚ ለብሽታ በመጋለጥ እና በቂ ያልሆነ የስነ-ልቦና እንክብካቤ ምክንያት የሚያጋጥማቸው የዕድገት ውስንነት ነው፡፡ መቀንጨር ለአእምሮ እድገት ውስንነት ያጋልጣል፡፡ ይህን ለመከላከል የተመጣጠነ ምግብ መመገብ ያስፈልጋል፡፡"),
       CourseBodyImage(
         image: 'assets/materials/images/c_2.png',
         description: "ከላይ ያለው ልጅ የቀነጨረ አና ከክብደት በታች ነው",
       ),
       CourseBodyImage(
         image: 'assets/materials/images/c_3.png',
-        description: "ከላይ ያለው ልጅ ትክ ከለኛ ነው",
+        description: "ከላይ ያለው ልጅ የተስተካከለ ጤንነት ላይ ያለ ነው።",
       ),
 
       // SubTitleText(
