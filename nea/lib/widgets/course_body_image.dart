@@ -17,8 +17,8 @@ class CourseBodyImage extends StatelessWidget {
 
     return Container(
       width: double.infinity,
-      margin: EdgeInsets.only(bottom: 20.0),
-      decoration: BoxDecoration(
+      margin: const EdgeInsets.only(bottom: 20.0),
+      decoration: const BoxDecoration(
           border: Border(left: BorderSide(color: primaryColor, width: 2))),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -40,7 +40,7 @@ class CourseBodyImage extends StatelessWidget {
                     child: Image.asset(
                       image,
                       fit: BoxFit.contain,
-                      height: 250,
+                      height: 350,
                     ),
                   ),
                 ),
