@@ -128,11 +128,12 @@ class FormulaIngredientSerializer_POST(serializers.ModelSerializer):
 
 class FormulaIngredientSerializer_REF(serializers.ModelSerializer):
     # Ingredient Id
-    id = serializers.IntegerField()
+    # id = serializers.IntegerField()
+    # ingredient = serializers.IntegerField(source='')
 
     class Meta:
         model = models.FormulaIngredient
-        fields = ['id', 'ratio_min', 'ratio_max', 'ration']
+        fields = ['ingredient', 'ratio_min', 'ratio_max', 'ration']
 
 
 class FormulaIngredientSerializer_PATCH(serializers.ModelSerializer):
@@ -188,12 +189,16 @@ class FormulaSerializer_POST(serializers.ModelSerializer):
                 pk=ration['id'])
             models.FormulaRation.objects.create(
                 formula=instance, nutrient=nutrient_model, value=ration['value'])
-        for ingredient in ingredients:
-            inp = ingredient.pop('id')
-            ingredient_model = Ingredient.objects.get(
-                pk=inp)
+        for ingredient in ingredients.iterator():
+            # inp = ingredient.pop('id')
+            # ingredient_model = Ingredient.objects.get(
+            #     pk=inp)
+            print('-------------------------')
+            print(ingredient)
+            print('***')
+            print(ingredients)
             models.FormulaIngredient(
-                formula=instance, ingredient=ingredient_model, **ingredient)
+                formula=instance, **ingredient)
         return instance
 
 

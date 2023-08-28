@@ -12,7 +12,7 @@ class Remember extends StatelessWidget {
       padding: const EdgeInsets.only(bottom: 20.0),
       child: Container(
         decoration: BoxDecoration(
-            color: const Color(0xffF7A56D),
+            color: const Color(0xff79211C),
             borderRadius: BorderRadius.circular(10.0)),
         padding: const EdgeInsets.only(
           bottom: 0,

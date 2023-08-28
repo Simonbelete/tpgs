@@ -34,7 +34,10 @@ List<Path> paths = [
       if (match == null) return NotFound();
       var index = match == null ? 0 : int.parse(match);
       Course course = courseData.values.elementAt(index)[local] as Course;
-      return CourseScreen(course: course);
+      return CourseScreen(
+        course: course,
+        courseIndex: index,
+      );
     },
   ),
   Path(
