@@ -79,13 +79,14 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
   }
 
   return MaterialPageRoute(
-      settings: routeSettings,
-      builder: (_) => const Scaffold(
-            body: SafeArea(
-                child: Center(
-              child: TitleText(text: '404! Page not found'),
-            )),
-          ));
+      settings: routeSettings, builder: (_) => HomeScreen());
+
+  // const Scaffold(
+  //       body: SafeArea(
+  //           child: Center(
+  //         child: TitleText(text: '404! Page not found'),
+  //       )),
+  //     ));
 
   // switch (routeSettings.name) {
   //   case HomeScreen.routeName:
