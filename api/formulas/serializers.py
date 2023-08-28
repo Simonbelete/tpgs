@@ -129,7 +129,7 @@ class FormulaIngredientSerializer_POST(serializers.ModelSerializer):
 class FormulaIngredientSerializer_REF(serializers.ModelSerializer):
     # Ingredient Id
     # id = serializers.IntegerField()
-    # ingredient = serializers.IntegerField(source='')
+    # ingredient = serializers.IntegerField()
 
     class Meta:
         model = models.FormulaIngredient
@@ -189,16 +189,16 @@ class FormulaSerializer_POST(serializers.ModelSerializer):
                 pk=ration['id'])
             models.FormulaRation.objects.create(
                 formula=instance, nutrient=nutrient_model, value=ration['value'])
-        for ingredient in ingredients.iterator():
-            # inp = ingredient.pop('id')
+        for ingredient in ingredients:
+            inp = ingredient.pop('ingredient')
             # ingredient_model = Ingredient.objects.get(
             #     pk=inp)
-            print('-------------------------')
-            print(ingredient)
-            print('***')
-            print(ingredients)
-            models.FormulaIngredient(
-                formula=instance, **ingredient)
+            try:
+                models.FormulaIngredient.objects.create(
+                    formula=instance, ingredient=inp, **ingredient)
+            except Exception as ex:
+                print('EEEEEEEEEEEEEE')
+                print(ex)
         return instance
 
 
