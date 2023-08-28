@@ -78,23 +78,6 @@ class HomeScreen extends StatelessWidget {
                   }()),
                   child: body(context))),
         ),
-        // child: ResponsiveWidget.isSmallScreen(context)
-        //     ? body(context)
-        //     : Center(
-        //         child: SizedBox(
-        //           width: size.width * 0.3,
-        //           child: body(context),
-        //         ),
-        //       )),
-        // Center(
-        //     child: AspectRatio(
-        //       // aspectRatio: 12 / 9,
-        //       aspectRatio: ResponsiveWidget.isLargeScreen(context)
-        //           ? 12 / 9
-        //           : 12 / 9,
-        //       child: body(context),
-        //     ),
-        //   ),
         floatingActionButton: FloatingActionButton.small(
             backgroundColor: primaryColor,
             onPressed: () {

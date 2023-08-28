@@ -34,16 +34,6 @@ class Objectives extends StatelessWidget {
                     ),
               ),
             ),
-            // RichText(
-            //   text: TextSpan(
-            //     text: title! + " :- ",
-            //     style: Theme.of(context).textTheme.bodyMedium!.apply(
-            //           fontSizeDelta: 1,
-            //           fontWeightDelta: 500,
-            //           color: Colors.white,
-            //         ),
-            //   ),
-            // ),
             const SizedBox(
               height: 10,
             ),
@@ -61,19 +51,6 @@ class Objectives extends StatelessWidget {
                     )
                     .toList(),
               )),
-              // child: RichText(
-              //     text: TextSpan(
-              //   children: children
-              //       .map(
-              //         (e) => TextSpan(
-              //             text: "• " + e + "\n",
-              //             style: Theme.of(context).textTheme.bodyMedium!.apply(
-              //                   fontSizeDelta: 1,
-              //                   color: Colors.white,
-              //                 )),
-              //       )
-              //       .toList(),
-              // )),
             ),
           ],
         ),

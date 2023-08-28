@@ -21,7 +21,19 @@ class SubTitleText extends StatelessWidget {
         TextSpan(
           text: text,
           style: GoogleFonts.mulish(
-              fontSize: fontSize, fontWeight: FontWeight.bold, color: color),
+              fontSize: fontSize,
+              fontWeight: FontWeight.bold,
+              color: (() {
+                if (fontSize == 16.0) {
+                  return secondaryColor;
+                }
+
+                if (fontSize == 14.0) {
+                  return secondaryColor.withOpacity(0.8);
+                }
+
+                return color;
+              }())),
         ),
       ),
     );
