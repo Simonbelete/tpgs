@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import _ from "lodash";
 import {
   DataGrid,
@@ -106,13 +106,9 @@ const FormulaIngredients = ({ id }: { id?: number }) => {
     setContributionModal({ open: false });
 
   useEffect(() => {
-    dispatch(setIngredient(rows as any));
-  }, [rows]);
-
-  useEffect(() => {
     const controller = new AbortController();
-    dispatch(clearAll())
-    if (id == null) return;
+      
+    if (id == null || rows.length > 0) return;
 
     formula_service.ingredient
       .get(id)
@@ -234,8 +230,9 @@ const FormulaIngredients = ({ id }: { id?: number }) => {
     try {
       const response = await formula_service.ingredient.create(id, data);
       if (response.status == 201) {
+        console.log('created');
         const updatedRow: any = { ...row, id: response.data.id, isNew: false };
-        dispatch(setIngredient([...rows, updatedRow]))
+        dispatch(updateIngredient(updatedRow))
       }
     } catch (ex) {
       enqueueSnackbar("Failed", { variant: "error" });
@@ -254,6 +251,7 @@ const FormulaIngredients = ({ id }: { id?: number }) => {
         newRow.id || 0,
         data
       );
+      console.log('created');
     } catch (ex) {
       enqueueSnackbar("Failed", { variant: "error" });
     }

@@ -24,7 +24,7 @@ import { IngredientSelectDialog } from "@/features/ingredients";
 import { Formula, Ingredient, Nutrient } from "@/models";
 import { useSnackbar } from "notistack";
 import { useSelector, useDispatch } from "react-redux";
-import { setRequirements } from "../slices";
+import { setRequirements, clearAll } from "../slices";
 import { RootState } from "@/store";
 import { LabeledInput } from "@/components/inputs";
 import { AsyncDropdown, Dropdown } from "@/components/dropdowns";
@@ -162,6 +162,10 @@ const FormulaForm = ({
     'total_weight': 0,
     'total_dm': 0
   }); 
+
+  useEffect(() => {
+    dispatch(clearAll())
+  }, []);
 
   useEffect(() => {
     const cost_achived: number = (formulated == null ? formula?.ration_price : formulated.ration_price) || 0
