@@ -31,7 +31,7 @@ List<Path> paths = [
       match,
     ) {
       var local = Preferencess.getLocalSync() ?? "en";
-      if (match == null) return NotFound();
+      if (match == null) return const HomeScreen();
       var index = match == null ? 0 : int.parse(match);
       Course course = courseData.values.elementAt(index)[local] as Course;
       return CourseScreen(
