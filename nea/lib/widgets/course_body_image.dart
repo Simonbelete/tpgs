@@ -53,11 +53,6 @@ class CourseBodyImage extends StatelessWidget {
                   child: Paragraph(title: "", body: description!),
                 )
               : Container()
-          // Container(
-          //     decoration: BoxDecoration(border: Border.all(color: Colors.blue)),
-          //     padding: const EdgeInsets.only(left: 10.0, top: 0),
-          //     child:
-          //         children == null ? Container() : Column(children: children!))
         ],
       ),
     );
