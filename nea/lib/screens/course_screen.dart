@@ -13,16 +13,57 @@ class CourseScreen extends StatelessWidget {
   final int? courseIndex;
   static const String routeName = '/course';
 
-  const CourseScreen({super.key, required this.course, this.courseIndex});
+  CourseScreen({super.key, required this.course, this.courseIndex});
+
+  final GlobalKey<ScaffoldState> _key = GlobalKey(); // Create a key
 
   @override
   Widget build(BuildContext context) {
     var local = BlocProvider.of<LocalBloc>(context).state.local;
+    Size size = MediaQuery.of(context).size;
     return Scaffold(
+      key: _key,
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
         iconTheme: IconThemeData(color: secondaryColor),
+        automaticallyImplyLeading: false,
+        title: Center(
+          child: Container(
+            margin: EdgeInsets.zero,
+            // decoration: BoxDecoration(border: Border.all(width: 1)),
+            width: (() {
+              if (ResponsiveWidget.isSmallScreen(context)) {
+                return size.width;
+              } else if (ResponsiveWidget.isTabletScreen(context)) {
+                return size.width * 0.85;
+              } else if (ResponsiveWidget.isMediumScreen(context)) {
+                return size.width * 0.85;
+              } else if (ResponsiveWidget.isLargeScreen(context)) {
+                return size.width * 0.7;
+              } else {
+                // Extra Large
+                return size.width * 0.7;
+              }
+            }()),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                IconButton(
+                    onPressed: () {},
+                    icon: const Icon(Icons.arrow_back, color: Colors.black)),
+                IconButton(
+                  icon: const Icon(Icons.menu, color: Colors.black),
+                  onPressed: () => _key.currentState!.openEndDrawer(),
+                  tooltip:
+                      MaterialLocalizations.of(context).openAppDrawerTooltip,
+                )
+              ],
+            ),
+          ),
+        ),
+        actions: <Widget>[Container()],
+        scrolledUnderElevation: 5,
       ),
       body: ResponsiveWidget.isSmallScreen(context)
           ? body()
@@ -34,10 +75,6 @@ class CourseScreen extends StatelessWidget {
               itemBuilder: ((context, index) => ListTile(
                     title:
                         Text(courseData.values.elementAt(index)[local]!.title),
-                    //  Paragraph(
-                    //   body: courseData.values.elementAt(index)[local]!.title,
-                    //   title: "",
-                    // ),
                     selected: index == courseIndex,
                     selectedTileColor: secondaryColor,
                     selectedColor: Colors.white,

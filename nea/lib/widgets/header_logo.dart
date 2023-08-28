@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nea/constants.dart';
 import 'package:nea/widgets/sub_title_text.dart';
 
 class HeaderLogo extends StatelessWidget {
@@ -15,7 +16,10 @@ class HeaderLogo extends StatelessWidget {
           'assets/images/logo_color.png',
           height: 30,
         ),
-        const SubTitleText(text: "Nutrition Education"),
+        SubTitleText(
+          text: "Nutrition Education",
+          color: secondaryColor,
+        ),
         Image.asset(
           'assets/images/ilri_logo.png',
           width: 60,
