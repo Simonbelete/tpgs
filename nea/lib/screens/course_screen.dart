@@ -26,7 +26,7 @@ class CourseScreen extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
-        iconTheme: IconThemeData(color: secondaryColor),
+        iconTheme: const IconThemeData(color: secondaryColor),
         automaticallyImplyLeading: false,
         title: Center(
           child: Container(
@@ -50,7 +50,9 @@ class CourseScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 IconButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
                     icon: const Icon(Icons.arrow_back, color: Colors.black)),
                 IconButton(
                   icon: const Icon(Icons.menu, color: Colors.black),
