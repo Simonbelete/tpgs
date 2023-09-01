@@ -9,8 +9,10 @@ import { OnBoarding } from "@/models";
 import siteMetadata from "@/data/siteMetadata";
 import { driver } from "driver.js";
 import { onBoardConfig } from '@/util/onboard';
-import { getSession } from "next-auth/react";
-
+import { useSession } from "next-auth/react"
+import { useSelector, useDispatch } from "react-redux";
+import { RootState } from "@/store";
+import { START_TEMPLATE, ONBOARDING_KEY, isFirstTime, startFirstTimeOnboarding, updateOnboarding } from '@/features/onboarding'
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   '& .MuiDialogContent-root': {
@@ -21,13 +23,13 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   },
 }));
 
-export const ONBOARDING_KEY = 'onboarding';
-export const START_TEMPLATE = 'lets_get_started'
-
 const OnBoardingProvider = ({children}: {children: React.ReactNode}) => {
+  const dispatch = useDispatch();
+  const onBoardingState = useSelector((state: RootState) => state.onBoarding);
   const cookies = new Cookies(null);
   const [open, setOpen] = React.useState(false);
   const theme = useTheme();
+  const { data: session, status } = useSession()
 
   const handleClose = () => {
     setOpen(false);
@@ -35,48 +37,41 @@ const OnBoardingProvider = ({children}: {children: React.ReactNode}) => {
   };
 
   const handleStart = async () => {
-    try{
-      const session = await getSession();
-      // if(!session) return;
-
-      const response = await fetch(`/data/onboarding/${START_TEMPLATE}.json`)
-      const data = await response.json();
-      const steps = data;
-      const driverObj = driver({
-        ...onBoardConfig,
-        steps: steps,
-      });
-
-      driverObj.drive();
-      setOpen(false);
-    } catch(ex){
-
-    }
+    setOpen(false);
+    dispatch(updateOnboarding({
+      show: true,
+      template: START_TEMPLATE,
+      step: 0,
+      isFirstTime: false
+    }));
   }
 
   useEffect(() => {
+    setOpen(false);
+    // if(status !== "authenticated") return;
+    
     (async () => {
       try{
-        const session = await getSession();
-        // if(!session) return;
-
-        const onboard = cookies.get<OnBoarding>(ONBOARDING_KEY);
-        console.log(onboard);
-        if(onboard == undefined) {
-          setOpen(true);
-        }else if(onboard.show) {
-          const steps = require(`../data/${onboard.template}`)
+        // TODO: use middleware
+        console.log(onBoardingState.isFirstTime);
+        if(onBoardingState.isFirstTime) setOpen(true);
+        else if(onBoardingState.show) {
+          const template = onBoardingState.isFirstTime ? START_TEMPLATE : onBoardingState.template;
+          const response = await fetch(`/data/onboarding/${template}.json`)
+          const data = await response.json();
           const driverObj = driver({
             ...onBoardConfig,
-            steps: steps,
+            steps: data,
           });
-          driverObj.drive(onboard.step);
+           
+          driverObj.drive(onBoardingState.step);
         }
-      }catch(ex) {
-            
+      } catch(ex) {
+        // TODO: Handle error
       }
-    })();
-  }, []);
+    })()
+
+  }, [onBoardingState])
 
   return (
     <>

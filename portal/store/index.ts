@@ -3,6 +3,7 @@ import { tenantReducer } from "@/features/farms";
 import { formulaReducer } from "@/features/formula";
 import { ingredientFormReducer, ingredientFilterReducer } from "@/features/ingredients";
 import { nutrientFilterReducer } from "@/features/nutrients"; 
+import { onBoardingReducer } from "@/features/onboarding";
 
 export const store = configureStore({
   reducer: {
@@ -10,7 +11,8 @@ export const store = configureStore({
     formula: formulaReducer,
     ingredientForm: ingredientFormReducer,
     ingredientFilter: ingredientFilterReducer,
-    nutrientFilter: nutrientFilterReducer
+    nutrientFilter: nutrientFilterReducer,
+    onBoarding: onBoardingReducer
   },
 });
 

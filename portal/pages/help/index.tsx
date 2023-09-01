@@ -7,15 +7,20 @@ import { onBoardConfig } from '@/util/onboard';
 import PlayCircleOutlineIcon from '@mui/icons-material/PlayCircleOutline';
 import { useRouter } from 'next/navigation';
 import Cookies from 'universal-cookie';
-import { ONBOARDING_KEY } from '@/providers/OnBoarding';
+import { START_TEMPLATE, ONBOARDING_KEY, isFirstTime, destory ,startFirstTimeOnboarding } from '@/features/onboarding'
+import { useSelector, useDispatch } from "react-redux";
 
 const HelpPage = () => {
   const cookies = new Cookies(null);
   const router = useRouter();
+  const dispatch = useDispatch();
 
   const handleStartTour = () => {
-    cookies.remove(ONBOARDING_KEY);
-    router.refresh();
+    dispatch(startFirstTimeOnboarding());
+  }
+
+  const handleCancel = () => {
+    dispatch(destory());
   }
 
   return (
@@ -32,7 +37,7 @@ const HelpPage = () => {
           <Paper sx={{ px: 1, py: 1 }} elevation={6} variant="outlined" >
             <Grid container direction="row" justifyContent="space-between" alignItems="center" item xs={12} sx={{}}>
               <Typography variant="body2" color={"text.primary"}>Some Random Text</Typography>
-              <Button size="small" variant="text" onClick={() => {}}>Get Started</Button>
+              <Button size="small" variant="text" onClick={handleCancel}>Get Started</Button>
             </Grid>
           </Paper>
         </Grid>
