@@ -33,7 +33,12 @@ const OnBoardingProvider = ({children}: {children: React.ReactNode}) => {
 
   const handleClose = () => {
     setOpen(false);
-    cookies.set(ONBOARDING_KEY, {show: false, template: START_TEMPLATE, step: 0});
+    dispatch(updateOnboarding({
+      show: false,
+      template: START_TEMPLATE,
+      step: 0,
+      isFirstTime: false
+    }));
   };
 
   const handleStart = async () => {
