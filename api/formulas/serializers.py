@@ -166,7 +166,7 @@ class FormulaSerializer_GET(serializers.ModelSerializer):
 class FormulaSerializer_POST(serializers.ModelSerializer):
     requirements = FormulaRequirementSerializer_REF(many=True, required=False)
     rations = FormulaRationSerializer_REF(many=True, required=False)
-    ingredients = FormulaIngredientSerializer_REF(many=True, required=False)
+    ingredients = FormulaIngredientSerializer_REF(source='formulaingredient.ingredient',many=True, required=False)
 
     class Meta:
         model = models.Formula

@@ -1,0 +1,9 @@
+[
+    {
+        "element": "#main-menu",
+        "popover": {
+            "title": "Menus",
+            "description": "Description menu"
+        }
+    }
+]

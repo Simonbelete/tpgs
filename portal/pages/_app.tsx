@@ -1,6 +1,7 @@
 import "@/styles/globals.css";
 import "@glideapps/glide-data-grid/dist/index.css";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
+import "driver.js/dist/driver.css";
 import type { AppProps } from "next/app";
 import type { NextPage } from "next";
 import type { ReactElement, ReactNode } from "react";
@@ -14,6 +15,7 @@ import dynamic from "next/dynamic";
 import { Loading } from "@/components";
 import { Provider } from "react-redux";
 import { store } from "@/store";
+import OnBoardingProvider from "@/providers/OnBoarding";
 
 const DashboardLayout = dynamic(
   () => import("../components/layouts/DashboardLayout"),
@@ -55,9 +57,11 @@ export default function App({
     <Provider store={store}>
       <SessionProvider session={session}>
         <ThemeProvider theme={lightTheme}>
-          <SnackbarProvider>
-            {getLayout(<Component {...pageProps} />)}
-          </SnackbarProvider>
+          <OnBoardingProvider>
+            <SnackbarProvider>
+              {getLayout(<Component {...pageProps} />)}
+            </SnackbarProvider>
+          </OnBoardingProvider>
         </ThemeProvider>
       </SessionProvider>
     </Provider>
