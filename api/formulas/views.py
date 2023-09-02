@@ -107,17 +107,26 @@ class FormulateViewSet(viewsets.ViewSet):
 
 # Formula -> Ingredient -> Nutrients
 class FormulaIngredientNutrients(viewsets.ViewSet):
+    """Eacth ingredient's nutrient contribution with the requried nutrient
+    """
     def get_queryset(self):
         return models.FormulaIngredient.objects.get(formula=self.kwargs['formula_pk'], pk=self.kwargs['ingredient_pk'])
 
     def list(self, request, formula_pk=None, ingredient_pk=None):
         data = []
         formula_ingredient = self.get_queryset()
+        formula_requirement = models.FormulaRequirement.objects.filter(formula=formula_pk)
         for ingredient_nutrient in IngredientNutrient.objects.filter(
                 ingredient=formula_ingredient.ingredient).iterator():
+            nutrient_req = formula_requirement.filter(nutrient=ingredient_nutrient.nutrient)
+            if not nutrient_req:
+                nutrient_req = 0
+            else:
+                nutrient_req = nutrient_req[0]
             data.append({
                 **NutrientSerializer_GET(ingredient_nutrient.nutrient).data,
-                'qty': formula_ingredient.ration * ingredient_nutrient.value / 100,
-                'percentage': (formula_ingredient.qty / formula_ingredient.formula.weight) * 100
+                'contribution': formula_ingredient.ration * ingredient_nutrient.value / 100,
+                'requirement': nutrient_req,
+                'unit': ingredient_nutrient.nutrient.unit.name
             })
         return Response({'results': data})

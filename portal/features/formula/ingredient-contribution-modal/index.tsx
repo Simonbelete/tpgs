@@ -154,6 +154,7 @@ const IngredientContributionModal = ({
       <Box mx={2} my={4} pb={4}>
         {tabIndex == 0 && (
           <>
+            <Typography variant="caption">Below chart shows each nutrient's contribution to the ingredient compared to the required nutrient</Typography>
             <ResponsiveContainer width="100%" height={500}>
               <BarChart
                 // width={500}
@@ -167,11 +168,12 @@ const IngredientContributionModal = ({
                 }}
               >
                 <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="name" />
+                <XAxis dataKey="abbreviation" />
                 <YAxis />
                 <Tooltip />
                 <Legend />
-                <Bar dataKey="qty" label={"Quantity[kg]"} fill={"#1972BC"} />
+                <Bar dataKey="contribution" label={"Contribution"} fill={"#1972BC"} />
+                <Bar dataKey="requirement" fill="#82ca9d" />
               </BarChart>
             </ResponsiveContainer>
           </>

@@ -34,6 +34,9 @@ import FormulaIngredients from "../formula-ingredients";
 import errorToForm from "@/util/errorToForm";
 import formula_service from "../services/formula_service";
 import { useRouter } from "next/router";
+import SaveIcon from "@mui/icons-material/Save";
+import CloseIcon from "@mui/icons-material/Close";
+import LibraryAddIcon from "@mui/icons-material/LibraryAdd";
 
 type Inputs = Partial<Formula>;
 
@@ -526,9 +529,39 @@ const FormulaForm = ({
         </Box>
       </form>
       <Box>
-        <Button variant="contained" type="submit" onClick={() => handleSubmit(onSubmit)()}>
-          Submit
-        </Button>
+        <Stack
+            spacing={2}
+            direction={"row"}
+            justifyContent="flex-start"
+            alignItems="center"
+          >
+            <Box>
+              <Button variant="contained" startIcon={<SaveIcon />} size="small" onClick={startFormulating}>
+                Formulate
+              </Button>
+            </Box>
+            <Box>
+              <Button
+                variant="outlined"
+                size="small"
+                startIcon={<LibraryAddIcon />}
+                onClick={() => handleSubmit(onSubmit)()}
+              >
+                Save
+              </Button>
+            </Box>
+            <Box>
+              <Button
+                variant="outlined"
+                color="error"
+                size="small"
+                startIcon={<CloseIcon />}
+                onClick={() => router.push("/formulation/formulas")}
+              >
+                Cancel
+              </Button>
+            </Box>
+          </Stack>
       </Box>
     </>
   );
