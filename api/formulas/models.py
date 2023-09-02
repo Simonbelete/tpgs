@@ -25,7 +25,7 @@ class FormulaRation(CoreModel):
     formula = models.ForeignKey('formulas.Formula', on_delete=models.CASCADE)
     nutrient = models.ForeignKey(
         'nutrients.Nutrient', on_delete=models.CASCADE)
-    value =  models.DecimalField(max_digits=7, decimal_places=3,null=True, blank=True, default=0)
+    value = models.DecimalField(max_digits=7, decimal_places=3,null=True, blank=True, default=0)
 
 
 class FormulaIngredient(CoreModel):
