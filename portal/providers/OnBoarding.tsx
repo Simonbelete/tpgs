@@ -53,7 +53,7 @@ const OnBoardingProvider = ({children}: {children: React.ReactNode}) => {
 
   useEffect(() => {
     setOpen(false);
-    // if(status !== "authenticated") return;
+    if(status !== "authenticated") return;
     
     (async () => {
       try{
