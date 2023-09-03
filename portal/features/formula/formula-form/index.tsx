@@ -21,7 +21,7 @@ import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { IngredientSelectDialog } from "@/features/ingredients";
-import { Formula, Ingredient, Nutrient } from "@/models";
+import { Formula, FormulaRation, Ingredient, Nutrient } from "@/models";
 import { useSnackbar } from "notistack";
 import { useSelector, useDispatch } from "react-redux";
 import { setRequirements, clearAll } from "../slices";
@@ -31,6 +31,7 @@ import { AsyncDropdown, Dropdown } from "@/components/dropdowns";
 import { PurposeForm } from "@/features/purposes";
 import FormulaRequirements from "../formula-requirements";
 import FormulaIngredients from "../formula-ingredients";
+import FormulaQuickComparison from '../formula-quick-comparison';
 import errorToForm from "@/util/errorToForm";
 import formula_service from "../services/formula_service";
 import { useRouter } from "next/router";
@@ -70,6 +71,13 @@ function a11yProps(index: number) {
   };
 }
 
+function resultA11yProps(index: number) {
+  return {
+    id: `formula-form-result-${index}`,
+    "aria-controls": `formula-form-result-${index}`,
+  };
+}
+
 const FormulaForm = ({
   redirect = true,
   formula,
@@ -82,10 +90,15 @@ const FormulaForm = ({
   const router = useRouter();
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   const [tabIndex, setTabIndex] = useState(0);
+  const [resultTabIndex, setResultTabIndex] = useState(0);
   const dispatch = useDispatch();
   const [formulated, setRormulated] = useState<Formula>();
 
-  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
+  const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
+    setTabIndex(newValue);
+  };
+
+  const handleResultTabIndexChange = (event: React.SyntheticEvent, newValue: number) => {
     setTabIndex(newValue);
   };
 
@@ -270,7 +283,7 @@ const FormulaForm = ({
         </Paper>
       </Box>
 
-      <Tabs value={tabIndex} onChange={handleChange}>
+      <Tabs value={tabIndex} onChange={handleTabChange}>
         <Tab label="General" {...a11yProps(0)} />
         <Tab
           label="Ingredients"
@@ -528,6 +541,19 @@ const FormulaForm = ({
           {tabIndex == 2 && <FormulaRequirements id={formula?.id} />}
         </Box>
       </form>
+      <Box sx={{pb: 5}}>
+        <Tabs value={resultTabIndex} onChange={handleResultTabIndexChange}>
+          <Tab label="Quick Comparison" {...resultA11yProps(0)} />
+          <Tab
+            label="Prcing"
+            iconPosition="end"
+            {...resultA11yProps(1)}
+          />
+        </Tabs>
+        <Box>
+          {resultTabIndex == 0 && <FormulaQuickComparison formula_rations={(formulated?.rations as FormulaRation[])}/>}
+        </Box>
+      </Box>
       <Box>
         <Stack
             spacing={2}

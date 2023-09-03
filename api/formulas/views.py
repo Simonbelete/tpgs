@@ -90,17 +90,6 @@ class FormulateViewSet(viewsets.ViewSet):
         f = Formulate(formula)
         f.compute()
         f.save()
-        # requirements = formula.requirements.all()
-        # ingredients = formula.ingredients.all()
-        # result = []
-        # for req in requirements.iterator():
-        #     nu_sum = 0
-        #     for ing in ingredients.iterator():
-        #         curr_nu = ing.ingredient.nutrients.all().get(pk=req.nutrient.id)
-        #         nu_sum += curr_nu.value * formula.ration / 100
-        #     result.append({
-        #         {**req, 'result': nu_sum}
-        #     })
         data = serializers.FormulateSerializer_POST(self.get_queryset())
         return Response({'results': data.data})
 

@@ -27,6 +27,15 @@ class FormulaRation(CoreModel):
         'nutrients.Nutrient', on_delete=models.CASCADE)
     value = models.DecimalField(max_digits=7, decimal_places=3,null=True, blank=True, default=0)
 
+    @property
+    def achived_goal(self):
+        """Percentage acived based on formula requirement 
+        """
+        req = FormulaRequirement.objects.filter(formula=self.formula, nutrient=self.nutrient).aggregate(sum=Sum('value'))['sum'] or 0
+        if req == 0:
+            return 0
+        return self.value / req * 100
+
 
 class FormulaIngredient(CoreModel):
     formula = models.ForeignKey('formulas.Formula', on_delete=models.CASCADE)

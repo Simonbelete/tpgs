@@ -65,7 +65,7 @@ class FormulaRationSerializer_GET(serializers.ModelSerializer):
 
     class Meta:
         model = models.FormulaRation
-        fields = '__all__'
+        fields = ['id', 'formula', 'nutrient', 'achived_goal']
 
 
 class FormulaRationSerializer_POST(serializers.ModelSerializer):
@@ -191,20 +191,23 @@ class FormulaSerializer_POST(serializers.ModelSerializer):
                 formula=instance, nutrient=nutrient_model, value=ration['value'])
         for ingredient in ingredients:
             inp = ingredient.pop('ingredient')
-            # ingredient_model = Ingredient.objects.get(
-            #     pk=inp)
-            try:
-                models.FormulaIngredient.objects.create(
-                    formula=instance, ingredient=inp, **ingredient)
-            except Exception as ex:
-                print('EEEEEEEEEEEEEE')
-                print(ex)
+            models.FormulaIngredient.objects.create(
+                formula=instance, ingredient=inp, **ingredient)
         return instance
 
+# TODO: depth to 1
+class FormulaRationSerializer_FORMULATE(serializers.ModelSerializer):
+    nutrient = serializers.SlugRelatedField(
+        read_only=True,
+        slug_field='abbreviation'
+    )
+    class Meta:
+        model = models.FormulaRation
+        fields = ['id', 'value', 'nutrient', 'achived_goal']
 
 class FormulateSerializer_POST(serializers.ModelSerializer):
     requirements = FormulaRequirementSerializer_REF(many=True)
-    rations = FormulaRationSerializer_REF(many=True)
+    rations = FormulaRationSerializer_FORMULATE(many=True, read_only=True, source="formularation_set")
 
     class Meta:
         model = models.Formula
