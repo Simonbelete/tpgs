@@ -214,11 +214,12 @@ const FormulaForm = ({
     <>
       <Box sx={{ mb: 5 }}>
         <Paper sx={{ py: 1, px: 5 }} elevation={0} variant="outlined" square>
-          <Stack direction="row"
+          <Stack
+            direction={{ xs: 'column', lg: 'row' }}
             justifyContent="space-between"
-            alignItems="center"
-            spacing={0}
-            divider={<Divider orientation="vertical" flexItem />}>
+            alignItems={{ xs: 'left', lg: 'center' }}
+            spacing={{xs: 2, lg: 0}}
+            divider={<Divider orientation={{xs: "horizontal", lg: "vertical"}} flexItem />}>
               <Stack>
                 <Typography variant="caption" color="text.secondary">TOTAL COST</Typography>
                 <Stack direction={"row"} spacing={2}>
