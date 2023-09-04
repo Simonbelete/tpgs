@@ -107,18 +107,18 @@ class Formula(CoreModel):
         'nutrients.Nutrient', null=True, blank=True, through=FormulaRequirement, related_name='formula_requirements')
     budget = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True, default=0) # per kg
     desired_ratio = models.DecimalField(
-        validators=PERCENTAGE_VALIDATOR, max_digits=15, decimal_places=5, default=100)
+        validators=PERCENTAGE_VALIDATOR, max_digits=15, decimal_places=3, default=100)
     desired_dm = models.DecimalField(
-        validators=PERCENTAGE_VALIDATOR, max_digits=15, decimal_places=5, default=0)
+        validators=PERCENTAGE_VALIDATOR, max_digits=15, decimal_places=3, default=0)
     # Rations - rations are computed based on the given weight
     rations = models.ManyToManyField(
         'nutrients.Nutrient', null=True, blank=True, through=FormulaRation, related_name='formula_rations')
     ration_price = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True, default=0)
     ration_ratio = models.DecimalField(
-        validators=PERCENTAGE_VALIDATOR, max_digits=15, decimal_places=5, default=0)
+        validators=PERCENTAGE_VALIDATOR, max_digits=15, decimal_places=3, default=0)
     ration_weight = models.DecimalField(max_digits=7, decimal_places=3,null=True, blank=True, default=0)
     ration_dm = models.DecimalField(
-        validators=PERCENTAGE_VALIDATOR, max_digits=15, decimal_places=5, default=0)
+        validators=PERCENTAGE_VALIDATOR, max_digits=15, decimal_places=3, default=0)
 
     @property
     def requirement_count(self):

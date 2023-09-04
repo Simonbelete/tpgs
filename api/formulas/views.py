@@ -129,7 +129,6 @@ class FormulaPrintPdf(viewsets.ViewSet):
         for formula_ingredient in models.FormulaIngredient.objects.filter(formula=formula).iterator():
             ingredient_nutrients_list = IngredientNutrient.objects.filter(ingredient=formula_ingredient.ingredient).values_list('nutrient__abbreviation', 'value')
             ingredient_nutrients_dict = dict(ingredient_nutrients_list)
-            print(formula_ingredient.ration_price)
             data.loc[-1] = {
                 'Name': formula_ingredient.ingredient.name,
                 '%': formula_ingredient.ration,
@@ -142,6 +141,31 @@ class FormulaPrintPdf(viewsets.ViewSet):
             }
             data = data.reset_index(drop=True)
 
+        ration_nutrients_dict = dict(models.FormulaRation.objects.filter(formula=formula).values_list('nutrient__abbreviation', 'value'))
+        data.loc[-1] = {
+            'Name': 'Ration',
+            '%': formula.ration_ratio,
+            'Weight[Kg]': formula.ration_weight,
+            'Price[Kg]': formula.ration_price,
+            'DM[%]': formula.ration_dm,
+            'Min[%]': '-',
+            'Max[%]': '-',
+            **ration_nutrients_dict
+        }
+
+        requirement_nutrients_dict = dict(models.FormulaRequirement.objects.filter(formula=formula).values_list('nutrient__abbreviation', 'value'))
+        data.loc[-2] = {
+            'Name': 'Requirement',
+            '%': formula.desired_ratio,
+            'Weight[Kg]': formula.ration_weight,
+            'Price[Kg]': formula.budget,
+            'DM[%]': formula.desired_dm,
+            'Min[%]': '-',
+            'Max[%]': '-',
+            **requirement_nutrients_dict
+        }
+
+        data = data.reset_index(drop=True)
         data.fillna(0,inplace=True)
 
         data_2d = np.vstack([columns, data.to_numpy()])
