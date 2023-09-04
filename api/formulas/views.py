@@ -1,8 +1,15 @@
+import io
+import pandas as pd
+import numpy as np
 from django.shortcuts import render
 from rest_framework import viewsets, status
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from django.db import transaction
+from reportlab.lib import colors
+from reportlab.lib.pagesizes import letter, landscape, A4
+from reportlab.platypus import SimpleDocTemplate, Table, TableStyle
+from django.http import FileResponse
 
 from . import models
 from . import serializers
@@ -92,6 +99,60 @@ class FormulateViewSet(viewsets.ViewSet):
         f.save()
         data = serializers.FormulateSerializer_POST(self.get_queryset())
         return Response({'results': data.data})
+
+# Print Pdf
+class FormulaPrintPdf(viewsets.ViewSet):
+    """Return computed total cost and total nutrients sum
+    """
+
+    def get_queryset(self):
+        return models.Formula.objects.get(pk=self.kwargs['formula_pk'])
+
+    def create(self, request, formula_pk=None):
+        formula = self.get_queryset()
+
+        buffer = io.BytesIO()
+        doc = SimpleDocTemplate(buffer, rightMargin=72, leftMargin=72, topMargin=72, bottomMargin=72, pagesize=(landscape(A4)))
+
+        ingredient_ids = formula.ingredients.values_list('id')
+        ingredient_ids = list(zip(*ingredient_ids))[0]
+        ingredient_nutrient = IngredientNutrient.objects.filter(ingredient__in=ingredient_ids)
+        abbvers = np.array(list(zip(*ingredient_nutrient.values_list('nutrient__abbreviation').distinct())))
+        abbvers = np.sort(abbvers)
+        
+        columns = np.array(['Name', '%', 'Weight[Kg]', 'Price[Kg]', 'DM[%]'])
+        columns = np.append(columns, abbvers)
+        columns = np.append(columns, ['Min[%]', 'Max[%]'])
+
+        data = pd.DataFrame([], columns=columns)
+        
+        for formula_ingredient in models.FormulaIngredient.objects.filter(formula=formula).iterator():
+            ingredient_nutrients_list = IngredientNutrient.objects.filter(ingredient=formula_ingredient.ingredient).values_list('nutrient__abbreviation', 'value')
+            ingredient_nutrients_dict = dict(ingredient_nutrients_list)
+            print(formula_ingredient.ration_price)
+            data.loc[-1] = {
+                'Name': formula_ingredient.ingredient.name,
+                '%': formula_ingredient.ration,
+                'Weight[Kg]': formula_ingredient.ration_weight,
+                'Price[Kg]': formula_ingredient.ration_price,
+                'DM[%]': formula_ingredient.ingredient.dm,
+                'Min[%]': formula_ingredient.ratio_max,
+                'Max[%]': formula_ingredient.ratio_max,
+                **ingredient_nutrients_dict
+            }
+            data = data.reset_index(drop=True)
+
+        data.fillna(0,inplace=True)
+
+        data_2d = np.vstack([columns, data.to_numpy()])
+        t=Table(data_2d.tolist(), style=[
+            ('GRID',(0,0),(-1,-1),0.5,colors.grey),
+        ])
+
+        doc.build([t])
+
+        buffer.seek(0)
+        return FileResponse(buffer, as_attachment=True, filename="formula.pdf")
 
 
 # Formula -> Ingredient -> Nutrients

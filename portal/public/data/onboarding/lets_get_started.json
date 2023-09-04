@@ -1,9 +1,30 @@
 [
     {
-        "element": "#main-menu",
+        "element": "#main-sidebar-menu",
         "popover": {
             "title": "Menus",
             "description": "Description menu"
+        }
+    },
+    {
+        "element": "#farms-menu",
+        "popover": {
+            "title": "Farms",
+            "description": "Select Menu"
+        }
+    },
+    {
+        "element": "#farms-menu-popover",
+        "popover": {
+            "title": "Farms",
+            "description": "Select Farm"
+        }
+    },
+    {
+        "element": "#account-menu",
+        "popover": {
+            "title": "Account Menu",
+            "description": "Select Menu"
         }
     }
 ]

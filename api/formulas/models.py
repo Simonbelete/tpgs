@@ -68,11 +68,11 @@ class FormulaIngredient(CoreModel):
 
     @property
     def ration_weight(self):
-        return self.formula.weight * self.ration / 100
+        return round(self.formula.weight * self.ration / 100, 3)
 
     @property
     def ration_price(self):
-        return self.ration_weight * self.ingredient.price
+        return round(self.ration_weight * self.ingredient.price, 3)
 
 
 class Formula(CoreModel):

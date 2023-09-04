@@ -67,6 +67,7 @@ const FarmsMenu = () => {
         </Typography>
       </Button>
       <Popper
+        id="farms-menu-popover"
         open={open}
         anchorEl={anchorEl}
         role={undefined}

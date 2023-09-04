@@ -82,6 +82,7 @@ const SidebarMenu = () => {
 
   return (
     <Sidebar
+      id="main-sidebar-menu"
       style={{ height: "100vh" }}
       breakPoint="md"
       backgroundColor={sidebarTheme.sidebar.backgroundColor}
@@ -406,7 +407,7 @@ const SidebarMenu = () => {
           }
           icon={<HelpIcon fontSize="small" />}
         >
-          <MenuItem component={<Link href="/flocks" />}>
+          <MenuItem component={<Link href="/help" />}>
             <Typography variant="body1" fontSize={14}>
               User Guide
             </Typography>

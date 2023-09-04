@@ -36,3 +36,4 @@ django-simple-history
 pandas
 drf-nested-routers
 django-tenants
+reportlab
