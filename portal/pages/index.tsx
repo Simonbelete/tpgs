@@ -52,6 +52,7 @@ export default function Home() {
                 underline="none"
                 variant="body1"
                 color="black"
+                style={{color: "#495056"}}
               >
                 ILRI
                 <LaunchIcon sx={{ fontSize: 20, pl: 0.7 }} />

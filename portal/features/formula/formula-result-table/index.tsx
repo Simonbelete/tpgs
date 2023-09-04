@@ -7,6 +7,7 @@ import {
   TableCell,
   TableRow,
   Paper,
+  Typography,
 } from "@mui/material";
 import { FormulaIngredient } from "@/models";
 
@@ -15,18 +16,16 @@ const FormulaResultTable = ({
 }: {
   rows: Partial<FormulaIngredient>[];
 }) => {
-  useEffect(() => {
-    console.log("rows");
-    console.log(rows);
-  }, []);
   return (
-    <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 650 }} aria-label="simple table">
+    <TableContainer component={Paper} elevation={0} variant="outlined" square sx={{my: 3}}>
+      <Table sx={{ minWidth: 650 }} aria-label="simple table" size="small">
         <TableHead>
           <TableRow>
-            <TableCell>Ingredient</TableCell>
-            <TableCell align="right">Weight [Kg]</TableCell>
-            <TableCell align="right">Price [\Kg]</TableCell>
+            <TableCell sx={{fontWeight: 600}} >
+              Ingredient
+            </TableCell>
+            <TableCell align="right"  sx={{fontWeight: 600}}>Weight [Kg]</TableCell>
+            <TableCell align="right"  sx={{fontWeight: 600}}>Price [\Kg]</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -36,10 +35,10 @@ const FormulaResultTable = ({
               sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
             >
               <TableCell component="th" scope="row">
-                {row.name}
+                {row.ingredient}
               </TableCell>
-              <TableCell align="right">{row.total_weight}</TableCell>
-              <TableCell align="right">{row.total_price}</TableCell>
+              <TableCell align="right">{row.ration_weight}</TableCell>
+              <TableCell align="right">{row.ration_price}</TableCell>
             </TableRow>
           ))}
         </TableBody>

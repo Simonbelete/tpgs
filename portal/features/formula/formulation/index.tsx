@@ -250,10 +250,10 @@ const Formulation = ({ saveRef }: { saveRef: React.Ref<unknown> }) => {
         // @ts-ignore
         ingredients.current[k]["ratio"] = Number(newValue.data);
         // @ts-ignore
-        ingredients.current[k]["total_weight"] =
+        ingredients.current[k]["ration_weight"] =
           (getValues("weight") * Number(newValue.data)) / 100;
         // @ts-ignore
-        ingredients.current[k]["total_price"] =
+        ingredients.current[k]["ration_price"] =
           ingredients.current[k].price *
           ((getValues("weight") * Number(newValue.data)) / 100);
       }

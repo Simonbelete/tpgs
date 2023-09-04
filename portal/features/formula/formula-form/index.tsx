@@ -21,7 +21,7 @@ import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { IngredientSelectDialog } from "@/features/ingredients";
-import { Formula, FormulaRation, Ingredient, Nutrient } from "@/models";
+import { Formula, FormulaIngredient, FormulaRation, Ingredient, Nutrient } from "@/models";
 import { useSnackbar } from "notistack";
 import { useSelector, useDispatch } from "react-redux";
 import { setRequirements, clearAll } from "../slices";
@@ -38,6 +38,7 @@ import { useRouter } from "next/router";
 import SaveIcon from "@mui/icons-material/Save";
 import CloseIcon from "@mui/icons-material/Close";
 import LibraryAddIcon from "@mui/icons-material/LibraryAdd";
+import FormulaResultTable from "../formula-result-table";
 
 type Inputs = Partial<Formula>;
 
@@ -99,7 +100,7 @@ const FormulaForm = ({
   };
 
   const handleResultTabIndexChange = (event: React.SyntheticEvent, newValue: number) => {
-    setTabIndex(newValue);
+    setResultTabIndex(newValue);
   };
 
   // States
@@ -552,7 +553,8 @@ const FormulaForm = ({
           />
         </Tabs>
         <Box>
-          {resultTabIndex == 0 && <FormulaQuickComparison formula_rations={(formulated?.rations as FormulaRation[])}/>}
+          {resultTabIndex == 0 && <FormulaQuickComparison formula_rations={(formulated?.rations as FormulaRation[] || [])}/>}
+          {resultTabIndex == 1 && <FormulaResultTable rows={(formulated?.ingredients as FormulaIngredient[] || [])}/>}
         </Box>
       </Box>
       <Box>
