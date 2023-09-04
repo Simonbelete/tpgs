@@ -29,6 +29,8 @@ import {
   Grid,
   InputAdornment,
   Paper,
+  Tabs,
+  Tab
 } from "@mui/material";
 import {
   IngredientSelectDialog,
@@ -58,8 +60,16 @@ import formula_service from "../services/formula_service";
 import { useRouter } from "next/router";
 import FicPieChart from "../fic-pie-chart";
 import FormulaResultTable from "../formula-result-table";
+import FormulaQuickComparison from "../formula-quick-comparison";
 
 type Inputs = Partial<Formula>;
+
+function resultA11yProps(index: number) {
+  return {
+    id: `formula-experimental-result-${index}`,
+    "aria-controls": `formula-experimental-result-${index}`,
+  };
+}
 
 const schema = yup
   .object({
@@ -85,6 +95,7 @@ const schema = yup
 
 const Formulation = ({ saveRef }: { saveRef: React.Ref<unknown> }) => {
   const isInitialMount = useRef(true);
+  const [resultTabIndex, setResultTabIndex] = useState(0);
   const [loading, setLoading] = useState<boolean>(false);
   const theme = useTheme();
   const router = useRouter();
@@ -94,6 +105,11 @@ const Formulation = ({ saveRef }: { saveRef: React.Ref<unknown> }) => {
     ["Ration"],
     ["Requirement"],
   ]);
+
+  const handleResultTabIndexChange = (event: React.SyntheticEvent, newValue: number) => {
+    setResultTabIndex(newValue);
+  };
+
   const [columns, setColumns] = useState<
     Array<GridColumn & { nutrient_id?: number }>
   >([
@@ -731,21 +747,20 @@ const Formulation = ({ saveRef }: { saveRef: React.Ref<unknown> }) => {
           }}
         />
       </Sizer>
-      <Box>
-        <FIcBarChart
-          data={contributionChartData}
-          dataKey="contribution"
-          displayKey={"title"}
-        />
+      <Box sx={{py: 5}}>
+        <Tabs value={resultTabIndex} onChange={handleResultTabIndexChange}>
+          <Tab label="Quick Comparison" {...resultA11yProps(0)} />
+          <Tab
+            label="Prcing"
+            iconPosition="end"
+            {...resultA11yProps(1)}
+          />
+        </Tabs>
+        <Box>
+          {resultTabIndex == 0 && <FIcBarChart data={contributionChartData} dataKey="contribution" displayKey={"title"} />}
+          {resultTabIndex == 1 && <FormulaResultTable rows={(ingredients.current as any)}/>}
+        </Box>
       </Box>
-      <Grid container spacing={2} sx={{ my: 5 }}>
-        <Grid item xs={8}>
-          <FormulaResultTable rows={ingredients.current} />
-        </Grid>
-        <Grid item xs={4}>
-          {/* <FicPieChart data={ingredients.current} dataKey="ratio" /> */}
-        </Grid>
-      </Grid>
     </>
   );
 };

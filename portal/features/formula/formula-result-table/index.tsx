@@ -35,7 +35,8 @@ const FormulaResultTable = ({
               sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
             >
               <TableCell component="th" scope="row">
-                {row.ingredient}
+                {console.log(row.ingredient)}
+                {row.ingredient !== undefined ? row.ingredient : row.name}
               </TableCell>
               <TableCell align="right">{row.ration_weight}</TableCell>
               <TableCell align="right">{row.ration_price}</TableCell>
