@@ -384,7 +384,7 @@ const SidebarMenu = () => {
           </Typography>
         </MenuItem>
         <MenuItem
-          component={<Link href="/settings" />}
+          component={<Link href="/setting" />}
           icon={<SettingsIcon fontSize="small" />}
         >
           <Typography variant="body1" fontSize={14}>

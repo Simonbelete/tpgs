@@ -5,12 +5,14 @@ import { Grid,
   Switch, FormControlLabel, Typography, 
   Avatar, Box, Stack, List, ListItem, 
   ListItemButton, ListItemText,
-  Tab, Tabs } from '@mui/material';
+  Tab, Tabs, IconButton } from '@mui/material';
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import { Setting } from "@/models";
 import { useSession, signOut } from "next-auth/react";
 import { LabeledInput } from "@/components/inputs";
 import SystemSetting from "./system-setting";
+import LogoutIcon from "@mui/icons-material/Logout";
+import Link from "next/link";
 
 type Inputs = Partial<Setting>;
 
@@ -63,7 +65,11 @@ const SettingsForm = () => {
           </Box>
           <Box sx={{ flexGrow: 1 }}/>
           <Stack direction="row" spacing={2} useFlexGap flexWrap="wrap">
-            
+            <Link href="/api/logout">
+              <IconButton >
+                <LogoutIcon  />
+              </IconButton>
+            </Link>
           </Stack>
         </Box>
       </Grid>
