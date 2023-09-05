@@ -20,6 +20,7 @@ export const settingSlice = createSlice({
   reducers: {
    toggleSuperUserMode: (state) => {
     state.superUserMode = !state.superUserMode;
+    cookies.set(SETTING_KEY, {state});
    }
   }
 });

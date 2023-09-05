@@ -21,9 +21,11 @@ const EditLayout = ({
       <Box sx={{ display: "flex" }} flexDirection={{xs: "column", lg: "row"}} mb={5}>
         {header}
         <Box sx={{ flexGrow: 1 }}/>
-        <Stack direction="row" spacing={2} useFlexGap flexWrap="wrap">
-          {actions}
-        </Stack>
+        {actions && (
+          <Stack direction="row" spacing={2} useFlexGap flexWrap="wrap">
+            {actions}
+          </Stack>
+        )}
       </Box>
       <Box sx={{ height: "auto" }}>{children}</Box>
     </>

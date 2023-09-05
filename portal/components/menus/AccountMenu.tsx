@@ -42,7 +42,7 @@ const AccountMenu = () => {
             aria-expanded={open ? "true" : undefined}
           >
             <Avatar sx={{ width: 32, height: 32 }}>
-              {session?.user?.name || "U"}
+              {(session?.user?.name || "User")[0]}
             </Avatar>
           </IconButton>
         </Tooltip>

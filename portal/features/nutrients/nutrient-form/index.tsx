@@ -81,7 +81,6 @@ const NutrientForm = ({
   return (
     <Paper id="#abcc" sx={{ px: 5, py: 5 }} elevation={6} variant="outlined" square>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <p>{errors.code?.message}</p>
         <Grid container spacing={4}>
           {/* Name */}
           <Grid item xs={12} md={6}>
