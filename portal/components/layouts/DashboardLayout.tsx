@@ -4,6 +4,8 @@ import PrimaryNavbar from "../navbars/PrimaryNavbar";
 import { Sidebar } from "../menus";
 import { useTheme } from "@mui/material/styles";
 import { SuperUserBanner } from "../banners";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store";
 
 interface DashboardLayoutProps {
   children: ReactElement | ReactElement[];
@@ -12,13 +14,14 @@ interface DashboardLayoutProps {
 const DashboardLayout = (props: DashboardLayoutProps) => {
   const { children } = props;
   const theme = useTheme();
+  const settingState = useSelector((state: RootState) => state.setting);
 
   return (
     <ProSidebarProvider>
       <div style={{ height: "100vh", display: "flex" }}>
         <Sidebar />
         <div style={{ overflowY: "scroll", width: "100%" }}>
-          {/* <SuperUserBanner /> */}
+          {settingState.superUserMode && <SuperUserBanner />}
           <PrimaryNavbar />
           <div
             style={{

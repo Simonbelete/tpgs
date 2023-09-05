@@ -4,6 +4,7 @@ import { formulaReducer } from "@/features/formula";
 import { ingredientFormReducer, ingredientFilterReducer } from "@/features/ingredients";
 import { nutrientFilterReducer } from "@/features/nutrients"; 
 import { onBoardingReducer } from "@/features/onboarding";
+import { SettingReducer } from "@/features/settings";
 
 export const store = configureStore({
   reducer: {
@@ -12,7 +13,8 @@ export const store = configureStore({
     ingredientForm: ingredientFormReducer,
     ingredientFilter: ingredientFilterReducer,
     nutrientFilter: nutrientFilterReducer,
-    onBoarding: onBoardingReducer
+    onBoarding: onBoardingReducer,
+    setting: SettingReducer
   },
 });
 
