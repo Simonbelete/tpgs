@@ -10,8 +10,8 @@ const EXPORT_URL = `${URL}/export`;
 const IMPORT_URL = `${URL}/import`;
 
 export default {
-  get: async (): Promise<AxiosResponse<Response<NutrientGroup[]>>> =>
-    client.get(`${URL}/`),
+  get: async (query?: Object): Promise<AxiosResponse<Response<NutrientGroup[]>>> =>
+    client.get(`${URL}/`, { params: query }),
   getById: async (
     id: number
   ): Promise<AxiosResponse<Response<NutrientGroup>>> =>

@@ -62,6 +62,9 @@ NO_REPLAY_EMAIL_ADDRESS = env('NO_REPLAY_EMAIL_ADDRESS')
 
 DATETIME_FORMAT = "%d/%m/%Y %H:%M:%S"
 
+# url
+SITE_URL = env('SITE_URL')
+
 # Application definition
 
 SHARED_APPS = [

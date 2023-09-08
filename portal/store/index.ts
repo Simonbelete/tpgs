@@ -5,6 +5,7 @@ import { ingredientFormReducer, ingredientFilterReducer } from "@/features/ingre
 import { nutrientFilterReducer } from "@/features/nutrients"; 
 import { onBoardingReducer } from "@/features/onboarding";
 import { SettingReducer } from "@/features/settings";
+import { NutrientGroupFilterReducer } from '@/features/nutrient-group';
 
 export const store = configureStore({
   reducer: {
@@ -14,7 +15,8 @@ export const store = configureStore({
     ingredientFilter: ingredientFilterReducer,
     nutrientFilter: nutrientFilterReducer,
     onBoarding: onBoardingReducer,
-    setting: SettingReducer
+    setting: SettingReducer,
+    nutrientGroupFilter: NutrientGroupFilterReducer
   },
 });
 

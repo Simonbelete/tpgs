@@ -7,141 +7,29 @@ import { Breadcrumbs } from "@/components";
 import { Button, Typography, Stack } from "@mui/material";
 import {
   NutrientGroupList,
-  NutrientGroupService,
+  nutrientGroupService,
+  NutrientGroupImportExport,
+  NutrientGroupFilter
 } from "@/features/nutrient-group";
-import DownloadIcon from "@mui/icons-material/Download";
-import AddIcon from "@mui/icons-material/Add";
-import FileUploadIcon from "@mui/icons-material/FileUpload";
-import { ButtonMenu } from "@/components/buttons";
-import { useSnackbar } from "notistack";
-import messages from "@/util/messages";
-import fileDownload from "@/util/fileDownload";
+import Head from "next/head";
+import siteMetadata from "@/data/siteMetadata";
 
 const NutrientGroupPage = () => {
   const { breadcrumbs } = useBreadcrumbs();
 
   return (
-    <ListLayout
-      breadcrumbs={<Breadcrumbs items={breadcrumbs} />}
-      header={<Typography variant="title">Nutrients Group</Typography>}
-      actions={<Actions />}
-    >
-      <NutrientGroupList />
-    </ListLayout>
-  );
-};
-
-const Actions = (): ReactElement => {
-  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
-
-  const handleExport = async (type: string) => {
-    try {
-      let response: Partial<AxiosResponse> = {};
-      if (type == "xlsx") response = await NutrientGroupService.export.xlsx();
-      if (type == "xls") response = await NutrientGroupService.export.xls();
-      if (type == "csv") response = await NutrientGroupService.export.csv();
-      if (response.status == 200) {
-        fileDownload(response.data, `nutrient_groups.${type}`);
-      } else {
-        enqueueSnackbar(messages.exportError_400(), { variant: "error" });
-      }
-    } catch (ex) {
-      enqueueSnackbar(messages.exportError_500(), { variant: "error" });
-    }
-  };
-
-  const handleFileUpload = async (event: ChangeEvent<HTMLInputElement>) => {
-    if (event.target != null && event.target.files != null) {
-      const allowedExtensions = /(\.csv|\.xlsx|\.xls)$/i;
-      const target = event.target as HTMLInputElement;
-      const file = target.files != null ? target.files[0] : null;
-
-      if (file == null) return;
-
-      if (!allowedExtensions.test(file.name)) {
-        enqueueSnackbar(messages.exportFileTypeError(), { variant: "error" });
-        return;
-      }
-
-      const formData = new FormData();
-      formData.append("file", file);
-
-      try {
-        let response: Partial<AxiosResponse> = {};
-        if (file.name.includes(".xlsx"))
-          response = await NutrientGroupService.import.xlsx(formData);
-        if (file.name.includes(".xls"))
-          response = await NutrientGroupService.import.xls(formData);
-        if (file.name.includes(".csv"))
-          response = await NutrientGroupService.import.csv(formData);
-        if (response.status == 200) {
-          enqueueSnackbar(messages.importSuccess(), { variant: "success" });
-        } else {
-          enqueueSnackbar(messages.importError_400(), { variant: "error" });
-        }
-      } catch (ex) {
-        enqueueSnackbar(messages.importError_500(), { variant: "error" });
-      }
-    } else {
-      enqueueSnackbar(messages.fileNotSelected(), { variant: "error" });
-    }
-  };
-
-  return (
     <>
-      <Stack
-        spacing={2}
-        direction={"row"}
-        justifyContent="flex-start"
-        alignItems="center"
+      <Head>
+        <title>{siteMetadata.headerTitle} - Nutrient Groups</title>
+      </Head>
+      <ListLayout
+        breadcrumbs={<Breadcrumbs items={breadcrumbs} />}
+        header={<Typography variant="title">Nutrient Groups</Typography>}
+        actions={<NutrientGroupImportExport />}
+        filter={<NutrientGroupFilter />}
       >
-        <Link href="/nutrient-groups/create">
-          <Button variant="contained" size={"small"} startIcon={<AddIcon />}>
-            Create
-          </Button>
-        </Link>
-        <ButtonMenu
-          name="Export"
-          startIcon={<DownloadIcon />}
-          size="small"
-          menus={[
-            {
-              onClick: async () => await handleExport("csv"),
-              children: (
-                <>
-                  <Typography color={"black"}>Csv (.csv)</Typography>
-                </>
-              ),
-            },
-            {
-              onClick: async () => await handleExport("xlsx"),
-              children: (
-                <>
-                  <Typography color={"black"}>Excel (.xlsx)</Typography>
-                </>
-              ),
-            },
-            {
-              onClick: async () => await handleExport("xls"),
-
-              children: (
-                <>
-                  <Typography color={"black"}>Excel (.xls)</Typography>
-                </>
-              ),
-            },
-          ]}
-        />
-        <Button startIcon={<FileUploadIcon />} size="small" component="label">
-          Import
-          <input
-            type="file"
-            onChange={handleFileUpload}
-            accept=".csv,.xlsx,.xls"
-            hidden
-          />
-        </Button>
-      </Stack>
+        <NutrientGroupList />
+      </ListLayout>
     </>
   );
 };

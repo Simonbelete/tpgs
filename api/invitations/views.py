@@ -39,8 +39,7 @@ class VerifyInvitationViewSet(viewsets.ViewSet):
     def get_queryset(self):
         return models.Invitation.objects.all()
 
-    @transaction.atomic
-    def create(self, request, formula_pk=None):
+    def create(self, request):
         try:
             with transaction.atomic:
                 token = request.data['password']
@@ -52,6 +51,8 @@ class VerifyInvitationViewSet(viewsets.ViewSet):
                 for farm in invitation.farms.all().iterator():
                     user.farms.add(farm)
                     user.save()
+                invitation.accepted = True
+                invitation.save()
                 return Response(user, status=201)
         except Exception as ex:
             return Response({'error': str(ex)}, status=500)
