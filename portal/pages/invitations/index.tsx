@@ -15,7 +15,7 @@ import {
   InvitationFilter,
 } from "@/features/invitations";
 import SendIcon from "@mui/icons-material/Send";
-import SideFilter from "@/components/filters/SideFilter";
+import { SeoHead } from '@/seo';
 
 const UnitsPage = () => {
   const { breadcrumbs } = useBreadcrumbs();
@@ -40,6 +40,7 @@ const Actions = (): ReactElement => {
 
   return (
     <>
+      <SeoHead title="Invitations"/>
       <InvitationFormModal open={openModal} onClose={handleCloseModal} />
       <Stack
         spacing={2}
