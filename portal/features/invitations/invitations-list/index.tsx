@@ -9,11 +9,13 @@ import { useSnackbar } from "notistack";
 import { DataTable } from "@/components/tables";
 import { Farm, Invitation } from "@/models";
 import invitation_service from "../services/invitation_service";
-import { Chip, Box, Stack } from "@mui/material";
+import { Chip, Box, Stack, Typography } from "@mui/material";
 import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store";
+import Link from 'next/link';
 import _ from "lodash";
+import dayjs from 'dayjs'
 
 const columns: GridColDef[] = [
   {
@@ -21,7 +23,16 @@ const columns: GridColDef[] = [
     headerName: "Invited By",
     flex: 1,
     minWidth: 150,
-    // valueGetter: (params) => params.row.inviter ?? "",
+    renderCell: (params: GridRenderCellParams<any>) => {
+      if (params.row.inviter == null) return <></>;
+      return (
+        <Typography color={"link.primary"} variant="body2">
+          <Link href={`/users/${params.row.inviter.id}`}>
+            {params.row.inviter.name}
+          </Link>
+        </Typography>
+      );
+    },
   },
   {
     field: "email",
@@ -29,8 +40,20 @@ const columns: GridColDef[] = [
     flex: 1,
     minWidth: 150,
   },
-  { field: "sent_date", headerName: "Date", flex: 1, minWidth: 150 },
-  { field: "expire_date", headerName: "Expire Date", flex: 1, minWidth: 150 },
+  { 
+    field: "sent_date", 
+    headerName: "Invitation date", 
+    flex: 1, minWidth: 150,
+    valueGetter: (params) =>
+      params.row.sent_date ? dayjs(params.row.sent_date).format(process.env.NEXT_PUBLIC_DATE_FORMAT) : "",
+  },
+  { 
+    field: "expire_date", 
+    headerName: "Expire Date", 
+    flex: 1, minWidth: 150,
+    valueGetter: (params) =>
+      params.row.expire_date ? dayjs(params.row.expire_date).format(process.env.NEXT_PUBLIC_DATE_FORMAT) : "",
+  },
   {
     field: "farms",
     headerName: "Farms",
@@ -80,6 +103,7 @@ const InvitationsList = () => {
   const filter = useSelector((state: RootState) => state.invitationFilter)
 
   useEffect(() => {
+    console.log(process.env.NEXT_PUBLIC_DATE_FORMAT)
     const controller = new AbortController();
 
     setIsLoading(true);

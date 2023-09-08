@@ -10,13 +10,16 @@ from django.core.exceptions import ValidationError
 
 from . import models
 from . import serializers
+from . import filters
 from users.models import User
 from users.serializers import UserSerializer_GET
-
 
 class InvitationViewSet(viewsets.ModelViewSet):
     queryset = models.Invitation.objects.all()
     serializer_class = serializers.InvitationSerializer_GET
+    filterset_class = filters.InvitationFilter
+    search_fields = ['email']
+    ordering_fields = '__all__'
 
     def get_queryset(self):
         superuser_mode = self.request.headers.get('X-Superuser-Mode', 'false')

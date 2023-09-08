@@ -17,6 +17,9 @@ class Invitation(models.Model):
     farms = models.ManyToManyField(Farm)
     is_active = models.BooleanField(default=True)
 
+    class Meta:
+        ordering = ["-sent_date"]
+
     def save(self, *args, **kwargs):
         self.clean()
         self.expire_date = datetime.today() + timedelta(days=7)

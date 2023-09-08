@@ -21,3 +21,8 @@ class UserSerializer_GET(serializers.ModelSerializer):
         model = models.User
         fields = ['id', 'name', 'username', 'email',
                   'first_name', 'last_name', 'last_login']
+
+class UserSerializer_SLUG(serializers.ModelSerializer):
+    class Meta:
+        model = models.User
+        fields = ['id', 'name', 'username']
