@@ -17,7 +17,7 @@ import {
 import SendIcon from "@mui/icons-material/Send";
 import { SeoHead } from '@/seo';
 
-const UnitsPage = () => {
+const InvitationPage = () => {
   const { breadcrumbs } = useBreadcrumbs();
 
   return (
@@ -61,4 +61,4 @@ const Actions = (): ReactElement => {
   );
 };
 
-export default UnitsPage;
+export default InvitationPage;

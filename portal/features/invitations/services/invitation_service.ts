@@ -6,8 +6,8 @@ const URL = "/invitations";
 const VERIFY_URL = 'verify-invitation';
 
 export default {
-  get: async (): Promise<AxiosResponse<Response<Invitation[]>>> =>
-    client.get(`${URL}/`),
+  get: async (query?: Object): Promise<AxiosResponse<Response<Invitation[]>>> =>
+    client.get(`${URL}/`, { params: query }),
   getById: async (id: number): Promise<AxiosResponse<Response<Invitation>>> =>
     client.get(`${URL}/${id}`),
   create: async (data: Partial<Invitation>) => client.post(`${URL}/`, data),

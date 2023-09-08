@@ -65,18 +65,7 @@ const CheckboxDropdown = ({
   const [open, setOpen] = useState<boolean>(false);
   const [data, setData] = useState<object[]>([...(menus || [])])
   const [loading, setLoading] = useState(false);
-  const inputRef = useRef<any>();
   const [searchInput, setSearchInput] = useState<string>("");
-  const handleChange = (event: SelectChangeEvent) => {
-    // const {
-    //   target: { value },
-    // } = event;
-    // setPersonName(
-    //   // On autofill we get a stringified value.
-    //   typeof value === 'string' ? value.split(',') : value,
-    // );
-  };
-
 
   const handleOpen = async () => {
     setOpen(true);

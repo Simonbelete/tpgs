@@ -11,6 +11,9 @@ import { Farm, Invitation } from "@/models";
 import invitation_service from "../services/invitation_service";
 import { Chip, Box, Stack } from "@mui/material";
 import { useRouter } from "next/router";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store";
+import _ from "lodash";
 
 const columns: GridColDef[] = [
   {
@@ -65,6 +68,7 @@ const columns: GridColDef[] = [
 
 const InvitationsList = () => {
   const [rows, setRows] = useState<GridRowsProp<Invitation>>([]);
+  const [rowCount, setRowCount] = useState<number>(0);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [paginationModel, setPaginationModel] = useState({
     page: 0,
@@ -73,19 +77,38 @@ const InvitationsList = () => {
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   const router = useRouter();
 
-  useEffect(() => {
-    setIsLoading(true);
+  const filter = useSelector((state: RootState) => state.invitationFilter)
 
-    invitation_service
-      .get()
-      .then((response) => {
-        setRows(response.data.results);
-      })
-      .catch(() => {})
-      .finally(() => {
-        setIsLoading(false);
-      });
-  }, [paginationModel]);
+  useEffect(() => {
+    const controller = new AbortController();
+
+    setIsLoading(true);
+     loadData().finally(() => {
+      setIsLoading(false);
+     })
+
+     return () => {
+      controller.abort()
+    }
+  }, [paginationModel, filter]);
+
+  const loadData = async () => {
+    // Build Filters
+    let filterQuery: any = {}
+
+    if(filter.invitationState.length !== 0) filterQuery['accepted__in'] = filter.invitationState.map((e: any) => e.value).join(',');
+
+    // Page Builder
+    const offset = paginationModel.page * paginationModel.pageSize;
+    const pageQuery = {...{limit: paginationModel.pageSize, offset: offset}, ...(_.isEmpty(filterQuery) ? {}: {offset: null, limit: null})}
+    const searchQuery = filter.search != "" ? {search: filter.search} : {}
+
+    const response = await invitation_service.get({...pageQuery, ...filterQuery, ...searchQuery})
+    if(response.status == 200) {
+      setRows(response.data.results);
+      setRowCount(response.data.count || 0);
+    }
+  }
 
   const refresh = () => {
     setPaginationModel({ page: 0, pageSize: 10 });
@@ -112,11 +135,10 @@ const InvitationsList = () => {
       columns={columns}
       rowCount={rows.length}
       loading={isLoading}
-      pageSizeOptions={[5]}
+      pageSizeOptions={[5, 10, 25, 50, 100]}
       paginationModel={paginationModel}
       paginationMode="server"
       onPaginationModelChange={setPaginationModel}
-      setting={DataTable.SETTING_COL.delete}
     />
   );
 };
