@@ -18,11 +18,10 @@ import { useRouter } from "next/router";
 import { LabeledInput } from "@/components/inputs";
 import LoadingButton from "@mui/lab/LoadingButton";
 import service from "../services/invitation_service";
-import { isAxiosError } from "axios";
 import errorToForm from "@/util/errorToForm";
 import { VerifyInvitation } from "@/models";
 
-type Inputs = VerifyInvitation & {confirm_password?: string}
+type Inputs = VerifyInvitation & {confirm_password?: string | null}
 
 const schema = yup
   .object({
@@ -56,10 +55,10 @@ const ResetPassword = () => {
         setSuccess(
           "Creating account..."
         );
+        router.push({pathname: '/login', query: {email: encodeURIComponent(response.data.email)}})
       }
     } catch (ex: any) {
       if (ex.status == 400) {
-        console.log(ex)
         setErrorMessage(`Please check your data and try again, ${ex.data.message}` );
         errorToForm(ex.data, setError);
       } else

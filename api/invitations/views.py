@@ -11,6 +11,7 @@ from django.core.exceptions import ValidationError
 from . import models
 from . import serializers
 from users.models import User
+from users.serializers import UserSerializer_GET
 
 
 class InvitationViewSet(viewsets.ModelViewSet):
@@ -55,7 +56,8 @@ class VerifyInvitationViewSet(viewsets.ViewSet):
                     user.save()
                 invitation.accepted = True
                 invitation.save()
-                return Response(user, status=201)
+                serializer = UserSerializer_GET(user)
+                return Response(serializer.data, status=201)
         except models.Invitation.DoesNotExist:
             return Response({
                 'message': 'Token is not valid',

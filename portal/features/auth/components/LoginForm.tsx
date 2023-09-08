@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { signIn } from "next-auth/react";
-import { useRouter } from "next/navigation";
+import { useRouter } from "next/router";
 import { LabeledInput } from "@/components/inputs";
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import {
@@ -37,9 +37,16 @@ const LoginForm = () => {
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
+  useEffect(() => {
+    console.log(router.query)
+  }, [router])
+
   const { handleSubmit, watch, control } = useForm<Inputs>({
     // @ts-ignore
     resolver: yupResolver(schema),
+    defaultValues:{
+      email: router.query.email as string || ""
+    }
   });
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
