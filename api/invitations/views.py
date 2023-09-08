@@ -42,7 +42,7 @@ class VerifyInvitationViewSet(viewsets.ViewSet):
     def create(self, request):
         try:
             with transaction.atomic:
-                token = request.data['password']
+                token = request.data['token']
                 password = request.data['password']
                 name = request.data['name']
                 invitation = models.Invitation.objects.get(token=token)

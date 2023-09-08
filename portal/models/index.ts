@@ -36,3 +36,4 @@ export type { default as FormulaRation } from "./FormulaRation";
 export type { default as NutrientHistory } from './NutrientHistory';
 export type { default as OnBoarding } from './OnBoarding';
 export type { default as Setting } from './Setting';
+export type { default as VerifyInvitation } from './VerifyInvitation';
