@@ -6,6 +6,7 @@ from drf_spectacular.utils import extend_schema, OpenApiParameter, OpenApiExampl
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework.authentication import SessionAuthentication, BasicAuthentication
 from rest_framework.permissions import IsAuthenticated
+from django.core.exceptions import ValidationError
 
 from . import models
 from . import serializers
@@ -39,9 +40,10 @@ class VerifyInvitationViewSet(viewsets.ViewSet):
     def get_queryset(self):
         return models.Invitation.objects.all()
 
+    @transaction.atomic
     def create(self, request):
         try:
-            with transaction.atomic:
+            with transaction.atomic():
                 token = request.data['token']
                 password = request.data['password']
                 name = request.data['name']
@@ -54,5 +56,17 @@ class VerifyInvitationViewSet(viewsets.ViewSet):
                 invitation.accepted = True
                 invitation.save()
                 return Response(user, status=201)
+        except models.Invitation.DoesNotExist:
+            return Response({
+                'message': 'Token is not valid',
+                'errors': {
+                    'token': ['The given token is not valid']
+                }
+                },status=400)
+        except ValidationError as ex:
+            return Response({
+                'message': 'Invalid input',
+                'errors': ex,
+            },status=400)
         except Exception as ex:
             return Response({'error': str(ex)}, status=500)

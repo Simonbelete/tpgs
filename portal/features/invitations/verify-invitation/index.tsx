@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { signIn } from "next-auth/react";
 import Layout from "../layouts/Layout";
 import * as yup from "yup";
@@ -14,7 +14,7 @@ import {
   Grid,
 } from "@mui/material";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter } from "next/router";
 import { LabeledInput } from "@/components/inputs";
 import LoadingButton from "@mui/lab/LoadingButton";
 import service from "../services/invitation_service";
@@ -22,11 +22,12 @@ import { isAxiosError } from "axios";
 import errorToForm from "@/util/errorToForm";
 import { VerifyInvitation } from "@/models";
 
-type Inputs = VerifyInvitation
+type Inputs = VerifyInvitation & {confirm_password?: string}
 
 const schema = yup
   .object({
-    password: yup.string().required(),
+    password: yup.string().length(6).required(),
+    confirm_password: yup.string().label('confirm password').required().oneOf([yup.ref('password'), null], 'Passwords must match'),
     name: yup.string().required(),
   })
   .required();
@@ -48,17 +49,18 @@ const ResetPassword = () => {
     try {
       const response = await service.verify({
         password: data.password,
-        token: "",
+        token: router.query.token as string || "",
         name: data.name
       });
       if (response.status == 200) {
         setSuccess(
-          "Password reset email sent, please check your email to reset your password"
+          "Creating account..."
         );
       }
     } catch (ex: any) {
       if (ex.status == 400) {
-        setErrorMessage("Error check if your email address is correct");
+        console.log(ex)
+        setErrorMessage(`Please check your data and try again, ${ex.data.message}` );
         errorToForm(ex.data, setError);
       } else
         setErrorMessage(
@@ -72,7 +74,7 @@ const ResetPassword = () => {
   return (
     <Layout>
       <Stack>
-        <Box sx={{ mb: 4 }} justifyContent={"center"} alignItems={"center"}>
+        <Box sx={{ mb: 4, width: '100%' }} justifyContent={"center"} alignItems={"center"}>
           <Box sx={{ mb: 2, display: "flex", justifyContent: "center" }}>
             <Link href="/">
               <img src="/images/ilri_logo.png" height={50} />
@@ -82,7 +84,7 @@ const ResetPassword = () => {
             Join Invitation
           </Typography>
           {error && (
-            <Box sx={{ mt: 1 }}>
+            <Box sx={{ mt: 1, width: 267 }}>
               <Alert variant="outlined" severity="error">
                 {error}
               </Alert>
@@ -137,8 +139,31 @@ const ResetPassword = () => {
                       fullWidth
                       size="small"
                       value={value}
-                      label={"New Password"}
-                      placeholder={"New Password"}
+                      label={"Password"}
+                      placeholder={"Password"}
+                      type="password"
+                    />
+                  )}
+                />
+              </Grid>
+
+              <Grid item xs={12}>
+                <Controller
+                  name={"confirm_password"}
+                  control={control}
+                  render={({
+                    field: { onChange, value },
+                    fieldState: { invalid, isTouched, isDirty, error },
+                  }) => (
+                    <LabeledInput
+                      error={!!error?.message}
+                      helperText={error?.message}
+                      onChange={onChange}
+                      fullWidth
+                      size="small"
+                      value={value}
+                      label={"Confirm Password"}
+                      placeholder={"Confirm Password"}
                       type="password"
                     />
                   )}
