@@ -5,6 +5,7 @@ export { default as Copyright } from "./copyright";
 export { default as Loading } from "./Loading";
 export { default as Breadcrumbs } from "./Breadcrumbs";
 export { default as AppsDescription } from "./apps-descripiton";
+export { default as DatePicker } from './DatePicker';
 
 export * from "./call-to-actions";
 export * from "./heros";

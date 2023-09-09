@@ -25,9 +25,14 @@ import NotificationsIcon from "@mui/icons-material/Notifications";
 import SettingsIcon from "@mui/icons-material/Settings";
 import LogoutIcon from "@mui/icons-material/Logout";
 import HelpIcon from "@mui/icons-material/Help";
+import { useSession, signOut } from "next-auth/react";
+import hasGroup from "@/util/hasGroup";
+import { useGroup } from "@/hooks";
 
 const SidebarMenu = () => {
   const theme = useTheme();
+  const { data: session, status } = useSession();
+  const { isSuperUser, isAdmin, isFarmer} = useGroup();
 
   const sidebarTheme = {
     sidebar: {
@@ -113,11 +118,13 @@ const SidebarMenu = () => {
               Users
             </Typography>
           </MenuItem>
-          <MenuItem component={<Link href="/invitations" />}>
-            <Typography variant="body1" fontSize={14}>
-              Invitations
-            </Typography>
-          </MenuItem>
+          { isSuperUser || isAdmin && (
+            <MenuItem component={<Link href="/invitations" />}>
+              <Typography variant="body1" fontSize={14}>
+                Invitations
+              </Typography>
+            </MenuItem>
+          )}
         </SubMenu>
 
         <SubMenu

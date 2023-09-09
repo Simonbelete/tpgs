@@ -1,4 +1,4 @@
-import Image from "next/image";
+import React from 'react';
 import { Inter } from "next/font/google";
 import LaunchIcon from "@mui/icons-material/Launch";
 import {
@@ -31,6 +31,9 @@ const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
   const theme = useTheme();
+
+  const [selected, setSelected] = React.useState<Date>();
+
   return (
     <>
       <Head>
@@ -87,6 +90,8 @@ export default function Home() {
         <SignUpNowCTA />
         <AppsDescription />
         <ContactUsForm />
+
+        
 
         <footer
           style={{

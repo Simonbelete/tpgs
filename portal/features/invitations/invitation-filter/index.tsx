@@ -14,9 +14,9 @@ import {
 import { useSelector, useDispatch } from "react-redux";
 import { SearchInput } from "@/components/inputs";
 import { CheckboxDropdown } from "@/components/dropdowns";
-import { NutrientGroup } from "@/models";
 import { setSearch, clearAll, setInvitationState, removeInvitationState } from "../slices";
 import { RootState } from "@/store";
+import { DatePicker } from "@/components";
 
 const InvitationFilter = () => {
   const dispatch = useDispatch();
@@ -88,18 +88,9 @@ const InvitationFilter = () => {
               />
             </Stack>
           </Grid>
-        {/* <Grid item xs={12}>
-          <Stack direction={"row"}>
-            <CheckboxDropdown
-              url="/nutrient-groups"
-              dataValueKey="id"
-              dataLableKey="name"
-              label={"Nutrient Group"}
-              selected={nutrientGroups}
-              onChange={handleOnNutrientGroupChange}
-            />
-          </Stack>
-        </Grid> */}
+          <Grid item xs={12} >
+            <DatePicker />
+          </Grid>
         <Grid item xs={12}>
           <Divider />
         </Grid>
@@ -113,15 +104,6 @@ const InvitationFilter = () => {
                     onDelete={handleInvitationStateRemove(e)}
                   />
                 </ListItem>)}
-            {/* {nutrientGroups.map((e, key) => 
-              <ListItem key={key}>
-                <Chip
-                  label={`Nutrient Group: ${e.name}`}
-                  size="small"
-                  onDelete={handleDeleteNutrientGroup(e)}
-                />
-              </ListItem>
-            )} */}
           </Stack>
         </Grid>
       </Grid>

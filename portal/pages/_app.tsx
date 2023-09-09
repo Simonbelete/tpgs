@@ -2,6 +2,7 @@ import "@/styles/globals.css";
 import "@glideapps/glide-data-grid/dist/index.css";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import "driver.js/dist/driver.css";
+import 'react-day-picker/dist/style.css';
 import type { AppProps } from "next/app";
 import type { NextPage, Metadata } from "next";
 import type { ReactElement, ReactNode } from "react";

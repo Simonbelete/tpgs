@@ -21,6 +21,7 @@ declare module "next-auth" {
     access?: string;
     refresh?: string;
     groups?: string[];
+    is_superuser?: boolean;
   }
 }
 
