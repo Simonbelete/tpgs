@@ -16,6 +16,8 @@ import {
 } from "@/features/invitations";
 import SendIcon from "@mui/icons-material/Send";
 import { SeoHead } from '@/seo';
+import { withClientGroup } from "@/hoc";
+import { GROUP_ADMIN } from '@/constants';
 
 const InvitationPage = () => {
   const { breadcrumbs } = useBreadcrumbs();
@@ -61,4 +63,11 @@ const Actions = (): ReactElement => {
   );
 };
 
-export default InvitationPage;
+// InvitationPage.auth = {
+//   role: "admin",
+//   loading: <h1>Loading...</h1>,
+//   unauthorized: "/login-with-different-user", // redirect to this url
+// }
+
+// export default InvitationPage;
+export default withClientGroup(InvitationPage, [GROUP_ADMIN]);

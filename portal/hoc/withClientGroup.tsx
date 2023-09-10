@@ -1,16 +1,23 @@
 import React, { FC, useEffect } from "react";
-import { getSession } from "next-auth/react";
+import { useSession } from "next-auth/react"
+import { Redirect403 } from "@/components";
 import { redirect } from "next/navigation";
+import { useRouter } from "next/router";
 
-const withClientGroup = async (WrappedComponent: React.FC, group: string) => {
-  const session = await getSession();
+const withClientGroup = (WrappedComponent: React.FC, groups: string[]) => {
 
-  return class withData extends React.Component {
-    render(): React.ReactNode {
-      if (session?.user?.groups?.includes(group)) return <WrappedComponent />;
-      else return redirect("/403");
-    }
-  };
+  const withData = () => {
+    const router = useRouter();
+    const { data: session, status } = useSession({required: true,
+      onUnauthenticated() {
+        router.push('/')
+      }})
+
+    if(session?.user?.groups?.some(e => groups.includes(e))) return <WrappedComponent />; 
+    else return <Redirect403 />
+  } 
+
+  return withData;
 };
 
 export default withClientGroup;
