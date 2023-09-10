@@ -1,0 +1,23 @@
+[
+    {
+        "title": "onboarding",
+        "description": "",
+        "topics": [
+            {
+                "title": "Let's get started",
+                "template": "onboarding/lets_get_started.json"
+            }
+        ]
+    },
+    {
+        "title": "Users",
+        "description": "",
+        "topics": [
+            {
+                "title": "Invite new user",
+                "description": "",
+                "template": "users/invite_user.json"
+            }
+        ]
+    }
+]

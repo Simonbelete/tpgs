@@ -5,7 +5,6 @@ import { Button,
   useTheme, 
   DialogTitle, Dialog, DialogContent, DialogActions, IconButton, Typography, Grid, Box, Stack } from "@mui/material";
 import CloseIcon from '@mui/icons-material/Close';
-import { OnBoarding } from "@/models";
 import siteMetadata from "@/data/siteMetadata";
 import { driver } from "driver.js";
 import { onBoardConfig } from '@/util/onboard';
@@ -29,7 +28,7 @@ const OnBoardingProvider = ({children}: {children: React.ReactNode}) => {
   const cookies = new Cookies(null);
   const [open, setOpen] = React.useState(false);
   const theme = useTheme();
-  const { data: session, status } = useSession()
+  const { data: session, status } = useSession();
 
   const handleClose = () => {
     setOpen(false);
@@ -58,11 +57,10 @@ const OnBoardingProvider = ({children}: {children: React.ReactNode}) => {
     (async () => {
       try{
         // TODO: use middleware
-        console.log(onBoardingState.isFirstTime);
         if(onBoardingState.isFirstTime) setOpen(true);
         else if(onBoardingState.show) {
           const template = onBoardingState.isFirstTime ? START_TEMPLATE : onBoardingState.template;
-          const response = await fetch(`/data/onboarding/${template}.json`)
+          const response = await fetch(`/data/${template}`)
           const data = await response.json();
           const driverObj = driver({
             ...onBoardConfig,

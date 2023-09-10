@@ -29,6 +29,10 @@ const AccountMenu = () => {
   const router = useRouter();
   const { data: session, status } = useSession();
 
+  const handleSignOut = async () => {
+    await signOut();
+  }
+
   return (
     <>
       <Box id="account-menu" sx={{ display: "flex", alignItems: "center", textAlign: "center" }}>
@@ -106,7 +110,7 @@ const AccountMenu = () => {
           </ListItemIcon>
           Settings
         </MenuItem>
-        <MenuItem onClick={() => signOut()}>
+        <MenuItem onClick={handleSignOut}>
           <ListItemIcon>
             <Logout fontSize="small" />
           </ListItemIcon>

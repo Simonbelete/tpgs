@@ -6,6 +6,9 @@ import { ONBOARDING_KEY, START_TEMPLATE } from '../constants';
 
 const cookies = new Cookies();
 
+/**
+ * @step last tour stopped index
+ */
 export interface NutrientFilterState extends OnBoarding {
   isFirstTime: boolean;
 }
@@ -19,6 +22,13 @@ export const onboardingSlice = createSlice({
   name: "On Boarding",
   initialState,
   reducers: {
+    startTour: (state, action: PayloadAction<string>) => {
+      state.show = true,
+      state.template = action.payload;
+      state.isFirstTime = false;
+      state.step = 0;
+      cookies.set(ONBOARDING_KEY, {...state});
+    },
     updateOnboarding: (state, action: PayloadAction<NutrientFilterState>) => {
       state.show = action.payload.show
       state.template = action.payload.template
@@ -53,5 +63,5 @@ export const onboardingSlice = createSlice({
   }
 });
 
-export const { isFirstTime, onDoneTour, onCloseTour, updateOnboarding, destory, startFirstTimeOnboarding } = onboardingSlice.actions;
+export const { isFirstTime, startTour, onDoneTour, onCloseTour, updateOnboarding, destory, startFirstTimeOnboarding } = onboardingSlice.actions;
 export default onboardingSlice.reducer;
