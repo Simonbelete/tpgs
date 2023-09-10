@@ -1,5 +1,9 @@
 [
     {
-        
+        "element": "#farms-menu", 
+        "popover": {
+            "title": "Farm Menu",
+            "description": "Click on the menu"
+        }
     }
 ]

@@ -65,6 +65,9 @@ const OnBoardingProvider = ({children}: {children: React.ReactNode}) => {
           const driverObj = driver({
             ...onBoardConfig,
             steps: data,
+            onCloseClick:() => {
+              driverObj.destroy();
+            },
           });
            
           driverObj.drive(onBoardingState.step);

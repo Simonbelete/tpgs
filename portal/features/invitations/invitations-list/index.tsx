@@ -103,7 +103,6 @@ const InvitationsList = () => {
   const filter = useSelector((state: RootState) => state.invitationFilter)
 
   useEffect(() => {
-    console.log(process.env.NEXT_PUBLIC_DATE_FORMAT)
     const controller = new AbortController();
 
     setIsLoading(true);
@@ -163,6 +162,7 @@ const InvitationsList = () => {
       paginationModel={paginationModel}
       paginationMode="server"
       onPaginationModelChange={setPaginationModel}
+      setting={DataTable.SETTING_COL.delete}
     />
   );
 };

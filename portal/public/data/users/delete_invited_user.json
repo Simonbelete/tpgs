@@ -1,0 +1,23 @@
+[
+    {
+        "element": "#sidebar-menu-users-main", 
+        "popover": {
+            "title": "Expand Menu",
+            "description": "View all sub menus"
+        }
+    },
+    {
+        "element": "#sidebar-menu-invitations", 
+        "popover": {
+            "title": "Select Menu",
+            "description": "Select Menu to view all invitaitons"
+        }
+    },
+    {
+        "element": "#data-table-delete", 
+        "popover": {
+            "title": "Farm Menu",
+            "description": "Click on the menu"
+        }
+    }
+]

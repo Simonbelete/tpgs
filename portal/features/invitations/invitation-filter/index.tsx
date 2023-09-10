@@ -33,7 +33,7 @@ const InvitationFilter = () => {
   const handleSearchButton = () => {}
   
   return (
-    <Paper sx={{ p: 2 }} elevation={0} variant="outlined" square>
+    <Paper sx={{ p: 2 }} elevation={0} variant="outlined" square id="invitation-filter">
       <Grid container alignItems={"center"}>
         <Grid item xs={12} md={4}>
           <Typography variant="body2" fontWeight={700}>
@@ -87,9 +87,6 @@ const InvitationFilter = () => {
                 onChange={handleInvitationStateChange}
               />
             </Stack>
-          </Grid>
-          <Grid item xs={12} >
-            <DatePicker />
           </Grid>
         <Grid item xs={12}>
           <Divider />

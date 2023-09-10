@@ -137,6 +137,7 @@ export const authOptions = {
       user: User;
     }) {
       session.accessToken = token.accessToken;
+      session.user.groups = token.groups;
       return session;
     },
   },

@@ -29,6 +29,12 @@ import { useSession, signOut } from "next-auth/react";
 import hasGroup from "@/util/hasGroup";
 import { useGroup } from "@/hooks";
 
+function menuProps(key: string) {
+  return {
+    id: `sidebar-menu-${key}`,
+  }
+}
+
 const SidebarMenu = () => {
   const theme = useTheme();
   const { data: session, status } = useSession();
@@ -106,6 +112,7 @@ const SidebarMenu = () => {
 
       <Menu menuItemStyles={menuItemStyles}>
         <SubMenu
+          {...menuProps("users-main")}
           label={
             <Typography variant="body1" fontSize={14}>
               Users
@@ -113,13 +120,13 @@ const SidebarMenu = () => {
           }
           icon={<PeopleIcon fontSize="small" />}
         >
-          <MenuItem component={<Link href="/users" />}>
+          <MenuItem component={<Link href="/users" />} icon={<AdjustIcon fontSize="small" />} {...menuProps("users")}>
             <Typography variant="body1" fontSize={14}>
               Users
             </Typography>
           </MenuItem>
           { isSuperUser || isAdmin && (
-            <MenuItem component={<Link href="/invitations" />}>
+            <MenuItem component={<Link href="/invitations" />} {...menuProps('invitations')} icon={<AdjustIcon fontSize="small" />}>
               <Typography variant="body1" fontSize={14}>
                 Invitations
               </Typography>
@@ -414,12 +421,12 @@ const SidebarMenu = () => {
           }
           icon={<HelpIcon fontSize="small" />}
         >
-          <MenuItem component={<Link href="/help" />}>
+          <MenuItem component={<Link href="/help" />} icon={<AdjustIcon fontSize="small" />}>
             <Typography variant="body1" fontSize={14}>
               User Guide
             </Typography>
           </MenuItem>
-          <MenuItem component={<Link href="/flocks/reduction" />}>
+          <MenuItem component={<Link href="/flocks/reduction" />} icon={<AdjustIcon fontSize="small" />}>
             <Typography variant="body1" fontSize={14}>
               Contact Us
             </Typography>

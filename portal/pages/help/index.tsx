@@ -9,6 +9,7 @@ import { startTour, destory ,startFirstTimeOnboarding } from '@/features/onboard
 import { useSelector, useDispatch } from "react-redux";
 import _ from 'lodash';
 import { SearchInputIcon } from "@/components/inputs";
+import { SeoHead } from "@/seo";
 
 const HelpPage = () => {
   const cookies = new Cookies(null);
@@ -38,18 +39,16 @@ const HelpPage = () => {
 
   return (
     <>
-      <Head>
-        <title>{siteMetadata.headerTitle} - Help</title>
-      </Head>
+      <SeoHead title="Help" />
       <Container maxWidth="lg">
         <Grid container direction="row" justifyContent="space-between" alignItems="center" item xs={12}>
           <Typography variant="h3" fontWeight={600} color={"text.primary"} sx={{mb: 5}}>Help</Typography>
           <IconButton size="small" onClick={handleStartTour}><PlayCircleOutlineIcon /></IconButton>
         </Grid>
-        <Grid container  columns={{ xs: 1, md: 2 }} spacing={3}>
+        <Grid container columns={{ xs: 1, md: 2 }} columnSpacing={4} spacing={4}>
           {
             data?.map((e: any) => (
-              <Grid item xs >
+              <Grid item xs sx={{mb: 5}}>
                 <Typography sx={{mb: 2}} variant="overline"  color="text.secondary">{e.title}</Typography>
                 {e.topics.map((t: any) => (
                   <Paper sx={{ px: 1, py: 0 }} elevation={6} variant="outlined" >

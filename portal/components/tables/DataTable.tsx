@@ -181,28 +181,28 @@ const DataTable = ({
           renderCell(params: any) {
             return (
               <Box>
-                <Link href={router.asPath + "/" + params.id + "/edit"}>
+                <Link href={router.asPath + "/" + params.id + "/edit"} id="data-table-edit">
                   <Tooltip title="Edit">
                     <IconButton aria-label="edit">
                       <EditNoteIcon fontSize="small" />
                     </IconButton>
                   </Tooltip>
                 </Link>
-                <Link href={router.asPath + "/" + params.id}>
+                <Link href={router.asPath + "/" + params.id} id="data-table-view">
                   <Tooltip title="View">
                     <IconButton aria-label="view">
                       <VisibilityIcon fontSize="small" />
                     </IconButton>
                   </Tooltip>
                 </Link>
-                <Link href={`${router.asPath}/${params.id}/histories`}>
+                <Link href={`${router.asPath}/${params.id}/histories`} id="data-table-histories">
                   <Tooltip title="History">
                     <IconButton aria-label="history">
                       <HistoryIcon fontSize="small" />
                     </IconButton>
                   </Tooltip>
                 </Link>
-                <Tooltip title="Delete">
+                <Tooltip title="Delete" id="data-table-delete">
                   <IconButton
                     aria-label="delete"
                     onClick={() => handleDeleteModalOpen(params.id)}

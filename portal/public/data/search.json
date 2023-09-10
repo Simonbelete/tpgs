@@ -17,6 +17,10 @@
                 "title": "Invite new user",
                 "description": "",
                 "template": "users/invite_user.json"
+            },
+            {
+                "title": "Delete/remove invitation",
+                "template": "users/delete_invited_user.json"
             }
         ]
     }

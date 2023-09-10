@@ -7,12 +7,21 @@ import { onCloseTour, onDoneTour } from '@/features/onboarding'
 const cookies = new Cookies(null);
 
 export const onBoardConfig: Config = {
-  showProgress: true,
-  allowClose: false,
+  showButtons: [
+    'next',
+    'previous',
+    'close'
+  ],
+  // showProgress: true,
+  // allowClose: false,
   onDestroyed: (element?: Element, step: DriveStep, options: { config: Config; state: State }) => {
+    let indx = 0;
+    if(step.popover?.progressText !== undefined) indx = Number(step.popover.progressText[0]);
     store.dispatch(onDoneTour());
   },
   onCloseClick: (element?: Element, step: DriveStep, options: { config: Config; state: State }) => {
-    store.dispatch(onCloseTour());
+    let indx = 0;
+    if(step.popover?.progressText !== undefined) indx = Number(step.popover.progressText[0]);
+    store.dispatch(onCloseTour(indx));
   }
 }

@@ -46,12 +46,14 @@ export const onboardingSlice = createSlice({
     isFirstTime: (state) => {
       state.isFirstTime = cookies.get<OnBoarding>(ONBOARDING_KEY) == undefined;
     },
-    onDoneTour: (state) => {
+    onDoneTour: (state, action: PayloadAction<number>) => {
       state.show = false
+      state.step = action.payload;
       cookies.set(ONBOARDING_KEY, {...state});
     },
-    onCloseTour: (state) => {
+    onCloseTour: (state, action: PayloadAction<number>) => {
       state.show = false
+      state.step = action.payload;
       cookies.set(ONBOARDING_KEY, {...state});
     },
     destory: (state) => {

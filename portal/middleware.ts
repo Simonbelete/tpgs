@@ -3,6 +3,7 @@ export const config = {
   matcher: [
     "/dashboard", 
     "/nutrient-groups", 
-    "/invitations"
+    "/invitations",
+    "/help"
   ],
 };

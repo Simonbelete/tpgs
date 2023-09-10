@@ -15,6 +15,8 @@ const useGroup = () => {
     if(session.user.groups?.includes(GROUP_ADMIN)) setIsAdmin(true);
     if(session.user.groups?.includes(GROUP_FARMER)) setIsFarmer(true);
 
+    console.log(session);
+
   }, [session]);
 
   return {isSuperUser, isAdmin, isFarmer}
