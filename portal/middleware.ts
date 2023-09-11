@@ -4,6 +4,7 @@ export const config = {
     "/dashboard", 
     "/nutrient-groups", 
     "/invitations",
+    "/users",
     "/help"
   ],
 };

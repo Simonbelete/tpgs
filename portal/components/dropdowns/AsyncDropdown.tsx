@@ -12,6 +12,7 @@ interface Model {
 }
 
 export default function AsyncDropdown<T>({
+  id,
   url,
   key = "name",
   value,
@@ -25,6 +26,7 @@ export default function AsyncDropdown<T>({
   onChange,
   ...props
 }: {
+  id?: string,
   url: string;
   key?: string;
   value?: any;
@@ -46,32 +48,6 @@ export default function AsyncDropdown<T>({
   const handleModalOpen = () => setModalOpen(true);
   const handleModalClose = () => setModalOpen(false);
 
-  // React.useEffect(() => {
-  //   let active = true;
-
-  //   if (!loading) {
-  //     return undefined;
-  //   }
-
-  //   (async () => {
-  //     try {
-  //       const response = await client.get(url);
-
-  //       if (active) {
-  //         setOptions(response.data.results);
-  //       }
-  //     } catch (ex) {
-  //       active = false;
-  //     } finally {
-  //       setLoading(false);
-  //     }
-  //   })();
-
-  //   return () => {
-  //     active = false;
-  //   };
-  // }, [loading, url]);
-
   const handleOpen = async () => {
     setOpen(true);
     try {
@@ -85,7 +61,7 @@ export default function AsyncDropdown<T>({
   };
 
   return (
-    <Stack gap={1}>
+    <Stack gap={1} id={id}>
       <FullScreenModal open={modalOpen} onClose={handleModalClose}>
         {createForm}
       </FullScreenModal>

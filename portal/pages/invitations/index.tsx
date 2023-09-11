@@ -23,14 +23,17 @@ const InvitationPage = () => {
   const { breadcrumbs } = useBreadcrumbs();
 
   return (
-    <ListLayout
-      breadcrumbs={<Breadcrumbs items={breadcrumbs} />}
-      header={<Typography variant="title">Invitations</Typography>}
-      actions={<Actions />}
-      filter={<InvitationFilter />}
-    >
-      <InvitationsList />
-    </ListLayout>
+    <>
+      <SeoHead title="Invitations"/>
+      <ListLayout
+        breadcrumbs={<Breadcrumbs items={breadcrumbs} />}
+        header={<Typography variant="title">Invitations</Typography>}
+        actions={<Actions />}
+        filter={<InvitationFilter />}
+      >
+        <InvitationsList />
+      </ListLayout>
+    </>
   );
 };
 
@@ -42,7 +45,6 @@ const Actions = (): ReactElement => {
 
   return (
     <>
-      <SeoHead title="Invitations"/>
       <InvitationFormModal open={openModal} onClose={handleCloseModal} />
       <Stack
         spacing={2}
@@ -51,6 +53,7 @@ const Actions = (): ReactElement => {
         alignItems="center"
       >
         <Button
+          id="invite-user-button"
           variant="contained"
           size="small"
           startIcon={<SendIcon />}
@@ -63,11 +66,4 @@ const Actions = (): ReactElement => {
   );
 };
 
-// InvitationPage.auth = {
-//   role: "admin",
-//   loading: <h1>Loading...</h1>,
-//   unauthorized: "/login-with-different-user", // redirect to this url
-// }
-
-// export default InvitationPage;
 export default withClientGroup(InvitationPage, [GROUP_ADMIN]);

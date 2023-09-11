@@ -80,6 +80,7 @@ const InvitationFormModal = ({
                 fieldState: { invalid, isTouched, isDirty, error },
               }) => (
                 <LabeledInput
+                  id="invitation-form-modal-email-input"
                   error={!!error?.message}
                   helperText={error?.message}
                   onChange={onChange}
@@ -102,6 +103,7 @@ const InvitationFormModal = ({
                 fieldState: { invalid, isTouched, isDirty, error },
               }) => (
                 <AsyncDropdown
+                  id="invitation-form-modal-farms-input"
                   multiple
                   url="/farms/"
                   key="name"

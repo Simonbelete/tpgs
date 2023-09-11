@@ -111,6 +111,7 @@ const SidebarMenu = () => {
       </Box>
 
       <Menu menuItemStyles={menuItemStyles}>
+      { isSuperUser || isAdmin && (
         <SubMenu
           {...menuProps("users-main")}
           label={
@@ -125,14 +126,13 @@ const SidebarMenu = () => {
               Users
             </Typography>
           </MenuItem>
-          { isSuperUser || isAdmin && (
             <MenuItem component={<Link href="/invitations" />} {...menuProps('invitations')} icon={<AdjustIcon fontSize="small" />}>
               <Typography variant="body1" fontSize={14}>
                 Invitations
               </Typography>
             </MenuItem>
-          )}
         </SubMenu>
+        )}
 
         <SubMenu
           label={

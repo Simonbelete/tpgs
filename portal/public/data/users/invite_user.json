@@ -1,9 +1,37 @@
 [
     {
-        "element": "#farms-menu", 
+        "element": "#sidebar-menu-users-main", 
         "popover": {
-            "title": "Farm Menu",
-            "description": "Click on the menu"
+            "title": "Expand Menu",
+            "description": "View all sub menus"
+        }
+    },
+    {
+        "element": "#sidebar-menu-invitations", 
+        "popover": {
+            "title": "Select Menu",
+            "description": "Select Menu to view all invitaitons"
+        }
+    },
+    {
+        "element": "#invite-user-button",
+        "popover": {
+            "title": "Click the button",
+            "description": "Select Menu to view all invitaitons"
+        }
+    },
+    {
+        "element": "#invitation-form-modal-email-input",
+        "popover": {
+            "title": "Insert email address",
+            "description": "Select Menu to view all invitaitons"
+        }
+    },
+    {
+        "element": "#invitation-form-modal-farms-input",
+        "popover": {
+            "title": "Select Farms",
+            "description": "Select Menu to view all invitaitons"
         }
     }
 ]
