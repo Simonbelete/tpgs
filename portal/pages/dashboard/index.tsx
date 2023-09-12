@@ -6,6 +6,7 @@ import { ListLayout } from "@/layouts";
 import { useBreadcrumbs } from "@/hooks";
 import { Breadcrumbs } from "@/components";
 import { NotificationCard } from "@/features/notification";
+import { SeoHead } from "@/seo";
 
 const FarmsHeatmapComponent = dynamic(
   () => import("../../features/dashboard/farms-heatmap"),
@@ -19,9 +20,11 @@ const DashboardPage = () => {
   const { breadcrumbs } = useBreadcrumbs();
 
   return (
+    <>
+    <SeoHead title="Dashboard" />
     <ListLayout
         breadcrumbs={<Breadcrumbs items={breadcrumbs} />}
-        header={<Typography variant="title">Nutrients</Typography>}
+        header={<Typography variant="title">Dashboard</Typography>}
       >
         <Box sx={{px: 2}}>
          <Grid container spacing={5}>
@@ -41,20 +44,7 @@ const DashboardPage = () => {
         </Grid>
         </Box>
     </ListLayout>
-   
-    // <Box>
-    // <Grid container spacing={10}>
-    //   <Grid item xs>
-    //     <ChickenStat />
-    //   </Grid>
-    //   <Grid container>
-    //     <Grid item xs={6}>
-    //       {/* <FarmsHeatmap /> */}
-    //       <FarmsHeatmapComponent/>
-    //     </Grid>
-    //   </Grid>
-    // </Grid>
-    // </Box>
+    </>
   );
 };
 

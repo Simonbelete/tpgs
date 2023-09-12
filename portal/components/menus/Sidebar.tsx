@@ -29,6 +29,7 @@ import { useSession, signOut } from "next-auth/react";
 import hasGroup from "@/util/hasGroup";
 import { useGroup } from "@/hooks";
 import { ChickenIcon } from "@/components/Icons";
+import DashboardIcon from '@mui/icons-material/Dashboard';
 
 function menuProps(key: string) {
   return {
@@ -114,7 +115,14 @@ const SidebarMenu = () => {
         <Divider />
       </Box>
 
+      
+
       <Menu menuItemStyles={menuItemStyles}>
+        <MenuItem component={<Link href="/dashboard" />} icon={<DashboardIcon fontSize="small" />}>
+            <Typography variant="body1" fontSize={14}>
+              Dashboard
+            </Typography>
+          </MenuItem>
       { isSuperUser || isAdmin && (
         <SubMenu
           {...menuProps("users-main")}
