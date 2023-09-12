@@ -1,6 +1,6 @@
 import React, { ReactElement } from "react";
 import { Typography, Grid, Box } from "@mui/material";
-import { ChickenStat } from "@/features/dashboard";
+import { Stats } from "@/features/dashboard";
 import dynamic from "next/dynamic";
 import { ListLayout } from "@/layouts";
 import { useBreadcrumbs } from "@/hooks";
@@ -23,13 +23,13 @@ const DashboardPage = () => {
         breadcrumbs={<Breadcrumbs items={breadcrumbs} />}
         header={<Typography variant="title">Nutrients</Typography>}
       >
-        <Box sx={{px: 5}}>
+        <Box sx={{px: 2}}>
          <Grid container spacing={5}>
-            <Grid container item spacing={3}>
-              <ChickenStat />
+            <Grid item spacing={3}>
+              <Stats />
             </Grid>
             <Grid container item spacing={3}>
-              <Grid item xs={8} sx={{p: 0}}>
+              <Grid item xs={8} sx={{px: 0}}>
                 <FarmsHeatmapComponent />
               </Grid>
               <Grid item xs={4} sx={{p: 0}}>

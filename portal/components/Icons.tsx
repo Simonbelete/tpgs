@@ -24,7 +24,7 @@ export const ChickenIcon = (props: SVGProps<SVGSVGElement>) => {
   )
 }
 
-export const ChickenEaster = (props: SVGProps<SVGSVGElement>) => {
+export const ChickenEasterIcon = (props: SVGProps<SVGSVGElement>) => {
   return (
     <svg
     xmlns="http://www.w3.org/2000/svg"
@@ -42,7 +42,7 @@ export const ChickenEaster = (props: SVGProps<SVGSVGElement>) => {
   )
 }
 
-export const DNAHellx = (props: SVGProps<SVGSVGElement>) => {
+export const DNAHellxIcon = (props: SVGProps<SVGSVGElement>) => {
   return (
     <svg
     xmlns="http://www.w3.org/2000/svg"
@@ -61,7 +61,7 @@ export const DNAHellx = (props: SVGProps<SVGSVGElement>) => {
   )
 }
 
-export const Farm = (props: SVGProps<SVGSVGElement>) => {
+export const FarmIcon = (props: SVGProps<SVGSVGElement>) => {
   return (
     <svg
     xmlns="http://www.w3.org/2000/svg"
@@ -96,7 +96,7 @@ export const Farm = (props: SVGProps<SVGSVGElement>) => {
   )
 }
 
-export const Sack = (props: SVGProps<SVGSVGElement>) => {
+export const SackIcon = (props: SVGProps<SVGSVGElement>) => {
   return (
     <svg
     xmlns="http://www.w3.org/2000/svg"
@@ -111,7 +111,7 @@ export const Sack = (props: SVGProps<SVGSVGElement>) => {
   )
 }
 
-export const Cycle = (props: SVGProps<SVGSVGElement>) => {
+export const CycleIcon = (props: SVGProps<SVGSVGElement>) => {
   return (
     <svg
     xmlns="http://www.w3.org/2000/svg"
@@ -140,7 +140,7 @@ export const Cycle = (props: SVGProps<SVGSVGElement>) => {
   )
 }
 
-export const FlourBag = (props: SVGProps<SVGSVGElement>) => {
+export const FlourBagIcon = (props: SVGProps<SVGSVGElement>) => {
   return (
     <svg
     xmlns="http://www.w3.org/2000/svg"

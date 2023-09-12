@@ -1,47 +1,41 @@
+import React from "react";
 import {
   Grid,
   Box,
   Card,
-  Typography
+  Typography,
+  ButtonBase,
+  Avatar
 } from "@mui/material";
-// Custom components
-// Custom icons
-import React from "react";
+import Shadow from "../Shadow";
+import { useTheme } from "@emotion/react";
 
-export default function Default({startContent, endContent, name, value, growth, growthName}: {startContent?: React.ReactNode, endContent?: React.ReactNode ,name: string, value: string, growth?: string, growthName?: string}) {
+export default function Default({startContent, endContent, color, name, value, growth, growthName}: {startContent?: React.ReactNode, color?: string, endContent?: React.ReactNode ,name: string, value: string, growth?: string, growthName?: string}) {
+  const theme = useTheme();
+
   return (
-    <Card>
-      <Grid
-        sx={{
-          my: 'auto',
-          height: '100%',
-          alignContent: "center",
-          justifyContent: "center"
-        }}>
-        {startContent}
-
-        <Box>
-          <Typography>
-            {name}
-          </Typography>
-          <Typography>
-            {value}
-          </Typography>
-          {growth ? (
-            <Box alignItems='center'>
-              <Typography>
-                {growth}
+    <Shadow radius={"56px"}>
+     <Grid container spacing={2} sx={{width: 200, py: 1, pl: 1}}>
+        <Grid item>
+          <ButtonBase sx={{ width: 70, height: '100%' }}>
+            <Avatar sx={{ width: 56, height: 56, bgcolor: color || theme.palette.primary.main }}>
+              {startContent}
+            </Avatar>
+          </ButtonBase>
+        </Grid>
+        <Grid item xs={12} sm container>
+          <Grid item xs container direction="column" spacing={2}>
+            <Grid item xs>
+              <Typography variant="overline" color="text.secondary">
+                {name}
               </Typography>
-              <Typography>
-                {growthName}
+              <Typography variant="h5" fontWeight="600" color={"text.primary"} gutterBottom>
+                {value}
               </Typography>
-            </Box>
-          ) : null}
-        </Box>
-        <Box>
-          {endContent}
-        </Box>
+            </Grid>
+          </Grid>
+        </Grid>
       </Grid>
-    </Card>
+    </Shadow>
   );
 }

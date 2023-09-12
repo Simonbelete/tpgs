@@ -1,1 +1,1 @@
-export { default as ChickenStat } from './chicken-stat';
+export { default as Stats } from './Stats';
