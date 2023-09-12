@@ -11,20 +11,23 @@ router.register(r'chickens/(?P<id>.+)/histories',
 
 urlpatterns = [
     path('', include(router.urls)),
+    
+    path('chickens/import/', include([
+          path('xlsx', views.ChickenXlsxImport.as_view(),
+               name="chickens_import_xlsx"),
+          path('xls', views.ChickenXlsImport.as_view(),
+               name="chickens_import_xls"),
+          path('csv', views.ChickenCsvImport.as_view(),
+               name="chickens_import_csv")
+    ]));
 
-    # Xlsx
-    path('chickens/export/xlsx', views.ChickenXlsxExport.as_view(),
-         name="chickens_export_xlsx"),
-    path('chickens/import/xlsx', views.ChickenXlsxImport.as_view(),
-         name="chickens_import_xlsx"),
-    # Xls
-    path('chickens/export/xls', views.ChickenXlsExport.as_view(),
-         name="chickens_export_xls"),
-    path('chickens/import/xls', views.ChickenXlsImport.as_view(),
-         name="chickens_import_xls"),
-    # Csv
-    path('chickens/export/csv', views.ChickenCsvExport.as_view(),
-         name="chickens_export_csv"),
-    path('chickens/import/csv', views.ChickenCsvImport.as_view(),
-         name="chickens_import_csv")
+    path('chickens/import/', include([
+          path('xlsx', views.ChickenXlsxExport.as_view(),
+               name="chickens_export_xlsx"),
+          path('xls', views.ChickenXlsExport.as_view(),
+               name="chickens_export_xls"),
+          path('csv', views.ChickenCsvExport.as_view(),
+               name="chickens_export_csv")
+    ]))
+    
 ]

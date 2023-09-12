@@ -28,6 +28,7 @@ import HelpIcon from "@mui/icons-material/Help";
 import { useSession, signOut } from "next-auth/react";
 import hasGroup from "@/util/hasGroup";
 import { useGroup } from "@/hooks";
+import { ChickenIcon } from "@/components/Icons";
 
 function menuProps(key: string) {
   return {
@@ -67,6 +68,9 @@ const SidebarMenu = () => {
     },
     icon: {
       color: sidebarTheme.menu.icon,
+      ['> svg']: {
+        fill: sidebarTheme.menu.disabled.color,
+      },
       [`&.${menuClasses.disabled}`]: {
         color: sidebarTheme.menu.disabled.color,
       },
@@ -243,6 +247,27 @@ const SidebarMenu = () => {
             </Typography>
           </MenuItem>
         </SubMenu>
+      </Menu>
+      <div
+        style={{ padding: "0 24px", marginBottom: "8px", marginTop: "32px" }}
+      >
+        <Typography
+          variant="caption"
+          fontWeight={500}
+          style={{ opacity: 0.6, letterSpacing: "0.5px" }}
+        >
+          Breeding
+        </Typography>
+      </div>
+      <Menu menuItemStyles={menuItemStyles}>
+        <MenuItem
+            component={<Link href="/chickens" />}
+            icon={<ChickenIcon width="20" height="20" fill="inherit" />}
+          >
+            <Typography variant="body1" fontSize={14}>
+              Chickens
+            </Typography>
+          </MenuItem>
       </Menu>
       {/* <div
         style={{ padding: "0 24px", marginBottom: "8px", marginTop: "32px" }}
