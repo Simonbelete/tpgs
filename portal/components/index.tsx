@@ -7,9 +7,10 @@ export { default as Breadcrumbs } from "./Breadcrumbs";
 export { default as AppsDescription } from "./apps-descripiton";
 export { default as DatePicker } from './DatePicker';
 export { default as Redirect403 } from './Redirect403';
+export { default as Shadow } from './Shadow';
 
 export * from "./call-to-actions";
 export * from "./heros";
 export * from "./menus";
 export * from "./navbars";
-export * from "../layouts";
+export * from "./card";

@@ -188,3 +188,12 @@ class AverageWeight(viewsets.ViewSet):
             flock_weight = feeds.filter(flock__isNull=False).aggregate(
                 weight_sum=Sum('weight'), )
             weights = feeds.aggregate(avg=Avg('weight'))
+
+
+class FarmHeatMap(viewsets.ViewSet):
+    def list(self, request, **kwargs):
+        farms = Farm.objects.all().execlude(name='public')
+        cities = farms.values('city').annotate(total=Count('city')).order_by('total')
+        print('------')
+        print(cities)
+        return Response({'geojson': []})
