@@ -1,7 +1,7 @@
 import React from "react";
 import { NextPageContext } from "next";
 import { Container, Button, Stack } from "@mui/material";
-import { EditLayout } from "@/components/layouts";
+import { EditLayout } from "@/layouts";
 import { BreedView, BreedService } from "@/features/breeds";
 import { Breadcrumbs, Loading } from "@/components";
 import { useBreadcrumbs } from "@/hooks";

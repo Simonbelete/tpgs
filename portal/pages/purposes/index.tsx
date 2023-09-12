@@ -1,7 +1,7 @@
 import React, { ChangeEvent, ReactElement } from "react";
 import { AxiosResponse } from "axios";
 import Link from "next/link";
-import { ListLayout } from "@/components/layouts";
+import { ListLayout } from "@/layouts";
 import { useBreadcrumbs } from "@/hooks";
 import { Breadcrumbs } from "@/components";
 import { Button, Typography, Stack } from "@mui/material";

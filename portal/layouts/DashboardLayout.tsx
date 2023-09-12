@@ -1,9 +1,9 @@
 import React, { ReactElement } from "react";
 import { ProSidebarProvider, useProSidebar } from "react-pro-sidebar";
-import PrimaryNavbar from "../navbars/PrimaryNavbar";
-import { Sidebar } from "../menus";
+import PrimaryNavbar from "../components/navbars/PrimaryNavbar";
+import { Sidebar } from "../components/menus";
 import { useTheme } from "@mui/material/styles";
-import { SuperUserBanner } from "../banners";
+import { SuperUserBanner } from "../components/banners";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store";
 

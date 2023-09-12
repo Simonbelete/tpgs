@@ -12,4 +12,4 @@ export * from "./call-to-actions";
 export * from "./heros";
 export * from "./menus";
 export * from "./navbars";
-export * from "./layouts";
+export * from "../layouts";

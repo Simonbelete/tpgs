@@ -1,5 +1,5 @@
 import React from "react";
-import { ViewLayout } from "@/components/layouts";
+import { ViewLayout } from "@/layouts";
 import { useBreadcrumbs } from "@/hooks";
 import { Button, Typography, Box, Container } from "@mui/material";
 import { NutrientView } from "@/features/nutrients";

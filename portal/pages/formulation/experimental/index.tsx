@@ -2,7 +2,7 @@ import React, { ReactElement, useRef, useImperativeHandle } from "react";
 import { Typography, Stack, Button } from "@mui/material";
 import { Breadcrumbs, Loading } from "@/components";
 import { useBreadcrumbs } from "@/hooks";
-import { ActionLayout } from "@/components/layouts";
+import { ActionLayout } from "@/layouts";
 import { Formulation } from "@/features/formula";
 
 const FormulationExperimentalPage = () => {

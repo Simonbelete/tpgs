@@ -1,5 +1,5 @@
 import React, { ReactElement } from "react";
-import { DefaultLayout } from "@/components/layouts";
+import { DefaultLayout } from "@/layouts";
 import { AuthSignUp } from "@/features/auth";
 import Head from "next/head";
 

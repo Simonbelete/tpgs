@@ -1,7 +1,7 @@
 import React from "react";
 import { NextPageContext } from "next";
 import { Container, Typography } from "@mui/material";
-import { EditLayout } from "@/components/layouts";
+import { EditLayout } from "@/layouts";
 import { IngredientForm, IngredientService } from "@/features/ingredients";
 import { Breadcrumbs, Loading } from "@/components";
 import { useBreadcrumbs } from "@/hooks";

@@ -2,7 +2,7 @@ import React, { useEffect, ReactElement } from "react";
 import { FlockForm } from "@/features/flocks";
 import { Breadcrumbs } from "@/components";
 import { useBreadcrumbs } from "@/hooks";
-import { CreateLayout } from "@/components/layouts";
+import { CreateLayout } from "@/layouts";
 import { Button, Typography, Box, Container } from "@mui/material";
 import SaveIcon from "@mui/icons-material/Save";
 import LibraryAddIcon from "@mui/icons-material/LibraryAdd";

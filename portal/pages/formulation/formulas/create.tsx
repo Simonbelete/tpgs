@@ -3,7 +3,7 @@ import { Button, Typography, Box, Container, Stack } from "@mui/material";
 import { Breadcrumbs, Loading } from "@/components";
 import { useBreadcrumbs } from "@/hooks";
 import { FormulaForm } from "@/features/formula";
-import { CreateLayout, ActionLayout } from "@/components/layouts";
+import { CreateLayout, ActionLayout } from "@/layouts";
 import { useRouter } from "next/router";
 import PrintIcon from "@mui/icons-material/Print";
 import SaveIcon from "@mui/icons-material/Save";

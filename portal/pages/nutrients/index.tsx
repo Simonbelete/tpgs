@@ -1,7 +1,7 @@
 import React, { ReactElement } from "react";
 import { IngredientTypeList } from "@/features/ingredient-types";
 import Link from "next/link";
-import { ListLayout } from "@/components/layouts";
+import { ListLayout } from "@/layouts";
 import { useBreadcrumbs } from "@/hooks";
 import { Breadcrumbs } from "@/components";
 import { Button, Typography } from "@mui/material";

@@ -3,7 +3,7 @@ import { Button, Typography, Box, Container } from "@mui/material";
 import { Breadcrumbs } from "@/components";
 import { useBreadcrumbs } from "@/hooks";
 import { IngredientForm } from "@/features/ingredients";
-import { CreateLayout } from "@/components/layouts";
+import { CreateLayout } from "@/layouts";
 import SaveIcon from "@mui/icons-material/Save";
 import LibraryAddIcon from "@mui/icons-material/LibraryAdd";
 

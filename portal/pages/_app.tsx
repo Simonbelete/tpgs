@@ -20,7 +20,7 @@ import OnBoardingProvider from "@/providers/OnBoarding";
 import siteMetadata from "@/data/siteMetadata";
 
 const DashboardLayout = dynamic(
-  () => import("../components/layouts/DashboardLayout"),
+  () => import("../layouts/DashboardLayout"),
   {
     ssr: false,
     loading: () => <Loading />,

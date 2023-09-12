@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { ListLayout } from "@/components/layouts";
+import { ListLayout } from "@/layouts";
 import { useBreadcrumbs } from "@/hooks";
 import { Breadcrumbs } from "@/components";
 import { Typography } from "@mui/material";

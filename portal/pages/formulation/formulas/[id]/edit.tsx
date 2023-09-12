@@ -1,7 +1,7 @@
 import React, { useRef } from "react";
 import { NextPageContext } from "next";
 import { Container, Typography, Stack, Button, Box } from "@mui/material";
-import { EditLayout } from "@/components/layouts";
+import { EditLayout } from "@/layouts";
 import { FormulaForm, FormulaService } from "@/features/formula";
 import { Breadcrumbs, Loading } from "@/components";
 import { useBreadcrumbs } from "@/hooks";

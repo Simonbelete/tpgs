@@ -1,7 +1,7 @@
 import React from "react";
 import { NextPageContext } from "next";
 import { Button, Typography, Box, Container } from "@mui/material";
-import { EditLayout } from "@/components/layouts";
+import { EditLayout } from "@/layouts";
 import { NutrientForm, NutrientService } from "@/features/nutrients";
 import { Breadcrumbs } from "@/components";
 import { useBreadcrumbs } from "@/hooks";
