@@ -31,7 +31,7 @@ const DirectoryBuilder = () => {
       onSelected={handleSelected}
       onClose={handleClose}
     />
-    <Paper sx={{ p: 1 }} elevation={0} variant="outlined" square>
+    <Paper sx={{ p: 2 }} elevation={0} variant="outlined" square>
       <Grid container alignItems={"center"}>
         <Grid item xs={12} md={4}>
           <Typography variant="body2" fontWeight={700}>
@@ -52,23 +52,25 @@ const DirectoryBuilder = () => {
             </Box>
           </Stack>
         </Grid>
+      </Grid>
       <Divider sx={{ my: 1 }} />
-        <Grid container spacing={2}>
+        <Grid container spacing={2} >
           <Grid item xs={12}>
-            <Stack>
+            <Stack direction="row"
+              justifyContent="flex-start"
+              alignItems="center"
+              spacing={2}>
               {state.directories.map((e, key) => 
-                <ListItem key={key}>
                   <Chip
+                    key={key}
                     label={e.name}
                     size="small"
                     onDelete={handleDirectoryRemove(e)}
                   />
-                </ListItem>
               )}
             </Stack>
           </Grid>
         </Grid>
-      </Grid>
     </Paper>
   </>
   )
