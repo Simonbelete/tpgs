@@ -38,3 +38,4 @@ export type { default as OnBoarding } from './OnBoarding';
 export type { default as Setting } from './Setting';
 export type { default as VerifyInvitation } from './VerifyInvitation';
 export type { default as Notification } from './Notification';
+export type { default as Directory } from './Directory';

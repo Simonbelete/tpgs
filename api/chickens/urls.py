@@ -19,7 +19,7 @@ urlpatterns = [
                name="chickens_import_xls"),
           path('csv', views.ChickenCsvImport.as_view(),
                name="chickens_import_csv")
-    ]));
+    ])),
 
     path('chickens/import/', include([
           path('xlsx', views.ChickenXlsxExport.as_view(),
@@ -28,6 +28,6 @@ urlpatterns = [
                name="chickens_export_xls"),
           path('csv', views.ChickenCsvExport.as_view(),
                name="chickens_export_csv")
-    ]))
+    ])),
     
 ]

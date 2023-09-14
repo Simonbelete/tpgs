@@ -30,6 +30,7 @@ import hasGroup from "@/util/hasGroup";
 import { useGroup } from "@/hooks";
 import { ChickenIcon } from "@/components/Icons";
 import DashboardIcon from '@mui/icons-material/Dashboard';
+import EggIcon from '@mui/icons-material/Egg';
 
 function menuProps(key: string) {
   return {
@@ -329,7 +330,7 @@ const SidebarMenu = () => {
           </Typography>
         </MenuItem>
       </Menu> */}
-      {/* <div
+      <div
         style={{ padding: "0 24px", marginBottom: "8px", marginTop: "32px" }}
       >
         <Typography
@@ -337,36 +338,45 @@ const SidebarMenu = () => {
           fontWeight={500}
           style={{ opacity: 0.6, letterSpacing: "0.5px" }}
         >
-          Compare
+          Reporting
         </Typography>
-      </div> */}
-      {/* <Menu menuItemStyles={menuItemStyles}>
-        <MenuItem component={<Link href="/chickens" />}>
+      </div>
+      <Menu menuItemStyles={menuItemStyles}>
+      <SubMenu
+          label={
+            <Typography variant="body1" fontSize={14}>
+              Eggs Reporting
+            </Typography>
+          }
+          icon={<EggIcon fozntSize="small" />}
+        >
+           <MenuItem component={<Link href="/breeds" />} icon={<AdjustIcon fontSize="small" />}>
+          <Typography variant="body1" fontSize={14}>
+            Egg Grading
+          </Typography>
+          </MenuItem>
+          <MenuItem component={<Link href="/eggs" />} icon={<AdjustIcon fontSize="small" />}>
+            <Typography variant="body1" fontSize={14}>
+              Egg Curve
+            </Typography>
+          </MenuItem>
+          <MenuItem component={<Link href="/hhep" />} icon={<AdjustIcon fontSize="small" />}>
+            <Typography variant="body1" fontSize={14}>
+              HHEP
+            </Typography>
+          </MenuItem>
+          <MenuItem component={<Link href="/feeds" />} icon={<AdjustIcon fontSize="small" />}>
+            <Typography variant="body1" fontSize={14}>
+              HDEP
+            </Typography>
+          </MenuItem>
+        </SubMenu>
+        <MenuItem component={<Link href="/chickens" />} icon={<AdjustIcon fontSize="small" />}>
           <Typography variant="body1" fontSize={14}>
             Body Weight
           </Typography>
         </MenuItem>
-        <MenuItem component={<Link href="/breeds" />}>
-          <Typography variant="body1" fontSize={14}>
-            Egg Grading
-          </Typography>
-        </MenuItem>
-        <MenuItem component={<Link href="/eggs" />}>
-          <Typography variant="body1" fontSize={14}>
-            Egg Curve
-          </Typography>
-        </MenuItem>
-        <MenuItem component={<Link href="/feeds" />}>
-          <Typography variant="body1" fontSize={14}>
-            HHEP
-          </Typography>
-        </MenuItem>
-        <MenuItem component={<Link href="/feeds" />}>
-          <Typography variant="body1" fontSize={14}>
-            HDEP
-          </Typography>
-        </MenuItem>
-      </Menu> */}
+      </Menu>
       <div
         style={{ padding: "0 24px", marginBottom: "8px", marginTop: "32px" }}
       >
