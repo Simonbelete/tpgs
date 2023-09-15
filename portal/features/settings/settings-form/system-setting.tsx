@@ -1,7 +1,9 @@
 import React from "react";
-import { FormControlLabel, Grid, Switch, Box, Typography, Container, Paper, Divider, FormGroup, FormLabel } from "@mui/material";
+import { Button,
+  Grid, Switch, Box, Typography, Stack, Paper, Divider, FormGroup, FormLabel } from "@mui/material";
 import { useDispatch } from "react-redux";
 import { toggleSuperUserMode } from '../slices';
+import { RefreshDirectoryButton } from '@/features/directory';
 
 const SystemSetting = () => {
   const dispatch = useDispatch();
@@ -18,14 +20,17 @@ const SystemSetting = () => {
           <Divider />
         </Box>
         
-        <Box>
+        <Stack direction="column" spacing={2}>
           <Paper sx={{p: 1}} elevation={0} square variant="outlined">
-          <FormGroup row sx={{alignItems: "center", justifyContent: "space-between"}}>
-            <FormLabel sx={{color: "#495056", fontSize: "16px", fontWeight: 500}}>Super User</FormLabel>
-            <Switch onChange={handleSuperUserMode}/>
-          </FormGroup>
+            <FormGroup row sx={{alignItems: "center", justifyContent: "space-between"}}>
+              <FormLabel sx={{color: "#495056", fontSize: "16px", fontWeight: 500}}>Super User</FormLabel>
+              <Switch onChange={handleSuperUserMode}/>
+            </FormGroup>
           </Paper>
-        </Box>
+          <Box>
+            <RefreshDirectoryButton />
+          </Box>
+        </Stack>
       </Box>
     </div>
   )
