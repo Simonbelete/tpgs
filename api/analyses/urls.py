@@ -9,14 +9,12 @@ from . import views
     analyses/{{farm}}/{{flock}}/{{house}}/*
 """
 
-# router = routers.DefaultRouter()
-# router.register(r'analyses', None,
-#                 basename='api_analyses')
-
 directories_router = routers.DefaultRouter()
 directories_router.register(r'directories', views.DirectoryListViewSet,
                             basename='api_directories_lists')
-directories_router.register(r'directories/refresh', views.DirectoryListRefresh,
+
+directories_ref_router = routers.DefaultRouter()
+directories_ref_router.register(r'directories/refresh', views.DirectoryListRefresh,
                             basename='api_directories_lists_refresh')
 
 hdep_router = routers.DefaultRouter()
@@ -29,7 +27,7 @@ hhep_router.register(
 
 
 urlpatterns = [
-    # path('', include(router.urls)),
+    path('', include(directories_ref_router.urls)),
     path('', include(directories_router.urls)),
     path('', include(hdep_router.urls)),
     path('', include(hhep_router.urls)),

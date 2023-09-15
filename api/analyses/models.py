@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.db import connection
 
 class DirectoryList(models.Model):
     unique_id = models.CharField(max_length=255, primary_key=True)

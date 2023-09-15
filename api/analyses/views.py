@@ -37,7 +37,8 @@ class DirectoryListRefresh(viewsets.ViewSet):
         try:
             models.DirectoryList.refresh_view()
             return Response({}, status=200)
-        except:
+        except Exception as ex:
+            print(ex)
             return Response({}, status=500)
 
 class HDEPViewSet(viewsets.ViewSet):
