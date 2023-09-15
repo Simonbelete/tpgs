@@ -6,13 +6,14 @@ import { ListLayout } from "@/layouts";
 import { useBreadcrumbs } from "@/hooks";
 import { Breadcrumbs } from "@/components";
 import { NotificationCard } from "@/features/notification";
+import { FarmsHeatmapSkeleton } from '@/features/dashboard';
 import { SeoHead } from "@/seo";
 
 const FarmsHeatmapComponent = dynamic(
   () => import("../../features/dashboard/farms-heatmap"),
   {
     ssr: false,
-    loading: () => <h1>Loading...</h1>
+    loading: () => <FarmsHeatmapSkeleton />
   }
 );
 
