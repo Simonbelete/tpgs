@@ -6,7 +6,7 @@ from . import views
 
 """
     `all` - Considers all data
-    analyses/{{farm}}/{{flock}}/{{house}}/{{pen}}/*
+    analyses/{{farm}}/{{flock}}/{{house}}/*
 """
 
 # router = routers.DefaultRouter()
@@ -16,6 +16,8 @@ from . import views
 directories_router = routers.DefaultRouter()
 directories_router.register(r'directories', views.DirectoryListViewSet,
                             basename='api_directories_lists')
+directories_router.register(r'directories/refresh', views.DirectoryListRefresh,
+                            basename='api_directories_lists_refresh')
 
 hdep_router = routers.DefaultRouter()
 hdep_router.register(

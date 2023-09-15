@@ -1,0 +1,19 @@
+[
+    {
+        "model": "flocks.Flock",
+        "pk": 1,
+        "fields": {
+            "name": "all",
+            "note": "*",
+            "is_active": false
+        }
+    },
+    {
+        "model": "houses.House",
+        "pk": 1,
+        "fields": {
+            "name": "all",
+            "is_active": false
+        }
+    }
+]

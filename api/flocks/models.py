@@ -5,7 +5,7 @@ from django.db import transaction
 from django.core.exceptions import ValidationError
 from simple_history.models import HistoricalRecords
 
-from core.models import CoreModel
+from core.models import CoreModel, BaseActiveManager
 from accusation.models import Accusation
 from chickens.models import Chicken
 from breeds.models import Breed

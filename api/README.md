@@ -8,7 +8,8 @@ eg 9999.999
 
 1. ```python manage.py migrate_schemas --shared```
 2. ```python manage.py create_schema public```
-3. ```python manage.py loaddata */fixtures/*.json```
+<!-- 3. ```python manage.py loaddata */fixtures/*.json``` -->
+3. ```python manage.py loaddata fixtures/*.json```
 4. ```python manage.py create_groups```
 5. ```python manage.py cities_light```
 

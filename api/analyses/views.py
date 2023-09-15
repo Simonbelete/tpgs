@@ -32,6 +32,14 @@ class DirectoryListViewSet(viewsets.ReadOnlyModelViewSet):
     ordering_fields = '__all__'
 
 
+class DirectoryListRefresh(viewsets.ViewSet):
+    def create(self, request):
+        try:
+            models.DirectoryList.refresh_view()
+            return Response({}, status=200)
+        except:
+            return Response({}, status=500)
+
 class HDEPViewSet(viewsets.ViewSet):
     def get_query(self):
         return Egg.objects.all()

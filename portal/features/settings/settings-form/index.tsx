@@ -5,7 +5,7 @@ import { Grid,
   Switch, FormControlLabel, Typography, 
   Avatar, Box, Stack, List, ListItem, 
   ListItemButton, ListItemText,
-  Tab, Tabs, IconButton } from '@mui/material';
+  Tab, Tabs, IconButton, useMediaQuery, useTheme } from '@mui/material';
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import { Setting } from "@/models";
 import { useSession, signOut } from "next-auth/react";
@@ -53,6 +53,9 @@ const SettingsForm = () => {
     
   };
 
+  const theme = useTheme()
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down("md"))
+
   return (
     <Grid container>
       <Grid item xs={12}>
@@ -75,14 +78,15 @@ const SettingsForm = () => {
       </Grid>
       <Grid item xs={12}>
         <Box
+          flexDirection={{xs: "column", md: "row"}}
           sx={{ flexGrow: 1, display: 'flex', height: 'auto' }}
         >
           <Tabs
-            orientation="vertical"
+            orientation={isSmallScreen ? "horizontal" : "vertical"}
             variant="scrollable"
             value={value}
             onChange={handleChange}
-            aria-label="Vertical tabs example"
+            aria-label="settings-tab"
             sx={{ borderRight: 1, borderColor: 'divider' }}
           >
             <Tab label="Change Password" {...a11yProps(0)} />
