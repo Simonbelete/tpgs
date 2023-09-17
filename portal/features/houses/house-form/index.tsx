@@ -11,6 +11,7 @@ import { useSnackbar } from "notistack";
 import CloseIcon from "@mui/icons-material/Close";
 import LibraryAddIcon from "@mui/icons-material/LibraryAdd";
 import { Card, DangerZoneCard, InfoZoneCard } from '@/components/card';
+import SaveIcon from '@mui/icons-material/Save';
 
 type Inputs = Partial<House>;
 
@@ -75,7 +76,7 @@ const HouseForm = ({
         <form onSubmit={handleSubmit(onSubmit)}>
           <Grid container spacing={4}>
             {/* Name */}
-            <Grid item xs={12} md={6}>
+            <Grid item xs={12}>
               <Controller
                 name={"name"}
                 control={control}
@@ -99,18 +100,7 @@ const HouseForm = ({
           </Grid>
           </form>
         </Card>
-      </Grid>
-      <Grid item xs={3}>
-        <Stack spacing={3}>
-          <InfoZoneCard />
-          <DangerZoneCard />
-        </Stack>
-      </Grid>
-    </Grid>
-
-
-    
-    <Box sx={{mt: 5}}>
+        <Box sx={{mt: 5}}>
         <Stack
             spacing={2}
             direction={"row"}
@@ -119,9 +109,9 @@ const HouseForm = ({
           >
             <Box>
               <Button
-                variant="outlined"
+                variant="contained"
                 size="small"
-                startIcon={<LibraryAddIcon />}
+                startIcon={<SaveIcon />}
                 onClick={() => handleSubmit(onSubmit)()}
               >
                 Save
@@ -133,13 +123,21 @@ const HouseForm = ({
                 color="error"
                 size="small"
                 startIcon={<CloseIcon />}
-                onClick={() => router.push("/formulation/formulas")}
+                onClick={() => router.push("/houses")}
               >
                 Cancel
               </Button>
             </Box>
           </Stack>
       </Box>
+      </Grid>
+      <Grid item xs={3}>
+        <Stack spacing={3}>
+          <InfoZoneCard />
+          <DangerZoneCard />
+        </Stack>
+      </Grid>
+    </Grid>
     </>
   );
 };

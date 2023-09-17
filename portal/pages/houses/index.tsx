@@ -10,6 +10,9 @@ import {
   HouseForm
 } from "@/features/houses";
 import { SeoHead } from "@/seo";
+import AddIcon from "@mui/icons-material/Add";
+import Link from "next/link";
+import CloseIcon from "@mui/icons-material/Close";
 
 const HousePage = () => {
   const { breadcrumbs } = useBreadcrumbs();
@@ -30,6 +33,7 @@ const HousePage = () => {
     <EditLayout
       breadcrumbs={<Breadcrumbs items={breadcrumbs} />}
       header={<Typography variant="title">{"data.name"} - Edit</Typography>}
+      actions={<Actions />}
     >
       {/* <Container maxWidth="md"> */}
         <HouseForm  />
@@ -38,5 +42,27 @@ const HousePage = () => {
     </>
   );
 };
+
+const Actions = () => {
+  return (
+    <Stack
+        spacing={2}
+        direction={"row"}
+        justifyContent="flex-start"
+        alignItems="center"
+      >
+        <Link href="/houses/create">
+          <Button variant="outlined" size={"small"} startIcon={<AddIcon />}>
+            Create New
+          </Button>
+        </Link>
+        <Link href="/houses">
+          <Button variant="outlined" color="error" size={"small"} startIcon={<CloseIcon />}>
+            Cancel
+          </Button>
+        </Link>
+      </Stack>
+  )
+} 
 
 export default HousePage;

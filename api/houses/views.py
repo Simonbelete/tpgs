@@ -9,7 +9,7 @@ from tablib import Dataset
 from import_export import resources
 import pandas as pd
 
-from core.views import HistoryViewSet
+from core.views import HistoryViewSet, SummaryViewSet
 from core.serializers import UploadSerializer
 from . import models
 from . import serializers
@@ -25,9 +25,12 @@ class HouseHistoryViewSet(HistoryViewSet):
     queryset = models.House.history.all()
     serializer_class = serializers.HouseHistorySerializer
 
+class HouseSummaryViewSet(SummaryViewSet):
+    def get_query(self):
+        return models.House.objects.get(pk=self.id_pk) 
+
+
 # Xlsx
-
-
 class HouseXlsxExport(APIView):
     def get(self, request):
         dataset = admin.HouseResource().export()
