@@ -59,8 +59,8 @@ class SummaryViewSet(viewsets.ViewSet):
             history_queryset = self.queryset.history.most_recent()
             return Response({
                 'created_by': self.queryset.created_by or 'unknown',
-                'created_at': self.queryset.created_at
-                'last_updated_by': history_queryset.history_user
+                'created_at': self.queryset.created_at,
+                'last_updated_by': history_queryset.history_user,
                 'last_updated_at': history_queryset.history_date,
                 'last_history_id': history_queryset.history_id,
                 'last_history_type': history_queryset.history_type
@@ -70,8 +70,8 @@ class SummaryViewSet(viewsets.ViewSet):
             # No History found
             return Response({
                 'created_by': self.queryset.created_by or 'unknown',
-                'created_at': self.queryset.created_at
-                'last_updated_by': None
+                'created_at': self.queryset.created_at,
+                'last_updated_by': None,
                 'last_updated_at': None,
                 'last_history_id': None,
                 'last_history_type': None,

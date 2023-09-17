@@ -1,8 +1,9 @@
 import { Response } from "@/models";
-import axios, { AxiosResponse } from "axios";
+import axios, { AxiosResponse, AxiosError, AxiosRequestConfig } from "axios";
 import { getCsrfToken, getSession } from "next-auth/react";
 import NProgress from "nprogress";
 import Cookies from "universal-cookie";
+import type { BaseQueryFn } from '@reduxjs/toolkit/query'
 
 const cookies = new Cookies();
 
@@ -64,5 +65,33 @@ if (typeof window !== "undefined") {
     }
   );
 }
+
+export const clientBaseQuery =  (
+  { baseUrl }: { baseUrl: string } = { baseUrl: '' }
+): BaseQueryFn<
+  {
+    url: string
+    method: AxiosRequestConfig['method']
+    data?: AxiosRequestConfig['data']
+    params?: AxiosRequestConfig['params']
+  },
+  unknown,
+  unknown
+> =>
+async ({ url, method, data, params }) => {
+  try {
+    const result = await instance({ url: baseUrl + url, method, data, params })
+    return { data: result.data }
+  } catch (axiosError) {
+    let err = axiosError as AxiosError
+    return {
+      error: {
+        status: err.response?.status,
+        data: err.response?.data || err.message,
+      },
+    }
+  }  
+}
+
 
 export default instance;

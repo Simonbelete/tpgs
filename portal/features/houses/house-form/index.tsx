@@ -12,6 +12,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import LibraryAddIcon from "@mui/icons-material/LibraryAdd";
 import { Card, DangerZoneCard, InfoZoneCard } from '@/components/card';
 import SaveIcon from '@mui/icons-material/Save';
+import HouseInfoZone from "./HouseInfoZone";
 
 type Inputs = Partial<House>;
 
@@ -133,7 +134,9 @@ const HouseForm = ({
       </Grid>
       <Grid item xs={3}>
         <Stack spacing={3}>
-          <InfoZoneCard />
+          {house && (
+            <HouseInfoZone id={house?.id} />
+          )}
           <DangerZoneCard />
         </Stack>
       </Grid>

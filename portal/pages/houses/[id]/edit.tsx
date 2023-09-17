@@ -1,6 +1,9 @@
 import React from "react";
 import { NextPageContext } from "next";
-import { Container, Typography } from "@mui/material";
+import { Button, Typography, Stack, Container } from "@mui/material";
+import AddIcon from "@mui/icons-material/Add";
+import Link from "next/link";
+import CloseIcon from "@mui/icons-material/Close";
 import { EditLayout } from "@/layouts";
 import {
   HouseForm,
@@ -16,44 +19,65 @@ const HouseEditPage = ({ data }: { data: House }) => {
 
   return (
     <>
-    {/* <SeoHead title={`${data.name || ""} - Edit`} /> */}
+    <SeoHead title={`${data.name || ""} - Edit`} />
     <EditLayout
       breadcrumbs={<Breadcrumbs items={breadcrumbs} />}
-      header={<Typography variant="title">{"data.name"} - Edit</Typography>}
+      header={<Typography variant="title">{data.name} - Edit</Typography>}
+      actions={<Actions />}
     >
-      <Container maxWidth="md">
-        <HouseForm house={data} />
-      </Container>
+        <HouseForm  />
     </EditLayout>
     </>
   );
 };
 
-// export async function getServerSideProps(context: NextPageContext) {
-//   const { id } = context.query;
+const Actions = () => {
+  return (
+    <Stack
+        spacing={2}
+        direction={"row"}
+        justifyContent="flex-start"
+        alignItems="center"
+      >
+        <Link href="/houses/create">
+          <Button variant="outlined" size={"small"} startIcon={<AddIcon />}>
+            Create New
+          </Button>
+        </Link>
+        <Link href="/houses">
+          <Button variant="outlined" color="error" size={"small"} startIcon={<CloseIcon />}>
+            Cancel
+          </Button>
+        </Link>
+      </Stack>
+  )
+} 
 
-//   try {
-//     // const res = await HouseService.getByIdSSR(context, Number(id));
+export async function getServerSideProps(context: NextPageContext) {
+  const { id } = context.query;
 
-//     // if (res.status != 200)
-//     //   return {
-//     //     redirect: {
-//     //       permanent: false,
-//     //       destination: `/${res.status}?id=${id}&from=/houses&next=/houses`,
-//     //     },
-//     //   };
+  try {
+    const res = await HouseService.getByIdSSR(context, Number(id));
 
-//     const data = {name: "Dummy"}
+    if (res.status != 200)
+      return {
+        redirect: {
+          permanent: false,
+          destination: `/${res.status}?id=${id}&from=/houses&next=/houses`,
+        },
+      };
 
-//     return { props: { data } };
-//   } catch (ex) {
-//     return {
-//       redirect: {
-//         permanent: false,
-//         destination: `/404?id=${id}&from=/houses&next=/units&error=unknown`,
-//       },
-//     };
-//   }
-// }
+    const data = {name: "Dummy"}
+
+    return { props: { data } };
+  } catch (ex) {
+    return {
+      redirect: {
+        permanent: false,
+        destination: `/404?id=${id}&from=/houses&next=/units&error=unknown`,
+      },
+    };
+  }
+}
 
 export default HouseEditPage;
