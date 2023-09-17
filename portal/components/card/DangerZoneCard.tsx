@@ -6,7 +6,8 @@ import { Card,
   Grid,
   Stack,
   useTheme,
-  Button
+  Button,
+  Box
 } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import EventNoteIcon from '@mui/icons-material/EventNote';
@@ -17,15 +18,33 @@ const DangerZoneCard =  ({
   const theme = useTheme();
 
   return (
-    <Card sx={{px: 2, py: 2, 
+    <Card sx={{px: 1, py: 2, 
       boxShadow: "rgba(145, 158, 171, 0.2) 0px 0px 2px 0px, rgba(145, 158, 171, 0.12) 0px 12px 24px -4px", 
       background: "#fff", borderRadius: "6px",
       borderWidth: 1,
       borderStyle: "solid",
       borderColor: theme.palette.error.main
       }}>
-        <Stack>
-         <Button size="small">Deactivate</Button>
+        <Stack divider={<Divider orientation="horizontal" flexItem />}
+          spacing={1}>
+          <Stack direction={"row"} justifyContent="space-between" spacing={1}>
+              <Typography component="span" gutterBottom={true}>
+                <Typography variant="body2" fontWeight={600}>Deactivate</Typography>
+                <Typography variant="caption" color="text.light" sx={{lineHeight: 0}}>Change the visibility of the record.</Typography>
+              </Typography>
+              <Box>
+                <Button variant="outlined" color="warning" size="small">Deactivate</Button>
+              </Box>
+          </Stack>
+          <Stack direction={"row"} justifyContent="space-between">
+              <Typography component="span" gutterBottom={true}>
+                <Typography variant="body2" fontWeight={600}>Delete</Typography>
+                <Typography variant="caption" color="text.light" sx={{lineHeight: 0}}>Once you delete this record, there is no recovering it.</Typography>
+              </Typography>
+              <Box>
+                <Button variant="outlined" color="error" size="small">Delete</Button>
+              </Box>
+          </Stack>
         </Stack>
     </Card>
   )
