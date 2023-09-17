@@ -20,6 +20,9 @@ class HouseViewSet(viewsets.ModelViewSet):
     queryset = models.House.objects.all()
     serializer_class = serializers.HouseSerializer_GET
 
+    def perform_create(self, serializer):
+        serializer.save(created_by=self.request.user)
+
 
 class HouseHistoryViewSet(HistoryViewSet):
     queryset = models.House.history.all()
