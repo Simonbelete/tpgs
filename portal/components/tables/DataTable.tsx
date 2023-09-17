@@ -142,6 +142,7 @@ export enum SETTING_COL {
   default = "default",
   history = "history",
   delete = "delete",
+  basic = "basic" 
 }
 
 const DataTable = ({
@@ -215,6 +216,43 @@ const DataTable = ({
           },
         };
         break;
+        case SETTING_COL.basic:
+          col = {
+            field: "Actions",
+            flex: 1,
+            minWidth: 150,
+            headerAlign: "center",
+            align: "right",
+            renderCell(params: any) {
+              return (
+                <Box>
+                  <Link href={router.asPath + "/" + params.id + "/edit"} id="data-table-edit">
+                    <Tooltip title="Edit">
+                      <IconButton aria-label="edit">
+                        <EditNoteIcon fontSize="small" />
+                      </IconButton>
+                    </Tooltip>
+                  </Link>
+                  <Link href={`${router.asPath}/${params.id}/histories`} id="data-table-histories">
+                    <Tooltip title="History">
+                      <IconButton aria-label="history">
+                        <HistoryIcon fontSize="small" />
+                      </IconButton>
+                    </Tooltip>
+                  </Link>
+                  <Tooltip title="Delete" id="data-table-delete">
+                    <IconButton
+                      aria-label="delete"
+                      onClick={() => handleDeleteModalOpen(params.id)}
+                    >
+                      <DeleteForeverIcon fontSize="small" />
+                    </IconButton>
+                  </Tooltip>
+                </Box>
+              );
+            },
+          };
+          break;
       case SETTING_COL.delete:
         col = {
           field: "Actions",

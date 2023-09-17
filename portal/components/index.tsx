@@ -8,6 +8,7 @@ export { default as AppsDescription } from "./apps-descripiton";
 export { default as DatePicker } from './DatePicker';
 export { default as Redirect403 } from './Redirect403';
 export { default as Shadow } from './Shadow';
+export { default as RenderProgress } from './RenderProgress';
 
 export * from "./call-to-actions";
 export * from "./heros";

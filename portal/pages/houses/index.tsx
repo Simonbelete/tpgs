@@ -3,25 +3,29 @@ import { ListLayout } from "@/layouts";
 import { useBreadcrumbs } from "@/hooks";
 import { Breadcrumbs } from "@/components";
 import { Button, Typography, Stack } from "@mui/material";
-import { FlocksList, FlockImportExport } from "@/features/flocks";
+import {
+  HouseList,
+  HouseImportExport,
+  HouseFilter
+} from "@/features/houses";
 import { SeoHead } from "@/seo";
 
-const FlockPage = () => {
+const HousePage = () => {
   const { breadcrumbs } = useBreadcrumbs();
 
   return (
     <>
-      <SeoHead title="Flocks" />
+      <SeoHead title="House"/>
       <ListLayout
         breadcrumbs={<Breadcrumbs items={breadcrumbs} />}
-        header={<Typography variant="title">Flocks</Typography>}
-        actions={<FlockImportExport />}
+        header={<Typography variant="title">House</Typography>}
+        actions={<HouseImportExport />}
+        filter={<HouseFilter />}
       >
-        <FlocksList />
+        <HouseList />
       </ListLayout>
     </>
   );
 };
 
-
-export default FlockPage;
+export default HousePage;

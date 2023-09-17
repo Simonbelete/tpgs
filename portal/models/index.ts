@@ -39,3 +39,4 @@ export type { default as Setting } from './Setting';
 export type { default as VerifyInvitation } from './VerifyInvitation';
 export type { default as Notification } from './Notification';
 export type { default as Directory } from './Directory';
+export type { default as House } from './House';

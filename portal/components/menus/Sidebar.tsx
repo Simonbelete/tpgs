@@ -28,9 +28,11 @@ import HelpIcon from "@mui/icons-material/Help";
 import { useSession, signOut } from "next-auth/react";
 import hasGroup from "@/util/hasGroup";
 import { useGroup } from "@/hooks";
-import { ChickenIcon } from "@/components/Icons";
+import { ChickenIcon, DNAHellxIcon } from "@/components/Icons";
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import EggIcon from '@mui/icons-material/Egg';
+import GroupWorkIcon from '@mui/icons-material/GroupWork';
+import CabinIcon from '@mui/icons-material/Cabin';
 
 function menuProps(key: string) {
   return {
@@ -71,7 +73,7 @@ const SidebarMenu = () => {
     icon: {
       color: sidebarTheme.menu.icon,
       ['> svg']: {
-        fill: sidebarTheme.menu.disabled.color,
+        fill: sidebarTheme.menu.icon,
       },
       [`&.${menuClasses.disabled}`]: {
         color: sidebarTheme.menu.disabled.color,
@@ -277,6 +279,55 @@ const SidebarMenu = () => {
               Chickens
             </Typography>
           </MenuItem>
+          <SubMenu
+          label={
+            <Typography variant="body1" fontSize={14}>
+              Flocks
+            </Typography>
+          }
+          icon={<GroupWorkIcon width="20" height="20" fill="inherit" />}
+        >
+            <MenuItem
+              component={<Link href="/flocks" />}
+              icon={<AdjustIcon fontSize="small" />}
+            >
+              <Typography variant="body1" fontSize={14}>
+                Flocks
+              </Typography>
+            </MenuItem>
+            <MenuItem
+              component={<Link href="/flocks/accusations" />}
+              icon={<AdjustIcon fontSize="small" />}
+            >
+              <Typography variant="body1" fontSize={14}>
+                Accusations
+              </Typography>
+            </MenuItem>
+            <MenuItem
+              component={<Link href="/flocks/reductions" />}
+              icon={<AdjustIcon fontSize="small" />}
+            >
+              <Typography variant="body1" fontSize={14}>
+                Reductions
+              </Typography>
+            </MenuItem>
+          </SubMenu>
+          <MenuItem
+              component={<Link href="/breeds" />}
+              icon={<DNAHellxIcon width="20" height="20" fill="inherit" />}
+            >
+              <Typography variant="body1" fontSize={14}>
+                Breeds
+              </Typography>
+            </MenuItem>
+            <MenuItem
+              component={<Link href="/houses" />}
+              icon={<CabinIcon fontSize="small" />}
+            >
+              <Typography variant="body1" fontSize={14}>
+                House
+              </Typography>
+            </MenuItem>
       </Menu>
       {/* <div
         style={{ padding: "0 24px", marginBottom: "8px", marginTop: "32px" }}

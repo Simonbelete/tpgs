@@ -156,7 +156,7 @@ const InvitationsList = () => {
       onDelete={handleDelete}
       rows={rows}
       columns={columns}
-      rowCount={rows.length}
+      rowCount={rowCount}
       loading={isLoading}
       pageSizeOptions={[5, 10, 25, 50, 100]}
       paginationModel={paginationModel}

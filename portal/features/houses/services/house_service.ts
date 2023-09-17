@@ -1,30 +1,35 @@
 import { AxiosResponse } from "axios";
-import { Response, Breed, BreedHistory } from "@/models";
+import { Response, House } from "@/models";
 import client from "@/services/client";
 import clientSSR from "@/services/client_ssr";
 import { NextPageContext } from "next";
 
-const URL = "/breeds";
+const URL = "/houses";
 const HISTORY_URL = `histories`;
 const EXPORT_URL = `${URL}/export`;
 const IMPORT_URL = `${URL}/import`;
 
+
 export default {
-  get: async (query?: Object): Promise<AxiosResponse<Response<Breed[]>>> =>
+  get: async (query?: Object): Promise<AxiosResponse<Response<House[]>>> =>
     client.get(`${URL}/`, { params: query }),
-  getById: async (id: number): Promise<AxiosResponse<Response<Breed>>> =>
+  getById: async (id: number): Promise<AxiosResponse<Response<House>>> =>
     client.get(`${URL}/${id}`),
-  create: async (data: Partial<Breed>) => client.post(`${URL}/`, data),
-  update: async (id: number, data: Partial<Breed>) =>
-    client.patch(`${URL}/${id}/`, data),
+  create: async (
+    data: Partial<House>
+  ): Promise<AxiosResponse<House>> => client.post(`${URL}/`, data),
+  update: async (
+    id: number,
+    data: Partial<House>
+  ): Promise<AxiosResponse<House>> => client.patch(`${URL}/${id}/`, data),
   delete: async (id: number) => client.delete(`${URL}/${id}/`),
   getByIdSSR: async (
     context: NextPageContext,
     id: number
-  ): Promise<AxiosResponse<Response<Breed>>> =>
+  ): Promise<AxiosResponse<Response<House>>> =>
     clientSSR(context).get(`${URL}/${id}`),
   history: {
-    get: async (id: number): Promise<AxiosResponse<Response<BreedHistory[]>>> =>
+    get: async (id: number): Promise<AxiosResponse<Response<House[]>>> =>
       client.get(`${URL}/${id}/${HISTORY_URL}/`),
   },
   export: {
@@ -51,5 +56,5 @@ export default {
           "Content-Type": "multipart/form-data",
         },
       }),
-  },
+  }
 };

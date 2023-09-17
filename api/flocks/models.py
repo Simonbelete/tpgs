@@ -28,7 +28,17 @@ class Flock(CoreModel):
         return self.total_accusation - self.total_reduction
 
     @property
+    def total_taged_chickens(self):
+        """ Total Number of Alive Chickens """
+        accusation = self.accusations.all().aggregate(count=models.Count('chickens'))['count']
+        reduction = self.reduction.all().aggregate(count=models.Count('chickens'))['count']
+        return accusation - reduction
+
+    @property
     def total_accusation(self):
+        """
+            TODO: separate alive and dead 
+        """
         result = self.accusations.all().aggregate(
             male_sum=models.Sum('no_male_chickens'), female_sum=models.Sum('no_female_chickens'), count=models.Count('chickens'))
         return (result['male_sum'] or 0) + (result['female_sum'] or 0) + result['count']
