@@ -9,8 +9,7 @@ import { Card,
   Button,
   Box
 } from '@mui/material';
-import EditIcon from '@mui/icons-material/Edit';
-import EventNoteIcon from '@mui/icons-material/EventNote';
+import ManageHistoryIcon from '@mui/icons-material/ManageHistory';
 
 const DangerZoneCard =  ({
 }: {
@@ -27,6 +26,18 @@ const DangerZoneCard =  ({
       }}>
         <Stack divider={<Divider orientation="horizontal" flexItem />}
           spacing={1}>
+            <Stack direction={"row"} justifyContent="space-between" spacing={1}>
+              <Typography component="span" gutterBottom={true}>
+                <Typography variant="body2" fontWeight={600}>Histories</Typography>
+                <Typography variant="caption" color="text.light" sx={{lineHeight: 0}}>Active changes made.</Typography>
+              </Typography>
+              <Box>
+                <Button variant="outlined" size="small" 
+                  startIcon={<ManageHistoryIcon fontSize="small" />}>
+                    View
+                  </Button>
+              </Box>
+          </Stack>
           <Stack direction={"row"} justifyContent="space-between" spacing={1}>
               <Typography component="span" gutterBottom={true}>
                 <Typography variant="body2" fontWeight={600}>Deactivate</Typography>

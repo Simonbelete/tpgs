@@ -11,7 +11,6 @@ import EventNoteIcon from '@mui/icons-material/EventNote';
 import Link from 'next/link';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import EventRepeatIcon from '@mui/icons-material/EventRepeat';
-import EditCalendarIcon from '@mui/icons-material/EditCalendar';
 import DrawIcon from '@mui/icons-material/Draw';
 import HistoryIcon from '@mui/icons-material/History';
 
