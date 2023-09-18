@@ -57,8 +57,8 @@ class SummaryViewSet(viewsets.ViewSet):
             self.id_pk = id_pk
             self.queryset = self.get_queryset()
             history_queryset = self.queryset.history.last()
-            print('----------')
-            print(history_queryset)
+            if(not history_queryset):
+                raise ObjectDoesNotExist()
             return Response({
                 'created_by': {
                     'id': self.queryset.created_by.id if self.queryset.created_by else 0,
@@ -77,7 +77,10 @@ class SummaryViewSet(viewsets.ViewSet):
         except ObjectDoesNotExist as ex:
             # No History found
             return Response({
-                'created_by': self.queryset.created_by or 'unknown',
+                'created_by': {
+                    'id': 0,
+                   'name': self.queryset.created_by or 'unknown',
+                },
                 'created_at': self.queryset.created_at,
                 'last_updated_by': 'unknown',
                 'last_updated_at': None,
