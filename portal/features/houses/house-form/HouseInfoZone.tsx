@@ -6,7 +6,7 @@ const HouseInfoZone = ({id}: {id: number}) => {
   const { data, error, isLoading } = useGetSummaryQuery(id);
 
   return (
-    <InfoZoneCard />
+    <InfoZoneCard data={data} isLoading={isLoading}/>
   )
 }
 

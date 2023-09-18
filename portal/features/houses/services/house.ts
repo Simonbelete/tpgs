@@ -3,13 +3,14 @@ import { AbstractSummary } from '@/models';
 
 const URL = "/houses";
 const HISTORY_URL = `histories`;
+const SUMMARY_URL = `summary`;
 const EXPORT_URL = `${URL}/export`;
 const IMPORT_URL = `${URL}/import`;
 
 export const houseApi = baseApi.injectEndpoints({
   endpoints: (build) => {
     return {
-      getSummary: build.query<AbstractSummary, number>({ query: (id: number) => ({ url: `${URL}/${id}`, method: 'get' }) }),
+      getSummary: build.query<AbstractSummary, number>({ query: (id: number) => ({ url: `${URL}/${id}/${SUMMARY_URL}/`, method: 'get' }) }),
     }
   },
   overrideExisting: false,

@@ -67,7 +67,7 @@ if (typeof window !== "undefined") {
 }
 
 export const clientBaseQuery =  (
-  { baseUrl }: { baseUrl: string } = { baseUrl: '' }
+  { baseUrl }: { baseUrl: string } = { baseUrl: '/api' }
 ): BaseQueryFn<
   {
     url: string

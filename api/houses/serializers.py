@@ -7,7 +7,7 @@ from . import models
 class HouseSerializer_GET(serializers.ModelSerializer):
     class Meta:
         model = models.House
-        fields = '__all__'
+        fields = ['id', 'name']
 
 
 class HouseHistorySerializer(serializers.ModelSerializer):

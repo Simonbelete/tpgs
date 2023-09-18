@@ -25,7 +25,7 @@ const HouseEditPage = ({ data }: { data: House }) => {
       header={<Typography variant="title">{data.name} - Edit</Typography>}
       actions={<Actions />}
     >
-        <HouseForm  />
+        <HouseForm house={data} />
     </EditLayout>
     </>
   );
@@ -58,7 +58,7 @@ export async function getServerSideProps(context: NextPageContext) {
 
   try {
     const res = await HouseService.getByIdSSR(context, Number(id));
-
+    
     if (res.status != 200)
       return {
         redirect: {
@@ -67,9 +67,7 @@ export async function getServerSideProps(context: NextPageContext) {
         },
       };
 
-    const data = {name: "Dummy"}
-
-    return { props: { data } };
+    return { props: { data: res.data } };
   } catch (ex) {
     return {
       redirect: {

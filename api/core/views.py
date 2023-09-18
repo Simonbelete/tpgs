@@ -56,14 +56,22 @@ class SummaryViewSet(viewsets.ViewSet):
         try:
             self.id_pk = id_pk
             self.queryset = self.get_queryset()
-            history_queryset = self.queryset.history.most_recent()
+            history_queryset = self.queryset.history.last()
+            print('----------')
+            print(history_queryset)
             return Response({
-                'created_by': self.queryset.created_by or 'unknown',
+                'created_by': {
+                    'id': self.queryset.created_by.id if self.queryset.created_by else 0,
+                    'name': self.queryset.created_by.name if self.queryset.created_by else 'unknown'
+                },
                 'created_at': self.queryset.created_at,
-                'last_updated_by': history_queryset.history_user,
+                'last_updated_by': {
+                    'id': history_queryset.history_user.id,
+                    'name': history_queryset.history_user.name
+                },
                 'last_updated_at': history_queryset.history_date,
                 'last_history_id': history_queryset.history_id,
-                'last_history_type': history_queryset.history_type
+                'last_history_type': history_queryset.history_type,
                 'history_count': 0
             }, status=200)
         except ObjectDoesNotExist as ex:
@@ -71,7 +79,7 @@ class SummaryViewSet(viewsets.ViewSet):
             return Response({
                 'created_by': self.queryset.created_by or 'unknown',
                 'created_at': self.queryset.created_at,
-                'last_updated_by': None,
+                'last_updated_by': 'unknown',
                 'last_updated_at': None,
                 'last_history_id': None,
                 'last_history_type': None,
