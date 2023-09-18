@@ -47,8 +47,8 @@ const InfoZoneCardCard =  ({isLoading, data}: {data?: AbstractSummary, isLoading
               {isLoading ? (
                   <Skeleton variant="text" sx={{ fontSize: '1rem' }} />
                 ): (
-                  <Link href="/user/1">
-                  {data?.created_by}
+                  <Link href={`/users/${data?.created_by.id}`}>
+                  {data?.created_by.name}
                 </Link>
                 ) }
               </Typography>
@@ -82,9 +82,9 @@ const InfoZoneCardCard =  ({isLoading, data}: {data?: AbstractSummary, isLoading
               {isLoading ? (
                   <Skeleton variant="text" sx={{ fontSize: '1rem' }} />
                 ): (
-                  <Link href="/user/1">
-                  {data?.last_updated_by}
-                  </Link>
+                  <Link href={`/users/${data?.last_updated_by.id}`}>
+                  {data?.last_updated_by.name || '-'}
+                </Link>
                 ) }
               </Typography>
             </Typography>

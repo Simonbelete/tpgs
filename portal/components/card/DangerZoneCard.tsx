@@ -10,9 +10,24 @@ import { Card,
   Box
 } from '@mui/material';
 import ManageHistoryIcon from '@mui/icons-material/ManageHistory';
+import LoadingButton from "@mui/lab/LoadingButton";
 
 const DangerZoneCard =  ({
+  onViewHistories,
+  onDeactivate,
+  onActivate,
+  onDelete,
+  isUpdating,
+  isDeleting,
+  is_active
 }: {
+  onViewHistories: () => void,
+  onDeactivate: () => void,
+  onActivate: () => void,
+  onDelete: () => void,
+  isUpdating: boolean,
+  isDeleting: boolean,
+  is_active?: boolean;
 }) => {
   const theme = useTheme();
 
@@ -32,20 +47,40 @@ const DangerZoneCard =  ({
                 <Typography variant="caption" color="text.light" sx={{lineHeight: 0}}>Active changes made.</Typography>
               </Typography>
               <Box>
-                <Button variant="outlined" size="small" 
+                <Button variant="outlined" size="small" onClick={onViewHistories} 
                   startIcon={<ManageHistoryIcon fontSize="small" />}>
                     View
                   </Button>
               </Box>
           </Stack>
           <Stack direction={"row"} justifyContent="space-between" spacing={1}>
-              <Typography component="span" gutterBottom={true}>
-                <Typography variant="body2" fontWeight={600}>Deactivate</Typography>
-                <Typography variant="caption" color="text.light" sx={{lineHeight: 0}}>Change the visibility of the record.</Typography>
-              </Typography>
-              <Box>
-                <Button variant="outlined" color="warning" size="small">Deactivate</Button>
-              </Box>
+              {is_active ? (
+                 <>
+                 <Typography component="span" gutterBottom={true}>
+                   <Typography variant="body2" fontWeight={600}>Deactivate</Typography>
+                   <Typography variant="caption" color="text.light" sx={{lineHeight: 0}}>Change the visibility of the record.</Typography>
+                 </Typography>
+                 <Box>
+                   <LoadingButton 
+                    loading={isUpdating} 
+                    loadingIndicator="Deactivating..."
+                    variant="outlined" color="warning" size="small" onClick={onDeactivate}>Deactivate</LoadingButton>
+                 </Box>
+               </>
+              ): (
+                <>
+                  <Typography component="span" gutterBottom={true}>
+                    <Typography variant="body2" fontWeight={600}>Activate</Typography>
+                    <Typography variant="caption" color="text.light" sx={{lineHeight: 0}}>Change the visibility of the record.</Typography>
+                  </Typography>
+                  <Box>
+                    <LoadingButton 
+                      loading={isUpdating} 
+                      loadingIndicator="Activating..."
+                      variant="outlined" color="primary" size="small" onClick={onActivate}>Activate</LoadingButton>
+                  </Box>
+                </>
+              )}
           </Stack>
           <Stack direction={"row"} justifyContent="space-between">
               <Typography component="span" gutterBottom={true}>
@@ -53,7 +88,10 @@ const DangerZoneCard =  ({
                 <Typography variant="caption" color="text.light" sx={{lineHeight: 0}}>Once you delete this record, there is no recovering it.</Typography>
               </Typography>
               <Box>
-                <Button variant="outlined" color="error" size="small">Delete</Button>
+                <LoadingButton 
+                  loading={isDeleting} 
+                  loadingPosition="start"
+                  variant="outlined" color="error" size="small" onClick={onDelete}>Delete</LoadingButton>
               </Box>
           </Stack>
         </Stack>
