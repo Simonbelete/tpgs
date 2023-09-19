@@ -18,8 +18,8 @@ from . import filters
 
 
 class HouseViewSet(CoreModelViewSet):
-    queryset = models.House.objects.all()
-    all_queryset = models.House.all.all()
+    queryset = models.House.all.all()
+    # all_queryset = models.House.all.all()
     serializer_class = serializers.HouseSerializer_GET
     filterset_class = filters.HouseFilter
     search_fields = ['name']
