@@ -9,13 +9,10 @@ const HouseDangerZone = ({ id, is_active }: { id: number, is_active: boolean }) 
   const [deleteHouse, { isLoading: isDeleting }] = useDeleteHouseMutation();
 
   const handleToggleActive = async (value: boolean) => {
-    console.log('999999')
-    console.log(value)
     try{
       await updateHouse({id: id, data: {is_active: value}}) 
     }catch(ex){
-      console.log('00000')
-      console.log(ex)
+      
     }
   }
 

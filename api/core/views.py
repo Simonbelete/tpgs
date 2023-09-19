@@ -3,6 +3,18 @@ from rest_framework import viewsets, status
 from rest_framework.response import Response
 from rest_framework.exceptions import NotFound
 from django.core.exceptions import ObjectDoesNotExist
+import distutils.util
+
+
+class CoreModelViewSet(viewsets.ModelViewSet):
+    def get_queryset(self):
+        is_active = self.request.GET.get('is_active')
+        if (not is_active or distutils.util.strtobool(is_active)):
+            return self.queryset
+        return self.all_queryset
+
+    def perform_create(self, serializer):
+        serializer.save(created_by=self.request.user)
 
 
 class HistoryViewSet(viewsets.ModelViewSet):
@@ -57,7 +69,7 @@ class SummaryViewSet(viewsets.ViewSet):
             self.id_pk = id_pk
             self.queryset = self.get_queryset()
             history_queryset = self.queryset.history.last()
-            if(not history_queryset):
+            if (not history_queryset):
                 raise ObjectDoesNotExist()
             return Response({
                 'created_by': {
@@ -79,7 +91,7 @@ class SummaryViewSet(viewsets.ViewSet):
             return Response({
                 'created_by': {
                     'id': 0,
-                   'name': self.queryset.created_by or 'unknown',
+                    'name': self.queryset.created_by or 'unknown',
                 },
                 'created_at': self.queryset.created_at,
                 'last_updated_by': 'unknown',

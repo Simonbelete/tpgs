@@ -9,28 +9,31 @@ from tablib import Dataset
 from import_export import resources
 import pandas as pd
 
-from core.views import HistoryViewSet, SummaryViewSet
+from core.views import HistoryViewSet, SummaryViewSet, CoreModelViewSet
 from core.serializers import UploadSerializer
 from . import models
 from . import serializers
 from . import admin
+from . import filters
 
 
-class HouseViewSet(viewsets.ModelViewSet):
+class HouseViewSet(CoreModelViewSet):
     queryset = models.House.objects.all()
+    all_queryset = models.House.all.all()
     serializer_class = serializers.HouseSerializer_GET
-
-    def perform_create(self, serializer):
-        serializer.save(created_by=self.request.user)
+    filterset_class = filters.HouseFilter
+    search_fields = ['name']
+    ordering_fields = '__all__'
 
 
 class HouseHistoryViewSet(HistoryViewSet):
     queryset = models.House.history.all()
     serializer_class = serializers.HouseHistorySerializer
 
+
 class HouseSummaryViewSet(SummaryViewSet):
     def get_query(self):
-        return models.House.objects.get(pk=self.id_pk) 
+        return models.House.objects.get(pk=self.id_pk)
 
 
 # Xlsx
