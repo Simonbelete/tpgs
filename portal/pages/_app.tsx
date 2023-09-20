@@ -78,7 +78,12 @@ export default function App({
       <SessionProvider session={session}>
         <ThemeProvider theme={lightTheme}>
           <OnBoardingProvider>
-            <SnackbarProvider>
+            <SnackbarProvider
+               anchorOrigin={{
+                vertical: 'top',
+                horizontal: 'center',
+              }}
+            >
               {getLayout(<Component {...pageProps} />)}
             </SnackbarProvider>
           </OnBoardingProvider>

@@ -26,7 +26,7 @@ const HouseFilter = () => {
   
   const selector = useSelector((state: RootState) => state.houseList);
 
-  const handleActiveChange = (event: SelectChangeEvent) => {dispatch(houseListSlice.actions.setIsActive(event.target.value.value))}
+  const handleActiveChange = (event: SelectChangeEvent) => {dispatch(houseListSlice.actions.setIsActive((event.target.value as any).value))}
 
   const handleSearchButton = () => {}
   

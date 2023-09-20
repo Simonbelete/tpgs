@@ -9,10 +9,12 @@ import { SettingReducer } from "@/features/settings";
 import { NutrientGroupFilterReducer } from '@/features/nutrient-group';
 import { invitationFilterReducer } from "@/features/invitations";
 import { directoryBuilderReducer } from '@/features/directory';
-import { houseFilterReducer, houseListReducer } from "@/features/houses"; 
+import { houseListReducer } from "@/features/houses"; 
 
 import { baseApi } from '@/services/baseApi';
 import { houseApi } from '@/features/houses/services';
+
+import { rtkQueryErrorLogger } from './middlewares/rtkQueryErrorLogger';
 
 export const store = configureStore({
   reducer: {
@@ -26,13 +28,12 @@ export const store = configureStore({
     nutrientGroupFilter: NutrientGroupFilterReducer,
     invitationFilter: invitationFilterReducer,
     directoryBuilder: directoryBuilderReducer,
-    houseFilter: houseFilterReducer,
     houseList: houseListReducer,
-    // Apis
+    // // Apis
     [houseApi.reducerPath]: houseApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
-      getDefaultMiddleware().concat(baseApi.middleware),
+      getDefaultMiddleware().concat(baseApi.middleware, rtkQueryErrorLogger),
 });
 
 // see `setupListeners` docs - takes an optional callback as the 2nd arg for customization
