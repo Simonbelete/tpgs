@@ -9,6 +9,7 @@ import { SettingReducer } from "@/features/settings";
 import { NutrientGroupFilterReducer } from '@/features/nutrient-group';
 import { invitationFilterReducer } from "@/features/invitations";
 import { directoryBuilderReducer } from '@/features/directory';
+import { houseFilterReducer, houseListReducer } from "@/features/houses"; 
 
 import { baseApi } from '@/services/baseApi';
 import { houseApi } from '@/features/houses/services';
@@ -25,7 +26,8 @@ export const store = configureStore({
     nutrientGroupFilter: NutrientGroupFilterReducer,
     invitationFilter: invitationFilterReducer,
     directoryBuilder: directoryBuilderReducer,
-
+    houseFilter: houseFilterReducer,
+    houseList: houseListReducer,
     // Apis
     [houseApi.reducerPath]: houseApi.reducer,
   },

@@ -3,30 +3,31 @@ import type { PayloadAction } from "@reduxjs/toolkit";
 
 export interface HouseState {
   search: string,
-  active: boolean 
+  isActive: boolean 
 }
 
 const initialState: HouseState = {
   search: "",
-  active: true
+  isActive: true
 }
 
-export const houseFilter = createSlice({
-  name: "House Filter",
+export const houseListSlice = createSlice({
+  name: "House List",
   initialState,
   reducers: {
     setSearch: (state, action: PayloadAction<string>) => {
       state.search = action.payload;
     },
-    setActive: (state, action: PayloadAction<boolean>) => {
-      state.active = action.payload
+    setIsActive: (state, action: PayloadAction<boolean>) => {
+      console.log('aaaa')
+      console.log(action.payload);
+      state.isActive = action.payload
     },
-    clearAll: (state) => {
+    reset: (state) => {
       state.search = ""
-      state.active = true
+      state.isActive = true
     }
   }
 });
 
-export const { setSearch, setActive ,clearAll } = houseFilter.actions;
-export default houseFilter.reducer;
+export default houseListSlice.reducer;

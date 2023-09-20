@@ -52,7 +52,8 @@ const CheckboxDropdown = ({
   onChange,
   selected,
   dataValueKey,
-  dataLableKey
+  dataLableKey,
+  multiple=true
 }: {
   url?: string,
   dataValueKey: string;
@@ -61,6 +62,7 @@ const CheckboxDropdown = ({
   label: string;
   onChange: (event: SelectChangeEvent) => void;
   selected: object[];
+  multiple?: boolean;
 }) => {
   const [open, setOpen] = useState<boolean>(false);
   const [data, setData] = useState<object[]>([...(menus || [])])
@@ -109,7 +111,7 @@ const CheckboxDropdown = ({
           open={open}
           onOpen={handleOpen}
           onClose={handleClose}
-          multiple
+          multiple={multiple}
           // @ts-ignore
           value={selected}
           renderValue={(selected) => <></>}

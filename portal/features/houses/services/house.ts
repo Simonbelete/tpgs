@@ -1,7 +1,6 @@
 import { baseApi } from '@/services/baseApi';
 import { AbstractSummary, Response, House } from '@/models';
 import { AxiosResponse } from "axios";
-import client from "@/services/client";
 import clientSSR from "@/services/client_ssr";
 import { NextPageContext } from "next";
 
@@ -14,6 +13,7 @@ const IMPORT_URL = `${URL}/import`;
 export const houseApi = baseApi.injectEndpoints({
   endpoints: (build) => {
     return {
+      getHouses: build.query<Response<House>, Object>({ query: (query?: Object) => ({ url: `${URL}/`, method: 'get', params: query }) }),
       getSummary: build.query<AbstractSummary, number>({ query: (id: number) => ({ url: `${URL}/${id}/${SUMMARY_URL}/`, method: 'get' }) }),
       createHouse: build.mutation({
         query: () => ({ url: `${URL}/`, method: 'post' }),
@@ -38,6 +38,7 @@ export const houseEndpoints = {
 }
 
 export const { 
+  useGetHousesQuery,
   useGetSummaryQuery, 
   useCreateHouseMutation,
   useUpdateHouseMutation,

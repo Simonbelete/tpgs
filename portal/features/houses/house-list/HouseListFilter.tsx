@@ -14,7 +14,7 @@ import {
 import { useSelector, useDispatch } from "react-redux";
 import { SearchInput } from "@/components/inputs";
 import { CheckboxDropdown } from "@/components/dropdowns";
-import { setSearch, clearAll, setActive } from "../slices";
+import { houseListSlice } from "./slice";
 import { RootState } from "@/store";
 
 const HouseFilter = () => {
@@ -24,9 +24,9 @@ const HouseFilter = () => {
     {name: 'Deactive', value: false}
   ]
   
-  const filterState = useSelector((state: RootState) => state.houseFilter);
+  const selector = useSelector((state: RootState) => state.houseList);
 
-  const handleActiveChange = (event: SelectChangeEvent) => dispatch(setActive(event.target.value as any));
+  const handleActiveChange = (event: SelectChangeEvent) => {dispatch(houseListSlice.actions.setIsActive(event.target.value.value))}
 
   const handleSearchButton = () => {}
   
@@ -45,7 +45,7 @@ const HouseFilter = () => {
             justifyContent={{ xs: "start", md: "end" }}
             spacing={2}
           >
-            <SearchInput label="Search..."  onChange={(event: React.ChangeEvent<HTMLInputElement>) => dispatch(setSearch(event.target.value)) }/>
+            <SearchInput label="Search..."  onChange={(event: React.ChangeEvent<HTMLInputElement>) => dispatch(houseListSlice.actions.setSearch(event.target.value)) }/>
 
             <Box>
               <Button
@@ -64,7 +64,7 @@ const HouseFilter = () => {
                 color="secondary"
                 size="small"
                 disableElevation
-                onClick={() => dispatch(clearAll())}
+                onClick={() => dispatch(houseListSlice.actions.reset())}
               >
                 Clear
               </Button>
@@ -77,11 +77,12 @@ const HouseFilter = () => {
         <Grid item xs={12}>
             <Stack direction={"row"}>
               <CheckboxDropdown
+                multiple={false}
                 menus={activeMenu}
                 dataValueKey="value"
                 dataLableKey="name"
                 label={"Active"}
-                selected={[{value: filterState.active}]}
+                selected={[{value: selector.isActive}]}
                 onChange={handleActiveChange}
               />
             </Stack>
@@ -93,7 +94,7 @@ const HouseFilter = () => {
           <Stack>
               <ListItem>
                   <Chip
-                    label={`State: ${filterState.active}`}
+                    label={`State: ${selector.isActive}`}
                     size="small"
                     onDelete={() => {}}
                 />

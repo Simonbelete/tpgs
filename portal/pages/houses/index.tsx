@@ -5,8 +5,8 @@ import { Breadcrumbs } from "@/components";
 import { Typography, Stack, Container } from "@mui/material";
 import {
   HouseList,
+  HouseListFilter,
   HouseImportExport,
-  HouseFilter,
 } from "@/features/houses";
 import { SeoHead } from "@/seo";
 const HousePage = () => {
@@ -19,7 +19,7 @@ const HousePage = () => {
         breadcrumbs={<Breadcrumbs items={breadcrumbs} />}
         header={<Typography variant="title">House</Typography>}
         actions={<HouseImportExport />}
-        filter={<HouseFilter />}
+        filter={<HouseListFilter />}
       >
         <HouseList />
       </ListLayout>
