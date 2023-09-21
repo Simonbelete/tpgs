@@ -13,7 +13,7 @@ import SaveIcon from '@mui/icons-material/Save';
 import HouseInfoZone from "./HouseInfoZone";
 import HouseDangerZone from "./HouseDangerZone";
 import { useCreateHouseMutation, useUpdateHouseMutation } from "../services";
-import { useErrorToForm } from "@/hooks";
+import { useErrorToForm, useCRUD } from "@/hooks";
 
 type Inputs = Partial<House>;
 
@@ -30,10 +30,10 @@ const HouseForm = ({
   redirect?: boolean;
 }) => {
   const router = useRouter();
-  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
-  const [createHouse, { isLoading: isCreating, error: createError }] = useCreateHouseMutation();
-  const [updateHouse, { isLoading: isUpdating, error: updateError }] = useUpdateHouseMutation();
+  // const [createHouse, { isLoading: isCreating, error: createError }] = useCreateHouseMutation();
+  const [createHouse, createResult ] = useCreateHouseMutation();
+  const [updateHouse, updateResult ] = useUpdateHouseMutation();
 
   const { handleSubmit, control, setError } = useForm<Inputs>({
     defaultValues: {
@@ -43,7 +43,19 @@ const HouseForm = ({
     resolver: yupResolver(schema),
   });
 
-  const apiErrorToForm = useErrorToForm([createError, updateError], setError);
+  useEffect(() => {
+    createResult.status
+  }, [createResult])
+
+  const useCRUDHook = useCRUD({
+    results: [
+      createResult,
+      updateResult
+    ],
+    setError: setError
+  })
+
+  // const apiErrorToForm = useErrorToForm([createError, updateError], setError);
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     if (house == null) await create(data);
