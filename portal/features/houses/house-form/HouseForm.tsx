@@ -6,14 +6,13 @@ import { Grid, Button, Paper, Stack, Box } from "@mui/material";
 import { House } from "@/models";
 import { LabeledInput } from "@/components/inputs";
 import { useRouter } from "next/router";
-import { useSnackbar } from "notistack";
 import CloseIcon from "@mui/icons-material/Close";
-import { Card, DangerZoneCard, InfoZoneCard } from '@/components/card';
+import { Card } from '@/components/card';
 import SaveIcon from '@mui/icons-material/Save';
 import HouseInfoZone from "./HouseInfoZone";
 import HouseDangerZone from "./HouseDangerZone";
 import { useCreateHouseMutation, useUpdateHouseMutation } from "../services";
-import { useErrorToForm, useCRUD } from "@/hooks";
+import { useCRUD } from "@/hooks";
 
 type Inputs = Partial<House>;
 
@@ -31,7 +30,6 @@ const HouseForm = ({
 }) => {
   const router = useRouter();
 
-  // const [createHouse, { isLoading: isCreating, error: createError }] = useCreateHouseMutation();
   const [createHouse, createResult ] = useCreateHouseMutation();
   const [updateHouse, updateResult ] = useUpdateHouseMutation();
 

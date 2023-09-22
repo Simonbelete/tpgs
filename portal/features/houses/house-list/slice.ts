@@ -19,8 +19,6 @@ export const houseListSlice = createSlice({
       state.search = action.payload;
     },
     setIsActive: (state, action: PayloadAction<boolean>) => {
-      console.log('aaaa')
-      console.log(action.payload);
       state.is_active = action.payload
     },
     reset: (state) => {
