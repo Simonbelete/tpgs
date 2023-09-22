@@ -7,17 +7,21 @@ import { CreateLayout } from "@/layouts";
 import {
   HouseForm,
 } from "@/features/houses";
+import { SeoHead } from "@/seo";
 
 const HouseCreatePage = () => {
   const { breadcrumbs } = useBreadcrumbs();
 
   return (
-    <CreateLayout
-      breadcrumbs={<Breadcrumbs items={breadcrumbs} />}
-      header={<Typography variant="title">Create House</Typography>}
-    >
-      <HouseForm />
-    </CreateLayout>
+    <>
+      <SeoHead title="Create House" />
+      <CreateLayout
+        breadcrumbs={<Breadcrumbs items={breadcrumbs} />}
+        header={<Typography variant="title">Create House</Typography>}
+      >
+        <HouseForm />
+      </CreateLayout>
+    </>
   );
 };
 

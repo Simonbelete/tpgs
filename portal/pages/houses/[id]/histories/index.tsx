@@ -6,18 +6,22 @@ import { Typography } from "@mui/material";
 import { HouseHistoryList } from "@/features/houses";
 import { useRouter } from "next/router";
 import { NextPageContext } from "next";
+import { SeoHead } from "@/seo";
 
 const HouseHistoryPage = ({ id }: { id: number }) => {
   const { breadcrumbs } = useBreadcrumbs();
   const router = useRouter();
 
   return (
-    <ListLayout
-      breadcrumbs={<Breadcrumbs items={breadcrumbs} />}
-      header={<Typography variant="title">Histories</Typography>}
-    >
-      <HouseHistoryList id={id} />
-    </ListLayout>
+    <>
+      <SeoHead title="House Histories" />
+      <ListLayout
+        breadcrumbs={<Breadcrumbs items={breadcrumbs} />}
+        header={<Typography variant="title">Histories</Typography>}
+      >
+        <HouseHistoryList id={id} />
+      </ListLayout>
+    </>
   );
 };
 

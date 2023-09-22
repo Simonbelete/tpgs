@@ -41,12 +41,17 @@ const HouseFilter = () => {
         <Grid item xs={12} md />
         <Grid item xs={12} md={4}>
           <Stack
-            direction="row"
+            direction={{xs: "column", md: "row"}}
             justifyContent={{ xs: "start", md: "end" }}
             spacing={2}
           >
             <SearchInput label="Search..."  onChange={(event: React.ChangeEvent<HTMLInputElement>) => dispatch(houseListSlice.actions.setSearch(event.target.value)) }/>
 
+            <Stack
+            direction="row"
+            justifyContent={{ xs: "start", md: "end" }}
+            spacing={2}
+          >
             <Box>
               <Button
                 variant="contained"
@@ -69,6 +74,8 @@ const HouseFilter = () => {
                 Clear
               </Button>
             </Box>
+          </Stack>
+
           </Stack>
         </Grid>
       </Grid>

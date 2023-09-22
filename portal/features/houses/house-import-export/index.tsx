@@ -81,6 +81,7 @@ const HouseImportExport = () => {
         direction={"row"}
         justifyContent="flex-start"
         alignItems="center"
+        useFlexGap flexWrap="wrap"
       >
         <Link href="/houses/create">
           <Button variant="contained" size={"small"} startIcon={<AddIcon />}>
