@@ -1,4 +1,5 @@
-export default interface Unit {
-  id: number;
+import AbstractBaseModel from "./AbstractBaseModel";
+
+export default interface Unit extends AbstractBaseModel {
   name: string;
 }
