@@ -86,7 +86,7 @@ class SummaryViewSet(viewsets.ViewSet):
                 'last_updated_at': history_queryset.history_date,
                 'last_history_id': history_queryset.history_id,
                 'last_history_type': history_queryset.history_type,
-                'history_count': 0
+                'history_count': self.queryset.history.count()
             }, status=200)
         except ObjectDoesNotExist as ex:
             # No History found

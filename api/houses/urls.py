@@ -6,6 +6,8 @@ from . import views
 router = routers.DefaultRouter()
 router.register(r'houses', views.HouseViewSet,
                 basename='api_houses'),
+router.register(r'houses/(?P<id>.+)/histories',
+                views.HouseHistoryViewSet, basename='api_house_histories'),
 
 summary_router = NestedDefaultRouter(
     router, r'houses', lookup='id')
