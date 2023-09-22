@@ -3,16 +3,13 @@ import {
   GridRowsProp,
   GridColDef,
 } from "@mui/x-data-grid";
-import { useSnackbar } from "notistack";
 import { DataTable } from "@/components/tables";
 import { House } from "@/models";
-import house_service from "../services/house_service";
-import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store";
 import _ from "lodash";
 import dayjs from 'dayjs';
-import { useGetHousesQuery } from "../services";
+import { useGetHousesQuery, useDeleteHouseMutation } from "../services";
 import buildQuery from "@/util/buildQuery";
 
 const columns: GridColDef[] = [
@@ -31,29 +28,11 @@ const HouseList = () => {
     pageSize: 10,
   });
 
-  const { data, isLoading } = useGetHousesQuery(buildQuery({...paginationModel, ...selector})); 
+  const { data, isLoading, refetch } = useGetHousesQuery(buildQuery({...paginationModel, ...selector})); 
+  const [deleteHouse, deleteResult ] = useDeleteHouseMutation();
 
-  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
-  const router = useRouter();
+  const handleDelete = async (id: number) => await deleteHouse(id).then(() => refetch())
 
-  const refresh = () => {
-    setPaginationModel({ page: 0, pageSize: 10 });
-  };
-
-  const handleDelete = async (id: number) => {
-    try {
-      const response = await house_service.delete(id);
-      if (response.status == 204) {
-        enqueueSnackbar("Successfully Deleted!", { variant: "success" });
-        // router.push("/invitation");
-      } else enqueueSnackbar("Failed to Deleted!", { variant: "error" });
-    } catch (ex) {
-      enqueueSnackbar("Server Error!", { variant: "error" });
-    } finally {
-      refresh();
-    }
-  };
-  {console.log(data)}
   return (
     <DataTable
       onDelete={handleDelete}

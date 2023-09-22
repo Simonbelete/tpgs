@@ -9,9 +9,7 @@ const useCRUD = ({results, setError }: {results: any[], setError?: any}) => {
   useEffect(() => {
     for(const result of results) {
       if(result.status !== "fulfilled") continue;
-      console.log('------');
-      console.log(result)
-      
+
       const isError = result.isError
       const isSuccess = result.isSuccess
   
@@ -31,8 +29,8 @@ const useCRUD = ({results, setError }: {results: any[], setError?: any}) => {
         if(statusCode == 400) errorToForm(data, setError);
       } else if(isSuccess) {
         if(statusCode == 201) enqueueSnackbar("Created", {variant: 'success'})
-        console.log(statusCode)
         if(statusCode == 200) enqueueSnackbar("Updated Success", {variant: 'success'})
+        if(statusCode == 204) enqueueSnackbar("Deleted", {variant: 'success'})
       } 
     }
   }, [results])
