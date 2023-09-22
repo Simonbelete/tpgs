@@ -1,30 +1,32 @@
 import { DangerZoneCard } from '@/components';
-import React from 'react';
+import React, { useState } from 'react';
 import { useDeleteHouseMutation, useUpdateHouseMutation } from '../services';
 import { useRouter } from 'next/router';
+import { useCRUD } from "@/hooks";
 
 const HouseDangerZone = ({ id, is_active }: { id: number, is_active: boolean }) => {
   const router = useRouter();
-  const [updateHouse, { isLoading: isUpdating } ] = useUpdateHouseMutation();
-  const [deleteHouse, { isLoading: isDeleting }] = useDeleteHouseMutation();
+  const [updateHouse, updateResult ] = useUpdateHouseMutation();
+  const [deleteHouse, deleteResult ] = useDeleteHouseMutation();
 
-  const handleToggleActive = async (value: boolean) => {
-    try{
-      await updateHouse({id: id, data: {is_active: value}}) 
-    }catch(ex){
-      
-    }
-  }
+  const handleToggleActive = async (value: boolean) =>  await updateHouse({id: id, is_active: value})
+  const handleDelete = async () => await deleteHouse(id).then(() => router.push('/houses'))
+
+  const useCRUDHook = useCRUD({
+    results: [
+      updateResult
+    ],
+  });
 
   return (
     <DangerZoneCard 
       onViewHistories={() => router.push(`/houses/${id}/histories`)} 
       onDeactivate={() => handleToggleActive(false)}
       onActivate={() => handleToggleActive(true)}
-      onDelete={() => deleteHouse(id).then(() => router.push('/houses'))}
-      isUpdating={isUpdating}
-      isDeleting={isDeleting}
-      is_active={is_active}
+      onDelete={handleDelete}
+      isUpdating={updateResult.isLoading}
+      isDeleting={deleteResult.isLoading}
+      is_active={updateResult.data == undefined ? is_active : updateResult.data.is_active }
     />
   )
 }

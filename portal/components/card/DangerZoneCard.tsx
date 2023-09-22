@@ -67,7 +67,7 @@ const DangerZoneCard =  ({
                     variant="outlined" color="warning" size="small" onClick={onDeactivate}>Deactivate</LoadingButton>
                  </Box>
                </>
-              ): (
+              ): ( 
                 <>
                   <Typography component="span" gutterBottom={true}>
                     <Typography variant="body2" fontWeight={600}>Activate</Typography>
