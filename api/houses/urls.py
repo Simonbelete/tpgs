@@ -21,9 +21,9 @@ urlpatterns = [
     path('houses/export/', include([
         path('xlsx', views.HouseXlsxExport.as_view(),
              name="houses_export_xlsx"),
-        path('houses/export/xls', views.HouseXlsExport.as_view(),
+        path('xls', views.HouseXlsExport.as_view(),
              name="houses_export_xls"),
-         path('houses/export/csv', views.HouseCsvExport.as_view(),
+         path('csv', views.HouseCsvExport.as_view(),
               name="houses_export_csv"),
          ])),
 
