@@ -52,26 +52,9 @@ const HouseForm = ({
   })
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
-    if (house == null) await create(data);
-    else await update(data);
+    if (house == null) await createHouse(data);
+    else await updateHouse({...data, id: house.id});
   };
-
-  const create = async (data: Partial<House>) => {
-    const response = await createHouse(data);
-  }
-
-  const update = async (data: Partial<House>) => {
-    // const response = await updateHouse(data);
-   }
-
-  // const update = async (data: Partial<House>) => {
-  //   delete data.id;
-  //   const response = await house_service.update(house?.id || 0, data);
-  //   if ((response.status = 201)) {
-  //     enqueueSnackbar("Successfully updated!", { variant: "success" });
-  //     router.push("/houses/" + house?.id);
-  //   }
-  // };
 
   return (
     <>

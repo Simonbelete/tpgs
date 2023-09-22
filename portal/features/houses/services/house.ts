@@ -18,8 +18,8 @@ export const houseApi = baseApi.injectEndpoints({
       createHouse: build.mutation<Promise<AxiosResponse<House>>, Partial<House>>({
         query: (data: Partial<House>) => ({ url: `${URL}/`, method: 'post', data: data }),
       }),
-      updateHouse: build.mutation<House, {id: number, data: Partial<House>}>({
-        query: ({id, data}) => ({ url: `${URL}/${id}/`, method: 'patch', data: data }),
+      updateHouse: build.mutation<House, Pick<House, 'id'> & Partial<House>>({
+        query: ({id, ...patch}) => ({ url: `${URL}/${id}/`, method: 'patch', data: patch }),
       }),
       deleteHouse: build.mutation<any, number>({
         query: (id: number) => ({ url: `${URL}/${id}/`, method: 'delete' }),

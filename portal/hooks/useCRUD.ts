@@ -26,6 +26,7 @@ const useCRUD = ({results, setError }: {results: any[], setError: any}) => {
       if(statusCode == 400) errorToForm(data, setError);
     } else if(isSuccess) {
       if(statusCode == 201) enqueueSnackbar("Created", {variant: 'success'})
+      if(statusCode == 200) enqueueSnackbar("Updated", {variant: 'success'})
     } 
   }
 }

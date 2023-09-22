@@ -84,11 +84,10 @@ async ({ url, method, data, params }) => {
     return {
       data: {
         ...result.data,
-        status: result.status
+        status: result.status,
       }
     }
   } catch (axiosError) {
-    // TODO: Log error
     let err = axiosError as AxiosError
     return {
       error: {
