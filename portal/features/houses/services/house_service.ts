@@ -9,7 +9,6 @@ const HISTORY_URL = `histories`;
 const EXPORT_URL = `${URL}/export`;
 const IMPORT_URL = `${URL}/import`;
 
-
 export default {
   get: async (query?: Object): Promise<AxiosResponse<Response<House[]>>> =>
     client.get(`${URL}/`, { params: query }),
