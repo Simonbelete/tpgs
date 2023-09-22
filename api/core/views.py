@@ -9,6 +9,8 @@ import distutils.util
 class CoreModelViewSet(viewsets.ModelViewSet):
     # def get_queryset(self):
     #     is_active = self.request.GET.get('is_active')
+    #     print('-------------')
+    #     print(is_active)
     #     if (not is_active or distutils.util.strtobool(is_active)):
     #         return self.queryset
     #     return self.all_queryset
