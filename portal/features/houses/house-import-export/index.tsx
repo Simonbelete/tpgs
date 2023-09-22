@@ -16,7 +16,7 @@ import {
   importHousesXLSX,
   importHousesCSV,
   importHousesXLS
- } from "../services/house";
+ } from "../services";
 
 const HouseImportExport = () => {
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();

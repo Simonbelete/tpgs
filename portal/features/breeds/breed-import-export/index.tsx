@@ -9,19 +9,26 @@ import messages from "@/util/messages";
 import { ButtonMenu } from "@/components/buttons";
 import AddIcon from "@mui/icons-material/Add";
 import FileUploadIcon from "@mui/icons-material/FileUpload";
-import service from "../services/breed_service";
+import { 
+  exportBreedsXLSX,
+  exportBreedsXLS,
+  exportBreedsCSV,
+  importBreedsXLSX,
+  importBreedsCSV,
+  importBreedsXLS
+ } from "../services";
 
-const BreedImportExport = () => {
+const HouseImportExport = () => {
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
   const handleExport = async (type: string) => {
     try {
       let response: Partial<AxiosResponse> = {};
-      if (type == "xlsx") response = await service.export.xlsx();
-      if (type == "xls") response = await service.export.xls();
-      if (type == "csv") response = await service.export.csv();
+      if (type == "xlsx") response = await exportBreedsXLSX ();
+      if (type == "xls") response = await exportBreedsXLS();
+      if (type == "csv") response = await exportBreedsCSV();
       if (response.status == 200) {
-        fileDownload(response.data, `nutrients.${type}`);
+        fileDownload(response.data, `houses_.${type}`);
       } else {
         enqueueSnackbar(messages.exportError_400(), { variant: "error" });
       }
@@ -49,11 +56,11 @@ const BreedImportExport = () => {
       try {
         let response: Partial<AxiosResponse> = {};
         if (file.name.includes(".xlsx"))
-          response = await service.import.xlsx(formData);
+          response = await importBreedsXLSX(formData);
         if (file.name.includes(".xls"))
-          response = await service.import.xls(formData);
+          response = await importBreedsXLS(formData);
         if (file.name.includes(".csv"))
-          response = await service.import.csv(formData);
+          response = await importBreedsCSV(formData);
         if (response.status == 200) {
           enqueueSnackbar(messages.importSuccess(), { variant: "success" });
         } else {
@@ -74,8 +81,9 @@ const BreedImportExport = () => {
         direction={"row"}
         justifyContent="flex-start"
         alignItems="center"
+        useFlexGap flexWrap="wrap"
       >
-        <Link href="/nutrient-groups/create">
+        <Link href="/houses/create">
           <Button variant="contained" size={"small"} startIcon={<AddIcon />}>
             Create
           </Button>
@@ -132,4 +140,4 @@ const BreedImportExport = () => {
   );
 };
 
-export default BreedImportExport;
+export default HouseImportExport;

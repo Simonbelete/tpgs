@@ -10,9 +10,11 @@ import { NutrientGroupFilterReducer } from '@/features/nutrient-group';
 import { invitationFilterReducer } from "@/features/invitations";
 import { directoryBuilderReducer } from '@/features/directory';
 import { houseListReducer } from "@/features/houses"; 
+import { breedListReducer } from "@/features/breeds";
 
 import { baseApi } from '@/services/baseApi';
 import { houseApi } from '@/features/houses/services';
+import { breedApi } from '@/features/breeds/services';
 
 import { rtkQueryErrorLogger } from './middlewares/rtkQueryErrorLogger';
 
@@ -29,8 +31,10 @@ export const store = configureStore({
     invitationFilter: invitationFilterReducer,
     directoryBuilder: directoryBuilderReducer,
     houseList: houseListReducer,
+    breedList: breedListReducer,
     // // Apis
     [houseApi.reducerPath]: houseApi.reducer,
+    [breedApi.reducerPath]: breedApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
       getDefaultMiddleware().concat(baseApi.middleware, rtkQueryErrorLogger),

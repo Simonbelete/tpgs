@@ -7,7 +7,6 @@ import { DataTable } from "@/components/tables";
 import { House } from "@/models";
 import _ from "lodash";
 import { useGetHouseHistoryQuery } from "../services";
-import buildQuery from "@/util/buildQuery";
 import { historyColDef } from "@/components/gird-col-def";
 
 const columns: GridColDef[] = [

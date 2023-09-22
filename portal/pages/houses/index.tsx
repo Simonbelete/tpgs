@@ -1,8 +1,8 @@
-import React, { ChangeEvent, ReactElement } from "react";
+import React from "react";
 import { ListLayout } from "@/layouts";
 import { useBreadcrumbs } from "@/hooks";
 import { Breadcrumbs } from "@/components";
-import { Typography, Stack, Container } from "@mui/material";
+import { Typography } from "@mui/material";
 import {
   HouseList,
   HouseListFilter,
