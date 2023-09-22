@@ -278,11 +278,11 @@ const DataTable = ({
         break;
       default:
         col = {
-          field: "Actions",
-          flex: 1,
-          minWidth: 150,
-          headerAlign: "center",
-          align: "right",
+          // field: "Actions",
+          // flex: 1,
+          // minWidth: 150,
+          // headerAlign: "center",
+          // align: "right",
         };
     }
     const result: GridColDef[] = [col];
