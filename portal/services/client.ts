@@ -81,12 +81,21 @@ export const clientBaseQuery =  (
 async ({ url, method, data, params }) => {
   try {
     const result = await instance({ url: baseUrl + url, method, data, params })
-    return result;
+    return {
+      data: {
+        ...result.data,
+        status: result.status
+      }
+    }
   } catch (axiosError) {
     // TODO: Log error
     let err = axiosError as AxiosError
     return {
-      error: err
+      error: {
+        // @ts-ignore
+        data: err?.data || {},
+        status: err.status
+      }
     }
   }  
 }

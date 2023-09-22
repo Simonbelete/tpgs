@@ -7,9 +7,8 @@ export const rtkQueryErrorLogger: Middleware =
 
     if (isRejectedWithValue(action)) {
       if(action.payload.status == 500) {
-        enqueueSnackbar("aaa");
+        enqueueSnackbar("Please check your network and try again", {variant: "error"})
       }
-      enqueueSnackbar("Please check your network and try again", {variant: "error"})
     }
 
     return next(action)

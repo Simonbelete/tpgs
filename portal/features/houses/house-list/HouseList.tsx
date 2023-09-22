@@ -64,7 +64,7 @@ const HouseList = () => {
       refresh();
     }
   };
-
+  {console.log(data)}
   return (
     <DataTable
       onDelete={handleDelete}

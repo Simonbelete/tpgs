@@ -1,33 +1,32 @@
 import { useEffect } from "react";
 import { TypedUseQueryHookResult } from '@reduxjs/toolkit/query/react'
 import errorToForm from "@/util/errorToForm";
+import { useSnackbar } from "notistack";
 
 const useCRUD = ({results, setError }: {results: any[], setError: any}) => {
-  const process201 = () => {
-    
-  }
+  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
   for(const result of results) {
-    const error = result.error
     const isError = result.isError
     const isSuccess = result.isSuccess
 
-    let data = {}
+    let data: any = {}
+    let statusCode: number = 0
     
-    if(isError) data = error.data
-    else if(isSuccess) data = result.data
-
-    const statusCode = isError && !isSuccess ? error.status : 0
-
-    console.log(result);
-    console.log('sTatsu')
-    console.log(statusCode)
-    console.log(data)
+    if(isError) {
+       data = result.error.data
+       statusCode = result.error.status
+    }
+    else if(isSuccess) {
+      data = result.data
+      statusCode = result.data.status
+    }
 
     if(isError) {
       if(statusCode == 400) errorToForm(data, setError);
-    } else {
-    }
+    } else if(isSuccess) {
+      if(statusCode == 201) enqueueSnackbar("Created", {variant: 'success'})
+    } 
   }
 }
 

@@ -43,10 +43,6 @@ const HouseForm = ({
     resolver: yupResolver(schema),
   });
 
-  useEffect(() => {
-    createResult.status
-  }, [createResult])
-
   const useCRUDHook = useCRUD({
     results: [
       createResult,
@@ -54,8 +50,6 @@ const HouseForm = ({
     ],
     setError: setError
   })
-
-  // const apiErrorToForm = useErrorToForm([createError, updateError], setError);
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     if (house == null) await create(data);
