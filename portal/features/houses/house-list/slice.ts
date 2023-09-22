@@ -3,12 +3,12 @@ import type { PayloadAction } from "@reduxjs/toolkit";
 
 export interface HouseState {
   search: string,
-  isActive: boolean 
+  is_active: boolean 
 }
 
 const initialState: HouseState = {
   search: "",
-  isActive: true
+  is_active: true
 }
 
 export const houseListSlice = createSlice({
@@ -21,11 +21,11 @@ export const houseListSlice = createSlice({
     setIsActive: (state, action: PayloadAction<boolean>) => {
       console.log('aaaa')
       console.log(action.payload);
-      state.isActive = action.payload
+      state.is_active = action.payload
     },
     reset: (state) => {
       state.search = ""
-      state.isActive = true
+      state.is_active = true
     }
   }
 });

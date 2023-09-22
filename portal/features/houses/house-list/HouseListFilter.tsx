@@ -82,7 +82,7 @@ const HouseFilter = () => {
                 dataValueKey="value"
                 dataLableKey="name"
                 label={"Active"}
-                selected={[{value: selector.isActive}]}
+                selected={[{value: selector.is_active}]}
                 onChange={handleActiveChange}
               />
             </Stack>
@@ -94,7 +94,7 @@ const HouseFilter = () => {
           <Stack>
               <ListItem>
                   <Chip
-                    label={`State: ${selector.isActive}`}
+                    label={`State: ${selector.is_active}`}
                     size="small"
                     onDelete={() => {}}
                 />

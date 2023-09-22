@@ -13,18 +13,7 @@ import { RootState } from "@/store";
 import _ from "lodash";
 import dayjs from 'dayjs';
 import { useGetHousesQuery } from "../services";
-
-const buildQuery = (data: any): Object => {
-  let result: any = {}
-  for(const key in data) {
-    if(data[key].isArray) {
-      result[`${key}__in`] = data[key].map((e: any) => e.id).join(',')
-    }else {
-      result[key] = data[key]
-    }
-  }
-  return result;
-}
+import buildQuery from "@/util/buildQuery";
 
 const columns: GridColDef[] = [
   { field: "name", headerName: "Name", flex: 1, minWidth: 150 },
