@@ -5,10 +5,8 @@ import AddIcon from "@mui/icons-material/Add";
 import Link from "next/link";
 import CloseIcon from "@mui/icons-material/Close";
 import { EditLayout } from "@/layouts";
-import {
-  HouseForm,
-  HouseService,
-} from "@/features/houses";
+import { HouseForm } from "@/features/houses";
+import { getHouseByIdSSR } from '@/features/houses/services';
 import { Breadcrumbs, Loading } from "@/components";
 import { useBreadcrumbs } from "@/hooks";
 import { House } from "@/models";
@@ -57,7 +55,7 @@ export async function getServerSideProps(context: NextPageContext) {
   const { id } = context.query;
 
   try {
-    const res = await HouseService.getByIdSSR(context, Number(id));
+    const res = await getHouseByIdSSR(context, Number(id));
     
     if (res.status != 200)
       return {

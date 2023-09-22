@@ -9,6 +9,7 @@ import {
   HouseImportExport,
 } from "@/features/houses";
 import { SeoHead } from "@/seo";
+
 const HousePage = () => {
   const { breadcrumbs } = useBreadcrumbs();
 

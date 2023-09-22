@@ -31,7 +31,7 @@ export const breedApi = baseApi.injectEndpoints({
   overrideExisting: false,
 });
 
-export const getHouseByIdSSR = async (
+export const getBreedByIdSSR = async (
     context: NextPageContext,
     id: number
   ): Promise<AxiosResponse<Response<Breed>>> =>

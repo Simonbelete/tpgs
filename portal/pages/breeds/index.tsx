@@ -1,22 +1,33 @@
-import React, { ChangeEvent, ReactElement } from "react";
+import React from "react";
 import { ListLayout } from "@/layouts";
 import { useBreadcrumbs } from "@/hooks";
 import { Breadcrumbs } from "@/components";
-import { Button, Typography, Stack } from "@mui/material";
-import { BreedList, BreedImportExport } from "@/features/breeds";
+import { Typography } from "@mui/material";
+import {
+  BreedList,
+  BreedListFilter,
+  BreedImportExport,
+} from "@/features/breeds";
+import { SeoHead } from "@/seo";
 
 const BreedPage = () => {
   const { breadcrumbs } = useBreadcrumbs();
 
   return (
-    <ListLayout
-      breadcrumbs={<Breadcrumbs items={breadcrumbs} />}
-      header={<Typography variant="title">Breeds</Typography>}
-      actions={<BreedImportExport />}
-    >
-      <BreedList />
-    </ListLayout>
+    <>
+      <SeoHead title="House"/>
+      <ListLayout
+        breadcrumbs={<Breadcrumbs items={breadcrumbs} />}
+        header={<Typography variant="title">Breed</Typography>}
+        actions={<BreedImportExport />}
+        filter={<BreedListFilter />}
+      >
+        <BreedList />
+      </ListLayout>
+    </>
   );
 };
+
+
 
 export default BreedPage;
