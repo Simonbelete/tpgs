@@ -1,4 +1,5 @@
-export default interface Purpose {
-  id: number;
+import AbstractBaseModel from "./AbstractBaseModel";
+
+export default interface Purpose extends AbstractBaseModel {
   name: string;
 }

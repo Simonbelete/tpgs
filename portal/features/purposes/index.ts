@@ -1,5 +1,4 @@
-export { default as PurposeList } from "./purpose-list";
-export { default as PurposeForm } from "./purpose-form";
-export { default as PurposeHistoryList } from "./purpose-history-list";
-export { default as PurposeView } from "./purpose-view";
-export { default as PurposeService } from "./services/purpose_service";
+export { default as PurposeImportExport } from './purpose-import-export';
+export * from './purpose-list';
+export * from './purpose-form';
+export * from './purpose-history-list';

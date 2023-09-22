@@ -9,10 +9,10 @@ import { BreedForm } from "@/features/breeds";
 import { getBreedByIdSSR } from '@/features/breeds/services';
 import { Breadcrumbs, Loading } from "@/components";
 import { useBreadcrumbs } from "@/hooks";
-import { House } from "@/models";
+import { Breed } from "@/models";
 import { SeoHead } from "@/seo";
 
-const BreeedEditPage = ({ data }: { data: House }) => {
+const BreeedEditPage = ({ data }: { data: Breed }) => {
   const { breadcrumbs } = useBreadcrumbs();
 
   return (
@@ -23,7 +23,7 @@ const BreeedEditPage = ({ data }: { data: House }) => {
       header={<Typography variant="title">{data.name} - Edit</Typography>}
       actions={<Actions />}
     >
-        <BreedForm house={data} />
+        <BreedForm breed={data} />
     </EditLayout>
     </>
   );
@@ -37,12 +37,12 @@ const Actions = () => {
         justifyContent="flex-start"
         alignItems="center"
       >
-        <Link href="/houses/create">
+        <Link href="/breeds/create">
           <Button variant="outlined" size={"small"} startIcon={<AddIcon />}>
             Create New
           </Button>
         </Link>
-        <Link href="/houses">
+        <Link href="/breeds">
           <Button variant="outlined" color="error" size={"small"} startIcon={<CloseIcon />}>
             Cancel
           </Button>

@@ -11,10 +11,12 @@ import { invitationFilterReducer } from "@/features/invitations";
 import { directoryBuilderReducer } from '@/features/directory';
 import { houseListReducer } from "@/features/houses"; 
 import { breedListReducer } from "@/features/breeds";
+import { purposeListReducer } from '@/features/purposes';
 
 import { baseApi } from '@/services/baseApi';
 import { houseApi } from '@/features/houses/services';
 import { breedApi } from '@/features/breeds/services';
+import { purposeApi } from '@/features/purposes/services';
 
 import { rtkQueryErrorLogger } from './middlewares/rtkQueryErrorLogger';
 
@@ -32,9 +34,11 @@ export const store = configureStore({
     directoryBuilder: directoryBuilderReducer,
     houseList: houseListReducer,
     breedList: breedListReducer,
+    purposeList: purposeListReducer,
     // // Apis
     [houseApi.reducerPath]: houseApi.reducer,
     [breedApi.reducerPath]: breedApi.reducer,
+    [purposeApi.reducerPath]: purposeApi.reducer
   },
   middleware: (getDefaultMiddleware) =>
       getDefaultMiddleware().concat(baseApi.middleware, rtkQueryErrorLogger),
