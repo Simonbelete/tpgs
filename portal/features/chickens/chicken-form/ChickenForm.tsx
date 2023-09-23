@@ -3,39 +3,39 @@ import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import { Grid, Button, Paper, Stack, Box } from "@mui/material";
-import { Unit } from "@/models";
+import { Chicken } from "@/models";
 import { LabeledInput } from "@/components/inputs";
 import { useRouter } from "next/router";
 import CloseIcon from "@mui/icons-material/Close";
 import { Card } from '@/components/card';
 import SaveIcon from '@mui/icons-material/Save';
-import UnitInfoZone from "./UnitInfoZone";
-import UnitDangerZone from "./UnitDangerZone";
-import { useCreateUnitMutation, useUpdateUnitMutation } from "../services";
+import ChickenInfoZone from "./ChickenInfoZone";
+import ChickenDangerZone from "./ChickenDangerZone";
+import { useCreateChickenMutation, useUpdateChickenMutation } from "../services";
 import { useCRUD } from "@/hooks";
 
-type Inputs = Partial<Unit>;
+type Inputs = Partial<Chicken>;
 
 const schema = yup
   .object({
-    name: yup.string().required(),
+    tag: yup.string().required(),
 }).required();
 
-const UnitForm = ({
-  unit,
+const ChickenForm = ({
+  chicken,
   redirect = true,
 }: {
-  unit?: Unit;
+  chicken?: Chicken;
   redirect?: boolean;
 }) => {
   const router = useRouter();
 
-  const [createUnit, createResult ] = useCreateUnitMutation();
-  const [updateUnit, updateResult ] = useUpdateUnitMutation();
+  const [createChicken, createResult ] = useCreateChickenMutation();
+  const [updateChicken, updateResult ] = useUpdateChickenMutation();
 
   const { handleSubmit, control, setError } = useForm<Inputs>({
     defaultValues: {
-      ...unit,
+      ...chicken,
     },
     // @ts-ignore 
     resolver: yupResolver(schema),
@@ -50,21 +50,21 @@ const UnitForm = ({
   })
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
-    if (unit == null) await createUnit(data);
-    else await updateUnit({...data, id: unit.id});
+    if (chicken == null) await createChicken(data);
+    else await updateChicken({...data, id: chicken.id});
   };
 
   return (
     <>
     <Grid container spacing={4}>
       <Grid item xs={9}>
-        <Card title="Unit Form">
+        <Card title="Chicken Form">
         <form onSubmit={handleSubmit(onSubmit)}>
           <Grid container spacing={4}>
             {/* Name */}
             <Grid item xs={12}>
               <Controller
-                name={"name"}
+                name={"tag"}
                 control={control}
                 render={({
                   field: { onChange, value },
@@ -77,8 +77,8 @@ const UnitForm = ({
                     fullWidth
                     size="small"
                     value={value}
-                    label={"Name"}
-                    placeholder={"Name"}
+                    label={"Tag"}
+                    placeholder={"Tag"}
                   />
                 )}
               />
@@ -119,10 +119,10 @@ const UnitForm = ({
       </Grid>
       <Grid item xs={3}>
         <Stack spacing={3}>
-          {unit && (
+          {chicken && (
             <>
-            <UnitInfoZone id={unit?.id} />
-            <UnitDangerZone id={unit.id} is_active={unit.is_active} />
+            <ChickenInfoZone id={chicken?.id} />
+            <ChickenDangerZone id={chicken.id} is_active={chicken.is_active} />
             </>
           )}
         </Stack>
@@ -132,4 +132,4 @@ const UnitForm = ({
   );
 };
 
-export default UnitForm;
+export default ChickenForm;

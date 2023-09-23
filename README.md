@@ -7,3 +7,6 @@ ILRI poultry farming management system
 - Activate venv
 - Run Migrations
 - ``` python manage.py create_permissions```
+
+## TODO
+- Calendar view for chicken feed, egg, weight, vacine

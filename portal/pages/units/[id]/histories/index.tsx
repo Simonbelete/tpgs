@@ -3,23 +3,23 @@ import { ListLayout } from "@/layouts";
 import { useBreadcrumbs } from "@/hooks";
 import { Breadcrumbs } from "@/components";
 import { Typography } from "@mui/material";
-import { BreedHistoryList } from "@/features/breeds";
+import { UnitHistoryList } from "@/features/units";
 import { useRouter } from "next/router";
 import { NextPageContext } from "next";
 import { SeoHead } from "@/seo";
 
-const ChickenHistoryPage = ({ id }: { id: number }) => {
+const UnitHistoryPage = ({ id }: { id: number }) => {
   const { breadcrumbs } = useBreadcrumbs();
   const router = useRouter();
 
   return (
     <>
-      <SeoHead title="Chicken Histories" />
+      <SeoHead title="Unit Histories" />
       <ListLayout
         breadcrumbs={<Breadcrumbs items={breadcrumbs} />}
         header={<Typography variant="title">Histories</Typography>}
       >
-        <BreedHistoryList id={id} />
+        <UnitHistoryList id={id} />
       </ListLayout>
     </>
   );
@@ -33,4 +33,4 @@ export async function getServerSideProps(context: NextPageContext) {
   };
 }
 
-export default ChickenHistoryPage;
+export default UnitHistoryPage;

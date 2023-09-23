@@ -1,49 +1,33 @@
-import React, { ReactElement } from "react";
-import Link from "next/link";
-import dynamic from "next/dynamic";
-import { Typography, Button, IconButton, Stack } from "@mui/material";
+import React from "react";
+import { ListLayout } from "@/layouts";
 import { useBreadcrumbs } from "@/hooks";
-import { ListLayout, Breadcrumbs, Loading } from "@/components";
-import { UnitsList } from "@/features/units";
-import DownloadIcon from "@mui/icons-material/Download";
-import AddIcon from "@mui/icons-material/Add";
-import FileUploadIcon from "@mui/icons-material/FileUpload";
+import { Breadcrumbs } from "@/components";
+import { Typography } from "@mui/material";
+import {
+  UnitList,
+  UnitListFilter,
+  UnitImportExport,
+} from "@/features/units";
+import { SeoHead } from "@/seo";
 
-const UnitsPage = () => {
+const UnitPage = () => {
   const { breadcrumbs } = useBreadcrumbs();
 
   return (
-    <ListLayout
-      breadcrumbs={<Breadcrumbs items={breadcrumbs} />}
-      header={<Typography variant="title">Units</Typography>}
-      actions={<Actions />}
-    >
-      <UnitsList />
-    </ListLayout>
+    <>
+      <SeoHead title="Units"/>
+      <ListLayout
+        breadcrumbs={<Breadcrumbs items={breadcrumbs} />}
+        header={<Typography variant="title">Units</Typography>}
+        actions={<UnitImportExport />}
+        filter={<UnitListFilter />}
+      >
+        <UnitList />
+      </ListLayout>
+    </>
   );
 };
 
-const Actions = (): ReactElement => {
-  return (
-    <Stack
-      spacing={2}
-      direction={"row"}
-      justifyContent="flex-start"
-      alignItems="center"
-    >
-      <Link href="/units/create">
-        <Button variant="contained" startIcon={<AddIcon />}>
-          Create
-        </Button>
-      </Link>
-      <Button startIcon={<DownloadIcon />} size="small">
-        Export
-      </Button>
-      <Button startIcon={<FileUploadIcon />} size="small">
-        Import
-      </Button>
-    </Stack>
-  );
-};
 
-export default UnitsPage;
+
+export default UnitPage;

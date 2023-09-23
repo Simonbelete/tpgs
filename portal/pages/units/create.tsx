@@ -1,40 +1,25 @@
-import React, { ReactElement } from "react";
-import dynamic from "next/dynamic";
-import { Button, Typography, Box, Container } from "@mui/material";
-import { Breadcrumbs, Loading } from "@/components";
+import React, { useEffect } from "react";
+import { Typography } from "@mui/material";
+import { Breadcrumbs } from "@/components";
 import { useBreadcrumbs } from "@/hooks";
-import { UnitForm } from "@/features/units";
 import { CreateLayout } from "@/layouts";
-import SaveIcon from "@mui/icons-material/Save";
-import LibraryAddIcon from "@mui/icons-material/LibraryAdd";
+import {
+  UnitForm,
+} from "@/features/units";
+import { SeoHead } from "@/seo";
 
 const UnitCreatePage = () => {
   const { breadcrumbs } = useBreadcrumbs();
 
   return (
-    <CreateLayout
-      breadcrumbs={<Breadcrumbs items={breadcrumbs} />}
-      header={<Typography variant="title">Create New Unit</Typography>}
-      actions={<Actions />}
-    >
-      <UnitForm />
-    </CreateLayout>
-  );
-};
-
-const Actions = (): ReactElement => {
-  return (
     <>
-      {/* <Box>
-        <Button variant="contained" startIcon={<SaveIcon />}>
-          Create
-        </Button>
-      </Box>
-      <Box>
-        <Button variant="outlined" startIcon={<LibraryAddIcon />}>
-          Create and New
-        </Button>
-      </Box> */}
+      <SeoHead title="Create Unit" />
+      <CreateLayout
+        breadcrumbs={<Breadcrumbs items={breadcrumbs} />}
+        header={<Typography variant="title">Create Unit</Typography>}
+      >
+        <UnitForm />
+      </CreateLayout>
     </>
   );
 };
