@@ -1,16 +1,16 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 
-export interface CityState {
+export interface RegionState {
   search: string,
 }
 
-const initialState: CityState = {
+const initialState: RegionState = {
   search: "",
 }
 
-export const cityListSlice = createSlice({
-  name: "City List",
+export const regionListSlice = createSlice({
+  name: "Region List",
   initialState,
   reducers: {
     setSearch: (state, action: PayloadAction<string>) => {
@@ -22,4 +22,4 @@ export const cityListSlice = createSlice({
   }
 });
 
-export default cityListSlice.reducer;
+export default regionListSlice.reducer;

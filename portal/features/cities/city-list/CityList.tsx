@@ -25,7 +25,7 @@ const columns: GridColDef[] = [
 ];
 
 const CityList = () => {
-  const selector = useSelector((state: RootState) => state.countryList);
+  const selector = useSelector((state: RootState) => state.cityList);
   const [paginationModel, setPaginationModel] = useState({
     page: 0,
     pageSize: 10,
