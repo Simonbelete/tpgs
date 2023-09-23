@@ -41,3 +41,6 @@ export type { default as Notification } from './Notification';
 export type { default as Directory } from './Directory';
 export type { default as House } from './House';
 export type { default as AbstractSummary } from './AbstractSummary';
+export type { default as Country } from './Country';
+export type { default as City } from './City';
+export type { default as Region } from './Region';

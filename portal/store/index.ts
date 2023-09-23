@@ -15,6 +15,7 @@ import { purposeListReducer } from '@/features/purposes';
 import { unitListReducer } from '@/features/units';
 import { eggListReducer } from "@/features/eggs";
 import { countryListReducer } from '@/features/countries';
+import { cityListReducer } from '@/features/cities';
 
 import { baseApi } from '@/services/baseApi';
 import { houseApi } from '@/features/houses/services';
@@ -43,6 +44,7 @@ export const store = configureStore({
     unitList: unitListReducer,
     eggList: eggListReducer,
     countryList: countryListReducer,
+    cityList: cityListReducer,
 
     // // Apis
     [houseApi.reducerPath]: houseApi.reducer,

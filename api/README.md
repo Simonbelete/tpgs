@@ -21,7 +21,8 @@ eg 9999.999
 
 migrate all ```python manage.py migrate_schemas```
 
-### Locations
+### Country details
+Migrate city, country and regions to public schema
 ```python manage.py cities_light```
 
 ### Directory List

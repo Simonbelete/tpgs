@@ -466,7 +466,7 @@ const SidebarMenu = () => {
             </Typography>
           </MenuItem>
           <MenuItem
-            component={<Link href="/flocks/reduction" />}
+            component={<Link href="/cities" />}
             icon={<AdjustIcon fontSize="small" />}
           >
             <Typography variant="body1" fontSize={14}>
