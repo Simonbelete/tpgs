@@ -277,6 +277,7 @@ const DataTable = ({
         };
         break;
       default:
+        // @ts-ignore
         col = {
           // field: "Actions",
           // flex: 1,
@@ -290,6 +291,11 @@ const DataTable = ({
   };
 
   const settingColumn: GridColDef[] = generateSettingColumns();
+
+  const getRowById = (row: any) => {
+    if (setting == SETTING_COL.history) return row.history_id;
+    return row.id;
+  }
 
   return (
     <>
@@ -313,10 +319,7 @@ const DataTable = ({
         getRowClassName={(params) =>
           params.indexRelativeToCurrentPage % 2 === 0 ? "even" : "odd"
         }
-        getRowId={(row: any) => {
-          if (setting == SETTING_COL.history) return row.history_id;
-          return row.id;
-        }}
+        getRowId={props.getRowId && getRowById}
         {...props}
       />
     </>

@@ -3,35 +3,35 @@ import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import { Grid, Button, Paper, Stack, Box } from "@mui/material";
-import { Breed } from "@/models";
+import { Egg } from "@/models";
 import { LabeledInput } from "@/components/inputs";
 import { useRouter } from "next/router";
 import CloseIcon from "@mui/icons-material/Close";
 import { Card } from '@/components/card';
 import SaveIcon from '@mui/icons-material/Save';
-import BreedInfoZone from "./BreedInfoZone";
-import BreedDangerZone from "./BreedDangerZone";
-import { useCreateBreedMutation, useUpdateBreedMutation } from "../services";
+import EggInfoZone from "./EggInfoZone";
+import EggDangerZone from "./EggDangerZone";
+import { useCreateEggMutation, useUpdateEggMutation } from "../services";
 import { useCRUD } from "@/hooks";
 
-type Inputs = Partial<Breed>;
+type Inputs = Partial<Egg>;
 
 const schema = yup
   .object({
     name: yup.string().required(),
 }).required();
 
-const BreedForm = ({
+const EggForm = ({
   breed,
   redirect = true,
 }: {
-  breed?: Breed;
+  breed?: Egg;
   redirect?: boolean;
 }) => {
   const router = useRouter();
 
-  const [createBreed, createResult ] = useCreateBreedMutation();
-  const [updateBreed, updateResult ] = useUpdateBreedMutation();
+  const [createEgg, createResult ] = useCreateEggMutation();
+  const [updateEgg, updateResult ] = useUpdateEggMutation();
 
   const { handleSubmit, control, setError } = useForm<Inputs>({
     defaultValues: {
@@ -50,15 +50,15 @@ const BreedForm = ({
   })
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
-    if (breed == null) await createBreed(data);
-    else await updateBreed({...data, id: breed.id});
+    if (breed == null) await createEgg(data);
+    else await updateEgg({...data, id: breed.id});
   };
 
   return (
     <>
     <Grid container spacing={4}>
       <Grid item xs={9}>
-        <Card title="Breed Form">
+        <Card title="Egg Form">
         <form onSubmit={handleSubmit(onSubmit)}>
           <Grid container spacing={4}>
             {/* Name */}
@@ -121,8 +121,8 @@ const BreedForm = ({
         <Stack spacing={3}>
           {breed && (
             <>
-            <BreedInfoZone id={breed?.id} />
-            <BreedDangerZone id={breed.id} is_active={breed.is_active} />
+            <EggInfoZone id={breed?.id} />
+            <EggDangerZone id={breed.id} is_active={breed.is_active} />
             </>
           )}
         </Stack>
@@ -132,4 +132,4 @@ const BreedForm = ({
   );
 };
 
-export default BreedForm;
+export default EggForm;
