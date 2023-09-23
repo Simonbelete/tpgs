@@ -13,6 +13,7 @@ import { houseListReducer } from "@/features/houses";
 import { breedListReducer } from "@/features/breeds";
 import { purposeListReducer } from '@/features/purposes';
 import { unitListReducer } from '@/features/units';
+import { eggListReducer } from "@/features/eggs";
 
 import { baseApi } from '@/services/baseApi';
 import { houseApi } from '@/features/houses/services';
