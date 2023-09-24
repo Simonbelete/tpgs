@@ -15,6 +15,8 @@ import { useCreateChickenMutation, useUpdateChickenMutation } from "../services"
 import { useCRUD } from "@/hooks";
 import { AsyncDropdown, Dropdown } from "@/components/dropdowns";
 import { ChickenDropdown } from "../chicken-dropdown";
+import { FlockDropdown } from "@/features/flocks";
+import { HouseDropdown } from "@/features/houses";
 
 type Inputs = Partial<Chicken>;
 
@@ -175,7 +177,7 @@ const ChickenForm = ({
               />
             </Grid>
             {/* Flock */}
-            {/* <Grid item xs={12} md={6}>
+            <Grid item xs={12} md={6}>
               <Controller
                 name={"flock"}
                 control={control}
@@ -183,10 +185,7 @@ const ChickenForm = ({
                   field: { onChange, value },
                   fieldState: { error },
                 }) => (
-                  <AsyncDropdown
-                    multiple
-                    url="/flocks/"
-                    key="name"
+                  <FlockDropdown
                     onChange={(_, data) => onChange(data)}
                     value={value}
                     label="Flock"
@@ -195,9 +194,9 @@ const ChickenForm = ({
                   />
                 )}
               />
-            </Grid> */}
+            </Grid>
             {/* House */}
-            {/* <Grid item xs={12} md={6}>
+            <Grid item xs={12} md={6}>
               <Controller
                 name={"house"}
                 control={control}
@@ -205,10 +204,7 @@ const ChickenForm = ({
                   field: { onChange, value },
                   fieldState: { error },
                 }) => (
-                  <AsyncDropdown
-                    multiple
-                    url="/houses/"
-                    key="name"
+                  <HouseDropdown
                     onChange={(_, data) => onChange(data)}
                     value={value}
                     label="House"
@@ -217,7 +213,7 @@ const ChickenForm = ({
                   />
                 )}
               />
-            </Grid> */}
+            </Grid>
              {/* Pen */}
              <Grid item xs={12} md={6}>
               <Controller
