@@ -1,5 +1,6 @@
 from django.urls import path, include
 from rest_framework import routers
+from rest_framework_nested.routers import NestedDefaultRouter
 from . import views
 
 router = routers.DefaultRouter()
@@ -8,9 +9,14 @@ router.register(r'chickens', views.ChickenViewSet,
 router.register(r'chickens/(?P<id>.+)/histories',
                 views.ChickenHistoryViewSet, basename='api_chickens_histories'),
 
+summary_router = NestedDefaultRouter(
+    router, r'chickens', lookup='id')
+summary_router.register(r'summary', views.ChickenSummaryViewSet,
+                        basename='api_chicken_summary')
 
 urlpatterns = [
     path('', include(router.urls)),
+    path('', include(summary_router.urls)),
     
     path('chickens/import/', include([
           path('xlsx', views.ChickenXlsxImport.as_view(),

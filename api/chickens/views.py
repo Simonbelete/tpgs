@@ -11,26 +11,17 @@ from import_export import resources
 from rest_framework.parsers import MultiPartParser
 from tablib import Dataset
 
-
-from core.views import HistoryViewSet
+from core.views import HistoryViewSet, SummaryViewSet, CoreModelViewSet
 from core.serializers import UploadSerializer
 from . import models
 from . import serializers
 from . import admin
+from . import filters
 
-
-class ChickenFilter(django_filters.FilterSet):
-    tag = django_filters.CharFilter(field_name='tag', lookup_expr='contains')
-
-    class Meta:
-        model = models.Chicken
-        fields = ['tag']
-
-
-class ChickenViewSet(viewsets.ModelViewSet):
-    queryset = models.Chicken.objects.all()
+class ChickenViewSet(CoreModelViewSet):
+    queryset = models.Chicken.all.all()
     serializer_class = serializers.ChickenSerializer_GET
-    filterset_class = ChickenFilter
+    filterset_class = filters.ChickenFilter
     search_fields = ['tag']
     ordering_fields = '__all__'
 
@@ -39,13 +30,13 @@ class ChickenViewSet(viewsets.ModelViewSet):
             return serializers.ChickenSerializer_POST
         return serializers.ChickenSerializer_GET
 
-    def perform_create(self, serializer):
-        serializer.save(created_by=self.request.user)
-
-
 class ChickenHistoryViewSet(HistoryViewSet):
     queryset = models.Chicken.history.all()
     serializer_class = serializers.ChickenHistorySerializer
+
+class ChickenSummaryViewSet(SummaryViewSet):
+    def get_query(self):
+        return models.Chicken.all.get(pk=self.id_pk)
 
 
 # Xlsx

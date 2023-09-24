@@ -3,7 +3,7 @@ import { ListLayout } from "@/layouts";
 import { useBreadcrumbs } from "@/hooks";
 import { Breadcrumbs } from "@/components";
 import { Typography } from "@mui/material";
-import { BreedHistoryList } from "@/features/breeds";
+import { FeedHistoryList } from "@/features/feeds";
 import { useRouter } from "next/router";
 import { NextPageContext } from "next";
 import { SeoHead } from "@/seo";
@@ -14,12 +14,12 @@ const BreedHistoryPage = ({ id }: { id: number }) => {
 
   return (
     <>
-      <SeoHead title="Breed Histories" />
+      <SeoHead title="Feed Histories" />
       <ListLayout
         breadcrumbs={<Breadcrumbs items={breadcrumbs} />}
         header={<Typography variant="title">Histories</Typography>}
       >
-        <BreedHistoryList id={id} />
+        <FeedHistoryList id={id} />
       </ListLayout>
     </>
   );
