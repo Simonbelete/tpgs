@@ -14,7 +14,7 @@ const IMPORT_URL = `${URL}/import`;
 export const houseApi = baseApi.injectEndpoints({
   endpoints: (build) => {
     return {
-      getHouses: build.query<Response<House>, Object>({ query: (query?: Object) => ({ url: `${URL}/`, method: 'get', params: query }) }),
+      getHouses: build.query<Response<House[]>, Object>({ query: (query?: Object) => ({ url: `${URL}/`, method: 'get', params: query }) }),
       getHouseHistory: build.query<Response<House>, {id: number, query: Object}>({ query: ({id, query}) => ({ url: `${URL}/${id}/${HISTORY_URL}`, method: 'get', params: query }) }),
       getSummary: build.query<AbstractSummary, number>({ query: (id: number) => ({ url: `${URL}/${id}/${SUMMARY_URL}/`, method: 'get' }) }),
       createHouse: build.mutation<Promise<AxiosResponse<House>>, Partial<House>>({
@@ -61,6 +61,7 @@ export const importHousesXLS = async (data: FormData) =>
 
 export const { 
   useGetHousesQuery,
+  useLazyGetHousesQuery,
   useGetHouseHistoryQuery,
   useGetSummaryQuery, 
   useCreateHouseMutation,

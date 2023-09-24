@@ -14,7 +14,7 @@ const IMPORT_URL = `${URL}/import`;
 export const breedApi = baseApi.injectEndpoints({
   endpoints: (build) => {
     return {
-      getBreeds: build.query<Response<Breed>, Object>({ query: (query?: Object) => ({ url: `${URL}/`, method: 'get', params: query }) }),
+      getBreeds: build.query<Response<Breed[]>, Object>({ query: (query?: Object) => ({ url: `${URL}/`, method: 'get', params: query }) }),
       getBreedHistory: build.query<Response<Breed>, {id: number, query: Object}>({ query: ({id, query}) => ({ url: `${URL}/${id}/${HISTORY_URL}`, method: 'get', params: query }) }),
       getBreedSummary: build.query<AbstractSummary, number>({ query: (id: number) => ({ url: `${URL}/${id}/${SUMMARY_URL}/`, method: 'get' }) }),
       createBreed: build.mutation<Promise<AxiosResponse<Breed>>, Partial<Breed>>({
@@ -61,6 +61,7 @@ export const importBreedsXLS = async (data: FormData) =>
 
 export const { 
   useGetBreedsQuery,
+  useLazyGetBreedsQuery,
   useGetBreedHistoryQuery,
   useGetBreedSummaryQuery, 
   useCreateBreedMutation,

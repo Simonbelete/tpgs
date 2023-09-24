@@ -1,27 +1,25 @@
 import React, { useEffect } from "react";
 import { AsyncDropdown } from "@/components/dropdowns";
-import { useLazyGetChickensQuery } from '../services';
-import { Chicken } from "@/models";
+import { useLazyGetDdrectoriesQuery } from '../services';
+import { Directory } from "@/models";
 
-const ChickenDropdown = ({
-  sex,
+const DirectoryDropdown = ({
   value,
-  label = "Chicken",
+  label = "Directory",
   error,
   onChange,
   helperText,
 }: {
-  sex?: string;
   value?: any,
   label: string,
   error?: boolean
   helperText?: string;
   onChange?: (event: any, newValue: any) => void;
 }) => {
-  const [trigger, {isLoading, data}, lastPromiseInfo] = useLazyGetChickensQuery();
+  const [trigger, {isLoading, data}, lastPromiseInfo] = useLazyGetDdrectoriesQuery();
 
   const handleOnOpen = () => {
-    trigger({'sex': sex}, true);
+    trigger({}, true);
   }
 
   const handleOnClose = () => {
@@ -29,7 +27,7 @@ const ChickenDropdown = ({
   }
 
   return (
-    <AsyncDropdown<Chicken>
+    <AsyncDropdown<Directory>
       value={value}
       dataKey="name"
       label={label}
@@ -41,10 +39,10 @@ const ChickenDropdown = ({
       onClose={handleOnClose}
       onChange={onChange}
       onInputChange={(event: any, newInputValue: any) => {
-        trigger({search: newInputValue, sex: sex}, true)
+        trigger({}, true)
       }}
     />
   )
 }
 
-export default ChickenDropdown;
+export default DirectoryDropdown;

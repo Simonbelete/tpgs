@@ -6,7 +6,7 @@ const URL = "/cities";
 export const cityApi = baseApi.injectEndpoints({
   endpoints: (build) => {
     return {
-      getCities: build.query<Response<City>, Object>({ query: (query?: Object) => ({ url: `${URL}/`, method: 'get', params: query }) }),
+      getCities: build.query<Response<City[]>, Object>({ query: (query?: Object) => ({ url: `${URL}/`, method: 'get', params: query }) }),
     }
   },
   overrideExisting: false,
@@ -14,4 +14,5 @@ export const cityApi = baseApi.injectEndpoints({
 
 export const { 
   useGetCitiesQuery,
+  useLazyGetCitiesQuery,
 } = cityApi;
