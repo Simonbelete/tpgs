@@ -33,7 +33,7 @@ class HouseHistoryViewSet(HistoryViewSet):
 
 class HouseSummaryViewSet(SummaryViewSet):
     def get_query(self):
-        return models.House.objects.get(pk=self.id_pk)
+        return models.House.all.get(pk=self.id_pk)
 
 
 # Xlsx

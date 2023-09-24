@@ -11,6 +11,7 @@ import _ from "lodash";
 import dayjs from 'dayjs';
 import { useGetUnitsQuery, useDeleteUnitMutation } from "../services";
 import buildQuery from "@/util/buildQuery";
+import buildPage from "@/util/buildPage";
 
 const columns: GridColDef[] = [
   { field: "name", headerName: "Name", flex: 1, minWidth: 150 },
@@ -28,7 +29,7 @@ const UnitList = () => {
     pageSize: 10,
   });
 
-  const { data, isLoading, refetch } = useGetUnitsQuery(buildQuery({...paginationModel, ...selector})); 
+  const { data, isLoading, refetch } = useGetUnitsQuery(buildQuery({...buildPage(paginationModel), ...selector})); 
   const [deleteHouse, deleteResult ] = useDeleteUnitMutation();
 
   const handleDelete = async (id: number) => await deleteHouse(id).then(() => refetch())
