@@ -5,7 +5,6 @@ from simple_history.admin import SimpleHistoryAdmin
 
 from . import models
 
-
 class PurposeResource(resources.ModelResource):
     class Meta:
         model = models.Purpose

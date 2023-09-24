@@ -11,26 +11,17 @@ from import_export import resources
 from rest_framework.parsers import MultiPartParser
 from tablib import Dataset
 
-
-from core.views import HistoryViewSet
+from core.views import HistoryViewSet, SummaryViewSet, CoreModelViewSet
 from core.serializers import UploadSerializer
 from . import models
 from . import serializers
 from . import admin
+from . import filters
 
-
-class PurposeFilter(django_filters.FilterSet):
-    name = django_filters.CharFilter(field_name='name', lookup_expr='contains')
-
-    class Meta:
-        model = models.Purpose
-        fields = ['name']
-
-
-class PurposeViewSet(viewsets.ModelViewSet):
-    queryset = models.Purpose.objects.all()
+class PurposeViewSet(CoreModelViewSet):
+    queryset = models.Purpose.all.all()
     serializer_class = serializers.PurposeSerializer_GET
-    filterset_class = PurposeFilter
+    filterset_class = filters.PurposeFilter
     search_fields = ['name']
     ordering_fields = '__all__'
 
@@ -46,6 +37,10 @@ class PurposeViewSet(viewsets.ModelViewSet):
 class PurposeHistoryViewSet(HistoryViewSet):
     queryset = models.Purpose.history.all()
     serializer_class = serializers.PurposeHistorySerializer
+
+class PurposeSummaryViewSet(SummaryViewSet):
+    def get_query(self):
+        return models.Purpose.all.get(pk=self.id_pk)
 
 
 # Xlsx
