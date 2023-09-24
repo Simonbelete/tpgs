@@ -1,43 +1,27 @@
-import React, { useEffect, ReactElement } from "react";
-import { FeedForm } from "@/features/feeds";
+import React, { useEffect } from "react";
+import { Typography } from "@mui/material";
 import { Breadcrumbs } from "@/components";
 import { useBreadcrumbs } from "@/hooks";
 import { CreateLayout } from "@/layouts";
-import { Button, Typography, Box, Container } from "@mui/material";
-import SaveIcon from "@mui/icons-material/Save";
-import LibraryAddIcon from "@mui/icons-material/LibraryAdd";
+import {
+  FeedForm,
+} from "@/features/feeds";
+import { SeoHead } from "@/seo";
 
-const FeedCreatePage = () => {
+const BreedCreatePage = () => {
   const { breadcrumbs } = useBreadcrumbs();
 
   return (
-    <CreateLayout
-      breadcrumbs={<Breadcrumbs items={breadcrumbs} />}
-      header={<Typography variant="title">Create Feed</Typography>}
-      actions={<Actions />}
-    >
-      <Container maxWidth="md">
-        <FeedForm />
-      </Container>
-    </CreateLayout>
-  );
-};
-
-const Actions = (): ReactElement => {
-  return (
     <>
-      <Box>
-        <Button variant="contained" startIcon={<SaveIcon />}>
-          Create
-        </Button>
-      </Box>
-      <Box>
-        <Button variant="outlined" startIcon={<LibraryAddIcon />}>
-          Create and New
-        </Button>
-      </Box>
+      <SeoHead title="Create Feed Intake" />
+      <CreateLayout
+        breadcrumbs={<Breadcrumbs items={breadcrumbs} />}
+        header={<Typography variant="title">Create Feed Intake</Typography>}
+      >
+        <FeedForm />
+      </CreateLayout>
     </>
   );
 };
 
-export default FeedCreatePage;
+export default BreedCreatePage;

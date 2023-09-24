@@ -3,37 +3,34 @@ import { ListLayout } from "@/layouts";
 import { useBreadcrumbs } from "@/hooks";
 import { Breadcrumbs } from "@/components";
 import { Typography } from "@mui/material";
-import { FeedHistoryList } from "@/features/feeds";
+import { BreedHistoryList } from "@/features/breeds";
 import { useRouter } from "next/router";
 import { NextPageContext } from "next";
+import { SeoHead } from "@/seo";
 
-const FeedHistoryPage = ({ id }: { id: number }) => {
+const BreedHistoryPage = ({ id }: { id: number }) => {
   const { breadcrumbs } = useBreadcrumbs();
   const router = useRouter();
 
   return (
-    <ListLayout
-      breadcrumbs={<Breadcrumbs items={breadcrumbs} />}
-      header={<Typography variant="title">Feed History</Typography>}
-      actions={<Actions />}
-    >
-      <FeedHistoryList id={id} />
-    </ListLayout>
+    <>
+      <SeoHead title="Breed Histories" />
+      <ListLayout
+        breadcrumbs={<Breadcrumbs items={breadcrumbs} />}
+        header={<Typography variant="title">Histories</Typography>}
+      >
+        <BreedHistoryList id={id} />
+      </ListLayout>
+    </>
   );
-};
-
-const Actions = () => {
-  return <></>;
 };
 
 export async function getServerSideProps(context: NextPageContext) {
   const { id } = context.query;
-
-  console.log(context.query);
 
   return {
     props: { id },
   };
 }
 
-export default FeedHistoryPage;
+export default BreedHistoryPage;
