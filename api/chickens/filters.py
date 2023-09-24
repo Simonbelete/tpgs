@@ -7,4 +7,4 @@ class ChickenFilter(filters.FilterSet):
 
     class Meta:
         model = models.Chicken
-        fields = ['tag', 'is_active']
+        fields = ['tag', 'sex', 'is_active']

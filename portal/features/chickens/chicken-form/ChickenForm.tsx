@@ -13,13 +13,36 @@ import ChickenInfoZone from "./ChickenInfoZone";
 import ChickenDangerZone from "./ChickenDangerZone";
 import { useCreateChickenMutation, useUpdateChickenMutation } from "../services";
 import { useCRUD } from "@/hooks";
+import { AsyncDropdown, Dropdown } from "@/components/dropdowns";
+import { ChickenDropdown } from "../chicken-dropdown";
 
 type Inputs = Partial<Chicken>;
 
 const schema = yup
   .object({
     tag: yup.string().required(),
-}).required();
+    sex: yup.string().nullable(),
+    sire: yup.number().nullable(),
+    dam: yup.number().nullable(),
+    flock: yup.number().nullable(),
+    house: yup.number().nullable(),
+    pen: yup.string().nullable(),
+    reduction_date: yup.string().nullable(),
+    reduction_reason: yup.string().nullable(),
+}).transform((currentValue: any) => {
+  if (currentValue.sire != null)
+    currentValue.sire = currentValue.sire.id;
+  if (currentValue.dam != null)
+    currentValue.dam = currentValue.dam.id;
+  if (currentValue.flock != null)
+    currentValue.flock = currentValue.flock.id;
+  if (currentValue.house != null)
+    currentValue.house = currentValue.house.id;
+  if (currentValue.sex != null)
+    currentValue.sex = currentValue.sex.value;
+
+  return currentValue;
+});
 
 const ChickenForm = ({
   chicken,
@@ -41,6 +64,8 @@ const ChickenForm = ({
     resolver: yupResolver(schema),
   });
 
+  console.log(chicken);
+
   const useCRUDHook = useCRUD({
     results: [
       createResult,
@@ -50,6 +75,8 @@ const ChickenForm = ({
   })
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
+    console.log(data);
+
     if (chicken == null) await createChicken(data);
     else await updateChicken({...data, id: chicken.id});
   };
@@ -62,7 +89,7 @@ const ChickenForm = ({
         <form onSubmit={handleSubmit(onSubmit)}>
           <Grid container spacing={4}>
             {/* Name */}
-            <Grid item xs={12}>
+            <Grid item xs={12} md={6}>
               <Controller
                 name={"tag"}
                 control={control}
@@ -79,6 +106,138 @@ const ChickenForm = ({
                     value={value}
                     label={"Tag"}
                     placeholder={"Tag"}
+                  />
+                )}
+              />
+            </Grid>
+            {/* Sex */}
+            <Grid item xs={12} md={6}>
+                  <Controller
+                    name={"sex"}
+                    control={control}
+                    render={({
+                      field: { onChange, value },
+                      fieldState: { invalid, isTouched, isDirty, error },
+                    }) => (
+                      <Dropdown
+                        options={[
+                          { value: "M", name: "Male" },
+                          { value: "F", name: "Female" },
+                        ]}
+                        key="name"
+                        onChange={(_, data) => onChange(data)}
+                        value={value}
+                        label="Sex"
+                        error={!!error?.message}
+                        helperText={error?.message}
+                      />
+                    )}
+                  />
+            </Grid>
+            {/* Sire */}
+            <Grid item xs={12} md={6}>
+              <Controller
+                name={"sire"}
+                control={control}
+                render={({
+                  field: { onChange, value },
+                  fieldState: { error },
+                }) => (
+                  <ChickenDropdown
+                    sex={'M'}
+                    onChange={(_, data) => onChange(data)}
+                    value={value}
+                    label="Sire"
+                    error={!!error?.message}
+                    helperText={error?.message}
+                  />
+                )}
+              />
+            </Grid>
+            {/* Dam */}
+            {/* <Grid item xs={12} md={6}>
+              <Controller
+                name={"dam"}
+                control={control}
+                render={({
+                  field: { onChange, value },
+                  fieldState: { error },
+                }) => (
+                  <AsyncDropdown
+                    multiple
+                    url="/chickens/"
+                    key="name"
+                    onChange={(_, data) => onChange(data)}
+                    value={value}
+                    label="Dam"
+                    error={!!error?.message}
+                    helperText={error?.message}
+                  />
+                )}
+              />
+            </Grid> */}
+            {/* Flock */}
+            {/* <Grid item xs={12} md={6}>
+              <Controller
+                name={"flock"}
+                control={control}
+                render={({
+                  field: { onChange, value },
+                  fieldState: { error },
+                }) => (
+                  <AsyncDropdown
+                    multiple
+                    url="/flocks/"
+                    key="name"
+                    onChange={(_, data) => onChange(data)}
+                    value={value}
+                    label="Flock"
+                    error={!!error?.message}
+                    helperText={error?.message}
+                  />
+                )}
+              />
+            </Grid> */}
+            {/* House */}
+            {/* <Grid item xs={12} md={6}>
+              <Controller
+                name={"house"}
+                control={control}
+                render={({
+                  field: { onChange, value },
+                  fieldState: { error },
+                }) => (
+                  <AsyncDropdown
+                    multiple
+                    url="/houses/"
+                    key="name"
+                    onChange={(_, data) => onChange(data)}
+                    value={value}
+                    label="House"
+                    error={!!error?.message}
+                    helperText={error?.message}
+                  />
+                )}
+              />
+            </Grid> */}
+             {/* Pen */}
+             <Grid item xs={12} md={6}>
+              <Controller
+                name={"pen"}
+                control={control}
+                render={({
+                  field: { onChange, value },
+                  fieldState: { invalid, isTouched, isDirty, error },
+                }) => (
+                  <LabeledInput
+                    error={!!error?.message}
+                    helperText={error?.message}
+                    onChange={onChange}
+                    fullWidth
+                    size="small"
+                    value={value}
+                    label={"Pen"}
+                    placeholder={"Pen"}
                   />
                 )}
               />

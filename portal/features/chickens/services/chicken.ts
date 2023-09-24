@@ -11,10 +11,10 @@ const SUMMARY_URL = `summary`;
 const EXPORT_URL = `${URL}/export`;
 const IMPORT_URL = `${URL}/import`;
 
-export const breedApi = baseApi.injectEndpoints({
+export const chickenApi = baseApi.injectEndpoints({
   endpoints: (build) => {
     return {
-      getChickens: build.query<Response<Chicken>, Object>({ query: (query?: Object) => ({ url: `${URL}/`, method: 'get', params: query }) }),
+      getChickens: build.query<Response<Chicken[]>, Object>({ query: (query?: Object) => ({ url: `${URL}/`, method: 'get', params: query }) }),
       getChickenHistory: build.query<Response<Chicken>, {id: number, query: Object}>({ query: ({id, query}) => ({ url: `${URL}/${id}/${HISTORY_URL}`, method: 'get', params: query }) }),
       getChickenSummary: build.query<AbstractSummary, number>({ query: (id: number) => ({ url: `${URL}/${id}/${SUMMARY_URL}/`, method: 'get' }) }),
       createChicken: build.mutation<Promise<AxiosResponse<Chicken>>, Partial<Chicken>>({
@@ -58,12 +58,12 @@ export const importChickensXLS = async (data: FormData) =>
     },
 });
 
-
 export const { 
   useGetChickensQuery,
+  useLazyGetChickensQuery,
   useGetChickenHistoryQuery,
   useGetChickenSummaryQuery, 
   useCreateChickenMutation,
   useUpdateChickenMutation,
   useDeleteChickenMutation,
-} = breedApi;
+} = chickenApi;

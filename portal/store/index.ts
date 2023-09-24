@@ -17,6 +17,7 @@ import { eggListReducer } from "@/features/eggs";
 import { countryListReducer } from '@/features/countries';
 import { cityListReducer } from '@/features/cities';
 import { regionListReducer } from "@/features/regions";
+import { chickenListReducer } from "@/features/chickens";
 
 import { baseApi } from '@/services/baseApi';
 import { houseApi } from '@/features/houses/services';
@@ -27,6 +28,7 @@ import { eggApi } from '@/features/eggs/services';
 import { countryApi } from "@/features/countries/services";
 import { cityApi } from "@/features/cities/services";
 import { regionApi } from "@/features/regions/services";
+import { chickenApi } from '@/features/chickens/services';
 
 import { rtkQueryErrorLogger } from './middlewares/rtkQueryErrorLogger';
 
@@ -50,6 +52,7 @@ export const store = configureStore({
     countryList: countryListReducer,
     cityList: cityListReducer,
     regionList: regionListReducer,
+    chickenList: chickenListReducer,
 
     // // Apis
     [houseApi.reducerPath]: houseApi.reducer,
@@ -60,6 +63,7 @@ export const store = configureStore({
     [countryApi.reducerPath]: countryApi.reducer,
     [cityApi.reducerPath]: cityApi.reducer,
     [regionApi.reducerPath]: regionApi.reducer,
+    [chickenApi.reducerPath]: chickenApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
       getDefaultMiddleware().concat(baseApi.middleware, rtkQueryErrorLogger),

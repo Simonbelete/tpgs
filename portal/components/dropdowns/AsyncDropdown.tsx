@@ -13,8 +13,9 @@ interface Model {
 
 export default function AsyncDropdown<T>({
   id,
-  url,
-  key = "name",
+  onOpen,
+  onClose,
+  dataKey = "name",
   value,
   label,
   defaultOptions,
@@ -22,43 +23,46 @@ export default function AsyncDropdown<T>({
   helperText,
   createForm,
   createFormTitle = "Create New",
+  isLoading,
   multiple,
   onChange,
+  options,
+  onInputChange,
   ...props
 }: {
   id?: string,
-  url: string;
-  key?: string;
+  onOpen: () => void,
+  onClose: () => void,
+  dataKey?: string;
   value?: any;
   label?: string;
   defaultOptions?: any;
+  options: T[],
   error?: boolean;
   multiple?: boolean;
   helperText?: string;
   createForm?: React.ReactElement;
   createFormTitle?: string;
+  isLoading?: boolean;
   onChange?: (event: any, newValue: any) => void;
+  onInputChange?: (event: any, newInputValue: any) => void;
 }) {
   const [open, setOpen] = React.useState(false);
-  const [options, setOptions] = React.useState<readonly T[]>([]);
-  const [loading, setLoading] = React.useState(false);
 
   // Modal
   const [modalOpen, setModalOpen] = React.useState(false);
   const handleModalOpen = () => setModalOpen(true);
   const handleModalClose = () => setModalOpen(false);
 
-  const handleOpen = async () => {
+  const handleOnOpen = React.useCallback(() => {
     setOpen(true);
-    try {
-      const response = await client.get(url);
+    onOpen();
+  }, [onOpen])
 
-      setOptions(response.data.results);
-    } catch (ex) {
-    } finally {
-      setLoading(false);
-    }
-  };
+  const handleOnClose = React.useCallback(() => {
+    setOpen(false);
+    onClose();
+  }, [onClose])
 
   return (
     <Stack gap={1} id={id}>
@@ -75,30 +79,30 @@ export default function AsyncDropdown<T>({
         multiple={multiple}
         size="small"
         open={open}
-        onOpen={handleOpen}
-        onClose={() => {
-          setOpen(false);
-        }}
+        onOpen={handleOnOpen}
+        onClose={handleOnClose}
         onChange={onChange}
-        // value={value}
+        value={value}
         defaultValue={value}
-        getOptionLabel={(option) => option[key]}
+        getOptionLabel={(option) => option[dataKey]}
         options={options}
-        loading={loading}
-        isOptionEqualToValue={(option, value) => option[key] === value[key]}
+        loading={isLoading}
+        isOptionEqualToValue={(option, val) => option[dataKey] === val[dataKey]}
+        onInputChange={onInputChange}
         renderInput={(params) => (
           <TextField
             {...params}
             error={error}
             helperText={helperText}
             fullWidth
-            label={value ? "" : label}
+            // label={value ? "" : label}
+            label={""}
             InputLabelProps={{ shrink: false }}
             InputProps={{
               ...params.InputProps,
               endAdornment: (
                 <React.Fragment>
-                  {loading ? (
+                  {isLoading ? (
                     <CircularProgress color="inherit" size={20} />
                   ) : null}
                   {params.InputProps.endAdornment}

@@ -2,7 +2,10 @@ import React, { useEffect, useState } from "react";
 import {
   GridRowsProp,
   GridColDef,
+  GridRenderCellParams
 } from "@mui/x-data-grid";
+import { Typography } from "@mui/material";
+import Link from "next/link";
 import { DataTable } from "@/components/tables";
 import { Breed } from "@/models";
 import { useSelector } from "react-redux";
@@ -13,7 +16,39 @@ import { useGetChickensQuery, useDeleteChickenMutation } from "../services";
 import buildQuery from "@/util/buildQuery";
 
 const columns: GridColDef[] = [
-  { field: "name", headerName: "Name", flex: 1, minWidth: 150 },
+  { field: "tag", headerName: "Tag", flex: 1, minWidth: 150 },
+  { field: "sex", headerName: "Tag", flex: 1, minWidth: 150 },
+  { field: "house", headerName: "House", flex: 1, minWidth: 150,
+    renderCell: (params: GridRenderCellParams<any>) => {
+      if (params.row.house == null) return <></>;
+      return (
+        <Typography color={"link.primary"} variant="body2">
+          <Link href={`/houses/${params.row.house.id}`}>
+            {params.row.house.name}
+          </Link>
+        </Typography>
+      );
+    },
+  },
+  { field: "pen", headerName: "Pen", flex: 1, minWidth: 150,
+  },
+  { field: "flock", headerName: "Flock", flex: 1, minWidth: 150,
+    renderCell: (params: GridRenderCellParams<any>) => {
+      if (params.row.flock == null) return <></>;
+      return (
+        <Typography color={"link.primary"} variant="body2">
+          <Link href={`/flocks/${params.row.flock.id}`}>
+            {params.row.flock.name}
+          </Link>
+        </Typography>
+      );
+    },
+  },
+  { field: "reduction_date", 
+    headerName: "Mortality", flex: 1, minWidth: 150,
+    valueGetter: (params) =>
+      params.row.reduction_date ? dayjs(params.row.reduction_date).format(process.env.NEXT_PUBLIC_DATE_FORMAT) : "",
+  },
   { field: "created_at", 
     headerName: "Create at", flex: 1, minWidth: 150,
     valueGetter: (params) =>

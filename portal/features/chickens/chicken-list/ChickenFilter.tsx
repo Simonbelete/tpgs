@@ -24,7 +24,7 @@ const ChickenFilter = () => {
     {name: 'Deactive', value: false}
   ]
   
-  const selector = useSelector((state: RootState) => state.breedList);
+  const selector = useSelector((state: RootState) => state.chickenList);
 
   const handleActiveChange = (event: SelectChangeEvent) => dispatch(chickenListSlice.actions.setIsActive((event.target.value as any).value))
 

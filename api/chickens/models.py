@@ -40,6 +40,13 @@ class Chicken(CoreModel):
     def __str__(self):
         return self.tag
 
+    @property
+    def name(self):
+        return "{tag} {sex}".format(
+            tag=self.tag,
+            sex=self.sex
+        )
+
     # def ancestors(self):
     #     '''Returns a list of this person's ancestors (their parents and all of
     #     their parents' ancestors).'''
