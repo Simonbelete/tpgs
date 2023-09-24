@@ -91,6 +91,7 @@ const DangerZoneCard =  ({
                 <LoadingButton 
                   loading={isDeleting} 
                   loadingPosition="start"
+                  startIcon={<></>}
                   variant="outlined" color="error" size="small" onClick={onDelete}>Delete</LoadingButton>
               </Box>
           </Stack>

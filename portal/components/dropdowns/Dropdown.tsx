@@ -3,8 +3,8 @@ import TextField from "@mui/material/TextField";
 import Autocomplete, { AutocompleteProps } from "@mui/material/Autocomplete";
 import { Button, IconButton, Tooltip, Stack, Typography } from "@mui/material";
 
-export default function AsyncDropdown<T>({
-  key = "name",
+export default function Dropdown<T>({
+  dataKey = "name",
   value,
   label,
   defaultOptions,
@@ -15,7 +15,7 @@ export default function AsyncDropdown<T>({
   options,
   ...props
 }: {
-  key?: string;
+  dataKey?: string;
   value?: any;
   label?: string;
   defaultOptions?: any;
@@ -50,9 +50,9 @@ export default function AsyncDropdown<T>({
         onChange={onChange}
         value={value}
         defaultValue={value}
-        getOptionLabel={(option) => option[key]}
+        getOptionLabel={(option) => option[dataKey]}
         options={options}
-        isOptionEqualToValue={(option, value) => option[key] === value[key]}
+        isOptionEqualToValue={(option, value) => option[dataKey] === value[dataKey]}
         renderInput={(params) => (
           <TextField
             {...params}

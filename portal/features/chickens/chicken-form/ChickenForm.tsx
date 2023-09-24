@@ -124,9 +124,9 @@ const ChickenForm = ({
                           { value: "M", name: "Male" },
                           { value: "F", name: "Female" },
                         ]}
-                        key="name"
+                        dataKey="name"
                         onChange={(_, data) => onChange(data)}
-                        value={value}
+                        value={value ?? undefined}
                         label="Sex"
                         error={!!error?.message}
                         helperText={error?.message}
@@ -155,7 +155,7 @@ const ChickenForm = ({
               />
             </Grid>
             {/* Dam */}
-            {/* <Grid item xs={12} md={6}>
+            <Grid item xs={12} md={6}>
               <Controller
                 name={"dam"}
                 control={control}
@@ -163,10 +163,8 @@ const ChickenForm = ({
                   field: { onChange, value },
                   fieldState: { error },
                 }) => (
-                  <AsyncDropdown
-                    multiple
-                    url="/chickens/"
-                    key="name"
+                  <ChickenDropdown
+                    sex={'F'}
                     onChange={(_, data) => onChange(data)}
                     value={value}
                     label="Dam"
@@ -175,7 +173,7 @@ const ChickenForm = ({
                   />
                 )}
               />
-            </Grid> */}
+            </Grid>
             {/* Flock */}
             {/* <Grid item xs={12} md={6}>
               <Controller
@@ -235,7 +233,7 @@ const ChickenForm = ({
                     onChange={onChange}
                     fullWidth
                     size="small"
-                    value={value}
+                    value={value ?? ""}
                     label={"Pen"}
                     placeholder={"Pen"}
                   />

@@ -399,7 +399,7 @@ const SidebarMenu = () => {
               Eggs Reporting
             </Typography>
           }
-          icon={<EggIcon fozntSize="small" />}
+          icon={<EggIcon fontSize="small" />}
         >
            <MenuItem component={<Link href="/breeds" />} icon={<AdjustIcon fontSize="small" />}>
           <Typography variant="body1" fontSize={14}>
