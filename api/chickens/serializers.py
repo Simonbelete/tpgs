@@ -3,6 +3,8 @@ from rest_framework import serializers
 
 from . import models
 from users.serializers import UserSerializer_GET
+from flocks.serializers import FlockSerializer_SLUG
+from houses.serializers import HouseSerializer_SLUG
 
 class ChickenSerializer_SLUG(serializers.ModelSerializer):
     class Meta:
@@ -12,6 +14,9 @@ class ChickenSerializer_SLUG(serializers.ModelSerializer):
 class ChickenSerializer_GET(serializers.ModelSerializer):
     sire = ChickenSerializer_SLUG()
     dam = ChickenSerializer_SLUG()
+    flock = FlockSerializer_SLUG()
+    house = HouseSerializer_SLUG()
+
     class Meta:
         model = models.Chicken
         fields = ['id', 'name', 'tag', 'sex', 'sire', 'dam', 'flock', 'house', 'pen', 

@@ -3,6 +3,10 @@ from rest_framework import serializers
 from users.serializers import UserSerializer_SLUG
 from . import models
 
+class HouseSerializer_SLUG(serializers.ModelSerializer):
+    class Meta:
+        model = models.House
+        fields = ['id', 'name']
 
 class HouseSerializer_GET(serializers.ModelSerializer):
     class Meta:

@@ -66,8 +66,6 @@ const ChickenForm = ({
     resolver: yupResolver(schema),
   });
 
-  console.log(chicken);
-
   const useCRUDHook = useCRUD({
     results: [
       createResult,
@@ -128,7 +126,7 @@ const ChickenForm = ({
                         ]}
                         dataKey="name"
                         onChange={(_, data) => onChange(data)}
-                        value={value ?? undefined}
+                        value={chicken?.sex !== null ? {value: chicken?.sex, name: chicken?.sex === 'M' ? 'Male': 'Female'} : {value: "", name: ""}}
                         label="Sex"
                         error={!!error?.message}
                         helperText={error?.message}
