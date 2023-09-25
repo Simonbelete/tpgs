@@ -18,6 +18,7 @@ import { countryListReducer } from '@/features/countries';
 import { cityListReducer } from '@/features/cities';
 import { regionListReducer } from "@/features/regions";
 import { chickenListReducer } from "@/features/chickens";
+import { flockListReducer } from "@/features/flocks";
 
 import { baseApi } from '@/services/baseApi';
 import { houseApi } from '@/features/houses/services';
@@ -29,6 +30,7 @@ import { countryApi } from "@/features/countries/services";
 import { cityApi } from "@/features/cities/services";
 import { regionApi } from "@/features/regions/services";
 import { chickenApi } from '@/features/chickens/services';
+import { flockApi } from '@/features/flocks/services';
 
 import { rtkQueryErrorLogger } from './middlewares/rtkQueryErrorLogger';
 
@@ -53,6 +55,7 @@ export const store = configureStore({
     cityList: cityListReducer,
     regionList: regionListReducer,
     chickenList: chickenListReducer,
+    flockList: flockListReducer,
 
     // // Apis
     [houseApi.reducerPath]: houseApi.reducer,
@@ -64,6 +67,7 @@ export const store = configureStore({
     [cityApi.reducerPath]: cityApi.reducer,
     [regionApi.reducerPath]: regionApi.reducer,
     [chickenApi.reducerPath]: chickenApi.reducer,
+    [flockApi.reducerPath]: flockApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
       getDefaultMiddleware().concat(baseApi.middleware, rtkQueryErrorLogger),

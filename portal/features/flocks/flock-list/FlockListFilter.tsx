@@ -6,37 +6,32 @@ import {
   Grid,
   Typography,
   Divider,
-  SelectChangeEvent,
   Button,
   ListItem,
-  Chip
+  Chip,
+  SelectChangeEvent
 } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
 import { SearchInput } from "@/components/inputs";
 import { CheckboxDropdown } from "@/components/dropdowns";
-import { NutrientGroup } from "@/models";
-import { setNutrientGroups, removeNutrientGroupById, setSearch, clearAll } from "../slices";
+import { flockListSlice } from "./slice";
 import { RootState } from "@/store";
 
 const FlockFilter = () => {
   const dispatch = useDispatch();
-  const nutrientGroups = useSelector((state: RootState) => state.nutrientFilter.nutrient_groups);
+  const activeMenu = [
+    {name: 'Active', value: true},
+    {name: 'Deactive', value: false}
+  ]
+  
+  const selector = useSelector((state: RootState) => state.flockList);
 
-  const handleOnNutrientGroupChange = (event: SelectChangeEvent) => {
-      dispatch(setNutrientGroups(event.target.value as any))
-      // setNutrientGroups(event.target.value as any);
-  }
+  const handleActiveChange = (event: SelectChangeEvent) => dispatch(flockListSlice.actions.setIsActive((event.target.value as any).value))
 
-  const handleDeleteNutrientGroup = (data: NutrientGroup) => () => {
-    dispatch(removeNutrientGroupById(data.id));
-  }
-
-  const handleSearchButton = () => {
-
-  }
+  const handleSearchButton = () => dispatch(flockListSlice.actions.reset());
   
   return (
-    <Paper sx={{ p: 2 }} elevation={0} variant="outlined" square>
+    <Paper sx={{ p: 2 }} elevation={0} variant="outlined" square id="invitation-filter">
       <Grid container alignItems={"center"}>
         <Grid item xs={12} md={4}>
           <Typography variant="body2" fontWeight={700}>
@@ -46,12 +41,17 @@ const FlockFilter = () => {
         <Grid item xs={12} md />
         <Grid item xs={12} md={4}>
           <Stack
+            direction={{xs: "column", md: "row"}}
+            justifyContent={{ xs: "start", md: "end" }}
+            spacing={2}
+          >
+            <SearchInput label="Search..."  onChange={(event: React.ChangeEvent<HTMLInputElement>) => dispatch(flockListSlice.actions.setSearch(event.target.value)) }/>
+
+            <Stack
             direction="row"
             justifyContent={{ xs: "start", md: "end" }}
             spacing={2}
           >
-            <SearchInput label="Search..."  onChange={(event: React.ChangeEvent<HTMLInputElement>) => dispatch(setSearch(event.target.value)) }/>
-
             <Box>
               <Button
                 variant="contained"
@@ -69,42 +69,43 @@ const FlockFilter = () => {
                 color="secondary"
                 size="small"
                 disableElevation
-                onClick={() => dispatch(clearAll())}
+                onClick={() => dispatch(flockListSlice.actions.reset())}
               >
                 Clear
               </Button>
             </Box>
+          </Stack>
+
           </Stack>
         </Grid>
       </Grid>
       <Divider sx={{ my: 1 }} />
       <Grid container spacing={2}>
         <Grid item xs={12}>
-          <Stack direction={"row"}>
-            <CheckboxDropdown
-              url="/nutrient-groups"
-              dataValueKey="id"
-              dataLableKey="name"
-              label={"Nutrient Group"}
-              selected={nutrientGroups}
-              onChange={handleOnNutrientGroupChange}
-            />
-          </Stack>
-        </Grid>
+            <Stack direction={"row"}>
+              <CheckboxDropdown
+                multiple={false}
+                menus={activeMenu}
+                dataValueKey="value"
+                dataLableKey="name"
+                label={"Active"}
+                selected={[{value: selector.is_active}]}
+                onChange={handleActiveChange}
+              />
+            </Stack>
+          </Grid>
         <Grid item xs={12}>
           <Divider />
         </Grid>
         <Grid item xs={12}>
           <Stack>
-            {nutrientGroups.map((e, key) => 
-              <ListItem key={key}>
-                <Chip
-                  label={`Nutrient Group: ${e.name}`}
-                  size="small"
-                  onDelete={handleDeleteNutrientGroup(e)}
+              <ListItem>
+                  <Chip
+                    label={`State: ${selector.is_active}`}
+                    size="small"
+                    onDelete={() => {}}
                 />
-              </ListItem>
-            )}
+                </ListItem>
           </Stack>
         </Grid>
       </Grid>

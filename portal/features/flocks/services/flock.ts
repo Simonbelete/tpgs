@@ -5,13 +5,13 @@ import clientSSR from "@/services/client_ssr";
 import client from "@/services/client";
 import { NextPageContext } from "next";
 
-const URL = "/breeds";
+const URL = "/flocks";
 const HISTORY_URL = `histories`;
 const SUMMARY_URL = `summary`;
 const EXPORT_URL = `${URL}/export`;
 const IMPORT_URL = `${URL}/import`;
 
-export const breedApi = baseApi.injectEndpoints({
+export const flockApi = baseApi.injectEndpoints({
   endpoints: (build) => {
     return {
       getFlocks: build.query<Response<Flock[]>, Object>({ query: (query?: Object) => ({ url: `${URL}/`, method: 'get', params: query }) }),
@@ -67,4 +67,4 @@ export const {
   useCreateFlockMutation,
   useUpdateFlockMutation,
   useDeleteFlockMutation,
-} = breedApi;
+} = flockApi;

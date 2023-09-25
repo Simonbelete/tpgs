@@ -1,41 +1,25 @@
-import React, { useEffect, ReactElement } from "react";
-import { FlockForm } from "@/features/flocks";
+import React, { useEffect } from "react";
+import { Typography } from "@mui/material";
 import { Breadcrumbs } from "@/components";
 import { useBreadcrumbs } from "@/hooks";
 import { CreateLayout } from "@/layouts";
-import { Button, Typography, Box, Container } from "@mui/material";
-import SaveIcon from "@mui/icons-material/Save";
-import LibraryAddIcon from "@mui/icons-material/LibraryAdd";
+import {
+  FlockForm,
+} from "@/features/flocks";
+import { SeoHead } from "@/seo";
 
 const FlockCreatePage = () => {
   const { breadcrumbs } = useBreadcrumbs();
 
   return (
-    <CreateLayout
-      breadcrumbs={<Breadcrumbs items={breadcrumbs} />}
-      header={<Typography variant="title">Create Flock</Typography>}
-      actions={<Actions />}
-    >
-      <Container maxWidth="md">
-        <FlockForm />
-      </Container>
-    </CreateLayout>
-  );
-};
-
-const Actions = (): ReactElement => {
-  return (
     <>
-      <Box>
-        <Button variant="contained" startIcon={<SaveIcon />}>
-          Create
-        </Button>
-      </Box>
-      <Box>
-        <Button variant="outlined" startIcon={<LibraryAddIcon />}>
-          Create and New
-        </Button>
-      </Box>
+      <SeoHead title="Create Flock" />
+      <CreateLayout
+        breadcrumbs={<Breadcrumbs items={breadcrumbs} />}
+        header={<Typography variant="title">Create Flock</Typography>}
+      >
+        <FlockForm />
+      </CreateLayout>
     </>
   );
 };

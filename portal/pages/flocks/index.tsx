@@ -1,9 +1,13 @@
-import React, { ChangeEvent, ReactElement } from "react";
+import React from "react";
 import { ListLayout } from "@/layouts";
 import { useBreadcrumbs } from "@/hooks";
 import { Breadcrumbs } from "@/components";
-import { Button, Typography, Stack } from "@mui/material";
-import { FlocksList, FlockImportExport } from "@/features/flocks";
+import { Typography } from "@mui/material";
+import {
+  FlockList,
+  FlockListFilter,
+  FlockImportExport,
+} from "@/features/flocks";
 import { SeoHead } from "@/seo";
 
 const FlockPage = () => {
@@ -11,17 +15,19 @@ const FlockPage = () => {
 
   return (
     <>
-      <SeoHead title="Flocks" />
+      <SeoHead title="Flocks"/>
       <ListLayout
         breadcrumbs={<Breadcrumbs items={breadcrumbs} />}
         header={<Typography variant="title">Flocks</Typography>}
         actions={<FlockImportExport />}
+        filter={<FlockListFilter />}
       >
-        <FlocksList />
+        <FlockList />
       </ListLayout>
     </>
   );
 };
+
 
 
 export default FlockPage;

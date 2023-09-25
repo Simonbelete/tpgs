@@ -1,30 +1,62 @@
 import React from "react";
 import { NextPageContext } from "next";
-import { Container } from "@mui/material";
+import { Button, Typography, Stack, Container } from "@mui/material";
+import AddIcon from "@mui/icons-material/Add";
+import Link from "next/link";
+import CloseIcon from "@mui/icons-material/Close";
 import { EditLayout } from "@/layouts";
-import { FlockForm, FlockService } from "@/features/flocks";
+import { BreedForm } from "@/features/breeds";
+import { getBreedByIdSSR } from '@/features/breeds/services';
 import { Breadcrumbs, Loading } from "@/components";
 import { useBreadcrumbs } from "@/hooks";
-import { Nutrient } from "@/models";
+import { Breed } from "@/models";
+import { SeoHead } from "@/seo";
 
-const FlockEditPage = ({ data }: { data: Nutrient }) => {
+const FlockEditPage = ({ data }: { data: Breed }) => {
   const { breadcrumbs } = useBreadcrumbs();
 
   return (
-    <EditLayout breadcrumbs={<Breadcrumbs items={breadcrumbs} />}>
-      <Container maxWidth="xl">
-        <FlockForm flock={data} />
-      </Container>
+    <>
+    <SeoHead title={`${data.name || ""} - Edit`} />
+    <EditLayout
+      breadcrumbs={<Breadcrumbs items={breadcrumbs} />}
+      header={<Typography variant="title">{data.name} - Edit</Typography>}
+      actions={<Actions />}
+    >
+        <BreedForm breed={data} />
     </EditLayout>
+    </>
   );
 };
+
+const Actions = () => {
+  return (
+    <Stack
+        spacing={2}
+        direction={"row"}
+        justifyContent="flex-start"
+        alignItems="center"
+      >
+        <Link href="/breeds/create">
+          <Button variant="outlined" size={"small"} startIcon={<AddIcon />}>
+            Create New
+          </Button>
+        </Link>
+        <Link href="/breeds">
+          <Button variant="outlined" color="error" size={"small"} startIcon={<CloseIcon />}>
+            Cancel
+          </Button>
+        </Link>
+      </Stack>
+  )
+} 
 
 export async function getServerSideProps(context: NextPageContext) {
   const { id } = context.query;
 
   try {
-    const res = await FlockService.getByIdSSR(context, Number(id));
-
+    const res = await getBreedByIdSSR(context, Number(id));
+    
     if (res.status != 200)
       return {
         redirect: {
@@ -33,9 +65,7 @@ export async function getServerSideProps(context: NextPageContext) {
         },
       };
 
-    const data = res.data;
-
-    return { props: { data } };
+    return { props: { data: res.data } };
   } catch (ex) {
     return {
       redirect: {
