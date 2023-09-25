@@ -20,6 +20,12 @@ import { HouseDropdown } from "@/features/houses";
 
 type Inputs = Partial<Chicken>;
 
+const sexOptions = [
+  { value: null, name: "---" },
+  { value: "M", name: "Male" },
+  { value: "F", name: "Female" },
+]
+
 const schema = yup
   .object({
     tag: yup.string().required(),
@@ -61,10 +67,15 @@ const ChickenForm = ({
   const { handleSubmit, control, setError } = useForm<Inputs>({
     defaultValues: {
       ...chicken,
+      // TODO: Create a separate sex dropdown
+      // @ts-ignore
+      sex: sexOptions.find((o) => o.value == chicken?.sex) 
     },
     // @ts-ignore 
     resolver: yupResolver(schema),
   });
+
+  console.log(chicken);
 
   const useCRUDHook = useCRUD({
     results: [
@@ -75,8 +86,6 @@ const ChickenForm = ({
   })
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
-    console.log(data);
-
     if (chicken == null) await createChicken(data);
     else await updateChicken({...data, id: chicken.id});
   };
@@ -120,13 +129,10 @@ const ChickenForm = ({
                       fieldState: { invalid, isTouched, isDirty, error },
                     }) => (
                       <Dropdown
-                        options={[
-                          { value: "M", name: "Male" },
-                          { value: "F", name: "Female" },
-                        ]}
+                        options={sexOptions}
                         dataKey="name"
                         onChange={(_, data) => onChange(data)}
-                        value={chicken?.sex !== null ? {value: chicken?.sex, name: chicken?.sex === 'M' ? 'Male': 'Female'} : {value: "", name: ""}}
+                        value={value}
                         label="Sex"
                         error={!!error?.message}
                         helperText={error?.message}

@@ -48,6 +48,7 @@ export default function Dropdown<T>({
           setOpen(false);
         }}
         onChange={onChange}
+        // value={options.find((o: any) => o[dataKey] === value)}
         value={value}
         defaultValue={value}
         getOptionLabel={(option) => option[dataKey]}
