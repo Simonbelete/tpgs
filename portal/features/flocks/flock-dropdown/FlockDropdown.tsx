@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { AsyncDropdown } from "@/components/dropdowns";
 import { useLazyGetFlocksQuery } from '../services';
 import { Flock } from "@/models";
+import { FlockForm } from "../flock-form";
 
 const FlockDropdown = ({
   value,
@@ -38,6 +39,8 @@ const FlockDropdown = ({
       onOpen={handleOnOpen}
       onClose={handleOnClose}
       onChange={onChange}
+      createForm={<FlockForm />}
+      createFormTitle="Create Flock"
       onInputChange={(event: any, newInputValue: any) => {
         trigger({}, true)
       }}

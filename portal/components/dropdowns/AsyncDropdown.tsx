@@ -1,15 +1,10 @@
 import * as React from "react";
 import TextField from "@mui/material/TextField";
-import Autocomplete, { AutocompleteProps } from "@mui/material/Autocomplete";
+import Autocomplete from "@mui/material/Autocomplete";
 import CircularProgress from "@mui/material/CircularProgress";
-import client from "@/services/client";
-import { Button, IconButton, Tooltip, Stack, Typography } from "@mui/material";
+import { IconButton, Tooltip, Stack, Typography, Box } from "@mui/material";
 import AddToQueueIcon from "@mui/icons-material/AddToQueue";
-import { PlainModal, FullScreenModal } from "../modals";
-
-interface Model {
-  id?: string;
-}
+import { FullScreenModal } from "../modals";
 
 export default function AsyncDropdown<T>({
   id,
@@ -66,7 +61,10 @@ export default function AsyncDropdown<T>({
 
   return (
     <Stack gap={1} id={id}>
-      <FullScreenModal open={modalOpen} onClose={handleModalClose}>
+      <FullScreenModal title={createFormTitle} open={modalOpen} onClose={handleModalClose}>
+        {/* <Box>
+          <Typography variant="title">{createFormTitle}</Typography>
+        </Box> */}
         {createForm}
       </FullScreenModal>
       {label && (

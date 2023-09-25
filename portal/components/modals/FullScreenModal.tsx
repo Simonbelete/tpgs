@@ -30,10 +30,12 @@ export default function FullScreenModal({
   open,
   onClose,
   children,
+  title = 'Create New',
 }: {
+  title?: string,
   open: boolean;
   onClose?: () => void;
-  children?: React.ReactElement;
+  children?: React.ReactNode;
 }) {
   const theme = useTheme();
 
@@ -64,12 +66,12 @@ export default function FullScreenModal({
             <CloseIcon />
           </IconButton>
           <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
-            Create New
+            {title}
           </Typography>
         </Toolbar>
       </AppBar>
       <DialogContent sx={{ background: theme.palette.background.default }}>
-        <Container>{children}</Container>
+        <Container maxWidth="md">{children}</Container>
       </DialogContent>
       <DialogActions>
         <Button
