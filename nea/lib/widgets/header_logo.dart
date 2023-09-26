@@ -17,7 +17,7 @@ class HeaderLogo extends StatelessWidget {
           height: 30,
         ),
         const SubTitleText(
-          text: "Nutrition Education",
+          text: "Nutrition Literacy",
           color: secondaryColor,
         ),
         Image.asset(

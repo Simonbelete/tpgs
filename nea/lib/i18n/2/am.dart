@@ -18,7 +18,7 @@ Course AM = Course(
     children: const [
       Objectives(title: 'ዓላማ', children: ['ስለ የተመጣጠነ ምግብ እጥረት እና መንስኤዎች ማወቅ']),
       CourseBodyImage(
-        image: 'assets/materials/images/10.png',
+        image: 'assets/materials/images/10_am.png',
         description: "ስድስቱ የምግብ አይነቶች",
       ),
       KeyMessages(title: 'ጭብጥ መልዕክቶች', children: [

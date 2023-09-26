@@ -20,7 +20,7 @@ Course SW = Course(
         'Boresha uelewa juu ya vikundi vya chakula kwa mseto wa lishe'
       ]),
       CourseBodyImage(
-        image: 'assets/materials/images/10.png',
+        image: 'assets/materials/images/10_sw.png',
         description: "Vikundi sita vya chakula",
       ),
       KeyMessages(title: "Ujumbe Muhimu", children: [
