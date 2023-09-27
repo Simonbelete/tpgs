@@ -22,10 +22,10 @@ const schema = yup
 }).required();
 
 const FlockForm = ({
-  Flock,
+  flock,
   redirect = true,
 }: {
-  Flock?: Flock;
+  flock?: Flock;
   redirect?: boolean;
 }) => {
   const router = useRouter();
@@ -35,7 +35,7 @@ const FlockForm = ({
 
   const { handleSubmit, control, setError } = useForm<Inputs>({
     defaultValues: {
-      ...Flock,
+      ...flock,
     },
     // @ts-ignore 
     resolver: yupResolver(schema),
@@ -50,8 +50,8 @@ const FlockForm = ({
   })
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
-    if (Flock == null) await createFlock(data);
-    else await updateFlock({...data, id: Flock.id});
+    if (flock == null) await createFlock(data);
+    else await updateFlock({...data, id: flock.id});
   };
 
   return (
@@ -119,10 +119,10 @@ const FlockForm = ({
       </Grid>
       <Grid item xs={3}>
         <Stack spacing={3}>
-          {Flock && (
+          {flock && (
             <>
-            <FlockInfoZone id={Flock?.id} />
-            <FlockDangerZone id={Flock.id} is_active={Flock.is_active} />
+            <FlockInfoZone id={flock?.id} />
+            <FlockDangerZone id={flock.id} is_active={flock.is_active} />
             </>
           )}
         </Stack>

@@ -5,14 +5,14 @@ import AddIcon from "@mui/icons-material/Add";
 import Link from "next/link";
 import CloseIcon from "@mui/icons-material/Close";
 import { EditLayout } from "@/layouts";
-import { BreedForm } from "@/features/breeds";
+import { FlockForm } from "@/features/flocks";
 import { getBreedByIdSSR } from '@/features/breeds/services';
 import { Breadcrumbs, Loading } from "@/components";
 import { useBreadcrumbs } from "@/hooks";
-import { Breed } from "@/models";
+import { Flock } from "@/models";
 import { SeoHead } from "@/seo";
 
-const FlockEditPage = ({ data }: { data: Breed }) => {
+const FlockEditPage = ({ data }: { data: Flock }) => {
   const { breadcrumbs } = useBreadcrumbs();
 
   return (
@@ -23,7 +23,7 @@ const FlockEditPage = ({ data }: { data: Breed }) => {
       header={<Typography variant="title">{data.name} - Edit</Typography>}
       actions={<Actions />}
     >
-        <BreedForm breed={data} />
+        <FlockForm flock={data} />
     </EditLayout>
     </>
   );

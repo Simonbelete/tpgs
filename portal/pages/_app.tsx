@@ -64,31 +64,42 @@ export const metadata: Metadata = {
   },
 }
 
+// export default function App({
+//   Component,
+//   pageProps: { session, ...pageProps },
+// }: AppPropsWithLayout) {
+//   // Use the layout defined at the page level, if available
+//   const getLayout =
+//     Component.getLayout ??
+//     ((page) => <DashboardLayout>{page}</DashboardLayout>);
+
+//   return (
+//     <Provider store={store}>
+//       <SessionProvider session={session}>
+//         <ThemeProvider theme={lightTheme}>
+//           <OnBoardingProvider>
+//             <SnackbarProvider
+//                anchorOrigin={{
+//                 vertical: 'top',
+//                 horizontal: 'center',
+//               }}
+//             >
+//               {getLayout(<Component {...pageProps} />)}
+//             </SnackbarProvider>
+//           </OnBoardingProvider>
+//         </ThemeProvider>
+//       </SessionProvider>
+//     </Provider>
+//   );
+// }
+
+
 export default function App({
   Component,
   pageProps: { session, ...pageProps },
 }: AppPropsWithLayout) {
-  // Use the layout defined at the page level, if available
-  const getLayout =
-    Component.getLayout ??
-    ((page) => <DashboardLayout>{page}</DashboardLayout>);
 
   return (
-    <Provider store={store}>
-      <SessionProvider session={session}>
-        <ThemeProvider theme={lightTheme}>
-          <OnBoardingProvider>
-            <SnackbarProvider
-               anchorOrigin={{
-                vertical: 'top',
-                horizontal: 'center',
-              }}
-            >
-              {getLayout(<Component {...pageProps} />)}
-            </SnackbarProvider>
-          </OnBoardingProvider>
-        </ThemeProvider>
-      </SessionProvider>
-    </Provider>
+    <Component {...pageProps} />
   );
 }

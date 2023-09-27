@@ -6,6 +6,7 @@ import client from "@/services/client";
 import { NextPageContext } from "next";
 
 const URL = "/flocks";
+const ACCUSATION_URL = "/accusations";
 const HISTORY_URL = `histories`;
 const SUMMARY_URL = `summary`;
 const EXPORT_URL = `${URL}/export`;
@@ -25,7 +26,9 @@ export const flockApi = baseApi.injectEndpoints({
       }),
       deleteFlock: build.mutation<any, number>({
         query: (id: number) => ({ url: `${URL}/${id}/`, method: 'delete' }),
-      })
+      }),
+      // Accusations
+      getFlockAccusations:  build.query<Response<Flock>, {flock_id: number, query: Object}>({ query: ({flock_id, query}) => ({ url: `${URL}/${flock_id}/${ACCUSATION_URL}`, method: 'get', params: query }) }),
     }
   },
   overrideExisting: false,
@@ -67,4 +70,5 @@ export const {
   useCreateFlockMutation,
   useUpdateFlockMutation,
   useDeleteFlockMutation,
+  useGetFlockAccusationsQuery,
 } = flockApi;
