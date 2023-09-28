@@ -4,6 +4,9 @@ import { Chicken } from "@/models";
 import ChickenInfoZone from "./ChickenInfoZone";
 import ChickenDangerZone from "./ChickenDangerZone";
 import ChickenDetailForm from "./ChickenDetailForm";
+import OffspringList from "./OffspringList";
+import AncestorsList from "./AncestorsList";
+import SiblingsList from "./SiblingsList";
 
 function a11yProps(index: number) {
   return {
@@ -36,11 +39,14 @@ const ChickenForm = ({
           >
           <Tab label="Detail" {...a11yProps(0)} />
           <Tab label="Offspring" {...a11yProps(1)} />
-          <Tab label="Ancestors" {...a11yProps(1)} />
-          <Tab label="Siblings" {...a11yProps(2)} />
+          <Tab label="Ancestors" {...a11yProps(2)} />
+          <Tab label="Siblings" {...a11yProps(3)} />
         </Tabs>
         <Box sx={{pt: 5}}>
           {tab == 0 && <ChickenDetailForm chicken={chicken} />}
+          {(tab == 1 && chicken) && <OffspringList id={chicken?.id} />}
+          {(tab == 2 && chicken) && <AncestorsList id={chicken?.id} />}
+          {(tab == 3 && chicken) && <SiblingsList id={chicken?.id} />}
         </Box>
       </Grid>
       <Grid item xs={12} lg={4} xl={2.5}>

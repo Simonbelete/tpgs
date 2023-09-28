@@ -89,7 +89,7 @@ const ChickenDetailForm = ({chicken}: {chicken?: Chicken}) => {
     <>
       <Card title="Chicken Form">
         <form onSubmit={handleSubmit(onSubmit)}>
-          <Grid container spacing={4}>
+          <Grid container rowSpacing={4} columnSpacing={10}>
             {/* Name */}
             <Grid item xs={12} md={6}>
               <Controller

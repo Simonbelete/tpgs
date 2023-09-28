@@ -142,7 +142,8 @@ export enum SETTING_COL {
   default = "default",
   history = "history",
   delete = "delete",
-  basic = "basic" 
+  basic = "basic",
+  edit = "edit" 
 }
 
 const DataTable = ({
@@ -253,6 +254,28 @@ const DataTable = ({
             },
           };
           break;
+      case SETTING_COL.edit:
+        col = {
+          field: "Actions",
+          flex: 1,
+          minWidth: 150,
+          headerAlign: "center",
+          align: "right",
+          renderCell(params: any) {
+            return (
+              <Box>
+                <Link href={router.asPath + "/" + params.id + "/edit"} id="data-table-edit">
+                  <Tooltip title="Edit">
+                    <IconButton aria-label="edit">
+                      <EditNoteIcon fontSize="small" />
+                    </IconButton>
+                  </Tooltip>
+                </Link>
+              </Box>
+            );
+          },
+        };
+        break;
       case SETTING_COL.delete:
         col = {
           field: "Actions",
