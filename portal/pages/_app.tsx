@@ -18,6 +18,9 @@ import { Provider } from "react-redux";
 import { store } from "@/store";
 import OnBoardingProvider from "@/providers/OnBoarding";
 import siteMetadata from "@/data/siteMetadata";
+import { Inter,  } from 'next/font/google'
+
+const inter = Inter({ subsets: ['latin'] })
 
 const DashboardLayout = dynamic(
   () => import("../layouts/DashboardLayout"),
@@ -64,42 +67,33 @@ export const metadata: Metadata = {
   },
 }
 
-// export default function App({
-//   Component,
-//   pageProps: { session, ...pageProps },
-// }: AppPropsWithLayout) {
-//   // Use the layout defined at the page level, if available
-//   const getLayout =
-//     Component.getLayout ??
-//     ((page) => <DashboardLayout>{page}</DashboardLayout>);
-
-//   return (
-//     <Provider store={store}>
-//       <SessionProvider session={session}>
-//         <ThemeProvider theme={lightTheme}>
-//           <OnBoardingProvider>
-//             <SnackbarProvider
-//                anchorOrigin={{
-//                 vertical: 'top',
-//                 horizontal: 'center',
-//               }}
-//             >
-//               {getLayout(<Component {...pageProps} />)}
-//             </SnackbarProvider>
-//           </OnBoardingProvider>
-//         </ThemeProvider>
-//       </SessionProvider>
-//     </Provider>
-//   );
-// }
-
-
 export default function App({
   Component,
   pageProps: { session, ...pageProps },
 }: AppPropsWithLayout) {
+  // Use the layout defined at the page level, if available
+  const getLayout =
+    Component.getLayout ??
+    ((page) => <DashboardLayout>{page}</DashboardLayout>);
 
   return (
-    <Component {...pageProps} />
+    <Provider store={store}>
+      <SessionProvider session={session}>
+        <ThemeProvider theme={lightTheme}>
+          <OnBoardingProvider>
+            <SnackbarProvider
+               anchorOrigin={{
+                vertical: 'top',
+                horizontal: 'center',
+              }}
+            >
+              <main className={`${inter.className}`}>
+                {getLayout(<Component {...pageProps} />)}
+              </main>
+            </SnackbarProvider>
+          </OnBoardingProvider>
+        </ThemeProvider>
+      </SessionProvider>
+    </Provider>
   );
 }
