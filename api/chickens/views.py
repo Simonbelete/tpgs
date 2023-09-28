@@ -41,7 +41,6 @@ class ChickenSummaryViewSet(SummaryViewSet):
         return models.Chicken.all.get(pk=self.id_pk)
 
 class ChickenOffspringViewSet(viewsets.GenericViewSet):
-    # queryset = models.Chicken.history.all()
     serializer_class = serializers.ChickenSerializer_GET
 
     # def get_queryset(self):
@@ -51,7 +50,27 @@ class ChickenOffspringViewSet(viewsets.GenericViewSet):
 
     def list(self, request, id=None, **kwargs):
         id = self.kwargs['id']
+
+        print('------------------')
+        print(list(models.Chicken.all.get(pk=id).ancestors()))
+        
         queryset = models.Chicken.all.get(pk=id).offspring()
+        page = self.paginate_queryset(queryset)
+
+        if page is not None:
+            serializer = self.get_serializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
+
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data)
+
+class ChickenAncestorViewSet(viewsets.GenericViewSet):
+    serializer_class = serializers.ChickenSerializer_GET
+
+    def list(self, request, id=None, **kwargs):
+        id = self.kwargs['id']
+
+        queryset = list(models.Chicken.all.get(pk=id).ancestors())
         page = self.paginate_queryset(queryset)
 
         if page is not None:
