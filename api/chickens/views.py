@@ -12,6 +12,7 @@ from rest_framework.parsers import MultiPartParser
 from tablib import Dataset
 from django.db.models import Q
 from rest_framework.response import Response
+from rest_framework.exceptions import NotFound
 
 from core.views import HistoryViewSet, SummaryViewSet, CoreModelViewSet
 from core.serializers import UploadSerializer
@@ -63,6 +64,30 @@ class ChickenAncestorViewSet(viewsets.GenericViewSet):
         id = self.kwargs['id']
 
         queryset = list(models.Chicken.all.get(pk=id).ancestors())
+        page = self.paginate_queryset(queryset)
+
+        if page is not None:
+            serializer = self.get_serializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
+
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data)
+
+class SiblingsViewSet(viewsets.GenericViewSet):
+    serializer_class = serializers.ChickenSerializer_GET
+
+    def get_queryset(self):
+        try:
+            queryset = models.Chicken.all.get(pk=self.kwargs['id'])
+            return queryset
+        except models.Chicken.DoesNotExist as ex:
+            raise NotFound()
+
+    def list(self, request, id=None, **kwargs):
+        id = self.kwargs['id']
+        
+        chicken = self.get_queryset()
+        queryset = models.Chicken.objects.exclude(pk=chicken.id).filter(sire=chicken.sire, dam=chicken.dam)
         page = self.paginate_queryset(queryset)
 
         if page is not None:
