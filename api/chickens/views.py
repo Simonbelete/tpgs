@@ -40,12 +40,26 @@ class ChickenSummaryViewSet(SummaryViewSet):
     def get_query(self):
         return models.Chicken.all.get(pk=self.id_pk)
 
-class ChickenOffspringViewSet(viewsets.ModelViewSet):
-    queryset = models.Chicken.history.all()
+class ChickenOffspringViewSet(viewsets.GenericViewSet):
+    # queryset = models.Chicken.history.all()
     serializer_class = serializers.ChickenSerializer_GET
 
-    def get_queryset(self):
-        return models.Chicken.all.get(pk=self.kwargs['id_pk']).offspring()
+    # def get_queryset(self):
+    #     print('------------------')
+    #     print(list(models.Chicken.all.get(pk=self.kwargs['id_pk']).ancestors()))
+    #     return models.Chicken.all.get(pk=self.kwargs['id_pk']).offspring()
+
+    def list(self, request, id=None, **kwargs):
+        id = self.kwargs['id']
+        queryset = models.Chicken.all.get(pk=id).offspring()
+        page = self.paginate_queryset(queryset)
+
+        if page is not None:
+            serializer = self.get_serializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
+
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data)
 
 # Xlsx
 
