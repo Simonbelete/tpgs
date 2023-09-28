@@ -13,7 +13,7 @@ from eggs.models import Egg
 from flocks.models import Flock, FlockReduction, FlockAccusation
 from farms.models import Farm
 from feeds.models import Feed
-
+from chickens.models import Chicken
 
 class DirectoryListFilter(django_filters.FilterSet):
     farm_name = django_filters.CharFilter(
@@ -206,3 +206,63 @@ class FarmHeatMap(viewsets.ViewSet):
         print('------')
         print(cities)
         return Response({'geojson': []})
+    
+class PedigreeViewset(viewsets.ViewSet):
+    def get_query(self):
+        return Chicken.objects.all()
+    
+    def filter_by_flock(self, queryset, flock_id):
+        if(flock_id != 'all'):
+            return queryset.filter(flock=flock_id)
+        return queryset
+    
+    def filter_by_house(self, queryset, house_id):
+        if(house_id != 'all'):
+            return queryset.filter(house=house_id)
+        return queryset
+
+    def list(self, request, **kwargs):
+        farm_id = kwargs['farm_id']
+        flock_id = kwargs['flock_id']
+        house_id = kwargs['house_id']
+
+        if (kwargs['farm_id'] == 'all'):
+            return Response({
+                'errors': [
+                    'farm can not be all'
+                ]
+            })
+        
+        try:
+            farm = Farm.objects.get(pk=farm_id)
+            queryset = self.get_query().filter(reduction_date__isnull=False)
+
+            with tenant_context(farm):
+                queryset = self.filter_by_flock(queryset, flock_id)
+                queryset = self.filter_by_house(queryset, house_id)
+
+                nodes = serializers.PedigreeSerializer(queryset, many=True)
+                links = []
+
+                for chicken in queryset.iterator():
+                    if(chicken.sire):
+                        links.append({
+                            'source': chicken.sire.id,
+                            'target': chicken.id
+                        })
+                    if(chicken.dam):
+                        links.append({
+                            'source': chicken.dam.id,
+                            'target': chicken.id
+                        })
+            return Response({
+                'results': {
+                    'nodes': nodes.data,
+                    'links': links
+                }
+            }, status=200)
+        except Farm.DoesNotExist:
+            return Response({'error': 'Farm doesnot exist'}, status=400)
+        except Exception as ex:
+            print(ex)
+            return Response({}, status=500)

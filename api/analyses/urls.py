@@ -25,10 +25,14 @@ hhep_router = routers.DefaultRouter()
 hhep_router.register(
     r'analyses/(?P<farm_id>.+)/(?P<flock_id>.+)/(?P<house_id>.+)/hhep', views.HHEPViewSet, basename="api_hhep")
 
+pedigree_router = routers.DefaultRouter()
+pedigree_router.register(
+    r'analyses/(?P<farm_id>.+)/(?P<flock_id>.+)/(?P<house_id>.+)/pedigree', views.PedigreeViewset, basename="api_pedigree")
 
 urlpatterns = [
     path('', include(directories_ref_router.urls)),
     path('', include(directories_router.urls)),
     path('', include(hdep_router.urls)),
     path('', include(hhep_router.urls)),
+    path('', include(pedigree_router.urls)),
 ]

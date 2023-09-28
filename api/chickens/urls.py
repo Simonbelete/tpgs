@@ -15,7 +15,6 @@ router.register(r'chickens/(?P<id>.+)/offspring',
                 views.ChickenOffspringViewSet, basename='api_chicken_offspring'),
 router.register(r'chickens/(?P<id>.+)/ancestors',
                 views.ChickenAncestorViewSet, basename='api_chicken_ancestors'),
-
 router.register(r'chickens/(?P<id>.+)/histories',
                 views.ChickenHistoryViewSet, basename='api_chickens_histories'),
 
