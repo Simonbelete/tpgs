@@ -65,7 +65,7 @@ export default function Home() {
           <AppBar
             position="static"
             elevation={0}
-            sx={{ background: "#f5faf8" }}
+            sx={{ background: "#f5faf8"}}
           >
             <Toolbar>
               <Container>

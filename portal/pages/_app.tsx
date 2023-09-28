@@ -80,7 +80,7 @@ export default function App({
     <Provider store={store}>
       <SessionProvider session={session}>
         <ThemeProvider theme={lightTheme}>
-          <OnBoardingProvider>
+          {/* <OnBoardingProvider> */}
             <SnackbarProvider
                anchorOrigin={{
                 vertical: 'top',
@@ -91,7 +91,7 @@ export default function App({
                 {getLayout(<Component {...pageProps} />)}
               </main>
             </SnackbarProvider>
-          </OnBoardingProvider>
+          {/* </OnBoardingProvider> */}
         </ThemeProvider>
       </SessionProvider>
     </Provider>

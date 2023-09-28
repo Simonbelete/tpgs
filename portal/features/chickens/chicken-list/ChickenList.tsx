@@ -7,7 +7,7 @@ import {
 import { Typography } from "@mui/material";
 import Link from "next/link";
 import { DataTable } from "@/components/tables";
-import { Breed } from "@/models";
+import { Breed, Chicken } from "@/models";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store";
 import _ from "lodash";
@@ -16,9 +16,9 @@ import { useGetChickensQuery, useDeleteChickenMutation } from "../services";
 import buildQuery from "@/util/buildQuery";
 
 const columns: GridColDef[] = [
-  { field: "tag", headerName: "Tag", flex: 1, minWidth: 150 },
-  { field: "sex", headerName: "Tag", flex: 1, minWidth: 150 },
-  { field: "house", headerName: "House", flex: 1, minWidth: 150,
+  { field: "tag", headerName: "Tag", flex: 1,  },
+  { field: "sex", headerName: "Tag", flex: 1,  },
+  { field: "house", headerName: "House", flex: 1,
     renderCell: (params: GridRenderCellParams<any>) => {
       if (params.row.house == null) return <></>;
       return (
@@ -30,9 +30,9 @@ const columns: GridColDef[] = [
       );
     },
   },
-  { field: "pen", headerName: "Pen", flex: 1, minWidth: 150,
+  { field: "pen", headerName: "Pen", flex: 1,
   },
-  { field: "flock", headerName: "Flock", flex: 1, minWidth: 150,
+  { field: "flock", headerName: "Flock", flex: 1,
     renderCell: (params: GridRenderCellParams<any>) => {
       if (params.row.flock == null) return <></>;
       return (
@@ -45,12 +45,12 @@ const columns: GridColDef[] = [
     },
   },
   { field: "reduction_date", 
-    headerName: "Mortality", flex: 1, minWidth: 150,
+    headerName: "Mortality", flex: 1,
     valueGetter: (params) =>
       params.row.reduction_date ? dayjs(params.row.reduction_date).format(process.env.NEXT_PUBLIC_DATE_FORMAT) : "",
   },
   { field: "created_at", 
-    headerName: "Create at", flex: 1, minWidth: 150,
+    headerName: "Create at", flex: 1,
     valueGetter: (params) =>
       params.row.created_at ? dayjs(params.row.created_at).format(process.env.NEXT_PUBLIC_DATE_FORMAT) : "",
   },
@@ -71,7 +71,7 @@ const ChickenList = () => {
   return (
     <DataTable
       onDelete={handleDelete}
-      rows={(data?.results ?? []) as GridRowsProp<Breed>}
+      rows={(data?.results ?? []) as GridRowsProp<Chicken>}
       columns={columns}
       rowCount={data?.count || 0}
       loading={isLoading}
