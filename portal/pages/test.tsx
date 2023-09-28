@@ -47,9 +47,6 @@ export default function PedigreeChart() {
       .force("y", d3.forceY())
       .force('collide', d3.forceCollide().radius(RADIUS)) // avoid node overlaps
       .force('center', d3.forceCenter(WIDTH / 2, HEIGHT / 4)) // nodes are attracted by the center of the chart area
-      console.log('link')
-      console.log(simulation.nodes());
-
 
   return (
     <div>

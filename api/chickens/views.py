@@ -10,6 +10,8 @@ from django.conf import settings
 from import_export import resources
 from rest_framework.parsers import MultiPartParser
 from tablib import Dataset
+from django.db.models import Q
+from rest_framework.response import Response
 
 from core.views import HistoryViewSet, SummaryViewSet, CoreModelViewSet
 from core.serializers import UploadSerializer
@@ -38,6 +40,12 @@ class ChickenSummaryViewSet(SummaryViewSet):
     def get_query(self):
         return models.Chicken.all.get(pk=self.id_pk)
 
+class ChickenOffspringViewSet(viewsets.ModelViewSet):
+    queryset = models.Chicken.history.all()
+    serializer_class = serializers.ChickenSerializer_GET
+
+    def get_queryset(self):
+        return models.Chicken.all.get(pk=self.kwargs['id_pk']).offspring()
 
 # Xlsx
 

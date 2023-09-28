@@ -14,9 +14,15 @@ summary_router = NestedDefaultRouter(
 summary_router.register(r'summary', views.ChickenSummaryViewSet,
                         basename='api_chicken_summary')
 
+offspring_router = NestedDefaultRouter(
+    router, r'chickens', lookup='id')
+offspring_router.register(r'offspring', views.ChickenOffspringViewSet,
+                        basename='api_chicken_offspring')
+
 urlpatterns = [
     path('', include(router.urls)),
     path('', include(summary_router.urls)),
+    path('', include(offspring_router.urls)),
     
     path('chickens/import/', include([
           path('xlsx', views.ChickenXlsxImport.as_view(),

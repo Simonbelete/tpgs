@@ -46,6 +46,14 @@ class Chicken(CoreModel):
             tag=self.tag,
             sex=self.sex
         )
+    
+    def offspring(self):
+        if self.sex == 'M':
+            return self.children_of_sire.all()
+        elif self.sex == 'F':
+            return self.children_of_dam.all()
+        else:
+            return []
 
     # def ancestors(self):
     #     '''Returns a list of this person's ancestors (their parents and all of
