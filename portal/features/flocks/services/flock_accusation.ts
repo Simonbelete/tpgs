@@ -14,9 +14,8 @@ const IMPORT_URL = `${URL}/import`;
 export const flocAccusationkApi = baseApi.injectEndpoints({
   endpoints: (build) => {
     return {
-      getAccusations: build.query<Response<Flock[]>, Object>({ query: (query?: Object) => ({ url: `${URL}/`, method: 'get', params: query }) }),
       getFlockAccusations: build.query<Response<Flock[]>, Object>({ query: (query?: Object) => ({ url: `${URL}/`, method: 'get', params: query }) }),
-      getFlockHistory: build.query<Response<Flock>, {id: number, query: Object}>({ query: ({id, query}) => ({ url: `${URL}/${id}/${HISTORY_URL}`, method: 'get', params: query }) }),
+      getFlockAccusationHistory: build.query<Response<Flock>, {id: number, query: Object}>({ query: ({id, query}) => ({ url: `${URL}/${id}/${HISTORY_URL}`, method: 'get', params: query }) }),
       getFlockSummary: build.query<AbstractSummary, number>({ query: (id: number) => ({ url: `${URL}/${id}/${SUMMARY_URL}/`, method: 'get' }) }),
       createFlock: build.mutation<Promise<AxiosResponse<Flock>>, Partial<Flock>>({
         query: (data: Partial<Flock>) => ({ url: `${URL}/`, method: 'post', data: data }),
@@ -35,4 +34,6 @@ export const flocAccusationkApi = baseApi.injectEndpoints({
 
 
 export const { 
+  useGetFlockAccusationsQuery,
+  useGetFlockAccusationHistoryQuery
 } = flocAccusationkApi;

@@ -70,8 +70,6 @@ const ChickenDetailForm = ({chicken}: {chicken?: Chicken}) => {
     resolver: yupResolver(schema),
   });
 
-  console.log(chicken);
-
   const useCRUDHook = useCRUD({
     results: [
       createResult,
@@ -185,7 +183,6 @@ const ChickenDetailForm = ({chicken}: {chicken?: Chicken}) => {
                   <FlockDropdown
                     onChange={(_, data) => onChange(data)}
                     value={value}
-                    label="Flock"
                     error={!!error?.message}
                     helperText={error?.message}
                   />

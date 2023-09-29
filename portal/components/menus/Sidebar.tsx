@@ -312,6 +312,31 @@ const SidebarMenu = () => {
               </Typography>
             </MenuItem>
           </SubMenu>
+          <SubMenu
+          label={
+            <Typography variant="body1" fontSize={14}>
+              Egg Production
+            </Typography>
+          }
+          icon={<EggIcon />}
+        >
+            <MenuItem
+              component={<Link href="/eggs" />}
+              icon={<AdjustIcon fontSize="small" />}
+            >
+              <Typography variant="body1" fontSize={14}>
+                Individual
+              </Typography>
+            </MenuItem>
+            <MenuItem
+              component={<Link href="/eggs/mass" />}
+              icon={<AdjustIcon fontSize="small" />}
+            >
+              <Typography variant="body1" fontSize={14}>
+                Mass
+              </Typography>
+            </MenuItem>
+          </SubMenu>
           <MenuItem
               component={<Link href="/breeds" />}
               icon={<DNAHellxIcon width="20" height="20" fill="inherit" />}

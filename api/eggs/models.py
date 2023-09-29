@@ -15,9 +15,9 @@ class Egg(CoreModel):
         Chicken, on_delete=models.CASCADE, null=True, blank=True, related_name='eggs')
     week = models.IntegerField(default=0)
     eggs = models.IntegerField()
-    weight = models.FloatField()
-    weight_unit = models.ForeignKey(
-        Unit, on_delete=models.SET_NULL, null=True, blank=True, related_name='eggs')
+    weight = models.FloatField() # in g
+    # weight_unit = models.ForeignKey(
+    #     Unit, on_delete=models.SET_NULL, null=True, blank=True, related_name='eggs')
     history = HistoricalRecords()
 
     class Meta:

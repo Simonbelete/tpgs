@@ -13,7 +13,7 @@ const ChickenDropdown = ({
 }: {
   sex?: string;
   value?: any,
-  label: string,
+  label?: string,
   error?: boolean
   helperText?: string;
   onChange?: (event: any, newValue: any) => void;

@@ -13,20 +13,33 @@ import EggInfoZone from "./EggInfoZone";
 import EggDangerZone from "./EggDangerZone";
 import { useCreateEggMutation, useUpdateEggMutation } from "../services";
 import { useCRUD } from "@/hooks";
+import { ChickenDropdown } from "@/features/chickens";
+import { FlockDropdown } from "@/features/flocks";
 
 type Inputs = Partial<Egg>;
 
 const schema = yup
   .object({
-    name: yup.string().required(),
-}).required();
+    flock: yup.number(),
+    chicken: yup.number(),
+    week: yup.number().typeError("Week must be number").min(0).required("Week is required"),
+    eggs: yup.string(),
+    weight: yup.string(),
+}).transform((currentValue: any) => {
+  if (currentValue.chicken != null)
+    currentValue.chicken = currentValue.chicken.id;
+  if (currentValue.flock != null)
+    currentValue.flock = currentValue.flock.id;
+
+  return currentValue;
+})
 
 const EggForm = ({
-  breed,
-  redirect = true,
+  egg,
+  mass
 }: {
-  breed?: Egg;
-  redirect?: boolean;
+  egg?: Egg;
+  mass?: boolean;
 }) => {
   const router = useRouter();
 
@@ -35,7 +48,7 @@ const EggForm = ({
 
   const { handleSubmit, control, setError } = useForm<Inputs>({
     defaultValues: {
-      ...breed,
+      ...egg,
     },
     // @ts-ignore 
     resolver: yupResolver(schema),
@@ -50,8 +63,9 @@ const EggForm = ({
   })
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
-    if (breed == null) await createEgg(data);
-    else await updateEgg({...data, id: breed.id});
+    console.log(data);
+    if (egg == null) await createEgg(data);
+    else await updateEgg({...data, id: egg.id});
   };
 
   return (
@@ -61,10 +75,74 @@ const EggForm = ({
         <Card title="Egg Form">
         <form onSubmit={handleSubmit(onSubmit)}>
           <Grid container spacing={4}>
-            {/* Name */}
-            <Grid item xs={12}>
+            {mass == true ? (
+              <>
+                {/* Flock */}
+                <Grid item xs={12}>
+                  <Controller
+                    name={"flock"}
+                    control={control}
+                    render={({
+                      field: { onChange, value },
+                      fieldState: { invalid, isTouched, isDirty, error },
+                    }) => (
+                      <FlockDropdown
+                        onChange={(_, data) => onChange(data)}
+                        value={value}
+                        error={!!error?.message}
+                        helperText={error?.message}
+                      />
+                    )}
+                  />
+                </Grid>
+              </>): (
+              <>
+                {/* Chicken */}
+                <Grid item xs={12} md={6}>
+                  <Controller
+                    name={"chicken"}
+                    control={control}
+                    render={({
+                      field: { onChange, value },
+                      fieldState: { invalid, isTouched, isDirty, error },
+                    }) => (
+                      <ChickenDropdown
+                        onChange={(_, data) => onChange(data)}
+                        value={value}
+                        error={!!error?.message}
+                        helperText={error?.message}
+                      />
+                    )}
+                  />
+                </Grid>
+              </>)}
+              {/* Week */}
+             <Grid item xs={12} md={6}>
               <Controller
-                name={"name"}
+                name={"week"}
+                control={control}
+                render={({
+                  field: { onChange, value },
+                  fieldState: { error },
+                }) => (
+                  <LabeledInput
+                    error={!!error?.message}
+                    helperText={error?.message}
+                    onChange={onChange}
+                    fullWidth
+                    size="small"
+                    value={value ?? ""}
+                    label={"Week"}
+                    placeholder={"Week"}
+                    type={"number"}
+                  />
+                )}
+              />
+            </Grid>
+              {/* Eggs */}
+             <Grid item xs={12} md={6}>
+              <Controller
+                name={"eggs"}
                 control={control}
                 render={({
                   field: { onChange, value },
@@ -76,9 +154,31 @@ const EggForm = ({
                     onChange={onChange}
                     fullWidth
                     size="small"
-                    value={value}
-                    label={"Name"}
-                    placeholder={"Name"}
+                    value={value ?? ""}
+                    label={"No of Eggs"}
+                    placeholder={"No of Eggs"}
+                  />
+                )}
+              />
+            </Grid>
+              {/* total Weight */}
+             <Grid item xs={12} md={6}>
+              <Controller
+                name={"weight"}
+                control={control}
+                render={({
+                  field: { onChange, value },
+                  fieldState: { invalid, isTouched, isDirty, error },
+                }) => (
+                  <LabeledInput
+                    error={!!error?.message}
+                    helperText={error?.message}
+                    onChange={onChange}
+                    fullWidth
+                    size="small"
+                    value={value ?? ""}
+                    label={"Total Weight [g]"}
+                    placeholder={"Total Weight [g]"}
                   />
                 )}
               />
@@ -119,10 +219,10 @@ const EggForm = ({
       </Grid>
       <Grid item xs={3}>
         <Stack spacing={3}>
-          {breed && (
+          {egg && (
             <>
-            <EggInfoZone id={breed?.id} />
-            <EggDangerZone id={breed.id} is_active={breed.is_active} />
+            <EggInfoZone id={egg?.id} />
+            <EggDangerZone id={egg.id} is_active={egg.is_active} />
             </>
           )}
         </Stack>

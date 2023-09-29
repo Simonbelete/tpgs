@@ -1,21 +1,13 @@
 import { useState } from 'react';
 import LoadingButton from '@mui/lab/LoadingButton';
 import AutorenewIcon from '@mui/icons-material/Autorenew';
-import directory_services from '../services/directory_services';
+import { useRefreshDirectoryMutation } from '../services';
 
 const RefreshDirectoryButton = () => {
-  const [isLoading, setIsLoading] = useState(false);
-  
-  const handleRefresh = async () => {
-    try{
-      setIsLoading(true);
-      await directory_services.refresh();
-    }catch(ex) {
-      
-    } finally {
-      setIsLoading(false);
-    }
-  }
+
+  const [refreshDirectory, { isLoading }] = useRefreshDirectoryMutation();
+
+  const handleRefresh = async () => await refreshDirectory(null);
 
   return (
     <LoadingButton 

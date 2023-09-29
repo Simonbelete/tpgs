@@ -6,13 +6,11 @@ import { FlockForm } from "../flock-form";
 
 const FlockDropdown = ({
   value,
-  label = "Flock",
   error,
   onChange,
   helperText,
 }: {
   value?: any,
-  label: string,
   error?: boolean
   helperText?: string;
   onChange?: (event: any, newValue: any) => void;
@@ -31,7 +29,7 @@ const FlockDropdown = ({
     <AsyncDropdown<Flock>
       value={value}
       dataKey="name"
-      label={label}
+      label={"Flock"}
       error={error}
       helperText={helperText}
       options={data?.results ?? []}

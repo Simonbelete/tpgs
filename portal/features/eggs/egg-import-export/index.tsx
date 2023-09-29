@@ -31,7 +31,7 @@ const HouseImportExport = () => {
         fileDownload(response.data, `eggs_.${type}`);
       } else {
         enqueueSnackbar(messages.exportError_400(), { variant: "error" });
-      }
+      }EggListFilter
     } catch (ex) {
       enqueueSnackbar(messages.exportError_500(), { variant: "error" });
     }
@@ -83,7 +83,7 @@ const HouseImportExport = () => {
         alignItems="center"
         useFlexGap flexWrap="wrap"
       >
-        <Link href="/houses/create">
+        <Link href="/eggs/create">
           <Button variant="contained" size={"small"} startIcon={<AddIcon />}>
             Create
           </Button>
