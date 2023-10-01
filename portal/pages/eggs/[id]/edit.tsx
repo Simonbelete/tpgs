@@ -5,25 +5,27 @@ import AddIcon from "@mui/icons-material/Add";
 import Link from "next/link";
 import CloseIcon from "@mui/icons-material/Close";
 import { EditLayout } from "@/layouts";
-import { EggForm } from "@/features/breeds";
-import { getEggByIdSSR } from '@/features/breeds/services';
+import { EggForm } from "@/features/eggs";
+import { getEggByIdSSR } from '@/features/eggs/services';
 import { Breadcrumbs, Loading } from "@/components";
 import { useBreadcrumbs } from "@/hooks";
-import { Egg } from "@/models";
+import { Egg, Chicken } from "@/models";
 import { SeoHead } from "@/seo";
 
 const BreeedEditPage = ({ data }: { data: Egg }) => {
   const { breadcrumbs } = useBreadcrumbs();
 
+  const TITLE = (data.chicken as Chicken).name || ""; 
+
   return (
     <>
-    <SeoHead title={`${data.name || ""} - Edit`} />
+    <SeoHead title={`${TITLE} - Edit`} />
     <EditLayout
       breadcrumbs={<Breadcrumbs items={breadcrumbs} />}
-      header={<Typography variant="title">{data.name} - Edit</Typography>}
+      header={<Typography variant="title">{TITLE} - Edit</Typography>}
       actions={<Actions />}
     >
-        <EggForm breed={data} />
+        <EggForm egg={data} />
     </EditLayout>
     </>
   );
@@ -61,7 +63,7 @@ export async function getServerSideProps(context: NextPageContext) {
       return {
         redirect: {
           permanent: false,
-          destination: `/${res.status}?id=${id}&from=/breeds&next=/breeds`,
+          destination: `/${res.status}?id=${id}&from=/eggs&next=/eggs`,
         },
       };
 
@@ -70,7 +72,7 @@ export async function getServerSideProps(context: NextPageContext) {
     return {
       redirect: {
         permanent: false,
-        destination: `/404?id=${id}&from=/breeds&next=/breeds&error=unknown`,
+        destination: `/404?id=${id}&from=/eggs&next=/breeds&error=unknown`,
       },
     };
   }

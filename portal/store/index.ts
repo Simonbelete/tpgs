@@ -33,6 +33,7 @@ import { chickenApi } from '@/features/chickens/services';
 import { flockApi } from '@/features/flocks/services';
 
 import { rtkQueryErrorLogger } from './middlewares/rtkQueryErrorLogger';
+import { urlQueryBuilder } from './middlewares/urlQueryBuilder';
 
 export const store = configureStore({
   reducer: {
@@ -70,7 +71,7 @@ export const store = configureStore({
     [flockApi.reducerPath]: flockApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
-      getDefaultMiddleware().concat(baseApi.middleware, rtkQueryErrorLogger),
+      getDefaultMiddleware().concat(baseApi.middleware, rtkQueryErrorLogger, urlQueryBuilder.middleware),
 });
 
 // see `setupListeners` docs - takes an optional callback as the 2nd arg for customization
