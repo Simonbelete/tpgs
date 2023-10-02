@@ -17,21 +17,13 @@ from core.serializers import UploadSerializer
 from . import models
 from . import serializers
 from . import admin
-
-
-class EggFilter(django_filters.FilterSet):
-    # name = django_filters.CharFilter(field_name='name', lookup_expr='contains')
-
-    class Meta:
-        model = models.Egg
-        fields = []
-
+from . import filters
 
 class EggViewSet(viewsets.ModelViewSet):
     queryset = models.Egg.objects.all()
     serializer_class = serializers.EggSerializer_GET
-    filterset_class = EggFilter
-    # search_fields = ['name']
+    filterset_class = filters.EggFilter
+    search_fields = ['tag']
     ordering_fields = '__all__'
 
     def get_serializer_class(self):
