@@ -11,27 +11,19 @@ from import_export import resources
 from rest_framework.parsers import MultiPartParser
 from tablib import Dataset
 
-
-from core.views import HistoryViewSet
+from core.views import HistoryViewSet, SummaryViewSet, CoreModelViewSet
 from core.serializers import UploadSerializer
 from . import models
 from . import serializers
 from . import admin
+from . import filters
 
 
-class FeedFilter(django_filters.FilterSet):
-    # name = django_filters.CharFilter(field_name='name', lookup_expr='contains')
-
-    class Meta:
-        model = models.Feed
-        fields = []
-
-
-class FeedViewSet(viewsets.ModelViewSet):
+class FeedViewSet(CoreModelViewSet):
     queryset = models.Feed.objects.all()
     serializer_class = serializers.FeedSerializer_GET
-    filterset_class = FeedFilter
-    # search_fields = ['name']
+    filterset_class = filters.FeedFilter
+    search_fields = ['chicken__tag', 'flock__name']
     ordering_fields = '__all__'
 
     def get_serializer_class(self):
@@ -39,14 +31,13 @@ class FeedViewSet(viewsets.ModelViewSet):
             return serializers.FeedSerializer_POST
         return serializers.FeedSerializer_GET
 
-    def perform_create(self, serializer):
-        serializer.save(created_by=self.request.user)
-
-
 class FeedHistoryViewSet(HistoryViewSet):
     queryset = models.Feed.history.all()
     serializer_class = serializers.FeedHistorySerializer
 
+class FeedSummaryViewSet(SummaryViewSet):
+    def get_query(self):
+        return models.Feed.all.get(pk=self.id_pk)
 
 # Xlsx
 
