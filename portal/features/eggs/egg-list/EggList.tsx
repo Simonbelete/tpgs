@@ -13,7 +13,7 @@ import { useGetEggsQuery, useDeleteEggMutation } from "../services";
 import buildQuery from "@/util/buildQuery";
 
 const columns: GridColDef[] = [
-  { field: "name", headerName: "Name", flex: 1, minWidth: 150 },
+  { field: "f", headerName: "Name", flex: 1, minWidth: 150 },
   { field: "created_at", 
     headerName: "Create at", flex: 1, minWidth: 150,
     valueGetter: (params) =>
@@ -21,17 +21,21 @@ const columns: GridColDef[] = [
   },
 ];
 
-const EggList = () => {
-  const selector = useSelector((state: RootState) => state.houseList);
+const EggList = ({mass = false}: {mass?: boolean}) => {
+  const selector = useSelector((state: RootState) => state.filter);
   const [paginationModel, setPaginationModel] = useState({
     page: 0,
     pageSize: 10,
   });
 
-  const { data, isLoading, refetch } = useGetEggsQuery(buildQuery({...paginationModel, ...selector})); 
-  const [deleteHouse, deleteResult ] = useDeleteEggMutation();
+  const { data, isLoading, refetch } = useGetEggsQuery(buildQuery({
+    ...paginationModel, ...selector,
+    flock__isnull: mass,
+    chicken_isnull: !mass
+  })); 
+  const [deleteEgg, deleteResult ] = useDeleteEggMutation();
 
-  const handleDelete = async (id: number) => await deleteHouse(id).then(() => refetch())
+  const handleDelete = async (id: number) => await deleteEgg(id).then(() => refetch())
 
   return (
     <DataTable

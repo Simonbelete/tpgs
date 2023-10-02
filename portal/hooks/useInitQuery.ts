@@ -11,7 +11,7 @@ const useInitQuery = () => {
   useEffect(() => {
     const result: FilterState = {
       search: (router.query.search as string) || "",
-      is_active: router.query.is_active === 'true' ? true : false,
+      is_active: router.query.is_active === 'false' ? false : true,
       filters: {}
     }
 

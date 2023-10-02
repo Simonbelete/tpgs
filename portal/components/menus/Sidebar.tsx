@@ -33,6 +33,7 @@ import DashboardIcon from '@mui/icons-material/Dashboard';
 import EggIcon from '@mui/icons-material/Egg';
 import GroupWorkIcon from '@mui/icons-material/GroupWork';
 import CabinIcon from '@mui/icons-material/Cabin';
+import { useRouter } from "next/router";
 
 function menuProps(key: string) {
   return {
@@ -42,6 +43,7 @@ function menuProps(key: string) {
 
 const SidebarMenu = () => {
   const theme = useTheme();
+  const router = useRouter();
   const { data: session, status } = useSession();
   const { isSuperUser, isAdmin, isFarmer} = useGroup();
 
@@ -55,6 +57,11 @@ const SidebarMenu = () => {
       icon: theme.palette.text.secondary,
       hover: {
         backgroundColor: "#202d32",
+        color: "#bfd2ef",
+        fontSize: "13px",
+      },
+      active: {
+        backgroundColor: "#365966",
         color: "#bfd2ef",
         fontSize: "13px",
       },
@@ -89,6 +96,10 @@ const SidebarMenu = () => {
       [`&.${menuClasses.disabled}`]: {
         color: sidebarTheme.menu.disabled.color,
       },
+      [`&.${menuClasses.active}`]: {
+        backgroundColor: sidebarTheme.menu.active.backgroundColor,
+        color: sidebarTheme.menu.active.color,
+      },
       "&:hover": {
         backgroundColor: sidebarTheme.menu.hover.backgroundColor,
         color: sidebarTheme.menu.hover.color,
@@ -121,7 +132,7 @@ const SidebarMenu = () => {
       
 
       <Menu menuItemStyles={menuItemStyles}>
-        <MenuItem component={<Link href="/dashboard" />} icon={<DashboardIcon fontSize="small" />}>
+        <MenuItem component={<Link href="/dashboard" />} icon={<DashboardIcon fontSize="small" />} active={router.pathname.includes('/dashboard')}>
             <Typography variant="body1" fontSize={14}>
               Dashboard
             </Typography>
@@ -319,10 +330,12 @@ const SidebarMenu = () => {
             </Typography>
           }
           icon={<EggIcon />}
+          defaultOpen={['/eggs', '/eggs/mass'].includes(router.pathname)}
         >
             <MenuItem
               component={<Link href="/eggs" />}
               icon={<AdjustIcon fontSize="small" />}
+              active={RegExp('^/eggs$').test(router.pathname)}
             >
               <Typography variant="body1" fontSize={14}>
                 Individual
@@ -331,6 +344,7 @@ const SidebarMenu = () => {
             <MenuItem
               component={<Link href="/eggs/mass" />}
               icon={<AdjustIcon fontSize="small" />}
+              active={RegExp('^/eggs/mass$').test(router.pathname)}
             >
               <Typography variant="body1" fontSize={14}>
                 Mass
