@@ -8,7 +8,12 @@ const useCRUD = ({results, setError }: {results: any[], setError?: any}) => {
 
   useEffect(() => {
     for(const result of results) {
-      if(result.status !== "fulfilled") continue;
+      // TOOD: 
+      if(result.status === "fulfilled" || result.status === 'rejected') {
+
+      }else {
+        continue;
+      }
 
       const isError = result.isError
       const isSuccess = result.isSuccess
@@ -24,7 +29,7 @@ const useCRUD = ({results, setError }: {results: any[], setError?: any}) => {
         data = result.data
         statusCode = result.data.status
       }
-  
+
       if(isError) {
         if(statusCode == 400) errorToForm(data, setError);
       } else if(isSuccess) {

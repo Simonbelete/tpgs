@@ -12,10 +12,10 @@ import { useBreadcrumbs } from "@/hooks";
 import { Egg, Chicken } from "@/models";
 import { SeoHead } from "@/seo";
 
-const BreeedEditPage = ({ data }: { data: Egg }) => {
+const EggEditPage = ({ data }: { data: Egg }) => {
   const { breadcrumbs } = useBreadcrumbs();
 
-  const TITLE = (data.chicken as Chicken).name || ""; 
+  const TITLE = data.chicken !== null ? (data.chicken as Chicken).name : ""; 
 
   return (
     <>
@@ -78,4 +78,4 @@ export async function getServerSideProps(context: NextPageContext) {
   }
 }
 
-export default BreeedEditPage;
+export default EggEditPage;

@@ -20,11 +20,11 @@ type Inputs = Partial<Egg>;
 
 const schema = yup
   .object({
-    flock: yup.number(),
-    chicken: yup.number(),
+    flock: yup.number().nullable(),
+    chicken: yup.number().nullable(),
     week: yup.number().typeError("Week must be number").min(0).required("Week is required"),
-    eggs: yup.string(),
-    weight: yup.string(),
+    eggs: yup.number(),
+    weight: yup.number(),
 }).transform((currentValue: any) => {
   if (currentValue.chicken != null)
     currentValue.chicken = currentValue.chicken.id;

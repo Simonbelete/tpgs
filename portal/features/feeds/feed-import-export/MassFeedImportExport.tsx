@@ -18,7 +18,7 @@ import {
   importFeedsXLS
  } from "../services";
 
-const FeedImportExport = () => {
+const MassFeedImportExport = () => {
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
   const handleExport = async (type: string) => {
@@ -83,7 +83,7 @@ const FeedImportExport = () => {
         alignItems="center"
         useFlexGap flexWrap="wrap"
       >
-        <Link href="/feeds/create">
+        <Link href="/feeds/mass/create">
           <Button variant="contained" size={"small"} startIcon={<AddIcon />}>
             Create
           </Button>
@@ -140,4 +140,4 @@ const FeedImportExport = () => {
   );
 };
 
-export default FeedImportExport;
+export default MassFeedImportExport;

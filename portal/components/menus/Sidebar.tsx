@@ -28,7 +28,7 @@ import HelpIcon from "@mui/icons-material/Help";
 import { useSession, signOut } from "next-auth/react";
 import hasGroup from "@/util/hasGroup";
 import { useGroup } from "@/hooks";
-import { ChickenIcon, DNAHellxIcon } from "@/components/Icons";
+import { ChickenIcon, DNAHellxIcon, SackIcon } from "@/components/Icons";
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import EggIcon from '@mui/icons-material/Egg';
 import GroupWorkIcon from '@mui/icons-material/GroupWork';
@@ -345,6 +345,34 @@ const SidebarMenu = () => {
               component={<Link href="/eggs/mass" />}
               icon={<AdjustIcon fontSize="small" />}
               active={RegExp('^/eggs/mass$').test(router.pathname)}
+            >
+              <Typography variant="body1" fontSize={14}>
+                Mass
+              </Typography>
+            </MenuItem>
+          </SubMenu>
+          <SubMenu
+          label={
+            <Typography variant="body1" fontSize={14}>
+              Feed Intake
+            </Typography>
+          }
+          icon={<SackIcon width="20" height="20" fill="inherit" />}
+          defaultOpen={['/feeds', '/feeds/mass'].includes(router.pathname)}
+        >
+            <MenuItem
+              component={<Link href="/feeds" />}
+              icon={<AdjustIcon fontSize="small" />}
+              active={RegExp('^/feeds$').test(router.pathname)}
+            >
+              <Typography variant="body1" fontSize={14}>
+                Individual
+              </Typography>
+            </MenuItem>
+            <MenuItem
+              component={<Link href="/feeds/mass" />}
+              icon={<AdjustIcon fontSize="small" />}
+              active={RegExp('^/feeds/mass$').test(router.pathname)}
             >
               <Typography variant="body1" fontSize={14}>
                 Mass

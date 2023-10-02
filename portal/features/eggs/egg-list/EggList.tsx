@@ -2,8 +2,11 @@ import React, { useEffect, useState } from "react";
 import {
   GridRowsProp,
   GridColDef,
+  GridRenderCellParams
 } from "@mui/x-data-grid";
 import { DataTable } from "@/components/tables";
+import { Typography } from "@mui/material";
+import Link from "next/link";
 import { Egg } from "@/models";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store";
@@ -11,14 +14,36 @@ import _ from "lodash";
 import dayjs from 'dayjs';
 import { useGetEggsQuery, useDeleteEggMutation } from "../services";
 import buildQuery from "@/util/buildQuery";
+import buildPage from "@/util/buildPage";
 
 const columns: GridColDef[] = [
-  { field: "f", headerName: "Name", flex: 1, minWidth: 150 },
-  { field: "created_at", 
-    headerName: "Create at", flex: 1, minWidth: 150,
-    valueGetter: (params) =>
-      params.row.created_at ? dayjs(params.row.created_at).format(process.env.NEXT_PUBLIC_DATE_FORMAT) : "",
+  { field: "chicken", headerName: "Chicken", flex: 1,
+    renderCell: (params: GridRenderCellParams<any>) => {
+      if (params.row.chicken == null) return <></>;
+      return (
+        <Typography color={"link.primary"} variant="body2">
+          <Link href={`/chickens/${params.row.chicken.id}`}>
+            {params.row.chicken.name}
+          </Link>
+        </Typography>
+      );
+    },
   },
+  { field: "flock", headerName: "Flock", flex: 1,
+    renderCell: (params: GridRenderCellParams<any>) => {
+      if (params.row.flock == null) return <></>;
+      return (
+        <Typography color={"link.primary"} variant="body2">
+          <Link href={`/flocks/${params.row.flock.id}`}>
+            {params.row.flock.name}
+          </Link>
+        </Typography>
+      );
+    },
+  },
+  { field: "week", headerName: "Week", flex: 1, minWidth: 150 },
+  { field: "eggs", headerName: "No of Eggs", flex: 1, minWidth: 150 },
+  { field: "weight", headerName: "Weight [g]", flex: 1, minWidth: 150 },
 ];
 
 const EggList = ({mass = false}: {mass?: boolean}) => {
@@ -29,9 +54,9 @@ const EggList = ({mass = false}: {mass?: boolean}) => {
   });
 
   const { data, isLoading, refetch } = useGetEggsQuery(buildQuery({
-    ...paginationModel, ...selector,
-    flock__isnull: mass,
-    chicken_isnull: !mass
+    ...buildPage(paginationModel), ...selector,
+    flock__isnull: !mass,
+    chicken_isnull: mass
   })); 
   const [deleteEgg, deleteResult ] = useDeleteEggMutation();
 
