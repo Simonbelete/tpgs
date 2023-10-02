@@ -19,6 +19,7 @@ import { cityListReducer } from '@/features/cities';
 import { regionListReducer } from "@/features/regions";
 import { chickenListReducer } from "@/features/chickens";
 import { flockListReducer } from "@/features/flocks";
+import { filterReducer } from './slices';
 
 import { baseApi } from '@/services/baseApi';
 import { houseApi } from '@/features/houses/services';
@@ -38,6 +39,7 @@ import { urlQueryBuilder } from './middlewares/urlQueryBuilder';
 export const store = configureStore({
   reducer: {
     tenant: tenantReducer,
+    filter: filterReducer,
     formula: formulaReducer,
     ingredientForm: ingredientFormReducer,
     ingredientFilter: ingredientFilterReducer,
@@ -57,7 +59,7 @@ export const store = configureStore({
     regionList: regionListReducer,
     chickenList: chickenListReducer,
     flockList: flockListReducer,
-
+    
     // // Apis
     [houseApi.reducerPath]: houseApi.reducer,
     [breedApi.reducerPath]: breedApi.reducer,

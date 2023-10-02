@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Paper,
   Stack,
@@ -14,8 +14,9 @@ import {
 import { useSelector, useDispatch } from "react-redux";
 import { SearchInput } from "@/components/inputs";
 import { CheckboxDropdown } from "@/components/dropdowns";
-import { eggListSlice } from "./slice";
 import { RootState } from "@/store";
+import { filterSlice } from '@/store/slices';
+import { useInitQuery } from '@/hooks';
 
 const EggFilter = () => {
   const dispatch = useDispatch();
@@ -24,11 +25,13 @@ const EggFilter = () => {
     {name: 'Deactive', value: false}
   ]
   
-  const selector = useSelector((state: RootState) => state.eggList);
+  const selector = useSelector((state: RootState) => state.filter);
 
-  const handleActiveChange = (event: SelectChangeEvent) => dispatch(eggListSlice.actions.setIsActive((event.target.value as any).value))
+  const handleActiveChange = (event: SelectChangeEvent) => dispatch(filterSlice.actions.setIsActive((event.target.value as any).value))
 
-  const handleSearchButton = () => dispatch(eggListSlice.actions.reset());
+  const handleSearchButton = () => dispatch(filterSlice.actions.reset());
+
+  const queryInit = useInitQuery();
   
   return (
     <Paper sx={{ p: 2 }} elevation={0} variant="outlined" square id="invitation-filter">
@@ -45,7 +48,7 @@ const EggFilter = () => {
             justifyContent={{ xs: "start", md: "end" }}
             spacing={2}
           >
-            <SearchInput label="Search..."  onChange={(event: React.ChangeEvent<HTMLInputElement>) => dispatch(eggListSlice.actions.setSearch(event.target.value)) }/>
+            <SearchInput label="Search..."  onChange={(event: React.ChangeEvent<HTMLInputElement>) => dispatch(filterSlice.actions.setSearch(event.target.value)) }/>
 
             <Stack
             direction="row"
@@ -69,7 +72,7 @@ const EggFilter = () => {
                 color="secondary"
                 size="small"
                 disableElevation
-                onClick={() => dispatch(eggListSlice.actions.reset())}
+                onClick={() => dispatch(filterSlice.actions.reset())}
               >
                 Clear
               </Button>
