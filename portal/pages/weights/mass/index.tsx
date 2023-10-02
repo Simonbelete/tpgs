@@ -7,22 +7,23 @@ import {
   WeightList,
   WeightListFilter,
   WeightImportExport,
+  MassWeightImportExport
 } from "@/features/weights";
 import { SeoHead } from "@/seo";
 
-const WeightPage = () => {
+const WeightMassPage = () => {
   const { breadcrumbs } = useBreadcrumbs();
 
   return (
     <>
-      <SeoHead title="Body Weight"/>
+      <SeoHead title="Mass Body Weight"/>
       <ListLayout
         breadcrumbs={<Breadcrumbs items={breadcrumbs} />}
-        header={<Typography variant="title">Body Weight</Typography>}
-        actions={<WeightImportExport />}
+        header={<Typography variant="title">Mass Body Weight</Typography>}
+        actions={<MassWeightImportExport />}
         filter={<WeightListFilter />}
       >
-        <WeightList />
+        <WeightList mass />
       </ListLayout>
     </>
   );
@@ -30,4 +31,4 @@ const WeightPage = () => {
 
 
 
-export default WeightPage;
+export default WeightMassPage;

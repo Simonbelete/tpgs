@@ -18,6 +18,7 @@ import PeopleIcon from "@mui/icons-material/People";
 import CrisisAlertIcon from "@mui/icons-material/CrisisAlert";
 import CircleIcon from "@mui/icons-material/Circle";
 import AdjustIcon from "@mui/icons-material/Adjust";
+import ScaleIcon from '@mui/icons-material/Scale';
 import LocalDiningIcon from "@mui/icons-material/LocalDining";
 import PublicIcon from "@mui/icons-material/Public";
 import PaidIcon from "@mui/icons-material/Paid";
@@ -28,7 +29,7 @@ import HelpIcon from "@mui/icons-material/Help";
 import { useSession, signOut } from "next-auth/react";
 import hasGroup from "@/util/hasGroup";
 import { useGroup } from "@/hooks";
-import { ChickenIcon, DNAHellxIcon, SackIcon } from "@/components/Icons";
+import { ChickenIcon, DNAHellxIcon, SackIcon, FlourBagIcon, ChickenEasterIcon } from "@/components/Icons";
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import EggIcon from '@mui/icons-material/Egg';
 import GroupWorkIcon from '@mui/icons-material/GroupWork';
@@ -329,7 +330,7 @@ const SidebarMenu = () => {
               Egg Production
             </Typography>
           }
-          icon={<EggIcon />}
+          icon={<ChickenEasterIcon width="20" height="20" fill="inherit"  />}
           defaultOpen={['/eggs', '/eggs/mass'].includes(router.pathname)}
         >
             <MenuItem
@@ -373,6 +374,34 @@ const SidebarMenu = () => {
               component={<Link href="/feeds/mass" />}
               icon={<AdjustIcon fontSize="small" />}
               active={RegExp('^/feeds/mass$').test(router.pathname)}
+            >
+              <Typography variant="body1" fontSize={14}>
+                Mass
+              </Typography>
+            </MenuItem>
+          </SubMenu>
+          <SubMenu
+          label={
+            <Typography variant="body1" fontSize={14}>
+              Body Weight
+            </Typography>
+          }
+          icon={<ScaleIcon width="20" height="20" fill="inherit" />}
+          defaultOpen={['/weights', '/weights/mass'].includes(router.pathname)}
+        >
+            <MenuItem
+              component={<Link href="/weights" />}
+              icon={<AdjustIcon fontSize="small" />}
+              active={RegExp('^/weights$').test(router.pathname)}
+            >
+              <Typography variant="body1" fontSize={14}>
+                Individual
+              </Typography>
+            </MenuItem>
+            <MenuItem
+              component={<Link href="/weights/mass" />}
+              icon={<AdjustIcon fontSize="small" />}
+              active={RegExp('^/weights/mass$').test(router.pathname)}
             >
               <Typography variant="body1" fontSize={14}>
                 Mass

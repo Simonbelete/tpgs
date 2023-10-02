@@ -31,6 +31,8 @@ import { cityApi } from "@/features/cities/services";
 import { regionApi } from "@/features/regions/services";
 import { chickenApi } from '@/features/chickens/services';
 import { flockApi } from '@/features/flocks/services';
+import { feedApi } from '@/features/feeds/services';
+import { weightApi } from '@/features/weights/services';
 
 import { rtkQueryErrorLogger } from './middlewares/rtkQueryErrorLogger';
 import { urlQueryBuilder } from './middlewares/urlQueryBuilder';
@@ -69,6 +71,8 @@ export const store = configureStore({
     [regionApi.reducerPath]: regionApi.reducer,
     [chickenApi.reducerPath]: chickenApi.reducer,
     [flockApi.reducerPath]: flockApi.reducer,
+    [feedApi.reducerPath]: feedApi.reducer,
+    [weightApi.reducerPath]: weightApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
       getDefaultMiddleware().concat(baseApi.middleware, rtkQueryErrorLogger, urlQueryBuilder.middleware),

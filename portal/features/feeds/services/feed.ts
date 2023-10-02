@@ -5,13 +5,13 @@ import clientSSR from "@/services/client_ssr";
 import client from "@/services/client";
 import { NextPageContext } from "next";
 
-const URL = "/breeds";
+const URL = "/feeds";
 const HISTORY_URL = `histories`;
 const SUMMARY_URL = `summary`;
 const EXPORT_URL = `${URL}/export`;
 const IMPORT_URL = `${URL}/import`;
 
-export const breedApi = baseApi.injectEndpoints({
+export const feedApi = baseApi.injectEndpoints({
   endpoints: (build) => {
     return {
       getFeeds: build.query<Response<Feed>, Object>({ query: (query?: Object) => ({ url: `${URL}/`, method: 'get', params: query }) }),
@@ -66,4 +66,4 @@ export const {
   useCreateFeedMutation,
   useUpdateFeedMutation,
   useDeleteFeedMutation,
-} = breedApi;
+} = feedApi;

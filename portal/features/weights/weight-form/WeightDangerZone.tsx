@@ -1,16 +1,16 @@
 import { DangerZoneCard } from '@/components';
 import React, { useState } from 'react';
-import { useDeleteEggMutation, useUpdateEggMutation } from '../services';
+import { useDeleteWeightMutation, useUpdateWeightMutation } from '../services';
 import { useRouter } from 'next/router';
 import { useCRUD } from "@/hooks";
 
-const EggDangerZone = ({ id, is_active }: { id: number, is_active: boolean }) => {
+const WeightDangerZone = ({ id, is_active }: { id: number, is_active: boolean }) => {
   const router = useRouter();
-  const [updateEgg, updateResult ] = useUpdateEggMutation();
-  const [deleteEgg, deleteResult ] = useDeleteEggMutation();
+  const [updateWeight, updateResult ] = useUpdateWeightMutation();
+  const [deleteWeight, deleteResult ] = useDeleteWeightMutation();
 
-  const handleToggleActive = async (value: boolean) =>  await updateEgg({id: id, is_active: value})
-  const handleDelete = async () => await deleteEgg(id).then(() => router.push('/eggs'))
+  const handleToggleActive = async (value: boolean) =>  await updateWeight({id: id, is_active: value})
+  const handleDelete = async () => await deleteWeight(id).then(() => router.push('/eggs'))
 
   const useCRUDHook = useCRUD({
     results: [
@@ -31,4 +31,4 @@ const EggDangerZone = ({ id, is_active }: { id: number, is_active: boolean }) =>
   )
 }
 
-export default EggDangerZone;
+export default WeightDangerZone;

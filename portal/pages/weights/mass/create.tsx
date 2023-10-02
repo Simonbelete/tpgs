@@ -8,20 +8,20 @@ import {
 } from "@/features/weights";
 import { SeoHead } from "@/seo";
 
-const WeightCreatePage = () => {
+const MassWeightCreatePage = () => {
   const { breadcrumbs } = useBreadcrumbs();
 
   return (
     <>
-      <SeoHead title="Create Body Weight" />
+      <SeoHead title="Create Mass Body Weight" />
       <CreateLayout
         breadcrumbs={<Breadcrumbs items={breadcrumbs} />}
-        header={<Typography variant="title">Create Body Weight</Typography>}
+        header={<Typography variant="title">Create Mass Body Weight</Typography>}
       >
-        <WeightForm />
+        <WeightForm mass />
       </CreateLayout>
     </>
   );
 };
 
-export default WeightCreatePage;
+export default MassWeightCreatePage;
