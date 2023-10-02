@@ -13,7 +13,7 @@ class Weight(CoreModel):
     chicken = models.ForeignKey(
         Chicken, on_delete=models.CASCADE, null=True, blank=True, related_name='weights')
     week = models.IntegerField(default=0)
-    weight = models.FloatField()
+    weight = models.FloatField(null=True, blank=True)
     weight_unit = models.ForeignKey(
         Unit, on_delete=models.SET_NULL, null=True, blank=True, related_name='weights')
     history = HistoricalRecords()

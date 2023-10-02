@@ -12,26 +12,18 @@ from rest_framework.parsers import MultiPartParser
 from tablib import Dataset
 
 
-from core.views import HistoryViewSet
+from core.views import HistoryViewSet, SummaryViewSet, CoreModelViewSet
 from core.serializers import UploadSerializer
 from . import models
 from . import serializers
 from . import admin
+from . import filters
 
-
-class WeightFilter(django_filters.FilterSet):
-    # name = django_filters.CharFilter(field_name='name', lookup_expr='contains')
-
-    class Meta:
-        model = models.Weight
-        fields = []
-
-
-class WeightViewSet(viewsets.ModelViewSet):
+class WeightViewSet(CoreModelViewSet):
     queryset = models.Weight.objects.all()
     serializer_class = serializers.WeightSerializer_GET
-    filterset_class = WeightFilter
-    # search_fields = ['name']
+    filterset_class = filters.WeightFilter
+    search_fields = ['chicken__tag', 'flock__name']
     ordering_fields = '__all__'
 
     def get_serializer_class(self):
@@ -39,13 +31,15 @@ class WeightViewSet(viewsets.ModelViewSet):
             return serializers.WeightSerializer_POST
         return serializers.WeightSerializer_GET
 
-    def perform_create(self, serializer):
-        serializer.save(created_by=self.request.user)
-
 
 class WeightHistoryViewSet(HistoryViewSet):
     queryset = models.Weight.history.all()
     serializer_class = serializers.WeightHistorySerializer
+
+
+class WeightSummaryViewSet(SummaryViewSet):
+    def get_query(self):
+        return models.Weight.all.get(pk=self.id_pk)
 
 
 # Xlsx
