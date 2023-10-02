@@ -13,7 +13,6 @@ import { houseListReducer } from "@/features/houses";
 import { breedListReducer } from "@/features/breeds";
 import { purposeListReducer } from '@/features/purposes';
 import { unitListReducer } from '@/features/units';
-import { eggListReducer } from "@/features/eggs";
 import { countryListReducer } from '@/features/countries';
 import { cityListReducer } from '@/features/cities';
 import { regionListReducer } from "@/features/regions";
@@ -53,7 +52,6 @@ export const store = configureStore({
     breedList: breedListReducer,
     purposeList: purposeListReducer,
     unitList: unitListReducer,
-    eggList: eggListReducer,
     countryList: countryListReducer,
     cityList: cityListReducer,
     regionList: regionListReducer,
