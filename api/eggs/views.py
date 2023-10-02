@@ -12,18 +12,18 @@ from rest_framework.parsers import MultiPartParser
 from tablib import Dataset
 
 
-from core.views import HistoryViewSet
+from core.views import HistoryViewSet, SummaryViewSet, CoreModelViewSet
 from core.serializers import UploadSerializer
 from . import models
 from . import serializers
 from . import admin
 from . import filters
 
-class EggViewSet(viewsets.ModelViewSet):
+class EggViewSet(CoreModelViewSet):
     queryset = models.Egg.objects.all()
     serializer_class = serializers.EggSerializer_GET
     filterset_class = filters.EggFilter
-    search_fields = ['tag']
+    search_fields = ['chicken__tag', 'flock__name']
     ordering_fields = '__all__'
 
     def get_serializer_class(self):
@@ -31,13 +31,13 @@ class EggViewSet(viewsets.ModelViewSet):
             return serializers.EggSerializer_POST
         return serializers.EggSerializer_GET
 
-    def perform_create(self, serializer):
-        serializer.save(created_by=self.request.user)
-
-
 class EggHistoryViewSet(HistoryViewSet):
     queryset = models.Egg.history.all()
     serializer_class = serializers.EggHistorySerializer
+
+class EggSummaryViewSet(SummaryViewSet):
+    def get_query(self):
+        return models.Egg.all.get(pk=self.id_pk)
 
 
 # Xlsx
