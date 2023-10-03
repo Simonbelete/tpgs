@@ -1,37 +1,33 @@
-import React, { ChangeEvent, ReactElement } from "react";
-import { AxiosResponse } from "axios";
-import Link from "next/link";
+import React from "react";
 import { ListLayout } from "@/layouts";
 import { useBreadcrumbs } from "@/hooks";
 import { Breadcrumbs } from "@/components";
-import { Button, Typography, Stack } from "@mui/material";
+import { Typography } from "@mui/material";
 import {
   NutrientGroupList,
-  nutrientGroupService,
+  NutrientGroupListFilter,
   NutrientGroupImportExport,
-  NutrientGroupFilter
 } from "@/features/nutrient-group";
-import Head from "next/head";
-import siteMetadata from "@/data/siteMetadata";
+import { SeoHead } from "@/seo";
 
 const NutrientGroupPage = () => {
   const { breadcrumbs } = useBreadcrumbs();
 
   return (
     <>
-      <Head>
-        <title>{siteMetadata.headerTitle} - Nutrient Groups</title>
-      </Head>
+      <SeoHead title="Nutrient Group"/>
       <ListLayout
         breadcrumbs={<Breadcrumbs items={breadcrumbs} />}
-        header={<Typography variant="title">Nutrient Groups</Typography>}
+        header={<Typography variant="title">Nutrient Group</Typography>}
         actions={<NutrientGroupImportExport />}
-        filter={<NutrientGroupFilter />}
+        filter={<NutrientGroupListFilter />}
       >
         <NutrientGroupList />
       </ListLayout>
     </>
   );
 };
+
+
 
 export default NutrientGroupPage;

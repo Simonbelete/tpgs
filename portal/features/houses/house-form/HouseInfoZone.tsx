@@ -1,6 +1,6 @@
 import { InfoZoneCard } from "@/components";
 import React, { useEffect } from "react";
-import { useGetSummaryQuery } from '../services/house';
+import { useGetSummaryQuery } from '../services';
 
 const HouseInfoZone = ({id}: {id: number}) => {
   const { data, error, isLoading } = useGetSummaryQuery(id);

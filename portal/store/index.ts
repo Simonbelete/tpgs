@@ -6,7 +6,6 @@ import { ingredientFormReducer, ingredientFilterReducer } from "@/features/ingre
 import { nutrientFilterReducer } from "@/features/nutrients"; 
 import { onBoardingReducer } from "@/features/onboarding";
 import { SettingReducer } from "@/features/settings";
-import { NutrientGroupFilterReducer } from '@/features/nutrient-group';
 import { invitationFilterReducer } from "@/features/invitations";
 import { directoryBuilderReducer } from '@/features/directory';
 import { houseListReducer } from "@/features/houses"; 
@@ -17,7 +16,6 @@ import { countryListReducer } from '@/features/countries';
 import { cityListReducer } from '@/features/cities';
 import { regionListReducer } from "@/features/regions";
 import { chickenListReducer } from "@/features/chickens";
-import { flockListReducer } from "@/features/flocks";
 import { filterReducer } from './slices';
 
 import { baseApi } from '@/services/baseApi';
@@ -33,6 +31,7 @@ import { chickenApi } from '@/features/chickens/services';
 import { flockApi } from '@/features/flocks/services';
 import { feedApi } from '@/features/feeds/services';
 import { weightApi } from '@/features/weights/services';
+import { nutrientGroupApi } from '@/features/nutrient-group/services';
 
 import { rtkQueryErrorLogger } from './middlewares/rtkQueryErrorLogger';
 import { urlQueryBuilder } from './middlewares/urlQueryBuilder';
@@ -47,7 +46,6 @@ export const store = configureStore({
     nutrientFilter: nutrientFilterReducer,
     onBoarding: onBoardingReducer,
     setting: SettingReducer,
-    nutrientGroupFilter: NutrientGroupFilterReducer,
     invitationFilter: invitationFilterReducer,
     directoryBuilder: directoryBuilderReducer,
     houseList: houseListReducer,
@@ -58,7 +56,6 @@ export const store = configureStore({
     cityList: cityListReducer,
     regionList: regionListReducer,
     chickenList: chickenListReducer,
-    flockList: flockListReducer,
     
     // // Apis
     [houseApi.reducerPath]: houseApi.reducer,
@@ -73,6 +70,7 @@ export const store = configureStore({
     [flockApi.reducerPath]: flockApi.reducer,
     [feedApi.reducerPath]: feedApi.reducer,
     [weightApi.reducerPath]: weightApi.reducer,
+    [nutrientGroupApi.reducerPath]: nutrientGroupApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
       getDefaultMiddleware().concat(baseApi.middleware, rtkQueryErrorLogger, urlQueryBuilder.middleware),

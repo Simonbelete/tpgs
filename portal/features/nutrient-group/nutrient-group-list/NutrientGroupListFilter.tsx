@@ -18,7 +18,7 @@ import { RootState } from "@/store";
 import { filterSlice } from '@/store/slices';
 import { useInitQuery } from '@/hooks';
 
-const FlockFilter = () => {
+const NutrientGroupFilter = () => {
   const dispatch = useDispatch();
   const activeMenu = [
     {name: 'Active', value: true},
@@ -116,4 +116,4 @@ const FlockFilter = () => {
   );
 };
 
-export default FlockFilter;
+export default NutrientGroupFilter;

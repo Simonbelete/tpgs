@@ -4,14 +4,13 @@ import {
   GridColDef,
 } from "@mui/x-data-grid";
 import { DataTable } from "@/components/tables";
-import { Flock } from "@/models";
+import { House } from "@/models";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store";
 import _ from "lodash";
 import dayjs from 'dayjs';
-import { useGetFlocksQuery, useDeleteFlockMutation } from "../services";
+import { useGetNutrientGroupsQuery, useDeleteNutrientGroupMutation } from "../services";
 import buildQuery from "@/util/buildQuery";
-import buildPage from "@/util/buildPage";
 
 const columns: GridColDef[] = [
   { field: "name", headerName: "Name", flex: 1, minWidth: 150 },
@@ -22,22 +21,22 @@ const columns: GridColDef[] = [
   },
 ];
 
-const FlockList = () => {
-  const selector = useSelector((state: RootState) => state.filter);
+const NutrientGroupList = () => {
+  const selector = useSelector((state: RootState) => state.houseList);
   const [paginationModel, setPaginationModel] = useState({
     page: 0,
     pageSize: 10,
   });
 
-  const { data, isLoading, refetch } = useGetFlocksQuery(buildQuery({...buildPage(paginationModel), ...selector})); 
-  const [deleteFlock, deleteResult ] = useDeleteFlockMutation();
+  const { data, isLoading, refetch } = useGetNutrientGroupsQuery(buildQuery({...paginationModel, ...selector})); 
+  const [deleteNutrientGroup, deleteResult ] = useDeleteNutrientGroupMutation();
 
-  const handleDelete = async (id: number) => await deleteFlock(id).then(() => refetch())
+  const handleDelete = async (id: number) => await deleteNutrientGroup(id).then(() => refetch())
 
   return (
     <DataTable
       onDelete={handleDelete}
-      rows={(data?.results ?? []) as GridRowsProp<Flock>}
+      rows={(data?.results ?? []) as GridRowsProp<House>}
       columns={columns}
       rowCount={data?.count || 0}
       loading={isLoading}
@@ -50,4 +49,4 @@ const FlockList = () => {
   );
 };
 
-export default FlockList;
+export default NutrientGroupList;

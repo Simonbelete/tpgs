@@ -14,6 +14,7 @@ import _ from "lodash";
 import dayjs from 'dayjs';
 import { useGetChickensQuery, useDeleteChickenMutation } from "../services";
 import buildQuery from "@/util/buildQuery";
+import buildPage from "@/util/buildPage";
 
 const columns: GridColDef[] = [
   { field: "tag", headerName: "Tag", flex: 1,  },
@@ -63,7 +64,7 @@ const ChickenList = () => {
     pageSize: 10,
   });
 
-  const { data, isLoading, refetch } = useGetChickensQuery(buildQuery({...paginationModel, ...selector})); 
+  const { data, isLoading, refetch } = useGetChickensQuery(buildQuery({...buildPage(paginationModel), ...selector})); 
   const [deleteHouse, deleteResult ] = useDeleteChickenMutation();
 
   const handleDelete = async (id: number) => await deleteHouse(id).then(() => refetch())

@@ -44,10 +44,12 @@ const AccountMenu = () => {
             aria-controls={open ? "account-menu" : undefined}
             aria-haspopup="true"
             aria-expanded={open ? "true" : undefined}
+            
           >
             <Avatar sx={{ width: 32, height: 32 }}>
               {(session?.user?.name || "User")[0]}
             </Avatar>
+            {(session?.user?.name || "")}
           </IconButton>
         </Tooltip>
       </Box>

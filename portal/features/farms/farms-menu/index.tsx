@@ -18,6 +18,7 @@ import { Farm } from "@/models";
 import farm_service from "../services/farm_service";
 import WindowIcon from "@mui/icons-material/Window";
 import HouseIcon from "@mui/icons-material/House";
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import Link from "next/link";
 import { useSelector, useDispatch } from "react-redux";
 import { useRouter } from "next/router";
@@ -60,7 +61,10 @@ const FarmsMenu = () => {
         aria-expanded={open ? "true" : undefined}
         onClick={handleClick}
         disableRipple
-        startIcon={<HouseIcon />}
+        size="small"
+        startIcon={<HouseIcon fontSize="small" />}
+        endIcon={<ArrowDropDownIcon />}
+        color="secondary"
       >
         <Typography variant="caption" color="text.primary">
           {tenant.name}
