@@ -1,13 +1,13 @@
 version: '3.7'
 
 networks:
-  odoo_modules:
+  tpgs:
     driver: bridge
 
 services:
   postgresql:
-    image: ilri_pfm/postgresql
-    container_name: odoo_modules_postgresql
+    image: tpgs/postgresql
+    container_name: tpgs_postgresql
     build:
       context: .
       dockerfile: postgresql/Dockerfile
@@ -21,3 +21,13 @@ services:
       - './postgresql/db:/var/lib/postgresql/data'
     ports:
       - '5432:5432'
+  redis:
+    image: tpgs/redis
+    container_name: tpgs_redis
+    build:
+      context: .
+      dockerfile: redis/Dockerfile
+      args:
+        POSTGRES_VERSION: ${REDIS_VERSION}
+    ports:
+      - '6379:6379'
