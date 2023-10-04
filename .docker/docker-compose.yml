@@ -28,6 +28,6 @@ services:
       context: .
       dockerfile: redis/Dockerfile
       args:
-        POSTGRES_VERSION: ${REDIS_VERSION}
+        REDIS_VERSION: ${REDIS_VERSION}
     ports:
       - '6379:6379'
