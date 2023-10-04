@@ -87,6 +87,8 @@ SHARED_APPS = [
     'django_filters',
     'simple_history',
     'django_rest_passwordreset',
+    'django_celery_beat',
+    'django_celery_results',
     'auths',
     'farms',
     'users',
@@ -126,6 +128,16 @@ INSTALLED_APPS = list(SHARED_APPS) + \
 SITE_ID = 1
 
 AUTH_USER_MODEL = 'users.User'
+
+# Celery
+# save Celery task results in Django's database
+CELERY_RESULT_BACKEND = env('CELERY_BROKER_URL')
+
+# This configures Redis as the datastore between Django + Celery
+CELERY_BROKER_URL = env('CELERY_RESULT_BACKEND')
+
+# this allows you to schedule items in the Django admin.
+CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers.DatabaseScheduler'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

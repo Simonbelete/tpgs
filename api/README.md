@@ -13,6 +13,15 @@ eg 9999.999
 4. ```python manage.py create_groups```
 5. ```python manage.py cities_light```
 
+### Deploy
+
+```celery beat -l info```
+```celery worker -l info```
+
+## Run Worker
+
+```celery worker --beat```
+
 ## Creating New Tenant
 
 ```python manage.py create_schema [tenant_name]```
@@ -60,3 +69,5 @@ Farm / Flock / House / Pen
 ## Charts
 
 - 
+
+

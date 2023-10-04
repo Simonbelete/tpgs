@@ -37,3 +37,7 @@ pandas
 drf-nested-routers
 django-tenants
 reportlab
+celery
+redis
+django-celery-beat
+django-celery-results
