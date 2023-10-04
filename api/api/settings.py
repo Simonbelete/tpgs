@@ -103,7 +103,7 @@ SHARED_APPS = [
     'units',
     'purposes',
     'formulas',
-    'analyses'
+    
 ]
 
 TENANT_APPS = [
@@ -121,7 +121,8 @@ TENANT_APPS = [
 ]
 
 INSTALLED_APPS = list(SHARED_APPS) + \
-    [app for app in TENANT_APPS if app not in SHARED_APPS]
+    [app for app in TENANT_APPS if app not in SHARED_APPS] + \
+    ['analyses']
 
 # SHOW_PUBLIC_IF_NO_TENANT_FOUND = True
 

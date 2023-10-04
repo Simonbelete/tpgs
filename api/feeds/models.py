@@ -22,3 +22,12 @@ class Feed(CoreModel):
 
     class Meta:
         unique_together = ['flock', 'chicken', 'week']
+
+    @property
+    def adjusted_weight(self):
+        if(not self.flock):
+            return self.weight / self.flock.total_chickens
+        elif(self.chicken):
+            return self.weight
+        else:
+            return self.weight / (self.flock.total_chickens + 1)

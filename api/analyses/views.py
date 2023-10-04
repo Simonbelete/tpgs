@@ -2,10 +2,10 @@ from django.shortcuts import render
 from rest_framework import viewsets, status
 import django_filters
 from rest_framework.response import Response
-from django.db.models import Q
-from django.db.models import Count, Sum, Avg, F
+from django.db.models import Count, Sum, Avg, F, Q
 from django_tenants.utils import tenant_context
 from drf_spectacular.utils import extend_schema, OpenApiParameter, OpenApiExample
+from django.db import connection
 
 from . import models
 from . import serializers
@@ -13,6 +13,7 @@ from eggs.models import Egg
 from flocks.models import Flock, FlockReduction, FlockAccusation
 from farms.models import Farm
 from feeds.models import Feed
+from weights.models import Weight
 from chickens.models import Chicken
 
 class DirectoryListFilter(django_filters.FilterSet):
@@ -261,6 +262,74 @@ class PedigreeViewset(viewsets.ViewSet):
                     'links': links
                 }
             }, status=200)
+        except Farm.DoesNotExist:
+            return Response({'error': 'Farm doesnot exist'}, status=400)
+        except Exception as ex:
+            print(ex)
+            return Response({}, status=500)
+
+class WBFT(viewsets.ViewSet):
+    """Weight By Feed Type(Formula)
+    """
+
+    def filter_by_flock(self, queryset, flock_id):
+        if(flock_id != 'all'):
+            return queryset.filter(flock=flock_id)
+        return queryset
+    
+    def filter_by_house(self, queryset, house_id):
+        if(house_id != 'all'):
+            return queryset.filter(house=house_id)
+        return queryset
+    
+    @extend_schema(
+        parameters=[
+            OpenApiParameter(
+                name='week', description='Week', location=OpenApiParameter.QUERY, required=False, type=int),
+            OpenApiParameter(
+                name='sex', description='Sex', location=OpenApiParameter.QUERY, required=False, type=str),
+        ]
+    )
+    def list(self, request, **kwargs):
+        week = int(request.GET.get('week', 0))
+        farm_id = kwargs['farm_id']
+        flock_id = kwargs['flock_id']
+        house_id = kwargs['house_id']
+
+        if (kwargs['farm_id'] == 'all'):
+            return Response({
+                'errors': [
+                    'farm can not be all'
+                ]
+            })
+        
+        try:
+            farm = Farm.objects.get(pk=farm_id)
+
+            with tenant_context(farm):
+                queryset = Feed.objects.filter(week=week)
+                queryset = self.filter_by_flock(queryset, flock_id)
+                queryset = self.filter_by_house(queryset, house_id)
+
+                weight_queryset = Weight.objects.filter(week=week)
+                weight_queryset = self.filter_by_flock(weight_queryset, flock_id)
+                weight_queryset = self.filter_by_house(weight_queryset, house_id)
+
+                cursor = connection.cursor()
+                cursor.execute("""
+                    SET search_path TO {farm};
+
+                    SELECT * FROM feeds_feed ff
+                        INNER JOIN weights_weight ww
+                            ON ff.flock_id = ww.flock_id
+                                OR ff.chicken_id = ww.flock_id;
+                """.format(farm=farm))
+                
+                return Response({
+                    'results': cursor.fetchall()
+                }, status=200)
+
+        # flock, chicken, weight, formula
         except Farm.DoesNotExist:
             return Response({'error': 'Farm doesnot exist'}, status=400)
         except Exception as ex:

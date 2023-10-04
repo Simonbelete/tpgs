@@ -18,3 +18,6 @@ ILRI poultry farming management system
 - Feed By Weight (FE)
     - Trend
     - Probability density (Density) 
+
+
+Dash board chickens that doesnt belong to any flock or house

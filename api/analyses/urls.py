@@ -6,7 +6,7 @@ from . import views
 
 """
     `all` - Considers all data
-    analyses/{{farm}}/{{breed}}/{{flock}}/{{house}}/*
+    analyses/{{farm}}/{{flock}}/{{house}}/*
 """
 
 directories_router = routers.DefaultRouter()
@@ -29,10 +29,15 @@ pedigree_router = routers.DefaultRouter()
 pedigree_router.register(
     r'analyses/(?P<farm_id>.+)/(?P<flock_id>.+)/(?P<house_id>.+)/pedigree', views.PedigreeViewset, basename="api_pedigree")
 
+wbft_router = routers.DefaultRouter()
+wbft_router.register(
+    r'analyses/(?P<farm_id>.+)/(?P<flock_id>.+)/(?P<house_id>.+)/wbft', views.WBFT, basename="api_wbft")
+
 urlpatterns = [
     path('', include(directories_ref_router.urls)),
     path('', include(directories_router.urls)),
     path('', include(hdep_router.urls)),
     path('', include(hhep_router.urls)),
     path('', include(pedigree_router.urls)),
+    path('', include(wbft_router.urls)),
 ]

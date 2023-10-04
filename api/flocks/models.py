@@ -24,7 +24,9 @@ class Flock(CoreModel):
 
     @property
     def total_chickens(self):
-        """ Total Number of Alive Chickens """
+        """ Total Number of Alive Chickens
+        It includes both individual and bulk chickens
+        """
         return self.total_accusation - self.total_reduction
 
     @property
