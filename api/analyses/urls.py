@@ -6,7 +6,7 @@ from . import views
 
 """
     `all` - Considers all data
-    analyses/{{farm}}/{{flock}}/{{house}}/*
+    analyses/{{farm}}/{{breed}}/{{flock}}/{{house}}/*
 """
 
 directories_router = routers.DefaultRouter()

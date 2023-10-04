@@ -10,3 +10,11 @@ ILRI poultry farming management system
 
 ## TODO
 - Calendar view for chicken feed, egg, weight, vacine
+
+### Analysis
+- Weight By Feed Type(WBFT)
+    - Density
+
+- Feed By Weight (FE)
+    - Trend
+    - Probability density (Density) 

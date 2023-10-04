@@ -32,12 +32,16 @@ class Migration(migrations.Migration):
         migrations.RunSQL(
             """
             CREATE MATERIALIZED VIEW directory_list AS 
-                SELECT concat(ff.id, ff2.id, hh.id) AS unique_id, 
-                    ff.schema_name AS farm_name, ff.id AS farm_id, 
+                SELECT concat(ff.id, bb.id, ff2.id, hh.id) AS unique_id, 
+                    ff.schema_name AS farm_name, ff.id AS farm_id,
+                    bb.name as breed_name, bb.id, breed_id,
                 	ff2.name AS flock_name, ff2.id AS flock_id,
                 	hh.name as house_name, hh.id AS house_id
                 FROM farms_farm ff
-                CROSS JOIN test.flocks_flock ff2, test.houses_house hh;
+                CROSS JOIN
+                    test.flocks_flock ff2, 
+                    test.houses_house hh
+                    test.breeds_breed bb;
 
                 CREATE UNIQUE INDEX ON directory_list(unique_id);
             """,
