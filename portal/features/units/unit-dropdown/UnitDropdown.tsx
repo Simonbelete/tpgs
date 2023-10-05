@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { AsyncDropdown } from "@/components/dropdowns";
 import { useLazyGetUnitsQuery } from '../services';
 import { Unit } from "@/models";
+import { UnitForm } from '../unit-form' 
 
 const UnitDropdown = ({
   value,
@@ -11,7 +12,7 @@ const UnitDropdown = ({
   helperText,
 }: {
   value?: any,
-  label: string,
+  label?: string,
   error?: boolean
   helperText?: string;
   onChange?: (event: any, newValue: any) => void;
@@ -38,6 +39,8 @@ const UnitDropdown = ({
       onOpen={handleOnOpen}
       onClose={handleOnClose}
       onChange={onChange}
+      createFormTitle="Create Unit"
+      createForm={<UnitForm />}
       onInputChange={(event: any, newInputValue: any) => {
         trigger({}, true)
       }}

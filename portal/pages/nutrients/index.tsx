@@ -1,32 +1,33 @@
-import React, { ReactElement } from "react";
-import { IngredientTypeList } from "@/features/ingredient-types";
-import Link from "next/link";
+import React from "react";
 import { ListLayout } from "@/layouts";
 import { useBreadcrumbs } from "@/hooks";
 import { Breadcrumbs } from "@/components";
-import { Button, Typography } from "@mui/material";
-import AddIcon from "@mui/icons-material/Add";
-import { NutrientsList, NutrientListActions, NutrientFilter } from "@/features/nutrients";
-import Head from "next/head";
+import { Typography } from "@mui/material";
+import {
+  NutrientList,
+  NutrientListFilter,
+  NutrientImportExport,
+} from "@/features/nutrients";
+import { SeoHead } from "@/seo";
 
-const NutrientsPage = () => {
+const NutrientPage = () => {
   const { breadcrumbs } = useBreadcrumbs();
 
   return (
     <>
-      <Head>
-        <title>ILRI TPGS - Nutrients</title>
-      </Head>
+      <SeoHead title="Nutrients"/>
       <ListLayout
         breadcrumbs={<Breadcrumbs items={breadcrumbs} />}
         header={<Typography variant="title">Nutrients</Typography>}
-        actions={<NutrientListActions />}
-        filter={<NutrientFilter />}
+        actions={<NutrientImportExport />}
+        filter={<NutrientListFilter />}
       >
-        <NutrientsList />
+        <NutrientList />
       </ListLayout>
     </>
   );
 };
 
-export default NutrientsPage;
+
+
+export default NutrientPage;

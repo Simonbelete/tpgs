@@ -1,19 +1,20 @@
-import React from "react";
-import { ViewLayout } from "@/layouts";
-import { useBreadcrumbs } from "@/hooks";
-import { Button, Typography, Box, Container } from "@mui/material";
-import { NutrientView } from "@/features/nutrients";
+import { Loading } from "@/components";
+import { NextPageContext } from "next";
 
-const NutrientPage = () => {
-  const { breadcrumbs } = useBreadcrumbs();
+const Page = ({ id }: { id: number }) => {
+  return <Loading />
+}
 
-  return (
-    <ViewLayout>
-      <Container maxWidth="xl">
-        <NutrientView />
-      </Container>
-    </ViewLayout>
-  );
-};
+export async function getServerSideProps(context: NextPageContext) {
+  const { id } = context.query;
 
-export default NutrientPage;
+  return {
+    redirect: {
+      permanent: false,
+      // @ts-ignore
+      destination: `${context.resolvedUrl}/edit`
+    }
+  };
+}
+
+export default Page;

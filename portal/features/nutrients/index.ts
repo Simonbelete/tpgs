@@ -1,10 +1,4 @@
-export { default as NutrientsList } from "./nutrients-list";
-export { default as NutrientForm } from "./nutrient-form";
-export { default as NutrientView } from "./nutrient-view";
-export { default as NutrientService } from "./services/nutrient_service";
-export { default as NutrientListItem } from "./nutrient-list-item";
-export { default as NutrientSelectDialog } from "./nutrient-select-dialog";
-export { default as NutrientEditableTable } from "./nutrient-editable-table";
-export { default as NutrientListActions } from "./nutrient-list-actions";
-export { default as NutrientFilter } from './nutrient-filter';
-export * from "./slices";
+export * from './nutrient-form';
+export * from './nutrients-list';
+export * from './nutrient-history-list';
+export * from './nutrient-import-export';

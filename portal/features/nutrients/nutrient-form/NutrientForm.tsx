@@ -13,6 +13,8 @@ import NutrientInfoZone from "./NutrientInfoZone";
 import NutrientDangerZone from "./NutrientDangerZone";
 import { useCreateNutrientMutation, useUpdateNutrientMutation } from "../services";
 import { useCRUD } from "@/hooks";
+import { NutrientGroupDropdown } from "@/features/nutrient-group";
+import { UnitDropdown } from "@/features/units";
 
 type Inputs = Partial<Nutrient>;
 
@@ -169,15 +171,11 @@ const NutrientForm = ({
                 field: { onChange, value },
                 fieldState: { invalid, isTouched, isDirty, error },
               }) => (
-                <AsyncDropdown
-                  url="/nutrient-groups/"
-                  key="name"
+                <NutrientGroupDropdown
                   onChange={(_, data) => onChange(data)}
                   value={value}
-                  label="Nutrient Group"
                   error={!!error?.message}
                   helperText={error?.message}
-                  createForm={<NutrientGroupForm />}
                 />
               )}
             />
@@ -191,15 +189,11 @@ const NutrientForm = ({
                 field: { onChange, value },
                 fieldState: { invalid, isTouched, isDirty, error },
               }) => (
-                <AsyncDropdown
-                  url="/units/"
-                  key="name"
+                <UnitDropdown 
                   onChange={(_, data) => onChange(data)}
                   value={value}
-                  label="Unit"
                   error={!!error?.message}
                   helperText={error?.message}
-                  createForm={<UnitForm />}
                 />
               )}
             />
