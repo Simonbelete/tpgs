@@ -14,7 +14,7 @@ const IMPORT_URL = `${URL}/import`;
 export const unitApi = baseApi.injectEndpoints({
   endpoints: (build) => {
     return {
-      getUnits: build.query<Response<Unit>, Object>({ query: (query?: Object) => ({ url: `${URL}/`, method: 'get', params: query }) }),
+      getUnits: build.query<Response<Unit[]>, Object>({ query: (query?: Object) => ({ url: `${URL}/`, method: 'get', params: query }) }),
       getUnitHistory: build.query<Response<Unit>, {id: number, query: Object}>({ query: ({id, query}) => ({ url: `${URL}/${id}/${HISTORY_URL}`, method: 'get', params: query }) }),
       getUnitSummary: build.query<AbstractSummary, number>({ query: (id: number) => ({ url: `${URL}/${id}/${SUMMARY_URL}/`, method: 'get' }) }),
       createUnit: build.mutation<Promise<AxiosResponse<Unit>>, Partial<Unit>>({
@@ -61,6 +61,7 @@ export const importUnitsXLS = async (data: FormData) =>
 
 export const { 
   useGetUnitsQuery,
+  useLazyGetUnitsQuery,
   useGetUnitHistoryQuery,
   useGetUnitSummaryQuery, 
   useCreateUnitMutation,
