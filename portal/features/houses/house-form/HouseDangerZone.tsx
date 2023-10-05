@@ -20,7 +20,7 @@ const HouseDangerZone = ({ id, is_active }: { id: number, is_active: boolean }) 
 
   return (
     <DangerZoneCard 
-      onViewHistories={() => router.push(`/houses/${id}/histories`)} 
+      onViewHistories={() => router.push(`${router.pathname}/histories`)} 
       onDeactivate={() => handleToggleActive(false)}
       onActivate={() => handleToggleActive(true)}
       onDelete={handleDelete}

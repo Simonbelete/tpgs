@@ -14,7 +14,7 @@ import {
 import { useSelector, useDispatch } from "react-redux";
 import { SearchInput } from "@/components/inputs";
 import { CheckboxDropdown } from "@/components/dropdowns";
-import { houseListSlice } from "./slice";
+import { filterSlice } from '@/store/slices'
 import { RootState } from "@/store";
 
 const HouseFilter = () => {
@@ -24,11 +24,11 @@ const HouseFilter = () => {
     {name: 'Deactive', value: false}
   ]
   
-  const selector = useSelector((state: RootState) => state.houseList);
+  const selector = useSelector((state: RootState) => state.filter);
 
-  const handleActiveChange = (event: SelectChangeEvent) => dispatch(houseListSlice.actions.setIsActive((event.target.value as any).value))
+  const handleActiveChange = (event: SelectChangeEvent) => dispatch(filterSlice.actions.setIsActive((event.target.value as any).value))
 
-  const handleSearchButton = () => dispatch(houseListSlice.actions.reset());
+  const handleSearchButton = () => dispatch(filterSlice.actions.reset());
   
   return (
     <Paper sx={{ p: 2 }} elevation={0} variant="outlined" square id="invitation-filter">
@@ -45,7 +45,7 @@ const HouseFilter = () => {
             justifyContent={{ xs: "start", md: "end" }}
             spacing={2}
           >
-            <SearchInput label="Search..."  onChange={(event: React.ChangeEvent<HTMLInputElement>) => dispatch(houseListSlice.actions.setSearch(event.target.value)) }/>
+            <SearchInput label="Search..."  onChange={(event: React.ChangeEvent<HTMLInputElement>) => dispatch(filterSlice.actions.setSearch(event.target.value)) }/>
 
             <Stack
             direction="row"
@@ -69,7 +69,7 @@ const HouseFilter = () => {
                 color="secondary"
                 size="small"
                 disableElevation
-                onClick={() => dispatch(houseListSlice.actions.reset())}
+                onClick={() => dispatch(filterSlice.actions.reset())}
               >
                 Clear
               </Button>
