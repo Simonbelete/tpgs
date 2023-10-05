@@ -1,28 +1,31 @@
 import React from "react";
 import { NextPageContext } from "next";
-import { Container, Stack, Button } from "@mui/material";
-import { EditLayout } from "@/layouts";
-import {
-  IngredientTypeForm,
-  IngredientTypeService,
-} from "@/features/ingredient-types";
-import { Breadcrumbs, Loading } from "@/components";
-import { useBreadcrumbs } from "@/hooks";
-import { Nutrient } from "@/models";
+import { Button, Typography, Stack, Container } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import Link from "next/link";
+import CloseIcon from "@mui/icons-material/Close";
+import { EditLayout } from "@/layouts";
+import { IngredientTypeForm } from "@/features/ingredient-types";
+import { getIngredientTypeByIdSSR } from '@/features/ingredient-types/services';
+import { Breadcrumbs, Loading } from "@/components";
+import { useBreadcrumbs } from "@/hooks";
+import { IngredientType } from "@/models";
+import { SeoHead } from "@/seo";
 
-const IngredientTypeEditPage = ({ data }: { data: Nutrient }) => {
+const BreeedEditPage = ({ data }: { data: IngredientType }) => {
   const { breadcrumbs } = useBreadcrumbs();
 
   return (
-    <EditLayout breadcrumbs={<Breadcrumbs items={breadcrumbs} />}
-    actions={<Actions />}
+    <>
+    <SeoHead title={`${data.name || ""} - Edit`} />
+    <EditLayout
+      breadcrumbs={<Breadcrumbs items={breadcrumbs} />}
+      header={<Typography variant="title">{data.name} - Edit</Typography>}
+      actions={<Actions />}
     >
-      <Container maxWidth="xl">
         <IngredientTypeForm ingredient_type={data} />
-      </Container>
     </EditLayout>
+    </>
   );
 };
 
@@ -34,9 +37,14 @@ const Actions = () => {
         justifyContent="flex-start"
         alignItems="center"
       >
-        <Link href="/houses/create">
-          <Button variant="contained" size={"small"} startIcon={<AddIcon />}>
+        <Link href="/breeds/create">
+          <Button variant="outlined" size={"small"} startIcon={<AddIcon />}>
             Create New
+          </Button>
+        </Link>
+        <Link href="/breeds">
+          <Button variant="outlined" color="error" size={"small"} startIcon={<CloseIcon />}>
+            Cancel
           </Button>
         </Link>
       </Stack>
@@ -47,28 +55,25 @@ export async function getServerSideProps(context: NextPageContext) {
   const { id } = context.query;
 
   try {
-    const res = await IngredientTypeService.getById(Number(id));
-
-    // context.resolvedUrl
+    const res = await getIngredientTypeByIdSSR(context, Number(id));
+    
     if (res.status != 200)
       return {
         redirect: {
           permanent: false,
-          destination: `/${res.status}?id=${id}&from=/ingredient-types&next=/units`,
+          destination: `/${res.status}?id=${id}&from=/breeds&next=/breeds`,
         },
       };
 
-    const data = res.data;
-
-    return { props: { data } };
+    return { props: { data: res.data } };
   } catch (ex) {
     return {
       redirect: {
         permanent: false,
-        destination: `/404?id=${id}&from=/ingredient-types&next=/ingredient-types&error=unknown`,
+        destination: `/404?id=${id}&from=/breeds&next=/breeds&error=unknown`,
       },
     };
   }
 }
 
-export default IngredientTypeEditPage;
+export default BreeedEditPage;

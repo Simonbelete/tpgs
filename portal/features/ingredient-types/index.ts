@@ -1,3 +1,4 @@
-export { default as IngredientTypeForm } from "./ingredient-type-form";
-export { default as IngredientTypeList } from "./ingredient-type-list";
-export { default as IngredientTypeService } from "./services/ingredient_type_services";
+export * from './ingredient-type-form';
+export * from './ingredient-type-history-list';
+export * from './ingredient-type-import-export';
+export * from './ingredient-type-list';

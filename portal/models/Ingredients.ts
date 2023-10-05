@@ -1,8 +1,8 @@
+import AbstractBaseModel from "./AbstractBaseModel";
 import IngredientNutrient from "./IngredientNutrient";
 import IngredientType from "./IngredientType";
 
-export default interface Ingredient {
-  id: number;
+export default interface Ingredient extends AbstractBaseModel {
   name: string;
   code: string;
   ingredient_type: number | IngredientType;
