@@ -15,7 +15,7 @@ const BreedPage = () => {
 
   return (
     <>
-      <SeoHead title="House"/>
+      <SeoHead title="Breeds"/>
       <ListLayout
         breadcrumbs={<Breadcrumbs items={breadcrumbs} />}
         header={<Typography variant="title">Breed</Typography>}

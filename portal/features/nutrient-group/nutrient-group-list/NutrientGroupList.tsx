@@ -11,6 +11,7 @@ import _ from "lodash";
 import dayjs from 'dayjs';
 import { useGetNutrientGroupsQuery, useDeleteNutrientGroupMutation } from "../services";
 import buildQuery from "@/util/buildQuery";
+import buildPage from "@/util/buildPage";
 
 const columns: GridColDef[] = [
   { field: "name", headerName: "Name", flex: 1, minWidth: 150 },
@@ -22,13 +23,13 @@ const columns: GridColDef[] = [
 ];
 
 const NutrientGroupList = () => {
-  const selector = useSelector((state: RootState) => state.houseList);
+  const selector = useSelector((state: RootState) => state.filter);
   const [paginationModel, setPaginationModel] = useState({
     page: 0,
     pageSize: 10,
   });
 
-  const { data, isLoading, refetch } = useGetNutrientGroupsQuery(buildQuery({...paginationModel, ...selector})); 
+  const { data, isLoading, refetch } = useGetNutrientGroupsQuery(buildQuery({...buildPage(paginationModel), ...selector})); 
   const [deleteNutrientGroup, deleteResult ] = useDeleteNutrientGroupMutation();
 
   const handleDelete = async (id: number) => await deleteNutrientGroup(id).then(() => refetch())

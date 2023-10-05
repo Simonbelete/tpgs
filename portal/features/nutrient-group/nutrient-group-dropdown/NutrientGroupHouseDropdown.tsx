@@ -1,21 +1,22 @@
 import React, { useEffect } from "react";
 import { AsyncDropdown } from "@/components/dropdowns";
-import { useLazyGetIngredientsQuery } from '../services';
-import { Flock } from "@/models";
-import { IngredientForm  } from "../ingredient-form";
+import { useLazyGetNutrientGroupsQuery } from '../services';
+import { NutrientGroup } from "@/models";
 
-const FlockDropdown = ({
+const NutrientGroupDropdown = ({
   value,
+  label = "House",
   error,
   onChange,
   helperText,
 }: {
   value?: any,
+  label: string,
   error?: boolean
   helperText?: string;
   onChange?: (event: any, newValue: any) => void;
 }) => {
-  const [trigger, {isLoading, data}, lastPromiseInfo] = useLazyGetIngredientsQuery();
+  const [trigger, {isLoading, data}, lastPromiseInfo] = useLazyGetNutrientGroupsQuery();
 
   const handleOnOpen = () => {
     trigger({}, true);
@@ -26,10 +27,10 @@ const FlockDropdown = ({
   }
 
   return (
-    <AsyncDropdown<Flock>
+    <AsyncDropdown<NutrientGroup>
       value={value}
       dataKey="name"
-      label={"Flock"}
+      label={label}
       error={error}
       helperText={helperText}
       options={data?.results ?? []}
@@ -37,8 +38,6 @@ const FlockDropdown = ({
       onOpen={handleOnOpen}
       onClose={handleOnClose}
       onChange={onChange}
-      createForm={<IngredientForm />}
-      createFormTitle="Create Ingredient"
       onInputChange={(event: any, newInputValue: any) => {
         trigger({}, true)
       }}
@@ -46,4 +45,4 @@ const FlockDropdown = ({
   )
 }
 
-export default FlockDropdown;
+export default NutrientGroupDropdown;

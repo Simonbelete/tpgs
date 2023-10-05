@@ -29,8 +29,6 @@ const Actions = () => {
 export async function getServerSideProps(context: NextPageContext) {
   const { id } = context.query;
 
-  console.log(context.query);
-
   return {
     props: { id },
   };

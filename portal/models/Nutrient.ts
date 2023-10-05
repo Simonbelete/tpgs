@@ -1,8 +1,8 @@
+import AbstractBaseModel from "./AbstractBaseModel";
 import NutrientGroup from "./NutrientGroup";
 import Unit from "./Unit";
 
-export default interface Nutrient {
-  id: number;
+export default interface Nutrient extends AbstractBaseModel {
   name: string;
   code: string;
   abbreviation: string;

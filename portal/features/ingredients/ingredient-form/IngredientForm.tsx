@@ -13,6 +13,7 @@ import IngredientInfoZone from "./IngredientInfoZone";
 import IngredientDangerZone from "./IngredientDangerZone";
 import { useCreateIngredientMutation, useUpdateIngredientMutation } from "../services";
 import { useCRUD } from "@/hooks";
+import { IngredientTypeDropdown } from "@/features/ingredient-types";
 
 type Inputs = Partial<Ingredient>;
 
@@ -122,16 +123,11 @@ const IngredientForm = ({
                   field: { onChange, value },
                   fieldState: { error },
                 }) => (
-                  <AsyncDropdown
-                    multiple
-                    url="/ingredient-types/"
-                    key="name"
+                  <IngredientTypeDropdown
                     onChange={(_, data) => onChange(data)}
                     value={value}
-                    label="Ingredient Types"
                     error={!!error?.message}
                     helperText={error?.message}
-                    createForm={<IngredientTypeForm redirect={false} />}
                   />
                 )}
               />

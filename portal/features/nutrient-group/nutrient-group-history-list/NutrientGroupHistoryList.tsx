@@ -1,8 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { GridRowsProp, GridColDef, GridToolbar } from "@mui/x-data-grid";
+import {
+  GridRowsProp,
+  GridColDef,
+} from "@mui/x-data-grid";
 import { DataTable } from "@/components/tables";
-import nutrient_group_service from "../services/nutrient_group_service";
-import { NutrientGroupHistory } from "@/models";
+import { NutrientGroup } from "@/models";
+import _ from "lodash";
+import { useGetNutrientGroupHistoryQuery } from "../services";
 import { historyColDef } from "@/components/gird-col-def";
 
 const columns: GridColDef[] = [
@@ -11,36 +15,26 @@ const columns: GridColDef[] = [
 ];
 
 const NutrientGroupHistoryList = ({ id }: { id: number }) => {
-  const [rows, setRows] = useState<GridRowsProp<NutrientGroupHistory>>([]);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
   const [paginationModel, setPaginationModel] = useState({
     page: 0,
     pageSize: 10,
   });
 
-  useEffect(() => {
-    setIsLoading(true);
-    try {
-      nutrient_group_service.history.get(id).then((response) => {
-        setRows(response.data.results);
-      });
-    } catch (ex) {
-    } finally {
-      setIsLoading(false);
+  const { data, isLoading, refetch } = useGetNutrientGroupHistoryQuery(
+    {
+      id: id,
+      query: paginationModel
     }
-  }, [paginationModel]);
-
-  const refresh = () => {
-    setPaginationModel({ page: 0, pageSize: 10 });
-  };
+  ); 
 
   return (
     <DataTable
-      rows={rows}
+      onDelete={() => {}}
+      rows={(data?.results ?? []) as GridRowsProp<NutrientGroup>}
       columns={columns}
-      rowCount={rows.length}
+      rowCount={data?.count || 0}
       loading={isLoading}
-      pageSizeOptions={[5]}
+      pageSizeOptions={[5, 10, 25, 50, 100]}
       paginationModel={paginationModel}
       paginationMode="server"
       onPaginationModelChange={setPaginationModel}

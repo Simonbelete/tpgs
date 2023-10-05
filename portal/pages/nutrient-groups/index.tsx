@@ -15,10 +15,10 @@ const NutrientGroupPage = () => {
 
   return (
     <>
-      <SeoHead title="Nutrient Group"/>
+      <SeoHead title="NutrientGroup"/>
       <ListLayout
         breadcrumbs={<Breadcrumbs items={breadcrumbs} />}
-        header={<Typography variant="title">Nutrient Group</Typography>}
+        header={<Typography variant="title">NutrientGroup</Typography>}
         actions={<NutrientGroupImportExport />}
         filter={<NutrientGroupListFilter />}
       >

@@ -16,7 +16,7 @@ export const houseApi = baseApi.injectEndpoints({
     return {
       getHouses: build.query<Response<House[]>, Object>({ query: (query?: Object) => ({ url: `${URL}/`, method: 'get', params: query }) }),
       getHouseHistory: build.query<Response<House>, {id: number, query: Object}>({ query: ({id, query}) => ({ url: `${URL}/${id}/${HISTORY_URL}`, method: 'get', params: query }) }),
-      getSummary: build.query<AbstractSummary, number>({ query: (id: number) => ({ url: `${URL}/${id}/${SUMMARY_URL}/`, method: 'get' }) }),
+      getHouseSummary: build.query<AbstractSummary, number>({ query: (id: number) => ({ url: `${URL}/${id}/${SUMMARY_URL}/`, method: 'get' }) }),
       createHouse: build.mutation<Promise<AxiosResponse<House>>, Partial<House>>({
         query: (data: Partial<House>) => ({ url: `${URL}/`, method: 'post', data: data }),
       }),
@@ -63,7 +63,7 @@ export const {
   useGetHousesQuery,
   useLazyGetHousesQuery,
   useGetHouseHistoryQuery,
-  useGetSummaryQuery, 
+  useGetHouseSummaryQuery, 
   useCreateHouseMutation,
   useUpdateHouseMutation,
   useDeleteHouseMutation,

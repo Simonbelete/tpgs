@@ -14,7 +14,7 @@ const IMPORT_URL = `${URL}/import`;
 export const nutrientGroupApi = baseApi.injectEndpoints({
   endpoints: (build) => {
     return {
-      getNutrientGroups: build.query<Response<NutrientGroup>, Object>({ query: (query?: Object) => ({ url: `${URL}/`, method: 'get', params: query }) }),
+      getNutrientGroups: build.query<Response<NutrientGroup[]>, Object>({ query: (query?: Object) => ({ url: `${URL}/`, method: 'get', params: query }) }),
       getNutrientGroupHistory: build.query<Response<NutrientGroup>, {id: number, query: Object}>({ query: ({id, query}) => ({ url: `${URL}/${id}/${HISTORY_URL}`, method: 'get', params: query }) }),
       getNutrientGroupSummary: build.query<AbstractSummary, number>({ query: (id: number) => ({ url: `${URL}/${id}/${SUMMARY_URL}/`, method: 'get' }) }),
       createNutrientGroup: build.mutation<Promise<AxiosResponse<NutrientGroup>>, Partial<NutrientGroup>>({
@@ -61,6 +61,7 @@ export const importNutrientGroupsXLS = async (data: FormData) =>
 
 export const { 
   useGetNutrientGroupsQuery,
+  useLazyGetNutrientGroupsQuery,
   useGetNutrientGroupHistoryQuery,
   useGetNutrientGroupSummaryQuery, 
   useCreateNutrientGroupMutation,
