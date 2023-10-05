@@ -1,5 +1,4 @@
-export { default as IngredientForm } from "./ingredient-form";
-export { default as IngredientsList } from "./ingredients-list";
-export { default as IngredientSelectDialog } from "./ingredients-select-dialog";
-export { default as IngredientService } from "./services/ingredient_service";
-export * from "./slices";
+export * from './ingredient-dropdown';
+export * from './ingredient-form';
+export * from './ingredients-list';
+export * from './ingredient-import-export';

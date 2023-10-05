@@ -21,7 +21,7 @@ import AddIcon from "@mui/icons-material/Add";
 import DeleteIcon from "@mui/icons-material/DeleteOutlined";
 import { RootState } from "@/store";
 import { setNutrients, removeNutrientById, updateNutrient, clearAll } from "../slices";
-import ingredient_service from "../services/ingredient_service";
+// import ingredient_service from "../services/ingredient_service";
 import { enqueueSnackbar } from "notistack";
 import messages from "@/util/messages";
 import randomId from "@/util/randomId";

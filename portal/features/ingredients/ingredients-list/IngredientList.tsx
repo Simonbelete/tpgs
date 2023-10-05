@@ -4,12 +4,12 @@ import {
   GridColDef,
 } from "@mui/x-data-grid";
 import { DataTable } from "@/components/tables";
-import { Breed } from "@/models";
+import { Ingredient } from "@/models";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store";
 import _ from "lodash";
 import dayjs from 'dayjs';
-import { useGetBreedsQuery, useDeleteBreedMutation } from "../services";
+import { useGetIngredientsQuery, useDeleteIngredientMutation } from "../services";
 import buildQuery from "@/util/buildQuery";
 import buildPage from "@/util/buildPage";
 
@@ -22,22 +22,22 @@ const columns: GridColDef[] = [
   },
 ];
 
-const BreedList = () => {
+const IngredientList = () => {
   const selector = useSelector((state: RootState) => state.filter);
   const [paginationModel, setPaginationModel] = useState({
     page: 0,
     pageSize: 10,
   });
 
-  const { data, isLoading, refetch } = useGetBreedsQuery(buildQuery({...buildPage(paginationModel), ...selector})); 
-  const [deleteHouse, deleteResult ] = useDeleteBreedMutation();
+  const { data, isLoading, refetch } = useGetIngredientsQuery(buildQuery({...buildPage(paginationModel), ...selector})); 
+  const [deleteHouse, deleteResult ] = useDeleteIngredientMutation();
 
   const handleDelete = async (id: number) => await deleteHouse(id).then(() => refetch())
 
   return (
     <DataTable
       onDelete={handleDelete}
-      rows={(data?.results ?? []) as GridRowsProp<Breed>}
+      rows={(data?.results ?? []) as GridRowsProp<Ingredient>}
       columns={columns}
       rowCount={data?.count || 0}
       loading={isLoading}
@@ -50,4 +50,4 @@ const BreedList = () => {
   );
 };
 
-export default BreedList;
+export default IngredientList;

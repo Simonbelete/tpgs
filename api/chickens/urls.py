@@ -35,7 +35,7 @@ urlpatterns = [
                name="chickens_import_csv")
     ])),
 
-    path('chickens/import/', include([
+    path('chickens/export/', include([
           path('xlsx', views.ChickenXlsxExport.as_view(),
                name="chickens_export_xlsx"),
           path('xls', views.ChickenXlsExport.as_view(),

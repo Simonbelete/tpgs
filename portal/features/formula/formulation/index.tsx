@@ -1,6 +1,5 @@
 import React, {
   useState,
-  useMemo,
   useRef,
   useEffect,
   useImperativeHandle,
@@ -13,11 +12,8 @@ import {
   GridColumn,
   Item,
   GridColumnIcon,
-  DataEditorProps,
-  GridSelection,
 } from "@glideapps/glide-data-grid";
 import _ from "lodash";
-import { NutrientService } from "@/features/nutrients";
 import { Sizer } from "../components";
 import {
   Box,
@@ -28,7 +24,6 @@ import {
   AccordionDetails,
   Grid,
   InputAdornment,
-  Paper,
   Tabs,
   Tab
 } from "@mui/material";
@@ -52,15 +47,15 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import * as yup from "yup";
 import { LabeledInput } from "@/components/inputs";
-import { AsyncDropdown, Dropdown } from "@/components/dropdowns";
-import { PurposeForm } from "@/features/purposes";
+import {  Dropdown } from "@/components/dropdowns";
 import { yupResolver } from "@hookform/resolvers/yup";
 import FIcBarChart from "../fic-bar-chart";
 import formula_service from "../services/formula_service";
 import { useRouter } from "next/router";
-import FicPieChart from "../fic-pie-chart";
 import FormulaResultTable from "../formula-result-table";
-import FormulaQuickComparison from "../formula-quick-comparison";
+import { PurposeDropdown } from "@/features/purposes";
+import { CountryDropdown } from "@/features/countries";
+import { useGetNutrientsQuery } from '@/features/nutrients/services';
 
 type Inputs = Partial<Formula>;
 
@@ -151,6 +146,8 @@ const Formulation = ({ saveRef }: { saveRef: React.Ref<unknown> }) => {
   // Nutrients Start and end Rows
   const COL_NU_SI = 4;
   const COL_NU_EI = columns.length - 2;
+
+  const a = useGetNutrientsQuery();
 
   useEffect(() => {
     if (isInitialMount.current) {
@@ -545,15 +542,11 @@ const Formulation = ({ saveRef }: { saveRef: React.Ref<unknown> }) => {
                       field: { onChange, value },
                       fieldState: { invalid, isTouched, isDirty, error },
                     }) => (
-                      <AsyncDropdown
-                        url="/purposes/"
-                        key="name"
+                      <PurposeDropdown
                         onChange={(_, data) => onChange(data)}
                         value={value}
-                        label="Purpose"
                         error={!!error?.message}
                         helperText={error?.message}
-                        createForm={<PurposeForm />}
                       />
                     )}
                   />
@@ -643,12 +636,9 @@ const Formulation = ({ saveRef }: { saveRef: React.Ref<unknown> }) => {
                       field: { onChange, value },
                       fieldState: { invalid, isTouched, isDirty, error },
                     }) => (
-                      <AsyncDropdown
-                        url="/countries/"
-                        key="name"
+                      <CountryDropdown
                         onChange={(_, data) => onChange(data)}
                         value={value}
-                        label="Country"
                         error={!!error?.message}
                         helperText={error?.message}
                       />

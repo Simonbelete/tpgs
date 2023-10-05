@@ -14,7 +14,7 @@ const IMPORT_URL = `${URL}/import`;
 export const purposeApi = baseApi.injectEndpoints({
   endpoints: (build) => {
     return {
-      getPurposes: build.query<Response<Purpose>, Object>({ query: (query?: Object) => ({ url: `${URL}/`, method: 'get', params: query }) }),
+      getPurposes: build.query<Response<Purpose[]>, Object>({ query: (query?: Object) => ({ url: `${URL}/`, method: 'get', params: query }) }),
       getPurposeHistory: build.query<Response<Purpose>, {id: number, query: Object}>({ query: ({id, query}) => ({ url: `${URL}/${id}/${HISTORY_URL}`, method: 'get', params: query }) }),
       getPurposeSummary: build.query<AbstractSummary, number>({ query: (id: number) => ({ url: `${URL}/${id}/${SUMMARY_URL}/`, method: 'get' }) }),
       createPurpose: build.mutation<Promise<AxiosResponse<Purpose>>, Partial<Purpose>>({
@@ -61,6 +61,7 @@ export const importPurposesXLS = async (data: FormData) =>
 
 export const { 
   useGetPurposesQuery,
+  useLazyGetPurposesQuery,
   useGetPurposeHistoryQuery,
   useGetPurposeSummaryQuery, 
   useCreatePurposeMutation,

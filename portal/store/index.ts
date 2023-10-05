@@ -2,16 +2,11 @@ import { configureStore } from "@reduxjs/toolkit";
 import { setupListeners } from '@reduxjs/toolkit/query'
 import { tenantReducer } from "@/features/farms";
 import { formulaReducer } from "@/features/formula";
-import { ingredientFormReducer, ingredientFilterReducer } from "@/features/ingredients";
-import { nutrientFilterReducer } from "@/features/nutrients"; 
+import { ingredientFormReducer } from "@/features/ingredients";
 import { onBoardingReducer } from "@/features/onboarding";
 import { SettingReducer } from "@/features/settings";
 import { invitationFilterReducer } from "@/features/invitations";
 import { directoryBuilderReducer } from '@/features/directory';
-import { houseListReducer } from "@/features/houses"; 
-import { breedListReducer } from "@/features/breeds";
-import { purposeListReducer } from '@/features/purposes';
-import { unitListReducer } from '@/features/units';
 import { countryListReducer } from '@/features/countries';
 import { cityListReducer } from '@/features/cities';
 import { regionListReducer } from "@/features/regions";
@@ -42,16 +37,10 @@ export const store = configureStore({
     filter: filterReducer,
     formula: formulaReducer,
     ingredientForm: ingredientFormReducer,
-    ingredientFilter: ingredientFilterReducer,
-    nutrientFilter: nutrientFilterReducer,
     onBoarding: onBoardingReducer,
     setting: SettingReducer,
     invitationFilter: invitationFilterReducer,
     directoryBuilder: directoryBuilderReducer,
-    houseList: houseListReducer,
-    breedList: breedListReducer,
-    purposeList: purposeListReducer,
-    unitList: unitListReducer,
     countryList: countryListReducer,
     cityList: cityListReducer,
     regionList: regionListReducer,

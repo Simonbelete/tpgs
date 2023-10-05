@@ -1,17 +1,18 @@
 import { baseApi } from '@/services/baseApi';
-import { AbstractSummary, Response, Ingredient } from '@/models';
+import { AbstractSummary, Response, Ingredient, IngredientNutrient } from '@/models';
 import { AxiosResponse } from "axios";
 import clientSSR from "@/services/client_ssr";
 import client from "@/services/client";
 import { NextPageContext } from "next";
 
 const URL = "/ingredients";
+const NUTRIENT_URL = "/nutrients";
 const HISTORY_URL = `histories`;
 const SUMMARY_URL = `summary`;
 const EXPORT_URL = `${URL}/export`;
 const IMPORT_URL = `${URL}/import`;
 
-export const breedApi = baseApi.injectEndpoints({
+export const ingredientApi = baseApi.injectEndpoints({
   endpoints: (build) => {
     return {
       getIngredients: build.query<Response<Ingredient[]>, Object>({ query: (query?: Object) => ({ url: `${URL}/`, method: 'get', params: query }) }),
@@ -25,7 +26,15 @@ export const breedApi = baseApi.injectEndpoints({
       }),
       deleteIngredient: build.mutation<any, number>({
         query: (id: number) => ({ url: `${URL}/${id}/`, method: 'delete' }),
-      })
+      }),
+      // Nutrients
+      getIngredientNutrients: build.query<Response<IngredientNutrient[]>, {id: number, query: Object}>({ query: ({id, query}) => ({ url: `${URL}/${id}/${NUTRIENT_URL}`, method: 'get', params: query }) }),
+      createIngredientNutrient: build.mutation<Promise<AxiosResponse<IngredientNutrient>>, {id: number, data: Partial<Ingredient>}>({
+        query: ({id, data}) => ({ url: `${URL}/${id}/${NUTRIENT_URL}`, method: 'post', data: data }),
+      }),
+      updateIngredientNutriet: build.mutation<IngredientNutrient, Pick<IngredientNutrient, 'ingredient'> & Partial<Ingredient>>({
+        query: ({ingredient, ...patch}) => ({ url: `${URL}/${ingredient}/`, method: 'patch', data: patch }),
+      }),
     }
   },
   overrideExisting: false,
@@ -67,4 +76,10 @@ export const {
   useCreateIngredientMutation,
   useUpdateIngredientMutation,
   useDeleteIngredientMutation,
-} = breedApi;
+  
+  // Nutrients
+  useGetIngredientNutrientsQuery,
+  useLazyGetIngredientNutrientsQuery,
+  useCreateIngredientNutrientMutation,
+  useUpdateIngredientNutrietMutation
+} = ingredientApi;

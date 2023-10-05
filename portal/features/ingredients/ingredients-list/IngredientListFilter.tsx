@@ -17,7 +17,7 @@ import { CheckboxDropdown } from "@/components/dropdowns";
 import { RootState } from "@/store";
 import { filterSlice } from "@/store/slices";
 
-const BreedFilter = () => {
+const IngredientFilter = () => {
   const dispatch = useDispatch();
   const activeMenu = [
     {name: 'Active', value: true},
@@ -113,4 +113,4 @@ const BreedFilter = () => {
   );
 };
 
-export default BreedFilter;
+export default IngredientFilter;

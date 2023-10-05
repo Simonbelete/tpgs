@@ -11,7 +11,7 @@ const SUMMARY_URL = `summary`;
 const EXPORT_URL = `${URL}/export`;
 const IMPORT_URL = `${URL}/import`;
 
-export const houseApi = baseApi.injectEndpoints({
+export const nutrientApi = baseApi.injectEndpoints({
   endpoints: (build) => {
     return {
       getNutrients: build.query<Response<Nutrient[]>, Object>({ query: (query?: Object) => ({ url: `${URL}/`, method: 'get', params: query }) }),
@@ -67,4 +67,4 @@ export const {
   useCreateNutrientMutation,
   useUpdateNutrientMutation,
   useDeleteNutrientMutation,
-} = houseApi;
+} = nutrientApi;

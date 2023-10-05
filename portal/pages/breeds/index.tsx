@@ -18,7 +18,7 @@ const BreedPage = () => {
       <SeoHead title="Breeds"/>
       <ListLayout
         breadcrumbs={<Breadcrumbs items={breadcrumbs} />}
-        header={<Typography variant="title">Breed</Typography>}
+        header={<Typography variant="title">Breeds</Typography>}
         actions={<BreedImportExport />}
         filter={<BreedListFilter />}
       >

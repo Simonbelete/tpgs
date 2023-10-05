@@ -1,39 +1,25 @@
-import React, { ReactElement } from "react";
-import { Button, Typography, Box, Container } from "@mui/material";
+import React, { useEffect } from "react";
+import { Typography } from "@mui/material";
 import { Breadcrumbs } from "@/components";
 import { useBreadcrumbs } from "@/hooks";
-import { IngredientForm } from "@/features/ingredients";
 import { CreateLayout } from "@/layouts";
-import SaveIcon from "@mui/icons-material/Save";
-import LibraryAddIcon from "@mui/icons-material/LibraryAdd";
+import {
+  IngredientForm,
+} from "@/features/ingredients";
+import { SeoHead } from "@/seo";
 
 const IngredientCreatePage = () => {
   const { breadcrumbs } = useBreadcrumbs();
 
   return (
-    <CreateLayout
-      breadcrumbs={<Breadcrumbs items={breadcrumbs} />}
-      header={<Typography variant="title">Create New Ingredient</Typography>}
-      actions={<Actions />}
-    >
-      <IngredientForm />
-    </CreateLayout>
-  );
-};
-
-const Actions = (): ReactElement => {
-  return (
     <>
-      <Box>
-        <Button variant="contained" startIcon={<SaveIcon />}>
-          Create
-        </Button>
-      </Box>
-      <Box>
-        <Button variant="outlined" startIcon={<LibraryAddIcon />}>
-          Create and New
-        </Button>
-      </Box>
+      <SeoHead title="Create Ingredient" />
+      <CreateLayout
+        breadcrumbs={<Breadcrumbs items={breadcrumbs} />}
+        header={<Typography variant="title">Create Ingredient</Typography>}
+      >
+        <IngredientForm />
+      </CreateLayout>
     </>
   );
 };

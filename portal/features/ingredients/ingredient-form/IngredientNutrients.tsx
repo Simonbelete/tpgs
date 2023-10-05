@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import _ from "lodash";
 import {
-  DataGrid,
   GridRowsProp,
   GridColDef,
   GridToolbarContainer,
@@ -21,10 +20,11 @@ import AddIcon from "@mui/icons-material/Add";
 import DeleteIcon from "@mui/icons-material/DeleteOutlined";
 import { RootState } from "@/store";
 import { setNutrients, removeNutrientById, updateNutrient, clearAll } from "../slices";
-import ingredient_service from "../services/ingredient_service";
+import { useGetIngredientNutrientsQuery, useCreateIngredientNutrientMutation, useUpdateIngredientNutrietMutation, useLazyGetIngredientNutrientsQuery } from '../services';
 import { enqueueSnackbar } from "notistack";
 import messages from "@/util/messages";
-import randomId from "@/util/randomId";
+import buildQuery from "@/util/buildQuery";
+import buildPage from "@/util/buildPage";
 
 const EditToolbar = (props: {
   processRowUpdate: (newRow: GridRowModel) => void;
@@ -86,25 +86,10 @@ const IngredientNutrients = ({ id }: { id?: number }) => {
   const dispatch = useDispatch();
   const rows: GridRowsProp<Partial<IngredientNutrient> & Partial<{ isNew?: boolean }>> = useSelector((state: RootState) => state.ingredientForm.nutrients);
 
-  useEffect(() => {
-    const controller = new AbortController();
-    dispatch(clearAll())
+  const [trigger, {isLoading, data}, lastPromiseInfo] = useLazyGetIngredientNutrientsQuery();
 
-    if (id == null) return;
-
-    ingredient_service.nutrient
-      .get(id)
-      .then((response) => {
-        if (response.status == 200) {
-          dispatch(setNutrients(response.data.results))
-        }
-      })
-      .catch((ex) => {});
-
-      return () => {
-        controller.abort()
-      }
-  }, []);
+  const [createIngredientNutrient, createResult ] = useCreateIngredientNutrientMutation();
+  const [updateIngredientNutrient, updateResult ] = useUpdateIngredientNutrietMutation();
 
   const columns: GridColDef[] = [
     {
@@ -188,8 +173,7 @@ const IngredientNutrients = ({ id }: { id?: number }) => {
     return newRow;
   };
 
-  const handleOnProcessRowUpdateError = (error: any) => {
-  }
+  const handleOnProcessRowUpdateError = (error: any) => {}
 
   const onCreate = async (
     row: GridRowModel,
@@ -197,15 +181,19 @@ const IngredientNutrients = ({ id }: { id?: number }) => {
   ) => {
     if (id == null) return;
 
-    try {
-      const response = await ingredient_service.nutrient.create(id, data);
-      if (response.status == 201) {
-        const updatedRow: any = { ...row, id: response.data.id, isNew: false };
-        dispatch(setNutrients([...rows, updatedRow]))
-      }
-    } catch (ex) {
-      enqueueSnackbar("Failed", { variant: "error" });
-    }
+    const response = await createIngredientNutrient({id, data}).unwrap();
+    trigger({id, query: {}},true);
+
+
+    // try {
+
+    //   if (response.status == 201) {
+    //     const updatedRow: any = { ...row, id: response.data.id, isNew: false };
+    //     dispatch(setNutrients([...rows, updatedRow]))
+    //   }
+    // } catch (ex) {
+    //   enqueueSnackbar("Failed", { variant: "error" });
+    // }
   };
 
   const onUpdate = async (
@@ -214,33 +202,36 @@ const IngredientNutrients = ({ id }: { id?: number }) => {
   ) => {
     if (id == null) return;
 
-    try {
-      const response = await ingredient_service.nutrient.update(
-        id,
-        newRow.id || 0,
-        data
-      );
-    } catch (ex) {
-      enqueueSnackbar("Failed", { variant: "error" });
-    }
+    const response = await updateIngredientNutrient({...data, ingredient: id});
+    trigger({id, query: {}},true);
+
+    // try {
+    //   const response = await ingredient_service.nutrient.update(
+    //     id,
+    //     newRow.id || 0,
+    //     data
+    //   );
+    // } catch (ex) {
+    //   enqueueSnackbar("Failed", { variant: "error" });
+    // }
   };
 
   const handleDelete = async (row_id: string | number) => {
-    if (id == null) return;
-    const response = await ingredient_service.nutrient.delete(
-      id,
-      Number(row_id) || 0
-    );
-    if (response.status == 204)
-      enqueueSnackbar(messages.deleteSuccess(), { variant: "success" });
-    else enqueueSnackbar(messages.deleteError(), { variant: "error" });
+    // if (id == null) return;
+    // const response = await ingredient_service.nutrient.delete(
+    //   id,
+    //   Number(row_id) || 0
+    // );
+    // if (response.status == 204)
+    //   enqueueSnackbar(messages.deleteSuccess(), { variant: "success" });
+    // else enqueueSnackbar(messages.deleteError(), { variant: "error" });
   };
 
   return (
     <>
       <EditableTable
         sx={{ background: "white", minHeight: "20px" }}
-        rows={rows}
+        rows={(data?.results ?? []) as GridRowsProp<IngredientNutrient>}
         // editMode="row"
         rowHeight={40}
         columns={columns}

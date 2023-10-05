@@ -1,11 +1,11 @@
 import React, { useEffect } from "react";
 import { AsyncDropdown } from "@/components/dropdowns";
-import { useLazyGetCountriesQuery } from '../services';
-import { Country } from "@/models";
+import { useLazyGetNutrientsQuery } from '../services';
+import { Nutrient } from "@/models";
 
-const CountryDropdown = ({
+const NutrientDropdown = ({
   value,
-  label = "Country",
+  label = "Nutrient",
   error,
   onChange,
   helperText,
@@ -16,7 +16,7 @@ const CountryDropdown = ({
   helperText?: string;
   onChange?: (event: any, newValue: any) => void;
 }) => {
-  const [trigger, {isLoading, data}, lastPromiseInfo] = useLazyGetCountriesQuery();
+  const [trigger, {isLoading, data}, lastPromiseInfo] = useLazyGetNutrientsQuery();
 
   const handleOnOpen = () => {
     trigger({}, true);
@@ -27,7 +27,7 @@ const CountryDropdown = ({
   }
 
   return (
-    <AsyncDropdown<Country>
+    <AsyncDropdown<Nutrient>
       value={value}
       dataKey="name"
       label={label}
@@ -45,4 +45,4 @@ const CountryDropdown = ({
   )
 }
 
-export default CountryDropdown;
+export default NutrientDropdown;
