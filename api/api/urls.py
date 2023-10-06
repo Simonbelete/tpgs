@@ -15,8 +15,8 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path, include
-import notifications.urls
+from django.urls import path, include, re_path
+from notifications import views as notificationsView
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
     TokenRefreshView,
@@ -32,8 +32,18 @@ urlpatterns = [
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('api/token/verify/', TokenVerifyView.as_view(), name='token_verify'),
-    path('api/inbox/notifications/',
-         include(notifications.urls, namespace='notifications')),
+    path('api/inbox/notifications/', include([
+        path('', notificationsView.AllNotificationsList.as_view(), name='all'),
+        path('unread/', notificationsView.UnreadNotificationsList.as_view(), name='unread'),
+        path('mark-all-as-read/', notificationsView.mark_all_as_read, name='mark_all_as_read'),
+        path('mark-as-read/(?P<slug>\d+)/', notificationsView.mark_as_read, name='mark_as_read'),
+        path('mark-as-unread/(?P<slug>\d+)/', notificationsView.mark_as_unread, name='mark_as_unread'),
+        path('delete/(?P<slug>\d+)/', notificationsView.delete, name='delete'),
+        path('unread_count/', notificationsView.live_unread_notification_count, name='live_unread_notification_count'),
+        path('all_count/', notificationsView.live_all_notification_count, name='live_all_notification_count'),
+        path('unread_list/', notificationsView.live_unread_notification_list, name='live_unread_notification_list'),
+        path('all_list/', notificationsView.live_all_notification_list, name='live_all_notification_list'),
+    ])),
     path('adminactions/', include('adminactions.urls')),
     path('api/', include([
         path('', include('cities_light.contrib.restframework3')),
