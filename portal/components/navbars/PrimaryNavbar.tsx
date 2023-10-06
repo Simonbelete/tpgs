@@ -16,6 +16,7 @@ import MenuOpenIcon from "@mui/icons-material/MenuOpen";
 import Image from "next/image";
 import ILRILogo from "../logos/ILRILogo";
 import { FarmsMenu } from "@/features/farms";
+import { NotificationPopover } from '@/features/notification';
 import { AccountMenu } from "../menus";
 
 const PrimaryNavbar = () => {
@@ -53,12 +54,13 @@ const PrimaryNavbar = () => {
         <Box sx={{ flexGrow: 1 }}></Box>
         <Stack
           direction={"row"}
-          spacing={2}
+          spacing={0}
           justifyContent="center"
           alignItems="center"
         >
           <FarmsMenu />
           <AccountMenu />
+          <NotificationPopover />
         </Stack>
       </Toolbar>
     </AppBar>

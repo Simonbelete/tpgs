@@ -62,9 +62,10 @@ const FarmsMenu = () => {
         onClick={handleClick}
         disableRipple
         size="small"
-        startIcon={<HouseIcon fontSize="small" />}
+        startIcon={<HouseIcon />}
         endIcon={<ArrowDropDownIcon />}
         color="secondary"
+        sx={{padding: 0, mr: 1}}
       >
         <Typography variant="caption" color="text.primary">
           {tenant.name}

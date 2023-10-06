@@ -15,6 +15,7 @@ import Settings from "@mui/icons-material/Settings";
 import Logout from "@mui/icons-material/Logout";
 import { useSession, signOut } from "next-auth/react";
 import { useRouter } from "next/router";
+import SettingsIcon from '@mui/icons-material/Settings';
 
 const AccountMenu = () => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -40,16 +41,12 @@ const AccountMenu = () => {
           <IconButton
             onClick={handleClick}
             size="small"
-            sx={{ ml: 2 }}
             aria-controls={open ? "account-menu" : undefined}
             aria-haspopup="true"
             aria-expanded={open ? "true" : undefined}
             
           >
-            <Avatar sx={{ width: 32, height: 32 }}>
-              {(session?.user?.name || "User")[0]}
-            </Avatar>
-            {(session?.user?.name || "")}
+            <SettingsIcon />
           </IconButton>
         </Tooltip>
       </Box>
@@ -66,8 +63,8 @@ const AccountMenu = () => {
             filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
             mt: 1.5,
             "& .MuiAvatar-root": {
-              width: 32,
-              height: 32,
+              width: 28,
+              height: 28,
               ml: -0.5,
               mr: 1,
             },
@@ -87,13 +84,15 @@ const AccountMenu = () => {
         }}
         transformOrigin={{ horizontal: "right", vertical: "top" }}
         anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
+        
       >
         <MenuItem
+        
           onClick={() => {
             router.push("/settings");
           }}
         >
-          <Avatar /> Profile
+          <Avatar sizes="small" /> Profile
         </MenuItem>
         <Divider />
         {/* <MenuItem onClick={handleClose}>
