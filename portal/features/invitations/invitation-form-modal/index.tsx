@@ -18,18 +18,7 @@ type Inputs = Partial<Invitation>;
 const schema = yup
   .object({
     email: yup.string().required(),
-    farms: yup.array().of(yup.number()).required(),
-  })
-  .transform((currentValue: any) => {
-    console.log(currentValue.farms)
-    if (currentValue.farms.length != 0) {
-      const fids = currentValue.farms.map((e: any) => {
-        if(e !== undefined) 
-          return e.id
-      });
-      currentValue.farms = fids;
-    }
-    return currentValue;
+    farms: yup.array().of(yup.object()).required(),
   });
 
 const InvitationFormModal = ({
@@ -53,14 +42,18 @@ const InvitationFormModal = ({
 
   const [createInvitation, createResult ] = useCreateInvitationMutation();
 
-  // const useCRUDHook = useCRUD({
-  //   results: [
-  //     createResult,
-  //   ],
-  //   setError: setError
-  // })
+  const useCRUDHook = useCRUD({
+    results: [
+      createResult,
+    ],
+    setError: setError
+  })
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
+    data.farms = data.farms?.map((e: any) => {
+      if(e !== undefined) 
+        return e.id
+    });
     console.log('abc')
     await createInvitation(data);
 

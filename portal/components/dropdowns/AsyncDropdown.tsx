@@ -59,6 +59,11 @@ export default function AsyncDropdown<T>({
     onClose();
   }, [onClose])
 
+  React.useEffect(() => {
+    console.log('----')
+    console.log(value)
+  }, [value])
+
   return (
     <Stack gap={1} id={id}>
       <FullScreenModal title={createFormTitle} open={modalOpen} onClose={handleModalClose}>
