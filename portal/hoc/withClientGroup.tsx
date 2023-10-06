@@ -13,7 +13,7 @@ const withClientGroup = (WrappedComponent: React.FC, groups: string[]) => {
         router.push('/')
       }})
 
-    if(session?.user?.groups?.some(e => groups.includes(e))) return <WrappedComponent />; 
+    if(session?.user?.is_superuser || session?.user?.groups?.some(e => groups.includes(e))) return <WrappedComponent />; 
     else return <Redirect403 />
   } 
 

@@ -8,20 +8,25 @@ import { LabeledInput } from "@/components/inputs";
 import { Invitation } from "@/models";
 import { useSnackbar } from "notistack";
 import SendIcon from "@mui/icons-material/Send";
-import { AsyncDropdown } from "@/components/dropdowns";
-import invitation_service from "../services/invitation_service";
 import { useRouter } from "next/router";
+import { FarmDropdown } from "@/features/farms";
+import { useCreateInvitationMutation } from "../services";
+import { useCRUD } from "@/hooks";
 
 type Inputs = Partial<Invitation>;
 
 const schema = yup
   .object({
     email: yup.string().required(),
-    farms: yup.array().of(yup.number()),
+    farms: yup.array().of(yup.number()).required(),
   })
   .transform((currentValue: any) => {
+    console.log(currentValue.farms)
     if (currentValue.farms.length != 0) {
-      const fids = currentValue.farms.map((e: any) => e.id);
+      const fids = currentValue.farms.map((e: any) => {
+        if(e !== undefined) 
+          return e.id
+      });
       currentValue.farms = fids;
     }
     return currentValue;
@@ -40,30 +45,42 @@ const InvitationFormModal = ({
   const {
     handleSubmit,
     control,
-    formState: { errors },
+    setError
   } = useForm<Inputs>({
     // @ts-ignore
     resolver: yupResolver(schema),
   });
 
+  const [createInvitation, createResult ] = useCreateInvitationMutation();
+
+  // const useCRUDHook = useCRUD({
+  //   results: [
+  //     createResult,
+  //   ],
+  //   setError: setError
+  // })
+
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
-    try {
-      const response = await invitation_service.create(data);
-      if (response.status == 201) {
-        enqueueSnackbar("Successfully send invitation", { variant: "success" });
-        router.push("/invitations");
-      } else {
-        enqueueSnackbar(
-          "Failed to send invitation, please check you inputs and try again",
-          { variant: "error" }
-        );
-      }
-    } catch (ex) {
-      enqueueSnackbar(
-        "Failed to send invitation, please check your network and try again!",
-        { variant: "error" }
-      );
-    }
+    console.log('abc')
+    await createInvitation(data);
+
+    // try {
+    //   const response = await invitation_service.create(data);
+    //   if (response.status == 201) {
+    //     enqueueSnackbar("Successfully send invitation", { variant: "success" });
+    //     router.push("/invitations");
+    //   } else {
+    //     enqueueSnackbar(
+    //       "Failed to send invitation, please check you inputs and try again",
+    //       { variant: "error" }
+    //     );
+    //   }
+    // } catch (ex) {
+    //   enqueueSnackbar(
+    //     "Failed to send invitation, please check your network and try again!",
+    //     { variant: "error" }
+    //   );
+    // }
   };
 
   return (
@@ -86,30 +103,26 @@ const InvitationFormModal = ({
                   onChange={onChange}
                   fullWidth
                   size="small"
-                  value={value}
+                  value={value ?? ""}
                   label={"Email Address"}
                   placeholder={"Email Address"}
                 />
               )}
             />
           </Grid>
-          {/* Unit */}
+          {/* Farms */}
           <Grid item xs={12}>
             <Controller
               name={"farms"}
               control={control}
               render={({
                 field: { onChange, value },
-                fieldState: { invalid, isTouched, isDirty, error },
+                fieldState: { error },
               }) => (
-                <AsyncDropdown
-                  id="invitation-form-modal-farms-input"
+                <FarmDropdown
                   multiple
-                  url="/farms/"
-                  key="name"
                   onChange={(_, data) => onChange(data)}
-                  value={value}
-                  label="Farm"
+                  value={value ?? []}
                   error={!!error?.message}
                   helperText={error?.message}
                 />

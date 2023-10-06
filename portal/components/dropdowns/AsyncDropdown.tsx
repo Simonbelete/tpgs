@@ -74,6 +74,7 @@ export default function AsyncDropdown<T>({
       )}
       <Autocomplete
         fullWidth
+        clearOnBlur={false}
         multiple={multiple}
         size="small"
         open={open}
@@ -104,16 +105,18 @@ export default function AsyncDropdown<T>({
                     <CircularProgress color="inherit" size={20} />
                   ) : null}
                   {params.InputProps.endAdornment}
-                  <Tooltip title={createFormTitle}>
-                    <IconButton
-                      sx={{ py: 0 }}
-                      size="large"
-                      // color="secondary.main"
-                      onClick={handleModalOpen}
-                    >
-                      <AddToQueueIcon />
-                    </IconButton>
-                  </Tooltip>
+                  {createForm && (
+                    <Tooltip title={createFormTitle}>
+                      <IconButton
+                        sx={{ py: 0 }}
+                        size="large"
+                        // color="secondary.main"
+                        onClick={handleModalOpen}
+                      >
+                        <AddToQueueIcon />
+                      </IconButton>
+                    </Tooltip>
+                  )}
                 </React.Fragment>
               ),
             }}

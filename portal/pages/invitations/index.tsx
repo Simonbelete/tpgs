@@ -8,7 +8,8 @@ import {
   Grid,
 } from "@mui/material";
 import { useBreadcrumbs } from "@/hooks";
-import { ListLayout, Breadcrumbs, Loading } from "@/components";
+import { Breadcrumbs, Loading } from "@/components";
+import { ListLayout } from '@/layouts';
 import {
   InvitationsList,
   InvitationFormModal,

@@ -7,6 +7,7 @@ from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework.authentication import SessionAuthentication, BasicAuthentication
 from rest_framework.permissions import IsAuthenticated
 from django.core.exceptions import ValidationError
+from django.utils import timezone
 
 from . import models
 from . import serializers
@@ -37,7 +38,6 @@ class InvitationViewSet(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         serializer.save(inviter=self.request.user)
 
-
 class VerifyInvitationViewSet(viewsets.ViewSet):
     serializer_class = serializers.VerifyInvitationSerializer_POST
 
@@ -52,6 +52,11 @@ class VerifyInvitationViewSet(viewsets.ViewSet):
                 password = request.data['password']
                 name = request.data['name']
                 invitation = models.Invitation.objects.get(token=token)
+                if(invitation.expire_date < timezone.now().date()):
+                    return Response({
+                        'error': 'token expired'
+                    }, status=400)
+
                 user = User.objects.create_user(
                     invitation.email, password, name=name)
                 for farm in invitation.farms.all().iterator():
