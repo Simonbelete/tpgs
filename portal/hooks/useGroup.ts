@@ -11,7 +11,7 @@ const useGroup = () => {
   useEffect(() => {
     if(session?.user == null) return;
 
-    setIsSuperUser(session.user.is_superuser);
+    setIsSuperUser(session.user.is_superuser || false);
     if(session.user.groups?.includes(GROUP_ADMIN)) setIsAdmin(true);
     if(session.user.groups?.includes(GROUP_FARMER)) setIsFarmer(true);
 

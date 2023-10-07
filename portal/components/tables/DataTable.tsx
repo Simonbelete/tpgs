@@ -16,7 +16,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { DeleteModal } from "../modals";
 import HistoryIcon from "@mui/icons-material/History";
-import EditIcon from "@mui/icons-material/Edit";
+import ScheduleSendIcon from '@mui/icons-material/ScheduleSend';
 
 const ODD_OPACITY = 0.2;
 
@@ -143,17 +143,20 @@ export enum SETTING_COL {
   history = "history",
   delete = "delete",
   basic = "basic",
-  edit = "edit" 
+  edit = "edit",
+  email = "email"
 }
 
 const DataTable = ({
   rows,
   columns,
   onDelete,
+  onResendEmail,
   setting = SETTING_COL.default,
   ...props
 }: DataGridProps & {
   onDelete?: (id: number) => void;
+  onResendEmail?: (id: number) => void;
   setting?: SETTING_COL;
 }) => {
   const router = useRouter();
@@ -169,6 +172,10 @@ const DataTable = ({
     onDelete != undefined ? onDelete(deleteId) : {};
     handleDeleteModalClose();
   }, [onDelete, deleteId]);
+
+  const handleOnResendEmail = useCallback((id: number) => {
+    onResendEmail != undefined ? onResendEmail(id): {}
+  }, [onResendEmail])
 
   const generateSettingColumns = (): GridColDef[] => {
     let col: GridColDef;
@@ -276,7 +283,7 @@ const DataTable = ({
           },
         };
         break;
-      case SETTING_COL.delete:
+      case SETTING_COL.email:
         col = {
           field: "Actions",
           flex: 1,
@@ -286,6 +293,14 @@ const DataTable = ({
           renderCell(params: any) {
             return (
               <Box>
+                <Tooltip title="Resend Email">
+                  <IconButton
+                    aria-label="resend-email"
+                    onClick={() => handleOnResendEmail(params.id)}
+                  >
+                    <ScheduleSendIcon fontSize="small" />
+                  </IconButton>
+                </Tooltip>
                 <Tooltip title="Delete">
                   <IconButton
                     aria-label="delete"
@@ -299,6 +314,29 @@ const DataTable = ({
           },
         };
         break;
+      case SETTING_COL.delete:
+          col = {
+            field: "Actions",
+            flex: 1,
+            minWidth: 150,
+            headerAlign: "center",
+            align: "right",
+            renderCell(params: any) {
+              return (
+                <Box>
+                  <Tooltip title="Delete">
+                    <IconButton
+                      aria-label="delete"
+                      onClick={() => handleDeleteModalOpen(params.id)}
+                    >
+                      <DeleteForeverIcon fontSize="small" />
+                    </IconButton>
+                  </Tooltip>
+                </Box>
+              );
+            },
+          };
+          break;
       default:
         // @ts-ignore
         col = {

@@ -8,6 +8,7 @@ from django.http import Http404
 from django.urls import set_urlconf
 from django.utils.deprecation import MiddlewareMixin
 from django.http import JsonResponse, HttpResponse, HttpResponseForbidden
+from rest_framework.authentication import TokenAuthentication
 
 from django_tenants.utils import get_tenant_model, get_tenant_domain_model
 

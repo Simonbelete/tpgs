@@ -138,7 +138,7 @@ const SidebarMenu = () => {
               Dashboard
             </Typography>
           </MenuItem>
-      { isSuperUser || isAdmin && (
+      { (isSuperUser || isAdmin)  && (
         <SubMenu
           {...menuProps("users-main")}
           label={

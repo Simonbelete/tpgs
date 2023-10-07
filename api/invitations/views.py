@@ -8,10 +8,12 @@ from rest_framework.authentication import SessionAuthentication, BasicAuthentica
 from rest_framework.permissions import IsAuthenticated
 from django.core.exceptions import ValidationError
 from django.utils import timezone
+from rest_framework.exceptions import NotFound
 
 from . import models
 from . import serializers
 from . import filters
+from .tasks import send_invitation_email
 from users.models import User
 from users.serializers import UserSerializer_GET
 
@@ -80,3 +82,11 @@ class VerifyInvitationViewSet(viewsets.ViewSet):
             },status=400)
         except Exception as ex:
             return Response({'error': str(ex)}, status=500)
+
+class ResendInvitationViewSet(viewsets.ViewSet):
+    def create(self, request, id=None):
+        try:
+            invitation = models.Invitation.objects.get(pk=id)
+            send_invitation_email(invitation.inviter, invitation.email, invitation.token)
+        except models.Invitation.DoesNotExist:
+            raise NotFound()

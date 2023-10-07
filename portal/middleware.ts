@@ -5,6 +5,7 @@ export const config = {
     "/nutrient-groups", 
     "/invitations",
     "/users",
-    "/help"
+    "/help",
+    "/chickens/:path*"
   ],
 };

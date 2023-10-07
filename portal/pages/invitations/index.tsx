@@ -11,9 +11,9 @@ import { useBreadcrumbs } from "@/hooks";
 import { Breadcrumbs, Loading } from "@/components";
 import { ListLayout } from '@/layouts';
 import {
-  InvitationsList,
+  InvitationList,
+  InvitationListFilter,
   InvitationFormModal,
-  InvitationFilter,
 } from "@/features/invitations";
 import SendIcon from "@mui/icons-material/Send";
 import { SeoHead } from '@/seo';
@@ -30,9 +30,9 @@ const InvitationPage = () => {
         breadcrumbs={<Breadcrumbs items={breadcrumbs} />}
         header={<Typography variant="title">Invitations</Typography>}
         actions={<Actions />}
-        filter={<InvitationFilter />}
+        filter={<InvitationListFilter />}
       >
-        <InvitationsList />
+        <InvitationList />
       </ListLayout>
     </>
   );
@@ -67,4 +67,6 @@ const Actions = (): ReactElement => {
   );
 };
 
-export default withClientGroup(InvitationPage, [GROUP_ADMIN]);
+export default InvitationPage;
+
+// export default withClientGroup(InvitationPage, [GROUP_ADMIN]);

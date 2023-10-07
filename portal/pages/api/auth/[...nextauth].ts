@@ -137,7 +137,10 @@ export const authOptions = {
       user: User;
     }) {
       session.accessToken = token.accessToken;
-      session.user.groups = token.groups;
+      if(session.user !== undefined) {
+        session.user.groups = token.groups as any;
+        session.user.is_superuser = (token.is_superuser as any) || false;
+      }
       return session;
     },
   },

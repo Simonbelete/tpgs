@@ -11,6 +11,7 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
         data['email'] = self.user.email
         # data['farms'] = self.user.farms
         data['groups'] = self.user.groups.values_list('name', flat=True)
+        data['is_superuser'] = self.user.is_superuser
 
         return data
 
