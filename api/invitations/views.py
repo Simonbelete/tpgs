@@ -87,6 +87,11 @@ class ResendInvitationViewSet(viewsets.ViewSet):
     def create(self, request, id=None):
         try:
             invitation = models.Invitation.objects.get(pk=id)
-            send_invitation_email(invitation.inviter, invitation.email, invitation.token)
+            send_invitation_email.delay(invitation.inviter.id, invitation.email, invitation.token)
+            return Response({}, status=200)
         except models.Invitation.DoesNotExist:
             raise NotFound()
+        except Exception as ex:
+            print('----')
+            print(ex)
+            return Response({}, status=500)
