@@ -94,8 +94,14 @@ const InvitationList = () => {
     page: 0,
     pageSize: 10,
   });
-
-  const { data, isLoading, refetch } = useGetInvitationsQuery(buildQuery({...buildPage(paginationModel), ...selector})); 
+  
+  const { data, isLoading, refetch } = useGetInvitationsQuery(
+    {
+      ...paginationModel,
+      ...buildQuery({'accepted': selector.filters['accepted']}, 'value')
+      // 'accepted__in': selector.filters['accepted__in'].map((e: any) => e.value).join(',')
+    }
+  ); 
   const [deleteHouse, deleteResult ] = useDeleteInvitationMutation();
 
   const handleDelete = async (id: number) => await deleteHouse(id).then(() => refetch())

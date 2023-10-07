@@ -34,8 +34,8 @@ const InvitationFilter = () => {
 
   const handleSearchButton = () => dispatch(filterSlice.actions.reset());
 
-  const handleInvitationStateChange = (event: SelectChangeEvent) => dispatch(filterSlice.actions.pushFilter({key: 'accepted__in', value: event.target.value as any}));
-  const handleInvitationStateRemove = (data: any) => () => dispatch(filterSlice.actions.popFilter({key: 'accepted__in', value: data}));
+  const handleInvitationStateChange = (event: SelectChangeEvent) => dispatch(filterSlice.actions.pushFilter({key: 'accepted', value: event.target.value as any}));
+  const handleInvitationStateRemove = (data: any) => () => dispatch(filterSlice.actions.popFilter({key: 'accepted', value: data}));
   
   return (
     <Paper sx={{ p: 2 }} elevation={0} variant="outlined" square id="invitation-filter">
@@ -95,7 +95,7 @@ const InvitationFilter = () => {
                 dataValueKey="value"
                 dataLableKey="name"
                 label={"Invitation State"}
-                selected={selector.filters['accepted__in'] || []}
+                selected={selector.filters['accepted'] || []}
                 onChange={handleInvitationStateChange}
               />
             </Stack>
@@ -105,7 +105,7 @@ const InvitationFilter = () => {
         </Grid>
         <Grid item xs={12}>
           <Stack direction={"row"}>
-            {selector.filters['accepted__in'] && selector.filters['accepted__in'].map((e: any, key: any) => 
+            {selector.filters['accepted'] && selector.filters['accepted'].map((e: any, key: any) => 
               <Chip key={key}
                     label={`State: ${e.name}`}
                     size="small"
