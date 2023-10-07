@@ -17,5 +17,6 @@ resend_router.register(
 
 urlpatterns = [
     path('', include(router.urls)),
-    path('', include(verify_router.urls))
+    path('', include(verify_router.urls)),
+    path('', include(resend_router.urls))
 ]

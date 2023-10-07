@@ -10,7 +10,8 @@ listenerMiddleware.startListening({
   matcher: isAnyOf(
     filterSlice.actions.setSearch,
     filterSlice.actions.setIsActive,
-    filterSlice.actions.addFilter,
+    filterSlice.actions.pushFilter,
+    filterSlice.actions.popFilter,
     filterSlice.actions.reset,
     // ...Object.values(filterSlice.actions)
   ),

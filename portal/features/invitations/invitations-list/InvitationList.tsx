@@ -12,9 +12,10 @@ import { useSelector } from "react-redux";
 import { RootState } from "@/store";
 import _ from "lodash";
 import dayjs from 'dayjs';
-import { useGetInvitationsQuery, useDeleteInvitationMutation } from "../services";
+import { useGetInvitationsQuery, useDeleteInvitationMutation, useResendInvitationEmailMutation } from "../services";
 import buildQuery from "@/util/buildQuery";
 import buildPage from "@/util/buildPage";
+import { useSnackbar } from "notistack";
 
 const columns: GridColDef[] = [
   {
@@ -89,6 +90,7 @@ const columns: GridColDef[] = [
 ];
 
 const InvitationList = () => {
+  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   const selector = useSelector((state: RootState) => state.filter);
   const [paginationModel, setPaginationModel] = useState({
     page: 0,
@@ -97,18 +99,27 @@ const InvitationList = () => {
   
   const { data, isLoading, refetch } = useGetInvitationsQuery(
     {
-      ...paginationModel,
+      ...buildPage(paginationModel),
       ...buildQuery({'accepted': selector.filters['accepted']}, 'value')
-      // 'accepted__in': selector.filters['accepted__in'].map((e: any) => e.value).join(',')
     }
   ); 
-  const [deleteHouse, deleteResult ] = useDeleteInvitationMutation();
+  const [resendEmail, resendResult] = useResendInvitationEmailMutation();
+  
+  const [deleteInvitation, deleteResult ] = useDeleteInvitationMutation();
 
-  const handleDelete = async (id: number) => await deleteHouse(id).then(() => refetch())
+  const handleDelete = async (id: number) => await deleteInvitation(id).then(() => refetch())
+
+  const handleResendEmail = async (id: number) => await resendEmail(id);
+
+  useEffect(() => {
+    if(resendResult.isSuccess) enqueueSnackbar("Email will be send", {variant: "info"})
+    if(resendResult.isError) enqueueSnackbar("Failed to send email, please try again", {variant: "error"})
+  }, [resendResult])
 
   return (
     <DataTable
       onDelete={handleDelete}
+      onResendEmail={handleResendEmail}
       rows={(data?.results ?? []) as GridRowsProp<Invitation>}
       columns={columns}
       rowCount={data?.count || 0}
@@ -117,7 +128,7 @@ const InvitationList = () => {
       paginationModel={paginationModel}
       paginationMode="server"
       onPaginationModelChange={setPaginationModel}
-      setting={DataTable.SETTING_COL.basic}
+      setting={DataTable.SETTING_COL.email}
     />
   );
 };
