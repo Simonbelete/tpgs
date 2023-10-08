@@ -88,9 +88,9 @@ class Formula(CoreModel):
     name = models.CharField(max_length=100)
     purpose = models.ForeignKey(
         Purpose, on_delete=models.SET_NULL, null=True, blank=True)
-    weight = models.DecimalField(max_digits=7, decimal_places=3,null=True, blank=True, default=0)
-    weight_unit = models.ForeignKey(
-        Unit, on_delete=models.SET_NULL, null=True, blank=True, default=3)  # kg
+    weight = models.DecimalField(max_digits=7, decimal_places=3,null=True, blank=True, default=0) #kg
+    # weight_unit = models.ForeignKey(
+    #     Unit, on_delete=models.SET_NULL, null=True, blank=True, default=3)  # kg
     country = models.ForeignKey(
         Country, on_delete=models.SET_NULL, null=True, blank=True)
     sex = models.CharField(max_length=1, choices=SEX_CHOICES,

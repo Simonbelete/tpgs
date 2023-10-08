@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, { useEffect, useImperativeHandle, useRef, useState } from "react";
 import {
   DataEditor,
   EditableGridCell,
@@ -18,7 +18,9 @@ import {
   Grid,
   InputAdornment,
   Tabs,
-  Tab
+  Tab,
+  Stack,
+  Button
 } from "@mui/material";
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import * as yup from "yup";
@@ -26,7 +28,7 @@ import { useGetNutrientsQuery, useLazyGetNutrientsQuery } from '@/features/nutri
 import { useLazyGetIngredientNutrientsQuery } from '@/features/ingredients/services';
 import { Loading } from "@/components";
 import { Sizer } from "../components";
-import { Ingredient, Nutrient, Formula } from "@/models";
+import { Ingredient, Nutrient, Formula, FormulaIngredient, FormulaRequirement, FormulaRation } from "@/models";
 import {
   IngredientSelectDialog,
 } from "@/features/ingredients";
@@ -36,9 +38,14 @@ import { LabeledInput } from "@/components/inputs";
 import { PurposeDropdown } from "@/features/purposes";
 import { CountryDropdown } from "@/features/countries";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { useCreateFormulaMutation } from '../services';
+import { useCRUD } from "@/hooks";
+import CloseIcon from "@mui/icons-material/Close";
+import SaveIcon from '@mui/icons-material/Save';
+import { useRouter } from "next/router";
+import { enqueueSnackbar } from "notistack";
 
-
-type Column = {} & GridColumn;
+type Column = {nutrient_id?: number} & GridColumn;
 type Inputs = Partial<Formula>;
 
 const schema = yup
@@ -64,8 +71,12 @@ const schema = yup
   });
 
 const Formulation = ({ saveRef }: { saveRef: React.Ref<unknown> }) => {
+  const router = useRouter();
   const [getNutrients, { data: nutreints, isUninitialized, isLoading: nutrientIsLoading}] = useLazyGetNutrientsQuery();
   const [getIngredientNutrients] = useLazyGetIngredientNutrientsQuery();
+
+  const [createFormula, createResult ] = useCreateFormulaMutation();
+
 
   const defaultColumns: Column[] = [
     {id: 'name', title: 'Name'},
@@ -89,11 +100,12 @@ const Formulation = ({ saveRef }: { saveRef: React.Ref<unknown> }) => {
   useEffect(() => {
     if(isUninitialized){
       getNutrients({}).unwrap().then((response) => {
-        const cols: GridColumn[] = (response?.results || [] ).map(e => {
+        const cols: Column[] = (response?.results || [] ).map(e => {
           return {
             id: e.abbreviation,
-            title: e.abbreviation
-          } as GridColumn
+            title: e.abbreviation,
+            nutrient_id: e.id
+          } as Column
         })
 
         columns.current = [
@@ -135,6 +147,7 @@ const Formulation = ({ saveRef }: { saveRef: React.Ref<unknown> }) => {
       const ROW_RATION_INDEX = rows.current.length - 2;
       const ROW_REQUIREMENT_INDEX = rows.current.length - 1;
     
+      console.log(columns.current);
       // Start from ration col
       for(let c=1; c<columns.current.length; c+=1) {
         const col_key: string = columns.current[c].id || "";
@@ -235,6 +248,7 @@ const Formulation = ({ saveRef }: { saveRef: React.Ref<unknown> }) => {
     setIsLoading(true);
     try{
       const newRow: any = {
+        id: 0,
         name: value.name,
         value: 0,
         price: value.price,
@@ -244,6 +258,8 @@ const Formulation = ({ saveRef }: { saveRef: React.Ref<unknown> }) => {
       for(let i=0; i<response.results.length; i+=1){
         let abbvr: string = (response.results[0].nutrient as Nutrient).abbreviation
         newRow[abbvr] = response.results[i].value;
+        // Ingredient id
+        newRow['ingredient_id'] = response.results[i].ingredient;
       }
   
       pushRow(newRow);
@@ -291,11 +307,12 @@ const Formulation = ({ saveRef }: { saveRef: React.Ref<unknown> }) => {
     refresh();
   } 
 
+
   // Form
   const {
     handleSubmit,
     control,
-    formState: { errors },
+    setError,
     getValues,
   } = useForm<Inputs>({
     // @ts-ignore
@@ -305,7 +322,71 @@ const Formulation = ({ saveRef }: { saveRef: React.Ref<unknown> }) => {
     }
   });
 
-  const onSubmit: SubmitHandler<Inputs> = async (data) => {}
+  const useCRUDHook = useCRUD({
+    results: [
+      createResult,
+    ],
+    setError: setError
+  })
+
+  const onSubmit: SubmitHandler<Inputs> = async (data) => {
+    const formula: Partial<Formula> = data;
+
+    const ROW_RATION_INDEX = rows.current.length - 2;
+    const ROW_REQUIREMENT_INDEX = rows.current.length - 1;
+
+    const frm_ing: Partial<FormulaIngredient>[] = []
+    const frm_req: Partial<FormulaRequirement>[] = []
+    const frm_rtn: Partial<FormulaRation>[] = []
+
+    for(let r=0; r<ROW_RATION_INDEX; r+=1) {
+      frm_ing.push({
+        ingredient: Number(rows.current[r]['ingredient_id']),
+        ration: Number(rows.current[r]['ration']),
+      });
+    }
+
+    // Start from nutrients
+    for(let c=6; c<columns.current.length; c+=1) {
+      const col_key: string = columns.current[c].id || "";
+      if(Number(rows.current[ROW_REQUIREMENT_INDEX][col_key]) !== 0) {
+        frm_req.push({
+          id: columns.current[c].nutrient_id,
+          value: Number(rows.current[ROW_REQUIREMENT_INDEX][col_key])
+        })
+      }
+     
+      if(Number(rows.current[ROW_RATION_INDEX][col_key]) !== 0) {
+        frm_rtn.push({
+          id: columns.current[c].nutrient_id,
+          value: Number(rows.current[ROW_RATION_INDEX][col_key])
+        })
+      }
+    }
+
+    formula.ingredients = frm_ing as any;
+    formula.rations = frm_rtn as any;
+    formula.requirements = frm_req as any;
+    formula.budget = Number(rows.current[ROW_REQUIREMENT_INDEX]['ration_price'])
+    formula.desired_ratio = Number(rows.current[ROW_REQUIREMENT_INDEX]['ration']) || 0
+    formula.desired_dm = Number(rows.current[ROW_REQUIREMENT_INDEX]['dm'])
+    formula.ration_price = Number(rows.current[ROW_RATION_INDEX]['ration_price'])
+    formula.ration_ratio = Number(rows.current[ROW_RATION_INDEX]['ration'])
+    formula.ration_dm = Number(rows.current[ROW_RATION_INDEX]['dm'])
+    
+    if(formula.desired_ratio == null || formula.ration_ratio == null) {
+      enqueueSnackbar("Please Insert Ingredient", {variant: "warning"})
+    }
+
+    console.log(formula);
+    const response = await createFormula(formula);
+  }
+
+  useImperativeHandle(saveRef, () => ({
+    save() {
+      handleSubmit(onSubmit)();
+    },
+  }));
 
   return (
     <>
@@ -561,6 +642,36 @@ const Formulation = ({ saveRef }: { saveRef: React.Ref<unknown> }) => {
            }}
          />
       </Sizer>
+      <Box sx={{mt: 5}}>
+                <Stack
+                  spacing={2}
+                  direction={"row"}
+                  justifyContent="flex-start"
+                  alignItems="center"
+                >
+                  <Box>
+                    <Button
+                      variant="contained"
+                      size="small"
+                      startIcon={<SaveIcon />}
+                      onClick={() => handleSubmit(onSubmit)()}
+                    >
+                      Save
+                    </Button>
+                  </Box>
+                  <Box>
+                    <Button
+                      variant="outlined"
+                      color="error"
+                      size="small"
+                      startIcon={<CloseIcon />}
+                      onClick={() => router.push("/formulas")}
+                    >
+                      Cancel
+                    </Button>
+                  </Box>
+                </Stack>
+              </Box>
     </>
   )
 }
