@@ -25,7 +25,7 @@ const Formulation = ({ saveRef }: { saveRef: React.Ref<unknown> }) => {
 
   const defaultColumns: Column[] = [
     {id: 'name', title: 'Name'},
-    {id: 'value', title: '%'},
+    {id: 'ration', title: '%'},
     {id: 'price', title: 'Price[Kg]'},
     {id: 'dm', title: 'DM[%]'}
   ]
@@ -35,8 +35,6 @@ const Formulation = ({ saveRef }: { saveRef: React.Ref<unknown> }) => {
   const [refState, setRefresh] = useState(1);
   const columns = useRef<Column[]>([]);
   const rows = useRef<any[]>([
-    {id: 'ration', name: 'Ration'},
-    {id: 'requirement', name: 'Requirement'}
   ]);
   const indexes = useRef<string[]>([]);
 
@@ -57,7 +55,19 @@ const Formulation = ({ saveRef }: { saveRef: React.Ref<unknown> }) => {
           ...cols
         ];
 
-        indexes.current = columns.current.map(e => String(e.id));
+        const initRation: any = {id: 'ration', name: 'Ration'}
+        const initReq: any = {id: 'requirement', name: 'Requirement'}
+
+        indexes.current = columns.current.map(e => {
+          const key: string = e.id || "";
+          if(key !== 'name' ) {
+            initRation[key] = '';
+            initReq[key] = '';
+          }
+          return String(e.id)
+        });
+
+        rows.current = [ initRation, initReq]
 
         refresh();
       })
@@ -68,6 +78,43 @@ const Formulation = ({ saveRef }: { saveRef: React.Ref<unknown> }) => {
   const onCellEdited = React.useCallback(
     (cell: Item, newValue: EditableGridCell) => {
       const [col, row] = cell;
+
+      if (rows.current[row] == undefined) {
+        return;
+      }
+
+      // @ts-ignore
+      rows.current[row][indexes.current[col]] = newValue.data;
+
+      const ROW_RATION_INDEX = rows.current.length - 2;
+      const ROW_REQUIREMENT_INDEX = rows.current.length - 1;
+    
+      for(let c=1; c<columns.current.length; c+=1) {
+        const col_key: string = columns.current[c].id || "";
+        
+        let col_total: number = 0
+
+        for(let r=0; r<ROW_RATION_INDEX; r+=1){
+          const ration = rows.current[r]['ration'];
+          const cell = rows.current[r][col_key]
+
+          let result = 0
+
+          if(c == 1) {
+            // For ration column
+            result = cell;
+          } else {
+            result = ration * cell / 100;
+          }
+
+          col_total += (result || 0) 
+        }
+
+        rows.current[ROW_RATION_INDEX][col_key] = col_total;
+      }
+
+      console.log(rows.current)
+
   }, [columns]);
 
   const getContent = React.useCallback(
