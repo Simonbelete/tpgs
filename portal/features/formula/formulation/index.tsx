@@ -8,16 +8,60 @@ import {
   Item,
   GridColumnIcon,
 } from "@glideapps/glide-data-grid";
+import {
+  Box,
+  Backdrop,
+  Accordion,
+  AccordionSummary,
+  Typography,
+  AccordionDetails,
+  Grid,
+  InputAdornment,
+  Tabs,
+  Tab
+} from "@mui/material";
+import { useForm, SubmitHandler, Controller } from "react-hook-form";
+import * as yup from "yup";
 import { useGetNutrientsQuery, useLazyGetNutrientsQuery } from '@/features/nutrients/services';
 import { useLazyGetIngredientNutrientsQuery } from '@/features/ingredients/services';
 import { Loading } from "@/components";
 import { Sizer } from "../components";
-import { Ingredient, Nutrient } from "@/models";
+import { Ingredient, Nutrient, Formula } from "@/models";
 import {
   IngredientSelectDialog,
 } from "@/features/ingredients";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import { Dropdown } from "@/components/dropdowns";
+import { LabeledInput } from "@/components/inputs";
+import { PurposeDropdown } from "@/features/purposes";
+import { CountryDropdown } from "@/features/countries";
+import { yupResolver } from "@hookform/resolvers/yup";
+
 
 type Column = {} & GridColumn;
+type Inputs = Partial<Formula>;
+
+const schema = yup
+  .object({
+    name: yup.string().required(),
+    purpose: yup.string().nullable(),
+    weight: yup.number().required(),
+    country: yup.string().nullable(),
+    sex: yup.string().nullable(),
+    age_from_week: yup.number().nullable(),
+    age_to_week: yup.number().nullable(),
+    formula_basis: yup.string().nullable(),
+    note: yup.string().nullable(),
+  })
+  .transform((currentValue: any) => {
+    if (currentValue.purpose != null)
+      currentValue.purpose = currentValue.purpose.id;
+    if (currentValue.country != null)
+      currentValue.country = currentValue.country.id;
+    if (currentValue.formula_basis != null)
+      currentValue.formula_basis = currentValue.formula_basis.value;
+    return currentValue;
+  });
 
 const Formulation = ({ saveRef }: { saveRef: React.Ref<unknown> }) => {
   const [getNutrients, { data: nutreints, isUninitialized, isLoading: nutrientIsLoading}] = useLazyGetNutrientsQuery();
@@ -27,6 +71,7 @@ const Formulation = ({ saveRef }: { saveRef: React.Ref<unknown> }) => {
     {id: 'name', title: 'Name'},
     {id: 'ration', title: '%'},
     {id: 'price', title: 'Price[Kg]'},
+    {id: 'price', title: 'Price [100kg]'},
     {id: 'dm', title: 'DM[%]'}
   ]
 
@@ -89,6 +134,7 @@ const Formulation = ({ saveRef }: { saveRef: React.Ref<unknown> }) => {
       const ROW_RATION_INDEX = rows.current.length - 2;
       const ROW_REQUIREMENT_INDEX = rows.current.length - 1;
     
+      // Start from ration col
       for(let c=1; c<columns.current.length; c+=1) {
         const col_key: string = columns.current[c].id || "";
         
@@ -112,8 +158,6 @@ const Formulation = ({ saveRef }: { saveRef: React.Ref<unknown> }) => {
 
         rows.current[ROW_RATION_INDEX][col_key] = col_total;
       }
-
-      console.log(rows.current)
 
   }, [columns]);
 
@@ -203,13 +247,53 @@ const Formulation = ({ saveRef }: { saveRef: React.Ref<unknown> }) => {
     ]
     refresh();
   }
-  const pushcolumn = (col: Column) => {
-    columns.current = [
-      ...columns.current,
-      col
-    ];
+  const pushcolumn = (col: Column, index?: number) => {
+    if(index) {
+      columns.current = [
+        ...columns.current.slice(0, index),
+        col,
+        ...columns.current.slice(index, -1)
+      ]
+    } else {
+      columns.current = [
+        ...columns.current,
+        col
+      ];
+    }
     refresh();
   } 
+
+  const popAndPushcolumn = (col: Column, index?: number) => {
+    if(index) {
+      columns.current = [
+        ...columns.current.slice(0, index),
+        col,
+        ...columns.current.slice(index + 1)
+      ]
+    } else {
+      columns.current = [
+        ...columns.current,
+        col
+      ];
+    }
+    refresh();
+  } 
+
+  // Form
+  const {
+    handleSubmit,
+    control,
+    formState: { errors },
+    getValues,
+  } = useForm<Inputs>({
+    // @ts-ignore
+    resolver: yupResolver(schema),
+    defaultValues: {
+      weight: 100
+    }
+  });
+
+  const onSubmit: SubmitHandler<Inputs> = async (data) => {}
 
   return (
     <>
@@ -219,6 +303,231 @@ const Formulation = ({ saveRef }: { saveRef: React.Ref<unknown> }) => {
         onSelected={handleSelected}
         onClose={() => setIsIngredientOpen(false)}
       />
+        <Box sx={{ my: 5, border: "1px solid #98AAC4" }}>
+        <Accordion elevation={0} defaultExpanded>
+          <AccordionSummary
+            expandIcon={<ExpandMoreIcon />}
+            aria-controls="panel1a-content"
+            id="panel1a-header"
+          >
+            <Typography fontWeight={600}>Formula Detail</Typography>
+          </AccordionSummary>
+          <AccordionDetails>
+            <form onSubmit={handleSubmit(onSubmit)}>
+              <Grid container spacing={4}>
+                {/* Name */}
+                <Grid item xs={12} md={6}>
+                  <Controller
+                    name={"name"}
+                    control={control}
+                    render={({
+                      field: { onChange, value },
+                      fieldState: { invalid, isTouched, isDirty, error },
+                    }) => (
+                      <LabeledInput
+                        error={!!error?.message}
+                        helperText={error?.message}
+                        onChange={onChange}
+                        fullWidth
+                        size="small"
+                        value={value}
+                        label={"Name"}
+                        placeholder={"Name"}
+                      />
+                    )}
+                  />
+                </Grid>
+                {/* Purpose */}
+                <Grid item xs={12} md={6}>
+                  <Controller
+                    name={"purpose"}
+                    control={control}
+                    render={({
+                      field: { onChange, value },
+                      fieldState: { invalid, isTouched, isDirty, error },
+                    }) => (
+                      <PurposeDropdown
+                        onChange={(_, data) => onChange(data)}
+                        value={value}
+                        error={!!error?.message}
+                        helperText={error?.message}
+                      />
+                    )}
+                  />
+                </Grid>
+                {/* Sex */}
+                <Grid item xs={12} md={6}>
+                  <Controller
+                    name={"sex"}
+                    control={control}
+                    render={({
+                      field: { onChange, value },
+                      fieldState: { invalid, isTouched, isDirty, error },
+                    }) => (
+                      <Dropdown
+                        options={[
+                          { value: "M", name: "Male" },
+                          { value: "F", name: "Female" },
+                        ]}
+                        key="name"
+                        onChange={(_, data) => onChange(data)}
+                        value={value}
+                        label="Sex"
+                        error={!!error?.message}
+                        helperText={error?.message}
+                      />
+                    )}
+                  />
+                </Grid>
+                {/* Formula Basis */}
+                <Grid item xs={12} md={6}>
+                  <Controller
+                    name={"formula_basis"}
+                    control={control}
+                    render={({
+                      field: { onChange, value },
+                      fieldState: { invalid, isTouched, isDirty, error },
+                    }) => (
+                      <Dropdown
+                        options={[
+                          { value: "AF", name: "As-Fed Basis" },
+                          { value: "DM", name: "DM Basis" },
+                        ]}
+                        key="name"
+                        onChange={(_, data) => onChange(data)}
+                        value={value}
+                        label="Feed Basis"
+                        error={!!error?.message}
+                        helperText={error?.message}
+                      />
+                    )}
+                  />
+                </Grid>
+                {/* Weight */}
+                <Grid item xs={12} md={6}>
+                  <Controller
+                    name={"weight"}
+                    control={control}
+                    render={({
+                      field: { onChange, value },
+                      fieldState: { error },
+                    }) => (
+                      <LabeledInput
+                        error={!!error?.message}
+                        helperText={error?.message}
+                        onChange={(event: any) => {
+                          console.log(event.target.value);
+                          // Update header title of price per kg
+                          popAndPushcolumn(
+                            {id: 'price', title: `Price [${event.target.value}kg]`},
+                            3
+                          )
+                          onChange(event);
+                        }}
+                        fullWidth
+                        size="small"
+                        value={value ?? 0}
+                        label={"Weight [Kg]"}
+                        placeholder={"Weight per Kg"}
+                        type="number"
+                        InputProps={{
+                          endAdornment: (
+                            <InputAdornment position="start">Kg</InputAdornment>
+                          ),
+                        }}
+                      />
+                    )}
+                  />
+                </Grid>
+                {/* Country */}
+                <Grid item xs={12} md={6}>
+                  <Controller
+                    name={"country"}
+                    control={control}
+                    render={({
+                      field: { onChange, value },
+                      fieldState: { invalid, isTouched, isDirty, error },
+                    }) => (
+                      <CountryDropdown
+                        onChange={(_, data) => onChange(data)}
+                        value={value}
+                        error={!!error?.message}
+                        helperText={error?.message}
+                      />
+                    )}
+                  />
+                </Grid>
+                <Grid item xs={12} md={6}>
+                  <Controller
+                    name={"age_from_week"}
+                    control={control}
+                    render={({
+                      field: { onChange, value },
+                      fieldState: { invalid, isTouched, isDirty, error },
+                    }) => (
+                      <LabeledInput
+                        error={!!error?.message}
+                        helperText={error?.message}
+                        onChange={onChange}
+                        fullWidth
+                        size="small"
+                        value={value}
+                        label={"Age From"}
+                        placeholder={"Age From"}
+                        type="number"
+                      />
+                    )}
+                  />
+                </Grid>
+                <Grid item xs={12} md={6}>
+                  <Controller
+                    name={"age_to_week"}
+                    control={control}
+                    render={({
+                      field: { onChange, value },
+                      fieldState: { invalid, isTouched, isDirty, error },
+                    }) => (
+                      <LabeledInput
+                        error={!!error?.message}
+                        helperText={error?.message}
+                        onChange={onChange}
+                        fullWidth
+                        size="small"
+                        value={value}
+                        label={"Age To"}
+                        placeholder={"Age To"}
+                        type="number"
+                      />
+                    )}
+                  />
+                </Grid>
+                {/* Name */}
+                <Grid item xs={12} md={6}>
+                  <Controller
+                    name={"note"}
+                    control={control}
+                    render={({
+                      field: { onChange, value },
+                      fieldState: { invalid, isTouched, isDirty, error },
+                    }) => (
+                      <LabeledInput
+                        error={!!error?.message}
+                        helperText={error?.message}
+                        onChange={onChange}
+                        fullWidth
+                        size="small"
+                        value={value}
+                        label={"Remark"}
+                        placeholder={"Remark"}
+                      />
+                    )}
+                  />
+                </Grid>
+              </Grid>
+            </form>
+          </AccordionDetails>
+        </Accordion>
+      </Box>
       <Sizer>
         <DataEditor
            width="100%"

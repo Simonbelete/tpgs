@@ -147,7 +147,7 @@ const Formulation = ({ saveRef }: { saveRef: React.Ref<unknown> }) => {
   const COL_NU_SI = 4;
   const COL_NU_EI = columns.length - 2;
 
-  const a = useGetNutrientsQuery();
+  const { data: nutrients, isLoading} = useGetNutrientsQuery();
 
   useEffect(() => {
     if (isInitialMount.current) {
