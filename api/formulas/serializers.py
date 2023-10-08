@@ -35,11 +35,11 @@ class FormulaRequirementSerializer_REF(serializers.ModelSerializer):
     # nutrient = serializers.PrimaryKeyRelatedField(
     #     queryset=Nutrient.objects.all(), read_only=False)
     # Nutrient Id
-    id = serializers.IntegerField()
+    # id = serializers.IntegerField()
 
     class Meta:
         model = models.FormulaRequirement
-        fields = ['id', 'value']
+        fields = ['nutrient', 'value']
 
 
 class FormulaRequirementSerializer_PATCH(serializers.ModelSerializer):
@@ -64,8 +64,8 @@ class FormulaRationSerializer_GET(serializers.ModelSerializer):
     nutrient = NutrientSerializer_GET()
 
     class Meta:
-        model = models.FormulaRation
-        fields = ['id', 'formula', 'nutrient', 'achived_goal']
+        model = models.FormulaRation 
+        fields = ['id', 'formula', 'nutrient', 'value']
 
 
 class FormulaRationSerializer_POST(serializers.ModelSerializer):
@@ -83,11 +83,11 @@ class FormulaRationSerializer_POST(serializers.ModelSerializer):
 class FormulaRationSerializer_REF(serializers.ModelSerializer):
     # nutrient = serializers.PrimaryKeyRelatedField(read_only=True)
     # Nutrient Id
-    id = serializers.IntegerField()
+    # id = serializers.IntegerField()
 
     class Meta:
         model = models.FormulaRation
-        fields = ['id', 'value']
+        fields = ['nutrient', 'value']
 
 
 class FormulaRationSerializer_PATCH(serializers.ModelSerializer):
@@ -164,9 +164,10 @@ class FormulaSerializer_GET(serializers.ModelSerializer):
 
 
 class FormulaSerializer_POST(serializers.ModelSerializer):
-    requirements = FormulaRequirementSerializer_REF(many=True, required=False)
-    rations = FormulaRationSerializer_REF(many=True, required=False)
-    ingredients = FormulaIngredientSerializer_REF(source='formulaingredient.ingredient',many=True, required=False)
+    requirements = FormulaRequirementSerializer_REF(source="formularequirement", many=True, required=False)
+    rations = FormulaRationSerializer_REF(source="formularation" ,many=True, required=False)
+    ingredients = FormulaIngredientSerializer_REF(source="formulaingredient", many=True, required=False)
+    # ingredients = FormulaIngredientSerializer_REF(source='formulaingredient.ingredient',many=True, required=False)
 
     class Meta:
         model = models.Formula
@@ -175,20 +176,16 @@ class FormulaSerializer_POST(serializers.ModelSerializer):
 
     @transaction.atomic
     def create(self, validated_data):
-        requirements = validated_data.pop('requirements', [])
-        rations = validated_data.pop('rations', [])
-        ingredients = validated_data.pop('ingredients', [])
+        requirements = validated_data.pop('formularequirement', [])
+        rations = validated_data.pop('formularation', [])
+        ingredients = validated_data.pop('formulaingredient', [])
         instance = models.Formula.objects.create(**validated_data)
         for requirement in requirements:
-            nutrient_model = Nutrient.objects.get(
-                pk=requirement['id'])
             models.FormulaRequirement.objects.create(
-                formula=instance, nutrient=nutrient_model, value=requirement['value'])
+                formula=instance, **requirement)
         for ration in rations:
-            nutrient_model = Nutrient.objects.get(
-                pk=ration['id'])
             models.FormulaRation.objects.create(
-                formula=instance, nutrient=nutrient_model, value=ration['value'])
+                formula=instance, **ration)
         for ingredient in ingredients:
             inp = ingredient.pop('ingredient')
             models.FormulaIngredient.objects.create(

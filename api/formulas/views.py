@@ -47,7 +47,7 @@ class FormulaRationViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.FormulaRationSerializer_GET
 
     def get_queryset(self):
-        return models.FormulaRequirement.objects.filter(formula=self.kwargs['formula_pk'])
+        return models.FormulaRation.objects.filter(formula=self.kwargs['formula_pk'])
 
     def get_serializer_class(self):
         if self.request.method == 'POST':
