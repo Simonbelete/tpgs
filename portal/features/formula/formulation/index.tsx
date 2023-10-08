@@ -71,7 +71,8 @@ const Formulation = ({ saveRef }: { saveRef: React.Ref<unknown> }) => {
     {id: 'name', title: 'Name'},
     {id: 'ration', title: '%'},
     {id: 'price', title: 'Price[Kg]'},
-    {id: 'price', title: 'Price [100kg]'},
+    {id: 'ration_weight', title: 'Ration Weight [kg]'},
+    {id: 'ration_price', title: 'Ration Price [100kg]'},
     {id: 'dm', title: 'DM[%]'}
   ]
 
@@ -142,13 +143,24 @@ const Formulation = ({ saveRef }: { saveRef: React.Ref<unknown> }) => {
 
         for(let r=0; r<ROW_RATION_INDEX; r+=1){
           const ration = rows.current[r]['ration'];
+          const price = rows.current[r]['price'];
           const cell = rows.current[r][col_key]
-
+          
           let result = 0
 
           if(c == 1) {
             // For ration column
             result = cell;
+          } else if(c == 3) {
+            // For ration weight
+            result = (getValues('weight') || 0) * ration / 100
+            // Set ration weight for current row
+            rows.current[r]['ration_weight'] = result;
+          } else if(c == 4){
+            // For ration price per weight
+            result = ((getValues('weight') || 0) * ration / 100) * price;
+            // set ration price for current row
+            rows.current[r]['ration_price'] = result;
           } else {
             result = ration * cell / 100;
           }
@@ -420,7 +432,7 @@ const Formulation = ({ saveRef }: { saveRef: React.Ref<unknown> }) => {
                           // Update header title of price per kg
                           popAndPushcolumn(
                             {id: 'price', title: `Price [${event.target.value}kg]`},
-                            3
+                            4
                           )
                           onChange(event);
                         }}
