@@ -78,17 +78,44 @@ const Formulation = ({ saveRef }: { saveRef: React.Ref<unknown> }) => {
       // @ts-ignore
       let d = dataRow != undefined ? dataRow[indexes.current[col]] : "";
 
-      return {
-        kind: GridCellKind.Text,
-        readonly: true,
-        allowOverlay: false,
-        displayData: String(d ?? ""),
-        data: String(d ?? ""),
-        style: "faded",
-        themeOverride: {
-          bgCell: "#EFEFF1",
-        },
-      };
+      const ROW_RATION_INDEX = rows.current.length - 2;
+      const ROW_REQUIREMENT_INDEX = rows.current.length - 1;
+
+      if (col == 0) {
+        return {
+          kind: GridCellKind.Text,
+          readonly: true,
+          allowOverlay: false,
+          displayData: String(d ?? ""),
+          data: String(d ?? ""),
+          style: "faded",
+          themeOverride: {
+            bgCell: "#EFEFF1",
+          },
+        };
+      }else if (
+        (ROW_REQUIREMENT_INDEX == row || col == 1) &&
+        row != ROW_RATION_INDEX
+      ) {
+        return {
+          kind: GridCellKind.Number,
+          allowOverlay: true,
+          displayData: String(d ?? 0),
+          data: Number(d ?? 0),
+        };
+      } else {
+        return {
+          kind: GridCellKind.Number,
+          allowOverlay: false,
+          readonly: true,
+          displayData: String(d ?? 0),
+          data: Number(d ?? 0),
+          style: "faded",
+          themeOverride: {
+            bgCell: "#EFEFF1",
+          },
+        };
+      }
     },
     [rows]
   );
@@ -98,7 +125,6 @@ const Formulation = ({ saveRef }: { saveRef: React.Ref<unknown> }) => {
   }, []);
 
   const onCellActivated = React.useCallback((cell: Item) => {}, []);
-
 
   const handleSelected = async (value?: Ingredient) => {
     if (value == undefined || value == null) return;
