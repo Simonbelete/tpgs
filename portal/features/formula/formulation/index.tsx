@@ -35,6 +35,8 @@ const Formulation = ({ saveRef }: { saveRef: React.Ref<unknown> }) => {
   const [refState, setRefresh] = useState(1);
   const columns = useRef<Column[]>([]);
   const rows = useRef<any[]>([
+    {id: 'ration', name: 'Ration'},
+    {id: 'requirement', name: 'Requirement'}
   ]);
   const indexes = useRef<string[]>([]);
 
@@ -123,8 +125,8 @@ const Formulation = ({ saveRef }: { saveRef: React.Ref<unknown> }) => {
 
   const pushRow = (row: any) => {
     rows.current = [
+      row,
       ...rows.current,
-      row
     ]
     refresh();
   }
