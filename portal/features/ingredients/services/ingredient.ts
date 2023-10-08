@@ -6,7 +6,7 @@ import client from "@/services/client";
 import { NextPageContext } from "next";
 
 const URL = "/ingredients";
-const NUTRIENT_URL = "/nutrients";
+const NUTRIENT_URL = "nutrients";
 const HISTORY_URL = `histories`;
 const SUMMARY_URL = `summary`;
 const EXPORT_URL = `${URL}/export`;
@@ -34,6 +34,9 @@ export const ingredientApi = baseApi.injectEndpoints({
       }),
       updateIngredientNutriet: build.mutation<IngredientNutrient, Pick<IngredientNutrient, 'ingredient'> & Partial<Ingredient>>({
         query: ({ingredient, ...patch}) => ({ url: `${URL}/${ingredient}/`, method: 'patch', data: patch }),
+      }),
+      deleteIngredientNutrient: build.mutation<Promise<AxiosResponse<IngredientNutrient>>, {id: number, nutrient_id: number}>({
+        query: ({id, nutrient_id}) => ({ url: `${URL}/${id}/${NUTRIENT_URL}/${nutrient_id}`, method: 'delete' }),
       }),
     }
   },
@@ -81,5 +84,6 @@ export const {
   useGetIngredientNutrientsQuery,
   useLazyGetIngredientNutrientsQuery,
   useCreateIngredientNutrientMutation,
-  useUpdateIngredientNutrietMutation
+  useUpdateIngredientNutrietMutation,
+  useDeleteIngredientNutrientMutation
 } = ingredientApi;

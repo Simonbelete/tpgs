@@ -29,7 +29,7 @@ const FlockDropdown = ({
     <AsyncDropdown<Flock>
       value={value}
       dataKey="name"
-      label={"Flock"}
+      label={"Ingredient"}
       error={error}
       helperText={helperText}
       options={data?.results ?? []}

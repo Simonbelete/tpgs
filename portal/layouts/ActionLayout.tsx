@@ -17,7 +17,7 @@ const ActionLayout = ({
   toolbars,
 }: ActionLayoutProps) => {
   return (
-    <div style={{position: "relative"}}>
+    <div>
       <Box mb={2}>{breadcrumbs}</Box>
       <Box sx={{ display: "flex" }} mb={5}>
         {header}

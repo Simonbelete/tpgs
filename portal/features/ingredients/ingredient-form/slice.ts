@@ -2,16 +2,19 @@ import { Ingredient, IngredientNutrient } from "@/models";
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 
-export interface IngredientFormState {
+export interface IngredientFormState extends Partial<Ingredient> {
   nutrients: (IngredientNutrient & { isNew?: boolean })[];
 }
 
 const initialState: IngredientFormState = {
+  name: "",
+  code: "",
+  price: 0,
   nutrients: [],
 };
 
 export const ingredientFormSlice = createSlice({
-  name: "Ingredient",
+  name: "Ingredient Form",
   initialState,
   reducers: {
     setNutrients: (

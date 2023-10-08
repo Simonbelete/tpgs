@@ -5,10 +5,10 @@ import IngredientType from "./IngredientType";
 export default interface Ingredient extends AbstractBaseModel {
   name: string;
   code: string;
-  ingredient_type: number | IngredientType;
-  description: number;
+  ingredient_type?: number | IngredientType;
+  description?: string;
   price: number;
-  price_unit: string;
+  price_unit?: string;
   nutrients: number | IngredientNutrient[];
   dm: number;
 }

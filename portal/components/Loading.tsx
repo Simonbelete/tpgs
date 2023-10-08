@@ -6,7 +6,6 @@ import { Dna } from  'react-loader-spinner'
 
 const Loading = ({ open = true}: {open?: boolean}) => {
   return (
-    <div>
       <Backdrop
         sx={{ background: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
         open={open}
@@ -21,7 +20,6 @@ const Loading = ({ open = true}: {open?: boolean}) => {
           wrapperClass="dna-wrapper"
         />
       </Backdrop>
-    </div>
   );
 };
 

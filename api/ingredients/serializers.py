@@ -105,7 +105,7 @@ class IngredientSerializer_POST(serializers.ModelSerializer):
     class Meta:
         model = models.Ingredient
         fields = ['name', 'code',
-                  'description', 'price', 'price_unit', 'nutrients']
+                  'description', 'price', 'nutrients']
 
     @transaction.atomic
     def create(self, validated_data):
