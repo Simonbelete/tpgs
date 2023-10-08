@@ -351,14 +351,14 @@ const Formulation = ({ saveRef }: { saveRef: React.Ref<unknown> }) => {
       const col_key: string = columns.current[c].id || "";
       if(Number(rows.current[ROW_REQUIREMENT_INDEX][col_key]) !== 0) {
         frm_req.push({
-          id: columns.current[c].nutrient_id,
+          nutrient: columns.current[c].nutrient_id,
           value: Number(rows.current[ROW_REQUIREMENT_INDEX][col_key])
         })
       }
      
       if(Number(rows.current[ROW_RATION_INDEX][col_key]) !== 0) {
         frm_rtn.push({
-          id: columns.current[c].nutrient_id,
+          nutrient: columns.current[c].nutrient_id,
           value: Number(rows.current[ROW_RATION_INDEX][col_key])
         })
       }
