@@ -44,6 +44,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import SaveIcon from '@mui/icons-material/Save';
 import { useRouter } from "next/router";
 import { enqueueSnackbar } from "notistack";
+import Plot from 'react-plotly.js';
 
 type Column = {nutrient_id?: number} & GridColumn;
 type Inputs = Partial<Formula>;
@@ -77,6 +78,10 @@ const Formulation = ({ saveRef }: { saveRef: React.Ref<unknown> }) => {
 
   const [createFormula, createResult ] = useCreateFormulaMutation();
 
+  const [chartData, setChartData] = useState({
+    x: [],
+    y: []
+  })
 
   const defaultColumns: Column[] = [
     {id: 'name', title: 'Name'},
@@ -147,7 +152,11 @@ const Formulation = ({ saveRef }: { saveRef: React.Ref<unknown> }) => {
       const ROW_RATION_INDEX = rows.current.length - 2;
       const ROW_REQUIREMENT_INDEX = rows.current.length - 1;
     
-      console.log(columns.current);
+      const chart: any = {
+        x: [],
+        y: []
+      }
+
       // Start from ration col
       for(let c=1; c<columns.current.length; c+=1) {
         const col_key: string = columns.current[c].id || "";
@@ -182,7 +191,13 @@ const Formulation = ({ saveRef }: { saveRef: React.Ref<unknown> }) => {
         }
 
         rows.current[ROW_RATION_INDEX][col_key] = col_total;
+
+        // Chart data
+        chart.x.push(columns.current[c].title)
+        chart.y.push(col_total/ rows.current[ROW_REQUIREMENT_INDEX][col_key] * 100)
       }
+
+      setChartData(chart);
 
   }, [columns]);
 
@@ -642,6 +657,20 @@ const Formulation = ({ saveRef }: { saveRef: React.Ref<unknown> }) => {
            }}
          />
       </Sizer>
+      <Box sx={{my: 5}}>
+      <Plot
+          data={[
+            {
+              x: chartData.x,
+              y: chartData.y,
+              type: 'bar'
+            }
+          ]}
+        layout={ {title: 'A Fancy Plot', height: 500, autosize: true} }
+        config={{responsive: true, }}
+        />
+      </Box>
+
       <Box sx={{mt: 5}}>
                 <Stack
                   spacing={2}
