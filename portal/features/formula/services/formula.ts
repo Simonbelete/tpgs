@@ -1,5 +1,5 @@
 import { baseApi } from '@/services/baseApi';
-import { AbstractSummary, Response, Formula } from '@/models';
+import { AbstractSummary, Response, Formula, FormulaIngredient } from '@/models';
 import { AxiosResponse } from "axios";
 import clientSSR from "@/services/client_ssr";
 import client from "@/services/client";
@@ -7,6 +7,7 @@ import { NextPageContext } from "next";
 
 const URL = "/formulas";
 const ACCUSATION_URL = "/accusations";
+const INGREDIENT_URL = "ingredients"
 const HISTORY_URL = `histories`;
 const SUMMARY_URL = `summary`;
 const EXPORT_URL = `${URL}/export`;
@@ -28,7 +29,18 @@ export const formulaApi = baseApi.injectEndpoints({
         query: (id: number) => ({ url: `${URL}/${id}/`, method: 'delete' }),
       }),
       // Accusations
-      getFormulaAccusations:  build.query<Response<Formula>, {formula_id: number, query: Object}>({ query: ({formula_id, query}) => ({ url: `${URL}/${formula_id}/${ACCUSATION_URL}`, method: 'get', params: query }) }),
+      getFormulaAccusations: build.query<Response<Formula>, {formula_id: number, query: Object}>({ query: ({formula_id, query}) => ({ url: `${URL}/${formula_id}/${ACCUSATION_URL}`, method: 'get', params: query }) }),
+      // Ingredients
+      getFormulaIngredients: build.query<Response<Formula>, {id: number, query: Object}>({ query: ({id, query}) => ({ url: `${URL}/${id}/${ACCUSATION_URL}`, method: 'get', params: query }) }),
+      createFormulaIngredient: build.mutation<Promise<AxiosResponse<FormulaIngredient>>, {id: number, data: Partial<FormulaIngredient>}>({
+        query: ({id, data}) => ({ url: `${URL}/${id}/${INGREDIENT_URL}`, method: 'post', data: data }),
+      }),
+      updateIngredientNutriet: build.mutation<FormulaIngredient, Pick<FormulaIngredient, 'ingredient'> & Partial<FormulaIngredient>>({
+        query: ({ingredient, ...patch}) => ({ url: `${URL}/${ingredient}/`, method: 'patch', data: patch }),
+      }),
+      deleteFormulaIngredient: build.mutation<Promise<AxiosResponse<FormulaIngredient>>, {id: number, ingredient_id: number}>({
+        query: ({id, ingredient_id}) => ({ url: `${URL}/${id}/${INGREDIENT_URL}/${ingredient_id}`, method: 'delete' }),
+      }),
     }
   },
   overrideExisting: false,
@@ -71,4 +83,11 @@ export const {
   useUpdateFormulaMutation,
   useDeleteFormulaMutation,
   useGetFormulaAccusationsQuery,
+
+  // Ingredients
+  useGetFormulaIngredientsQuery,
+  useLazyGetFormulaIngredientsQuery,
+  useCreateFormulaIngredientMutation,
+  useUpdateIngredientNutrietMutation,
+  useDeleteFormulaIngredientMutation,
 } = formulaApi;
