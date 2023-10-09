@@ -60,7 +60,7 @@ Course AM = Course(
       //     'Immediate causes (inadequate diet - quantity and quality, diseases)',
       //     'Underlying causes (food insecurity, inadequate mother and child care, and inadequate healthcare and unhealthy environment)'
       //   ]),
-      //   'A person who does not eat a diverse diet may lack certain vitamins and minerals (micronutrients). This can aﬀ ect health at all stages of life and prevent adequate growth and development in children. Micronutrients of public health signiﬁ cance are iron, vitamin A and iodine, lack of which aﬀ ect health and growth. A varied diet or taking special supplements can ensure people get the micronutrients they need.'
+      //   'A person who does not eat a diverse diet may lack certain vitamins and minerals (micronutrients). This can affect health at all stages of life and prevent adequate growth and development in children. Micronutrients of public health signiﬁ cance are iron, vitamin A and iodine, lack of which affect health and growth. A varied diet or taking special supplements can ensure people get the micronutrients they need.'
       // ]),
       CourseBodyImage(
         image: 'assets/materials/images/8.png',

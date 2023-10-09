@@ -25,7 +25,7 @@ Course EN = Course(
       ),
       KeyMessages(children: [
         Bullet(children: [
-          "To have a healthy and balanced diet means eating a variety of foods that supply nutrients that are important for the body. It does not mean eating expensive food. The food we eat is grouped into 5 groups"
+          "To have a healthy and balanced diet means eating a variety of foods that supply nutrients that are important for the body. It does not mean eating expensive food. The food we eat is grouped into 6 groups"
         ])
       ]),
       // Food Groups
@@ -93,6 +93,13 @@ Course EN = Course(
       Objectives(children: [
         'Enhance an understanding on the benefits of dietary diversification'
       ]),
+      Paragraph(
+          title: "Minimum Dietary diversity for Women ",
+          body:
+              "is a dichotomous indicator of whether or not women 15 to 49 years of age have consumed at least five out of ten defined food groups the previous day or night."),
+      Paragraph(
+          title: "Calculation formula WRA (Women of reproductive Age):- ",
+          body: ""),
       KeyMessages(children: [
         Bullet(children: [
           'To have a healthy and balanced diet means eating a variety of foods that supply nutrients that are important for the body. It does not mean eating expensive food.',

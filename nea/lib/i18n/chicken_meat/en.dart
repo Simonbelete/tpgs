@@ -81,7 +81,7 @@ Course EN = Course(
     Paragraph(
         title: "",
         body:
-            "It is a cooking method without getting wet in the heating process. Higher temperatures than those used in moist heat cooking methods are employed in dry heat cooking, which has different effects on food & nutritive value and physical appearance. All heat-sensitive nutrients, except for most of the mineral elements, are affected to some extent by dry heat methods."),
+            "It is a cooking method without getting wet in the heating process. Higher temperatures than those used in moist heat cooking methods are employed in dry heat cooking, which has different effects on food & nutritive value and physical appearance. All heat-sensitive nutrients, except for most of the mineral elements, are affect ed to some extent by dry heat methods."),
     SubTitleText(text: "1. Roasting"),
     CourseBodyImage(image: 'assets/materials/images/206.png'),
     Paragraph(
@@ -128,7 +128,7 @@ Course EN = Course(
     Bullet(children: [
       "Ovens must be preheated",
       "Oven temperature and shelf settings in recipes must be followed.",
-      "Shape, size, type, bone proportion, and quantity of food will affect the cooking time.",
+      "Shape, size, type, bone proportion, and quantity of food will affect  the cooking time.",
       "Meat thermometers can be inserted to determine the exact temperature in the center of the joint.",
     ]),
     SubTitleText(text: "Safety"),
@@ -202,7 +202,7 @@ Course EN = Course(
     Paragraph(
         title: "",
         body:
-            "Fat should not be heated beyond the required temperature, as decomposition of the fat molecules occurs at high temperatures, and this leads to the release of free fatty acid, which affects the keeping qualities and flavor of the fat."),
+            "Fat should not be heated beyond the required temperature, as decomposition of the fat molecules occurs at high temperatures, and this leads to the release of free fatty acid, which affect s the keeping qualities and flavor of the fat."),
     SubTitleText(
       text: "Methods for deep-frying",
       fontSize: 16.0,
@@ -231,7 +231,7 @@ Course EN = Course(
     Paragraph(
         title: "",
         body:
-            "The effects of deep frying on coated items are that the surface is sealed by coagulation of the protein with the minimum absorption of fat and retains the nutrients and flavor of the food. But with uncoated items, the food absorbs a large amount of fat, thus affecting the texture and nutritional content."),
+            "The effects of deep frying on coated items are that the surface is sealed by coagulation of the protein with the minimum absorption of fat and retains the nutrients and flavor of the food. But with uncoated items, the food absorbs a large amount of fat, thus affect ing the texture and nutritional content."),
     Remember(title: "General Rules", children: [
       "Never overfill fryers with fat or oil or food to be cooked.",
       "The normal frying temperature is between 175 0 C and 195 0 C; this is indicated by a slight heat haze rising from the fat.",
