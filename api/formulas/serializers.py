@@ -111,7 +111,7 @@ class FormulaIngredientSerializer_GET(serializers.ModelSerializer):
 
     class Meta:
         model = models.FormulaIngredient
-        fields = ['id', 'formula', 'ingredient', 'ratio_min', 'ratio_max', 'ration', 'ration_weight', 'ration_price']
+        fields = ['id', 'formula', 'ingredient', 'ratio_min', 'ratio_max', 'price', 'ration', 'ration_weight', 'ration_price']
 
 
 class FormulaIngredientSerializer_POST(serializers.ModelSerializer):
@@ -211,8 +211,17 @@ class FormulaIngredientSerializer_FORMULATE(serializers.ModelSerializer):
         model = models.FormulaIngredient
         fields = ['id', 'ingredient', 'ration_weight','ration_price']
 
+class FormulaRequirementSerializer_FORMULATE(serializers.ModelSerializer):
+    nutrient = serializers.SlugRelatedField(
+        read_only=True,
+        slug_field='abbreviation'
+    )
+    class Meta:
+        model = models.FormulaRequirement
+        fields = ['id', 'nutrient', 'value']
+
 class FormulateSerializer_POST(serializers.ModelSerializer):
-    requirements = FormulaRequirementSerializer_REF(many=True)
+    requirements = FormulaRequirementSerializer_FORMULATE(source="formularequirement_set", many=True)
     rations = FormulaRationSerializer_FORMULATE(source="formularation_set", many=True, read_only=True)
     ingredients = FormulaIngredientSerializer_FORMULATE(source="formulaingredient_set", many=True, read_only=True)
 

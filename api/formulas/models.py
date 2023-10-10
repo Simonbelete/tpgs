@@ -63,8 +63,8 @@ class FormulaIngredient(CoreModel):
         return super().clean()
 
     @property
-    def qty(self):
-        return self.formula.weight * self.ration / 100
+    def price(self):
+        return self.ingredient.price
 
     @property
     def ration_weight(self):
@@ -111,6 +111,7 @@ class Formula(CoreModel):
     desired_dm = models.DecimalField(
         validators=PERCENTAGE_VALIDATOR, max_digits=15, decimal_places=3, default=0)
     # Rations - rations are computed based on the given weight
+    # Rations shows result of formula for each nutrients
     rations = models.ManyToManyField(
         'nutrients.Nutrient', null=True, blank=True, through=FormulaRation, related_name='formula_rations')
     ration_price = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True, default=0)

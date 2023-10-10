@@ -27,6 +27,7 @@ import { flockApi } from '@/features/flocks/services';
 import { feedApi } from '@/features/feeds/services';
 import { weightApi } from '@/features/weights/services';
 import { nutrientGroupApi } from '@/features/nutrient-group/services';
+import { formulaApi } from "@/features/formula/services";
 
 import { rtkQueryErrorLogger } from './middlewares/rtkQueryErrorLogger';
 import { urlQueryBuilder } from './middlewares/urlQueryBuilder';
@@ -35,7 +36,6 @@ export const store = configureStore({
   reducer: {
     tenant: tenantReducer,
     filter: filterReducer,
-    formula: formulaReducer,
     ingredientForm: ingredientFormReducer,
     onBoarding: onBoardingReducer,
     setting: SettingReducer,
@@ -45,6 +45,7 @@ export const store = configureStore({
     cityList: cityListReducer,
     regionList: regionListReducer,
     chickenList: chickenListReducer,
+    formula: formulaReducer,
     
     // // Apis
     [houseApi.reducerPath]: houseApi.reducer,
@@ -60,6 +61,7 @@ export const store = configureStore({
     [feedApi.reducerPath]: feedApi.reducer,
     [weightApi.reducerPath]: weightApi.reducer,
     [nutrientGroupApi.reducerPath]: nutrientGroupApi.reducer,
+    [formulaApi.reducerPath]: formulaApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
       getDefaultMiddleware().concat(baseApi.middleware, rtkQueryErrorLogger, urlQueryBuilder.middleware),

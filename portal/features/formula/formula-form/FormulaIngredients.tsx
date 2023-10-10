@@ -19,15 +19,13 @@ import { useSelector, useDispatch } from "react-redux";
 import AddIcon from "@mui/icons-material/Add";
 import DeleteIcon from "@mui/icons-material/DeleteOutlined";
 import { RootState } from "@/store";
-import { setIngredient, clearAll, removeIngredientById, updateIngredient } from "../slices";
-import formula_service from "../services/formula_service";
+import { setIngredients, removeIngredientById, updateIngredient } from "./slice";
 import { enqueueSnackbar } from "notistack";
 import messages from "@/util/messages";
-import randomId from "@/util/randomId";
 import { IngredientSelectDialog } from "@/features/ingredients";
 import InsertChartIcon from "@mui/icons-material/InsertChart";
 import IngredientContributionModal from "../ingredient-contribution-modal";
-import { useGetFormulaIngredientsQuery, useCreateFormulaIngredientMutation, useUpdateIngredientNutrietMutation, useDeleteFormulaIngredientMutation } from '../services';
+import { useLazyGetFormulaIngredientsQuery, useCreateFormulaIngredientMutation, useUpdateFormulaIngredientMutation, useDeleteFormulaIngredientMutation } from '../services';
 
 const EditToolbar = (props: {
   processRowUpdate: (newRow: GridRowModel) => void;
@@ -57,7 +55,7 @@ const EditToolbar = (props: {
       if (checkDuplicate(value.id))
         enqueueSnackbar(messages.duplicateError(), { variant: "warning" });
       else {
-        dispatch(setIngredient([...rows, newRow]))
+        dispatch(setIngredients([...rows, newRow]))
         // processRowUpdate(newRow);
       }
     }
@@ -89,7 +87,7 @@ const EditToolbar = (props: {
 const FormulaIngredients = ({ id }: { id?: number }) => {
   const dispatch = useDispatch();
   const formulaState = useSelector((state: RootState) => state.formula);
-  const { data, isLoading, refetch } = useGetFormulaIngredientsQuery({id: id || 0 , query: {}});
+  const [trigger, {isLoading, data, fulfilledTimeStamp}] = useLazyGetFormulaIngredientsQuery();
   const rows: GridRowsProp<Partial<FormulaIngredient> & Partial<{ isNew: boolean }>> = useSelector((state: RootState) => state.formula.ingredients);
   const [contributionModal, setContributionModal] = useState<{
     id?: number;
@@ -98,6 +96,7 @@ const FormulaIngredients = ({ id }: { id?: number }) => {
     id: 0,
     open: false,
   });
+
 
   const handleOpenContributionModal = (id?: number) =>
     setContributionModal({
@@ -108,7 +107,7 @@ const FormulaIngredients = ({ id }: { id?: number }) => {
     setContributionModal({ open: false });
 
   const [createFormulaIngredient, createResult ] = useCreateFormulaIngredientMutation();
-  const [updateFormulaIngredient, updateResult ] = useUpdateIngredientNutrietMutation();
+  const [updateFormulaIngredient, updateResult ] = useUpdateFormulaIngredientMutation();
   const [deleteFormulaIngredient, deleteResult ] = useDeleteFormulaIngredientMutation();
 
 
@@ -131,11 +130,24 @@ const FormulaIngredients = ({ id }: { id?: number }) => {
     },
     {
       field: "price",
-      headerName: "Price",
+      headerName: "Price[Kg]",
       flex: 1,
-      minWidth: 100,
       valueGetter: (params) =>
         params.row.ingredient ? params.row.ingredient.price : "",
+    },
+    {
+      field: "ration_weight",
+      headerName: "Ration Weight [kg]",
+      flex: 1,
+      valueGetter: (params) =>
+        params.row.ingredient ? params.row.ingredient.ration_weight : "",
+    },
+    {
+      field: "ration_price",
+      headerName: "Ration Price [100kg]",
+      flex: 1,
+      valueGetter: (params) =>
+        params.row.ingredient ? params.row.ingredient.ration_price : "",
     },
     {
       field: "ratio_min",
@@ -199,8 +211,8 @@ const FormulaIngredients = ({ id }: { id?: number }) => {
       ratio_max: newRow.ratio_max,
       ingredient: (newRow.ingredient as Ingredient).id,
     };
-    if (id != null && newRow.isNew) await onCreate(newRow, bodyData);
-    else if(id != null) await onUpdate(newRow, bodyData);
+    if (id != null && newRow.isNew) await onCreate(bodyData);
+    else if(id != null) await onUpdate(bodyData);
 
     const updatedRow = { ...newRow, isNew: false };
 
@@ -210,29 +222,27 @@ const FormulaIngredients = ({ id }: { id?: number }) => {
   };
 
   const onCreate = async (
-    row: GridRowModel,
     data: Partial<FormulaIngredient>
   ) => {
     if (id == null) return;
 
     const response = await createFormulaIngredient({id, data}).unwrap();
-    refetch()
+    trigger({id: id, query: {}})
   };
 
   const onUpdate = async (
-    newRow: GridRowModel,
     data: Partial<FormulaIngredient>
   ) => {
     if (id == null) return;
 
     const response = await updateFormulaIngredient({...data, ingredient: id}).unwrap();
-    refetch();
+    trigger({id: id, query: {}})
   };
 
   const handleDelete = async (row_id: string | number) => {
     if (id == null) return;
     const response = await deleteFormulaIngredient({id, ingredient_id: Number(row_id)}).unwrap();
-    refetch();
+    trigger({id: id, query: {}})
   };
 
   return (
@@ -245,7 +255,7 @@ const FormulaIngredients = ({ id }: { id?: number }) => {
       <EditableTable
         autoHeight
         sx={{ background: "white" }}
-        rows={(data?.results ?? []) as GridRowsProp<FormulaIngredient>}
+        rows={rows}
         editMode="row"
         rowHeight={40}
         columns={columns}

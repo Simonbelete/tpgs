@@ -23,11 +23,18 @@ export const formulaSlice = createSlice({
   reducers: {
     setRequirements: (
       state,
-      action: PayloadAction<(FormulaRequirement & { isNew: boolean })[]>
+      action: PayloadAction<(FormulaRequirement & { isNew?: boolean })[]>
     ) => {
       state.requirements = action.payload;
     },
-    setIngredient: (
+    removeRequirementById: (state, action: PayloadAction<number>) => {
+      state.requirements = state.requirements.filter((e) => e.id != action.payload);
+    },
+    updateRequirement: (state, action: PayloadAction<FormulaRequirement & { isNew?: boolean }>) => {
+      const index = state.requirements.findIndex((e) => e.id == action.payload.id)
+      if(index != -1) state.requirements[index] = action.payload;
+    },
+    setIngredients: (
       state,
       action: PayloadAction<(FormulaIngredient & { isNew?: boolean })[]>
     ) => {
@@ -47,5 +54,5 @@ export const formulaSlice = createSlice({
   },
 });
 
-export const { setRequirements, setIngredient, clearAll, removeIngredientById, updateIngredient } = formulaSlice.actions;
+export const { setRequirements, removeRequirementById,updateRequirement, setIngredients, clearAll, removeIngredientById, updateIngredient } = formulaSlice.actions;
 export default formulaSlice.reducer;

@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { AsyncDropdown } from "@/components/dropdowns";
 import { useLazyGetNutrientsQuery } from '../services';
 import { Nutrient } from "@/models";
+import { NutrientForm } from "../nutrient-form";
 
 const NutrientDropdown = ({
   value,
@@ -38,6 +39,8 @@ const NutrientDropdown = ({
       onOpen={handleOnOpen}
       onClose={handleOnClose}
       onChange={onChange}
+      createForm={<NutrientForm />}
+      createFormTitle="Create Nutrient"
       onInputChange={(event: any, newInputValue: any) => {
         trigger({}, true)
       }}

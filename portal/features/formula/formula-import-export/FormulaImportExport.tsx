@@ -83,7 +83,7 @@ const FormulaImportExport = () => {
         alignItems="center"
         useFlexGap flexWrap="wrap"
       >
-        <Link href="/houses/create">
+        <Link href="/formulation/formulas/create">
           <Button variant="contained" size={"small"} startIcon={<AddIcon />}>
             Create
           </Button>

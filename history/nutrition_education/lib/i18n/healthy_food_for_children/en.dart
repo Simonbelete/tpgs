@@ -69,12 +69,12 @@ Course EN = Course(
     Paragraph(
         title: 'Nuts & seeds ',
         body:
-            'Nuts, seeds, and nut butter make a protein- and zinc-packed snack. Protein contributes to healthy brain growth and the development of long-term memory. Zinc also plays a vital role during the toddler years when the brain is growing rapidly. Insufficient amounts of zinc may affect your child’s cognitive development, impairing their memory and ability to learn.'),
+            'Nuts, seeds, and nut butter make a protein- and zinc-packed snack. Protein contributes to healthy brain growth and the development of long-term memory. Zinc also plays a vital role during the toddler years when the brain is growing rapidly. Insufficient amounts of zinc may affect  your child’s cognitive development, impairing their memory and ability to learn.'),
     CourseBodyImage(image: 'assets/materials/yogurt_food.jpg'),
     Paragraph(
         title: 'Yogurt ',
         body:
-            'Unsweetened yogurt is an easy, kid-friendly way to support brain growth. It contains nutrients such as protein, zinc, choline, and iodine. Children need iodine to produce thyroid hormones, vital to brain development and neurological processes. Even mild iodine deficiency may affect a child’s overall cognitive function and ability to reason.'),
+            'Unsweetened yogurt is an easy, kid-friendly way to support brain growth. It contains nutrients such as protein, zinc, choline, and iodine. Children need iodine to produce thyroid hormones, vital to brain development and neurological processes. Even mild iodine deficiency may affect  a child’s overall cognitive function and ability to reason.'),
     CourseBodyImage(image: 'assets/materials/beans_food.jpg'),
     Paragraph(
         title: 'Beans ',

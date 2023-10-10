@@ -63,8 +63,7 @@ const EggForm = ({
   })
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
-    console.log(data);
-    if (egg == null) await createEgg(data).then(() => router.push('/eggs'));
+    if (egg === undefined) await createEgg(data).then(() => router.push('/eggs'));
     else await updateEgg({...data, id: egg.id});
   };
 
