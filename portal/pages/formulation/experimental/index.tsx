@@ -3,15 +3,7 @@ import { Typography, Stack, Button } from "@mui/material";
 import { Breadcrumbs, Loading } from "@/components";
 import { useBreadcrumbs } from "@/hooks";
 import { ActionLayout } from "@/layouts";
-import dynamic from "next/dynamic";
-
-const FormulationComponent = dynamic(
-  () => import("../../../features/formula/formulation"),
-  {
-    ssr: false,
-    loading: () => <h1>Loading...</h1>
-  }
-);
+import { Formulation } from "@/features/formula";
 
 const FormulationExperimentalPage = () => {
   const { breadcrumbs } = useBreadcrumbs();
@@ -44,7 +36,7 @@ const FormulationExperimentalPage = () => {
         </>
       }
     >
-      <FormulationComponent saveRef={saveRef} />
+      <Formulation saveRef={saveRef} />
     </ActionLayout>
   );
 };
