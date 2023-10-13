@@ -1,16 +1,10 @@
 import React from "react";
 import Plot from "react-plotly.js";
 
-const FormulationAchivementChart = ({ data }: { data: { x: any; y: any } }) => {
+const FormulationAchivementChart = ({ data }: { data: any }) => {
   return (
     <Plot
-      data={[
-        {
-          x: data.x,
-          y: data.y,
-          type: "bar",
-        },
-      ]}
+      data={data}
       layout={{ title: "A Fancy Plot", height: 500 }}
       config={{ responsive: true }}
       style={{ width: "100%" }}

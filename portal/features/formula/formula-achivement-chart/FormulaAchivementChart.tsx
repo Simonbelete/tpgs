@@ -1,39 +1,63 @@
 import React, { useEffect, useState } from "react";
-import { Formula } from '@/models';
-import { useGetFormulaNutrientsQuery } from '../services';
+import { Formula } from "@/models";
+import { useGetFormulaNutrientsQuery } from "../services";
 import dynamic from "next/dynamic";
 
 const AchivementChartComponent = dynamic(
   () => import("../components/achivement-chart"),
   {
     ssr: false,
-    loading: () => <></>
+    loading: () => <></>,
   }
 );
 
-const FormulaAchivementChart = ({formula}: {formula: Formula}) => {
-  const {data, isLoading} = useGetFormulaNutrientsQuery(formula.id);
-  const [chartData, setChartData] = useState({
+const NutrientValueChartComponent = dynamic(
+  () => import("./NutrientValueChart"),
+  {
+    ssr: false,
+    loading: () => <></>,
+  }
+);
+
+const FormulaAchivementChart = ({ formula }: { formula: Formula }) => {
+  const { data, isLoading } = useGetFormulaNutrientsQuery(formula.id);
+  const [chartData, setChartData] = useState<{
+    x: string[];
+    y: number[];
+  }>({
     x: [],
-    y: []
-  })
+    y: [],
+  });
+  const [valuesData, setValuesData] = useState<any>([]);
 
   useEffect(() => {
-    const x: any = data?.results.map(e => e.name);
-    const y: any = data?.results.map(e => e.achived_goal);
+    const x: string[] = [];
+    const y: number[] = [];
+    const y1: number[] = [];
+    const y2: number[] = [];
 
-    console.log('------')
-    console.log(x)
-    console.log(y)
+    const response = data?.results || [];
 
-    setChartData({
-      x, y
-    })
-  }, [data])
+    for (let i = 0; i < response.length; i += 1) {
+      x.push(response[i].name || "");
+      y.push(response[i].achived_goal);
+      y1.push(response[i].ration_value);
+      y2.push(response[i].requirement_value);
+    }
+
+    setChartData({ x, y });
+    setValuesData([
+      { x, y: y1, type: "bar", name: "Ration" },
+      { x, y: y2, type: "bar", name: "Requirement" },
+    ]);
+  }, [data]);
 
   return (
-    <AchivementChartComponent data={chartData} />
-  )
-}
+    <div>
+      <AchivementChartComponent data={chartData} />
+      <NutrientValueChartComponent data={valuesData} />
+    </div>
+  );
+};
 
 export default FormulaAchivementChart;

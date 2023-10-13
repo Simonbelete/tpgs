@@ -9,7 +9,7 @@ import {
   InputAdornment,
   Button,
 } from "@mui/material";
-import { Ingredient, IngredientNutrient } from "@/models";
+import { Ingredient } from "@/models";
 import IngredientInfoZone from "./IngredientInfoZone";
 import IngredientDangerZone from "./IngredientDangerZone";
 import IngredientNutrients from "./IngredientNutrients";
