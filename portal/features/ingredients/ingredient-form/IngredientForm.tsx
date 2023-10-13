@@ -9,13 +9,14 @@ import {
   InputAdornment,
   Button,
 } from "@mui/material";
-import { Ingredient } from "@/models";
+import { Ingredient, IngredientNutrient } from "@/models";
 import IngredientInfoZone from "./IngredientInfoZone";
 import IngredientDangerZone from "./IngredientDangerZone";
 import IngredientNutrients from "./IngredientNutrients";
 import {
   useCreateIngredientMutation,
   useUpdateIngredientMutation,
+  useLazyGetIngredientNutrientsQuery,
 } from "../services";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -28,7 +29,8 @@ import { useCRUD } from "@/hooks";
 import { IngredientTypeDropdown } from "@/features/ingredient-types";
 import { useRouter } from "next/router";
 import { RootState } from "@/store";
-import { useSelector } from "react-redux";
+import { setNutrients } from "./slice";
+import { useSelector, useDispatch } from "react-redux";
 
 function a11yProps(index: number) {
   return {
@@ -55,9 +57,15 @@ const schema = yup
   });
 
 const IngredientForm = ({ ingredient }: { ingredient?: Ingredient }) => {
+  const dispatch = useDispatch();
   const selector = useSelector((state: RootState) => state.ingredientForm);
   const router = useRouter();
   const [tab, setTab] = useState(0);
+
+  const [
+    ingredientNutrientTrigger,
+    { isLoading: ingredientNutrientIsLoading, data: ingredientNutrient },
+  ] = useLazyGetIngredientNutrientsQuery();
 
   const handleTabChange = (event: React.SyntheticEvent, newValue: number) =>
     setTab(newValue);
@@ -83,6 +91,16 @@ const IngredientForm = ({ ingredient }: { ingredient?: Ingredient }) => {
       await createIngredient({ ...data, nutrients: selector.nutrients });
     else await updateIngredient({ ...data, id: ingredient.id });
   };
+
+  useEffect(() => {
+    if (ingredient !== undefined) {
+      ingredientNutrientTrigger({ id: ingredient.id, query: {} }).then(
+        (response) => {
+          dispatch(setNutrients(response.data?.results || []));
+        }
+      );
+    }
+  }, []);
 
   return (
     <>

@@ -16,9 +16,10 @@ router.register(r'ingredient-types', views.IngredientTypeViewSet,
                 basename='api_ingredient_types'),
 router.register(r'ingredients/(?P<ingredient_pk>.+)/nutrients',
                 views.IngredientNutrientViewSet, basename='api_ingredient_nutrients')
-summary_router = NestedDefaultRouter(
+
+summary_ing_type_router = NestedDefaultRouter(
     router, r'ingredient-types', lookup='id')
-summary_router.register(r'summary', views.IngredientTypeSummaryViewSet,
+summary_ing_type_router.register(r'summary', views.IngredientTypeSummaryViewSet,
                         basename='api_ingredient_types_summary')
 
 ingredient_nutrients_router = NestedDefaultRouter(
@@ -28,6 +29,8 @@ ingredient_nutrients_router.register(r'nutrients', views.IngredientNutrientViewS
 urlpatterns = [
     path('', include(router.urls)),
     path('', include(ingredient_nutrients_router.urls)),
+    path('', include(summary_router.urls)),
+    path('', include(summary_ing_type_router.urls)),
 
     path('ingredients/export/', include([
           path('xlsx', views.IngredientXlsxExport.as_view(),
