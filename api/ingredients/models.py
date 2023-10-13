@@ -2,6 +2,7 @@ from django.db import models
 from djmoney.models.fields import MoneyField
 from multiselectfield import MultiSelectField
 from units.models import Unit
+from simple_history.models import HistoricalRecords
 
 from core.models import CoreModel
 from core.validators import PERCENTAGE_VALIDATOR
@@ -9,7 +10,7 @@ from core.validators import PERCENTAGE_VALIDATOR
 
 class IngredientType(CoreModel):
     name = models.CharField(max_length=100, unique=True)
-
+    history = HistoricalRecords()
 
 class IngredientNutrient(CoreModel):
     ingredient = models.ForeignKey(
@@ -35,6 +36,8 @@ class Ingredient(CoreModel):
     # dry material
     dm = models.PositiveIntegerField(
         validators=PERCENTAGE_VALIDATOR, default=0)
+
+    history = HistoricalRecords()
 
     def __str__(self) -> str:
         return self.name

@@ -6,11 +6,20 @@ from . import views
 
 router = routers.DefaultRouter()
 router.register(r'ingredients', views.IngredientViewSet,
-                basename='api_ingredients'),
+                basename='api_ingredients')
+summary_router = NestedDefaultRouter(
+    router, r'ingredients', lookup='id')
+summary_router.register(r'summary', views.IngredientSummaryViewSet,
+                        basename='api_ingredients_summary')
+
 router.register(r'ingredient-types', views.IngredientTypeViewSet,
                 basename='api_ingredient_types'),
 router.register(r'ingredients/(?P<ingredient_pk>.+)/nutrients',
                 views.IngredientNutrientViewSet, basename='api_ingredient_nutrients')
+summary_router = NestedDefaultRouter(
+    router, r'ingredient-types', lookup='id')
+summary_router.register(r'summary', views.IngredientTypeSummaryViewSet,
+                        basename='api_ingredient_types_summary')
 
 ingredient_nutrients_router = NestedDefaultRouter(
     router, r'ingredients', lookup='ingredient')
@@ -19,4 +28,40 @@ ingredient_nutrients_router.register(r'nutrients', views.IngredientNutrientViewS
 urlpatterns = [
     path('', include(router.urls)),
     path('', include(ingredient_nutrients_router.urls)),
+
+    path('ingredients/export/', include([
+          path('xlsx', views.IngredientXlsxExport.as_view(),
+              name="ingredients_export_xlsx"),
+          path('xls', views.IngredientXlsExport.as_view(),
+               name="ingredients_export_xls"),
+          path('csv', views.IngredientCsvExport.as_view(),
+               name="ingredients_export_csv"),
+     ])),
+
+     path('ingredients/import/', include([
+          path('xlsx', views.IngredientXlsxImport.as_view(),
+              name="ingredients_import_xlsx"),
+          path('xls', views.IngredientXlsImport.as_view(),
+               name="ingredients_import_xls"),
+          path('csv', views.IngredientCsvImport.as_view(),
+               name="ingredients_import_csv")
+    ])),
+
+    path('ingredient-types/export/', include([
+          path('xlsx', views.IngredientTypeXlsxExport.as_view(),
+              name="ingredient_types_export_xlsx"),
+          path('xls', views.IngredientTypeXlsExport.as_view(),
+               name="ingredient_types_export_xls"),
+          path('csv', views.IngredientTypeCsvExport.as_view(),
+               name="ingredient_types_export_csv"),
+     ])),
+
+     path('ingredient-types/import/', include([
+          path('xlsx', views.IngredientTypeXlsxImport.as_view(),
+              name="ingredient_types_import_xlsx"),
+          path('xls', views.IngredientTypeXlsImport.as_view(),
+               name="ingredient_types_import_xls"),
+          path('csv', views.IngredientTypeCsvImport.as_view(),
+               name="ingredient_types_import_csv")
+    ]))
 ]
