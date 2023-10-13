@@ -11,7 +11,7 @@ class IngredientType(CoreModel):
     name = models.CharField(max_length=100, unique=True)
 
 
-class IngredientNutrient(models.Model):
+class IngredientNutrient(CoreModel):
     ingredient = models.ForeignKey(
         'ingredients.Ingredient', on_delete=models.CASCADE)
     nutrient = models.ForeignKey(

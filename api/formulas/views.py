@@ -11,6 +11,7 @@ from reportlab.lib.pagesizes import letter, landscape, A4
 from reportlab.platypus import SimpleDocTemplate, Table, TableStyle
 from django.http import FileResponse
 from rest_framework.exceptions import NotFound
+from django.db import connection
 
 from . import models
 from . import serializers
@@ -18,7 +19,6 @@ from ingredients.models import IngredientNutrient
 from nutrients.serializers import NutrientSerializer_GET
 from nutrients.models import Nutrient
 from .formulate import Formulate
-
 
 class FormulaViewSet(viewsets.ModelViewSet):
     queryset = models.Formula.objects.all()
@@ -225,8 +225,8 @@ class FormulaIngredientNutrients(viewsets.ViewSet):
         return Response({'results': data})
 
 
-# Statistics
-class FormulaStatistics(viewsets.ViewSet):
+# Formula Nutrients
+class FormulaNutrients(viewsets.ViewSet):
     def get_queryset(self):
         try:
             return models.Formula.all.get(pk=self.kwargs['id'])
@@ -234,5 +234,25 @@ class FormulaStatistics(viewsets.ViewSet):
             raise NotFound()
 
     def list(self, request, id=None):
-        queryset = self.get_queryset()
-        return Response()
+        formula = self.get_queryset()
+        ingredient_ids = formula.ingredients.values_list('id')
+        ingredient_ids = list(zip(*ingredient_ids))[0]
+        cursor = connection.cursor()
+        cursor.execute("""
+            SELECT 
+                fr.nutrient_id AS id,
+                fr.id AS ration_id, fr.value AS ration_value,
+                frq.id AS requirement_id, frq.value AS requirement_value,
+                ((fr.value * frq.value) / 100) AS achived_goal
+            FROM formulas_formularation fr
+            LEFT JOIN formulas_formularequirement frq
+                ON fr.nutrient_id = frq.nutrient_id
+            WHERE fr.formula_id = {formula_id}
+                AND frq.formula_id = {formula_id};
+        """.format(formula_id=formula.id))
+
+        columns = ['id', 'ration_id','ration_value', 'requirement_id', 'requirement_value', 'achived_goal']
+
+        return Response({
+            'results': [dict(zip(columns, row)) for row in cursor.fetchall()]
+        }, status=200)
