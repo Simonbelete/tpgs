@@ -10,6 +10,7 @@ from reportlab.lib import colors
 from reportlab.lib.pagesizes import letter, landscape, A4
 from reportlab.platypus import SimpleDocTemplate, Table, TableStyle
 from django.http import FileResponse
+from rest_framework.exceptions import NotFound
 
 from . import models
 from . import serializers
@@ -33,7 +34,10 @@ class FormulaRequirementViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.FormulaRequirementSerializer_GET
 
     def get_queryset(self):
-        return models.FormulaRequirement.objects.filter(formula=self.kwargs['formula_pk'])
+        try:
+            return models.FormulaRequirement.all.filter(formula=self.kwargs['formula_pk'])
+        except models.FormulaRequirement.DoesNotExist as ex:
+            raise NotFound()
 
     def get_serializer_class(self):
         if self.request.method == 'POST':
@@ -47,7 +51,10 @@ class FormulaRationViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.FormulaRationSerializer_GET
 
     def get_queryset(self):
-        return models.FormulaRation.objects.filter(formula=self.kwargs['formula_pk'])
+        try:
+            return models.FormulaRation.all.filter(formula=self.kwargs['formula_pk'])
+        except models.FormulaRation.DoesNotExist as ex:
+            raise NotFound()
 
     def get_serializer_class(self):
         if self.request.method == 'POST':
@@ -73,7 +80,10 @@ class FormulaIngredientViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.FormulaIngredientSerializer_GET
 
     def get_queryset(self):
-        return models.FormulaIngredient.objects.filter(formula=self.kwargs['formula_pk'])
+        try:
+            return models.FormulaIngredient.all.filter(formula=self.kwargs['formula_pk'])
+        except models.FormulaIngredient.DoesNotExist as ex:
+            raise NotFound()
 
     def get_serializer_class(self):
         if self.request.method == 'POST':
@@ -90,7 +100,10 @@ class FormulateViewSet(viewsets.ViewSet):
     """
 
     def get_queryset(self):
-        return models.Formula.objects.get(pk=self.kwargs['formula_pk'])
+        try:
+            return models.Formula.all.get(pk=self.kwargs['formula_pk'])
+        except models.Formula.DoesNotExist as ex:
+            raise NotFound()
 
     def create(self, request, formula_pk=None):
         formula = self.get_queryset()
@@ -106,7 +119,10 @@ class FormulaPrintPdf(viewsets.ViewSet):
     """
 
     def get_queryset(self):
-        return models.Formula.objects.get(pk=self.kwargs['formula_pk'])
+        try:
+            return models.Formula.all.get(pk=self.kwargs['formula_pk'])
+        except models.Formula.DoesNotExist as ex:
+            raise NotFound()
 
     def create(self, request, formula_pk=None):
         formula = self.get_queryset()
@@ -184,7 +200,10 @@ class FormulaIngredientNutrients(viewsets.ViewSet):
     """Eacth ingredient's nutrient contribution with the requried nutrient
     """
     def get_queryset(self):
-        return models.FormulaIngredient.objects.get(formula=self.kwargs['formula_pk'], pk=self.kwargs['ingredient_pk'])
+        try:
+            return models.FormulaIngredient.all.get(formula=self.kwargs['formula_pk'], pk=self.kwargs['ingredient_pk'])
+        except models.FormulaIngredient.DoesNotExist as ex:
+            raise NotFound()
 
     def list(self, request, formula_pk=None, ingredient_pk=None):
         data = []
@@ -204,3 +223,16 @@ class FormulaIngredientNutrients(viewsets.ViewSet):
                 'unit': ingredient_nutrient.nutrient.unit.name
             })
         return Response({'results': data})
+
+
+# Statistics
+class FormulaStatistics(viewsets.ViewSet):
+    def get_queryset(self):
+        try:
+            return models.Formula.all.get(pk=self.kwargs['id'])
+        except models.Formula.DoesNotExist as ex:
+            raise NotFound()
+
+    def list(self, request, id=None):
+        queryset = self.get_queryset()
+        return Response()

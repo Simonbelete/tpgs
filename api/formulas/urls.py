@@ -8,6 +8,9 @@ router = routers.DefaultRouter()
 router.register(r'formulas', views.FormulaViewSet,
                 basename='api_formulas')
 
+router.register(
+    r'formulas/(?P<id>.+)/statistics', views.FormulaStatistics, basename="api_formual_statistics")
+
 formula_req_router = NestedDefaultRouter(
     router, r'formulas', lookup='formula')
 formula_req_router.register(r'requirements', views.FormulaRequirementViewSet,
