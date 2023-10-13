@@ -1,7 +1,7 @@
 import React from "react";
 import Plot from 'react-plotly.js';
 
-const FormulationAchivementChart = ({data}: {data: {x: any[], y: any[]}}) => {
+const FormulationAchivementChart = ({data}: {data: {x: any, y: any}}) => {
   return (
     <Plot
           data={[

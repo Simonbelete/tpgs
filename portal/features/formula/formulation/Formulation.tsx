@@ -6,25 +6,21 @@ import {
   GridCellKind,
   GridColumn,
   Item,
-  GridColumnIcon,
 } from "@glideapps/glide-data-grid";
 import {
   Box,
-  Backdrop,
   Accordion,
   AccordionSummary,
   Typography,
   AccordionDetails,
   Grid,
   InputAdornment,
-  Tabs,
-  Tab,
   Stack,
   Button
 } from "@mui/material";
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import * as yup from "yup";
-import { useGetNutrientsQuery, useLazyGetNutrientsQuery } from '@/features/nutrients/services';
+import { useLazyGetNutrientsQuery } from '@/features/nutrients/services';
 import { useLazyGetIngredientNutrientsQuery } from '@/features/ingredients/services';
 import { Loading } from "@/components";
 import { Sizer } from "../components";
@@ -44,10 +40,9 @@ import CloseIcon from "@mui/icons-material/Close";
 import SaveIcon from '@mui/icons-material/Save';
 import { useRouter } from "next/router";
 import { enqueueSnackbar } from "notistack";
-// import { FormulationAchivementChartSkeleton } from './FormulationAchivementChart';
 import dynamic from "next/dynamic";
 
-const FormulationAchivementChartComponent = dynamic(
+const AchivementChartComponent = dynamic(
   () => import("../components/achivement-chart"),
   {
     ssr: false,
@@ -87,7 +82,7 @@ const Formulation = ({ saveRef }: { saveRef: React.Ref<unknown> }) => {
 
   const [createFormula, createResult ] = useCreateFormulaMutation();
 
-  const [chartData, setChartData] = useState({
+  const [chartData, setChartData] = useState<{x: any, y: any}>({
     x: [],
     y: []
   })
@@ -667,7 +662,7 @@ const Formulation = ({ saveRef }: { saveRef: React.Ref<unknown> }) => {
          />
       </Sizer>
       <Box sx={{my: 5}}>
-           <FormulationAchivementChartComponent data={chartData} />
+           <AchivementChartComponent data={chartData} />
       </Box>
 
       <Box sx={{mt: 5}}>

@@ -1,5 +1,5 @@
 import { baseApi } from '@/services/baseApi';
-import { AbstractSummary, Response, Formula, FormulaIngredient, FormulaRequirement } from '@/models';
+import { AbstractSummary, Response, Formula, FormulaIngredient, FormulaRequirement, FormulaNutrient } from '@/models';
 import { AxiosResponse } from "axios";
 import clientSSR from "@/services/client_ssr";
 import client from "@/services/client";
@@ -55,6 +55,8 @@ export const formulaApi = baseApi.injectEndpoints({
       }),
       // Rations
       getFormulaRations: build.query<Response<Formula[]>, number>({ query: (id) => ({ url: `${URL}/${id}/rations`, method: 'get' }) }),
+      // Nutrients
+      getFormulaNutrients: build.query<Response<FormulaNutrient[]>, number>({ query: (id) => ({ url: `${URL}/${id}/nutrients`, method: 'get' }) }),
     }
   },
   overrideExisting: false,
@@ -117,4 +119,8 @@ export const {
   // Rations
   useGetFormulaRationsQuery,
   useLazyGetFormulaRationsQuery,
+
+  // Nutrients
+  useGetFormulaNutrientsQuery,
+  useLazyGetFormulaNutrientsQuery
 } = formulaApi;

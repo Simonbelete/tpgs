@@ -2,7 +2,8 @@ import React, { useRef } from "react";
 import { NextPageContext } from "next";
 import { Container, Typography, Stack, Button, Box } from "@mui/material";
 import { EditLayout } from "@/layouts";
-import { FormulaForm, FormulaService } from "@/features/formula";
+import { FormulaForm } from "@/features/formula";
+import { getFormulaByIdSSR } from '@/features/formula/services';
 import { Breadcrumbs, Loading } from "@/components";
 import { useBreadcrumbs } from "@/hooks";
 import { Formula } from "@/models";
@@ -76,7 +77,7 @@ export async function getServerSideProps(context: NextPageContext) {
   const { id } = context.query;
 
   try {
-    const res = await FormulaService.getByIdSSR(context, Number(id));
+    const res = await getFormulaByIdSSR(context, Number(id));
 
     if (res.status != 200)
       return {

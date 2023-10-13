@@ -45,3 +45,4 @@ export type { default as Country } from './Country';
 export type { default as City } from './City';
 export type { default as Region } from './Region';
 export type { default as NotificationList } from './NotificationList';
+export type { default as FormulaNutrient } from './FormulaNutrient';

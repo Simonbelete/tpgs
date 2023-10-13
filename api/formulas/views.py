@@ -240,18 +240,20 @@ class FormulaNutrients(viewsets.ViewSet):
         cursor = connection.cursor()
         cursor.execute("""
             SELECT 
-                fr.nutrient_id AS id,
+                fr.nutrient_id AS id, nn.name AS name,
                 fr.id AS ration_id, fr.value AS ration_value,
                 frq.id AS requirement_id, frq.value AS requirement_value,
                 ((fr.value * frq.value) / 100) AS achived_goal
             FROM formulas_formularation fr
             LEFT JOIN formulas_formularequirement frq
                 ON fr.nutrient_id = frq.nutrient_id
+            INNER JOIN nutrients_nutrient nn
+                ON nn.id = fr.nutrient_id
             WHERE fr.formula_id = {formula_id}
                 AND frq.formula_id = {formula_id};
         """.format(formula_id=formula.id))
 
-        columns = ['id', 'ration_id','ration_value', 'requirement_id', 'requirement_value', 'achived_goal']
+        columns = ['id', 'name', 'ration_id','ration_value', 'requirement_id', 'requirement_value', 'achived_goal']
 
         return Response({
             'results': [dict(zip(columns, row)) for row in cursor.fetchall()]

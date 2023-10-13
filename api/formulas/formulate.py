@@ -35,6 +35,8 @@ class Formulate:
             self.ration_price += (fing.ingredient.price or 0) * ing_contri_per_kg
             self.ration_ratio += fing.ration
             self.ration_weight += ing_contri_per_kg
+        print('-------------------')
+        print(self.rations)
         return {'rations': self.rations, 'ration_dm': self.ration_dm, 'ration_price': self.ration_price, 'ration_ratio': self.ration_ratio}
 
     def save(self):
