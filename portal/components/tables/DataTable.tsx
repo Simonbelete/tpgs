@@ -17,6 +17,7 @@ import { useRouter } from "next/router";
 import { DeleteModal } from "../modals";
 import HistoryIcon from "@mui/icons-material/History";
 import ScheduleSendIcon from '@mui/icons-material/ScheduleSend';
+import AnalyticsIcon from '@mui/icons-material/Analytics';
 
 const ODD_OPACITY = 0.2;
 
@@ -144,7 +145,8 @@ export enum SETTING_COL {
   delete = "delete",
   basic = "basic",
   edit = "edit",
-  email = "email"
+  email = "email",
+  dashboard = "dashboard"
 }
 
 const DataTable = ({
@@ -337,6 +339,50 @@ const DataTable = ({
             },
           };
           break;
+        case SETTING_COL.dashboard:
+          col = {
+            field: "Actions",
+            flex: 1,
+            minWidth: 150,
+            headerAlign: "center",
+            align: "right",
+            renderCell(params: any) {
+              return (
+                <Box>
+                  <Link href={router.asPath + "/" + params.id + "/dashboard"} id="data-table-edit">
+                    <Tooltip title="Edit">
+                      <IconButton aria-label="edit">
+                        <AnalyticsIcon fontSize="small" />
+                      </IconButton>
+                    </Tooltip>
+                  </Link>
+                  <Link href={router.asPath + "/" + params.id + "/edit"} id="data-table-edit">
+                    <Tooltip title="Edit">
+                      <IconButton aria-label="edit">
+                        <EditNoteIcon fontSize="small" />
+                      </IconButton>
+                    </Tooltip>
+                  </Link>
+                  <Link href={`${router.asPath}/${params.id}/histories`} id="data-table-histories">
+                    <Tooltip title="History">
+                      <IconButton aria-label="history">
+                        <HistoryIcon fontSize="small" />
+                      </IconButton>
+                    </Tooltip>
+                  </Link>
+                  <Tooltip title="Delete" id="data-table-delete">
+                    <IconButton
+                      aria-label="delete"
+                      onClick={() => handleDeleteModalOpen(params.id)}
+                    >
+                      <DeleteForeverIcon fontSize="small" />
+                    </IconButton>
+                  </Tooltip>
+                </Box>
+              );
+            },
+          };
+            break;
       default:
         // @ts-ignore
         col = {

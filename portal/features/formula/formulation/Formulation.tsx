@@ -48,7 +48,7 @@ import { enqueueSnackbar } from "notistack";
 import dynamic from "next/dynamic";
 
 const FormulationAchivementChartComponent = dynamic(
-  () => import("./FormulationAchivementChart"),
+  () => import("../components/achivement-chart"),
   {
     ssr: false,
     loading: () => <></>

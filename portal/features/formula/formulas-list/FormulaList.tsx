@@ -45,7 +45,7 @@ const FormulaList = () => {
       paginationModel={paginationModel}
       paginationMode="server"
       onPaginationModelChange={setPaginationModel}
-      setting={DataTable.SETTING_COL.basic}
+      setting={DataTable.SETTING_COL.dashboard}
     />
   );
 };

@@ -21,7 +21,7 @@ import {
 } from "recharts";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "@/store";
-import formula_service from "../services/formula_service";
+// import formula_service from "../services/formula_service";
 import randomColor from "@/util/randomColor";
 
 const renderActiveShape = (props: any) => {
