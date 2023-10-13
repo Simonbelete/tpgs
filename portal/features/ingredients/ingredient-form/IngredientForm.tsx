@@ -151,8 +151,9 @@ const IngredientForm = ({
                         fieldState: { error },
                       }) => (
                         <IngredientTypeDropdown
+                          multiple
                           onChange={(_, data) => onChange(data)}
-                          value={value}
+                          value={value ?? []}
                           error={!!error?.message}
                           helperText={error?.message}
                         />

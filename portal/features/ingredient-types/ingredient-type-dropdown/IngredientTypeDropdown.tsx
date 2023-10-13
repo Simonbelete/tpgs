@@ -9,12 +9,14 @@ const IngredientTypeDropdown = ({
   error,
   onChange,
   helperText,
+  multiple,
 }: {
   value?: any,
   label?: string,
   error?: boolean
   helperText?: string;
   onChange?: (event: any, newValue: any) => void;
+  multiple?: boolean;
 }) => {
   const [trigger, {isLoading, data}, lastPromiseInfo] = useLazyGetIngredientTypesQuery();
 
@@ -28,6 +30,7 @@ const IngredientTypeDropdown = ({
 
   return (
     <AsyncDropdown<IngredientType>
+      multiple={multiple}
       value={value}
       dataKey="name"
       label={label}

@@ -5,7 +5,7 @@ import clientSSR from "@/services/client_ssr";
 import client from "@/services/client";
 import { NextPageContext } from "next";
 
-const URL = "/houses";
+const URL = "/ingredient-types";
 const HISTORY_URL = `histories`;
 const SUMMARY_URL = `summary`;
 const EXPORT_URL = `${URL}/export`;
