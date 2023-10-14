@@ -17,7 +17,7 @@ import { CheckboxDropdown } from "@/components/dropdowns";
 import { RootState } from "@/store";
 import { filterSlice } from "@/store/slices";
 import { useInitQuery } from "@/hooks";
-import { flockApi } from "../services";
+import { flockApi } from "../../flocks/services";
 
 const FlockAccusationFilter = () => {
   const dispatch = useDispatch();

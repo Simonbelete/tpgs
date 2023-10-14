@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 import FlockInfoZone from "./FlockInfoZone";
 import FlockDangerZone from "./FlockDangerZone";
 import FlockDetailForm from "./FlockDetailForm";
-import { FlockAccusationList } from "../flock-accusation-list";
+import { FlockAccusationList } from "../../flock-accusation/flock-accusation-list";
 
 function a11yProps(index: number) {
   return {

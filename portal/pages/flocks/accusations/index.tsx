@@ -22,7 +22,7 @@ const FlockAccusationPage = () => {
         actions={<FlockImportExport />}
         filter={<FlockAccusationListFilter />}
       >
-        <>a</>
+        <FlockAccusationList />
       </ListLayout>
     </>
   );

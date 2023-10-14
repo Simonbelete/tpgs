@@ -6,7 +6,10 @@ import { useSelector } from "react-redux";
 import { RootState } from "@/store";
 import _ from "lodash";
 import dayjs from "dayjs";
-import { useGetFlocksQuery, useDeleteFlockMutation } from "../services";
+import {
+  useGetFlocksQuery,
+  useDeleteFlockMutation,
+} from "../../flocks/services";
 import buildQuery from "@/util/buildQuery";
 import buildPage from "@/util/buildPage";
 
