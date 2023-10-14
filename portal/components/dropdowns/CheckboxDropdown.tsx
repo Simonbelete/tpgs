@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useCallback } from "react";
 import {
   FormControl,
   InputLabel,
@@ -10,13 +10,15 @@ import {
   InputBase,
   Typography,
   Box,
-  LinearProgress
+  LinearProgress,
 } from "@mui/material";
 import { styled, alpha } from "@mui/material/styles";
 import { SearchInputIcon } from "../inputs";
-import client from "@/services/client";
+import { store } from "@/store";
+import { flockApi } from "@/features/flocks/services";
+import buildQuery from "@/util/buildQuery";
 
-const WIDTH = 150
+const WIDTH = 150;
 
 const BootstrapInput = styled(InputBase)(({ theme }) => ({
   // "label + &": {
@@ -45,17 +47,18 @@ const BootstrapInput = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-const CheckboxDropdown = ({
-  url,
+export default function CheckboxDropdown<T>({
   menus,
+  query,
   label,
   onChange,
   selected,
   dataValueKey,
   dataLableKey,
-  multiple=true
+  multiple = true,
+  endpoint,
 }: {
-  url?: string,
+  query?: object;
   dataValueKey: string;
   dataLableKey: string;
   menus?: object[];
@@ -63,39 +66,27 @@ const CheckboxDropdown = ({
   onChange: (event: SelectChangeEvent) => void;
   selected: object[];
   multiple?: boolean;
-}) => {
+  endpoint: any;
+}) {
   const [open, setOpen] = useState<boolean>(false);
-  const [data, setData] = useState<object[]>([...(menus || [])])
-  const [loading, setLoading] = useState(false);
   const [searchInput, setSearchInput] = useState<string>("");
 
-  const handleOpen = async () => {
-    setOpen(true);
-    if(url != null && data.length == 0) loadData();
-  }
+  const [trigger, { data, isLoading }] = endpoint.useLazyQuery();
 
-  const handleClose = () => {
-    setOpen(false);
-  }
+  const handleOpen = () => {
+    setOpen(true);
+    const queryBuild = query ? { ...query, query: {} } : {};
+    trigger(queryBuild);
+  };
+  const handleClose = () => setOpen(false);
 
   const handleSearchInput = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchInput(event.target.value)
-    loadData(event.target.value);
-  }
-
-  const loadData = async (search?: string) => {
-    if(url == null) return;
-    
-    setLoading(true)
-    try{
-      const response = await client.get(url, {params: {limit: 10, search: search}});
-      setData(response.data.results);
-    }catch(ex){
-
-    }finally {
-      setLoading(false);
-    }
-  }
+    setSearchInput(event.target.value);
+    const queryBuild = query
+      ? { ...query, query: { searc: event.target.value } }
+      : { search: event.target.value };
+    trigger(queryBuild);
+  };
 
   return (
     <div>
@@ -107,7 +98,7 @@ const CheckboxDropdown = ({
         >
           {label}
         </InputLabel>
-        <Select      
+        <Select
           open={open}
           onOpen={handleOpen}
           onClose={handleClose}
@@ -129,41 +120,54 @@ const CheckboxDropdown = ({
           // onAnimationEndCapture={() => inputRef.current.focus()}
         >
           <li aria-selected="false" role="option">
-            <Box display="flex" aria-label="None" onClick={(e: any) => {
-                e.preventDefault(); 
+            <Box
+              display="flex"
+              aria-label="None"
+              onClick={(e: any) => {
+                e.preventDefault();
                 e.stopPropagation();
-              }} justifyContent="center" alignItems="center" sx={{width: WIDTH}}>
-              <Box sx={{py: 1, px: 1}}>
-                <SearchInputIcon label="Search..." value={searchInput} onChange={handleSearchInput}/>
+              }}
+              justifyContent="center"
+              alignItems="center"
+              sx={{ width: WIDTH }}
+            >
+              <Box sx={{ py: 1, px: 1 }}>
+                <SearchInputIcon
+                  label="Search..."
+                  value={searchInput}
+                  onChange={handleSearchInput}
+                />
               </Box>
             </Box>
           </li>
-          {loading && <LinearProgress />}
-          
-          {data.map((e, key) => (
-            // @ts-ignore
-            <MenuItem key={key} value={e} sx={{ paddingLeft: "6px" }}>
-              <Checkbox
-                // @ts-ignore
-                checked={selected && selected.some((d) => d[dataValueKey] == e[dataValueKey])}
-                size="small"
-                sx={{ paddingTop: 0, paddingBottom: 0, paddingRight: "15px" }}
-              />
-              <ListItemText
-                disableTypography
-                primary={
-                  <Typography variant="body2" fontSize={14}>
-                    {/* @ts-ignore */}
-                    {e[dataLableKey]}
-                  </Typography>
-                }
-              />
-            </MenuItem>
-          ))}
+          {isLoading && <LinearProgress />}
+
+          {data &&
+            data.results.map((e, key) => (
+              // @ts-ignore
+              <MenuItem key={key} value={e} sx={{ paddingLeft: "6px" }}>
+                <Checkbox
+                  // @ts-ignore
+                  checked={
+                    selected &&
+                    selected.some((d) => d[dataValueKey] == e[dataValueKey])
+                  }
+                  size="small"
+                  sx={{ paddingTop: 0, paddingBottom: 0, paddingRight: "15px" }}
+                />
+                <ListItemText
+                  disableTypography
+                  primary={
+                    <Typography variant="body2" fontSize={14}>
+                      {/* @ts-ignore */}
+                      {e[dataLableKey]}
+                    </Typography>
+                  }
+                />
+              </MenuItem>
+            ))}
         </Select>
       </FormControl>
     </div>
   );
-};
-
-export default CheckboxDropdown;
+}

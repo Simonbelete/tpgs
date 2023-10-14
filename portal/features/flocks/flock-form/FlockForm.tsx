@@ -1,35 +1,18 @@
-import React, { useEffect } from "react";
-import * as yup from "yup";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { useForm, SubmitHandler, Controller } from "react-hook-form";
-import { Grid, Button, Paper, Stack, Box } from "@mui/material";
+import React, { useEffect, useState } from "react";
+import { Grid, Stack, Box, Tabs, Tab, tabsClasses } from "@mui/material";
 import { Flock } from "@/models";
-import { LabeledInput } from "@/components/inputs";
 import { useRouter } from "next/router";
-import CloseIcon from "@mui/icons-material/Close";
-import { Card } from "@/components/card";
-import SaveIcon from "@mui/icons-material/Save";
 import FlockInfoZone from "./FlockInfoZone";
 import FlockDangerZone from "./FlockDangerZone";
-import { useCreateFlockMutation, useUpdateFlockMutation } from "../services";
-import { useCRUD } from "@/hooks";
-import { BreedDropdown } from "@/features/breeds";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import dayjs from "dayjs";
+import FlockDetailForm from "./FlockDetailForm";
+import { FlockAccusationList } from "../flock-accusation-list";
 
-type Inputs = Partial<Flock>;
-
-const schema = yup
-  .object({
-    name: yup.string().required(),
-    breed: yup.number(),
-    hatch_date: yup.string(),
-  })
-  .transform((currentValue: any) => {
-    if (currentValue.breed != null) currentValue.breed = currentValue.breed.id;
-
-    return currentValue;
-  });
+function a11yProps(index: number) {
+  return {
+    id: `simple-tab-${index}`,
+    "aria-controls": `simple-tabpanel-${index}`,
+  };
+}
 
 const FlockForm = ({
   flock,
@@ -39,127 +22,41 @@ const FlockForm = ({
   redirect?: boolean;
 }) => {
   const router = useRouter();
+  const [tab, setTab] = useState(0);
 
-  const [createFlock, createResult] = useCreateFlockMutation();
-  const [updateFlock, updateResult] = useUpdateFlockMutation();
-
-  const { handleSubmit, control, setError } = useForm<Inputs>({
-    defaultValues: {
-      ...flock,
-    },
-    // @ts-ignore
-    resolver: yupResolver(schema),
-  });
-
-  const useCRUDHook = useCRUD({
-    results: [createResult, updateResult],
-    setError: setError,
-  });
-
-  const onSubmit: SubmitHandler<Inputs> = async (data) => {
-    data.hatch_date = dayjs(data.hatch_date).format(
-      process.env.NEXT_PUBLIC_API_DATE_FORMAT
-    );
-
-    if (flock == null) await createFlock(data);
-    else await updateFlock({ ...data, id: flock.id });
-  };
+  const handleTabChange = (event: React.SyntheticEvent, newValue: number) =>
+    setTab(newValue);
 
   return (
     <>
       <Grid container spacing={4}>
-        <Grid item xs={9}>
-          <Card title="Flock Form">
-            <form onSubmit={handleSubmit(onSubmit)}>
-              <Grid container spacing={4}>
-                {/* Name */}
-                <Grid item xs={12}>
-                  <Controller
-                    name={"name"}
-                    control={control}
-                    render={({
-                      field: { onChange, value },
-                      fieldState: { invalid, isTouched, isDirty, error },
-                    }) => (
-                      <LabeledInput
-                        error={!!error?.message}
-                        helperText={error?.message}
-                        onChange={onChange}
-                        fullWidth
-                        size="small"
-                        value={value}
-                        label={"Name"}
-                        placeholder={"Name"}
-                      />
-                    )}
-                  />
-                </Grid>
-                {/* Name */}
-                <Grid item xs={12}>
-                  <Controller
-                    name={"breed"}
-                    control={control}
-                    render={({
-                      field: { onChange, value },
-                      fieldState: { error },
-                    }) => (
-                      <BreedDropdown
-                        error={!!error?.message}
-                        helperText={error?.message}
-                        onChange={onChange}
-                        value={value ?? ""}
-                      />
-                    )}
-                  />
-                </Grid>
-                {/* Name */}
-                <Grid item xs={12}>
-                  <Controller
-                    name={"hatch_date"}
-                    control={control}
-                    render={({
-                      field: { onChange, value },
-                      fieldState: { invalid, isTouched, isDirty, error },
-                    }) => (
-                      <DatePicker onChange={onChange} value={value ?? ""} />
-                    )}
-                  />
-                </Grid>
-              </Grid>
-            </form>
-          </Card>
-          <Box sx={{ mt: 5 }}>
-            <Stack
-              spacing={2}
-              direction={"row"}
-              justifyContent="flex-start"
-              alignItems="center"
-            >
-              <Box>
-                <Button
-                  variant="contained"
-                  size="small"
-                  startIcon={<SaveIcon />}
-                  onClick={() => handleSubmit(onSubmit)()}
-                >
-                  Save
-                </Button>
-              </Box>
-              <Box>
-                <Button
-                  variant="outlined"
-                  color="error"
-                  size="small"
-                  startIcon={<CloseIcon />}
-                  onClick={() => router.push("/houses")}
-                >
-                  Cancel
-                </Button>
-              </Box>
-            </Stack>
+        <Grid item xs={12} lg={8} xl={9.5}>
+          <Tabs
+            scrollButtons
+            value={tab}
+            onChange={handleTabChange}
+            aria-label="basic tabs example"
+            sx={{
+              [`& .${tabsClasses.scrollButtons}`]: {
+                "&.Mui-disabled": { opacity: 0.3 },
+              },
+            }}
+          >
+            <Tab label="Detail" {...a11yProps(0)} />
+            <Tab label="Offspring" {...a11yProps(1)} />
+            <Tab label="Ancestors" {...a11yProps(2)} />
+            <Tab label="Siblings" {...a11yProps(3)} />
+          </Tabs>
+          <Box sx={{ pt: 5 }}>
+            <Box sx={{ display: tab == 0 ? "block" : "none" }}>
+              <FlockDetailForm flock={flock} />
+            </Box>
+            <Box sx={{ display: tab == 1 ? "block" : "none" }}>
+              <FlockAccusationList />
+            </Box>
           </Box>
         </Grid>
-        <Grid item xs={3}>
+        <Grid item xs={12} lg={4} xl={2.5}>
           <Stack spacing={3}>
             {flock && (
               <>
