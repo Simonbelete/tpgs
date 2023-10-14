@@ -69,8 +69,10 @@ export default function CheckboxDropdown<T>({
 
   const handleOpen = () => {
     setOpen(true);
-    const queryBuild = query ? { ...query, query: {} } : {};
-    trigger(queryBuild);
+    if (data === undefined) {
+      const queryBuild = query ? { ...query, query: {} } : {};
+      trigger(queryBuild);
+    }
   };
   const handleClose = () => setOpen(false);
 
@@ -98,7 +100,9 @@ export default function CheckboxDropdown<T>({
           onClose={handleClose}
           multiple={multiple}
           // @ts-ignore
-          value={selected}
+          value={
+            multiple ? (Array.isArray(selected) ? selected : []) : selected
+          }
           renderValue={(selected) => <></>}
           onChange={onChange}
           input={<BootstrapInput />}
@@ -142,7 +146,7 @@ export default function CheckboxDropdown<T>({
               <MenuItem key={key} value={e} sx={{ paddingLeft: "6px" }}>
                 <Checkbox
                   checked={
-                    selected &&
+                    Array.isArray(selected) &&
                     selected.some(
                       (d: any) => d[dataValueKey] == e[dataValueKey]
                     )
