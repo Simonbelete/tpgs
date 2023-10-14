@@ -14,16 +14,10 @@ import {
 } from "@mui/material";
 import { styled, alpha } from "@mui/material/styles";
 import { SearchInputIcon } from "../inputs";
-import { store } from "@/store";
-import { flockApi } from "@/features/flocks/services";
-import buildQuery from "@/util/buildQuery";
 
 const WIDTH = 150;
 
 const BootstrapInput = styled(InputBase)(({ theme }) => ({
-  // "label + &": {
-  //   marginTop: theme.spacing(3),
-  // },
   "& .MuiInputBase-input": {
     borderRadius: 4,
     position: "relative",
@@ -143,14 +137,15 @@ export default function CheckboxDropdown<T>({
           {isLoading && <LinearProgress />}
 
           {data &&
-            data.results.map((e, key) => (
+            data.results.map((e: any, key: any) => (
               // @ts-ignore
               <MenuItem key={key} value={e} sx={{ paddingLeft: "6px" }}>
                 <Checkbox
-                  // @ts-ignore
                   checked={
                     selected &&
-                    selected.some((d) => d[dataValueKey] == e[dataValueKey])
+                    selected.some(
+                      (d: any) => d[dataValueKey] == e[dataValueKey]
+                    )
                   }
                   size="small"
                   sx={{ paddingTop: 0, paddingBottom: 0, paddingRight: "15px" }}

@@ -107,23 +107,15 @@ const FlockAccusationFilter = () => {
       <Grid container spacing={2}>
         <Grid item xs={12}>
           <Stack direction={"row"}>
-            {/* <CheckboxDropdown
-              multiple={false}
-              menus={activeMenu}
-              dataValueKey="value"
-              dataLableKey="name"
-              label={"Active"}
-              selected={[{ value: selector.is_active }]}
-              onChange={handleActiveChange}
-            /> */}
             <CheckboxDropdown
+              multiple
               endpoint={flockApi.endpoints.getFlocks}
               menus={activeMenu}
-              dataValueKey="value"
+              dataValueKey="id"
               dataLableKey="name"
-              label={"Active"}
-              selected={[{ value: selector.is_active }]}
-              onChange={handleActiveChange}
+              label={"Flock"}
+              selected={selector.filters["flock"] || []}
+              onChange={handleFlockStateChange}
             />
           </Stack>
         </Grid>
