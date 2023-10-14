@@ -9,14 +9,14 @@ import messages from "@/util/messages";
 import { ButtonMenu } from "@/components/buttons";
 import AddIcon from "@mui/icons-material/Add";
 import FileUploadIcon from "@mui/icons-material/FileUpload";
-import { 
+import {
   exportFlocksXLSX,
   exportFlocksXLS,
   exportFlocksCSV,
   importFlocksXLSX,
   importFlocksCSV,
-  importFlocksXLS
- } from "../services";
+  importFlocksXLS,
+} from "../services";
 
 const HouseImportExport = () => {
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
@@ -24,7 +24,7 @@ const HouseImportExport = () => {
   const handleExport = async (type: string) => {
     try {
       let response: Partial<AxiosResponse> = {};
-      if (type == "xlsx") response = await exportFlocksXLSX ();
+      if (type == "xlsx") response = await exportFlocksXLSX();
       if (type == "xls") response = await exportFlocksXLS();
       if (type == "csv") response = await exportFlocksCSV();
       if (response.status == 200) {
@@ -81,9 +81,10 @@ const HouseImportExport = () => {
         direction={"row"}
         justifyContent="flex-start"
         alignItems="center"
-        useFlexGap flexWrap="wrap"
+        useFlexGap
+        flexWrap="wrap"
       >
-        <Link href="/houses/create">
+        <Link href="/flocks/create">
           <Button variant="contained" size={"small"} startIcon={<AddIcon />}>
             Create
           </Button>

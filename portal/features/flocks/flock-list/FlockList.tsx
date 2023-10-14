@@ -2,23 +2,44 @@ import React, { useEffect, useState } from "react";
 import {
   GridRowsProp,
   GridColDef,
+  GridRenderCellParams,
 } from "@mui/x-data-grid";
 import { DataTable } from "@/components/tables";
 import { Flock } from "@/models";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store";
 import _ from "lodash";
-import dayjs from 'dayjs';
+import dayjs from "dayjs";
 import { useGetFlocksQuery, useDeleteFlockMutation } from "../services";
 import buildQuery from "@/util/buildQuery";
 import buildPage from "@/util/buildPage";
+import { ProgressBar } from "@/components";
 
 const columns: GridColDef[] = [
   { field: "name", headerName: "Name", flex: 1, minWidth: 150 },
-  { field: "created_at", 
-    headerName: "Create at", flex: 1, minWidth: 150,
-    valueGetter: (params) =>
-      params.row.created_at ? dayjs(params.row.created_at).format(process.env.NEXT_PUBLIC_DATE_FORMAT) : "",
+  {
+    field: "total_chickens",
+    headerName: "Total Chickens",
+    flex: 1,
+    minWidth: 150,
+  },
+  {
+    field: "total_taged_chickens",
+    headerName: "Taged Chickens",
+    flex: 1,
+    renderCell: (params: GridRenderCellParams<any>) => {
+      if (params.row.house == null) return <></>;
+      return (
+        <ProgressBar
+          variant="determinate"
+          value={
+            ((params.row.total_chickens - params.row.total_taged_chickens) /
+              params.row.total_taged_chickens) *
+            100
+          }
+        />
+      );
+    },
   },
 ];
 
@@ -29,10 +50,13 @@ const FlockList = () => {
     pageSize: 10,
   });
 
-  const { data, isLoading, refetch } = useGetFlocksQuery(buildQuery({...buildPage(paginationModel), ...selector})); 
-  const [deleteFlock, deleteResult ] = useDeleteFlockMutation();
+  const { data, isLoading, refetch } = useGetFlocksQuery(
+    buildQuery({ ...buildPage(paginationModel), ...selector })
+  );
+  const [deleteFlock, deleteResult] = useDeleteFlockMutation();
 
-  const handleDelete = async (id: number) => await deleteFlock(id).then(() => refetch())
+  const handleDelete = async (id: number) =>
+    await deleteFlock(id).then(() => refetch());
 
   return (
     <DataTable

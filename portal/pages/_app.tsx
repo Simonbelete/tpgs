@@ -2,7 +2,7 @@ import "@/styles/globals.css";
 import "@glideapps/glide-data-grid/dist/index.css";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import "driver.js/dist/driver.css";
-import 'react-day-picker/dist/style.css';
+import "react-day-picker/dist/style.css";
 import type { AppProps } from "next/app";
 import type { NextPage, Metadata } from "next";
 import type { ReactElement, ReactNode } from "react";
@@ -18,17 +18,16 @@ import { Provider } from "react-redux";
 import { store } from "@/store";
 import OnBoardingProvider from "@/providers/OnBoarding";
 import siteMetadata from "@/data/siteMetadata";
-import { Inter,  } from 'next/font/google'
+import { Inter } from "next/font/google";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 
-const inter = Inter({ subsets: ['latin'] })
+const inter = Inter({ subsets: ["latin"] });
 
-const DashboardLayout = dynamic(
-  () => import("../layouts/DashboardLayout"),
-  {
-    ssr: false,
-    loading: () => <Loading />,
-  }
-);
+const DashboardLayout = dynamic(() => import("../layouts/DashboardLayout"), {
+  ssr: false,
+  loading: () => <Loading />,
+});
 
 export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
   getLayout?: (page: ReactElement) => ReactNode;
@@ -59,13 +58,13 @@ export const metadata: Metadata = {
   openGraph: {
     title: siteMetadata.title,
     description: siteMetadata.description,
-    url: './',
+    url: "./",
     siteName: siteMetadata.title,
     images: [siteMetadata.image],
-    locale: 'en_US',
-    type: 'website',
+    locale: "en_US",
+    type: "website",
   },
-}
+};
 
 export default function App({
   Component,
@@ -80,18 +79,20 @@ export default function App({
     <Provider store={store}>
       <SessionProvider session={session}>
         <ThemeProvider theme={lightTheme}>
-          {/* <OnBoardingProvider> */}
+          <LocalizationProvider dateAdapter={AdapterDayjs}>
+            {/* <OnBoardingProvider> */}
             <SnackbarProvider
-               anchorOrigin={{
-                vertical: 'top',
-                horizontal: 'center',
+              anchorOrigin={{
+                vertical: "top",
+                horizontal: "center",
               }}
             >
               <main className={`${inter.className}`}>
                 {getLayout(<Component {...pageProps} />)}
               </main>
             </SnackbarProvider>
-          {/* </OnBoardingProvider> */}
+            {/* </OnBoardingProvider> */}
+          </LocalizationProvider>
         </ThemeProvider>
       </SessionProvider>
     </Provider>

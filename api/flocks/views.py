@@ -12,7 +12,7 @@ from rest_framework.parsers import MultiPartParser
 from tablib import Dataset
 
 
-from core.views import HistoryViewSet
+from core.views import HistoryViewSet, SummaryViewSet, CoreModelViewSet
 from core.serializers import UploadSerializer
 from . import models
 from . import serializers
@@ -27,7 +27,7 @@ class FlockFilter(django_filters.FilterSet):
         fields = ['name']
 
 
-class FlockViewSet(viewsets.ModelViewSet):
+class FlockViewSet(CoreModelViewSet):
     queryset = models.Flock.objects.all()
     serializer_class = serializers.FlockSerializer_GET
     filterset_class = FlockFilter
@@ -38,15 +38,6 @@ class FlockViewSet(viewsets.ModelViewSet):
         if self.request.method in ['POST', 'PATCH']:
             return serializers.FlockSerializer_POST
         return serializers.FlockSerializer_GET
-
-    def perform_create(self, serializer):
-        serializer.save(created_by=self.request.user)
-
-    def list(self, request, *args, **kwargs):
-        print('-----------')
-        print(self.queryset[0].total_accusation)
-        return super().list(request, *args, **kwargs)
-
 
 class FlockHistoryViewSet(HistoryViewSet):
     queryset = models.Flock.history.all()

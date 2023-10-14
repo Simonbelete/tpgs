@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { AsyncDropdown } from "@/components/dropdowns";
-import { useLazyGetBreedsQuery } from '../services';
+import { useLazyGetBreedsQuery } from "../services";
 import { Breed } from "@/models";
 
 const BreedDropdown = ({
@@ -10,21 +10,20 @@ const BreedDropdown = ({
   onChange,
   helperText,
 }: {
-  value?: any,
-  label: string,
-  error?: boolean
+  value?: any;
+  label?: string;
+  error?: boolean;
   helperText?: string;
   onChange?: (event: any, newValue: any) => void;
 }) => {
-  const [trigger, {isLoading, data}, lastPromiseInfo] = useLazyGetBreedsQuery();
+  const [trigger, { isLoading, data }, lastPromiseInfo] =
+    useLazyGetBreedsQuery();
 
   const handleOnOpen = () => {
     trigger({}, true);
-  }
+  };
 
-  const handleOnClose = () => {
-
-  }
+  const handleOnClose = () => {};
 
   return (
     <AsyncDropdown<Breed>
@@ -39,10 +38,10 @@ const BreedDropdown = ({
       onClose={handleOnClose}
       onChange={onChange}
       onInputChange={(event: any, newInputValue: any) => {
-        trigger({}, true)
+        trigger({}, true);
       }}
     />
-  )
-}
+  );
+};
 
 export default BreedDropdown;

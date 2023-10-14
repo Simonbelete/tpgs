@@ -5,10 +5,11 @@ export { default as Copyright } from "./copyright";
 export { default as Loading } from "./Loading";
 export { default as Breadcrumbs } from "./Breadcrumbs";
 export { default as AppsDescription } from "./apps-descripiton";
-export { default as DatePicker } from './DatePicker';
-export { default as Redirect403 } from './Redirect403';
-export { default as Shadow } from './Shadow';
-export { default as RenderProgress } from './RenderProgress';
+export { default as DatePicker } from "./DatePicker";
+export { default as Redirect403 } from "./Redirect403";
+export { default as Shadow } from "./Shadow";
+export { default as RenderProgress } from "./RenderProgress";
+export { default as ProgressBar } from "./ProgressBar";
 
 export * from "./call-to-actions";
 export * from "./heros";
