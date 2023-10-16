@@ -16,10 +16,17 @@ import 'bloc/search/bloc.dart';
 import 'screens/onboarding_screen.dart';
 import 'theme.dart';
 
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   Bloc.observer = AppBlocObserver();
   await Preferencess.init();
+
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
 
   runApp(NutritionEductionApp());
 }

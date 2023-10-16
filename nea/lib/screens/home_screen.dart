@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nea/constants.dart';
+import 'package:nea/screens/chat_list.screen.dart';
+import 'package:nea/screens/chat_screen.dart';
 import 'package:nea/utils/responsive_widget.dart';
 import 'package:nea/widgets/course_grid.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -59,35 +61,48 @@ class HomeScreen extends StatelessWidget {
     Size size = MediaQuery.of(context).size;
     return BlocBuilder<LocalBloc, LocalState>(builder: (context, state) {
       return Scaffold(
-        body: SafeArea(
-          child: Center(
-              child: Container(
-                  width: (() {
-                    if (ResponsiveWidget.isSmallScreen(context)) {
-                      return size.width;
-                    } else if (ResponsiveWidget.isTabletScreen(context)) {
-                      return size.width * 0.85;
-                    } else if (ResponsiveWidget.isMediumScreen(context)) {
-                      return size.width * 0.85;
-                    } else if (ResponsiveWidget.isLargeScreen(context)) {
-                      return size.width * 0.7;
-                    } else {
-                      // Extra Large
-                      return size.width * 0.7;
-                    }
-                  }()),
-                  child: body(context))),
-        ),
-        floatingActionButton: FloatingActionButton.small(
-            backgroundColor: primaryColor,
-            onPressed: () {
-              _loadInfoDialog(context);
-            },
-            child: Image.asset(
-              'assets/icons/info.png',
-              height: 20,
-            )),
-      );
+          body: SafeArea(
+            child: Center(
+                child: Container(
+                    width: (() {
+                      if (ResponsiveWidget.isSmallScreen(context)) {
+                        return size.width;
+                      } else if (ResponsiveWidget.isTabletScreen(context)) {
+                        return size.width * 0.85;
+                      } else if (ResponsiveWidget.isMediumScreen(context)) {
+                        return size.width * 0.85;
+                      } else if (ResponsiveWidget.isLargeScreen(context)) {
+                        return size.width * 0.7;
+                      } else {
+                        // Extra Large
+                        return size.width * 0.7;
+                      }
+                    }()),
+                    child: body(context))),
+          ),
+          floatingActionButton: Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              FloatingActionButton.small(
+                  backgroundColor: primaryColor,
+                  onPressed: () {
+                    Navigator.pushNamed(context, ChatListScreen.routeName);
+                  },
+                  child: Icon(Icons.message)),
+              const SizedBox(
+                height: 10,
+              ),
+              FloatingActionButton.small(
+                  backgroundColor: primaryColor,
+                  onPressed: () {
+                    _loadInfoDialog(context);
+                  },
+                  child: Image.asset(
+                    'assets/icons/info.png',
+                    height: 20,
+                  )),
+            ],
+          ));
     });
   }
 

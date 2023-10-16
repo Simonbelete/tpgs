@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "647746666321",
+    "project_id": "ilri-nutrition-education",
+    "storage_bucket": "ilri-nutrition-education.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:647746666321:android:ba69ed6aca5217ef385d70",
+        "android_client_info": {
+          "package_name": "com.example.nea"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "647746666321-l9kjrc6kc9vn75c00hjeq7oh1qo4dn7s.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAMG0U8kPa-fckax1EsulcHwtvSMp6fkXk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "647746666321-l9kjrc6kc9vn75c00hjeq7oh1qo4dn7s.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

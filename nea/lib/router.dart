@@ -3,6 +3,7 @@ import 'package:nea/i18n/courses.dart';
 import 'package:nea/i18n/foods.dart';
 import 'package:nea/models/course_model.dart';
 import 'package:nea/models/food_model.dart';
+import 'package:nea/screens/chat_list.screen.dart';
 import 'package:nea/screens/food_screen.dart';
 import 'package:nea/screens/home_screen.dart';
 import 'package:nea/screens/course_screen.dart';
@@ -23,6 +24,10 @@ List<Path> paths = [
   Path(
     r'^' + HomeScreen.routeName,
     (context, match) => HomeScreen(),
+  ),
+  Path(
+    r'^' + ChatListScreen.routeName,
+    (context, match) => ChatListScreen(),
   ),
   Path(
     r'^/course/([\w-]+)$',
