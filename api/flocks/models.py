@@ -59,10 +59,6 @@ class Flock(CoreModel):
 
 
 class FlockAccusation(CoreModel):
-    ACCUSATION_TYPE = [
-        ('')
-    ]
-
     flock = models.ForeignKey(
         Flock, on_delete=models.CASCADE, related_name='accusations')
     accusation = models.ForeignKey(

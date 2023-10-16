@@ -3,7 +3,10 @@ from rest_framework import viewsets, status
 from rest_framework.response import Response
 from rest_framework.exceptions import NotFound
 from django.core.exceptions import ObjectDoesNotExist
-import distutils.util
+from rest_framework.views import APIView
+from django.http import HttpResponse, JsonResponse
+from datetime import date
+from django.conf import settings
 
 
 class CoreModelViewSet(viewsets.ModelViewSet):
@@ -102,3 +105,16 @@ class SummaryViewSet(viewsets.ViewSet):
                 'last_history_type': None,
                 'history_count': 0
             }, status=200)
+
+
+class XlsxExport(APIView):
+    def get_dataset(self):
+        raise NotImplemented()
+
+    def get(self, request):
+        dataset = self.get_dataset()
+        response = HttpResponse(
+            dataset.xlsx, content_type='application/ms-excel')
+        response['Content-Disposition'] = 'attachment; filename="export_%s.xlsx"' % (
+            date.today().strftime(settings.DATETIME_FORMAT))
+        return response

@@ -1,0 +1,37 @@
+[
+    {
+        "model": "reduction_reason.ReductionReason",
+        "pk": 1,
+        "fields": {
+            "name": "Cull"
+        }
+    },
+    {
+        "model": "reduction_reason.ReductionReason",
+        "pk": 2,
+        "fields": {
+            "name": "Death"
+        }
+    },
+    {
+        "model": "reduction_reason.ReductionReason",
+        "pk": 3,
+        "fields": {
+            "name": "Sold"
+        }
+    },
+    {
+        "model": "reduction_reason.ReductionReason",
+        "pk": 4,
+        "fields": {
+            "name": "Lost"
+        }
+    },
+    {
+        "model": "reduction_reason.ReductionReason",
+        "pk": 5,
+        "fields": {
+            "name": "Tagged"
+        }
+    }
+]

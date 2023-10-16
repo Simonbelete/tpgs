@@ -25,3 +25,7 @@ Dash board chickens that doesnt belong to any flock or house
 Formula Dashboard
     - grouped bar chart for showing ingredient nutrients and requirement nutrients from Rations table
     - pie chart for the above condition i.e achived ratio
+
+## TODO
+
+- Rename mass to batch
