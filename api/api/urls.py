@@ -73,6 +73,7 @@ urlpatterns = [
         path('', include('purposes.urls')),
         path('', include('formulas.urls')),
         path('', include('houses.urls')),
+        path('', include('pen.urls')),
         path('', include('analyses.urls')),
         path('', include('reduction_reason.urls'))
     ])),
