@@ -60,7 +60,7 @@ export default function CheckboxDropdown<T>({
   onChange: (event: SelectChangeEvent) => void;
   selected: object[];
   multiple?: boolean;
-  endpoint: any;
+  endpoint?: any;
 }) {
   const [open, setOpen] = useState<boolean>(false);
   const [searchInput, setSearchInput] = useState<string>("");
@@ -69,6 +69,8 @@ export default function CheckboxDropdown<T>({
 
   const handleOpen = () => {
     setOpen(true);
+    if (menus !== undefined) return;
+
     if (data === undefined) {
       const queryBuild = query ? { ...query, query: {} } : {};
       trigger(queryBuild);
@@ -78,6 +80,8 @@ export default function CheckboxDropdown<T>({
 
   const handleSearchInput = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchInput(event.target.value);
+    if (menus !== undefined) return;
+
     const queryBuild = query
       ? { ...query, query: { searc: event.target.value } }
       : { search: event.target.value };
