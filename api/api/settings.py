@@ -117,6 +117,7 @@ TENANT_APPS = [
     'feeds',
     'weights',
     'houses',
+    'pen',
     'accusation',
     'reduction_reason'
 ]

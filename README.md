@@ -29,3 +29,6 @@ Formula /
 ## TODO
 
 - Rename mass to batch
+
+
+On Dashbaord add Total Generations in stats
