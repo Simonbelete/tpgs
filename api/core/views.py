@@ -7,6 +7,9 @@ from rest_framework.views import APIView
 from django.http import HttpResponse, JsonResponse
 from datetime import date
 from django.conf import settings
+from rest_framework.parsers import MultiPartParser
+from tablib import Dataset
+from import_export import resources
 
 
 class CoreModelViewSet(viewsets.ModelViewSet):
@@ -106,7 +109,7 @@ class SummaryViewSet(viewsets.ViewSet):
                 'history_count': 0
             }, status=200)
 
-
+## Exports
 class XlsxExport(APIView):
     def get_dataset(self):
         raise NotImplemented()
@@ -118,3 +121,82 @@ class XlsxExport(APIView):
         response['Content-Disposition'] = 'attachment; filename="export_%s.xlsx"' % (
             date.today().strftime(settings.DATETIME_FORMAT))
         return response
+
+class XlsExport(APIView):
+    def get_dataset(self):
+        raise NotImplemented()
+        
+    def get(self, request):
+        dataset = self.get_dataset()
+        response = HttpResponse(
+            dataset.xls, content_type='application/ms-excel')
+        response['Content-Disposition'] = 'attachment; filename="export_%s.xls"' % (
+            date.today().strftime(settings.DATETIME_FORMAT))
+        return response
+
+class CsvExport(APIView):
+    def get_dataset(self):
+        raise NotImplemented()
+
+    def get(self, request):
+        dataset = self.get_dataset()
+        response = HttpResponse(
+            dataset.csv, content_type='application/ms-excel')
+        response['Content-Disposition'] = 'attachment; filename="houses%s.csv"' % (
+            date.today().strftime(settings.DATETIME_FORMAT))
+        return response
+
+## Imports
+class XlsxImport(APIView):
+    serializer_class = UploadSerializer
+    parser_classes = [MultiPartParser]
+
+    def get_model(self):
+        raise NotImplemented()
+
+    def post(self, request):
+        file = request.FILES.get('file')
+        df = pd.read_excel(file, header=0)
+        dataset = Dataset().load(df)
+        resource = resources.modelresource_factory(
+            model=self.get_model())()
+        result = resource.import_data(dataset, raise_errors=True)
+        if not result.has_errors():
+            return JsonResponse({'message': 'Imported Successfully'}, status=200)
+        return JsonResponse({'errors': ['Import Failed']}, status=400)
+
+class XlsImport(APIView):
+    serializer_class = UploadSerializer
+    parser_classes = [MultiPartParser]
+
+    def get_model(self):
+        raise NotImplemented()
+
+    def post(self, request):
+        file = request.FILES.get('file')
+        df = pd.read_excel(file, header=0)
+        dataset = Dataset().load(df)
+        resource = resources.modelresource_factory(
+            model=self.get_model())()
+        result = resource.import_data(dataset, raise_errors=True)
+        if not result.has_errors():
+            return JsonResponse({'message': 'Imported Successfully'}, status=200)
+        return JsonResponse({'errors': ['Import Failed']}, status=400)
+
+class CsvImport(APIView):
+    serializer_class = UploadSerializer
+    parser_classes = [MultiPartParser]
+
+    def get_model(self):
+        raise NotImplemented()
+
+    def post(self, request):
+        file = request.FILES.get('file')
+        df = pd.read_csv(file, header=0)
+        dataset = Dataset().load(df)
+        resource = resources.modelresource_factory(
+            model=self.get_model())()
+        result = resource.import_data(dataset, raise_errors=True)
+        if not result.has_errors():
+            return JsonResponse({'message': 'Imported Successfully'}, status=200)
+        return JsonResponse({'errors': ['Import Failed']}, status=400)

@@ -9,7 +9,17 @@ from tablib import Dataset
 from import_export import resources
 import pandas as pd
 
-from core.views import HistoryViewSet, SummaryViewSet, CoreModelViewSet
+from core.views import (
+    HistoryViewSet,
+    SummaryViewSet,
+    CoreModelViewSet,
+    XlsxExport,
+    XlsExport,
+    CsvExport,
+    XlsxImport,
+    XlsImport,
+    CsvImport
+)
 from core.serializers import UploadSerializer
 from . import models
 from . import serializers
@@ -35,85 +45,28 @@ class HouseSummaryViewSet(SummaryViewSet):
     def get_query(self):
         return models.House.all.get(pk=self.id_pk)
 
+## House Export
+class HouseXlsxExport(XlsxExport):
+    def get_dataset(self):
+        return admin.HouseResource().export()
 
-# Xlsx
-class HouseXlsxExport(APIView):
-    def get(self, request):
-        dataset = admin.HouseResource().export()
-        response = HttpResponse(
-            dataset.xlsx, content_type='application/ms-excel')
-        response['Content-Disposition'] = 'attachment; filename="houses%s.xlsx"' % (
-            date.today().strftime(settings.DATETIME_FORMAT))
-        return response
+class HouseXlsExport(XlsExport):
+    def get_dataset(self):
+        return admin.HouseResource().export()
 
+class HouseCsvExport(CsvExport):
+    def get_dataset(self):
+        return admin.HouseResource().export()
 
-class HouseXlsxImport(APIView):
-    serializer_class = UploadSerializer
-    parser_classes = [MultiPartParser]
+## House Import
+class HouseXlsxImport(XlsxImport):
+    def get_model(self):
+        return models.House
 
-    def post(self, request):
-        file = request.FILES.get('file')
-        df = pd.read_excel(file, header=0)
-        dataset = Dataset().load(df)
-        resource = resources.modelresource_factory(
-            model=models.House)()
-        result = resource.import_data(dataset, raise_errors=True)
-        if not result.has_errors():
-            return JsonResponse({'message': 'Imported Successfully'}, status=200)
-        return JsonResponse({'errors': ['Import Failed']}, status=400)
+class HouseXlsImport(XlsxImport):
+    def get_model(self):
+        return models.House
 
-# Xls
-
-
-class HouseXlsExport(APIView):
-    def get(self, request):
-        dataset = admin.HouseResource().export()
-        response = HttpResponse(
-            dataset.xls, content_type='application/ms-excel')
-        response['Content-Disposition'] = 'attachment; filename="houses%s.xls"' % (
-            date.today().strftime(settings.DATETIME_FORMAT))
-        return response
-
-
-class HouseXlsImport(APIView):
-    serializer_class = UploadSerializer
-    parser_classes = [MultiPartParser]
-
-    def post(self, request):
-        file = request.FILES.get('file')
-        df = pd.read_excel(file, header=0)
-        dataset = Dataset().load(df)
-        resource = resources.modelresource_factory(
-            model=models.House)()
-        result = resource.import_data(dataset, raise_errors=True)
-        if not result.has_errors():
-            return JsonResponse({'message': 'Imported Successfully'}, status=200)
-        return JsonResponse({'errors': ['Import Failed']}, status=400)
-
-# Csv
-
-
-class HouseCsvExport(APIView):
-    def get(self, request):
-        dataset = admin.HouseResource().export()
-        response = HttpResponse(
-            dataset.csv, content_type='application/ms-excel')
-        response['Content-Disposition'] = 'attachment; filename="houses%s.csv"' % (
-            date.today().strftime(settings.DATETIME_FORMAT))
-        return response
-
-
-class HouseCsvImport(APIView):
-    serializer_class = UploadSerializer
-    parser_classes = [MultiPartParser]
-
-    def post(self, request):
-        file = request.FILES.get('file')
-        df = pd.read_csv(file, header=0)
-        dataset = Dataset().load(df)
-        resource = resources.modelresource_factory(
-            model=models.House)()
-        result = resource.import_data(dataset, raise_errors=True)
-        if not result.has_errors():
-            return JsonResponse({'message': 'Imported Successfully'}, status=200)
-        return JsonResponse({'errors': ['Import Failed']}, status=400)
+class HouseCsvImport(CsvImport):
+    def get_model(self):
+        return models.House
