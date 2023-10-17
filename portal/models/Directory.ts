@@ -1,4 +1,4 @@
-export default interface Directory{
+export default interface Directory {
   id: number;
   name: string;
   unique_id: string;
@@ -8,4 +8,6 @@ export default interface Directory{
   flock_id: number;
   house_name: string;
   house_id: number;
+  pen_id: number;
+  pen_name: string;
 }

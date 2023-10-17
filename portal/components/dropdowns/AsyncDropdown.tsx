@@ -87,7 +87,7 @@ export default function AsyncDropdown<T>({
         onChange={onChange}
         value={value}
         defaultValue={value}
-        getOptionLabel={(option) => option[dataKey]}
+        getOptionLabel={(option) => option[dataKey] ?? ""}
         options={options}
         loading={isLoading}
         isOptionEqualToValue={(option, val) => option[dataKey] === val[dataKey]}

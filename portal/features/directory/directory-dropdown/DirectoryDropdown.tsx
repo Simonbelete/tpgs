@@ -10,12 +10,14 @@ const DirectoryDropdown = ({
   onChange,
   helperText,
   query,
+  dataKey,
 }: {
   value?: any;
   label?: string;
   error?: boolean;
   helperText?: string;
   query?: Object;
+  dataKey?: string;
   onChange?: (event: any, newValue: any) => void;
 }) => {
   const [trigger, { isLoading, data }, lastPromiseInfo] =
@@ -30,7 +32,7 @@ const DirectoryDropdown = ({
   return (
     <AsyncDropdown<Directory>
       value={value}
-      dataKey="name"
+      dataKey={dataKey || "name"}
       label={label}
       error={error}
       helperText={helperText}

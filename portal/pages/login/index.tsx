@@ -1,17 +1,15 @@
 import React, { ReactElement } from "react";
-import { DefaultLayout } from "@/layouts";
 import { AuthLogin } from "@/features/auth";
 import Head from "next/head";
 import { getServerSession } from "next-auth/next";
 import { NextPageContext } from "next";
 import { authOptions } from "@/pages/api/auth/[...nextauth]";
+import { SeoHead } from "@/seo";
 
 const LoginPage = () => {
   return (
     <>
-      <Head>
-        <title>ILRI TPGS - Login</title>
-      </Head>
+      <SeoHead title="Login" />
       <AuthLogin />
     </>
   );

@@ -1,6 +1,7 @@
 from django.db import models
 from django.db import connection
 
+
 class DirectoryList(models.Model):
     unique_id = models.CharField(max_length=255, primary_key=True)
     farm_name = models.TextField()
@@ -9,6 +10,8 @@ class DirectoryList(models.Model):
     flock_name = models.TextField()
     house_id = models.IntegerField()
     house_name = models.TextField()
+    pen_id = models.IntegerField()
+    pen_name = models.TextField()
 
     class Meta:
         managed = False
@@ -22,4 +25,12 @@ class DirectoryList(models.Model):
 
     @property
     def name(self):
-        return "%s / %s / %s" % (self.farm_name, self.flock_name, self.house_name)
+        return "{farm} / {house} / {pen} / {flock}".format(farm=self.farm_name, house=self.house_name, pen=self.pen_name, flock=self.flock_name)
+
+    @property
+    def display_name(self):
+        return "{farm} / {house} / {pen} / {flock}".format(farm=self.farm_name, house=self.house_name, pen=self.pen_name, flock=self.flock_name)
+
+    @property
+    def batch_name(self):
+        return "{house} / {pen} / {flock}".format(house=self.house_name, pen=self.pen_name, flock=self.flock_name)

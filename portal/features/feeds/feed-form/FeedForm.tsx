@@ -21,27 +21,27 @@ import { RootState } from "@/store";
 
 type Inputs = Partial<Feed>;
 
-const schema = yup
-  .object({
-    flock: yup.number().nullable(),
-    chicken: yup.number().nullable(),
-    formula: yup.number().nullable(),
-    week: yup
-      .number()
-      .typeError("Week must be number")
-      .min(0)
-      .required("Week is required"),
-    weight: yup.number(),
-  })
-  .transform((currentValue: any) => {
-    if (currentValue.chicken != null)
-      currentValue.chicken = currentValue.chicken.id;
-    if (currentValue.flock != null) currentValue.flock = currentValue.flock.id;
-    if (currentValue.formula != null)
-      currentValue.formula = currentValue.formula.id;
+const schema = yup.object({
+  batch: yup.object().nullable(),
+  flock: yup.object().nullable(),
+  chicken: yup.number().nullable(),
+  formula: yup.number().nullable(),
+  week: yup
+    .number()
+    .typeError("Week must be number")
+    .min(0)
+    .required("Week is required"),
+  weight: yup.number(),
+});
+// .transform((currentValue: any) => {
+//   if (currentValue.chicken != null)
+//     currentValue.chicken = currentValue.chicken.id;
+//   if (currentValue.flock != null) currentValue.flock = currentValue.flock.id;
+//   if (currentValue.formula != null)
+//     currentValue.formula = currentValue.formula.id;
 
-    return currentValue;
-  });
+//   return currentValue;
+// });
 
 const FeedForm = ({
   feed,
@@ -67,13 +67,27 @@ const FeedForm = ({
     resolver: yupResolver(schema),
   });
 
+  console.log("00000000");
+  console.log(feed);
+
   const useCRUDHook = useCRUD({
     results: [createResult, updateResult],
     setError: setError,
   });
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
-    const body = {};
+    const body: Inputs = {
+      week: data.week,
+      weight: data.weight,
+      formula: (data.formula as any).id || null,
+    };
+
+    if (batch) {
+      body.flock = data.batch?.flock_id;
+      body.pen = data.batch?.pen_id;
+    } else {
+      body.chicken = (data.chicken as any).id;
+    }
 
     if (feed == null) await createFeed(data);
     else await updateFeed({ ...data, id: feed.id });
@@ -91,14 +105,16 @@ const FeedForm = ({
                     {/* Flock */}
                     <Grid item xs={12}>
                       <Controller
-                        name={"flock"}
+                        name={"batch"}
                         control={control}
                         render={({
                           field: { onChange, value },
-                          fieldState: { invalid, isTouched, isDirty, error },
+                          fieldState: { error },
                         }) => (
                           <DirectoryDropdown
+                            label="Batch"
                             query={{ farm_name: tenant.name }}
+                            dataKey="batch_name"
                             onChange={(_, data) => onChange(data)}
                             value={value ?? ""}
                             error={!!error?.message}
@@ -117,11 +133,11 @@ const FeedForm = ({
                         control={control}
                         render={({
                           field: { onChange, value },
-                          fieldState: { invalid, isTouched, isDirty, error },
+                          fieldState: { error },
                         }) => (
                           <ChickenDropdown
                             onChange={(_, data) => onChange(data)}
-                            value={value}
+                            value={value ?? ""}
                             error={!!error?.message}
                             helperText={error?.message}
                           />
@@ -159,7 +175,7 @@ const FeedForm = ({
                     control={control}
                     render={({
                       field: { onChange, value },
-                      fieldState: { invalid, isTouched, isDirty, error },
+                      fieldState: { error },
                     }) => (
                       <LabeledInput
                         error={!!error?.message}
@@ -181,7 +197,7 @@ const FeedForm = ({
                     control={control}
                     render={({
                       field: { onChange, value },
-                      fieldState: { invalid, isTouched, isDirty, error },
+                      fieldState: { error },
                     }) => (
                       <FormulaDropdown
                         onChange={(_, data) => onChange(data)}
