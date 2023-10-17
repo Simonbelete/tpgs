@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import {
   GridRowsProp,
   GridColDef,
-  GridRenderCellParams
+  GridRenderCellParams,
 } from "@mui/x-data-grid";
 import { DataTable } from "@/components/tables";
 import { Typography } from "@mui/material";
@@ -11,13 +11,16 @@ import { Egg } from "@/models";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store";
 import _ from "lodash";
-import dayjs from 'dayjs';
+import dayjs from "dayjs";
 import { useGetEggsQuery, useDeleteEggMutation } from "../services";
 import buildQuery from "@/util/buildQuery";
 import buildPage from "@/util/buildPage";
 
 const columns: GridColDef[] = [
-  { field: "chicken", headerName: "Chicken", flex: 1,
+  {
+    field: "chicken",
+    headerName: "Chicken",
+    flex: 1,
     renderCell: (params: GridRenderCellParams<any>) => {
       if (params.row.chicken == null) return <></>;
       return (
@@ -29,7 +32,10 @@ const columns: GridColDef[] = [
       );
     },
   },
-  { field: "flock", headerName: "Flock", flex: 1,
+  {
+    field: "flock",
+    headerName: "Flock",
+    flex: 1,
     renderCell: (params: GridRenderCellParams<any>) => {
       if (params.row.flock == null) return <></>;
       return (
@@ -46,21 +52,23 @@ const columns: GridColDef[] = [
   { field: "weight", headerName: "Weight [g]", flex: 1, minWidth: 150 },
 ];
 
-const EggList = ({mass = false}: {mass?: boolean}) => {
+const EggList = () => {
   const selector = useSelector((state: RootState) => state.filter);
   const [paginationModel, setPaginationModel] = useState({
     page: 0,
     pageSize: 10,
   });
 
-  const { data, isLoading, refetch } = useGetEggsQuery(buildQuery({
-    ...buildPage(paginationModel), ...selector,
-    flock__isnull: !mass,
-    chicken_isnull: mass
-  })); 
-  const [deleteEgg, deleteResult ] = useDeleteEggMutation();
+  const { data, isLoading, refetch } = useGetEggsQuery(
+    buildQuery({
+      ...buildPage(paginationModel),
+      ...selector,
+    })
+  );
+  const [deleteEgg, deleteResult] = useDeleteEggMutation();
 
-  const handleDelete = async (id: number) => await deleteEgg(id).then(() => refetch())
+  const handleDelete = async (id: number) =>
+    await deleteEgg(id).then(() => refetch());
 
   return (
     <DataTable

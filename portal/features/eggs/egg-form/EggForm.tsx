@@ -7,8 +7,8 @@ import { Egg } from "@/models";
 import { LabeledInput } from "@/components/inputs";
 import { useRouter } from "next/router";
 import CloseIcon from "@mui/icons-material/Close";
-import { Card } from '@/components/card';
-import SaveIcon from '@mui/icons-material/Save';
+import { Card } from "@/components/card";
+import SaveIcon from "@mui/icons-material/Save";
 import EggInfoZone from "./EggInfoZone";
 import EggDangerZone from "./EggDangerZone";
 import { useCreateEggMutation, useUpdateEggMutation } from "../services";
@@ -22,80 +22,54 @@ const schema = yup
   .object({
     flock: yup.number().nullable(),
     chicken: yup.number().nullable(),
-    week: yup.number().typeError("Week must be number").min(0).required("Week is required"),
+    week: yup
+      .number()
+      .typeError("Week must be number")
+      .min(0)
+      .required("Week is required"),
     eggs: yup.number(),
     weight: yup.number(),
-}).transform((currentValue: any) => {
-  if (currentValue.chicken != null)
-    currentValue.chicken = currentValue.chicken.id;
-  if (currentValue.flock != null)
-    currentValue.flock = currentValue.flock.id;
+  })
+  .transform((currentValue: any) => {
+    if (currentValue.chicken != null)
+      currentValue.chicken = currentValue.chicken.id;
+    if (currentValue.flock != null) currentValue.flock = currentValue.flock.id;
 
-  return currentValue;
-})
+    return currentValue;
+  });
 
-const EggForm = ({
-  egg,
-  mass
-}: {
-  egg?: Egg;
-  mass?: boolean;
-}) => {
+const EggForm = ({ egg }: { egg?: Egg }) => {
   const router = useRouter();
 
-  const [createEgg, createResult ] = useCreateEggMutation();
-  const [updateEgg, updateResult ] = useUpdateEggMutation();
+  const [createEgg, createResult] = useCreateEggMutation();
+  const [updateEgg, updateResult] = useUpdateEggMutation();
 
   const { handleSubmit, control, setError } = useForm<Inputs>({
     defaultValues: {
       ...egg,
     },
-    // @ts-ignore 
+    // @ts-ignore
     resolver: yupResolver(schema),
   });
 
   const useCRUDHook = useCRUD({
-    results: [
-      createResult,
-      updateResult
-    ],
-    setError: setError
-  })
+    results: [createResult, updateResult],
+    setError: setError,
+  });
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
-    if (egg === undefined) await createEgg(data).then(() => router.push('/eggs'));
-    else await updateEgg({...data, id: egg.id});
+    if (egg === undefined)
+      await createEgg(data).then(() => router.push("/eggs"));
+    else await updateEgg({ ...data, id: egg.id });
   };
 
   return (
     <>
-    <Grid container spacing={4}>
-      <Grid item xs={9}>
-        <Card title="Egg Form">
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <Grid container spacing={4}>
-            {mass == true ? (
-              <>
-                {/* Flock */}
-                <Grid item xs={12}>
-                  <Controller
-                    name={"flock"}
-                    control={control}
-                    render={({
-                      field: { onChange, value },
-                      fieldState: { invalid, isTouched, isDirty, error },
-                    }) => (
-                      <FlockDropdown
-                        onChange={(_, data) => onChange(data)}
-                        value={value}
-                        error={!!error?.message}
-                        helperText={error?.message}
-                      />
-                    )}
-                  />
-                </Grid>
-              </>): (
-              <>
+      <Grid container spacing={4}>
+        <Grid item xs={9}>
+          <Card title="Egg Form">
+            <form onSubmit={handleSubmit(onSubmit)}>
+              <Grid container spacing={4}>
                 {/* Chicken */}
                 <Grid item xs={12} md={6}>
                   <Controller
@@ -114,119 +88,118 @@ const EggForm = ({
                     )}
                   />
                 </Grid>
-              </>)}
-              {/* Week */}
-             <Grid item xs={12} md={6}>
-              <Controller
-                name={"week"}
-                control={control}
-                render={({
-                  field: { onChange, value },
-                  fieldState: { error },
-                }) => (
-                  <LabeledInput
-                    error={!!error?.message}
-                    helperText={error?.message}
-                    onChange={onChange}
-                    fullWidth
-                    size="small"
-                    value={value ?? ""}
-                    label={"Week"}
-                    placeholder={"Week"}
-                    type={"number"}
+                {/* Week */}
+                <Grid item xs={12} md={6}>
+                  <Controller
+                    name={"week"}
+                    control={control}
+                    render={({
+                      field: { onChange, value },
+                      fieldState: { error },
+                    }) => (
+                      <LabeledInput
+                        error={!!error?.message}
+                        helperText={error?.message}
+                        onChange={onChange}
+                        fullWidth
+                        size="small"
+                        value={value ?? ""}
+                        label={"Week"}
+                        placeholder={"Week"}
+                        type={"number"}
+                      />
+                    )}
                   />
-                )}
-              />
-            </Grid>
-              {/* Eggs */}
-             <Grid item xs={12} md={6}>
-              <Controller
-                name={"eggs"}
-                control={control}
-                render={({
-                  field: { onChange, value },
-                  fieldState: { invalid, isTouched, isDirty, error },
-                }) => (
-                  <LabeledInput
-                    error={!!error?.message}
-                    helperText={error?.message}
-                    onChange={onChange}
-                    fullWidth
-                    size="small"
-                    value={value ?? ""}
-                    label={"No of Eggs"}
-                    placeholder={"No of Eggs"}
+                </Grid>
+                {/* Eggs */}
+                <Grid item xs={12} md={6}>
+                  <Controller
+                    name={"eggs"}
+                    control={control}
+                    render={({
+                      field: { onChange, value },
+                      fieldState: { invalid, isTouched, isDirty, error },
+                    }) => (
+                      <LabeledInput
+                        error={!!error?.message}
+                        helperText={error?.message}
+                        onChange={onChange}
+                        fullWidth
+                        size="small"
+                        value={value ?? ""}
+                        label={"No of Eggs"}
+                        placeholder={"No of Eggs"}
+                      />
+                    )}
                   />
-                )}
-              />
-            </Grid>
-              {/* total Weight */}
-             <Grid item xs={12} md={6}>
-              <Controller
-                name={"weight"}
-                control={control}
-                render={({
-                  field: { onChange, value },
-                  fieldState: { invalid, isTouched, isDirty, error },
-                }) => (
-                  <LabeledInput
-                    error={!!error?.message}
-                    helperText={error?.message}
-                    onChange={onChange}
-                    fullWidth
-                    size="small"
-                    value={value ?? ""}
-                    label={"Total Weight [g]"}
-                    placeholder={"Total Weight [g]"}
+                </Grid>
+                {/* total Weight */}
+                <Grid item xs={12} md={6}>
+                  <Controller
+                    name={"weight"}
+                    control={control}
+                    render={({
+                      field: { onChange, value },
+                      fieldState: { invalid, isTouched, isDirty, error },
+                    }) => (
+                      <LabeledInput
+                        error={!!error?.message}
+                        helperText={error?.message}
+                        onChange={onChange}
+                        fullWidth
+                        size="small"
+                        value={value ?? ""}
+                        label={"Total Weight [g]"}
+                        placeholder={"Total Weight [g]"}
+                      />
+                    )}
                   />
-                )}
-              />
-            </Grid>
-          </Grid>
-          </form>
-        </Card>
-        <Box sx={{mt: 5}}>
-        <Stack
-            spacing={2}
-            direction={"row"}
-            justifyContent="flex-start"
-            alignItems="center"
-          >
-            <Box>
-              <Button
-                variant="contained"
-                size="small"
-                startIcon={<SaveIcon />}
-                onClick={() => handleSubmit(onSubmit)()}
-              >
-                Save
-              </Button>
-            </Box>
-            <Box>
-              <Button
-                variant="outlined"
-                color="error"
-                size="small"
-                startIcon={<CloseIcon />}
-                onClick={() => router.push("/houses")}
-              >
-                Cancel
-              </Button>
-            </Box>
+                </Grid>
+              </Grid>
+            </form>
+          </Card>
+          <Box sx={{ mt: 5 }}>
+            <Stack
+              spacing={2}
+              direction={"row"}
+              justifyContent="flex-start"
+              alignItems="center"
+            >
+              <Box>
+                <Button
+                  variant="contained"
+                  size="small"
+                  startIcon={<SaveIcon />}
+                  onClick={() => handleSubmit(onSubmit)()}
+                >
+                  Save
+                </Button>
+              </Box>
+              <Box>
+                <Button
+                  variant="outlined"
+                  color="error"
+                  size="small"
+                  startIcon={<CloseIcon />}
+                  onClick={() => router.push("/houses")}
+                >
+                  Cancel
+                </Button>
+              </Box>
+            </Stack>
+          </Box>
+        </Grid>
+        <Grid item xs={3}>
+          <Stack spacing={3}>
+            {egg && (
+              <>
+                <EggInfoZone id={egg?.id} />
+                <EggDangerZone id={egg.id} is_active={egg.is_active} />
+              </>
+            )}
           </Stack>
-      </Box>
+        </Grid>
       </Grid>
-      <Grid item xs={3}>
-        <Stack spacing={3}>
-          {egg && (
-            <>
-            <EggInfoZone id={egg?.id} />
-            <EggDangerZone id={egg.id} is_active={egg.is_active} />
-            </>
-          )}
-        </Stack>
-      </Grid>
-    </Grid>
     </>
   );
 };

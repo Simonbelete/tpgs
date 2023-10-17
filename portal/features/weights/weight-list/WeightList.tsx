@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import {
   GridRowsProp,
   GridColDef,
-  GridRenderCellParams
+  GridRenderCellParams,
 } from "@mui/x-data-grid";
 import { DataTable } from "@/components/tables";
 import { Typography } from "@mui/material";
@@ -11,13 +11,16 @@ import { Weight } from "@/models";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store";
 import _ from "lodash";
-import dayjs from 'dayjs';
+import dayjs from "dayjs";
 import { useGetWeightsQuery, useDeleteWeightMutation } from "../services";
 import buildQuery from "@/util/buildQuery";
 import buildPage from "@/util/buildPage";
 
 const columns: GridColDef[] = [
-  { field: "chicken", headerName: "Chicken", flex: 1,
+  {
+    field: "chicken",
+    headerName: "Chicken",
+    flex: 1,
     renderCell: (params: GridRenderCellParams<any>) => {
       if (params.row.chicken == null) return <></>;
       return (
@@ -29,7 +32,10 @@ const columns: GridColDef[] = [
       );
     },
   },
-  { field: "flock", headerName: "Flock", flex: 1,
+  {
+    field: "flock",
+    headerName: "Flock",
+    flex: 1,
     renderCell: (params: GridRenderCellParams<any>) => {
       if (params.row.flock == null) return <></>;
       return (
@@ -46,21 +52,23 @@ const columns: GridColDef[] = [
   { field: "weight", headerName: "Weight [g]", flex: 1, minWidth: 150 },
 ];
 
-const WeightList = ({mass = false}: {mass?: boolean}) => {
+const WeightList = () => {
   const selector = useSelector((state: RootState) => state.filter);
   const [paginationModel, setPaginationModel] = useState({
     page: 0,
     pageSize: 10,
   });
 
-  const { data, isLoading, refetch } = useGetWeightsQuery(buildQuery({
-    ...buildPage(paginationModel), ...selector,
-    flock__isnull: !mass,
-    chicken_isnull: mass
-  })); 
-  const [deleteWeight, deleteResult ] = useDeleteWeightMutation();
+  const { data, isLoading, refetch } = useGetWeightsQuery(
+    buildQuery({
+      ...buildPage(paginationModel),
+      ...selector,
+    })
+  );
+  const [deleteWeight, deleteResult] = useDeleteWeightMutation();
 
-  const handleDelete = async (id: number) => await deleteWeight(id).then(() => refetch())
+  const handleDelete = async (id: number) =>
+    await deleteWeight(id).then(() => refetch());
 
   return (
     <DataTable

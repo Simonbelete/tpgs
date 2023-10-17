@@ -306,7 +306,7 @@ const SidebarMenu = () => {
       <Menu menuItemStyles={menuItemStyles}>
         <MenuItem
           component={<Link href="/chickens" />}
-          icon={<ChickenIcon width="20" height="20" fill="#475A64" />}
+          icon={<ChickenIcon width="20" height="20" fill="inherit" />}
         >
           <Typography variant="body1" fontSize={14}>
             Chickens
@@ -345,34 +345,15 @@ const SidebarMenu = () => {
             </Typography>
           </MenuItem>
         </SubMenu>
-        <SubMenu
-          label={
-            <Typography variant="body1" fontSize={14}>
-              Egg Production
-            </Typography>
-          }
+        <MenuItem
+          component={<Link href="/eggs" />}
           icon={<ChickenEasterIcon width="20" height="20" fill="inherit" />}
-          defaultOpen={["/eggs", "/eggs/batch"].includes(router.pathname)}
+          active={RegExp("^/eggs$").test(router.pathname)}
         >
-          <MenuItem
-            component={<Link href="/eggs" />}
-            icon={<AdjustIcon fontSize="small" />}
-            active={RegExp("^/eggs$").test(router.pathname)}
-          >
-            <Typography variant="body1" fontSize={14}>
-              Individual
-            </Typography>
-          </MenuItem>
-          <MenuItem
-            component={<Link href="/eggs/mass" />}
-            icon={<AdjustIcon fontSize="small" />}
-            active={RegExp("^/eggs/mass$").test(router.pathname)}
-          >
-            <Typography variant="body1" fontSize={14}>
-              Mass
-            </Typography>
-          </MenuItem>
-        </SubMenu>
+          <Typography variant="body1" fontSize={14}>
+            Egg Production
+          </Typography>
+        </MenuItem>
         <SubMenu
           label={
             <Typography variant="body1" fontSize={14}>
@@ -401,34 +382,16 @@ const SidebarMenu = () => {
             </Typography>
           </MenuItem>
         </SubMenu>
-        <SubMenu
-          label={
-            <Typography variant="body1" fontSize={14}>
-              Body Weight
-            </Typography>
-          }
+
+        <MenuItem
+          component={<Link href="/weights" />}
           icon={<ScaleIcon width="20" height="20" fill="inherit" />}
-          defaultOpen={["/weights", "/weights/mass"].includes(router.pathname)}
+          active={RegExp("^/weights$").test(router.pathname)}
         >
-          <MenuItem
-            component={<Link href="/weights" />}
-            icon={<AdjustIcon fontSize="small" />}
-            active={RegExp("^/weights$").test(router.pathname)}
-          >
-            <Typography variant="body1" fontSize={14}>
-              Individual
-            </Typography>
-          </MenuItem>
-          <MenuItem
-            component={<Link href="/weights/mass" />}
-            icon={<AdjustIcon fontSize="small" />}
-            active={RegExp("^/weights/mass$").test(router.pathname)}
-          >
-            <Typography variant="body1" fontSize={14}>
-              Mass
-            </Typography>
-          </MenuItem>
-        </SubMenu>
+          <Typography variant="body1" fontSize={14}>
+            Body Weight
+          </Typography>
+        </MenuItem>
         <MenuItem
           component={<Link href="/breeds" />}
           icon={<DNAHellxIcon width="20" height="20" fill="inherit" />}

@@ -24,8 +24,8 @@ type Inputs = Partial<Feed>;
 const schema = yup.object({
   batch: yup.object().nullable(),
   flock: yup.object().nullable(),
-  chicken: yup.number().nullable(),
-  formula: yup.number().nullable(),
+  chicken: yup.object().nullable(),
+  formula: yup.object().nullable(),
   week: yup
     .number()
     .typeError("Week must be number")
@@ -89,7 +89,9 @@ const FeedForm = ({
     }
 
     if (feed == null)
-      await createFeed(body).then(() => redirect && router.push("/eeds/batch"));
+      await createFeed(body).then(
+        () => redirect && router.push("/feeds/batch")
+      );
     else await updateFeed({ ...body, id: feed.id });
   };
 
@@ -127,7 +129,7 @@ const FeedForm = ({
                 ) : (
                   <>
                     {/* Chicken */}
-                    <Grid item xs={12} md={6}>
+                    <Grid item xs={12}>
                       <Controller
                         name={"chicken"}
                         control={control}
