@@ -67,9 +67,6 @@ const FeedForm = ({
     resolver: yupResolver(schema),
   });
 
-  console.log("00000000");
-  console.log(feed);
-
   const useCRUDHook = useCRUD({
     results: [createResult, updateResult],
     setError: setError,
@@ -79,8 +76,10 @@ const FeedForm = ({
     const body: Inputs = {
       week: data.week,
       weight: data.weight,
-      formula: (data.formula as any).id || null,
     };
+
+    if (body.formula !== undefined)
+      body.formula = (data.formula as any).id || null;
 
     if (batch) {
       body.flock = data.batch?.flock_id;
@@ -89,8 +88,9 @@ const FeedForm = ({
       body.chicken = (data.chicken as any).id;
     }
 
-    if (feed == null) await createFeed(data);
-    else await updateFeed({ ...data, id: feed.id });
+    if (feed == null)
+      await createFeed(body).then(() => redirect && router.push("/eeds/batch"));
+    else await updateFeed({ ...body, id: feed.id });
   };
 
   return (

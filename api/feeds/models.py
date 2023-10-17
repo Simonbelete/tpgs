@@ -23,8 +23,8 @@ class Feed(CoreModel):
         Unit, on_delete=models.SET_NULL, null=True, blank=True, related_name='feeds')
     history = HistoricalRecords()
 
-    class Meta:
-        unique_together = ['flock', 'pen', 'chicken', 'week']
+    # class Meta:
+    #     unique_together = ['flock', 'pen', 'chicken', 'week']
 
     @property
     def adjusted_weight(self):
