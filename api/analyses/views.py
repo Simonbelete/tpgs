@@ -19,10 +19,11 @@ from chickens.models import Chicken
 class DirectoryListFilter(django_filters.FilterSet):
     farm_name = django_filters.CharFilter(
         field_name='farm_name', lookup_expr='contains')
+    farm_id = django_filters.NumberFilter(field_name='farm_id', lookup_expr='exact')
 
     class Meta:
         model = models.DirectoryList
-        fields = ['farm_name']
+        fields = ['farm_name', 'farm_id']
 
 
 class DirectoryListViewSet(viewsets.ReadOnlyModelViewSet):

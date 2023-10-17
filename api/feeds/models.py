@@ -6,10 +6,13 @@ from flocks.models import Flock
 from units.models import Unit
 from chickens.models import Chicken
 from formulas.models import Formula
+from pen.models import Pen
 
 class Feed(CoreModel):
     flock = models.ForeignKey(
         Flock, on_delete=models.CASCADE, null=True, blank=True, related_name='feeds')
+    pen = models.ForeignKey(
+        Pen, on_delete=models.CASCADE, null=True, blank=True, related_name='feeds')
     chicken = models.ForeignKey(
         Chicken, on_delete=models.CASCADE, null=True, blank=True, related_name='feeds')
     formula = models.ForeignKey(
@@ -21,7 +24,7 @@ class Feed(CoreModel):
     history = HistoricalRecords()
 
     class Meta:
-        unique_together = ['flock', 'chicken', 'week']
+        unique_together = ['flock', 'pen', 'chicken', 'week']
 
     @property
     def adjusted_weight(self):

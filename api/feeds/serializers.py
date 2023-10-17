@@ -16,7 +16,7 @@ class FeedSerializer_GET(serializers.ModelSerializer):
 class FeedSerializer_POST(serializers.ModelSerializer):
     class Meta:
         model = models.Feed
-        fields = ['chicken', 'flock', 'week', 'weight', 'formula']
+        fields = ['chicken', 'flock', 'pen', 'week', 'weight', 'formula']
 
 
 class FeedHistorySerializer(serializers.ModelSerializer):

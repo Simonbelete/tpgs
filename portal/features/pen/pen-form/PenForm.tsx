@@ -53,7 +53,8 @@ const PenForm = ({
       house: (data.house as House).id || 0,
     };
 
-    if (pen == null) await createPen(data);
+    if (pen == null)
+      await createPen(data).then(() => redirect && router.push("/pen"));
     else await updatePen({ ...body, id: pen.id });
   };
 

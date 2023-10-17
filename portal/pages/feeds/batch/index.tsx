@@ -15,10 +15,10 @@ const MassFeedPage = () => {
 
   return (
     <>
-      <SeoHead title="Mass Feed Intake"/>
+      <SeoHead title="Batch Feed Intake" />
       <ListLayout
         breadcrumbs={<Breadcrumbs items={breadcrumbs} />}
-        header={<Typography variant="title">Mass Feed Intake</Typography>}
+        header={<Typography variant="title">Batch Feed Intake</Typography>}
         actions={<MassFeedImportExport />}
         filter={<FeedListFilter />}
       >
@@ -27,7 +27,5 @@ const MassFeedPage = () => {
     </>
   );
 };
-
-
 
 export default MassFeedPage;

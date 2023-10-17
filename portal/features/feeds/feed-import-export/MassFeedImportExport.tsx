@@ -9,14 +9,14 @@ import messages from "@/util/messages";
 import { ButtonMenu } from "@/components/buttons";
 import AddIcon from "@mui/icons-material/Add";
 import FileUploadIcon from "@mui/icons-material/FileUpload";
-import { 
+import {
   exportFeedsXLSX,
   exportFeedsXLS,
   exportFeedsCSV,
   importFeedsXLSX,
   importFeedsCSV,
-  importFeedsXLS
- } from "../services";
+  importFeedsXLS,
+} from "../services";
 
 const MassFeedImportExport = () => {
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
@@ -24,7 +24,7 @@ const MassFeedImportExport = () => {
   const handleExport = async (type: string) => {
     try {
       let response: Partial<AxiosResponse> = {};
-      if (type == "xlsx") response = await exportFeedsXLSX ();
+      if (type == "xlsx") response = await exportFeedsXLSX();
       if (type == "xls") response = await exportFeedsXLS();
       if (type == "csv") response = await exportFeedsCSV();
       if (response.status == 200) {
@@ -81,9 +81,10 @@ const MassFeedImportExport = () => {
         direction={"row"}
         justifyContent="flex-start"
         alignItems="center"
-        useFlexGap flexWrap="wrap"
+        useFlexGap
+        flexWrap="wrap"
       >
-        <Link href="/feeds/mass/create">
+        <Link href="/feeds/batch/create">
           <Button variant="contained" size={"small"} startIcon={<AddIcon />}>
             Create
           </Button>

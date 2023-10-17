@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { AsyncDropdown } from "@/components/dropdowns";
-import { useLazyGetDdrectoriesQuery } from '../services';
+import { useLazyGetDdrectoriesQuery } from "../services";
 import { Directory } from "@/models";
 
 const DirectoryDropdown = ({
@@ -9,22 +9,23 @@ const DirectoryDropdown = ({
   error,
   onChange,
   helperText,
+  query,
 }: {
-  value?: any,
-  label: string,
-  error?: boolean
+  value?: any;
+  label?: string;
+  error?: boolean;
   helperText?: string;
+  query?: Object;
   onChange?: (event: any, newValue: any) => void;
 }) => {
-  const [trigger, {isLoading, data}, lastPromiseInfo] = useLazyGetDdrectoriesQuery();
+  const [trigger, { isLoading, data }, lastPromiseInfo] =
+    useLazyGetDdrectoriesQuery();
 
   const handleOnOpen = () => {
-    trigger({}, true);
-  }
+    trigger({ ...(query || {}) }, true);
+  };
 
-  const handleOnClose = () => {
-
-  }
+  const handleOnClose = () => {};
 
   return (
     <AsyncDropdown<Directory>
@@ -39,10 +40,10 @@ const DirectoryDropdown = ({
       onClose={handleOnClose}
       onChange={onChange}
       onInputChange={(event: any, newInputValue: any) => {
-        trigger({}, true)
+        trigger({ ...(query || {}) }, false);
       }}
     />
-  )
-}
+  );
+};
 
 export default DirectoryDropdown;
