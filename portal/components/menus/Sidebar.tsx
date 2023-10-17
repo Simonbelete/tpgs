@@ -352,7 +352,7 @@ const SidebarMenu = () => {
             </Typography>
           }
           icon={<ChickenEasterIcon width="20" height="20" fill="inherit" />}
-          defaultOpen={["/eggs", "/eggs/mass"].includes(router.pathname)}
+          defaultOpen={["/eggs", "/eggs/batch"].includes(router.pathname)}
         >
           <MenuItem
             component={<Link href="/eggs" />}
@@ -380,7 +380,7 @@ const SidebarMenu = () => {
             </Typography>
           }
           icon={<SackIcon width="20" height="20" fill="inherit" />}
-          defaultOpen={["/feeds", "/feeds/mass"].includes(router.pathname)}
+          defaultOpen={RegExp("^/feeds(.*)$").test(router.pathname)}
         >
           <MenuItem
             component={<Link href="/feeds" />}
@@ -392,12 +392,12 @@ const SidebarMenu = () => {
             </Typography>
           </MenuItem>
           <MenuItem
-            component={<Link href="/feeds/mass" />}
+            component={<Link href="/feeds/batch" />}
             icon={<AdjustIcon fontSize="small" />}
-            active={RegExp("^/feeds/mass$").test(router.pathname)}
+            active={RegExp("^/feeds/batch(.*)$").test(router.pathname)}
           >
             <Typography variant="body1" fontSize={14}>
-              Mass
+              Batch
             </Typography>
           </MenuItem>
         </SubMenu>
