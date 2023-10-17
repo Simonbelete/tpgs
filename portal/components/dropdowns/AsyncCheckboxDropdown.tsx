@@ -10,6 +10,7 @@ import {
   InputBase,
   Typography,
   Box,
+  LinearProgress,
 } from "@mui/material";
 import { styled, alpha } from "@mui/material/styles";
 import { SearchInputIcon } from "../inputs";
@@ -49,6 +50,7 @@ export default function CheckboxDropdown<T>({
   dataValueKey,
   dataLableKey,
   multiple = true,
+  endpoint,
 }: {
   query?: object;
   dataValueKey: string;
@@ -58,17 +60,32 @@ export default function CheckboxDropdown<T>({
   onChange: (event: SelectChangeEvent) => void;
   selected: object[];
   multiple?: boolean;
+  endpoint?: any;
 }) {
   const [open, setOpen] = useState<boolean>(false);
   const [searchInput, setSearchInput] = useState<string>("");
 
+  const [trigger, { data, isLoading }] = endpoint.useLazyQuery();
+
   const handleOpen = () => {
     setOpen(true);
+    if (menus !== undefined) return;
+
+    if (data === undefined) {
+      const queryBuild = query ? { ...query, query: {} } : {};
+      trigger(queryBuild);
+    }
   };
   const handleClose = () => setOpen(false);
 
   const handleSearchInput = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchInput(event.target.value);
+    if (menus !== undefined) return;
+
+    const queryBuild = query
+      ? { ...query, query: { searc: event.target.value } }
+      : { search: event.target.value };
+    trigger(queryBuild);
   };
 
   return (
@@ -102,6 +119,7 @@ export default function CheckboxDropdown<T>({
               },
             },
           }}
+          // onAnimationEndCapture={() => inputRef.current.focus()}
         >
           <li aria-selected="false" role="option">
             <Box
@@ -124,9 +142,10 @@ export default function CheckboxDropdown<T>({
               </Box>
             </Box>
           </li>
+          {isLoading && <LinearProgress />}
 
-          {menus &&
-            menus.map((e: any, key: any) => (
+          {data &&
+            data.results.map((e: any, key: any) => (
               // @ts-ignore
               <MenuItem key={key} value={e} sx={{ paddingLeft: "6px" }}>
                 <Checkbox

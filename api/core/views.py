@@ -11,6 +11,7 @@ from rest_framework.parsers import MultiPartParser
 from tablib import Dataset
 from import_export import resources
 
+from core.serializers import UploadSerializer
 
 class CoreModelViewSet(viewsets.ModelViewSet):
     # def get_queryset(self):

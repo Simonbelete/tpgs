@@ -1,1 +1,1 @@
-export { default as HouseHistoryList } from './HistoryList';
+export { default as PenHistoryList } from "./HistoryList";

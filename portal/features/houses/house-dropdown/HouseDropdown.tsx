@@ -1,7 +1,8 @@
 import React, { useEffect } from "react";
 import { AsyncDropdown } from "@/components/dropdowns";
-import { useLazyGetHousesQuery } from '../services';
+import { useLazyGetHousesQuery } from "../services";
 import { House } from "@/models";
+import { HouseForm } from "../house-form";
 
 const HouseDropdown = ({
   value,
@@ -10,21 +11,20 @@ const HouseDropdown = ({
   onChange,
   helperText,
 }: {
-  value?: any,
-  label: string,
-  error?: boolean
+  value?: any;
+  label: string;
+  error?: boolean;
   helperText?: string;
   onChange?: (event: any, newValue: any) => void;
 }) => {
-  const [trigger, {isLoading, data}, lastPromiseInfo] = useLazyGetHousesQuery();
+  const [trigger, { isLoading, data }, lastPromiseInfo] =
+    useLazyGetHousesQuery();
 
   const handleOnOpen = () => {
     trigger({}, true);
-  }
+  };
 
-  const handleOnClose = () => {
-
-  }
+  const handleOnClose = () => {};
 
   return (
     <AsyncDropdown<House>
@@ -38,11 +38,13 @@ const HouseDropdown = ({
       onOpen={handleOnOpen}
       onClose={handleOnClose}
       onChange={onChange}
+      createForm={<HouseForm />}
+      createFormTitle="Create House"
       onInputChange={(event: any, newInputValue: any) => {
-        trigger({}, true)
+        trigger({}, false);
       }}
     />
-  )
-}
+  );
+};
 
 export default HouseDropdown;

@@ -33,6 +33,11 @@ class PenViewSet(CoreModelViewSet):
     search_fields = ['name']
     ordering_fields = '__all__'
 
+    def get_serializer_class(self):
+        if self.request.method == 'GET':
+            return serializers.PenSerializer_GET
+        return serializers.PenSerializer_POST
+
 class PenHistoryViewSet(HistoryViewSet):
     queryset = models.Pen.history.all()
     serializer_class = serializers.PenHistorySerializer
@@ -60,7 +65,7 @@ class PenXlsxImport(XlsxImport):
     def get_model(self):
         return models.Pen
 
-class PenXlsImport(XlsxImport):
+class PenXlsImport(XlsImport):
     def get_model(self):
         return models.Pen
 

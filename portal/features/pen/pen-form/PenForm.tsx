@@ -3,7 +3,7 @@ import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import { Grid, Button, Paper, Stack, Box } from "@mui/material";
-import { Pen } from "@/models";
+import { House, Pen } from "@/models";
 import { LabeledInput } from "@/components/inputs";
 import { useRouter } from "next/router";
 import CloseIcon from "@mui/icons-material/Close";
@@ -13,20 +13,20 @@ import PenInfoZone from "./PenInfoZone";
 import PenDangerZone from "./PenDangerZone";
 import { useCreatePenMutation, useUpdatePenMutation } from "../services";
 import { useCRUD } from "@/hooks";
+import { HouseDropdown } from "@/features/houses";
 
 type Inputs = Partial<Pen>;
 
-const schema = yup
-  .object({
-    name: yup.string().required(),
-  })
-  .required();
+const schema = yup.object({
+  name: yup.string().required(),
+  house: yup.object().required(),
+});
 
 const PenForm = ({
-  house,
+  pen,
   redirect = true,
 }: {
-  house?: Pen;
+  pen?: Pen;
   redirect?: boolean;
 }) => {
   const router = useRouter();
@@ -36,7 +36,7 @@ const PenForm = ({
 
   const { handleSubmit, control, setError } = useForm<Inputs>({
     defaultValues: {
-      ...house,
+      ...pen,
     },
     // @ts-ignore
     resolver: yupResolver(schema),
@@ -48,8 +48,13 @@ const PenForm = ({
   });
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
-    if (house == null) await createPen(data);
-    else await updatePen({ ...data, id: house.id });
+    const body = {
+      name: data.name,
+      house: (data.house as House).id || 0,
+    };
+
+    if (pen == null) await createPen(data);
+    else await updatePen({ ...body, id: pen.id });
   };
 
   return (
@@ -77,6 +82,25 @@ const PenForm = ({
                         value={value}
                         label={"Name"}
                         placeholder={"Name"}
+                      />
+                    )}
+                  />
+                </Grid>
+                {/* House */}
+                <Grid item xs={12}>
+                  <Controller
+                    name={"house"}
+                    control={control}
+                    render={({
+                      field: { onChange, value },
+                      fieldState: { error },
+                    }) => (
+                      <HouseDropdown
+                        onChange={(_, data) => onChange(data)}
+                        value={value}
+                        label="House"
+                        error={!!error?.message}
+                        helperText={error?.message}
                       />
                     )}
                   />
@@ -117,10 +141,10 @@ const PenForm = ({
         </Grid>
         <Grid item xs={3}>
           <Stack spacing={3}>
-            {house && (
+            {pen && (
               <>
-                <PenInfoZone id={house?.id} />
-                <PenDangerZone id={house.id} is_active={house.is_active} />
+                <PenInfoZone id={pen?.id} />
+                <PenDangerZone id={pen.id} is_active={pen.is_active} />
               </>
             )}
           </Stack>

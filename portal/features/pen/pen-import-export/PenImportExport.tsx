@@ -28,7 +28,7 @@ const PenImportExport = () => {
       if (type == "xls") response = await exportPensXLS();
       if (type == "csv") response = await exportPensCSV();
       if (response.status == 200) {
-        fileDownload(response.data, `houses_.${type}`);
+        fileDownload(response.data, `pen_.${type}`);
       } else {
         enqueueSnackbar(messages.exportError_400(), { variant: "error" });
       }
@@ -84,7 +84,7 @@ const PenImportExport = () => {
         useFlexGap
         flexWrap="wrap"
       >
-        <Link href="/houses/create">
+        <Link href="/pen/create">
           <Button variant="contained" size={"small"} startIcon={<AddIcon />}>
             Create
           </Button>

@@ -18,7 +18,7 @@ import PeopleIcon from "@mui/icons-material/People";
 import CrisisAlertIcon from "@mui/icons-material/CrisisAlert";
 import CircleIcon from "@mui/icons-material/Circle";
 import AdjustIcon from "@mui/icons-material/Adjust";
-import ScaleIcon from '@mui/icons-material/Scale';
+import ScaleIcon from "@mui/icons-material/Scale";
 import LocalDiningIcon from "@mui/icons-material/LocalDining";
 import PublicIcon from "@mui/icons-material/Public";
 import PaidIcon from "@mui/icons-material/Paid";
@@ -29,24 +29,30 @@ import HelpIcon from "@mui/icons-material/Help";
 import { useSession, signOut } from "next-auth/react";
 import hasGroup from "@/util/hasGroup";
 import { useGroup } from "@/hooks";
-import { ChickenIcon, DNAHellxIcon, SackIcon, FlourBagIcon, ChickenEasterIcon } from "@/components/Icons";
-import DashboardIcon from '@mui/icons-material/Dashboard';
-import EggIcon from '@mui/icons-material/Egg';
-import GroupWorkIcon from '@mui/icons-material/GroupWork';
-import CabinIcon from '@mui/icons-material/Cabin';
+import {
+  ChickenIcon,
+  DNAHellxIcon,
+  SackIcon,
+  FlourBagIcon,
+  ChickenEasterIcon,
+} from "@/components/Icons";
+import DashboardIcon from "@mui/icons-material/Dashboard";
+import EggIcon from "@mui/icons-material/Egg";
+import GroupWorkIcon from "@mui/icons-material/GroupWork";
+import CabinIcon from "@mui/icons-material/Cabin";
 import { useRouter } from "next/router";
 
 function menuProps(key: string) {
   return {
     id: `sidebar-menu-${key}`,
-  }
+  };
 }
 
 const SidebarMenu = () => {
   const theme = useTheme();
   const router = useRouter();
   const { data: session, status } = useSession();
-  const { isSuperUser, isAdmin, isFarmer} = useGroup();
+  const { isSuperUser, isAdmin, isFarmer } = useGroup();
 
   const sidebarTheme = {
     sidebar: {
@@ -80,7 +86,7 @@ const SidebarMenu = () => {
     },
     icon: {
       color: sidebarTheme.menu.icon,
-      ['> svg']: {
+      ["> svg"]: {
         fill: sidebarTheme.menu.icon,
       },
       [`&.${menuClasses.disabled}`]: {
@@ -130,35 +136,45 @@ const SidebarMenu = () => {
         <Divider />
       </Box>
 
-      
-
       <Menu menuItemStyles={menuItemStyles}>
-        <MenuItem component={<Link href="/dashboard" />} icon={<DashboardIcon fontSize="small" />} active={router.pathname.includes('/dashboard')}>
-            <Typography variant="body1" fontSize={14}>
-              Dashboard
-            </Typography>
-          </MenuItem>
-      { (isSuperUser || isAdmin)  && (
-        <SubMenu
-          {...menuProps("users-main")}
-          label={
-            <Typography variant="body1" fontSize={14}>
-              Users
-            </Typography>
-          }
-          icon={<PeopleIcon fontSize="small" />}
+        <MenuItem
+          component={<Link href="/dashboard" />}
+          icon={<DashboardIcon fontSize="small" />}
+          active={router.pathname.includes("/dashboard")}
         >
-          <MenuItem component={<Link href="/users" />} icon={<AdjustIcon fontSize="small" />} {...menuProps("users")}>
-            <Typography variant="body1" fontSize={14}>
-              Users
-            </Typography>
-          </MenuItem>
-            <MenuItem component={<Link href="/invitations" />} {...menuProps('invitations')} icon={<AdjustIcon fontSize="small" />}>
+          <Typography variant="body1" fontSize={14}>
+            Dashboard
+          </Typography>
+        </MenuItem>
+        {(isSuperUser || isAdmin) && (
+          <SubMenu
+            {...menuProps("users-main")}
+            label={
+              <Typography variant="body1" fontSize={14}>
+                Users
+              </Typography>
+            }
+            icon={<PeopleIcon fontSize="small" />}
+          >
+            <MenuItem
+              component={<Link href="/users" />}
+              icon={<AdjustIcon fontSize="small" />}
+              {...menuProps("users")}
+            >
+              <Typography variant="body1" fontSize={14}>
+                Users
+              </Typography>
+            </MenuItem>
+            <MenuItem
+              component={<Link href="/invitations" />}
+              {...menuProps("invitations")}
+              icon={<AdjustIcon fontSize="small" />}
+            >
               <Typography variant="body1" fontSize={14}>
                 Invitations
               </Typography>
             </MenuItem>
-        </SubMenu>
+          </SubMenu>
         )}
 
         <SubMenu
@@ -252,12 +268,14 @@ const SidebarMenu = () => {
             </Typography>
           }
           icon={<BubbleChartIcon />}
-          defaultOpen={['/nutrients', '/nutrient-groups'].includes(router.pathname)}
+          defaultOpen={["/nutrients", "/nutrient-groups"].includes(
+            router.pathname
+          )}
         >
           <MenuItem
             component={<Link href="/nutrients" />}
             icon={<AdjustIcon fontSize="small" />}
-            active={RegExp('^/nutrients$').test(router.pathname)}
+            active={RegExp("^/nutrients$").test(router.pathname)}
           >
             <Typography variant="body1" fontSize={14}>
               Nutrients
@@ -266,7 +284,7 @@ const SidebarMenu = () => {
           <MenuItem
             component={<Link href="/nutrient-groups" />}
             icon={<AdjustIcon fontSize="small" />}
-            active={RegExp('^/nutrient-groups$').test(router.pathname)}
+            active={RegExp("^/nutrient-groups$").test(router.pathname)}
           >
             <Typography variant="body1" fontSize={14}>
               Nutrient Group
@@ -287,14 +305,14 @@ const SidebarMenu = () => {
       </div>
       <Menu menuItemStyles={menuItemStyles}>
         <MenuItem
-            component={<Link href="/chickens" />}
-            icon={<ChickenIcon width="20" height="20" fill="inherit" />}
-          >
-            <Typography variant="body1" fontSize={14}>
-              Chickens
-            </Typography>
-          </MenuItem>
-          <SubMenu
+          component={<Link href="/chickens" />}
+          icon={<ChickenIcon width="20" height="20" fill="#475A64" />}
+        >
+          <Typography variant="body1" fontSize={14}>
+            Chickens
+          </Typography>
+        </MenuItem>
+        <SubMenu
           label={
             <Typography variant="body1" fontSize={14}>
               Flocks
@@ -302,184 +320,150 @@ const SidebarMenu = () => {
           }
           icon={<GroupWorkIcon width="20" height="20" fill="inherit" />}
         >
-            <MenuItem
-              component={<Link href="/flocks" />}
-              icon={<AdjustIcon fontSize="small" />}
-            >
-              <Typography variant="body1" fontSize={14}>
-                Flocks
-              </Typography>
-            </MenuItem>
-            <MenuItem
-              component={<Link href="/flocks/accusations" />}
-              icon={<AdjustIcon fontSize="small" />}
-            >
-              <Typography variant="body1" fontSize={14}>
-                Accusations
-              </Typography>
-            </MenuItem>
-            <MenuItem
-              component={<Link href="/flocks/reductions" />}
-              icon={<AdjustIcon fontSize="small" />}
-            >
-              <Typography variant="body1" fontSize={14}>
-                Reductions
-              </Typography>
-            </MenuItem>
-          </SubMenu>
-          <SubMenu
+          <MenuItem
+            component={<Link href="/flocks" />}
+            icon={<AdjustIcon fontSize="small" />}
+          >
+            <Typography variant="body1" fontSize={14}>
+              Flocks
+            </Typography>
+          </MenuItem>
+          <MenuItem
+            component={<Link href="/flocks/accusations" />}
+            icon={<AdjustIcon fontSize="small" />}
+          >
+            <Typography variant="body1" fontSize={14}>
+              Accusations
+            </Typography>
+          </MenuItem>
+          <MenuItem
+            component={<Link href="/flocks/reductions" />}
+            icon={<AdjustIcon fontSize="small" />}
+          >
+            <Typography variant="body1" fontSize={14}>
+              Reductions
+            </Typography>
+          </MenuItem>
+        </SubMenu>
+        <SubMenu
           label={
             <Typography variant="body1" fontSize={14}>
               Egg Production
             </Typography>
           }
-          icon={<ChickenEasterIcon width="20" height="20" fill="inherit"  />}
-          defaultOpen={['/eggs', '/eggs/mass'].includes(router.pathname)}
+          icon={<ChickenEasterIcon width="20" height="20" fill="inherit" />}
+          defaultOpen={["/eggs", "/eggs/mass"].includes(router.pathname)}
         >
-            <MenuItem
-              component={<Link href="/eggs" />}
-              icon={<AdjustIcon fontSize="small" />}
-              active={RegExp('^/eggs$').test(router.pathname)}
-            >
-              <Typography variant="body1" fontSize={14}>
-                Individual
-              </Typography>
-            </MenuItem>
-            <MenuItem
-              component={<Link href="/eggs/mass" />}
-              icon={<AdjustIcon fontSize="small" />}
-              active={RegExp('^/eggs/mass$').test(router.pathname)}
-            >
-              <Typography variant="body1" fontSize={14}>
-                Mass
-              </Typography>
-            </MenuItem>
-          </SubMenu>
-          <SubMenu
+          <MenuItem
+            component={<Link href="/eggs" />}
+            icon={<AdjustIcon fontSize="small" />}
+            active={RegExp("^/eggs$").test(router.pathname)}
+          >
+            <Typography variant="body1" fontSize={14}>
+              Individual
+            </Typography>
+          </MenuItem>
+          <MenuItem
+            component={<Link href="/eggs/mass" />}
+            icon={<AdjustIcon fontSize="small" />}
+            active={RegExp("^/eggs/mass$").test(router.pathname)}
+          >
+            <Typography variant="body1" fontSize={14}>
+              Mass
+            </Typography>
+          </MenuItem>
+        </SubMenu>
+        <SubMenu
           label={
             <Typography variant="body1" fontSize={14}>
               Feed Intake
             </Typography>
           }
           icon={<SackIcon width="20" height="20" fill="inherit" />}
-          defaultOpen={['/feeds', '/feeds/mass'].includes(router.pathname)}
+          defaultOpen={["/feeds", "/feeds/mass"].includes(router.pathname)}
         >
-            <MenuItem
-              component={<Link href="/feeds" />}
-              icon={<AdjustIcon fontSize="small" />}
-              active={RegExp('^/feeds$').test(router.pathname)}
-            >
-              <Typography variant="body1" fontSize={14}>
-                Individual
-              </Typography>
-            </MenuItem>
-            <MenuItem
-              component={<Link href="/feeds/mass" />}
-              icon={<AdjustIcon fontSize="small" />}
-              active={RegExp('^/feeds/mass$').test(router.pathname)}
-            >
-              <Typography variant="body1" fontSize={14}>
-                Mass
-              </Typography>
-            </MenuItem>
-          </SubMenu>
-          <SubMenu
+          <MenuItem
+            component={<Link href="/feeds" />}
+            icon={<AdjustIcon fontSize="small" />}
+            active={RegExp("^/feeds$").test(router.pathname)}
+          >
+            <Typography variant="body1" fontSize={14}>
+              Individual
+            </Typography>
+          </MenuItem>
+          <MenuItem
+            component={<Link href="/feeds/mass" />}
+            icon={<AdjustIcon fontSize="small" />}
+            active={RegExp("^/feeds/mass$").test(router.pathname)}
+          >
+            <Typography variant="body1" fontSize={14}>
+              Mass
+            </Typography>
+          </MenuItem>
+        </SubMenu>
+        <SubMenu
           label={
             <Typography variant="body1" fontSize={14}>
               Body Weight
             </Typography>
           }
           icon={<ScaleIcon width="20" height="20" fill="inherit" />}
-          defaultOpen={['/weights', '/weights/mass'].includes(router.pathname)}
+          defaultOpen={["/weights", "/weights/mass"].includes(router.pathname)}
         >
-            <MenuItem
-              component={<Link href="/weights" />}
-              icon={<AdjustIcon fontSize="small" />}
-              active={RegExp('^/weights$').test(router.pathname)}
-            >
-              <Typography variant="body1" fontSize={14}>
-                Individual
-              </Typography>
-            </MenuItem>
-            <MenuItem
-              component={<Link href="/weights/mass" />}
-              icon={<AdjustIcon fontSize="small" />}
-              active={RegExp('^/weights/mass$').test(router.pathname)}
-            >
-              <Typography variant="body1" fontSize={14}>
-                Mass
-              </Typography>
-            </MenuItem>
-          </SubMenu>
           <MenuItem
-              component={<Link href="/breeds" />}
-              icon={<DNAHellxIcon width="20" height="20" fill="inherit" />}
-            >
-              <Typography variant="body1" fontSize={14}>
-                Breeds
-              </Typography>
-            </MenuItem>
-            <MenuItem
-              component={<Link href="/houses" />}
-              icon={<CabinIcon fontSize="small" />}
-            >
-              <Typography variant="body1" fontSize={14}>
-                House
-              </Typography>
-            </MenuItem>
-      </Menu>
-      {/* <div
-        style={{ padding: "0 24px", marginBottom: "8px", marginTop: "32px" }}
-      >
-        <Typography
-          variant="caption"
-          fontWeight={500}
-          style={{ opacity: 0.6, letterSpacing: "0.5px" }}
-        >
-          Breeding
-        </Typography>
-      </div> */}
-      {/* <Menu menuItemStyles={menuItemStyles}>
-        <SubMenu
-          label={
+            component={<Link href="/weights" />}
+            icon={<AdjustIcon fontSize="small" />}
+            active={RegExp("^/weights$").test(router.pathname)}
+          >
             <Typography variant="body1" fontSize={14}>
-              Flocks
-            </Typography>
-          }
-          icon={<ScienceIcon fontSize="small" />}
-        >
-          <MenuItem component={<Link href="/flocks" />}>
-            <Typography variant="body1" fontSize={14}>
-              Flocks
+              Individual
             </Typography>
           </MenuItem>
-          <MenuItem component={<Link href="/flocks/reduction" />}>
+          <MenuItem
+            component={<Link href="/weights/mass" />}
+            icon={<AdjustIcon fontSize="small" />}
+            active={RegExp("^/weights/mass$").test(router.pathname)}
+          >
             <Typography variant="body1" fontSize={14}>
-              Reduction
+              Mass
             </Typography>
           </MenuItem>
         </SubMenu>
-        <MenuItem component={<Link href="/chickens" />}>
-          <Typography variant="body1" fontSize={14}>
-            Chickens
-          </Typography>
-        </MenuItem>
-        <MenuItem component={<Link href="/breeds" />}>
+        <MenuItem
+          component={<Link href="/breeds" />}
+          icon={<DNAHellxIcon width="20" height="20" fill="inherit" />}
+        >
           <Typography variant="body1" fontSize={14}>
             Breeds
           </Typography>
         </MenuItem>
-        <MenuItem component={<Link href="/eggs" />}>
-          <Typography variant="body1" fontSize={14}>
-            Eggs
-          </Typography>
-        </MenuItem>
-        <MenuItem component={<Link href="/feeds" />}>
-          <Typography variant="body1" fontSize={14}>
-            Feeds
-          </Typography>
-        </MenuItem>
-      </Menu> */}
+        <SubMenu
+          label={
+            <Typography variant="body1" fontSize={14}>
+              House
+            </Typography>
+          }
+          icon={<CabinIcon fontSize="small" />}
+          defaultOpen={["/weights", "/weights/mass"].includes(router.pathname)}
+        >
+          <MenuItem
+            component={<Link href="/houses" />}
+            icon={<AdjustIcon fontSize="small" />}
+          >
+            <Typography variant="body1" fontSize={14}>
+              House
+            </Typography>
+          </MenuItem>
+          <MenuItem
+            component={<Link href="/pen" />}
+            icon={<AdjustIcon fontSize="small" />}
+          >
+            <Typography variant="body1" fontSize={14}>
+              Pen
+            </Typography>
+          </MenuItem>
+        </SubMenu>
+      </Menu>
       <div
         style={{ padding: "0 24px", marginBottom: "8px", marginTop: "32px" }}
       >
@@ -492,7 +476,7 @@ const SidebarMenu = () => {
         </Typography>
       </div>
       <Menu menuItemStyles={menuItemStyles}>
-      <SubMenu
+        <SubMenu
           label={
             <Typography variant="body1" fontSize={14}>
               Eggs Reporting
@@ -500,28 +484,43 @@ const SidebarMenu = () => {
           }
           icon={<EggIcon fontSize="small" />}
         >
-           <MenuItem component={<Link href="/breeds" />} icon={<AdjustIcon fontSize="small" />}>
-          <Typography variant="body1" fontSize={14}>
-            Egg Grading
-          </Typography>
+          <MenuItem
+            component={<Link href="/breeds" />}
+            icon={<AdjustIcon fontSize="small" />}
+          >
+            <Typography variant="body1" fontSize={14}>
+              Egg Grading
+            </Typography>
           </MenuItem>
-          <MenuItem component={<Link href="/eggs" />} icon={<AdjustIcon fontSize="small" />}>
+          <MenuItem
+            component={<Link href="/eggs" />}
+            icon={<AdjustIcon fontSize="small" />}
+          >
             <Typography variant="body1" fontSize={14}>
               Egg Curve
             </Typography>
           </MenuItem>
-          <MenuItem component={<Link href="/hhep" />} icon={<AdjustIcon fontSize="small" />}>
+          <MenuItem
+            component={<Link href="/hhep" />}
+            icon={<AdjustIcon fontSize="small" />}
+          >
             <Typography variant="body1" fontSize={14}>
               HHEP
             </Typography>
           </MenuItem>
-          <MenuItem component={<Link href="/feeds" />} icon={<AdjustIcon fontSize="small" />}>
+          <MenuItem
+            component={<Link href="/feeds" />}
+            icon={<AdjustIcon fontSize="small" />}
+          >
             <Typography variant="body1" fontSize={14}>
               HDEP
             </Typography>
           </MenuItem>
         </SubMenu>
-        <MenuItem component={<Link href="/chickens" />} icon={<AdjustIcon fontSize="small" />}>
+        <MenuItem
+          component={<Link href="/chickens" />}
+          icon={<AdjustIcon fontSize="small" />}
+        >
           <Typography variant="body1" fontSize={14}>
             Body Weight
           </Typography>
@@ -614,12 +613,18 @@ const SidebarMenu = () => {
           }
           icon={<HelpIcon fontSize="small" />}
         >
-          <MenuItem component={<Link href="/help" />} icon={<AdjustIcon fontSize="small" />}>
+          <MenuItem
+            component={<Link href="/help" />}
+            icon={<AdjustIcon fontSize="small" />}
+          >
             <Typography variant="body1" fontSize={14}>
               User Guide
             </Typography>
           </MenuItem>
-          <MenuItem component={<Link href="/flocks/reduction" />} icon={<AdjustIcon fontSize="small" />}>
+          <MenuItem
+            component={<Link href="/flocks/reduction" />}
+            icon={<AdjustIcon fontSize="small" />}
+          >
             <Typography variant="body1" fontSize={14}>
               Contact Us
             </Typography>

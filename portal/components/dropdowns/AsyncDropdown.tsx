@@ -25,14 +25,14 @@ export default function AsyncDropdown<T>({
   onInputChange,
   ...props
 }: {
-  id?: string,
-  onOpen: () => void,
-  onClose: () => void,
+  id?: string;
+  onOpen: () => void;
+  onClose: () => void;
   dataKey?: string;
   value?: any;
   label?: string;
   defaultOptions?: any;
-  options: T[],
+  options: T[];
   error?: boolean;
   multiple?: boolean;
   helperText?: string;
@@ -52,16 +52,20 @@ export default function AsyncDropdown<T>({
   const handleOnOpen = React.useCallback(() => {
     setOpen(true);
     onOpen();
-  }, [onOpen])
+  }, [onOpen]);
 
   const handleOnClose = React.useCallback(() => {
     setOpen(false);
     onClose();
-  }, [onClose])
+  }, [onClose]);
 
   return (
     <Stack gap={1} id={id}>
-      <FullScreenModal title={createFormTitle} open={modalOpen} onClose={handleModalClose}>
+      <FullScreenModal
+        title={createFormTitle}
+        open={modalOpen}
+        onClose={handleModalClose}
+      >
         {/* <Box>
           <Typography variant="title">{createFormTitle}</Typography>
         </Box> */}

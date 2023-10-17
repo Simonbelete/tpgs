@@ -1,5 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { GridRowsProp, GridColDef } from "@mui/x-data-grid";
+import {
+  GridRowsProp,
+  GridColDef,
+  GridRenderCellParams,
+} from "@mui/x-data-grid";
+import { Typography } from "@mui/material";
+import Link from "next/link";
 import { DataTable } from "@/components/tables";
 import { Pen } from "@/models";
 import { useSelector } from "react-redux";
@@ -11,18 +17,21 @@ import buildQuery from "@/util/buildQuery";
 import buildPage from "@/util/buildPage";
 
 const columns: GridColDef[] = [
-  { field: "name", headerName: "Name", flex: 1, minWidth: 150 },
+  { field: "name", headerName: "Name", flex: 1 },
   {
-    field: "created_at",
-    headerName: "Create at",
+    field: "house",
+    headerName: "House",
     flex: 1,
-    minWidth: 150,
-    valueGetter: (params) =>
-      params.row.created_at
-        ? dayjs(params.row.created_at).format(
-            process.env.NEXT_PUBLIC_DATE_FORMAT
-          )
-        : "",
+    renderCell: (params: GridRenderCellParams<any>) => {
+      if (params.row.house == null) return <></>;
+      return (
+        <Typography color={"link.primary"} variant="body2">
+          <Link href={`/houses/${params.row.house.id}`}>
+            {params.row.house.name}
+          </Link>
+        </Typography>
+      );
+    },
   },
 ];
 
