@@ -4,7 +4,7 @@ from simple_history.models import HistoricalRecords
 from core.models import CoreModel
 from units.models import Unit
 from houses.models import House
-
+from reduction_reason.models import ReductionReason
 
 class Chicken(CoreModel):
     SEX_CHOICES = (
@@ -33,8 +33,9 @@ class Chicken(CoreModel):
         House, on_delete=models.SET_NULL, null=True, blank=True, related_name='chickens')
     pen = models.CharField(max_length=250, null=True, blank=True)
     reduction_date = models.DateField(null=True, blank=True)
-    reduction_reason = models.CharField(max_length=1, choices=REDUCTION_REASON,
-                                        null=True, blank=True, default=None)
+    reduction_reason = models.ForeignKey(
+        ReductionReason, on_delete=models.SET_NULL, null=True, blank=True, related_name='chickens')
+
     history = HistoricalRecords()
 
     def __str__(self):

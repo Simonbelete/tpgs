@@ -41,6 +41,7 @@ import EggIcon from "@mui/icons-material/Egg";
 import GroupWorkIcon from "@mui/icons-material/GroupWork";
 import CabinIcon from "@mui/icons-material/Cabin";
 import { useRouter } from "next/router";
+import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 
 function menuProps(key: string) {
   return {
@@ -501,6 +502,23 @@ const SidebarMenu = () => {
         </Typography>
       </div>
       <Menu menuItemStyles={menuItemStyles}>
+        <SubMenu
+          label={
+            <Typography variant="body1" fontSize={14}>
+              Others
+            </Typography>
+          }
+          icon={<MoreHorizIcon fontSize="small" />}
+        >
+          <MenuItem
+            component={<Link href="/reduction-reasons" />}
+            icon={<AdjustIcon fontSize="small" />}
+          >
+            <Typography variant="body1" fontSize={14}>
+              Cull reasons
+            </Typography>
+          </MenuItem>
+        </SubMenu>
         <MenuItem
           component={<Link href="/feeds" />}
           icon={<PaidIcon fontSize="small" />}

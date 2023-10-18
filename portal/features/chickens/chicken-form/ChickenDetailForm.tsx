@@ -70,7 +70,7 @@ const ChickenDetailForm = ({ chicken }: { chicken?: Chicken }) => {
       sex: (data.sex as any).value || null,
       sire: (data.sire as any)?.id || null,
       dam: (data.dam as any)?.id || null,
-      flock: data.flock !== undefined ? (data.flock as any).id : null,
+      flock: data.flock !== null ? (data.flock as any).id : null,
       house: (data.pen as any).house.id || null,
       pen: (data.pen as any).id || null,
     };

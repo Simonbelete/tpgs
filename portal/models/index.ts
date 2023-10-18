@@ -47,3 +47,4 @@ export type { default as Region } from "./Region";
 export type { default as NotificationList } from "./NotificationList";
 export type { default as FormulaNutrient } from "./FormulaNutrient";
 export type { default as Pen } from "./Pen";
+export type { default as ReductionReason } from "./ReductionReason";
