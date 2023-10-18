@@ -80,7 +80,8 @@ urlpatterns = [
         path('', include('pen.urls')),
         path('', include('analyses.urls')),
         path('', include('reduction_reason.urls')),
-        path('', include('inbox.urls'))
+        path('', include('inbox.urls')),
+        path('', include('hatchery.urls')),
     ])),
 
     path('api/schema/', SpectacularAPIView.as_view(), name='schema'),
