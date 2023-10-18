@@ -12,8 +12,8 @@ router.register(r'unread', views.LiveUnreadNotificationList,
 
 urlpatterns = [
     path('inbox/notifications/', include([
-        path('unread_count', views.LiveUnreadNotificationCount.as_view(), name='live_unread_notification_count'),
-        path('all_count', views.LiveAllNotificationCount.as_view(), name='live_all_notification_count'),
-        path('', include(router.urls))
+        path('', include(router.urls)),
+        path('unread_count/', views.LiveUnreadNotificationCount.as_view(), name='live_unread_notification_count'),
+        path('all_count/', views.LiveAllNotificationCount.as_view(), name='live_all_notification_count'),
     ])),  
 ]
