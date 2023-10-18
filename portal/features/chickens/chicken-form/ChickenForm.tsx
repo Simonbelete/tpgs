@@ -24,7 +24,7 @@ const ChickenForm = ({ chicken }: { chicken?: Chicken }) => {
   return (
     <>
       <Grid container spacing={5}>
-        <Grid item xs>
+        <Grid item xs={12} lg={9} xl={10}>
           <Tabs
             scrollButtons
             value={tab}
@@ -45,18 +45,18 @@ const ChickenForm = ({ chicken }: { chicken?: Chicken }) => {
             <Box sx={{ display: tab == 0 ? "block" : "none" }}>
               <ChickenDetailForm chicken={chicken} />
             </Box>
-            <Box sx={{ display: tab == 0 ? "block" : "none" }}>
+            <Box sx={{ display: tab == 1 ? "block" : "none" }}>
               {chicken && <OffspringList id={chicken?.id} />}
             </Box>
-            <Box sx={{ display: tab == 0 ? "block" : "none" }}>
+            <Box sx={{ display: tab == 2 ? "block" : "none" }}>
               {chicken && <AncestorsList id={chicken?.id} />}
             </Box>
-            <Box sx={{ display: chicken && tab == 0 ? "block" : "none" }}>
+            <Box sx={{ display: tab == 3 ? "block" : "none" }}>
               {chicken && <SiblingsList id={chicken?.id} />}
             </Box>
           </Box>
         </Grid>
-        <Grid item xs={12} lg={4} xl={2.5}>
+        <Grid item xs={12} lg={3} xl={2}>
           <Stack spacing={3}>
             {chicken && (
               <>

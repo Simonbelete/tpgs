@@ -2,23 +2,24 @@ import React, { useEffect, useState } from "react";
 import {
   GridRowsProp,
   GridColDef,
-  GridRenderCellParams
+  GridRenderCellParams,
 } from "@mui/x-data-grid";
 import { Typography } from "@mui/material";
 import Link from "next/link";
 import { DataTable } from "@/components/tables";
-import { Breed, Chicken } from "@/models";
-import { useSelector } from "react-redux";
-import { RootState } from "@/store";
+import { Chicken } from "@/models";
 import _ from "lodash";
-import dayjs from 'dayjs';
+import dayjs from "dayjs";
 import { useGetChickenSiblingsQuery } from "../services";
 import buildQuery from "@/util/buildQuery";
 
 const columns: GridColDef[] = [
-  { field: "tag", headerName: "Tag", flex: 1,  },
-  { field: "sex", headerName: "Tag", flex: 1,  },
-  { field: "house", headerName: "House", flex: 1,
+  { field: "tag", headerName: "Tag", flex: 1 },
+  { field: "sex", headerName: "Tag", flex: 1 },
+  {
+    field: "house",
+    headerName: "House",
+    flex: 1,
     renderCell: (params: GridRenderCellParams<any>) => {
       if (params.row.house == null) return <></>;
       return (
@@ -30,8 +31,11 @@ const columns: GridColDef[] = [
       );
     },
   },
-  { field: "pen", headerName: "Pen", flex: 1,},
-  { field: "flock", headerName: "Flock", flex: 1,
+  { field: "pen", headerName: "Pen", flex: 1 },
+  {
+    field: "flock",
+    headerName: "Flock",
+    flex: 1,
     renderCell: (params: GridRenderCellParams<any>) => {
       if (params.row.flock == null) return <></>;
       return (
@@ -43,14 +47,20 @@ const columns: GridColDef[] = [
       );
     },
   },
-  { field: "reduction_date", 
-    headerName: "Mortality", flex: 1,
+  {
+    field: "reduction_date",
+    headerName: "Mortality",
+    flex: 1,
     valueGetter: (params) =>
-      params.row.reduction_date ? dayjs(params.row.reduction_date).format(process.env.NEXT_PUBLIC_DATE_FORMAT) : "",
-  }
+      params.row.reduction_date
+        ? dayjs(params.row.reduction_date).format(
+            process.env.NEXT_PUBLIC_DATE_FORMAT
+          )
+        : "",
+  },
 ];
 
-const SiblingsList = ({id}: {id: number}) => {
+const SiblingsList = ({ id }: { id: number }) => {
   const [paginationModel, setPaginationModel] = useState({
     page: 0,
     pageSize: 10,
@@ -58,8 +68,8 @@ const SiblingsList = ({id}: {id: number}) => {
 
   const { data, isLoading, refetch } = useGetChickenSiblingsQuery({
     id: id,
-    query: buildQuery({...paginationModel})
-  }); 
+    query: buildQuery({ ...paginationModel }),
+  });
 
   return (
     <DataTable

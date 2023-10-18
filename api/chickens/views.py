@@ -87,7 +87,9 @@ class SiblingsViewSet(viewsets.GenericViewSet):
         id = self.kwargs['id']
         
         chicken = self.get_queryset()
-        queryset = models.Chicken.objects.exclude(pk=chicken.id).filter(sire=chicken.sire, dam=chicken.dam)
+        queryset = []
+        if(chicken.sire and chicken.dam):
+            queryset = models.Chicken.objects.exclude(pk=chicken.id).filter(sire=chicken.sire, dam=chicken.dam)
         page = self.paginate_queryset(queryset)
 
         if page is not None:
