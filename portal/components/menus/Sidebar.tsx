@@ -330,19 +330,11 @@ const SidebarMenu = () => {
             </Typography>
           </MenuItem>
           <MenuItem
-            component={<Link href="/flocks/accusations" />}
-            icon={<AdjustIcon fontSize="small" />}
-          >
-            <Typography variant="body1" fontSize={14}>
-              Accusations
-            </Typography>
-          </MenuItem>
-          <MenuItem
             component={<Link href="/flocks/reductions" />}
             icon={<AdjustIcon fontSize="small" />}
           >
             <Typography variant="body1" fontSize={14}>
-              Reductions
+              Cull
             </Typography>
           </MenuItem>
         </SubMenu>

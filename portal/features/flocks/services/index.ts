@@ -1,2 +1,1 @@
-export * from './flock';
-export * from './flock_accusation';
+export * from "./flock";

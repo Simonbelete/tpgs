@@ -5,7 +5,6 @@ import { useRouter } from "next/router";
 import FlockInfoZone from "./FlockInfoZone";
 import FlockDangerZone from "./FlockDangerZone";
 import FlockDetailForm from "./FlockDetailForm";
-import { FlockAccusationList } from "../../flock-accusation/flock-accusation-list";
 
 function a11yProps(index: number) {
   return {
@@ -31,29 +30,8 @@ const FlockForm = ({
     <>
       <Grid container spacing={4}>
         <Grid item xs={12} lg={8} xl={9.5}>
-          <Tabs
-            scrollButtons
-            value={tab}
-            onChange={handleTabChange}
-            aria-label="basic tabs example"
-            sx={{
-              [`& .${tabsClasses.scrollButtons}`]: {
-                "&.Mui-disabled": { opacity: 0.3 },
-              },
-            }}
-          >
-            <Tab label="Detail" {...a11yProps(0)} />
-            <Tab label="Offspring" {...a11yProps(1)} />
-            <Tab label="Ancestors" {...a11yProps(2)} />
-            <Tab label="Siblings" {...a11yProps(3)} />
-          </Tabs>
           <Box sx={{ pt: 5 }}>
-            <Box sx={{ display: tab == 0 ? "block" : "none" }}>
-              <FlockDetailForm flock={flock} />
-            </Box>
-            <Box sx={{ display: tab == 1 ? "block" : "none" }}>
-              <FlockAccusationList />
-            </Box>
+            <FlockDetailForm flock={flock} />
           </Box>
         </Grid>
         <Grid item xs={12} lg={4} xl={2.5}>
