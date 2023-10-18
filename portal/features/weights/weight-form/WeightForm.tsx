@@ -70,7 +70,7 @@ const WeightForm = ({ weight }: { weight?: Weight }) => {
             <form onSubmit={handleSubmit(onSubmit)}>
               <Grid container spacing={4}>
                 {/* Chicken */}
-                <Grid item xs={12} md={6}>
+                <Grid item xs={12}>
                   <Controller
                     name={"chicken"}
                     control={control}

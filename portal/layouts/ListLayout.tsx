@@ -38,7 +38,7 @@ const ListLayout = ({
         </Grid>
       </Grid>
       <Box sx={{ my: 5 }}>{filter}</Box>
-      <Box sx={{ height: "70%" }}>{children}</Box>
+      <div style={{ minHeight: "400px" }}>{children}</div>
     </>
   );
 };

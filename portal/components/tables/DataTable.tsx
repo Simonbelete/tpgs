@@ -16,12 +16,16 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { DeleteModal } from "../modals";
 import HistoryIcon from "@mui/icons-material/History";
-import ScheduleSendIcon from '@mui/icons-material/ScheduleSend';
-import AnalyticsIcon from '@mui/icons-material/Analytics';
+import ScheduleSendIcon from "@mui/icons-material/ScheduleSend";
+import AnalyticsIcon from "@mui/icons-material/Analytics";
 
 const ODD_OPACITY = 0.2;
 
 const StripedDataGrid = styled(DataGrid)(({ theme }) => ({
+  [`& .${gridClasses.root}`]: {
+    background: "red",
+    height: "300px",
+  },
   [`& .${gridClasses.row}.even`]: {
     backgroundColor: theme.palette.grey[200],
     "&:hover, &.Mui-hovered": {
@@ -146,7 +150,7 @@ export enum SETTING_COL {
   basic = "basic",
   edit = "edit",
   email = "email",
-  dashboard = "dashboard"
+  dashboard = "dashboard",
 }
 
 const DataTable = ({
@@ -175,9 +179,12 @@ const DataTable = ({
     handleDeleteModalClose();
   }, [onDelete, deleteId]);
 
-  const handleOnResendEmail = useCallback((id: number) => {
-    onResendEmail != undefined ? onResendEmail(id): {}
-  }, [onResendEmail])
+  const handleOnResendEmail = useCallback(
+    (id: number) => {
+      onResendEmail != undefined ? onResendEmail(id) : {};
+    },
+    [onResendEmail]
+  );
 
   const generateSettingColumns = (): GridColDef[] => {
     let col: GridColDef;
@@ -192,21 +199,30 @@ const DataTable = ({
           renderCell(params: any) {
             return (
               <Box>
-                <Link href={router.asPath + "/" + params.id + "/edit"} id="data-table-edit">
+                <Link
+                  href={router.asPath + "/" + params.id + "/edit"}
+                  id="data-table-edit"
+                >
                   <Tooltip title="Edit">
                     <IconButton aria-label="edit">
                       <EditNoteIcon fontSize="small" />
                     </IconButton>
                   </Tooltip>
                 </Link>
-                <Link href={router.asPath + "/" + params.id} id="data-table-view">
+                <Link
+                  href={router.asPath + "/" + params.id}
+                  id="data-table-view"
+                >
                   <Tooltip title="View">
                     <IconButton aria-label="view">
                       <VisibilityIcon fontSize="small" />
                     </IconButton>
                   </Tooltip>
                 </Link>
-                <Link href={`${router.asPath}/${params.id}/histories`} id="data-table-histories">
+                <Link
+                  href={`${router.asPath}/${params.id}/histories`}
+                  id="data-table-histories"
+                >
                   <Tooltip title="History">
                     <IconButton aria-label="history">
                       <HistoryIcon fontSize="small" />
@@ -226,43 +242,49 @@ const DataTable = ({
           },
         };
         break;
-        case SETTING_COL.basic:
-          col = {
-            field: "Actions",
-            flex: 1,
-            minWidth: 150,
-            headerAlign: "center",
-            align: "right",
-            renderCell(params: any) {
-              return (
-                <Box>
-                  <Link href={router.asPath + "/" + params.id + "/edit"} id="data-table-edit">
-                    <Tooltip title="Edit">
-                      <IconButton aria-label="edit">
-                        <EditNoteIcon fontSize="small" />
-                      </IconButton>
-                    </Tooltip>
-                  </Link>
-                  <Link href={`${router.asPath}/${params.id}/histories`} id="data-table-histories">
-                    <Tooltip title="History">
-                      <IconButton aria-label="history">
-                        <HistoryIcon fontSize="small" />
-                      </IconButton>
-                    </Tooltip>
-                  </Link>
-                  <Tooltip title="Delete" id="data-table-delete">
-                    <IconButton
-                      aria-label="delete"
-                      onClick={() => handleDeleteModalOpen(params.id)}
-                    >
-                      <DeleteForeverIcon fontSize="small" />
+      case SETTING_COL.basic:
+        col = {
+          field: "Actions",
+          flex: 1,
+          minWidth: 150,
+          headerAlign: "center",
+          align: "right",
+          renderCell(params: any) {
+            return (
+              <Box>
+                <Link
+                  href={router.asPath + "/" + params.id + "/edit"}
+                  id="data-table-edit"
+                >
+                  <Tooltip title="Edit">
+                    <IconButton aria-label="edit">
+                      <EditNoteIcon fontSize="small" />
                     </IconButton>
                   </Tooltip>
-                </Box>
-              );
-            },
-          };
-          break;
+                </Link>
+                <Link
+                  href={`${router.asPath}/${params.id}/histories`}
+                  id="data-table-histories"
+                >
+                  <Tooltip title="History">
+                    <IconButton aria-label="history">
+                      <HistoryIcon fontSize="small" />
+                    </IconButton>
+                  </Tooltip>
+                </Link>
+                <Tooltip title="Delete" id="data-table-delete">
+                  <IconButton
+                    aria-label="delete"
+                    onClick={() => handleDeleteModalOpen(params.id)}
+                  >
+                    <DeleteForeverIcon fontSize="small" />
+                  </IconButton>
+                </Tooltip>
+              </Box>
+            );
+          },
+        };
+        break;
       case SETTING_COL.edit:
         col = {
           field: "Actions",
@@ -273,7 +295,10 @@ const DataTable = ({
           renderCell(params: any) {
             return (
               <Box>
-                <Link href={router.asPath + "/" + params.id + "/edit"} id="data-table-edit">
+                <Link
+                  href={router.asPath + "/" + params.id + "/edit"}
+                  id="data-table-edit"
+                >
                   <Tooltip title="Edit">
                     <IconButton aria-label="edit">
                       <EditNoteIcon fontSize="small" />
@@ -317,72 +342,81 @@ const DataTable = ({
         };
         break;
       case SETTING_COL.delete:
-          col = {
-            field: "Actions",
-            flex: 1,
-            minWidth: 150,
-            headerAlign: "center",
-            align: "right",
-            renderCell(params: any) {
-              return (
-                <Box>
-                  <Tooltip title="Delete">
-                    <IconButton
-                      aria-label="delete"
-                      onClick={() => handleDeleteModalOpen(params.id)}
-                    >
-                      <DeleteForeverIcon fontSize="small" />
+        col = {
+          field: "Actions",
+          flex: 1,
+          minWidth: 150,
+          headerAlign: "center",
+          align: "right",
+          renderCell(params: any) {
+            return (
+              <Box>
+                <Tooltip title="Delete">
+                  <IconButton
+                    aria-label="delete"
+                    onClick={() => handleDeleteModalOpen(params.id)}
+                  >
+                    <DeleteForeverIcon fontSize="small" />
+                  </IconButton>
+                </Tooltip>
+              </Box>
+            );
+          },
+        };
+        break;
+      case SETTING_COL.dashboard:
+        col = {
+          field: "Actions",
+          flex: 1,
+          minWidth: 150,
+          headerAlign: "center",
+          align: "right",
+          renderCell(params: any) {
+            return (
+              <Box>
+                <Link
+                  href={router.asPath + "/" + params.id + "/dashboard"}
+                  id="data-table-edit"
+                >
+                  <Tooltip title="Edit">
+                    <IconButton aria-label="edit">
+                      <AnalyticsIcon fontSize="small" />
                     </IconButton>
                   </Tooltip>
-                </Box>
-              );
-            },
-          };
-          break;
-        case SETTING_COL.dashboard:
-          col = {
-            field: "Actions",
-            flex: 1,
-            minWidth: 150,
-            headerAlign: "center",
-            align: "right",
-            renderCell(params: any) {
-              return (
-                <Box>
-                  <Link href={router.asPath + "/" + params.id + "/dashboard"} id="data-table-edit">
-                    <Tooltip title="Edit">
-                      <IconButton aria-label="edit">
-                        <AnalyticsIcon fontSize="small" />
-                      </IconButton>
-                    </Tooltip>
-                  </Link>
-                  <Link href={router.asPath + "/" + params.id + "/edit"} id="data-table-edit">
-                    <Tooltip title="Edit">
-                      <IconButton aria-label="edit">
-                        <EditNoteIcon fontSize="small" />
-                      </IconButton>
-                    </Tooltip>
-                  </Link>
-                  <Link href={`${router.asPath}/${params.id}/histories`} id="data-table-histories">
-                    <Tooltip title="History">
-                      <IconButton aria-label="history">
-                        <HistoryIcon fontSize="small" />
-                      </IconButton>
-                    </Tooltip>
-                  </Link>
-                  <Tooltip title="Delete" id="data-table-delete">
-                    <IconButton
-                      aria-label="delete"
-                      onClick={() => handleDeleteModalOpen(params.id)}
-                    >
-                      <DeleteForeverIcon fontSize="small" />
+                </Link>
+                <Link
+                  href={router.asPath + "/" + params.id + "/edit"}
+                  id="data-table-edit"
+                >
+                  <Tooltip title="Edit">
+                    <IconButton aria-label="edit">
+                      <EditNoteIcon fontSize="small" />
                     </IconButton>
                   </Tooltip>
-                </Box>
-              );
-            },
-          };
-            break;
+                </Link>
+                <Link
+                  href={`${router.asPath}/${params.id}/histories`}
+                  id="data-table-histories"
+                >
+                  <Tooltip title="History">
+                    <IconButton aria-label="history">
+                      <HistoryIcon fontSize="small" />
+                    </IconButton>
+                  </Tooltip>
+                </Link>
+                <Tooltip title="Delete" id="data-table-delete">
+                  <IconButton
+                    aria-label="delete"
+                    onClick={() => handleDeleteModalOpen(params.id)}
+                  >
+                    <DeleteForeverIcon fontSize="small" />
+                  </IconButton>
+                </Tooltip>
+              </Box>
+            );
+          },
+        };
+        break;
       default:
         // @ts-ignore
         col = {
@@ -402,7 +436,7 @@ const DataTable = ({
   const getRowById = (row: any) => {
     if (setting == SETTING_COL.history) return row.history_id;
     return row.id;
-  }
+  };
 
   return (
     <>
@@ -412,7 +446,7 @@ const DataTable = ({
         onYes={handleOnDelete}
       />
       <StripedDataGrid
-        sx={{ background: "white" }}
+        sx={{ background: "white", height: "100%" }}
         rows={rows}
         density="compact"
         rowHeight={50}

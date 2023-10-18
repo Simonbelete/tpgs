@@ -3,20 +3,24 @@ import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import { Grid, Button, Paper, Stack, Box } from "@mui/material";
-import { Chicken } from "@/models";
+import { Chicken, Pen } from "@/models";
 import { LabeledInput } from "@/components/inputs";
 import { useRouter } from "next/router";
 import CloseIcon from "@mui/icons-material/Close";
-import { Card } from '@/components/card';
-import SaveIcon from '@mui/icons-material/Save';
+import { Card } from "@/components/card";
+import SaveIcon from "@mui/icons-material/Save";
 import ChickenInfoZone from "./ChickenInfoZone";
 import ChickenDangerZone from "./ChickenDangerZone";
-import { useCreateChickenMutation, useUpdateChickenMutation } from "../services";
+import {
+  useCreateChickenMutation,
+  useUpdateChickenMutation,
+} from "../services";
 import { useCRUD } from "@/hooks";
-import { AsyncDropdown, Dropdown } from "@/components/dropdowns";
+import { Dropdown } from "@/components/dropdowns";
 import { ChickenDropdown } from "../chicken-dropdown";
 import { FlockDropdown } from "@/features/flocks";
 import { HouseDropdown } from "@/features/houses";
+import { PenDropdown } from "@/features/pen";
 
 type Inputs = Partial<Chicken>;
 
@@ -24,63 +28,55 @@ const sexOptions = [
   { value: null, name: "---" },
   { value: "M", name: "Male" },
   { value: "F", name: "Female" },
-]
+];
 
-const schema = yup
-  .object({
-    tag: yup.string().required(),
-    sex: yup.string().nullable(),
-    sire: yup.number().nullable(),
-    dam: yup.number().nullable(),
-    flock: yup.number().nullable(),
-    house: yup.number().nullable(),
-    pen: yup.string().nullable(),
-    reduction_date: yup.string().nullable(),
-    reduction_reason: yup.string().nullable(),
-}).transform((currentValue: any) => {
-  if (currentValue.sire != null)
-    currentValue.sire = currentValue.sire.id;
-  if (currentValue.dam != null)
-    currentValue.dam = currentValue.dam.id;
-  if (currentValue.flock != null)
-    currentValue.flock = currentValue.flock.id;
-  if (currentValue.house != null)
-    currentValue.house = currentValue.house.id;
-  if (currentValue.sex != null)
-    currentValue.sex = currentValue.sex.value;
-
-  return currentValue;
+const schema = yup.object({
+  tag: yup.string().required(),
+  sex: yup.object().nullable(),
+  sire: yup.object().nullable(),
+  dam: yup.object().nullable(),
+  flock: yup.object().nullable(),
+  house: yup.object().nullable(),
+  pen: yup.object().nullable(),
+  reduction_date: yup.string().nullable(),
+  reduction_reason: yup.string().nullable(),
 });
 
-
-const ChickenDetailForm = ({chicken}: {chicken?: Chicken}) => {
+const ChickenDetailForm = ({ chicken }: { chicken?: Chicken }) => {
   const router = useRouter();
 
-  const [createChicken, createResult ] = useCreateChickenMutation();
-  const [updateChicken, updateResult ] = useUpdateChickenMutation();
+  const [createChicken, createResult] = useCreateChickenMutation();
+  const [updateChicken, updateResult] = useUpdateChickenMutation();
 
   const { handleSubmit, control, setError } = useForm<Inputs>({
     defaultValues: {
       ...chicken,
       // TODO: Create a separate sex dropdown
       // @ts-ignore
-      sex: sexOptions.find((o) => o.value == chicken?.sex) 
+      sex: sexOptions.find((o) => o.value == chicken?.sex),
     },
-    // @ts-ignore 
+    // @ts-ignore
     resolver: yupResolver(schema),
   });
 
   const useCRUDHook = useCRUD({
-    results: [
-      createResult,
-      updateResult
-    ],
-    setError: setError
-  })
+    results: [createResult, updateResult],
+    setError: setError,
+  });
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
-    if (chicken == null) await createChicken(data);
-    else await updateChicken({...data, id: chicken.id});
+    const body = {
+      tag: data.tag,
+      sex: (data.sex as any).value || null,
+      sire: (data.sire as any)?.id || null,
+      dam: (data.dam as any)?.id || null,
+      flock: data.flock !== undefined ? (data.flock as any).id : null,
+      house: (data.pen as any).house.id || null,
+      pen: (data.pen as any).id || null,
+    };
+    if (chicken == null)
+      await createChicken(body).then(() => router.push("/chickens"));
+    else await updateChicken({ ...body, id: chicken.id });
   };
 
   return (
@@ -88,8 +84,8 @@ const ChickenDetailForm = ({chicken}: {chicken?: Chicken}) => {
       <Card title="Chicken Form">
         <form onSubmit={handleSubmit(onSubmit)}>
           <Grid container rowSpacing={4} columnSpacing={10}>
-            {/* Name */}
-            <Grid item xs={12} md={6}>
+            {/* Tag */}
+            <Grid item xs={12}>
               <Controller
                 name={"tag"}
                 control={control}
@@ -112,24 +108,24 @@ const ChickenDetailForm = ({chicken}: {chicken?: Chicken}) => {
             </Grid>
             {/* Sex */}
             <Grid item xs={12} md={6}>
-                  <Controller
-                    name={"sex"}
-                    control={control}
-                    render={({
-                      field: { onChange, value },
-                      fieldState: { invalid, isTouched, isDirty, error },
-                    }) => (
-                      <Dropdown
-                        options={sexOptions}
-                        dataKey="name"
-                        onChange={(_, data) => onChange(data)}
-                        value={value}
-                        label="Sex"
-                        error={!!error?.message}
-                        helperText={error?.message}
-                      />
-                    )}
+              <Controller
+                name={"sex"}
+                control={control}
+                render={({
+                  field: { onChange, value },
+                  fieldState: { invalid, isTouched, isDirty, error },
+                }) => (
+                  <Dropdown
+                    options={sexOptions}
+                    dataKey="name"
+                    onChange={(_, data) => onChange(data)}
+                    value={value}
+                    label="Sex"
+                    error={!!error?.message}
+                    helperText={error?.message}
                   />
+                )}
+              />
             </Grid>
             {/* Sire */}
             <Grid item xs={12} md={6}>
@@ -141,7 +137,7 @@ const ChickenDetailForm = ({chicken}: {chicken?: Chicken}) => {
                   fieldState: { error },
                 }) => (
                   <ChickenDropdown
-                    sex={'M'}
+                    sex={"M"}
                     onChange={(_, data) => onChange(data)}
                     value={value}
                     label="Sire"
@@ -161,7 +157,7 @@ const ChickenDetailForm = ({chicken}: {chicken?: Chicken}) => {
                   fieldState: { error },
                 }) => (
                   <ChickenDropdown
-                    sex={'F'}
+                    sex={"F"}
                     onChange={(_, data) => onChange(data)}
                     value={value}
                     label="Dam"
@@ -189,82 +185,61 @@ const ChickenDetailForm = ({chicken}: {chicken?: Chicken}) => {
                 )}
               />
             </Grid>
-            {/* House */}
+            {/* Pen */}
             <Grid item xs={12} md={6}>
-              <Controller
-                name={"house"}
-                control={control}
-                render={({
-                  field: { onChange, value },
-                  fieldState: { error },
-                }) => (
-                  <HouseDropdown
-                    onChange={(_, data) => onChange(data)}
-                    value={value}
-                    label="House"
-                    error={!!error?.message}
-                    helperText={error?.message}
-                  />
-                )}
-              />
-            </Grid>
-             {/* Pen */}
-             <Grid item xs={12} md={6}>
               <Controller
                 name={"pen"}
                 control={control}
                 render={({
                   field: { onChange, value },
-                  fieldState: { invalid, isTouched, isDirty, error },
+                  fieldState: { error },
                 }) => (
-                  <LabeledInput
+                  <PenDropdown
+                    onChange={(_, data) => onChange(data)}
+                    dataKey={"display_name"}
+                    value={value}
+                    label="House / Pen"
                     error={!!error?.message}
                     helperText={error?.message}
-                    onChange={onChange}
-                    fullWidth
-                    size="small"
-                    value={value ?? ""}
-                    label={"Pen"}
-                    placeholder={"Pen"}
                   />
                 )}
               />
             </Grid>
           </Grid>
-          </form>
-        </Card>
-        <Box sx={{mt: 5}}>
+        </form>
+      </Card>
+      <Box sx={{ mt: 5 }}>
         <Stack
-            spacing={2}
-            direction={"row"}
-            justifyContent="flex-start"
-            alignItems="center"
-          >
-            <Box>
-              <Button
-                variant="contained"
-                size="small"
-                startIcon={<SaveIcon />}
-                onClick={() => handleSubmit(onSubmit)()}
-              >
-                Save
-              </Button>
-            </Box>
-            <Box>
-              <Button
-                variant="outlined"
-                color="error"
-                size="small"
-                startIcon={<CloseIcon />}
-                onClick={() => router.push("/houses")}
-              >
-                Cancel
-              </Button>
-            </Box>
-          </Stack>
+          spacing={2}
+          direction={"row"}
+          justifyContent="flex-start"
+          alignItems="center"
+        >
+          <Box>
+            <Button
+              variant="contained"
+              size="small"
+              startIcon={<SaveIcon />}
+              onClick={() => handleSubmit(onSubmit)()}
+            >
+              Save
+            </Button>
+          </Box>
+          <Box>
+            <Button
+              variant="outlined"
+              color="error"
+              size="small"
+              startIcon={<CloseIcon />}
+              onClick={() => router.push("/houses")}
+            >
+              Cancel
+            </Button>
+          </Box>
+        </Stack>
       </Box>
     </>
-  )
-}
+  );
+};
 
 export default ChickenDetailForm;

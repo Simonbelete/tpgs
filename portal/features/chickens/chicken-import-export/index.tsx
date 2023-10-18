@@ -9,14 +9,14 @@ import messages from "@/util/messages";
 import { ButtonMenu } from "@/components/buttons";
 import AddIcon from "@mui/icons-material/Add";
 import FileUploadIcon from "@mui/icons-material/FileUpload";
-import { 
+import {
   exportChickensXLSX,
   exportChickensXLS,
   exportChickensCSV,
   importChickensXLSX,
   importChickensCSV,
-  importChickensXLS
- } from "../services";
+  importChickensXLS,
+} from "../services";
 
 const ChickenImportExport = () => {
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
@@ -24,7 +24,7 @@ const ChickenImportExport = () => {
   const handleExport = async (type: string) => {
     try {
       let response: Partial<AxiosResponse> = {};
-      if (type == "xlsx") response = await exportChickensXLSX ();
+      if (type == "xlsx") response = await exportChickensXLSX();
       if (type == "xls") response = await exportChickensXLS();
       if (type == "csv") response = await exportChickensCSV();
       if (response.status == 200) {
@@ -81,9 +81,10 @@ const ChickenImportExport = () => {
         direction={"row"}
         justifyContent="flex-start"
         alignItems="center"
-        useFlexGap flexWrap="wrap"
+        useFlexGap
+        flexWrap="wrap"
       >
-        <Link href="/houses/create">
+        <Link href="/chickens/create">
           <Button variant="contained" size={"small"} startIcon={<AddIcon />}>
             Create
           </Button>
