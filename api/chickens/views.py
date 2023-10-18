@@ -14,6 +14,7 @@ from django.db.models import Q
 from rest_framework.response import Response
 from rest_framework.exceptions import NotFound
 
+
 from core.views import HistoryViewSet, SummaryViewSet, CoreModelViewSet
 from core.serializers import UploadSerializer
 from . import models
@@ -98,6 +99,18 @@ class SiblingsViewSet(viewsets.GenericViewSet):
 
         serializer = self.get_serializer(queryset, many=True)
         return Response(serializer.data)
+
+class BatchChickenReductionViewSet(APIView):
+    serializer_class = serializers.ChickenBatchReductionSerializer_POST
+
+    def post(self, request):
+        chickens = self.serializer_class(request.data)
+        print('-----------')
+        print(chickens)
+        print('**')
+        print(chickens.data)
+        return Response()
+
 
 # Xlsx
 

@@ -51,7 +51,6 @@ const DangerZoneCard = ({
         spacing={1}
       >
         {children}
-
         <Stack direction={"row"} justifyContent="space-between" spacing={1}>
           <Typography component="span" gutterBottom={true}>
             <Typography variant="body2" fontWeight={600}>

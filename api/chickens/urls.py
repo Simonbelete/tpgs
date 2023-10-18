@@ -24,7 +24,7 @@ router.register(r'chickens/(?P<id>.+)/histories',
 urlpatterns = [
     path('', include(router.urls)),
     path('', include(summary_router.urls)),
-#     path('', include(offspring_router.urls)),
+    path('/chickens/reduction/batch', views.BatchChickenReductionViewSet.as_view()),
     
     path('chickens/import/', include([
           path('xlsx', views.ChickenXlsxImport.as_view(),
@@ -34,6 +34,8 @@ urlpatterns = [
           path('csv', views.ChickenCsvImport.as_view(),
                name="chickens_import_csv")
     ])),
+
+    
 
     path('chickens/export/', include([
           path('xlsx', views.ChickenXlsxExport.as_view(),

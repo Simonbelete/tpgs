@@ -25,6 +25,11 @@ from rest_framework_simplejwt.views import (
 from units.urls import router
 from drf_spectacular.views import SpectacularAPIView, SpectacularRedocView, SpectacularSwaggerView
 
+
+from django.views.decorators.cache import never_cache
+from django.http import JsonResponse
+from rest_framework.views import APIView
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api-auth/', include('rest_framework.urls')),
@@ -32,25 +37,24 @@ urlpatterns = [
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('api/token/verify/', TokenVerifyView.as_view(), name='token_verify'),
-    path('api/inbox/notifications/', include([
-        path('', notificationsView.AllNotificationsList.as_view(), name='all'),
-        path('unread/', notificationsView.UnreadNotificationsList.as_view(), name='unread'),
-        path('mark-all-as-read/', notificationsView.mark_all_as_read,
-             name='mark_all_as_read'),
-        path('mark-as-read/(?P<slug>\d+)/',
-             notificationsView.mark_as_read, name='mark_as_read'),
-        path('mark-as-unread/(?P<slug>\d+)/',
-             notificationsView.mark_as_unread, name='mark_as_unread'),
-        path('delete/(?P<slug>\d+)/', notificationsView.delete, name='delete'),
-        path('unread_count/', notificationsView.live_unread_notification_count,
-             name='live_unread_notification_count'),
-        path('all_count/', notificationsView.live_all_notification_count,
-             name='live_all_notification_count'),
-        path('unread_list/', notificationsView.live_unread_notification_list,
-             name='live_unread_notification_list'),
-        path('all_list/', notificationsView.live_all_notification_list,
-             name='live_all_notification_list'),
-    ])),
+    # path('api/inbox/notifications/', include([
+    #     path('', notificationsView.AllNotificationsList.as_view(), name='all'),
+    #     path('unread/', notificationsView.UnreadNotificationsList.as_view(), name='unread'),
+    #     path('mark-all-as-read/', notificationsView.mark_all_as_read,
+    #          name='mark_all_as_read'),
+    #     path('mark-as-read/(?P<slug>\d+)/',
+    #          notificationsView.mark_as_read, name='mark_as_read'),
+    #     path('mark-as-unread/(?P<slug>\d+)/',
+    #          notificationsView.mark_as_unread, name='mark_as_unread'),
+    #     path('delete/(?P<slug>\d+)/', notificationsView.delete, name='delete'),
+
+    #     path('all_count/', notificationsView.live_all_notification_count,
+    #          name='live_all_notification_count'),
+    #     path('unread_list/', notificationsView.live_unread_notification_list,
+    #          name='live_unread_notification_list'),
+    #     path('all_list/', notificationsView.live_all_notification_list,
+    #          name='live_all_notification_list'),
+    # ])),
     path('adminactions/', include('adminactions.urls')),
     path('api/', include([
         path('', include('cities_light.contrib.restframework3')),
@@ -75,7 +79,8 @@ urlpatterns = [
         path('', include('houses.urls')),
         path('', include('pen.urls')),
         path('', include('analyses.urls')),
-        path('', include('reduction_reason.urls'))
+        path('', include('reduction_reason.urls')),
+        path('', include('inbox.urls'))
     ])),
 
     path('api/schema/', SpectacularAPIView.as_view(), name='schema'),

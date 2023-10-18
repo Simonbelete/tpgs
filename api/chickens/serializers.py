@@ -5,6 +5,7 @@ from . import models
 from users.serializers import UserSerializer_GET
 from flocks.serializers import FlockSerializer_SLUG
 from houses.serializers import HouseSerializer_SLUG
+from reduction_reason.models import ReductionReason
 
 class ChickenSerializer_SLUG(serializers.ModelSerializer):
     class Meta:
@@ -37,3 +38,11 @@ class ChickenHistorySerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Chicken.history.__dict__['model']
         fields = '__all__'
+
+class ChickenBatchReductionSerializer_POST(serializers.Serializer):
+    chickens = serializers.PrimaryKeyRelatedField(many=True, queryset=models.Chicken.all.all())
+    reduction_reason = serializers.PrimaryKeyRelatedField(queryset=ReductionReason.objects.all())
+    reduction_date = serializers.DateField()
+    class Meta:
+        model = models.Chicken
+        fields = ['chickens', 'reduction_reason', 'reduction_date']
