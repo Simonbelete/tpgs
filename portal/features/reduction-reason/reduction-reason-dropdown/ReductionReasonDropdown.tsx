@@ -1,19 +1,19 @@
 import React, { useEffect } from "react";
 import { AsyncDropdown } from "@/components/dropdowns";
 import { useLazyGetReductionReasonsQuery } from "../services";
-import { Pen } from "@/models";
+import { ReductionReason } from "@/models";
 import { ReductionReasonForm } from "../reduction-reason-form";
 
-const PenDropdown = ({
+const ReductionReasonDropdown = ({
   value,
-  label = "Pen",
+  label = "Cull Reason",
   error,
   onChange,
   helperText,
   dataKey = "name",
 }: {
   value?: any;
-  label: string;
+  label?: string;
   error?: boolean;
   helperText?: string;
   dataKey?: string;
@@ -29,7 +29,7 @@ const PenDropdown = ({
   const handleOnClose = () => {};
 
   return (
-    <AsyncDropdown<Pen>
+    <AsyncDropdown<ReductionReason>
       value={value}
       dataKey={dataKey}
       label={label}
@@ -41,7 +41,7 @@ const PenDropdown = ({
       onClose={handleOnClose}
       onChange={onChange}
       createForm={<ReductionReasonForm />}
-      createFormTitle="Create Pen"
+      createFormTitle="Create ReductionReason"
       onInputChange={(event: any, newInputValue: any) => {
         trigger({}, false);
       }}
@@ -49,4 +49,4 @@ const PenDropdown = ({
   );
 };
 
-export default PenDropdown;
+export default ReductionReasonDropdown;

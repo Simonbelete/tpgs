@@ -60,11 +60,8 @@ const ChickenForm = ({ chicken }: { chicken?: Chicken }) => {
           <Stack spacing={3}>
             {chicken && (
               <>
-                <ChickenInfoZone id={chicken?.id} />
-                <ChickenDangerZone
-                  id={chicken.id}
-                  is_active={chicken.is_active}
-                />
+                <ChickenInfoZone id={chicken.id} />
+                <ChickenDangerZone chicken={chicken} />
               </>
             )}
           </Stack>

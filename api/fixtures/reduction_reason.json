@@ -26,12 +26,5 @@
         "fields": {
             "name": "Lost"
         }
-    },
-    {
-        "model": "reduction_reason.ReductionReason",
-        "pk": 5,
-        "fields": {
-            "name": "Tagged"
-        }
     }
 ]

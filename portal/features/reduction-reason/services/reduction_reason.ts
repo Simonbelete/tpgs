@@ -11,7 +11,7 @@ const SUMMARY_URL = `summary`;
 const EXPORT_URL = `${URL}/export`;
 const IMPORT_URL = `${URL}/import`;
 
-export const penApi = baseApi.injectEndpoints({
+export const reductionReasonApi = baseApi.injectEndpoints({
   endpoints: (build) => {
     return {
       getReductionReasons: build.query<Response<ReductionReason[]>, Object>({
@@ -103,4 +103,4 @@ export const {
   useCreateReductionReasonMutation,
   useUpdateReductionReasonMutation,
   useDeleteReductionReasonMutation,
-} = penApi;
+} = reductionReasonApi;
