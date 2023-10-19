@@ -4,6 +4,7 @@ class Preferencess {
   static late SharedPreferences _preferences;
   static const _ONBOARDING_KEY = 'onboarding_key';
   static const _LOCAL_KEY = 'local_key';
+  static const _ROLE = 'user';
 
   static Future init() async {
     _preferences = await SharedPreferences.getInstance();
@@ -27,5 +28,13 @@ class Preferencess {
 
   static getLocalSync() {
     return _preferences.getString(_LOCAL_KEY);
+  }
+
+  static Future setRole(String value) async {
+    _preferences.setString(_ROLE, value);
+  }
+
+  static Future getRole() async {
+    return _preferences.getString(_ROLE);
   }
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:nea/constants.dart';
 
 class MyButton extends StatelessWidget {
   final Function()? onPressed;
@@ -19,7 +20,7 @@ class MyButton extends StatelessWidget {
           height: 55,
           width: 275,
           decoration: BoxDecoration(
-            color: HexColor('#44564a'),
+            color: primaryColor,
             borderRadius: BorderRadius.circular(30),
           ),
           child: Text(

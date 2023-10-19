@@ -32,26 +32,24 @@ List<Path> paths = [
     r'^' + MessageScreen.routeName,
     (context, match) => const MessageScreen(),
   ),
-  Path(
-    r'^/chat/([\w-]+)$',
-    (
-      context,
-      match,
-    ) {
-      if (match == null) return const HomeScreen();
-      var index = match == null ? 0 : int.parse(match);
-      return ChatPage(
-        userId: match,
-      );
-    },
-  ),
+  // Path(
+  //   r'^/chat/([\w-]+)$',
+  //   (
+  //     context,
+  //     match,
+  //   ) {
+  //     if (match == null) return const HomeScreen();
+  //     var index = match == null ? 0 : int.parse(match);
+  //     print('00000000000000000000000000000000000');
+  //     print(match);
+  //     return ChatPage(
+  //       local: match,
+  //     );
+  //   },
+  // ),
   Path(
     r'^' + ChatListScreen.routeName,
     (context, match) => ChatListScreen(),
-  ),
-  Path(
-    r'^' + ChatPage.routeName,
-    (context, match) => ChatPage(),
   ),
   Path(
     r'^' + UsersPage.routeName,
@@ -111,8 +109,18 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
     }
   }
 
-  return MaterialPageRoute(
-      settings: routeSettings, builder: (_) => HomeScreen());
+  switch (routeSettings.name) {
+    case ChatPage.routeName:
+      return MaterialPageRoute(
+          settings: routeSettings,
+          builder: (_) => ChatPage(userId: routeSettings.arguments as String));
+    default:
+      return MaterialPageRoute(
+          settings: routeSettings, builder: (_) => HomeScreen());
+  }
+
+  // return MaterialPageRoute(
+  //     settings: routeSettings, builder: (_) => HomeScreen());
 
   // const Scaffold(
   //       body: SafeArea(

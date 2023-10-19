@@ -1,12 +1,12 @@
-import 'dart:ffi';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:nea/constants.dart';
+import 'package:nea/utils/preferencess.dart';
 import 'package:nea/widgets/my_button.dart';
 import 'package:nea/widgets/my_textfield.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class LoginBodyScreen extends StatefulWidget {
   const LoginBodyScreen({super.key});
@@ -17,10 +17,24 @@ class LoginBodyScreen extends StatefulWidget {
 
 class _LoginBodyScreenState extends State<LoginBodyScreen> {
   FirebaseAuth auth = FirebaseAuth.instance;
+  FirebaseFirestore db = FirebaseFirestore.instance;
 
   final phoneNumberController = TextEditingController();
 
+  String _errorMessage = "";
+  bool _verifyTab = false;
+  String verificationId = "";
+  String otp = "";
+  bool loading = false;
+
   void signUserIn() async {
+    validatePhoneNumber(phoneNumberController.text);
+    if (phoneNumberController.text == null) return;
+
+    setState(() {
+      loading = true;
+    });
+
     try {
       // Masuk menggunakan email dan password
       await auth.verifyPhoneNumber(
@@ -44,6 +58,10 @@ class _LoginBodyScreenState extends State<LoginBodyScreen> {
           codeAutoRetrievalTimeout: (String verificationId) {});
     } on FirebaseAuthException catch (e) {
       showErrorMessage(e.code);
+    } finally {
+      setState(() {
+        loading = false;
+      });
     }
   }
 
@@ -58,11 +76,6 @@ class _LoginBodyScreenState extends State<LoginBodyScreen> {
         });
   }
 
-  String _errorMessage = "";
-  bool _verifyTab = false;
-  String verificationId = "";
-  String otp = "";
-
   void validatePhoneNumber(String val) {
     if (val.isEmpty) {
       setState(() {
@@ -76,10 +89,27 @@ class _LoginBodyScreenState extends State<LoginBodyScreen> {
   }
 
   Future<void> signIn(String otp) async {
+    if (otp == null) return;
+
     PhoneAuthCredential credential = PhoneAuthProvider.credential(
         verificationId: verificationId, smsCode: otp);
     await auth.signInWithCredential(credential);
-    await FirebaseAuth.instance.signInWithCredential(credential);
+    final cred = await FirebaseAuth.instance.signInWithCredential(credential);
+    final userCollection = await db
+        .collection('users')
+        .where('uid', isEqualTo: cred.user?.uid)
+        .limit(1)
+        .get();
+    if (userCollection.docs.length == 0) {
+      db.collection('users').add({
+        'name': userCollection.docs[0]['name'],
+        'role': 'user',
+        'uid': cred.user?.uid
+      });
+      Preferencess.setRole('user');
+    } else {
+      Preferencess.setRole(userCollection.docs[0]['role']);
+    }
   }
 
   otpDialogBox(BuildContext context) {
@@ -88,7 +118,7 @@ class _LoginBodyScreenState extends State<LoginBodyScreen> {
         barrierDismissible: false,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: const Text('Enter your OTP'),
+            title: const Text('Enter OTP'),
             content: Padding(
               padding: const EdgeInsets.all(8.0),
               child: TextFormField(
@@ -106,13 +136,19 @@ class _LoginBodyScreenState extends State<LoginBodyScreen> {
             ),
             contentPadding: EdgeInsets.all(10.0),
             actions: <Widget>[
+              OutlinedButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: const Text('Cancel')),
               ElevatedButton(
+                style: ElevatedButton.styleFrom(backgroundColor: primaryColor),
                 onPressed: () {
                   Navigator.of(context).pop();
                   signIn(otp);
                 },
                 child: const Text(
-                  'Submit',
+                  'Login',
                 ),
               ),
             ],
@@ -124,6 +160,10 @@ class _LoginBodyScreenState extends State<LoginBodyScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: primaryColor,
+          elevation: 0,
+        ),
         resizeToAvoidBottomInset: false,
         backgroundColor: primaryColor,
         body: ListView(
@@ -205,40 +245,10 @@ class _LoginBodyScreenState extends State<LoginBodyScreen> {
                                   ),
                                   MyButton(
                                     onPressed: signUserIn,
-                                    buttonText: 'Submit',
+                                    buttonText: 'Login',
                                   ),
                                   const SizedBox(
                                     height: 12,
-                                  ),
-                                  Padding(
-                                    padding:
-                                        const EdgeInsets.fromLTRB(35, 0, 0, 0),
-                                    child: Row(
-                                      children: [
-                                        Text("",
-                                            style: GoogleFonts.poppins(
-                                              fontSize: 15,
-                                              color: HexColor("#8d8d8d"),
-                                            )),
-                                        TextButton(
-                                            child: Text(
-                                              "",
-                                              style: GoogleFonts.poppins(
-                                                fontSize: 15,
-                                                color: HexColor("#44564a"),
-                                              ),
-                                            ),
-                                            onPressed: () => {
-                                                  // Navigator.push(
-                                                  //   context,
-                                                  //   MaterialPageRoute(
-                                                  //     builder: (context) =>
-                                                  //         const SignUpScreen(),
-                                                  //   ),
-                                                  // ),
-                                                }),
-                                      ],
-                                    ),
                                   ),
                                 ],
                               ),
@@ -248,7 +258,7 @@ class _LoginBodyScreenState extends State<LoginBodyScreen> {
                       ),
                     ),
                     Transform.translate(
-                      offset: const Offset(50, -180),
+                      offset: const Offset(50, -170),
                       child: Image.asset(
                         'assets/images/ilri-cgiar.png',
                         scale: 1,

@@ -35,11 +35,11 @@ class UsersPage extends StatelessWidget {
     final navigator = Navigator.of(context);
 
     navigator.pop();
-    await navigator.push(
-      MaterialPageRoute(
-        builder: (context) => ChatPage(),
-      ),
-    );
+    // await navigator.push(
+    //   MaterialPageRoute(
+    //     builder: (context) => ChatPage(),
+    //   ),
+    // );
   }
 
   @override

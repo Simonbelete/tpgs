@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_chat_ui/flutter_chat_ui.dart';
 
 class ChatMessage {
   String messageContent;
@@ -29,6 +32,109 @@ class ChatPage extends StatefulWidget {
 }
 
 class _ChatPageState extends State<ChatPage> {
+  FirebaseFirestore db = FirebaseFirestore.instance;
+
+  DocumentSnapshot? currentUser;
+
+  @override
+  void initState() {
+    super.initState();
+    db.collection('users').doc(widget.userId).get().then((DocumentSnapshot da) {
+      setState(() {
+        currentUser = da;
+      });
+    });
+  }
+
+  Widget _buildChat() {
+    return SingleChildScrollView(
+      physics: BouncingScrollPhysics(),
+      child: StreamBuilder<QuerySnapshot>(
+          stream: db
+              .collection('messages')
+              .where('sender',
+                  isEqualTo: FirebaseAuth.instance.currentUser?.uid)
+              .where('receiver', isEqualTo: widget.userId)
+              .orderBy('createdAt', descending: false)
+              .limit(1000)
+              .snapshots(),
+          builder: ((context, snapshot) {
+            if (snapshot.hasError) {
+              return const Text('Something went wrong');
+            }
+
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(
+                child: CircularProgressIndicator(
+                    valueColor: AlwaysStoppedAnimation<Color>(Colors.red)),
+              );
+            }
+
+            if (!snapshot.hasData) {
+              return Container(
+                alignment: Alignment.center,
+                margin: const EdgeInsets.only(
+                  bottom: 200,
+                ),
+                child: const Text('No Messages'),
+              );
+            }
+
+            return ListView(
+                shrinkWrap: true,
+                padding: const EdgeInsets.only(top: 10, bottom: 10),
+                physics: const NeverScrollableScrollPhysics(),
+                children: snapshot.data!.docs
+                    .map((DocumentSnapshot document) {
+                      Map<String, dynamic> data =
+                          document.data()! as Map<String, dynamic>;
+
+                      return Container(
+                        padding: const EdgeInsets.only(
+                            left: 14, right: 14, top: 10, bottom: 10),
+                        child: Align(
+                          alignment: (data['messageType'] == "receiver"
+                              ? Alignment.topLeft
+                              : Alignment.topRight),
+                          child: Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20),
+                              color: (data['messageType'] == "receiver"
+                                  ? Colors.grey.shade200
+                                  : Colors.blue[200]),
+                            ),
+                            padding: const EdgeInsets.all(16),
+                            child: Text(
+                              data['messageContent'],
+                              style: const TextStyle(fontSize: 15),
+                            ),
+                          ),
+                        ),
+                      );
+                    })
+                    .toList()
+                    .cast());
+          })),
+    );
+  }
+
+  final messageContentController = TextEditingController();
+
+  void sendMessage(BuildContext context) async {
+    try {
+      await db.collection('messages').add({
+        'sender': FirebaseAuth.instance.currentUser?.uid,
+        'receiver': widget.userId,
+        'messageType': 'sender',
+        'messageContent': messageContentController.text,
+        'createdAt': FieldValue.serverTimestamp()
+      });
+    } catch (ex) {
+      ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Failed to send message')));
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -45,20 +151,25 @@ class _ChatPageState extends State<ChatPage> {
                     onPressed: () {
                       Navigator.pop(context);
                     },
-                    icon: Icon(
+                    icon: const Icon(
                       Icons.arrow_back,
                       color: Colors.black,
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 2,
                   ),
                   CircleAvatar(
-                    backgroundImage: NetworkImage(
-                        "https://randomuser.me/api/portraits/men/5.jpg"),
                     maxRadius: 20,
+                    child: Text(
+                      (currentUser?['name'] ?? "unknown")
+                          .toString()
+                          .substring(0, 2)
+                          .toUpperCase(),
+                      style: const TextStyle(color: Colors.white),
+                    ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 12,
                   ),
                   Expanded(
@@ -67,11 +178,11 @@ class _ChatPageState extends State<ChatPage> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
                         Text(
-                          "Kriss Benwat",
-                          style: TextStyle(
+                          (currentUser?['name'] ?? "..."),
+                          style: const TextStyle(
                               fontSize: 16, fontWeight: FontWeight.w600),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 6,
                         ),
                         Text(
@@ -82,10 +193,11 @@ class _ChatPageState extends State<ChatPage> {
                       ],
                     ),
                   ),
-                  Icon(
-                    Icons.settings,
+                  IconButton(
                     color: Colors.black54,
-                  ),
+                    icon: const Icon(Icons.logout, color: Colors.black54),
+                    onPressed: () => {FirebaseAuth.instance.signOut()},
+                  )
                 ],
               ),
             ),
@@ -94,36 +206,7 @@ class _ChatPageState extends State<ChatPage> {
         body: Container(
           child: Stack(
             children: <Widget>[
-              ListView.builder(
-                itemCount: messages.length,
-                shrinkWrap: true,
-                padding: EdgeInsets.only(top: 10, bottom: 10),
-                physics: NeverScrollableScrollPhysics(),
-                itemBuilder: (context, index) {
-                  return Container(
-                    padding: EdgeInsets.only(
-                        left: 14, right: 14, top: 10, bottom: 10),
-                    child: Align(
-                      alignment: (messages[index].messageType == "receiver"
-                          ? Alignment.topLeft
-                          : Alignment.topRight),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                          color: (messages[index].messageType == "receiver"
-                              ? Colors.grey.shade200
-                              : Colors.blue[200]),
-                        ),
-                        padding: EdgeInsets.all(16),
-                        child: Text(
-                          messages[index].messageContent,
-                          style: TextStyle(fontSize: 15),
-                        ),
-                      ),
-                    ),
-                  );
-                },
-              ),
+              _buildChat(),
               Align(
                 alignment: Alignment.bottomLeft,
                 child: Container(
@@ -142,36 +225,39 @@ class _ChatPageState extends State<ChatPage> {
                             color: Colors.lightBlue,
                             borderRadius: BorderRadius.circular(30),
                           ),
-                          child: Icon(
+                          child: const Icon(
                             Icons.add,
                             color: Colors.white,
                             size: 20,
                           ),
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 15,
                       ),
                       Expanded(
                         child: TextField(
-                          decoration: InputDecoration(
+                          controller: messageContentController,
+                          decoration: const InputDecoration(
                               hintText: "Write message...",
                               hintStyle: TextStyle(color: Colors.black54),
                               border: InputBorder.none),
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 15,
                       ),
                       FloatingActionButton(
-                        onPressed: () {},
-                        child: Icon(
+                        onPressed: () {
+                          sendMessage(context);
+                        },
+                        backgroundColor: Colors.blue,
+                        elevation: 0,
+                        child: const Icon(
                           Icons.send,
                           color: Colors.white,
                           size: 18,
                         ),
-                        backgroundColor: Colors.blue,
-                        elevation: 0,
                       ),
                     ],
                   ),
