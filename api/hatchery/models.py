@@ -13,6 +13,10 @@ class Hatchery(CoreModel):
         Breed, on_delete=models.SET_NULL, null=True, blank=True)
     note = models.TextField(null=True, blank=True)
     history = HistoricalRecords()
+
+    @property
+    def display_name(self):
+        return self.name
     
 class HatcheryEgg(CoreModel):
     """ Single Chicken's egg """
