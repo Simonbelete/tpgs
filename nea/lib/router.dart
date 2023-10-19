@@ -4,11 +4,14 @@ import 'package:nea/i18n/foods.dart';
 import 'package:nea/models/course_model.dart';
 import 'package:nea/models/food_model.dart';
 import 'package:nea/screens/chat_list.screen.dart';
+import 'package:nea/screens/chat.dart';
 import 'package:nea/screens/food_screen.dart';
 import 'package:nea/screens/home_screen.dart';
 import 'package:nea/screens/course_screen.dart';
 import 'package:nea/screens/image_screen.dart';
+import 'package:nea/screens/message.dart';
 import 'package:nea/screens/not_found_screen.dart';
+import 'package:nea/screens/users.dart';
 import 'package:nea/utils/preferencess.dart';
 import 'package:nea/widgets/title_text.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -26,8 +29,33 @@ List<Path> paths = [
     (context, match) => HomeScreen(),
   ),
   Path(
+    r'^' + MessageScreen.routeName,
+    (context, match) => const MessageScreen(),
+  ),
+  Path(
+    r'^/chat/([\w-]+)$',
+    (
+      context,
+      match,
+    ) {
+      if (match == null) return const HomeScreen();
+      var index = match == null ? 0 : int.parse(match);
+      return ChatPage(
+        userId: match,
+      );
+    },
+  ),
+  Path(
     r'^' + ChatListScreen.routeName,
     (context, match) => ChatListScreen(),
+  ),
+  Path(
+    r'^' + ChatPage.routeName,
+    (context, match) => ChatPage(),
+  ),
+  Path(
+    r'^' + UsersPage.routeName,
+    (context, match) => UsersPage(),
   ),
   Path(
     r'^/course/([\w-]+)$',

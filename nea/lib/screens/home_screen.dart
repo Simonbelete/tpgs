@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:nea/constants.dart';
 import 'package:nea/screens/chat_list.screen.dart';
-import 'package:nea/screens/chat_screen.dart';
+import 'package:nea/screens/message.dart';
+import 'package:nea/screens/users.dart';
 import 'package:nea/utils/responsive_widget.dart';
 import 'package:nea/widgets/course_grid.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -86,7 +87,7 @@ class HomeScreen extends StatelessWidget {
               FloatingActionButton.small(
                   backgroundColor: primaryColor,
                   onPressed: () {
-                    Navigator.pushNamed(context, ChatListScreen.routeName);
+                    Navigator.pushNamed(context, MessageScreen.routeName);
                   },
                   child: Icon(Icons.message)),
               const SizedBox(
