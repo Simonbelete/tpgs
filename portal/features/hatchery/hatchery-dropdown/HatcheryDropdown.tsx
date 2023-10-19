@@ -1,24 +1,26 @@
 import React, { useEffect } from "react";
 import { AsyncDropdown } from "@/components/dropdowns";
-import { useLazyGetBreedsQuery } from "../services";
-import { Breed } from "@/models";
-import { BreedForm } from "../breed-form";
+import { useLazyGetHatcheryQuery } from "../services";
+import { Hatchery } from "@/models";
+import { HatcheryForm } from "../hatchery-form";
 
-const BreedDropdown = ({
+const HatcheryDropdown = ({
   value,
-  label = "Breed",
+  label = "Hatchery",
   error,
   onChange,
   helperText,
+  dataKey = "name",
 }: {
   value?: any;
-  label?: string;
+  label: string;
   error?: boolean;
   helperText?: string;
+  dataKey?: string;
   onChange?: (event: any, newValue: any) => void;
 }) => {
   const [trigger, { isLoading, data }, lastPromiseInfo] =
-    useLazyGetBreedsQuery();
+    useLazyGetHatcheryQuery();
 
   const handleOnOpen = () => {
     trigger({}, true);
@@ -27,9 +29,9 @@ const BreedDropdown = ({
   const handleOnClose = () => {};
 
   return (
-    <AsyncDropdown<Breed>
+    <AsyncDropdown<Hatchery>
       value={value}
-      dataKey="name"
+      dataKey={dataKey}
       label={label}
       error={error}
       helperText={helperText}
@@ -38,8 +40,8 @@ const BreedDropdown = ({
       onOpen={handleOnOpen}
       onClose={handleOnClose}
       onChange={onChange}
-      createForm={<BreedForm redirect={false} />}
-      createFormTitle="Create Breed"
+      createForm={<HatcheryForm />}
+      createFormTitle="Create Hatchery"
       onInputChange={(event: any, newInputValue: any) => {
         trigger({}, false);
       }}
@@ -47,4 +49,4 @@ const BreedDropdown = ({
   );
 };
 
-export default BreedDropdown;
+export default HatcheryDropdown;

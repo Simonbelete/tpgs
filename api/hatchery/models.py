@@ -7,13 +7,15 @@ from breeds.models import Breed
 
 class Hatchery(CoreModel):
     name = models.CharField(max_length=250, unique=True)
-    hatchery_date = models.DateField()
+    incubation_moved_date = models.DateField(null=True, blank=True)
+    hatch_date = models.DateField(null=True, blank=True)
     breed = models.ForeignKey(
         Breed, on_delete=models.SET_NULL, null=True, blank=True)
     note = models.TextField(null=True, blank=True)
     history = HistoricalRecords()
     
 class HatcheryEgg(CoreModel):
+    """ Single Chicken's egg """
     hatchery = models.ForeignKey(
         Hatchery, on_delete=models.CASCADE, related_name='hatchery_eggs')
     egg = models.ForeignKey(
@@ -21,8 +23,8 @@ class HatcheryEgg(CoreModel):
     # Number of eggs to hatchery from the given week i.e No of egg set
     no_eggs = models.IntegerField()
     # Candling
-    canndle_date = models.DateField()
-    candled_eggs = models.IntegerField()
+    canndle_date = models.DateField(null=True, blank=True)
+    candled_eggs = models.IntegerField(null=True, blank=True)
     infertile_egg = models.IntegerField(null=True, blank=True)
     no_of_hatched = models.IntegerField(null=True, blank=True)
     no_dead = models.IntegerField(null=True, blank=True)

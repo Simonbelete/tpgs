@@ -339,8 +339,16 @@ const SidebarMenu = () => {
           </MenuItem>
         </SubMenu>
         <MenuItem
-          component={<Link href="/eggs" />}
+          component={<Link href="/hatchery" />}
           icon={<ChickenEasterIcon width="20" height="20" fill="inherit" />}
+        >
+          <Typography variant="body1" fontSize={14}>
+            Hatchery
+          </Typography>
+        </MenuItem>
+        <MenuItem
+          component={<Link href="/eggs" />}
+          icon={<EggIcon fontSize="small" />}
           active={RegExp("^/eggs$").test(router.pathname)}
         >
           <Typography variant="body1" fontSize={14}>

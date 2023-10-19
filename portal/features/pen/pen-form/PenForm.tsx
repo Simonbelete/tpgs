@@ -54,7 +54,7 @@ const PenForm = ({
     };
 
     if (pen == null)
-      await createPen(data).then(() => redirect && router.push("/pen"));
+      await createPen(body).then(() => redirect && router.push("/pen"));
     else await updatePen({ ...body, id: pen.id });
   };
 
