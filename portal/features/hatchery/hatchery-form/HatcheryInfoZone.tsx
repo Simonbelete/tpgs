@@ -1,11 +1,11 @@
 import { InfoZoneCard } from "@/components";
 import React, { useEffect } from "react";
-import { useGetPenSummaryQuery } from "../services";
+import { useGetHatcherySummaryQuery } from "../services";
 
-const PenInfoZone = ({ id }: { id: number }) => {
-  const { data, error, isLoading } = useGetPenSummaryQuery(id);
+const HatcheryInfoZone = ({ id }: { id: number }) => {
+  const { data, error, isLoading } = useGetHatcherySummaryQuery(id);
 
   return <InfoZoneCard data={data} isLoading={isLoading} />;
 };
 
-export default PenInfoZone;
+export default HatcheryInfoZone;

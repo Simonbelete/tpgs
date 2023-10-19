@@ -2,11 +2,13 @@ from rest_framework import serializers
 
 from . import models
 from eggs.models import Egg
+from breeds.serializers import BreedSerializer_SLUG
 
 class HatcherySerializer_GET(serializers.ModelSerializer):
+    breed = BreedSerializer_SLUG()
     class Meta:
         model = models.Hatchery
-        fields = '__all__'
+        fields = ['id', 'incubation_moved_date', 'hatch_date', 'breed', 'note']
 
 class HatcherySerializer_POST(serializers.ModelSerializer):
     class Meta:

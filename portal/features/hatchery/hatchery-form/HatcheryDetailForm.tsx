@@ -68,10 +68,13 @@ const HatcheryDetailForm = ({
 
     if (hatchery == null)
       await createHatchery(body).then(
-        () => {} //redirect && router.push("/hatchery")
+        () => redirect && router.push("/hatchery")
       );
     else await updateHatchery({ ...body, id: hatchery.id });
   };
+
+  console.log("00000000000000");
+  console.log(hatchery);
 
   return (
     <>
@@ -122,7 +125,7 @@ const HatcheryDetailForm = ({
                         },
                       }}
                       onChange={onChange}
-                      value={value ?? ""}
+                      value={dayjs(value)}
                     />
                   </Stack>
                 )}
@@ -150,7 +153,7 @@ const HatcheryDetailForm = ({
                         },
                       }}
                       onChange={onChange}
-                      value={value ?? ""}
+                      value={dayjs(value)}
                     />
                   </Stack>
                 )}

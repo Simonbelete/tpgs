@@ -30,7 +30,7 @@ const HatcheryForm = ({
   return (
     <>
       <Grid container spacing={4}>
-        <Grid item xs={12} lg={8} xl={9.5}>
+        <Grid item xs={12} lg={9} xl={9.5}>
           <Tabs
             scrollButtons
             value={tab}
@@ -52,7 +52,7 @@ const HatcheryForm = ({
             </Box>
           </Box>
         </Grid>
-        <Grid item xs={12} lg={4} xl={2.5}>
+        <Grid item xs={12} lg={3} xl={2.5}>
           <Stack spacing={3}>
             {hatchery && (
               <>

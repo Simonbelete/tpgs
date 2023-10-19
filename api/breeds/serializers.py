@@ -2,6 +2,11 @@ from rest_framework import serializers
 
 from . import models
 
+class BreedSerializer_SLUG(serializers.ModelSerializer):
+    class Meta:
+        model = models.Breed
+        fields = ['id', 'name']
+
 
 class BreedSerializer_GET(serializers.ModelSerializer):
     class Meta:

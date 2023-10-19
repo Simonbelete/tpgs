@@ -3,8 +3,8 @@ import { NextPageContext } from "next";
 import { Typography, Stack, IconButton, Tooltip } from "@mui/material";
 import Link from "next/link";
 import { EditLayout } from "@/layouts";
-import { HatcheryForm } from "@/features/pen";
-import { getHatcheryByIdSSR } from "@/features/pen/services";
+import { HatcheryForm } from "@/features/hatchery";
+import { getHatcheryByIdSSR } from "@/features/hatchery/services";
 import { Breadcrumbs, Loading } from "@/components";
 import { useBreadcrumbs } from "@/hooks";
 import { Hatchery } from "@/models";
@@ -25,7 +25,7 @@ const HatcheryEditPage = ({ data }: { data: Hatchery }) => {
         header={<Typography variant="title">{data.name} - Edit</Typography>}
         actions={<Actions />}
       >
-        <HatcheryForm pen={data} />
+        <HatcheryForm hatchery={data} />
       </EditLayout>
     </>
   );
@@ -42,7 +42,7 @@ const Actions = () => {
       alignItems="center"
     >
       <Tooltip title="Create New">
-        <Link href="/chickens/create">
+        <Link href="/hatchery/create">
           <IconButton color="secondary">
             <LibraryAddIcon />
           </IconButton>
@@ -56,7 +56,7 @@ const Actions = () => {
         </Link>
       </Tooltip>
       <Tooltip title="Cancel">
-        <Link href="/chickens">
+        <Link href="/hatchery">
           <IconButton color="secondary">
             <CancelIcon />
           </IconButton>
