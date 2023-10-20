@@ -1,5 +1,10 @@
 import { baseApi } from "@/services/baseApi";
-import { AbstractSummary, Response, NotificationList } from "@/models";
+import {
+  AbstractSummary,
+  Response,
+  Notification,
+  NotificationList,
+} from "@/models";
 
 const URL = "inbox/notifications";
 
@@ -9,8 +14,12 @@ export const notificationApi = baseApi.injectEndpoints({
       getUnreadCount: build.query<NotificationList, null>({
         query: () => ({ url: `${URL}/unread_count/`, method: "get" }),
       }),
-      getUnreadList: build.query<NotificationList, null>({
-        query: () => ({ url: `${URL}/unread/`, method: "get" }),
+      getUnreadList: build.query<Response<Notification[]>, Object>({
+        query: (query?: Object) => ({
+          url: `${URL}/unread/`,
+          method: "get",
+          params: query,
+        }),
       }),
     };
   },
