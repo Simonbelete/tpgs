@@ -6,11 +6,9 @@ import { ListLayout } from "@/layouts";
 import { UserList } from "@/features/users";
 import { SeoHead } from "@/seo";
 import { withClientGroup } from "@/hoc";
-import { GROUP_ADMIN } from '@/constants';
+import { GROUP_ADMIN } from "@/constants";
 import SendIcon from "@mui/icons-material/Send";
-import {
-  InvitationFormModal,
-} from "@/features/invitations";
+import { InvitationFormModal } from "@/features/invitations";
 
 const UsersPage = () => {
   const { breadcrumbs } = useBreadcrumbs();
@@ -37,7 +35,7 @@ const Actions = (): ReactElement => {
 
   return (
     <>
-      <SeoHead title="Invitations"/>
+      <SeoHead title="Invitations" />
       <InvitationFormModal open={openModal} onClose={handleCloseModal} />
       <Stack
         spacing={2}
@@ -60,4 +58,3 @@ const Actions = (): ReactElement => {
 };
 
 export default withClientGroup(UsersPage, [GROUP_ADMIN]);
-
