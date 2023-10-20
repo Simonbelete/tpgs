@@ -19,6 +19,7 @@ import {
   ListItemButton,
   ListItemIcon,
   CircularProgress,
+  Skeleton,
 } from "@mui/material";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import {
@@ -52,7 +53,7 @@ const NotificationPopover = () => {
     useLazyGetUnreadListQuery();
 
   useEffect(() => {
-    if (popupState.isOpen) trigger({ limit: 6 }, false);
+    if (popupState.isOpen) trigger({ limit: 6 }, true);
   }, [popupState.isOpen]);
 
   return (
@@ -96,7 +97,42 @@ const NotificationPopover = () => {
           <Box
             sx={{ maxHeight: 300, overflowY: "scroll", overflowX: "hidden" }}
           >
-            {isLoading && <CircularProgress />}
+            {isLoading && (
+              <Stack direction={"column"} gap={2}>
+                <Box sx={{ display: "flex" }} gap={2}>
+                  <Skeleton variant="circular" width={50} height={50} />
+                  <Skeleton
+                    variant="text"
+                    sx={{ fontSize: "1rem" }}
+                    width={"80%"}
+                  />
+                </Box>
+                <Box sx={{ display: "flex" }} gap={2}>
+                  <Skeleton variant="circular" width={50} height={50} />
+                  <Skeleton
+                    variant="text"
+                    sx={{ fontSize: "1rem" }}
+                    width={"80%"}
+                  />
+                </Box>
+                <Box sx={{ display: "flex" }} gap={2}>
+                  <Skeleton variant="circular" width={50} height={50} />
+                  <Skeleton
+                    variant="text"
+                    sx={{ fontSize: "1rem" }}
+                    width={"80%"}
+                  />
+                </Box>
+                <Box sx={{ display: "flex" }} gap={2}>
+                  <Skeleton variant="circular" width={50} height={50} />
+                  <Skeleton
+                    variant="text"
+                    sx={{ fontSize: "1rem" }}
+                    width={"80%"}
+                  />
+                </Box>
+              </Stack>
+            )}
             {!isLoading &&
               data &&
               data.results.map((e, i) => (

@@ -29,6 +29,7 @@ import { weightApi } from "@/features/weights/services";
 import { nutrientGroupApi } from "@/features/nutrient-group/services";
 import { formulaApi } from "@/features/formula/services";
 import { reductionReasonApi } from "@/features/reduction-reason/services";
+import { notificationApi } from "@/features/notification/services";
 
 import { rtkQueryErrorLogger } from "./middlewares/rtkQueryErrorLogger";
 import { urlQueryBuilder } from "./middlewares/urlQueryBuilder";
@@ -64,6 +65,7 @@ export const store = configureStore({
     [nutrientGroupApi.reducerPath]: nutrientGroupApi.reducer,
     [formulaApi.reducerPath]: formulaApi.reducer,
     [reductionReasonApi.reducerPath]: reductionReasonApi.reducer,
+    [notificationApi.reducerPath]: notificationApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(
