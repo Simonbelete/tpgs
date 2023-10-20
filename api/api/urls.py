@@ -55,8 +55,6 @@ urlpatterns = [
     #     path('all_list/', notificationsView.live_all_notification_list,
     #          name='live_all_notification_list'),
     # ])),
-    path('api/unread_list/', notificationsView.live_unread_notification_list,
-             name='live_unread_notification_list'),
     path('adminactions/', include('adminactions.urls')),
     path('api/', include([
         path('', include('cities_light.contrib.restframework3')),

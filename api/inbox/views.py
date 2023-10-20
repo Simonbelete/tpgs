@@ -37,3 +37,11 @@ class LiveUnreadNotificationCount(APIView):
                 'unread_count': request.user.notifications.unread().count(),
             }
         return Response(data)
+    
+class MarkAllAsRead(APIView):
+    def post(self, request):
+        try:
+            request.user.notifications.mark_all_as_read()
+            return Response({}, status=201)
+        except Exception as ex:
+            return Response({}, status=500)

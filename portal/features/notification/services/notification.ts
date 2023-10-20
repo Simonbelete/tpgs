@@ -5,6 +5,7 @@ import {
   Notification,
   NotificationList,
 } from "@/models";
+import { AxiosResponse } from "axios";
 
 const URL = "inbox/notifications";
 
@@ -21,6 +22,12 @@ export const notificationApi = baseApi.injectEndpoints({
           params: query,
         }),
       }),
+      markAllAsRead: build.mutation<Promise<AxiosResponse>, null>({
+        query: () => ({
+          url: `${URL}/mark-all-as-read/`,
+          method: "post",
+        }),
+      }),
     };
   },
   overrideExisting: false,
@@ -30,4 +37,5 @@ export const {
   useGetUnreadCountQuery,
   useGetUnreadListQuery,
   useLazyGetUnreadListQuery,
+  useMarkAllAsReadMutation,
 } = notificationApi;

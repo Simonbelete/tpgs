@@ -1,14 +1,8 @@
 import { Shadow, StatisticsCard } from "@/components";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Typography,
   Box,
-  Popover,
-  Tooltip,
-  IconButton,
-  Badge,
-  Drawer,
-  Grid,
   Stack,
   List,
   ListItem,
@@ -19,11 +13,10 @@ import {
   Button,
   ListItemButton,
   ListItemIcon,
-  CircularProgress,
   Skeleton,
 } from "@mui/material";
 import { Notification } from "@/models";
-import { useGetUnreadListQuery } from "../services";
+import { useGetUnreadListQuery, useMarkAllAsReadMutation } from "../services";
 import DoneAllIcon from "@mui/icons-material/DoneAll";
 import WarningIcon from "@mui/icons-material/Warning";
 import InfoIcon from "@mui/icons-material/Info";
@@ -35,11 +28,20 @@ import relativeTime from "dayjs/plugin/relativeTime";
 dayjs.extend(relativeTime);
 
 const NotificationCard = () => {
-  const { data, isLoading } = useGetUnreadListQuery({ limit: 0 });
+  const { data, isLoading, refetch } = useGetUnreadListQuery({ limit: 0 });
+  const [markAsRead, markAsReadResult] = useMarkAllAsReadMutation();
+
+  useEffect(() => {
+    if (markAsReadResult.isSuccess) refetch();
+  }, [markAsReadResult]);
+
+  const markAllAsRead = async () => {
+    const response = await markAsRead(null);
+  };
 
   return (
-    <StatisticsCard title="Notifications">
-      <Box sx={{ px: 2, pl: 2 }}>
+    <StatisticsCard>
+      <Box sx={{ py: 2, pl: 2 }}>
         <Stack
           direction="row"
           justifyContent="space-between"
@@ -53,6 +55,7 @@ const NotificationCard = () => {
             size="small"
             startIcon={<DoneAllIcon fontSize="small" />}
             variant="text"
+            onClick={markAllAsRead}
           >
             Mark all as read
           </Button>

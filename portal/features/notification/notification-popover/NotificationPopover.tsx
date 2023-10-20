@@ -6,8 +6,6 @@ import {
   Tooltip,
   IconButton,
   Badge,
-  Drawer,
-  Grid,
   Stack,
   List,
   ListItem,
@@ -28,7 +26,11 @@ import {
   bindPopover,
 } from "material-ui-popup-state/hooks";
 import NotificationsIcon from "@mui/icons-material/Notifications";
-import { useGetUnreadCountQuery, useLazyGetUnreadListQuery } from "../services";
+import {
+  useGetUnreadCountQuery,
+  useLazyGetUnreadListQuery,
+  useMarkAllAsReadMutation,
+} from "../services";
 import DoneAllIcon from "@mui/icons-material/DoneAll";
 import WarningIcon from "@mui/icons-material/Warning";
 import InfoIcon from "@mui/icons-material/Info";
@@ -51,10 +53,19 @@ const NotificationPopover = () => {
   const { data: countData, refetch } = useGetUnreadCountQuery(null);
   const [trigger, { isLoading, data }, lastPromiseInfo] =
     useLazyGetUnreadListQuery();
+  const [markAsRead, markAsReadResult] = useMarkAllAsReadMutation();
 
   useEffect(() => {
     if (popupState.isOpen) trigger({ limit: 6 }, true);
   }, [popupState.isOpen]);
+
+  useEffect(() => {
+    if (markAsReadResult.isSuccess) trigger({ limit: 6 }, true);
+  }, [markAsReadResult]);
+
+  const markAllAsRead = async () => {
+    const response = await markAsRead(null);
+  };
 
   return (
     <div>
@@ -76,7 +87,7 @@ const NotificationPopover = () => {
           horizontal: "center",
         }}
       >
-        <Box sx={{ px: 2, pl: 2 }}>
+        <Box sx={{ py: 2, pl: 2 }}>
           <Stack
             direction="row"
             justifyContent="space-between"
@@ -90,6 +101,7 @@ const NotificationPopover = () => {
               size="small"
               startIcon={<DoneAllIcon fontSize="small" />}
               variant="text"
+              onClick={markAllAsRead}
             >
               Mark all as read
             </Button>
