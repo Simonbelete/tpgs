@@ -31,9 +31,11 @@ class UserViewSet(mixins.CreateModelMixin,
     def get_queryset(self):
         superuser_mode = self.request.headers.get('X-Superuser-Mode', 'false')
         superuser_mode = eval(superuser_mode.capitalize())
+        print('------------------')
+        print(self.request.tenant_model)
         if (superuser_mode and self.request.user.is_superuser):
             return super().get_queryset()
-        return super().get_queryset().filter(farms__in=[self.request.tenant_model])
+        return super().get_queryset().filter(farms__name__in=[self.request.tenant])
 
     # def get_queryset(self):
     #     return self.queryset.filter(farms__in=[self.request.tenant.id])

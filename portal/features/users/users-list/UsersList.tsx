@@ -17,8 +17,8 @@ const columns: GridColDef[] = [
   { field: "name", headerName: "Name", flex: 1, minWidth: 150 },
   { field: "email", headerName: "Email", flex: 1, minWidth: 150 },
   {
-    field: "groups",
-    headerName: "Groups",
+    field: "farms",
+    headerName: "Farms",
     flex: 1,
     minWidth: 150,
     renderCell: (params: GridRenderCellParams<any>) => {
@@ -26,6 +26,22 @@ const columns: GridColDef[] = [
         <Stack direction="row" spacing={1}>
           {params.row.farms &&
             params.row.farms.map((e: string, key: any) => (
+              <Chip key={key} label={e} size="small" />
+            ))}
+        </Stack>
+      );
+    },
+  },
+  {
+    field: "groups",
+    headerName: "Groups",
+    flex: 1,
+    minWidth: 150,
+    renderCell: (params: GridRenderCellParams<any>) => {
+      return (
+        <Stack direction="row" spacing={1}>
+          {params.row.groups &&
+            params.row.groups.map((e: string, key: any) => (
               <Chip key={key} label={e} size="small" />
             ))}
         </Stack>

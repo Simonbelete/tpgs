@@ -27,7 +27,6 @@ class InvitationViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         superuser_mode = self.request.headers.get('X-Superuser-Mode', 'false')
         superuser_mode = eval(superuser_mode.capitalize())
-        print(superuser_mode)
         if (superuser_mode and self.request.user.is_superuser):
             return super().get_queryset()
         return super().get_queryset().filter(inviter=self.request.user)
