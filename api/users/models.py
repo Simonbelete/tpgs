@@ -6,7 +6,7 @@ from django.contrib.auth.models import Group
 from django_tenants.models import TenantMixin, DomainMixin
 
 from farms.models import Farm
-
+from core.models import BaseAllDataManger
 
 class UserManager(BaseUserManager):
     """
@@ -43,7 +43,8 @@ class UserManager(BaseUserManager):
 
 class User(AbstractUser):
     objects = UserManager()
-
+    all = BaseAllDataManger()
+    
     username = models.CharField(
         "username", max_length=150, unique=False, null=True, blank=True)
     email = models.EmailField(

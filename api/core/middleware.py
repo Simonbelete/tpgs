@@ -54,4 +54,5 @@ class FarmMiddleware(TenantMainMiddleware):
 
         tenant.domain_url = requested_farm
         request.tenant = tenant
+        request.tenant_model = tenant_model
         connection.set_tenant(request.tenant)
