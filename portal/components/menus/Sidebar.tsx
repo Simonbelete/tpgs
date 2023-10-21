@@ -40,6 +40,7 @@ import GroupWorkIcon from "@mui/icons-material/GroupWork";
 import CabinIcon from "@mui/icons-material/Cabin";
 import { useRouter } from "next/router";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
+import FactoryIcon from "@mui/icons-material/Factory";
 
 function menuProps(key: string) {
   return {
@@ -175,6 +176,15 @@ const SidebarMenu = () => {
             </MenuItem>
           </SubMenu>
         )}
+
+        <MenuItem
+          component={<Link href="/farms" />}
+          icon={<FactoryIcon fontSize="small" />}
+        >
+          <Typography variant="body1" fontSize={14}>
+            Farms
+          </Typography>
+        </MenuItem>
 
         <SubMenu
           label={
