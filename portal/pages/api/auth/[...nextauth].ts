@@ -124,7 +124,9 @@ export const authOptions = {
         token.accessToken = user.access;
         token.email = user.email;
         token.name = user.name;
+        token.id = user.id;
       }
+
       return { ...token, ...user };
     },
     async session({
@@ -137,10 +139,13 @@ export const authOptions = {
       user: User;
     }) {
       session.accessToken = token.accessToken;
-      if(session.user !== undefined) {
+
+      if (session.user !== undefined) {
+        session.user.id = token.id as any;
         session.user.groups = token.groups as any;
         session.user.is_superuser = (token.is_superuser as any) || false;
       }
+
       return session;
     },
   },
