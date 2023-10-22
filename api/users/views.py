@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.contrib.auth.models import Group, Permission
 from rest_framework import viewsets, mixins
 from core.utils import multi_farm_from_request, farm_from_request
+from django.db.models import Q
 
 from . import models
 from . import serializers
@@ -31,11 +32,9 @@ class UserViewSet(mixins.CreateModelMixin,
     def get_queryset(self):
         superuser_mode = self.request.headers.get('X-Superuser-Mode', 'false')
         superuser_mode = eval(superuser_mode.capitalize())
-        print('------------------')
-        print(self.request.tenant_model)
         if (superuser_mode and self.request.user.is_superuser):
-            return super().get_queryset()
-        return super().get_queryset().filter(farms__name__in=[self.request.tenant])
+            return super().get_queryset().filter(~Q(pk=self.request.user.id))
+        return super().get_queryset().filter(farms__name__in=[self.request.tenant]).filter(~Q(pk=self.request.user.id))
 
     # def get_queryset(self):
     #     return self.queryset.filter(farms__in=[self.request.tenant.id])

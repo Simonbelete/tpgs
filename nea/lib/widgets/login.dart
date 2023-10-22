@@ -53,15 +53,14 @@ class _LoginBodyScreenState extends State<LoginBodyScreen> {
           },
           codeSent: (String verId, int? resendToken) {
             verificationId = verId;
+            setState(() {
+              loading = false;
+            });
             otpDialogBox(context).then((value) {});
           },
           codeAutoRetrievalTimeout: (String verificationId) {});
     } on FirebaseAuthException catch (e) {
       showErrorMessage(e.code);
-    } finally {
-      setState(() {
-        loading = false;
-      });
     }
   }
 
@@ -101,14 +100,14 @@ class _LoginBodyScreenState extends State<LoginBodyScreen> {
         .limit(1)
         .get();
     if (userCollection.docs.length == 0) {
-      db.collection('users').add({
-        'name': userCollection.docs[0]['name'],
+      await db.collection('users').add({
+        'name': cred.user?.phoneNumber ?? "",
         'role': 'user',
         'uid': cred.user?.uid
       });
-      Preferencess.setRole('user');
+      await Preferencess.setRole('user');
     } else {
-      Preferencess.setRole(userCollection.docs[0]['role']);
+      await Preferencess.setRole(userCollection.docs[0]['role']);
     }
   }
 
@@ -245,7 +244,8 @@ class _LoginBodyScreenState extends State<LoginBodyScreen> {
                                   ),
                                   MyButton(
                                     onPressed: signUserIn,
-                                    buttonText: 'Login',
+                                    buttonText:
+                                        loading ? 'Sending...' : 'Login',
                                   ),
                                   const SizedBox(
                                     height: 12,

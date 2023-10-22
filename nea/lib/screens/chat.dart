@@ -34,14 +34,15 @@ class ChatPage extends StatefulWidget {
 class _ChatPageState extends State<ChatPage> {
   FirebaseFirestore db = FirebaseFirestore.instance;
 
-  DocumentSnapshot? currentUser;
+  // Sender
+  Map<String, dynamic>? currentUser;
 
   @override
   void initState() {
     super.initState();
     db.collection('users').doc(widget.userId).get().then((DocumentSnapshot da) {
       setState(() {
-        currentUser = da;
+        currentUser = da.data()! as Map<String, dynamic>;
       });
     });
   }
@@ -52,9 +53,16 @@ class _ChatPageState extends State<ChatPage> {
       child: StreamBuilder<QuerySnapshot>(
           stream: db
               .collection('messages')
-              .where('sender',
-                  isEqualTo: FirebaseAuth.instance.currentUser?.uid)
-              .where('receiver', isEqualTo: widget.userId)
+              .where(Filter.or(
+                Filter.and(
+                    Filter('receiver', isEqualTo: currentUser?['uid']),
+                    Filter('sender',
+                        isEqualTo: FirebaseAuth.instance.currentUser?.uid)),
+                Filter.and(
+                    Filter('sender', isEqualTo: currentUser?['uid']),
+                    Filter('receiver',
+                        isEqualTo: FirebaseAuth.instance.currentUser?.uid)),
+              ))
               .orderBy('createdAt', descending: false)
               .limit(1000)
               .snapshots(),
@@ -80,6 +88,9 @@ class _ChatPageState extends State<ChatPage> {
               );
             }
 
+            print('*********');
+            print(snapshot.data?.docs.length);
+
             return ListView(
                 shrinkWrap: true,
                 padding: const EdgeInsets.only(top: 10, bottom: 10),
@@ -93,13 +104,13 @@ class _ChatPageState extends State<ChatPage> {
                         padding: const EdgeInsets.only(
                             left: 14, right: 14, top: 10, bottom: 10),
                         child: Align(
-                          alignment: (data['messageType'] == "receiver"
+                          alignment: (data['sender'] == currentUser?['uid']
                               ? Alignment.topLeft
                               : Alignment.topRight),
                           child: Container(
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(20),
-                              color: (data['messageType'] == "receiver"
+                              color: (data['sender'] == currentUser?['uid']
                                   ? Colors.grey.shade200
                                   : Colors.blue[200]),
                             ),
@@ -124,11 +135,13 @@ class _ChatPageState extends State<ChatPage> {
     try {
       await db.collection('messages').add({
         'sender': FirebaseAuth.instance.currentUser?.uid,
-        'receiver': widget.userId,
+        'receiver': currentUser?['uid'],
         'messageType': 'sender',
         'messageContent': messageContentController.text,
         'createdAt': FieldValue.serverTimestamp()
       });
+
+      messageContentController.text = "";
     } catch (ex) {
       ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Failed to send message')));
