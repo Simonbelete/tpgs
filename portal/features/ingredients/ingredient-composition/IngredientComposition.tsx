@@ -7,17 +7,26 @@ import {
   Typography,
   Tooltip,
   Chip,
+  Grid,
 } from "@mui/material";
 import dynamic from "next/dynamic";
 import { Skeleton } from "@mui/material";
+import { useGetIngredientNutrientsQuery } from "../services";
+import { Nutrient } from "@/models";
+import { StatisticsCard } from "@/components";
 
-const Chart = dynamic(() => import("./Chart"), {
+const Chart = dynamic(() => import("./PieChart"), {
   ssr: false,
   loading: () => <Skeleton variant="circular" width={150} height={150} />,
 });
 
-const IngredientComposition = () => {
-  const [data, setData] = useState<{
+const BarChart = dynamic(() => import("./BarChart"), {
+  ssr: false,
+  loading: () => <Skeleton width={150} height={150} />,
+});
+
+const IngredientComposition = ({ id }: { id: number }) => {
+  const [chartData, setChartData] = useState<{
     values: number[];
     labels: string[];
   }>({
@@ -25,76 +34,64 @@ const IngredientComposition = () => {
     labels: [],
   });
 
-  return (
-    <Box>
-      <Paper sx={{ py: 1, px: 5 }} elevation={0} variant="outlined" square>
-        <Stack
-          direction={{ xs: "column", lg: "row" }}
-          justifyContent="space-between"
-          alignItems={{ xs: "left", lg: "center" }}
-          spacing={{ xs: 2, lg: 0 }}
-          divider={
-            <Divider
-              // @ts-ignore
-              orientation={{ xs: "horizontal", lg: "vertical" }}
-              flexItem
-            />
-          }
-        >
-          <Stack>
-            <Typography variant="caption" color="text.secondary">
-              TOTAL COST
-            </Typography>
-            <Stack direction={"row"} spacing={2}>
-              <Tooltip title="Achived Cost">
-                <Typography variant="body2" fontWeight={600} color="secondary">
-                  1k
-                </Typography>
-              </Tooltip>
-              <Tooltip title="Achivement">
-                <Chip
-                  size="small"
-                  variant="outlined"
-                  color={"error"}
-                  label={""}
-                />
-              </Tooltip>
-            </Stack>
-            <Tooltip title="Desired Cost">
-              <Typography variant="caption" color="text.secondary">
-                Formual 1
-              </Typography>
-            </Tooltip>
-          </Stack>
+  const [chartData2, setChartData2] = useState<any>([]);
 
-          <Stack>
-            <Typography variant="caption" color="text.secondary">
-              TOTAL Ratio [%]
-            </Typography>
-            <Stack direction={"row"} spacing={2}>
-              <Tooltip title="Achived Ration">
-                <Typography variant="body2" fontWeight={600} color="secondary">
-                  Text
-                </Typography>
-              </Tooltip>
-              <Tooltip title="Achivement">
-                <Chip
-                  size="small"
-                  variant="outlined"
-                  color={"error"}
-                  label={""}
-                />
-              </Tooltip>
-            </Stack>
-            <Tooltip title="Desired Cost">
-              <Typography variant="caption" color="text.secondary">
-                a
-              </Typography>
-            </Tooltip>
-          </Stack>
-        </Stack>
-      </Paper>
-    </Box>
+  const { data, isLoading, status } = useGetIngredientNutrientsQuery({
+    id,
+    query: {},
+  });
+
+  useEffect(() => {
+    const labels: string[] = [];
+    const values: number[] = [];
+
+    const x1: string[] = [];
+    const y1: number[] = [];
+
+    const x2: string[] = [];
+    const y2: number[] = [];
+
+    const response = data?.results || [];
+
+    for (let i = 0; i < response.length; i += 1) {
+      labels.push((response[i].nutrient as Nutrient).name || "");
+      values.push(response[i].value);
+
+      x1.push(
+        `${(response[i].nutrient as Nutrient).name} [${
+          (response[i].nutrient as Nutrient).unit || ""
+        }]` || ""
+      );
+      y1.push(response[i].value);
+
+      x2.push(
+        `${(response[i].nutrient as Nutrient).name} [${
+          (response[i].nutrient as Nutrient).unit || ""
+        }]` || ""
+      );
+      y2.push(response[i].as_feed_value);
+    }
+
+    setChartData({ values, labels });
+    setChartData2([
+      { x: x1, y: y1, type: "bar", name: "As dry matter" },
+      { x: x2, y: y2, type: "bar", name: "As feed" },
+    ]);
+  }, [data]);
+
+  return (
+    <Grid container spacing={3}>
+      <Grid item xs={4}>
+        <StatisticsCard title="Ingredient Compostions">
+          <Chart data={chartData} />
+        </StatisticsCard>
+      </Grid>
+      <Grid item xs={8}>
+        <StatisticsCard title="Ingredient Dry matter vs As feed comparation">
+          <BarChart data={chartData2} />
+        </StatisticsCard>
+      </Grid>
+    </Grid>
   );
 };
 

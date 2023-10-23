@@ -6,4 +6,6 @@ export default interface IngredientNutrient extends AbstractBaseModel {
   ingredient: number | Ingredient;
   nutrient: number | Nutrient;
   value: number;
+  as_feed_value: number;
+  unit?: string;
 }

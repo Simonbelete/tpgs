@@ -51,3 +51,4 @@ export type { default as ReductionReason } from "./ReductionReason";
 export type { default as Hatchery } from "./Hatchery";
 export type { default as HatcheryEgg } from "./HatcheryEgg";
 export type { default as Incubation } from "./Incubation";
+export type { default as IngredientAnalyses } from "./IngredientAnalyses";

@@ -4,6 +4,7 @@ import {
   Response,
   Ingredient,
   IngredientNutrient,
+  IngredientAnalyses,
 } from "@/models";
 import { AxiosResponse } from "axios";
 import clientSSR from "@/services/client_ssr";
@@ -65,6 +66,12 @@ export const ingredientApi = baseApi.injectEndpoints({
       }),
       deleteIngredient: build.mutation<any, number>({
         query: (id: number) => ({ url: `${URL}/${id}/`, method: "delete" }),
+      }),
+      getIngredientAnalyses: build.query<IngredientAnalyses, number>({
+        query: (id) => ({
+          url: `${URL}/${id}/analyses`,
+          method: "get",
+        }),
       }),
       // Nutrients
       getIngredientNutrients: build.query<
@@ -148,6 +155,7 @@ export const {
   useCreateIngredientMutation,
   useUpdateIngredientMutation,
   useDeleteIngredientMutation,
+  useGetIngredientAnalysesQuery,
 
   // Nutrients
   useGetIngredientNutrientsQuery,

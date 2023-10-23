@@ -45,9 +45,15 @@ const Actions = () => {
       alignItems="center"
     >
       <Tooltip title="Dashboard">
-        <IconButton color="secondary">
-          <AnalyticsIcon />
-        </IconButton>
+        <Link
+          href={`${router.pathname.split("/[id]")[0]}/${
+            router.query.id
+          }/dashboard`}
+        >
+          <IconButton color="secondary">
+            <AnalyticsIcon />
+          </IconButton>
+        </Link>
       </Tooltip>
       <Tooltip title="Create New">
         <Link href="/chickens/create">
@@ -57,7 +63,11 @@ const Actions = () => {
         </Link>
       </Tooltip>
       <Tooltip title="Histories">
-        <Link href={`${router.pathname.split("/edit")[0]}/histories`}>
+        <Link
+          href={`${router.pathname.split("/[id]")[0]}/${
+            router.query.id
+          }/histories`}
+        >
           <IconButton color="secondary">
             <ManageHistoryIcon />
           </IconButton>

@@ -1,7 +1,5 @@
 from django.db import models
-from djmoney.models.fields import MoneyField
-from multiselectfield import MultiSelectField
-from units.models import Unit
+from django.db.models import Count, Sum, Avg, F, Q
 from simple_history.models import HistoricalRecords
 
 from core.models import CoreModel
@@ -17,7 +15,18 @@ class IngredientNutrient(CoreModel):
         'ingredients.Ingredient', on_delete=models.CASCADE)
     nutrient = models.ForeignKey(
         'nutrients.Nutrient', on_delete=models.CASCADE)
+    # Value by Dry Matter
     value = models.DecimalField(max_digits=7, decimal_places=3,null=True, blank=True, default=0)
+
+    @property
+    def unit(self):
+        return self.nutrient.unit.name
+
+    @property
+    def as_feed_value(self):
+        """Dry matter to as feed conversion 
+        """
+        return self.value * self.ingredient.dm /100 
 
 
 class Ingredient(CoreModel):
@@ -42,6 +51,10 @@ class Ingredient(CoreModel):
     def __str__(self) -> str:
         return self.name
     
-    @property
     def nutrient_count(self):
-        return self.nutrients.count()
+        return IngredientNutrient.objects.filter(ingredient=self.id).count()
+    
+    def composition_total(self):
+        return self.nutrients.through.objects.all().aggregate(sum=Sum('value'))['sum'] or 0
+
+

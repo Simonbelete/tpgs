@@ -28,7 +28,7 @@ const NumberStatisticsCard = ({
   const theme = useTheme();
 
   return (
-    <Card variant="outlined" sx={{ borderRadius: 1 }}>
+    <Card variant="outlined" sx={{ borderRadius: 3 }}>
       <Box sx={{ px: 2, py: 1, width: 150 }}>
         <Stack direction={"row"} justifyContent={"space-between"}>
           <Stack>

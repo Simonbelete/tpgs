@@ -32,7 +32,7 @@ class NutrientSerializer_SLUG(serializers.ModelSerializer):
 
     class Meta:
         model = models.Nutrient
-        fields = '__all__'
+        fields = ['id', 'name', 'nutrient_group', 'unit']
 
 class NutrientSerializer_POST(serializers.ModelSerializer):
     class Meta:

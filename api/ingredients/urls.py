@@ -7,6 +7,10 @@ from . import views
 router = routers.DefaultRouter()
 router.register(r'ingredients', views.IngredientViewSet,
                 basename='api_ingredients')
+
+router.register(r'ingredients/(?P<id>.+)/analyses', views.IngredientAnalysesViewSet,
+                basename='api_ingredient_analyses')
+
 summary_router = NestedDefaultRouter(
     router, r'ingredients', lookup='id')
 summary_router.register(r'summary', views.IngredientSummaryViewSet,
@@ -31,6 +35,7 @@ urlpatterns = [
     path('', include(ingredient_nutrients_router.urls)),
     path('', include(summary_router.urls)),
     path('', include(summary_ing_type_router.urls)),
+    # path('', include(analyses_router.urls)),
 
     path('ingredients/export/', include([
           path('xlsx', views.IngredientXlsxExport.as_view(),

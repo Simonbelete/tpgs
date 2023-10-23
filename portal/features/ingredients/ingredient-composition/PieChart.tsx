@@ -1,7 +1,7 @@
 import React from "react";
 import Plot from "react-plotly.js";
 
-const IngredientCompostion = ({
+const PieChart = ({
   data,
 }: {
   data: { values: number[]; labels: string[] };
@@ -22,4 +22,4 @@ const IngredientCompostion = ({
   );
 };
 
-export default IngredientCompostion;
+export default PieChart;

@@ -10,6 +10,8 @@ from django.conf import settings
 from import_export import resources
 from rest_framework.parsers import MultiPartParser
 from tablib import Dataset
+from rest_framework.response import Response
+from rest_framework.exceptions import NotFound
 
 from core.views import HistoryViewSet, SummaryViewSet, CoreModelViewSet
 from core.serializers import UploadSerializer
@@ -122,9 +124,26 @@ class IngredientSummaryViewSet(SummaryViewSet):
     def get_query(self):
         return models.Ingredient.all.get(pk=self.id_pk)
 
+class IngredientAnalysesViewSet(viewsets.ViewSet):
+    def get_queryset(self):
+        try:
+            return models.Ingredient.all.get(pk=self.kwargs['id'])
+        except models.Ingredient.DoesNotExist as ex:
+            raise NotFound()
+    
+    def list(self, request, id=None, **kwargs):
+        queryset = self.get_queryset()
+
+        return Response({
+            'dm': queryset.dm,
+            'price': queryset.price,
+            'nutrient_count': queryset.nutrient_count(),
+            'composition_total': queryset.composition_total()
+        }, status=200)
+
 # Xlsx
 class IngredientXlsxExport(APIView):
-    def get(self, request):
+    def list(self, request):
         dataset = admin.IngredientResource().export()
         response = HttpResponse(
             dataset.xlsx, content_type='application/ms-excel')

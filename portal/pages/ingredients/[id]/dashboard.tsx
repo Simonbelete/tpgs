@@ -6,7 +6,7 @@ import { Breadcrumbs, Loading } from "@/components";
 import { useBreadcrumbs } from "@/hooks";
 import { Formula } from "@/models";
 import { useRouter } from "next/router";
-import { IngredientStat } from "@/features/ingredients";
+import { IngredientStat, IngredientComposition } from "@/features/ingredients";
 import { getFormulaByIdSSR } from "@/features/formula/services";
 import EditNoteIcon from "@mui/icons-material/EditNote";
 
@@ -21,9 +21,12 @@ const FormulaDashboardEditPage = ({ data }: { data: Formula }) => {
       header={<Typography variant="title">{data.name}</Typography>}
       actions={<Actions />}
     >
-      <Grid container>
+      <Grid container gap={5}>
         <Grid item xs={12}>
-          <IngredientStat />
+          <IngredientStat id={data.id} />
+        </Grid>
+        <Grid item xs={12}>
+          <IngredientComposition id={data.id} />
         </Grid>
       </Grid>
     </StatDashboardLayout>
