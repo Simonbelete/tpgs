@@ -8,11 +8,12 @@ class NutrientGroupFilter(filters.FilterSet):
 
     class Meta:
         model = models.NutrientGroup
-        fields = ['name']
+        fields = ['name', 'is_active']
 
 class NutrientFilter(filters.FilterSet):
     class Meta:
         model = models.Nutrient
         fields = {
-            'nutrient_group': ['in', 'exact']
+            'nutrient_group': ['in', 'exact'],
+            'is_active': 'exact'
         }

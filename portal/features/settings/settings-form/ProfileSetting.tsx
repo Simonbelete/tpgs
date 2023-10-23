@@ -39,8 +39,6 @@ const ProfileSetting = () => {
   });
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
-    console.log("***");
-    console.log(session);
     await updateUser({ ...data, id: Number(session?.user?.id) || 0 });
   };
 

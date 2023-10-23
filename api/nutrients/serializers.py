@@ -38,3 +38,10 @@ class NutrientSerializer_POST(serializers.ModelSerializer):
     class Meta:
         model = models.Nutrient
         fields = '__all__'
+
+class NutrientHistorySerializer(serializers.ModelSerializer):
+    history_user = UserSerializer_GET()
+
+    class Meta:
+        model = models.Nutrient.history.__dict__['model']
+        fields = '__all__'

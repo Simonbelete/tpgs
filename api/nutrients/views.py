@@ -9,16 +9,26 @@ from tablib import Dataset
 from import_export import resources
 import pandas as pd
 
-from core.views import HistoryViewSet
+from core.views import (
+    HistoryViewSet,
+    SummaryViewSet,
+    CoreModelViewSet,
+    XlsxExport,
+    XlsExport,
+    CsvExport,
+    XlsxImport,
+    XlsImport,
+    CsvImport
+)
 from core.serializers import UploadSerializer
 from . import models
 from . import serializers
 from . import admin
 from . import filters
 
-#
-# Nutrient Group
-#
+##
+## Nutrient Group
+##
 
 class NutrientGroupViewSet(viewsets.ModelViewSet):
     queryset = models.NutrientGroup.objects.all()
@@ -27,100 +37,43 @@ class NutrientGroupViewSet(viewsets.ModelViewSet):
     search_fields = ['name']
     ordering_fields = '__all__'
 
-
 class NutrientGroupHistoryViewSet(HistoryViewSet):
     queryset = models.NutrientGroup.history.all()
     serializer_class = serializers.NutrientGroupHistorySerializer
 
-# Xlsx
+class NutrientGroupSummaryViewSet(SummaryViewSet):
+    def get_query(self):
+        return models.NutrientGroup.all.get(pk=self.id_pk)
 
+## Nutrient Group Export
+class NutrientGroupXlsxExport(XlsxExport):
+    def get_dataset(self, request):
+        return admin.NutrientGroupResource().export()
 
-class NutrientGroupXlsxExport(APIView):
-    def get(self, request):
-        dataset = admin.NutrientGroupResource().export()
-        response = HttpResponse(
-            dataset.xlsx, content_type='application/ms-excel')
-        response['Content-Disposition'] = 'attachment; filename="nutrient_groups_%s.xlsx"' % (
-            date.today().strftime(settings.DATETIME_FORMAT))
-        return response
+class NutrientGroupXlsExport(XlsExport):
+    def get_dataset(self, request):
+        return admin.NutrientGroupResource().export()
 
+class NutrientGroupCsvExport(CsvExport):
+    def get_dataset(self, request):
+        return admin.NutrientGroupResource().export()
 
-class NutrientGroupXlsxImport(APIView):
-    serializer_class = UploadSerializer
-    parser_classes = [MultiPartParser]
+## Nutrient Group Import
+class NutrientGroupXlsxImport(XlsxImport):
+    def get_model(self):
+        return models.NutrientGroup
 
-    def post(self, request):
-        file = request.FILES.get('file')
-        df = pd.read_excel(file, header=0)
-        dataset = Dataset().load(df)
-        resource = resources.modelresource_factory(
-            model=models.NutrientGroup)()
-        result = resource.import_data(dataset, raise_errors=True)
-        if not result.has_errors():
-            return JsonResponse({'message': 'Imported Successfully'}, status=200)
-        return JsonResponse({'errors': ['Import Failed']}, status=400)
+class NutrientGroupXlsImport(XlsImport):
+    def get_model(self):
+        return models.NutrientGroup
 
-# Xls
+class NutrientGroupCsvImport(CsvImport):
+    def get_model(self):
+        return models.NutrientGroup
 
-
-class NutrientGroupXlsExport(APIView):
-    def get(self, request):
-        dataset = admin.NutrientGroupResource().export()
-        response = HttpResponse(
-            dataset.xls, content_type='application/ms-excel')
-        response['Content-Disposition'] = 'attachment; filename="nutrient_groups_%s.xls"' % (
-            date.today().strftime(settings.DATETIME_FORMAT))
-        return response
-
-
-class NutrientGroupXlsImport(APIView):
-    serializer_class = UploadSerializer
-    parser_classes = [MultiPartParser]
-
-    def post(self, request):
-        file = request.FILES.get('file')
-        df = pd.read_excel(file, header=0)
-        dataset = Dataset().load(df)
-        resource = resources.modelresource_factory(
-            model=models.NutrientGroup)()
-        result = resource.import_data(dataset, raise_errors=True)
-        if not result.has_errors():
-            return JsonResponse({'message': 'Imported Successfully'}, status=200)
-        return JsonResponse({'errors': ['Import Failed']}, status=400)
-
-# Csv
-
-
-class NutrientGroupCsvExport(APIView):
-    def get(self, request):
-        dataset = admin.NutrientGroupResource().export()
-        response = HttpResponse(
-            dataset.csv, content_type='application/ms-excel')
-        response['Content-Disposition'] = 'attachment; filename="nutrient_groups%s.csv"' % (
-            date.today().strftime(settings.DATETIME_FORMAT))
-        return response
-
-
-class NutrientGroupCsvImport(APIView):
-    serializer_class = UploadSerializer
-    parser_classes = [MultiPartParser]
-
-    def post(self, request):
-        file = request.FILES.get('file')
-        df = pd.read_csv(file, header=0)
-        dataset = Dataset().load(df)
-        resource = resources.modelresource_factory(
-            model=models.NutrientGroup)()
-        result = resource.import_data(dataset, raise_errors=True)
-        if not result.has_errors():
-            return JsonResponse({'message': 'Imported Successfully'}, status=200)
-        return JsonResponse({'errors': ['Import Failed']}, status=400)
-
-
-#
-# Nutrient
-#
-
+##
+## Nutrient
+##
 class NutrientViewSet(viewsets.ModelViewSet):
     queryset = models.Nutrient.objects.all()
     serializer_class = serializers.NutrientSerializer_GET
@@ -132,87 +85,34 @@ class NutrientViewSet(viewsets.ModelViewSet):
         if self.request.method == 'GET':
             return serializers.NutrientSerializer_GET
         return serializers.NutrientSerializer_POST
+class NutrientHistoryViewSet(HistoryViewSet):
+    queryset = models.Nutrient.history.all()
+    serializer_class = serializers.NutrientHistorySerializer
+    
+class NutrientSummaryViewSet(SummaryViewSet):
+    def get_query(self):
+        return models.Nutrient.all.get(pk=self.id_pk)
 
+class NutrientXlsxExport(XlsxExport):
+    def get_dataset(self):
+        return admin.NutrientResource().export()
 
-# Xlsx
+class NutrientXlsExport(XlsExport):
+    def get_dataset(self):
+        return admin.NutrientResource().export()
 
-class NutrientXlsxExport(APIView):
-    def get(self, request):
-        dataset = admin.NutrientResource().export()
-        response = HttpResponse(
-            dataset.xlsx, content_type='application/ms-excel')
-        response['Content-Disposition'] = 'attachment; filename="file_%s.xlsx"' % (
-            date.today().strftime(settings.DATETIME_FORMAT))
-        return response
+class NutrientCsvExport(CsvExport):
+   def get_dataset(self):
+        return admin.NutrientResource().export()
 
+class NutrientXlsxImport(XlsxImport):
+    def get_model(self):
+        return models.Nutrient
+    
+class NutrientXlsImport(XlsImport):
+    def get_model(self):
+        return models.Nutrient
 
-class NutrientXlsxImport(APIView):
-    serializer_class = UploadSerializer
-    parser_classes = [MultiPartParser]
-
-    def post(self, request):
-        file = request.FILES.get('file')
-        df = pd.read_excel(file, header=0)
-        dataset = Dataset().load(df)
-        resource = resources.modelresource_factory(
-            model=models.Nutrient)()
-        result = resource.import_data(dataset, raise_errors=True)
-        if not result.has_errors():
-            return JsonResponse({'message': 'Imported Successfully'}, status=200)
-        return JsonResponse({'errors': ['Import Failed']}, status=400)
-
-# Xls
-
-
-class NutrientXlsExport(APIView):
-    def get(self, request):
-        dataset = admin.NutrientResource().export()
-        response = HttpResponse(
-            dataset.xls, content_type='application/ms-excel')
-        response['Content-Disposition'] = 'attachment; filename="nutrient_groups_%s.xls"' % (
-            date.today().strftime(settings.DATETIME_FORMAT))
-        return response
-
-
-class NutrientXlsImport(APIView):
-    serializer_class = UploadSerializer
-    parser_classes = [MultiPartParser]
-
-    def post(self, request):
-        file = request.FILES.get('file')
-        df = pd.read_excel(file, header=0)
-        dataset = Dataset().load(df)
-        resource = resources.modelresource_factory(
-            model=models.Nutrient)()
-        result = resource.import_data(dataset, raise_errors=True)
-        if not result.has_errors():
-            return JsonResponse({'message': 'Imported Successfully'}, status=200)
-        return JsonResponse({'errors': ['Import Failed']}, status=400)
-
-# Csv
-
-
-class NutrientCsvExport(APIView):
-    def get(self, request):
-        dataset = admin.NutrientResource().export()
-        response = HttpResponse(
-            dataset.csv, content_type='application/ms-excel')
-        response['Content-Disposition'] = 'attachment; filename="nutrient_groups%s.csv"' % (
-            date.today().strftime(settings.DATETIME_FORMAT))
-        return response
-
-
-class NutrientCsvImport(APIView):
-    serializer_class = UploadSerializer
-    parser_classes = [MultiPartParser]
-
-    def post(self, request):
-        file = request.FILES.get('file')
-        df = pd.read_csv(file, header=0)
-        dataset = Dataset().load(df)
-        resource = resources.modelresource_factory(
-            model=models.Nutrient)()
-        result = resource.import_data(dataset, raise_errors=True)
-        if not result.has_errors():
-            return JsonResponse({'message': 'Imported Successfully'}, status=200)
-        return JsonResponse({'errors': ['Import Failed']}, status=400)
+class NutrientCsvImport(CsvImport):
+    def get_model(self):
+        return models.Nutrient
