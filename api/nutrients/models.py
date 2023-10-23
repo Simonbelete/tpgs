@@ -13,7 +13,7 @@ class NutrientGroup(CoreModel):
         return self.name
 
 
-class Nutrient(models.Model):
+class Nutrient(CoreModel):
     name = models.CharField(max_length=100)
     code = models.CharField(max_length=100, null=True, blank=True)
     abbreviation = models.CharField(max_length=10, unique=True)
@@ -22,3 +22,5 @@ class Nutrient(models.Model):
         NutrientGroup, on_delete=models.SET_NULL, null=True, blank=True, related_name='nutrients')
     unit = models.ForeignKey(
         Unit, on_delete=models.SET_NULL, null=True, blank=True, related_name='nutrients')
+
+    history = HistoricalRecords()

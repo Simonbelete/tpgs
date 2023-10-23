@@ -15,5 +15,5 @@ class NutrientFilter(filters.FilterSet):
         model = models.Nutrient
         fields = {
             'nutrient_group': ['in', 'exact'],
-            'is_active': 'exact'
+            'is_active': ['exact']
         }

@@ -1,62 +1,82 @@
 import React from "react";
 import { NextPageContext } from "next";
-import { Button, Typography, Stack, Container } from "@mui/material";
-import AddIcon from "@mui/icons-material/Add";
+import { Typography, Stack, IconButton, Tooltip } from "@mui/material";
 import Link from "next/link";
-import CloseIcon from "@mui/icons-material/Close";
 import { EditLayout } from "@/layouts";
 import { NutrientGroupForm } from "@/features/nutrient-group";
-import { getNutrientGroupByIdSSR } from '@/features/nutrient-group/services';
+import { getNutrientGroupByIdSSR } from "@/features/nutrient-group/services";
 import { Breadcrumbs, Loading } from "@/components";
 import { useBreadcrumbs } from "@/hooks";
 import { NutrientGroup } from "@/models";
 import { SeoHead } from "@/seo";
+import ManageHistoryIcon from "@mui/icons-material/ManageHistory";
+import CancelIcon from "@mui/icons-material/Cancel";
+import AnalyticsIcon from "@mui/icons-material/Analytics";
+import LibraryAddIcon from "@mui/icons-material/LibraryAdd";
+import { useRouter } from "next/router";
 
 const NutrientGroupEditPage = ({ data }: { data: NutrientGroup }) => {
   const { breadcrumbs } = useBreadcrumbs();
 
   return (
     <>
-    <SeoHead title={`${data.name || ""} - Edit`} />
-    <EditLayout
-      breadcrumbs={<Breadcrumbs items={breadcrumbs} />}
-      header={<Typography variant="title">{data.name} - Edit</Typography>}
-      actions={<Actions />}
-    >
+      <SeoHead title={`${data.name || ""} - Edit`} />
+      <EditLayout
+        breadcrumbs={<Breadcrumbs items={breadcrumbs} />}
+        header={<Typography variant="title">{data.name} - Edit</Typography>}
+        actions={<Actions id={data.id} />}
+      >
         <NutrientGroupForm nutrientGroup={data} />
-    </EditLayout>
+      </EditLayout>
     </>
   );
 };
 
-const Actions = () => {
+const Actions = ({ id }: { id: number }) => {
+  const router = useRouter();
+
   return (
     <Stack
-        spacing={2}
-        direction={"row"}
-        justifyContent="flex-start"
-        alignItems="center"
-      >
+      spacing={0}
+      direction={"row"}
+      justifyContent="flex-start"
+      alignItems="center"
+    >
+      <Tooltip title="Create New">
         <Link href="/nutrient-groups/create">
-          <Button variant="outlined" size={"small"} startIcon={<AddIcon />}>
-            Create New
-          </Button>
+          <IconButton color="secondary">
+            <LibraryAddIcon />
+          </IconButton>
         </Link>
+      </Tooltip>
+      <Tooltip title="Histories">
+        <Link
+          href={`${router.pathname.split("/[id]")[0]}/${
+            router.query.id
+          }/histories`}
+        >
+          <IconButton color="secondary">
+            <ManageHistoryIcon />
+          </IconButton>
+        </Link>
+      </Tooltip>
+      <Tooltip title="Cancel">
         <Link href="/nutrient-groups">
-          <Button variant="outlined" color="error" size={"small"} startIcon={<CloseIcon />}>
-            Cancel
-          </Button>
+          <IconButton color="secondary">
+            <CancelIcon />
+          </IconButton>
         </Link>
-      </Stack>
-  )
-} 
+      </Tooltip>
+    </Stack>
+  );
+};
 
 export async function getServerSideProps(context: NextPageContext) {
   const { id } = context.query;
 
   try {
     const res = await getNutrientGroupByIdSSR(context, Number(id));
-    
+
     if (res.status != 200)
       return {
         redirect: {

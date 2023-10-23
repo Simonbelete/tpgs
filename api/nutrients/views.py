@@ -8,6 +8,7 @@ from rest_framework.parsers import MultiPartParser
 from tablib import Dataset
 from import_export import resources
 import pandas as pd
+from rest_framework.permissions import DjangoModelPermissions
 
 from core.views import (
     HistoryViewSet,
@@ -30,8 +31,9 @@ from . import filters
 ## Nutrient Group
 ##
 
-class NutrientGroupViewSet(viewsets.ModelViewSet):
-    queryset = models.NutrientGroup.objects.all()
+class NutrientGroupViewSet(CoreModelViewSet):
+    permission_classes = [DjangoModelPermissions]
+    queryset = models.NutrientGroup.all.all()
     serializer_class = serializers.NutrientGroupSerializer_GET
     filterset_class = filters.NutrientGroupFilter
     search_fields = ['name']
@@ -47,15 +49,15 @@ class NutrientGroupSummaryViewSet(SummaryViewSet):
 
 ## Nutrient Group Export
 class NutrientGroupXlsxExport(XlsxExport):
-    def get_dataset(self, request):
+    def get_dataset(self):
         return admin.NutrientGroupResource().export()
 
 class NutrientGroupXlsExport(XlsExport):
-    def get_dataset(self, request):
+    def get_dataset(self):
         return admin.NutrientGroupResource().export()
 
 class NutrientGroupCsvExport(CsvExport):
-    def get_dataset(self, request):
+    def get_dataset(self):
         return admin.NutrientGroupResource().export()
 
 ## Nutrient Group Import
@@ -74,8 +76,8 @@ class NutrientGroupCsvImport(CsvImport):
 ##
 ## Nutrient
 ##
-class NutrientViewSet(viewsets.ModelViewSet):
-    queryset = models.Nutrient.objects.all()
+class NutrientViewSet(CoreModelViewSet):
+    queryset = models.Nutrient.all.all()
     serializer_class = serializers.NutrientSerializer_GET
     filterset_class = filters.NutrientFilter
     search_fields = ['code', 'name', 'abbreviation']
@@ -85,6 +87,7 @@ class NutrientViewSet(viewsets.ModelViewSet):
         if self.request.method == 'GET':
             return serializers.NutrientSerializer_GET
         return serializers.NutrientSerializer_POST
+
 class NutrientHistoryViewSet(HistoryViewSet):
     queryset = models.Nutrient.history.all()
     serializer_class = serializers.NutrientHistorySerializer

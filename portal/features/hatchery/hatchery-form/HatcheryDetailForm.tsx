@@ -73,9 +73,6 @@ const HatcheryDetailForm = ({
     else await updateHatchery({ ...body, id: hatchery.id });
   };
 
-  console.log("00000000000000");
-  console.log(hatchery);
-
   return (
     <>
       <Card title="Hatchery Form">

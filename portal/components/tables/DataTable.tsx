@@ -11,13 +11,13 @@ import { Box, IconButton, LinearProgress, Tooltip } from "@mui/material";
 import { alpha, styled } from "@mui/material/styles";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
-import EditNoteIcon from "@mui/icons-material/EditNote";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { DeleteModal } from "../modals";
 import HistoryIcon from "@mui/icons-material/History";
 import ScheduleSendIcon from "@mui/icons-material/ScheduleSend";
 import AnalyticsIcon from "@mui/icons-material/Analytics";
+import DriveFileRenameOutlineIcon from "@mui/icons-material/DriveFileRenameOutline";
 
 const ODD_OPACITY = 0.2;
 
@@ -205,7 +205,7 @@ const DataTable = ({
                 >
                   <Tooltip title="Edit">
                     <IconButton aria-label="edit">
-                      <EditNoteIcon fontSize="small" />
+                      <DriveFileRenameOutlineIcon fontSize="small" />
                     </IconButton>
                   </Tooltip>
                 </Link>
@@ -258,7 +258,7 @@ const DataTable = ({
                 >
                   <Tooltip title="Edit">
                     <IconButton aria-label="edit">
-                      <EditNoteIcon fontSize="small" />
+                      <DriveFileRenameOutlineIcon fontSize="small" />
                     </IconButton>
                   </Tooltip>
                 </Link>
@@ -301,7 +301,7 @@ const DataTable = ({
                 >
                   <Tooltip title="Edit">
                     <IconButton aria-label="edit">
-                      <EditNoteIcon fontSize="small" />
+                      <DriveFileRenameOutlineIcon fontSize="small" />
                     </IconButton>
                   </Tooltip>
                 </Link>
@@ -390,7 +390,7 @@ const DataTable = ({
                 >
                   <Tooltip title="Edit">
                     <IconButton aria-label="edit">
-                      <EditNoteIcon fontSize="small" />
+                      <DriveFileRenameOutlineIcon fontSize="small" />
                     </IconButton>
                   </Tooltip>
                 </Link>
