@@ -18,5 +18,11 @@ class TenantHeaderSchema(AutoSchema):
                 type=bool,
                 location=OpenApiParameter.HEADER,
                 description="Super user mode default `false`",
-            )
+            ),
+            # OpenApiParameter(
+            #     name="depth",
+            #     type=int,
+            #     location=OpenApiParameter.QUERY,
+            #     description="Depth default `0`",
+            # )
         ]

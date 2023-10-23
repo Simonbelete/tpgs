@@ -56,7 +56,6 @@ const NutrientForm = ({
   });
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
-    console.log(data);
     data.nutrient_group =
       data.nutrient_group != null ? (data.nutrient_group as any).id : null;
     data.unit = data.unit != null ? (data.unit as any).id : null;

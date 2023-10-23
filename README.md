@@ -32,3 +32,14 @@ Formula /
 
 
 On Dashbaord add Total Generations in stats
+
+
+## Formula Charts
+
+- Price (per 300kg Ingredient Price) - pie
+- Achivement
+    - Goal Achivmeet - bar
+    - Nutrient Requirement vs Nutrient rations - bar
+- Contribution
+    - Ingredient Contributation - pie
+    - Ingredient Nutrient contribuation - stacked => Done

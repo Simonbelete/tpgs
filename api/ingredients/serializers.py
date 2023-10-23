@@ -66,14 +66,13 @@ class IngredientSerializer_GET(serializers.ModelSerializer):
         model = models.Ingredient
         fields = '__all__'
 
-
 class IngredientSerializer_POST(serializers.ModelSerializer):
     nutrients = IngredientNutrientSerializer_REF(many=True, required=False)
 
     class Meta:
         model = models.Ingredient
         fields = ['name', 'code',
-                  'description', 'price', 'nutrients']
+                  'description', 'price', 'nutrients', 'dm', 'ingredient_type']
 
     @transaction.atomic
     def create(self, validated_data):

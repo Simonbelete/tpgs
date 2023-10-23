@@ -30,14 +30,14 @@ const IngredientStat = ({ id }: { id: number }) => {
             description="Total Ingredient's nutrient"
           />
         </Grid>
-        <Grid item xs={2}>
+        {/* <Grid item xs={2}>
           <NumberStatisticsCard
             value={`${data?.composition_total || "-"} %`}
             title="Composition [%]"
             icon={<InsightsIcon fontSize="large" />}
             description="Ingredient Compostion"
           />
-        </Grid>
+        </Grid> */}
         <Grid item xs={2}>
           <NumberStatisticsCard
             value={`${data?.price} /kg`}
@@ -49,7 +49,7 @@ const IngredientStat = ({ id }: { id: number }) => {
         <Grid item xs={2}>
           <NumberStatisticsCard
             value={`${data?.dm} %`}
-            title="Price [%]"
+            title="Dry matter [%]"
             icon={<WaterDropIcon fontSize="large" />}
             description="Dry Matter"
           />

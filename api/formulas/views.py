@@ -1,6 +1,7 @@
 import io
 import pandas as pd
 import numpy as np
+from decimal import Decimal
 from django.shortcuts import render
 from rest_framework import viewsets, status
 from rest_framework.views import APIView
@@ -74,8 +75,7 @@ class FormulaRationViewSet(viewsets.ModelViewSet):
             models.FormulaRation.objects.create(
                 formula=instance, nutrient=nutrient, value=req['value'])
         return instance
-
-
+    
 class FormulaIngredientViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.FormulaIngredientSerializer_GET
 
@@ -90,13 +90,15 @@ class FormulaIngredientViewSet(viewsets.ModelViewSet):
             return serializers.FormulaIngredientSerializer_POST
         if self.request.method in ['PUT', 'PATCH']:
             return serializers.FormulaIngredientSerializer_PATCH
+        if self.request.query_params.get('depth', 0) == 2:
+            return serializers.FormulaIngredientSerializer_GET_DEPTH_2
         return serializers.FormulaIngredientSerializer_GET
 
 # Formulate Calculation
 
 
 class FormulateViewSet(viewsets.ViewSet):
-    """Return computed total cost and total nutrients sum
+    """
     """
 
     def get_queryset(self):
@@ -258,3 +260,45 @@ class FormulaNutrients(viewsets.ViewSet):
         return Response({
             'results': [dict(zip(columns, row)) for row in cursor.fetchall()]
         }, status=200)
+    
+
+class FormulaMatrix(viewsets.ViewSet):
+    def get_queryset(self):
+        try:
+            return models.Formula.all.get(pk=self.kwargs['id'])
+        except models.Formula.DoesNotExist as ex:
+            raise NotFound()
+
+    def list(self, request, id=None):
+        formula = self.get_queryset()
+        queryset = models.FormulaIngredient.objects.filter(formula=formula)
+        result = []
+        for query in queryset.iterator():
+            ingredient_nutrients = IngredientNutrient.objects.filter(ingredient=query.ingredient.id)
+            nutrients = ingredient_nutrients.values_list('nutrient__name', flat=True)
+            print('(((())')
+            print(nutrients)
+            values = ingredient_nutrients.values_list('value', flat=True)
+            values = query.ration * np.array(values) / 100
+
+            result.append({
+                'id': query.id,
+                'ingredient': {
+                    'name': query.ingredient.name
+                },
+                'nutrients': nutrients,
+                'values': values
+            })
+
+        return Response({'results': result}, status=200)
+
+class FormulaIngredientAnalyses(viewsets.ViewSet):
+    def get_queryset(self):
+        try:
+            return models.FormulaIngredient.all.get(formula=self.kwargs['formula_pk'], pk=self.kwargs['ingredient_pk'])
+        except models.FormulaIngredient.DoesNotExist as ex:
+            raise NotFound()
+        
+    def list(self, request, formula_pk=None):
+
+        return Response({}, status=200)

@@ -42,22 +42,22 @@ function a11yProps(index: number) {
 
 type Inputs = Partial<Ingredient>;
 
-const schema = yup
-  .object({
-    name: yup.string().required(),
-    code: yup.string().nullable(),
-    ingredient_type: yup.number().nullable(),
-    dm: yup.number(),
-    price: yup.number(),
-    description: yup.string().nullable(),
-  })
-  .transform((currentValue: any) => {
-    if (currentValue.ingredient_type != null)
-      currentValue.ingredient_type = currentValue.ingredient_type.id;
-    return currentValue;
-  });
+const schema = yup.object({
+  name: yup.string().required(),
+  code: yup.string().nullable(),
+  ingredient_type: yup.array().of(yup.object()).nullable(),
+  dm: yup.number(),
+  price: yup.number(),
+  description: yup.string().nullable(),
+});
 
-const IngredientForm = ({ ingredient }: { ingredient?: Ingredient }) => {
+const IngredientForm = ({
+  ingredient,
+  redirect = true,
+}: {
+  ingredient?: Ingredient;
+  redirect?: boolean;
+}) => {
   const dispatch = useDispatch();
   const selector = useSelector((state: RootState) => state.ingredientForm);
   const router = useRouter();
@@ -88,9 +88,21 @@ const IngredientForm = ({ ingredient }: { ingredient?: Ingredient }) => {
   });
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
+    const body = {
+      name: data.name,
+      code: data.code,
+      ingredient_type: data.ingredient_type?.map((e: any) => {
+        if (e !== undefined) return e.id;
+      }),
+      dm: data.dm,
+      price: data.price,
+      description: data.description,
+    };
     if (ingredient == null)
-      await createIngredient({ ...data, nutrients: selector.nutrients });
-    else await updateIngredient({ ...data, id: ingredient.id });
+      await createIngredient({ ...body, nutrients: selector.nutrients }).then(
+        () => redirect && router.push("/ingredients")
+      );
+    else await updateIngredient({ ...body, id: ingredient.id });
   };
 
   useEffect(() => {

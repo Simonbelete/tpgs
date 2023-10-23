@@ -82,6 +82,9 @@ class FormulaIngredient(CoreModel):
     def ration_price(self):
         return round(self.ration_weight * self.ingredient.price, 3)
 
+    # def get_nutrients_ration(self):
+    #     return self.ingredient.
+
 
 class Formula(CoreModel):
     SEX_CHOICES = (
