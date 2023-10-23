@@ -200,7 +200,7 @@ const DataTable = ({
             return (
               <Box>
                 <Link
-                  href={router.asPath + "/" + params.id + "/edit"}
+                  href={router.pathname + "/" + params.id + "/edit"}
                   id="data-table-edit"
                 >
                   <Tooltip title="Edit">
@@ -210,7 +210,7 @@ const DataTable = ({
                   </Tooltip>
                 </Link>
                 <Link
-                  href={router.asPath + "/" + params.id}
+                  href={router.pathname + "/" + params.id}
                   id="data-table-view"
                 >
                   <Tooltip title="View">
@@ -220,7 +220,7 @@ const DataTable = ({
                   </Tooltip>
                 </Link>
                 <Link
-                  href={`${router.asPath}/${params.id}/histories`}
+                  href={`${router.pathname}/${params.id}/histories`}
                   id="data-table-histories"
                 >
                   <Tooltip title="History">
@@ -253,7 +253,7 @@ const DataTable = ({
             return (
               <Box>
                 <Link
-                  href={router.asPath + "/" + params.id + "/edit"}
+                  href={router.pathname + "/" + params.id + "/edit"}
                   id="data-table-edit"
                 >
                   <Tooltip title="Edit">
@@ -263,7 +263,7 @@ const DataTable = ({
                   </Tooltip>
                 </Link>
                 <Link
-                  href={`${router.asPath}/${params.id}/histories`}
+                  href={`${router.pathname}/${params.id}/histories`}
                   id="data-table-histories"
                 >
                   <Tooltip title="History">
@@ -296,7 +296,7 @@ const DataTable = ({
             return (
               <Box>
                 <Link
-                  href={router.asPath + "/" + params.id + "/edit"}
+                  href={router.pathname + "/" + params.id + "/edit"}
                   id="data-table-edit"
                 >
                   <Tooltip title="Edit">
@@ -375,7 +375,7 @@ const DataTable = ({
             return (
               <Box>
                 <Link
-                  href={router.asPath + "/" + params.id + "/dashboard"}
+                  href={router.pathname + "/" + params.id + "/dashboard"}
                   id="data-table-edit"
                 >
                   <Tooltip title="Edit">
@@ -385,7 +385,7 @@ const DataTable = ({
                   </Tooltip>
                 </Link>
                 <Link
-                  href={router.asPath + "/" + params.id + "/edit"}
+                  href={router.pathname + "/" + params.id + "/edit"}
                   id="data-table-edit"
                 >
                   <Tooltip title="Edit">
@@ -395,7 +395,7 @@ const DataTable = ({
                   </Tooltip>
                 </Link>
                 <Link
-                  href={`${router.asPath}/${params.id}/histories`}
+                  href={`${router.pathname}/${params.id}/histories`}
                   id="data-table-histories"
                 >
                   <Tooltip title="History">
