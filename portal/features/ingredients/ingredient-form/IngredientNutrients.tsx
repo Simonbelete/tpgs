@@ -19,8 +19,18 @@ import { NutrientSelectDialog } from "@/features/nutrients";
 import AddIcon from "@mui/icons-material/Add";
 import DeleteIcon from "@mui/icons-material/DeleteOutlined";
 import { RootState } from "@/store";
-import { setNutrients, removeNutrientById, updateNutrient, clearAll } from "./slice";
-import { useDeleteIngredientNutrientMutation, useCreateIngredientNutrientMutation, useUpdateIngredientNutrietMutation, useLazyGetIngredientNutrientsQuery } from '../services';
+import {
+  setNutrients,
+  removeNutrientById,
+  updateNutrient,
+  clearAll,
+} from "./slice";
+import {
+  useDeleteIngredientNutrientMutation,
+  useCreateIngredientNutrientMutation,
+  useUpdateIngredientNutrietMutation,
+  useLazyGetIngredientNutrientsQuery,
+} from "../services";
 import { enqueueSnackbar } from "notistack";
 import messages from "@/util/messages";
 
@@ -29,7 +39,9 @@ const EditToolbar = (props: {
 }) => {
   const { processRowUpdate } = props;
   const dispatch = useDispatch();
-  const rows: GridRowsProp<Partial<IngredientNutrient> & Partial<{ isNew?: boolean }>> = useSelector((state: RootState) => state.ingredientForm.nutrients);
+  const rows: GridRowsProp<
+    Partial<IngredientNutrient> & Partial<{ isNew?: boolean }>
+  > = useSelector((state: RootState) => state.ingredientForm.nutrients);
 
   const [open, setOpen] = useState(false);
 
@@ -51,7 +63,7 @@ const EditToolbar = (props: {
       if (checkDuplicate(value.id))
         enqueueSnackbar(messages.duplicateError(), { variant: "warning" });
       else {
-        dispatch(setNutrients([...rows, newRow]))
+        dispatch(setNutrients([...rows, newRow]));
       }
     }
     handleClose();
@@ -81,13 +93,19 @@ const EditToolbar = (props: {
 
 const IngredientNutrients = ({ id }: { id?: number }) => {
   const dispatch = useDispatch();
-  const rows: GridRowsProp<Partial<IngredientNutrient> & Partial<{ isNew?: boolean }>> = useSelector((state: RootState) => state.ingredientForm.nutrients);
+  const rows: GridRowsProp<
+    Partial<IngredientNutrient> & Partial<{ isNew?: boolean }>
+  > = useSelector((state: RootState) => state.ingredientForm.nutrients);
 
-  const [trigger, {isLoading, data}, lastPromiseInfo] = useLazyGetIngredientNutrientsQuery();
+  const [trigger, { isLoading, data }, lastPromiseInfo] =
+    useLazyGetIngredientNutrientsQuery();
 
-  const [createIngredientNutrient, createResult ] = useCreateIngredientNutrientMutation();
-  const [updateIngredientNutrient, updateResult ] = useUpdateIngredientNutrietMutation();
-  const [deleteIngredientNutrient, deleteResult ] = useDeleteIngredientNutrientMutation();
+  const [createIngredientNutrient, createResult] =
+    useCreateIngredientNutrientMutation();
+  const [updateIngredientNutrient, updateResult] =
+    useUpdateIngredientNutrietMutation();
+  const [deleteIngredientNutrient, deleteResult] =
+    useDeleteIngredientNutrientMutation();
 
   const columns: GridColDef[] = [
     {
@@ -116,18 +134,18 @@ const IngredientNutrients = ({ id }: { id?: number }) => {
     },
     {
       field: "value",
-      headerName: "Value",
+      headerName: "Value [%]",
       flex: 1,
       minWidth: 150,
       editable: true,
-      type: 'number',
+      type: "number",
     },
     {
       field: "unit",
       headerName: "Unit",
       flex: 1,
       minWidth: 150,
-      valueGetter: (params) => params.row.nutrient.unit
+      valueGetter: (params) => params.row.nutrient.unit,
     },
     {
       field: "actions",
@@ -155,23 +173,26 @@ const IngredientNutrients = ({ id }: { id?: number }) => {
     handleDelete(id);
   };
 
-  const processRowUpdate = async (updatedRow: GridRowModel, originalRow: GridRowModel) => {
+  const processRowUpdate = async (
+    updatedRow: GridRowModel,
+    originalRow: GridRowModel
+  ) => {
     const bodyData: Partial<IngredientNutrient> = {
       value: updatedRow.value,
       nutrient: (updatedRow.nutrient as Nutrient).id,
     };
 
     if (id != null && updatedRow.isNew) await onCreate(updatedRow, bodyData);
-    else if(id != null) await onUpdate(updatedRow, bodyData);
+    else if (id != null) await onUpdate(updatedRow, bodyData);
 
     const newRow = { ...updatedRow, isNew: false };
 
-    dispatch(updateNutrient(newRow as any))
+    dispatch(updateNutrient(newRow as any));
 
     return newRow;
   };
 
-  const handleOnProcessRowUpdateError = (error: any) => {}
+  const handleOnProcessRowUpdateError = (error: any) => {};
 
   const onCreate = async (
     row: GridRowModel,
@@ -179,8 +200,8 @@ const IngredientNutrients = ({ id }: { id?: number }) => {
   ) => {
     if (id == null) return;
 
-    const response = await createIngredientNutrient({id, data}).unwrap();
-    trigger({id, query: {}},true);
+    const response = await createIngredientNutrient({ id, data }).unwrap();
+    trigger({ id, query: {} }, true);
   };
 
   const onUpdate = async (
@@ -189,13 +210,19 @@ const IngredientNutrients = ({ id }: { id?: number }) => {
   ) => {
     if (id == null) return;
 
-    const response = await updateIngredientNutrient({...data, ingredient: id});
-    trigger({id, query: {}},true);
+    const response = await updateIngredientNutrient({
+      ...data,
+      ingredient: id,
+    });
+    trigger({ id, query: {} }, true);
   };
 
   const handleDelete = async (row_id: string | number) => {
     if (id == null) return;
-    const response = await deleteIngredientNutrient({id, nutrient_id: Number(row_id)});
+    const response = await deleteIngredientNutrient({
+      id,
+      nutrient_id: Number(row_id),
+    });
   };
 
   return (

@@ -41,3 +41,7 @@ class Ingredient(CoreModel):
 
     def __str__(self) -> str:
         return self.name
+    
+    @property
+    def nutrient_count(self):
+        return self.nutrients.count()

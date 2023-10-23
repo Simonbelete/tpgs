@@ -8,6 +8,7 @@ import {
   tabsClasses,
   InputAdornment,
   Button,
+  Chip,
 } from "@mui/material";
 import { Ingredient } from "@/models";
 import IngredientInfoZone from "./IngredientInfoZone";
@@ -118,7 +119,14 @@ const IngredientForm = ({ ingredient }: { ingredient?: Ingredient }) => {
             }}
           >
             <Tab label="Detail" {...a11yProps(0)} />
-            <Tab label="Nutrients" {...a11yProps(1)} />
+            <Tab
+              label="Nutrients"
+              iconPosition="end"
+              icon={
+                <Chip label={selector.nutrients.length || 0} size="small" />
+              }
+              {...a11yProps(1)}
+            />
           </Tabs>
           <Box sx={{ pt: 5 }}>
             {tab == 0 && (

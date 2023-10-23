@@ -378,7 +378,7 @@ const DataTable = ({
                   href={router.pathname + "/" + params.id + "/dashboard"}
                   id="data-table-edit"
                 >
-                  <Tooltip title="Edit">
+                  <Tooltip title="Dashboard">
                     <IconButton aria-label="edit">
                       <AnalyticsIcon fontSize="small" />
                     </IconButton>
