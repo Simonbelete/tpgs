@@ -252,10 +252,12 @@ const SidebarMenu = () => {
             </Typography>
           }
           icon={<LocalDiningIcon />}
+          defaultOpen={RegExp("^/ingredient(.*)$").test(router.pathname)}
         >
           <MenuItem
             component={<Link href="/ingredients" />}
             icon={<AdjustIcon fontSize="small" />}
+            active={RegExp("/ingredients(.*)$").test(router.pathname)}
           >
             <Typography variant="body1" fontSize={14}>
               Ingredients
@@ -264,6 +266,7 @@ const SidebarMenu = () => {
           <MenuItem
             component={<Link href="/ingredient-types" />}
             icon={<AdjustIcon fontSize="small" />}
+            active={RegExp("/ingredient-types(.*)$").test(router.pathname)}
           >
             <Typography variant="body1" fontSize={14}>
               Ingredient Type

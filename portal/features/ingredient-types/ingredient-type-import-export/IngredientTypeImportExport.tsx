@@ -9,14 +9,14 @@ import messages from "@/util/messages";
 import { ButtonMenu } from "@/components/buttons";
 import AddIcon from "@mui/icons-material/Add";
 import FileUploadIcon from "@mui/icons-material/FileUpload";
-import { 
+import {
   exportIngredientTypesXLSX,
   exportIngredientTypesXLS,
   exportIngredientTypesCSV,
   importIngredientTypesXLSX,
   importIngredientTypesCSV,
-  importIngredientTypesXLS
- } from "../services";
+  importIngredientTypesXLS,
+} from "../services";
 
 const IngredientTypeImportExport = () => {
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
@@ -24,11 +24,11 @@ const IngredientTypeImportExport = () => {
   const handleExport = async (type: string) => {
     try {
       let response: Partial<AxiosResponse> = {};
-      if (type == "xlsx") response = await exportIngredientTypesXLSX ();
+      if (type == "xlsx") response = await exportIngredientTypesXLSX();
       if (type == "xls") response = await exportIngredientTypesXLS();
       if (type == "csv") response = await exportIngredientTypesCSV();
       if (response.status == 200) {
-        fileDownload(response.data, `houses_.${type}`);
+        fileDownload(response.data, `ingredient_types_.${type}`);
       } else {
         enqueueSnackbar(messages.exportError_400(), { variant: "error" });
       }
@@ -81,7 +81,8 @@ const IngredientTypeImportExport = () => {
         direction={"row"}
         justifyContent="flex-start"
         alignItems="center"
-        useFlexGap flexWrap="wrap"
+        useFlexGap
+        flexWrap="wrap"
       >
         <Link href="/ingredient-types/create">
           <Button variant="contained" size={"small"} startIcon={<AddIcon />}>
