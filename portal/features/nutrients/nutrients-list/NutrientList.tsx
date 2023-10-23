@@ -2,16 +2,16 @@ import React, { useEffect, useState } from "react";
 import {
   GridRowsProp,
   GridColDef,
-  GridRenderCellParams
+  GridRenderCellParams,
 } from "@mui/x-data-grid";
-import { Typography } from '@mui/material';
+import { Typography } from "@mui/material";
 import Link from "next/link";
 import { DataTable } from "@/components/tables";
 import { Nutrient } from "@/models";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store";
 import _ from "lodash";
-import dayjs from 'dayjs';
+import dayjs from "dayjs";
 import { useGetNutrientsQuery, useDeleteNutrientMutation } from "../services";
 import buildQuery from "@/util/buildQuery";
 import buildPage from "@/util/buildPage";
@@ -39,11 +39,14 @@ const columns: GridColDef[] = [
       );
     },
   },
-  { field: "unit", headerName: "Unit", flex: 1, minWidth: 150,
-    valueGetter: (params) =>
-    params.row.unit ? params.row.unit.name : "", 
+  {
+    field: "unit",
+    headerName: "Unit",
+    flex: 1,
+    minWidth: 150,
+    valueGetter: (params) => (params.row.unit ? params.row.unit.name : ""),
     renderCell: (params: GridRenderCellParams<any>) => {
-      if (params.row.nutrient_group == null) return <></>;
+      if (params.row.unit == null) return <></>;
       return (
         <Typography color={"link.primary"} variant="body2">
           <Link href={`/units/${params.row.unit.id}`}>
@@ -62,10 +65,13 @@ const NutrientList = () => {
     pageSize: 10,
   });
 
-  const { data, isLoading, refetch } = useGetNutrientsQuery(buildQuery({...buildPage(paginationModel), ...selector})); 
-  const [deleteNutrient, deleteResult ] = useDeleteNutrientMutation();
+  const { data, isLoading, refetch } = useGetNutrientsQuery(
+    buildQuery({ ...buildPage(paginationModel), ...selector })
+  );
+  const [deleteNutrient, deleteResult] = useDeleteNutrientMutation();
 
-  const handleDelete = async (id: number) => await deleteNutrient(id).then(() => refetch())
+  const handleDelete = async (id: number) =>
+    await deleteNutrient(id).then(() => refetch());
 
   return (
     <DataTable

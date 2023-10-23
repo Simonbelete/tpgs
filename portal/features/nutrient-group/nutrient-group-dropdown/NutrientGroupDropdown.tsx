@@ -1,30 +1,29 @@
 import React, { useEffect } from "react";
 import { AsyncDropdown } from "@/components/dropdowns";
-import { useLazyGetNutrientGroupsQuery } from '../services';
+import { useLazyGetNutrientGroupsQuery } from "../services";
 import { NutrientGroup } from "@/models";
 
 const NutrientGroupDropdown = ({
   value,
-  label = "House",
+  label = "Nutrient Group",
   error,
   onChange,
   helperText,
 }: {
-  value?: any,
-  label?: string,
-  error?: boolean
+  value?: any;
+  label?: string;
+  error?: boolean;
   helperText?: string;
   onChange?: (event: any, newValue: any) => void;
 }) => {
-  const [trigger, {isLoading, data}, lastPromiseInfo] = useLazyGetNutrientGroupsQuery();
+  const [trigger, { isLoading, data }, lastPromiseInfo] =
+    useLazyGetNutrientGroupsQuery();
 
   const handleOnOpen = () => {
     trigger({}, true);
-  }
+  };
 
-  const handleOnClose = () => {
-
-  }
+  const handleOnClose = () => {};
 
   return (
     <AsyncDropdown<NutrientGroup>
@@ -39,10 +38,10 @@ const NutrientGroupDropdown = ({
       onClose={handleOnClose}
       onChange={onChange}
       onInputChange={(event: any, newInputValue: any) => {
-        trigger({}, true)
+        trigger({}, true);
       }}
     />
-  )
-}
+  );
+};
 
 export default NutrientGroupDropdown;

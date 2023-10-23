@@ -277,14 +277,12 @@ const SidebarMenu = () => {
             </Typography>
           }
           icon={<BubbleChartIcon />}
-          defaultOpen={["/nutrients", "/nutrient-groups"].includes(
-            router.pathname
-          )}
+          defaultOpen={RegExp("^/nutrient(.*)$").test(router.pathname)}
         >
           <MenuItem
             component={<Link href="/nutrients" />}
             icon={<AdjustIcon fontSize="small" />}
-            active={RegExp("^/nutrients$").test(router.pathname)}
+            active={RegExp("/nutrient(.*)$").test(router.pathname)}
           >
             <Typography variant="body1" fontSize={14}>
               Nutrients
@@ -293,7 +291,7 @@ const SidebarMenu = () => {
           <MenuItem
             component={<Link href="/nutrient-groups" />}
             icon={<AdjustIcon fontSize="small" />}
-            active={RegExp("^/nutrient-groups$").test(router.pathname)}
+            active={RegExp("^/nutrient-groups(.*)$").test(router.pathname)}
           >
             <Typography variant="body1" fontSize={14}>
               Nutrient Group
