@@ -5,7 +5,7 @@ const FormulationAchivementChart = ({ data }: { data: any }) => {
   return (
     <Plot
       data={data}
-      layout={{ title: "A Fancy Plot", height: 500 }}
+      layout={{ title: "Nutrient Ration vs Requirement", height: 500 }}
       config={{ responsive: true }}
       style={{ width: "100%" }}
     />

@@ -11,7 +11,7 @@ const FormulationAchivementChart = ({ data }: { data: { x: any; y: any } }) => {
           type: "bar",
         },
       ]}
-      layout={{ title: "A Fancy Plot", height: 500 }}
+      layout={{ title: "Nutrient goal achievement out of 100%", height: 500 }}
       config={{ responsive: true }}
       style={{ width: "100%" }}
     />

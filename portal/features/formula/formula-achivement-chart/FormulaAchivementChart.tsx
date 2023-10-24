@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Formula } from "@/models";
 import { useGetFormulaNutrientsQuery } from "../services";
 import dynamic from "next/dynamic";
+import { StatisticsCard } from "@/components";
 
 const AchivementChartComponent = dynamic(
   () => import("../components/achivement-chart"),
@@ -54,8 +55,12 @@ const FormulaAchivementChart = ({ formula }: { formula: Formula }) => {
 
   return (
     <div>
-      <AchivementChartComponent data={chartData} />
-      <NutrientValueChartComponent data={valuesData} />
+      <StatisticsCard title="Nutrient goal achievement out of 100%">
+        <AchivementChartComponent data={chartData} />
+      </StatisticsCard>
+      <StatisticsCard title="Nutrient Ration vs Requirement">
+        <NutrientValueChartComponent data={valuesData} />
+      </StatisticsCard>
     </div>
   );
 };

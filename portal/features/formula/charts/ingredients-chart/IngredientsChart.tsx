@@ -39,8 +39,6 @@ const IngredientsChart = ({ formula_id }: { formula_id: number }) => {
 
     const response = data?.results || [];
 
-    console.log(response);
-
     for (let i = 0; i < response.length; i += 1) {
       result_ndc.push({
         x: response[i].nutrients,

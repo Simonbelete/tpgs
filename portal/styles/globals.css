@@ -99,6 +99,7 @@ a:active { text-decoration: none; color: #0077AF;}
     /* scrollbar-color: green blue; */
     color: #aaa;
     width: 8px;
+    height: 5px;
     border-radius: 20px;
     /* background-clip: padding-box; */
     border: 0 solid transparent;

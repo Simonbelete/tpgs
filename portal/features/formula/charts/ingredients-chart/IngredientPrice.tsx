@@ -11,18 +11,22 @@ import { FormulaIngredient, Ingredient } from "@/models";
 export default function DenseTable({ data }: { data: FormulaIngredient[] }) {
   return (
     <TableContainer component={Paper}>
-      <Table
-        sx={{ minWidth: 650, height: "100%" }}
-        size="small"
-        aria-label="a dense table"
-      >
+      <Table sx={{ height: "100%" }} size="small" aria-label="a dense table">
         <TableHead>
           <TableRow>
-            <TableCell>Ingredient</TableCell>
-            <TableCell align="right">Ration</TableCell>
-            <TableCell align="right">Price [kg]</TableCell>
-            <TableCell align="right">Ration Weight [kg]</TableCell>
-            <TableCell align="right">Ration Price</TableCell>
+            <TableCell sx={{ fontWeight: 600 }}>Ingredient</TableCell>
+            <TableCell align="right" sx={{ fontWeight: 600 }}>
+              %
+            </TableCell>
+            <TableCell align="right" sx={{ fontWeight: 600 }}>
+              Unit Price (kg)
+            </TableCell>
+            <TableCell align="right" sx={{ fontWeight: 600 }}>
+              Batch Weight (kg)
+            </TableCell>
+            <TableCell align="right" sx={{ fontWeight: 600 }}>
+              Batch Price
+            </TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
