@@ -12,6 +12,7 @@ import { cityListReducer } from "@/features/cities";
 import { regionListReducer } from "@/features/regions";
 import { chickenListReducer } from "@/features/chickens";
 import { filterReducer } from "./slices";
+import { requirementFormReducer } from "@/features/requirements";
 
 import { baseApi } from "@/services/baseApi";
 import { houseApi } from "@/features/houses/services";
@@ -30,6 +31,7 @@ import { nutrientGroupApi } from "@/features/nutrient-group/services";
 import { formulaApi } from "@/features/formula/services";
 import { reductionReasonApi } from "@/features/reduction-reason/services";
 import { notificationApi } from "@/features/notification/services";
+import { requirementApi } from "@/features/requirements/services";
 
 import { rtkQueryErrorLogger } from "./middlewares/rtkQueryErrorLogger";
 import { urlQueryBuilder } from "./middlewares/urlQueryBuilder";
@@ -48,6 +50,7 @@ export const store = configureStore({
     regionList: regionListReducer,
     chickenList: chickenListReducer,
     formula: formulaReducer,
+    requirementForm: requirementFormReducer,
 
     // // Apis
     [houseApi.reducerPath]: houseApi.reducer,
@@ -66,6 +69,7 @@ export const store = configureStore({
     [formulaApi.reducerPath]: formulaApi.reducer,
     [reductionReasonApi.reducerPath]: reductionReasonApi.reducer,
     [notificationApi.reducerPath]: notificationApi.reducer,
+    [requirementApi.reducerPath]: requirementApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(

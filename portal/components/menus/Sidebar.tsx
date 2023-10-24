@@ -41,6 +41,7 @@ import CabinIcon from "@mui/icons-material/Cabin";
 import { useRouter } from "next/router";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import FactoryIcon from "@mui/icons-material/Factory";
+import ChecklistIcon from "@mui/icons-material/Checklist";
 
 function menuProps(key: string) {
   return {
@@ -241,7 +242,7 @@ const SidebarMenu = () => {
           </MenuItem>
           <MenuItem component={<Link href="/formulation/experimental" />}>
             <Typography variant="body1" fontSize={14}>
-              Experimental
+              Matrix
             </Typography>
           </MenuItem>
         </SubMenu>
@@ -301,6 +302,15 @@ const SidebarMenu = () => {
             </Typography>
           </MenuItem>
         </SubMenu>
+        <MenuItem
+          component={<Link href="/requirements" />}
+          icon={<ChecklistIcon fontSize="small" />}
+          active={RegExp("^/requirements(.*)$").test(router.pathname)}
+        >
+          <Typography variant="body1" fontSize={14}>
+            Requirements
+          </Typography>
+        </MenuItem>
       </Menu>
       <div
         style={{ padding: "0 24px", marginBottom: "8px", marginTop: "32px" }}
