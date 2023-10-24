@@ -276,8 +276,6 @@ class FormulaMatrix(viewsets.ViewSet):
         for query in queryset.iterator():
             ingredient_nutrients = IngredientNutrient.objects.filter(ingredient=query.ingredient.id)
             nutrients = ingredient_nutrients.values_list('nutrient__name', flat=True)
-            print('(((())')
-            print(nutrients)
             values = ingredient_nutrients.values_list('value', flat=True)
             values = query.ration * np.array(values) / 100
 

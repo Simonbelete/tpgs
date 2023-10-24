@@ -10,6 +10,7 @@ export { default as Redirect403 } from "./Redirect403";
 export { default as Shadow } from "./Shadow";
 export { default as RenderProgress } from "./RenderProgress";
 export { default as ProgressBar } from "./ProgressBar";
+export { default as BarChartSkeleton } from "./BarChartSkeleton";
 
 export * from "./call-to-actions";
 export * from "./heros";
