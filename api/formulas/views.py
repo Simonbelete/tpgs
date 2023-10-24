@@ -284,6 +284,10 @@ class FormulaMatrix(viewsets.ViewSet):
                 'ingredient': {
                     'name': query.ingredient.name
                 },
+                'ration': query.ration,
+                'price': query.price,
+                'ration_weight': query.ration_weight,
+                'ration_price': query.ration_price,
                 'nutrients': nutrients,
                 'values': values
             })

@@ -1,36 +1,41 @@
 import React, { useEffect, useState } from "react";
-import { Grid, Skeleton } from "@mui/material";
-import { Formula } from "@/models";
+import { Grid, Box } from "@mui/material";
 import { useGetFormulaMatrixQuery } from "../../services";
 import dynamic from "next/dynamic";
-import { BarChartSkeleton } from "@/components";
+import {
+  BarChartSkeleton,
+  PieChartSkeleton,
+  StatisticsCard,
+} from "@/components";
+import IngredientPrice from "./IngredientPrice";
+import { FormulaIngredient } from "@/models";
 
-// const ICC = dynamic(() => import("./ICC"), {
-//   ssr: false,
-//   loading: () => <></>,
-// });
+const ICC = dynamic(() => import("./ICC"), {
+  ssr: false,
+  loading: () => <PieChartSkeleton />,
+});
 
 const NDC = dynamic(() => import("./NDC"), {
   ssr: false,
   loading: () => <BarChartSkeleton />,
 });
 
-// const PriceChart = dynamic(() => import("./Price"), {
-//   ssr: false,
-//   loading: () => <></>,
-// });
-
 const IngredientsChart = ({ formula_id }: { formula_id: number }) => {
   const { data, isLoading } = useGetFormulaMatrixQuery(formula_id);
 
   const [ndc, setNdc] = useState<any>();
-  const [icc, seticc] = useState<any>();
-  const [price, setPrice] = useState<any>();
+  const [icc, setIcc] = useState<any>();
 
   useEffect(() => {
     const result_ndc: any[] = [];
-    const result_icc: any[] = [];
-    const result_price: any[] = [];
+    const result_icc: any = {
+      type: "pie",
+      values: [],
+      labels: [],
+      textinfo: "label+percent",
+      textposition: "outside",
+      automargin: true,
+    };
 
     const response = data?.results || [];
 
@@ -43,17 +48,30 @@ const IngredientsChart = ({ formula_id }: { formula_id: number }) => {
         name: response[i].ingredient.name || "",
         type: "bar",
       });
+
+      result_icc.values.push(response[i].ration);
+      result_icc.labels.push(response[i].ingredient.name || "");
     }
-    console.log(result_ndc);
     setNdc(result_ndc);
+    setIcc(result_icc);
   }, [data]);
 
   return (
-    <Grid container>
+    <>
       <Grid item xs={6}>
-        <NDC data={ndc} />
+        <IngredientPrice data={data?.results as FormulaIngredient[]} />
       </Grid>
-    </Grid>
+      <Grid item xs={6}>
+        <StatisticsCard title="Ingredient Contribution">
+          <ICC data={[icc]} />
+        </StatisticsCard>
+      </Grid>
+      <Grid item xs={12}>
+        <StatisticsCard title="Nutrient distribution chart">
+          <NDC data={ndc} />
+        </StatisticsCard>
+      </Grid>
+    </>
   );
 };
 

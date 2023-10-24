@@ -36,10 +36,10 @@ const FormulaDashboardEditPage = ({ data }: { data: Formula }) => {
         <Grid item xs={12}>
           <FormulaStat id={data.id} />
         </Grid>
-        <Grid item xs={12}>
+        <Grid container item spacing={3} xs={12}>
           <IngredientsChart formula_id={data.id} />
         </Grid>
-        <Grid item xs={12}>
+        <Grid xs={12}>
           <FormulaAchivementChart formula={data} />
         </Grid>
       </Grid>
