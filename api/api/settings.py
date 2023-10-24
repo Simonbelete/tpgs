@@ -102,7 +102,8 @@ SHARED_APPS = [
     'units',
     'purposes',
     'formulas',
-    'inbox'
+    'inbox',
+    'requirements'
 ]
 
 TENANT_APPS = [
