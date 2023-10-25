@@ -14,8 +14,8 @@ import {
 import { useSelector, useDispatch } from "react-redux";
 import { SearchInput } from "@/components/inputs";
 import { CheckboxDropdown } from "@/components/dropdowns";
-import { unitListSlice } from "./slice";
 import { RootState } from "@/store";
+import { filterSlice } from "@/store/slices";
 
 const UnitFilter = () => {
   const dispatch = useDispatch();
@@ -28,10 +28,10 @@ const UnitFilter = () => {
 
   const handleActiveChange = (event: SelectChangeEvent) =>
     dispatch(
-      unitListSlice.actions.setIsActive((event.target.value as any).value)
+      filterSlice.actions.setIsActive((event.target.value as any).value)
     );
 
-  const handleSearchButton = () => dispatch(unitListSlice.actions.reset());
+  const handleSearchButton = () => dispatch(filterSlice.actions.reset());
 
   return (
     <Paper
@@ -57,7 +57,7 @@ const UnitFilter = () => {
             <SearchInput
               label="Search..."
               onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-                dispatch(unitListSlice.actions.setSearch(event.target.value))
+                dispatch(filterSlice.actions.setSearch(event.target.value))
               }
             />
 
@@ -83,7 +83,7 @@ const UnitFilter = () => {
                   color="secondary"
                   size="small"
                   disableElevation
-                  onClick={() => dispatch(unitListSlice.actions.reset())}
+                  onClick={() => dispatch(filterSlice.actions.reset())}
                 >
                   Clear
                 </Button>
