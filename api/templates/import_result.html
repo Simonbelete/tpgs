@@ -1,0 +1,89 @@
+<html>
+    <style>
+        #import-result-table {
+          font-family: Arial, Helvetica, sans-serif;
+          border-collapse: collapse;
+          width: 100%;
+        }
+        
+        #import-result-table td, #import-result-table th {
+          border: 1px solid #ddd;
+          padding: 8px;
+        }
+        
+        #import-result-table tr:nth-child(even){background-color: #f2f2f2;}
+        
+        #import-result-table tr:hover {background-color: #ddd;}
+        
+        #import-result-table th {
+          padding-top: 12px;
+          padding-bottom: 12px;
+          text-align: left;
+          background-color: #04AA6D;
+          color: white;
+        }
+        </style>    
+<body>
+    {% if result %}
+    {% if result.has_errors %}
+        <h2>Errors</h2>
+        <table id="import-result-table">
+            <thead>
+                <tr>
+                    <th>Line number</th>
+                    <th>Value</th>
+                    <th>Detail</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for line, errors in result.row_errors %}
+                    {% for error in errors %}
+                        <tr>
+                            <td>{{ line }}</td>
+                            <td>
+                                <ul>
+                                    {% for key,val in error.row.items %}
+                                        <li>{{ key }}: {{ val }}</li>
+                                    {% endfor %}
+                                </ul>
+                            </td>
+                            <td>{{ error.error }}</td>
+                        </tr>
+                    {% endfor %}
+                {% endfor %}
+            </tbody>
+        </table>
+        <ul>
+            {% for error in result.base_errors  %}
+                <li>{{ error.error }}</li>
+            {% endfor %}
+            
+        </ul>
+    {% endif %}
+    {% if result.valid_rows %}
+        <h2>Valid Rows</h2>
+        <table id="import-result-table">
+            <thead>
+                <tr>
+                    <th>Import Type</th>
+                    <th>Diff</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in result.valid_rows %}
+                    <tr>
+                        <td>{{ row.import_type }}</td>
+                        <td>
+                            <ul>
+                                {% for field in row.diff %}
+                                    <li>{{ field }}</li>
+                                {% endfor %}
+                            </ul>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table> 
+    {% endif %}
+    {% endif %}
+</body></html>

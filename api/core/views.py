@@ -11,6 +11,7 @@ from rest_framework.parsers import MultiPartParser
 from tablib import Dataset
 from import_export import resources
 import pandas as pd
+from rest_framework.renderers import TemplateHTMLRenderer
 
 from core.serializers import UploadSerializer
 
@@ -152,6 +153,8 @@ class CsvExport(APIView):
 class XlsxImport(APIView):
     serializer_class = UploadSerializer
     parser_classes = [MultiPartParser]
+    renderer_classes = [TemplateHTMLRenderer]
+    template_name = 'import_result.html'
 
     def get_model(self):
         raise NotImplemented()
@@ -164,13 +167,14 @@ class XlsxImport(APIView):
             model=self.get_model())()
         result = resource.import_data(dataset, dry_run=True)
         if not result.has_errors():
-            resource.import_data(dataset, dry_run=False)
-            return JsonResponse({'message': 'Imported Successfully'}, status=200)
-        return JsonResponse({'errors': ['Import Failed']}, status=400)
+            result = resource.import_data(dataset, dry_run=False)
+        return Response({'result': result})
 
 class XlsImport(APIView):
     serializer_class = UploadSerializer
     parser_classes = [MultiPartParser]
+    renderer_classes = [TemplateHTMLRenderer]
+    template_name = 'import_result.html'
 
     def get_model(self):
         raise NotImplemented()
@@ -183,13 +187,14 @@ class XlsImport(APIView):
             model=self.get_model())()
         result = resource.import_data(dataset, dry_run=True)
         if not result.has_errors():
-            resource.import_data(dataset, dry_run=False)
-            return JsonResponse({'message': 'Imported Successfully'}, status=200)
-        return JsonResponse({'errors': ['Import Failed']}, status=400)
-
+            result = resource.import_data(dataset, dry_run=False)
+        return Response({'result': result})
+    
 class CsvImport(APIView):
     serializer_class = UploadSerializer
     parser_classes = [MultiPartParser]
+    renderer_classes = [TemplateHTMLRenderer]
+    template_name = 'import_result.html'
 
     def get_model(self):
         raise NotImplemented()
@@ -200,9 +205,7 @@ class CsvImport(APIView):
         dataset = Dataset().load(df)
         resource = resources.modelresource_factory(
             model=self.get_model())()
-        # result = resource.import_data(dataset, raise_errors=True)
         result = resource.import_data(dataset, dry_run=True)
         if not result.has_errors():
-            resource.import_data(dataset, dry_run=False)
-            return JsonResponse({'message': 'Imported Successfully'}, status=200)
-        return JsonResponse({'errors': ['Import Failed']}, status=400)
+            result = resource.import_data(dataset, dry_run=False)
+        return Response({'result': result})
