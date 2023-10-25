@@ -1,4 +1,4 @@
-import React, { ChangeEvent, ReactElement } from "react";
+import React, { ChangeEvent, ReactElement, useState } from "react";
 import Link from "next/link";
 import { AxiosResponse } from "axios";
 import { useSnackbar } from "notistack";
@@ -9,22 +9,28 @@ import messages from "@/util/messages";
 import { ButtonMenu } from "@/components/buttons";
 import AddIcon from "@mui/icons-material/Add";
 import FileUploadIcon from "@mui/icons-material/FileUpload";
-import { 
+import {
   exportNutrientsXLSX,
   exportNutrientsXLS,
   exportNutrientsCSV,
   importNutrientsXLSX,
   importNutrientsCSV,
-  importNutrientsXLS
- } from "../services";
+  importNutrientsXLS,
+} from "../services";
+import { HtmlModal } from "@/components";
 
 const BreedImportExport = () => {
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+  const [openResult, setOpenResult] = useState(false);
+  const [responseHtml, setResponseHtml] = useState({
+    open: false,
+    html: "",
+  });
 
   const handleExport = async (type: string) => {
     try {
       let response: Partial<AxiosResponse> = {};
-      if (type == "xlsx") response = await exportNutrientsXLSX ();
+      if (type == "xlsx") response = await exportNutrientsXLSX();
       if (type == "xls") response = await exportNutrientsXLS();
       if (type == "csv") response = await exportNutrientsCSV();
       if (response.status == 200) {
@@ -62,6 +68,10 @@ const BreedImportExport = () => {
         if (file.name.includes(".csv"))
           response = await importNutrientsCSV(formData);
         if (response.status == 200) {
+          setResponseHtml({
+            open: true,
+            html: response.data,
+          });
           enqueueSnackbar(messages.importSuccess(), { variant: "success" });
         } else {
           enqueueSnackbar(messages.importError_400(), { variant: "error" });
@@ -76,12 +86,18 @@ const BreedImportExport = () => {
 
   return (
     <>
+      <HtmlModal
+        open={responseHtml.open}
+        onClose={() => setResponseHtml({ open: false, html: "" })}
+        html={responseHtml.html}
+      />
       <Stack
         spacing={2}
         direction={"row"}
         justifyContent="flex-start"
         alignItems="center"
-        useFlexGap flexWrap="wrap"
+        useFlexGap
+        flexWrap="wrap"
       >
         <Link href="/nutrients/create">
           <Button variant="contained" size={"small"} startIcon={<AddIcon />}>
@@ -130,6 +146,7 @@ const BreedImportExport = () => {
           Import
           <input
             type="file"
+            value={""}
             onChange={handleFileUpload}
             accept=".csv,.xlsx,.xls"
             hidden

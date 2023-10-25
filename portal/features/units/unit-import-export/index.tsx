@@ -84,7 +84,7 @@ const UnitImportExport = () => {
         useFlexGap
         flexWrap="wrap"
       >
-        <Link href="/houses/create">
+        <Link href="/units/create">
           <Button variant="contained" size={"small"} startIcon={<AddIcon />}>
             Create
           </Button>

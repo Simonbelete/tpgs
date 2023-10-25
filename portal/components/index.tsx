@@ -13,6 +13,7 @@ export { default as ProgressBar } from "./ProgressBar";
 export { default as BarChartSkeleton } from "./BarChartSkeleton";
 export { default as PieChartSkeleton } from "./PieChartSkeleton";
 export { default as SnackbarCloseButton } from "./SnackbarCloseButton";
+export { default as HtmlModal } from "./HtmlModal";
 
 export * from "./call-to-actions";
 export * from "./heros";
