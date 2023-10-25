@@ -162,8 +162,9 @@ class XlsxImport(APIView):
         dataset = Dataset().load(df)
         resource = resources.modelresource_factory(
             model=self.get_model())()
-        result = resource.import_data(dataset, raise_errors=True)
+        result = resource.import_data(dataset, dry_run=True)
         if not result.has_errors():
+            resource.import_data(dataset, dry_run=False)
             return JsonResponse({'message': 'Imported Successfully'}, status=200)
         return JsonResponse({'errors': ['Import Failed']}, status=400)
 
@@ -180,8 +181,9 @@ class XlsImport(APIView):
         dataset = Dataset().load(df)
         resource = resources.modelresource_factory(
             model=self.get_model())()
-        result = resource.import_data(dataset, raise_errors=True)
+        result = resource.import_data(dataset, dry_run=True)
         if not result.has_errors():
+            resource.import_data(dataset, dry_run=False)
             return JsonResponse({'message': 'Imported Successfully'}, status=200)
         return JsonResponse({'errors': ['Import Failed']}, status=400)
 
