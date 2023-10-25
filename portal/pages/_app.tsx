@@ -13,7 +13,7 @@ import NProgress from "nprogress";
 import Router from "next/router";
 import { SnackbarProvider, useSnackbar } from "notistack";
 import dynamic from "next/dynamic";
-import { Loading } from "@/components";
+import { Loading, SnackbarCloseButton } from "@/components";
 import { Provider } from "react-redux";
 import { store } from "@/store";
 import OnBoardingProvider from "@/providers/OnBoarding";
@@ -86,6 +86,7 @@ export default function App({
                 vertical: "top",
                 horizontal: "center",
               }}
+              action={(key) => <SnackbarCloseButton key={key} />}
             >
               <main className={`${inter.className}`}>
                 {getLayout(<Component {...pageProps} />)}

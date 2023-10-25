@@ -38,7 +38,6 @@ const UnitImportExport = () => {
   };
 
   const handleFileUpload = async (event: ChangeEvent<HTMLInputElement>) => {
-    console.log("*****");
     if (event.target != null && event.target.files != null) {
       const allowedExtensions = /(\.csv|\.xlsx|\.xls)$/i;
       const target = event.target as HTMLInputElement;
