@@ -10,6 +10,7 @@ from django.conf import settings
 from rest_framework.parsers import MultiPartParser
 from tablib import Dataset
 from import_export import resources
+import pandas as pd
 
 from core.serializers import UploadSerializer
 

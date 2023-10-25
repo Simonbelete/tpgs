@@ -7,6 +7,7 @@ from . import models
 class UnitResource(resources.ModelResource):
     class Meta:
         model = models.Unit
+        import_id_fields = ['id']
         fields = ['id', 'name']
 
 class UnitConverterResource(resources.ModelResource):

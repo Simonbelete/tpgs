@@ -9,14 +9,14 @@ import messages from "@/util/messages";
 import { ButtonMenu } from "@/components/buttons";
 import AddIcon from "@mui/icons-material/Add";
 import FileUploadIcon from "@mui/icons-material/FileUpload";
-import { 
+import {
   exportUnitsXLSX,
   exportUnitsXLS,
   exportUnitsCSV,
   importUnitsXLSX,
   importUnitsCSV,
-  importUnitsXLS
- } from "../services";
+  importUnitsXLS,
+} from "../services";
 
 const UnitImportExport = () => {
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
@@ -24,7 +24,7 @@ const UnitImportExport = () => {
   const handleExport = async (type: string) => {
     try {
       let response: Partial<AxiosResponse> = {};
-      if (type == "xlsx") response = await exportUnitsXLSX ();
+      if (type == "xlsx") response = await exportUnitsXLSX();
       if (type == "xls") response = await exportUnitsXLS();
       if (type == "csv") response = await exportUnitsCSV();
       if (response.status == 200) {
@@ -38,6 +38,7 @@ const UnitImportExport = () => {
   };
 
   const handleFileUpload = async (event: ChangeEvent<HTMLInputElement>) => {
+    console.log("*****");
     if (event.target != null && event.target.files != null) {
       const allowedExtensions = /(\.csv|\.xlsx|\.xls)$/i;
       const target = event.target as HTMLInputElement;
@@ -81,7 +82,8 @@ const UnitImportExport = () => {
         direction={"row"}
         justifyContent="flex-start"
         alignItems="center"
-        useFlexGap flexWrap="wrap"
+        useFlexGap
+        flexWrap="wrap"
       >
         <Link href="/houses/create">
           <Button variant="contained" size={"small"} startIcon={<AddIcon />}>
@@ -130,6 +132,7 @@ const UnitImportExport = () => {
           Import
           <input
             type="file"
+            value={""}
             onChange={handleFileUpload}
             accept=".csv,.xlsx,.xls"
             hidden

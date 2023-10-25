@@ -1,0 +1,10 @@
+id,name,abbreviation,unit
+,Metabolizable Energy,ME,kcal/kg
+,Crude protein,CP,%
+,Lysine,Lys,%
+,m+c,m+c,%
+,Methionine,Met,%
+,Ether extract,EE,%
+,Crude fiber,CF,%
+,Calcium,Ca,%
+,Phosphorus,P,%

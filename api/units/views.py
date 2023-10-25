@@ -9,15 +9,27 @@ from tablib import Dataset
 from import_export import resources
 import pandas as pd
 
-from core.views import HistoryViewSet, SummaryViewSet, CoreModelViewSet
+from core.views import (
+    HistoryViewSet,
+    SummaryViewSet,
+    CoreModelViewSet,
+    XlsxExport,
+    XlsExport,
+    CsvExport,
+    XlsxImport,
+    XlsImport,
+    CsvImport
+)
 from core.serializers import UploadSerializer
 from . import models
 from . import serializers
 from . import filters
+from . import admin
+
 
 ## Unit Converter
 
-class UnitConverterViewSet(viewsets.ModelViewSet):
+class UnitConverterViewSet(CoreModelViewSet):
     queryset = models.UnitConverter.objects.all()
     serializer_class = serializers.UnitConverterSerializer_GET
     filterset_class = filters.UnitConverterFilter
@@ -32,86 +44,35 @@ class UnitConverterSummaryViewSet(SummaryViewSet):
     def get_query(self):
         return models.UnitConverter.all.get(pk=self.id_pk)
 
-# Xlsx
-class UnitConverterXlsxExport(APIView):
-    def get(self, request):
-        dataset = admin.UnitConverterResource().export()
-        response = HttpResponse(
-            dataset.xlsx, content_type='application/ms-excel')
-        response['Content-Disposition'] = 'attachment; filename="houses%s.xlsx"' % (
-            date.today().strftime(settings.DATETIME_FORMAT))
-        return response
+## Unit Converter Export
+class UnitConverterXlsxExport(XlsxExport):
+    def get_dataset(self):
+        return admin.UnitConverterResource().export()
 
-class UnitConverterXlsxImport(APIView):
-    serializer_class = UploadSerializer
-    parser_classes = [MultiPartParser]
+class UnitConverterXlsExport(XlsExport):
+    def get_dataset(self):
+        return admin.UnitConverterResource().export()
 
-    def post(self, request):
-        file = request.FILES.get('file')
-        df = pd.read_excel(file, header=0)
-        dataset = Dataset().load(df)
-        resource = resources.modelresource_factory(
-            model=models.UnitConverter)()
-        result = resource.import_data(dataset, raise_errors=True)
-        if not result.has_errors():
-            return JsonResponse({'message': 'Imported Successfully'}, status=200)
-        return JsonResponse({'errors': ['Import Failed']}, status=400)
+class UnitConverterCsvExport(CsvExport):
+    def get_dataset(self):
+        return admin.UnitConverterResource().export()
 
-# Xls
-class UnitConverterXlsExport(APIView):
-    def get(self, request):
-        dataset = admin.UnitConverterResource().export()
-        response = HttpResponse(
-            dataset.xls, content_type='application/ms-excel')
-        response['Content-Disposition'] = 'attachment; filename="houses%s.xls"' % (
-            date.today().strftime(settings.DATETIME_FORMAT))
-        return response
+## Unit Converter Import
+class UnitConverterXlsxImport(XlsxImport):
+    def get_model(self):
+        return models.UnitConverter
+    
+class UnitConverterXlsImport(XlsImport):
+    def get_model(self):
+        return models.UnitConverter
 
-class UnitConverterXlsImport(APIView):
-    serializer_class = UploadSerializer
-    parser_classes = [MultiPartParser]
-
-    def post(self, request):
-        file = request.FILES.get('file')
-        df = pd.read_excel(file, header=0)
-        dataset = Dataset().load(df)
-        resource = resources.modelresource_factory(
-            model=models.UnitConverter)()
-        result = resource.import_data(dataset, raise_errors=True)
-        if not result.has_errors():
-            return JsonResponse({'message': 'Imported Successfully'}, status=200)
-        return JsonResponse({'errors': ['Import Failed']}, status=400)
-
-# Csv
-class UnitConverterCsvExport(APIView):
-    def get(self, request):
-        dataset = admin.UnitConverterResource().export()
-        response = HttpResponse(
-            dataset.csv, content_type='application/ms-excel')
-        response['Content-Disposition'] = 'attachment; filename="houses%s.csv"' % (
-            date.today().strftime(settings.DATETIME_FORMAT))
-        return response
-
-class UnitConverterCsvImport(APIView):
-    serializer_class = UploadSerializer
-    parser_classes = [MultiPartParser]
-
-    def post(self, request):
-        file = request.FILES.get('file')
-        df = pd.read_csv(file, header=0)
-        dataset = Dataset().load(df)
-        resource = resources.modelresource_factory(
-            model=models.UnitConverter)()
-        result = resource.import_data(dataset, raise_errors=True)
-        if not result.has_errors():
-            return JsonResponse({'message': 'Imported Successfully'}, status=200)
-        return JsonResponse({'errors': ['Import Failed']}, status=400)
+class UnitConverterCsvImport(CsvImport):
+    def get_model(self):
+        return models.UnitConverter
 
 
-
-## Units
-
-class UnitViewSet(viewsets.ModelViewSet):
+## Unit
+class UnitViewSet(CoreModelViewSet):
     queryset = models.Unit.all.all()
     serializer_class = serializers.UnitSerializer_GET
     filterset_class = filters.UnitFilter
@@ -127,77 +88,28 @@ class UnitSummaryViewSet(SummaryViewSet):
     def get_query(self):
         return models.Unit.all.get(pk=self.id_pk)
 
-# Xlsx
-class UnitXlsxExport(APIView):
-    def get(self, request):
-        dataset = admin.UnitResource().export()
-        response = HttpResponse(
-            dataset.xlsx, content_type='application/ms-excel')
-        response['Content-Disposition'] = 'attachment; filename="units%s.xlsx"' % (
-            date.today().strftime(settings.DATETIME_FORMAT))
-        return response
+## Unit Export
+class UnitXlsxExport(XlsxExport):
+    def get_dataset(self):
+        return admin.UnitResource().export()
 
-class UnitXlsxImport(APIView):
-    serializer_class = UploadSerializer
-    parser_classes = [MultiPartParser]
+class UnitXlsExport(XlsExport):
+   def get_dataset(self):
+        return admin.UnitResource().export()
 
-    def post(self, request):
-        file = request.FILES.get('file')
-        df = pd.read_excel(file, header=0)
-        dataset = Dataset().load(df)
-        resource = resources.modelresource_factory(
-            model=models.Unit)()
-        result = resource.import_data(dataset, raise_errors=True)
-        if not result.has_errors():
-            return JsonResponse({'message': 'Imported Successfully'}, status=200)
-        return JsonResponse({'errors': ['Import Failed']}, status=400)
+class UnitCsvExport(CsvExport):
+   def get_dataset(self):
+        return admin.UnitResource().export()
 
-# Xls
-class UnitXlsExport(APIView):
-    def get(self, request):
-        dataset = admin.UnitResource().export()
-        response = HttpResponse(
-            dataset.xls, content_type='application/ms-excel')
-        response['Content-Disposition'] = 'attachment; filename="units%s.xls"' % (
-            date.today().strftime(settings.DATETIME_FORMAT))
-        return response
+## Unit Import
+class UnitXlsxImport(XlsxImport):
+    def get_model(self):
+        return models.Unit
 
-class UnitXlsImport(APIView):
-    serializer_class = UploadSerializer
-    parser_classes = [MultiPartParser]
-
-    def post(self, request):
-        file = request.FILES.get('file')
-        df = pd.read_excel(file, header=0)
-        dataset = Dataset().load(df)
-        resource = resources.modelresource_factory(
-            model=models.Unit)()
-        result = resource.import_data(dataset, raise_errors=True)
-        if not result.has_errors():
-            return JsonResponse({'message': 'Imported Successfully'}, status=200)
-        return JsonResponse({'errors': ['Import Failed']}, status=400)
-
-# Csv
-class UnitCsvExport(APIView):
-    def get(self, request):
-        dataset = admin.UnitResource().export()
-        response = HttpResponse(
-            dataset.csv, content_type='application/ms-excel')
-        response['Content-Disposition'] = 'attachment; filename="houses%s.csv"' % (
-            date.today().strftime(settings.DATETIME_FORMAT))
-        return response
-
-class UnitCsvImport(APIView):
-    serializer_class = UploadSerializer
-    parser_classes = [MultiPartParser]
-
-    def post(self, request):
-        file = request.FILES.get('file')
-        df = pd.read_csv(file, header=0)
-        dataset = Dataset().load(df)
-        resource = resources.modelresource_factory(
-            model=models.Unit)()
-        result = resource.import_data(dataset, raise_errors=True)
-        if not result.has_errors():
-            return JsonResponse({'message': 'Imported Successfully'}, status=200)
-        return JsonResponse({'errors': ['Import Failed']}, status=400)
+class UnitXlsImport(XlsImport):
+    def get_model(self):
+        return models.Unit
+    
+class UnitCsvImport(CsvImport):
+    def get_model(self):
+        return models.Unit

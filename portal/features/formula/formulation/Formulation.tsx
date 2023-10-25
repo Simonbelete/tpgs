@@ -16,28 +16,33 @@ import {
   Grid,
   InputAdornment,
   Stack,
-  Button
+  Button,
 } from "@mui/material";
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import * as yup from "yup";
-import { useLazyGetNutrientsQuery } from '@/features/nutrients/services';
-import { useLazyGetIngredientNutrientsQuery } from '@/features/ingredients/services';
+import { useLazyGetNutrientsQuery } from "@/features/nutrients/services";
+import { useLazyGetIngredientNutrientsQuery } from "@/features/ingredients/services";
 import { Loading } from "@/components";
 import { Sizer } from "../components";
-import { Ingredient, Nutrient, Formula, FormulaIngredient, FormulaRequirement, FormulaRation } from "@/models";
 import {
-  IngredientSelectDialog,
-} from "@/features/ingredients";
+  Ingredient,
+  Nutrient,
+  Formula,
+  FormulaIngredient,
+  FormulaRequirement,
+  FormulaRation,
+} from "@/models";
+import { IngredientSelectDialog } from "@/features/ingredients";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { Dropdown } from "@/components/dropdowns";
 import { LabeledInput } from "@/components/inputs";
 import { PurposeDropdown } from "@/features/purposes";
 import { CountryDropdown } from "@/features/countries";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useCreateFormulaMutation } from '../services';
+import { useCreateFormulaMutation } from "../services";
 import { useCRUD } from "@/hooks";
 import CloseIcon from "@mui/icons-material/Close";
-import SaveIcon from '@mui/icons-material/Save';
+import SaveIcon from "@mui/icons-material/Save";
 import { useRouter } from "next/router";
 import { enqueueSnackbar } from "notistack";
 import dynamic from "next/dynamic";
@@ -46,11 +51,11 @@ const AchivementChartComponent = dynamic(
   () => import("../components/achivement-chart"),
   {
     ssr: false,
-    loading: () => <></>
+    loading: () => <></>,
   }
 );
 
-type Column = {nutrient_id?: number} & GridColumn;
+type Column = { nutrient_id?: number } & GridColumn;
 type Inputs = Partial<Formula>;
 
 const schema = yup
@@ -77,70 +82,70 @@ const schema = yup
 
 const Formulation = ({ saveRef }: { saveRef: React.Ref<unknown> }) => {
   const router = useRouter();
-  const [getNutrients, { data: nutreints, isUninitialized, isLoading: nutrientIsLoading}] = useLazyGetNutrientsQuery();
+  const [
+    getNutrients,
+    { data: nutreints, isUninitialized, isLoading: nutrientIsLoading },
+  ] = useLazyGetNutrientsQuery();
   const [getIngredientNutrients] = useLazyGetIngredientNutrientsQuery();
 
-  const [createFormula, createResult ] = useCreateFormulaMutation();
+  const [createFormula, createResult] = useCreateFormulaMutation();
 
-  const [chartData, setChartData] = useState<{x: any, y: any}>({
+  const [chartData, setChartData] = useState<{ x: any; y: any }>({
     x: [],
-    y: []
-  })
+    y: [],
+  });
 
   const defaultColumns: Column[] = [
-    {id: 'name', title: 'Name'},
-    {id: 'ration', title: '%'},
-    {id: 'price', title: 'Price[Kg]'},
-    {id: 'ration_weight', title: 'Ration Weight [kg]'},
-    {id: 'ration_price', title: 'Ration Price [100kg]'},
-    {id: 'dm', title: 'DM[%]'}
-  ]
+    { id: "name", title: "Name" },
+    { id: "ration", title: "%" },
+    { id: "price", title: "Price[Kg]" },
+    { id: "ration_weight", title: "Ration Weight [kg]" },
+    { id: "ration_price", title: "Ration Price [100kg]" },
+    { id: "dm", title: "DM[%]" },
+  ];
 
   const [isLoading, setIsLoading] = useState(false);
   const [isIngredientOpen, setIsIngredientOpen] = useState(false);
   const [refState, setRefresh] = useState(1);
   const columns = useRef<Column[]>([]);
-  const rows = useRef<any[]>([
-  ]);
+  const rows = useRef<any[]>([]);
   const indexes = useRef<string[]>([]);
 
-  const refresh = () => setRefresh(refState+1);
+  const refresh = () => setRefresh(refState + 1);
 
   useEffect(() => {
-    if(isUninitialized){
-      getNutrients({}).unwrap().then((response) => {
-        const cols: Column[] = (response?.results || [] ).map(e => {
-          return {
-            id: e.abbreviation,
-            title: e.abbreviation,
-            nutrient_id: e.id
-          } as Column
-        })
+    if (isUninitialized) {
+      getNutrients({})
+        .unwrap()
+        .then((response) => {
+          const cols: Column[] = (response?.results || []).map((e) => {
+            return {
+              id: e.abbreviation,
+              title: e.abbreviation,
+              nutrient_id: e.id,
+            } as Column;
+          });
 
-        columns.current = [
-          ...defaultColumns,
-          ...cols
-        ];
+          columns.current = [...defaultColumns, ...cols];
 
-        const initRation: any = {id: 'ration', name: 'Ration'}
-        const initReq: any = {id: 'requirement', name: 'Requirement'}
+          const initRation: any = { id: "ration", name: "Ration" };
+          const initReq: any = { id: "requirement", name: "Requirement" };
 
-        indexes.current = columns.current.map(e => {
-          const key: string = e.id || "";
-          if(key !== 'name' ) {
-            initRation[key] = '';
-            initReq[key] = '';
-          }
-          return String(e.id)
+          indexes.current = columns.current.map((e) => {
+            const key: string = e.id || "";
+            if (key !== "name") {
+              initRation[key] = "";
+              initReq[key] = "";
+            }
+            return String(e.id);
+          });
+
+          rows.current = [initRation, initReq];
+
+          refresh();
         });
-
-        rows.current = [ initRation, initReq]
-
-        refresh();
-      })
     }
   }, []);
-
 
   const onCellEdited = React.useCallback(
     (cell: Item, newValue: EditableGridCell) => {
@@ -155,55 +160,58 @@ const Formulation = ({ saveRef }: { saveRef: React.Ref<unknown> }) => {
 
       const ROW_RATION_INDEX = rows.current.length - 2;
       const ROW_REQUIREMENT_INDEX = rows.current.length - 1;
-    
+
       const chart: any = {
         x: [],
-        y: []
-      }
+        y: [],
+      };
 
       // Start from ration col
-      for(let c=1; c<columns.current.length; c+=1) {
+      for (let c = 1; c < columns.current.length; c += 1) {
         const col_key: string = columns.current[c].id || "";
-        
-        let col_total: number = 0
 
-        for(let r=0; r<ROW_RATION_INDEX; r+=1){
-          const ration = rows.current[r]['ration'];
-          const price = rows.current[r]['price'];
-          const cell = rows.current[r][col_key]
-          
-          let result = 0
+        let col_total: number = 0;
 
-          if(c == 1) {
+        for (let r = 0; r < ROW_RATION_INDEX; r += 1) {
+          const ration = rows.current[r]["ration"];
+          const price = rows.current[r]["price"];
+          const cell = rows.current[r][col_key];
+
+          let result = 0;
+
+          if (c == 1) {
             // For ration column
             result = cell;
-          } else if(c == 3) {
+          } else if (c == 3) {
             // For ration weight
-            result = (getValues('weight') || 0) * ration / 100
+            result = ((getValues("weight") || 0) * ration) / 100;
             // Set ration weight for current row
-            rows.current[r]['ration_weight'] = result;
-          } else if(c == 4){
+            rows.current[r]["ration_weight"] = result;
+          } else if (c == 4) {
             // For ration price per weight
-            result = ((getValues('weight') || 0) * ration / 100) * price;
+            result = (((getValues("weight") || 0) * ration) / 100) * price;
             // set ration price for current row
-            rows.current[r]['ration_price'] = result;
+            rows.current[r]["ration_price"] = result;
           } else {
-            result = ration * cell / 100;
+            result = (ration * cell) / 100;
           }
 
-          col_total += (result || 0) 
+          col_total += result || 0;
         }
 
         rows.current[ROW_RATION_INDEX][col_key] = col_total;
 
         // Chart data
-        chart.x.push(columns.current[c].title)
-        chart.y.push(col_total/ rows.current[ROW_REQUIREMENT_INDEX][col_key] * 100)
+        chart.x.push(columns.current[c].title);
+        chart.y.push(
+          (col_total / rows.current[ROW_REQUIREMENT_INDEX][col_key]) * 100
+        );
       }
 
       setChartData(chart);
-
-  }, [columns]);
+    },
+    [columns]
+  );
 
   const getContent = React.useCallback(
     (cell: Item): GridCell => {
@@ -228,7 +236,7 @@ const Formulation = ({ saveRef }: { saveRef: React.Ref<unknown> }) => {
             bgCell: "#EFEFF1",
           },
         };
-      }else if (
+      } else if (
         (ROW_REQUIREMENT_INDEX == row || col == 1) &&
         row != ROW_RATION_INDEX
       ) {
@@ -262,91 +270,79 @@ const Formulation = ({ saveRef }: { saveRef: React.Ref<unknown> }) => {
   const onCellActivated = React.useCallback((cell: Item) => {}, []);
 
   const handleSelected = async (value?: Ingredient) => {
-    if (value == undefined || value == null) return;
-    setIsIngredientOpen(false);
-    setIsLoading(true);
-    try{
-      const newRow: any = {
-        id: 0,
-        name: value.name,
-        value: 0,
-        price: value.price,
-        dm: value.dm,
-      }
-      const response = await getIngredientNutrients({id: value.id, query: {}}).unwrap();
-      for(let i=0; i<response.results.length; i+=1){
-        let abbvr: string = (response.results[0].nutrient as Nutrient).abbreviation
-        newRow[abbvr] = response.results[i].value;
-        // Ingredient id
-        newRow['ingredient_id'] = response.results[i].ingredient;
-      }
-  
-      pushRow(newRow);
-    }finally {
-      setIsLoading(false);
-    }
-  }
+    console.log(value);
+    // if (value == undefined || value == null) return;
+    // setIsIngredientOpen(false);
+    // setIsLoading(true);
+    // try {
+    //   const newRow: any = {
+    //     id: 0,
+    //     name: value.name,
+    //     value: 0,
+    //     price: value.price,
+    //     dm: value.dm,
+    //   };
+    //   const response = await getIngredientNutrients({
+    //     id: value.id,
+    //     query: {},
+    //   }).unwrap();
+    //   for (let i = 0; i < response.results.length; i += 1) {
+    //     let abbvr: string = (response.results[0].nutrient as Nutrient)
+    //       .abbreviation;
+    //     newRow[abbvr] = response.results[i].value;
+    //     // Ingredient id
+    //     newRow["ingredient_id"] = response.results[i].ingredient;
+    //   }
+
+    //   pushRow(newRow);
+    // } finally {
+    //   setIsLoading(false);
+    // }
+  };
 
   const pushRow = (row: any) => {
-    rows.current = [
-      row,
-      ...rows.current,
-    ]
+    rows.current = [row, ...rows.current];
     refresh();
-  }
+  };
   const pushcolumn = (col: Column, index?: number) => {
-    if(index) {
+    if (index) {
       columns.current = [
         ...columns.current.slice(0, index),
         col,
-        ...columns.current.slice(index, -1)
-      ]
-    } else {
-      columns.current = [
-        ...columns.current,
-        col
+        ...columns.current.slice(index, -1),
       ];
+    } else {
+      columns.current = [...columns.current, col];
     }
     refresh();
-  } 
+  };
 
   const popAndPushcolumn = (col: Column, index?: number) => {
-    if(index) {
+    if (index) {
       columns.current = [
         ...columns.current.slice(0, index),
         col,
-        ...columns.current.slice(index + 1)
-      ]
-    } else {
-      columns.current = [
-        ...columns.current,
-        col
+        ...columns.current.slice(index + 1),
       ];
+    } else {
+      columns.current = [...columns.current, col];
     }
     refresh();
-  } 
-
+  };
 
   // Form
-  const {
-    handleSubmit,
-    control,
-    setError,
-    getValues,
-  } = useForm<Inputs>({
+  const { handleSubmit, control, setError, getValues } = useForm<Inputs>({
     // @ts-ignore
     resolver: yupResolver(schema),
     defaultValues: {
-      weight: 100
-    }
+      weight: 100,
+    },
   });
 
   const useCRUDHook = useCRUD({
-    results: [
-      createResult,
-    ],
-    setError: setError
-  })
+    results: [createResult],
+    setError: setError,
+  });
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     const formula: Partial<Formula> = data;
@@ -354,52 +350,56 @@ const Formulation = ({ saveRef }: { saveRef: React.Ref<unknown> }) => {
     const ROW_RATION_INDEX = rows.current.length - 2;
     const ROW_REQUIREMENT_INDEX = rows.current.length - 1;
 
-    const frm_ing: Partial<FormulaIngredient>[] = []
-    const frm_req: Partial<FormulaRequirement>[] = []
-    const frm_rtn: Partial<FormulaRation>[] = []
+    const frm_ing: Partial<FormulaIngredient>[] = [];
+    const frm_req: Partial<FormulaRequirement>[] = [];
+    const frm_rtn: Partial<FormulaRation>[] = [];
 
-    for(let r=0; r<ROW_RATION_INDEX; r+=1) {
+    for (let r = 0; r < ROW_RATION_INDEX; r += 1) {
       frm_ing.push({
-        ingredient: Number(rows.current[r]['ingredient_id']),
-        ration: Number(rows.current[r]['ration']),
+        ingredient: Number(rows.current[r]["ingredient_id"]),
+        ration: Number(rows.current[r]["ration"]),
       });
     }
 
     // Start from nutrients
-    for(let c=6; c<columns.current.length; c+=1) {
+    for (let c = 6; c < columns.current.length; c += 1) {
       const col_key: string = columns.current[c].id || "";
-      if(Number(rows.current[ROW_REQUIREMENT_INDEX][col_key]) !== 0) {
+      if (Number(rows.current[ROW_REQUIREMENT_INDEX][col_key]) !== 0) {
         frm_req.push({
           nutrient: columns.current[c].nutrient_id,
-          value: Number(rows.current[ROW_REQUIREMENT_INDEX][col_key])
-        })
+          value: Number(rows.current[ROW_REQUIREMENT_INDEX][col_key]),
+        });
       }
-     
-      if(Number(rows.current[ROW_RATION_INDEX][col_key]) !== 0) {
+
+      if (Number(rows.current[ROW_RATION_INDEX][col_key]) !== 0) {
         frm_rtn.push({
           nutrient: columns.current[c].nutrient_id,
-          value: Number(rows.current[ROW_RATION_INDEX][col_key])
-        })
+          value: Number(rows.current[ROW_RATION_INDEX][col_key]),
+        });
       }
     }
 
     formula.ingredients = frm_ing as any;
     formula.rations = frm_rtn as any;
     formula.requirements = frm_req as any;
-    formula.budget = Number(rows.current[ROW_REQUIREMENT_INDEX]['ration_price'])
-    formula.desired_ratio = Number(rows.current[ROW_REQUIREMENT_INDEX]['ration']) || 0
-    formula.desired_dm = Number(rows.current[ROW_REQUIREMENT_INDEX]['dm'])
-    formula.ration_price = Number(rows.current[ROW_RATION_INDEX]['ration_price'])
-    formula.ration_ratio = Number(rows.current[ROW_RATION_INDEX]['ration'])
-    formula.ration_dm = Number(rows.current[ROW_RATION_INDEX]['dm'])
-    
-    if(formula.desired_ratio == null || formula.ration_ratio == null) {
-      enqueueSnackbar("Please Insert Ingredient", {variant: "warning"})
+    formula.budget = Number(
+      rows.current[ROW_REQUIREMENT_INDEX]["ration_price"]
+    );
+    formula.desired_ratio =
+      Number(rows.current[ROW_REQUIREMENT_INDEX]["ration"]) || 0;
+    formula.desired_dm = Number(rows.current[ROW_REQUIREMENT_INDEX]["dm"]);
+    formula.ration_price = Number(
+      rows.current[ROW_RATION_INDEX]["ration_price"]
+    );
+    formula.ration_ratio = Number(rows.current[ROW_RATION_INDEX]["ration"]);
+    formula.ration_dm = Number(rows.current[ROW_RATION_INDEX]["dm"]);
+
+    if (formula.desired_ratio == null || formula.ration_ratio == null) {
+      enqueueSnackbar("Please Insert Ingredient", { variant: "warning" });
     }
 
-    console.log(formula);
     const response = await createFormula(formula);
-  }
+  };
 
   useImperativeHandle(saveRef, () => ({
     save() {
@@ -415,7 +415,7 @@ const Formulation = ({ saveRef }: { saveRef: React.Ref<unknown> }) => {
         onSelected={handleSelected}
         onClose={() => setIsIngredientOpen(false)}
       />
-        <Box sx={{ my: 5, border: "1px solid #98AAC4" }}>
+      <Box sx={{ my: 5, border: "1px solid #98AAC4" }}>
         <Accordion elevation={0} defaultExpanded>
           <AccordionSummary
             expandIcon={<ExpandMoreIcon />}
@@ -531,9 +531,12 @@ const Formulation = ({ saveRef }: { saveRef: React.Ref<unknown> }) => {
                           console.log(event.target.value);
                           // Update header title of price per kg
                           popAndPushcolumn(
-                            {id: 'price', title: `Price [${event.target.value}kg]`},
+                            {
+                              id: "price",
+                              title: `Price [${event.target.value}kg]`,
+                            },
                             4
-                          )
+                          );
                           onChange(event);
                         }}
                         fullWidth
@@ -640,63 +643,69 @@ const Formulation = ({ saveRef }: { saveRef: React.Ref<unknown> }) => {
           </AccordionDetails>
         </Accordion>
       </Box>
+      <Stack direction={"row"} sx={{ my: 5 }} gap={2}>
+        <Button variant="outlined" onClick={onRowAppended}>
+          Add Ingredients
+        </Button>
+        <Button variant="outlined">Load Requirement</Button>
+      </Stack>
       <Sizer>
         <DataEditor
-           width="100%"
-           experimental={{ strict: true }}
-           columns={columns.current}
-           rows={rows.current.length}
-           isDraggable={true}
-           freezeColumns={1}
-           rowMarkers="number"
-           onCellEdited={onCellEdited}
-           getCellContent={getContent}
-           onRowAppended={onRowAppended}
-           onCellActivated={onCellActivated}
-           trailingRowOptions={{
-             // How to get the trailing row to look right
-             sticky: true,
-             tint: true,
-             hint: "Add Ingredient",
-           }}
-         />
+          width="100%"
+          experimental={{ strict: true }}
+          columns={columns.current}
+          rows={rows.current.length}
+          isDraggable={true}
+          freezeColumns={1}
+          rowMarkers="number"
+          onCellEdited={onCellEdited}
+          getCellContent={getContent}
+          onRowAppended={onRowAppended}
+          onCellActivated={onCellActivated}
+          trailingRowOptions={{
+            // How to get the trailing row to look right
+            sticky: true,
+            tint: true,
+            hint: "Add Ingredient",
+          }}
+        />
       </Sizer>
-      <Box sx={{my: 5}}>
-           <AchivementChartComponent data={chartData} />
+      <Box sx={{ my: 5 }}>
+        <AchivementChartComponent data={chartData} />
       </Box>
 
-      <Box sx={{mt: 5}}>
-                <Stack
-                  spacing={2}
-                  direction={"row"}
-                  justifyContent="flex-start"
-                  alignItems="center"
-                >
-                  <Box>
-                    <Button
-                      variant="contained"
-                      size="small"
-                      startIcon={<SaveIcon />}
-                      onClick={() => handleSubmit(onSubmit)()}
-                    >
-                      Save
-                    </Button>
-                  </Box>
-                  <Box>
-                    <Button
-                      variant="outlined"
-                      color="error"
-                      size="small"
-                      startIcon={<CloseIcon />}
-                      onClick={() => router.push("/formulas")}
-                    >
-                      Cancel
-                    </Button>
-                  </Box>
-                </Stack>
-              </Box>
+      <Box sx={{ mt: 5 }}>
+        <Stack
+          spacing={2}
+          direction={"row"}
+          justifyContent="flex-start"
+          alignItems="center"
+        >
+          <Box>
+            <Button
+              variant="contained"
+              size="small"
+              startIcon={<SaveIcon />}
+              onClick={() => handleSubmit(onSubmit)()}
+            >
+              Save
+            </Button>
+          </Box>
+          <Box>
+            <Button
+              variant="outlined"
+              color="error"
+              size="small"
+              startIcon={<CloseIcon />}
+              onClick={() => router.push("/formulas")}
+            >
+              Cancel
+            </Button>
+          </Box>
+        </Stack>
+      </Box>
     </>
-  )
-}
+  );
+};
 
 export default Formulation;
