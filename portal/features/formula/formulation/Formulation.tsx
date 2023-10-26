@@ -269,35 +269,48 @@ const Formulation = ({ saveRef }: { saveRef: React.Ref<unknown> }) => {
 
   const onCellActivated = React.useCallback((cell: Item) => {}, []);
 
-  const handleSelected = async (value?: Ingredient) => {
-    console.log(value);
-    // if (value == undefined || value == null) return;
-    // setIsIngredientOpen(false);
-    // setIsLoading(true);
-    // try {
-    //   const newRow: any = {
-    //     id: 0,
-    //     name: value.name,
-    //     value: 0,
-    //     price: value.price,
-    //     dm: value.dm,
-    //   };
-    //   const response = await getIngredientNutrients({
-    //     id: value.id,
-    //     query: {},
-    //   }).unwrap();
-    //   for (let i = 0; i < response.results.length; i += 1) {
-    //     let abbvr: string = (response.results[0].nutrient as Nutrient)
-    //       .abbreviation;
-    //     newRow[abbvr] = response.results[i].value;
-    //     // Ingredient id
-    //     newRow["ingredient_id"] = response.results[i].ingredient;
-    //   }
-
-    //   pushRow(newRow);
-    // } finally {
-    //   setIsLoading(false);
-    // }
+  const handleSelected = async (values?: Ingredient[]) => {
+    console.log(values);
+    console.log(rows.current);
+    if (values?.length == 0) {
+      setIsIngredientOpen(false);
+      return;
+    }
+    try {
+      setIsIngredientOpen(false);
+      setIsLoading(true);
+      values = values ?? [];
+      for (let i = 0; i < values?.length; i += 1) {
+        // @ts-ignore
+        if (rows.current.some((e: any) => e["ingredient_id"] == values[i].id)) {
+          enqueueSnackbar(`Ingredient "${values[i].name}" is already exists`, {
+            variant: "warning",
+          });
+          continue;
+        }
+        const newRow: any = {
+          id: values[i].name,
+          name: values[i].name,
+          value: 0,
+          price: values[i].price,
+          dm: values[i].dm,
+          ingredient_id: values[i].id,
+        };
+        const response = await getIngredientNutrients({
+          id: values[i].id,
+          query: {},
+        }).unwrap();
+        for (let i = 0; i < response.results.length; i += 1) {
+          let abbvr: string = (response.results[0].nutrient as Nutrient)
+            .abbreviation;
+          newRow[abbvr] = response.results[i].value;
+        }
+        pushRow(newRow);
+      }
+    } finally {
+      setIsIngredientOpen(false);
+      setIsLoading(false);
+    }
   };
 
   const pushRow = (row: any) => {

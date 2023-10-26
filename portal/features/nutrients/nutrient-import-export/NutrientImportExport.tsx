@@ -34,7 +34,7 @@ const BreedImportExport = () => {
       if (type == "xls") response = await exportNutrientsXLS();
       if (type == "csv") response = await exportNutrientsCSV();
       if (response.status == 200) {
-        fileDownload(response.data, `houses_.${type}`);
+        fileDownload(response.data, `nutrients_.${type}`);
       } else {
         enqueueSnackbar(messages.exportError_400(), { variant: "error" });
       }

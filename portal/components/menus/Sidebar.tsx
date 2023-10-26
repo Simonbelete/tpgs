@@ -592,13 +592,16 @@ const SidebarMenu = () => {
         <MenuItem
           component={<Link href="/settings" />}
           icon={<SettingsIcon fontSize="small" />}
+          active={RegExp("^/settings(.*)$").test(router.pathname)}
         >
           <Typography variant="body1" fontSize={14}>
             Setting
           </Typography>
         </MenuItem>
         <MenuItem
-          component={<Link href="/api/logout" />}
+          onClick={async () => {
+            await signOut();
+          }}
           icon={<LogoutIcon fontSize="small" />}
         >
           <Typography variant="body1" fontSize={14}>

@@ -9,13 +9,14 @@ import siteMetadata from "@/data/siteMetadata";
 import Link from "next/link";
 import LogoutIcon from "@mui/icons-material/Logout";
 import CancelIcon from "@mui/icons-material/Cancel";
+import { SeoHead } from "@/seo";
 
 const SettingPage = () => {
   const { breadcrumbs } = useBreadcrumbs();
 
   return (
     <>
-      <Head>{siteMetadata.headerTitle} - Setting</Head>
+      <SeoHead title="Setting" />
       <EditLayout
         breadcrumbs={<Breadcrumbs items={breadcrumbs} />}
         header={<Typography variant="title">Setting</Typography>}

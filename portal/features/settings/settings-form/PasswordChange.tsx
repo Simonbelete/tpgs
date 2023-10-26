@@ -16,11 +16,19 @@ import { LabeledInput } from "@/components/inputs";
 import DriveFileRenameOutlineIcon from "@mui/icons-material/DriveFileRenameOutline";
 
 type Inputs = {
-  name: string;
+  old_password: string;
+  password: string;
+  confirm_password: string;
 };
 
 const schema = yup.object({
-  name: yup.string().required(),
+  old_password: yup.string().required(),
+  password: yup.string().length(6).required(),
+  confirm_password: yup
+    .string()
+    .label("confirm password")
+    .required()
+    .oneOf([yup.ref("password"), null], "Passwords must match"),
 });
 
 const PasswordChange = () => {
@@ -44,7 +52,7 @@ const PasswordChange = () => {
         <Grid container rowSpacing={4} columnSpacing={10}>
           <Grid item xs={12}>
             <Controller
-              name={"name"}
+              name={"old_password"}
               control={control}
               render={({
                 field: { onChange, value },
@@ -57,8 +65,53 @@ const PasswordChange = () => {
                   fullWidth
                   size="small"
                   value={value}
-                  label={"Full name"}
-                  placeholder={"Full name"}
+                  label={"Old Password"}
+                  placeholder={"Old Password"}
+                />
+              )}
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <Controller
+              name={"password"}
+              control={control}
+              render={({
+                field: { onChange, value },
+                fieldState: { invalid, isTouched, isDirty, error },
+              }) => (
+                <LabeledInput
+                  error={!!error?.message}
+                  helperText={error?.message}
+                  onChange={onChange}
+                  fullWidth
+                  size="small"
+                  value={value}
+                  label={"New Password"}
+                  placeholder={"New Password"}
+                  type="password"
+                />
+              )}
+            />
+          </Grid>
+
+          <Grid item xs={12}>
+            <Controller
+              name={"confirm_password"}
+              control={control}
+              render={({
+                field: { onChange, value },
+                fieldState: { invalid, isTouched, isDirty, error },
+              }) => (
+                <LabeledInput
+                  error={!!error?.message}
+                  helperText={error?.message}
+                  onChange={onChange}
+                  fullWidth
+                  size="small"
+                  value={value}
+                  label={"Confirm Password"}
+                  placeholder={"Confirm Password"}
+                  type="password"
                 />
               )}
             />

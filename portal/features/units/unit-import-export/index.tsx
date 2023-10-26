@@ -1,4 +1,4 @@
-import React, { ChangeEvent, ReactElement } from "react";
+import React, { ChangeEvent, useState } from "react";
 import Link from "next/link";
 import { AxiosResponse } from "axios";
 import { useSnackbar } from "notistack";
@@ -17,9 +17,14 @@ import {
   importUnitsCSV,
   importUnitsXLS,
 } from "../services";
+import { HtmlModal } from "@/components";
 
 const UnitImportExport = () => {
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+  const [responseHtml, setResponseHtml] = useState({
+    open: false,
+    html: "",
+  });
 
   const handleExport = async (type: string) => {
     try {
@@ -28,7 +33,7 @@ const UnitImportExport = () => {
       if (type == "xls") response = await exportUnitsXLS();
       if (type == "csv") response = await exportUnitsCSV();
       if (response.status == 200) {
-        fileDownload(response.data, `houses_.${type}`);
+        fileDownload(response.data, `units_.${type}`);
       } else {
         enqueueSnackbar(messages.exportError_400(), { variant: "error" });
       }
@@ -62,6 +67,10 @@ const UnitImportExport = () => {
         if (file.name.includes(".csv"))
           response = await importUnitsCSV(formData);
         if (response.status == 200) {
+          setResponseHtml({
+            open: true,
+            html: response.data,
+          });
           enqueueSnackbar(messages.importSuccess(), { variant: "success" });
         } else {
           enqueueSnackbar(messages.importError_400(), { variant: "error" });
@@ -76,6 +85,11 @@ const UnitImportExport = () => {
 
   return (
     <>
+      <HtmlModal
+        open={responseHtml.open}
+        onClose={() => setResponseHtml({ open: false, html: "" })}
+        html={responseHtml.html}
+      />
       <Stack
         spacing={2}
         direction={"row"}
