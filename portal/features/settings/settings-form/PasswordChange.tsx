@@ -1,25 +1,14 @@
 import React from "react";
-import {
-  Grid,
-  TextField,
-  Typography,
-  Box,
-  Divider,
-  InputAdornment,
-  IconButton,
-  Button,
-} from "@mui/material";
+import { Grid, Typography, Box, Divider, Button } from "@mui/material";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import { LabeledInput } from "@/components/inputs";
-import DriveFileRenameOutlineIcon from "@mui/icons-material/DriveFileRenameOutline";
+import { useChangePasswordMutation } from "@/features/auth/services";
+import { ChangePassword } from "@/models";
+import { useCRUD } from "@/hooks";
 
-type Inputs = {
-  old_password: string;
-  password: string;
-  confirm_password: string;
-};
+type Inputs = ChangePassword;
 
 const schema = yup.object({
   old_password: yup.string().required(),
@@ -32,13 +21,22 @@ const schema = yup.object({
 });
 
 const PasswordChange = () => {
+  const [changePassword, changePasswordResult] = useChangePasswordMutation();
+
   const { handleSubmit, control, setError } = useForm<Inputs>({
     defaultValues: {},
     // @ts-ignore
     resolver: yupResolver(schema),
   });
 
-  const onSubmit: SubmitHandler<Inputs> = async (data) => {};
+  const onSubmit: SubmitHandler<Inputs> = async (data) => {
+    await changePassword(data);
+  };
+
+  const useCRUDHook = useCRUD({
+    results: [changePasswordResult],
+    setError: setError,
+  });
 
   return (
     <div role="tabpanel" style={{ width: "100%" }}>
@@ -56,7 +54,7 @@ const PasswordChange = () => {
               control={control}
               render={({
                 field: { onChange, value },
-                fieldState: { invalid, isTouched, isDirty, error },
+                fieldState: { error },
               }) => (
                 <LabeledInput
                   error={!!error?.message}
@@ -77,7 +75,7 @@ const PasswordChange = () => {
               control={control}
               render={({
                 field: { onChange, value },
-                fieldState: { invalid, isTouched, isDirty, error },
+                fieldState: { error },
               }) => (
                 <LabeledInput
                   error={!!error?.message}
@@ -100,7 +98,7 @@ const PasswordChange = () => {
               control={control}
               render={({
                 field: { onChange, value },
-                fieldState: { invalid, isTouched, isDirty, error },
+                fieldState: { error },
               }) => (
                 <LabeledInput
                   error={!!error?.message}

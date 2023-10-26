@@ -54,3 +54,4 @@ export type { default as Incubation } from "./Incubation";
 export type { default as IngredientAnalyses } from "./IngredientAnalyses";
 export type { default as Requirement } from "./Requirement";
 export type { default as RequirementNutrient } from "./RequirementNutrient";
+export type { default as ChangePassword } from "./ChangePassword";
