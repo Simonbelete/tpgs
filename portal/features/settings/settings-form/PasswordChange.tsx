@@ -1,12 +1,16 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Grid, Typography, Box, Divider, Button } from "@mui/material";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import { LabeledInput } from "@/components/inputs";
-import { useChangePasswordMutation } from "@/features/auth/services";
+import {
+  useChangePasswordMutation,
+  useDeactivateAccountMutation,
+} from "@/features/auth/services";
 import { ChangePassword } from "@/models";
 import { useCRUD } from "@/hooks";
+import { signOut } from "next-auth/react";
 
 type Inputs = ChangePassword;
 
@@ -17,11 +21,13 @@ const schema = yup.object({
     .string()
     .label("confirm password")
     .required()
-    .oneOf([yup.ref("password"), null], "Passwords must match"),
+    .oneOf([yup.ref("password"), ""], "Passwords must match"),
 });
 
 const PasswordChange = () => {
   const [changePassword, changePasswordResult] = useChangePasswordMutation();
+  const [deactivateAccount, deactivateAccountResult] =
+    useDeactivateAccountMutation();
 
   const { handleSubmit, control, setError } = useForm<Inputs>({
     defaultValues: {},
@@ -30,8 +36,18 @@ const PasswordChange = () => {
   });
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
-    await changePassword(data);
+    const response = await changePassword(data);
   };
+
+  const handleDeleteAccount = async () => {
+    const response = await deactivateAccount(null);
+  };
+
+  useEffect(() => {
+    if (changePasswordResult.isSuccess || deactivateAccountResult.isSuccess) {
+      signOut();
+    }
+  }, [changePasswordResult.isSuccess, deactivateAccountResult.isSuccess]);
 
   const useCRUDHook = useCRUD({
     results: [changePasswordResult],
@@ -135,7 +151,7 @@ const PasswordChange = () => {
           <Divider />
         </Box>
 
-        <Button variant="outlined" color="error" onClick={() => {}}>
+        <Button variant="outlined" color="error" onClick={handleDeleteAccount}>
           Delete account
         </Button>
       </Box>

@@ -5,7 +5,9 @@ from . import views
 
 router = routers.DefaultRouter()
 router.register(r'auth/change-password', views.ChangePasswordViewSet,
-                basename='api_change password')
+                basename='api_change_password')
+router.register(r'auth/deactivate', views.DeactivateAccountViewSet,
+                basename='api_deactivate_account')
 
 urlpatterns = [
     path('', include(router.urls)),

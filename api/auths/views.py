@@ -42,3 +42,13 @@ class ChangePasswordViewSet(viewsets.GenericViewSet):
             return Response({}, status=200)
         except Exception as ex:
             return Response({}, status=500)
+        
+class DeactivateAccountViewSet(viewsets.GenericViewSet):
+    def create(self, request):
+        try:
+            user = self.request.user
+            user.is_active = False
+            user.save()
+            return Response({}, status=200)
+        except Exception as ex:
+            return Response({}, status=500)

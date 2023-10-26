@@ -17,9 +17,19 @@ export const authApi = baseApi.injectEndpoints({
           data: data,
         }),
       }),
+      deactivateAccount: build.mutation<
+        Promise<AxiosResponse<ChangePassword>>,
+        null
+      >({
+        query: () => ({
+          url: `${URL}/deactivate/`,
+          method: "post",
+        }),
+      }),
     };
   },
   overrideExisting: false,
 });
 
-export const { useChangePasswordMutation } = authApi;
+export const { useChangePasswordMutation, useDeactivateAccountMutation } =
+  authApi;
