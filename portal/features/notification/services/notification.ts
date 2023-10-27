@@ -22,6 +22,13 @@ export const notificationApi = baseApi.injectEndpoints({
           params: query,
         }),
       }),
+      getNotifications: build.query<Response<Notification[]>, Object>({
+        query: (query?: Object) => ({
+          url: `${URL}/all/`,
+          method: "get",
+          params: query,
+        }),
+      }),
       markAllAsRead: build.mutation<Promise<AxiosResponse>, null>({
         query: () => ({
           url: `${URL}/mark-all-as-read/`,
@@ -38,4 +45,5 @@ export const {
   useGetUnreadListQuery,
   useLazyGetUnreadListQuery,
   useMarkAllAsReadMutation,
+  useGetNotificationsQuery,
 } = notificationApi;
