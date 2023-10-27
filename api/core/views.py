@@ -89,8 +89,8 @@ class SummaryViewSet(viewsets.ViewSet):
                 },
                 'created_at': self.queryset.created_at,
                 'last_updated_by': {
-                    'id': history_queryset.history_user.id,
-                    'name': history_queryset.history_user.name
+                    'id': history_queryset.history_user.id if history_queryset.history_user else 0,
+                    'name': history_queryset.history_user.name if history_queryset.history_user else 'unknown',
                 },
                 'last_updated_at': history_queryset.history_date,
                 'last_history_id': history_queryset.history_id,

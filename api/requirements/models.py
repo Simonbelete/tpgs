@@ -2,7 +2,6 @@ from django.db import models
 from simple_history.models import HistoricalRecords
 
 from core.models import CoreModel
-from houses.models import House
 
 class RequirementNutrient(CoreModel):
     requirement = models.ForeignKey('requirements.Requirement', on_delete=models.CASCADE)
