@@ -5,6 +5,12 @@ from rest_framework import viewsets, mixins
 
 from . import serializers
 
+class LiveAllNotificationList(mixins.ListModelMixin, mixins.RetrieveModelMixin, viewsets.GenericViewSet):
+    serializer_class = serializers.NotificationSerializer_GET
+    
+    def get_queryset(self):
+        return self.request.user.notifications.all()
+
 class LiveUnreadNotificationList(mixins.ListModelMixin, mixins.RetrieveModelMixin, viewsets.GenericViewSet):
     serializer_class = serializers.NotificationSerializer_GET
 

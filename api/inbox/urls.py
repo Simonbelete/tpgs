@@ -10,6 +10,9 @@ router = routers.DefaultRouter()
 router.register(r'unread', views.LiveUnreadNotificationList,
                 basename='api_live_unread_notification_list')
 
+router.register(r'all', views.LiveAllNotificationList,
+                basename='api_live_all_notification_list')
+
 urlpatterns = [
     path('inbox/notifications/', include([
         path('', include(router.urls)),
