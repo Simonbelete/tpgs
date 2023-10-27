@@ -1,1 +1,1 @@
-export { default as IngredientSelectDialog } from './IngredientsSelectDialog';
+export { default as RequirementSelectDialog } from "./RequirementSelectDialog";

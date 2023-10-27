@@ -422,16 +422,16 @@ const Formulation = ({ saveRef }: { saveRef: React.Ref<unknown> }) => {
   }));
 
   const handleRequirementSelected = async (value?: Requirement) => {
-    if(value == null) {
+    if (value == null) {
       setIsRequirementOpen(false);
       return;
     }
 
-    try{
-      const response = 
-    } finally {
+    // try{
+    //   const response =
+    // } finally {
 
-    }
+    // }
   };
 
   return (
