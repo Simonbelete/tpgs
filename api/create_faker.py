@@ -4,7 +4,7 @@ os.environ.setdefault("DJANGO_SETTINGS_MODULE", "api.settings")
 import django 
 django.setup() 
 
-from random import shuffle
+from random import shuffle, randint
 from faker import factory,Faker 
 from itertools import islice, cycle
 from model_bakery import baker
@@ -25,7 +25,7 @@ def safe_execute(function, default, *args):
     try:
         return function(*args)
     except:
-        return default
+        return list(default)
 
 print('=> Starting')
 
@@ -60,16 +60,15 @@ requirements = safe_execute(
 )
 print('=> Requirement Done!')
 
-requirement_nutrients = safe_execute(
-    lambda: baker.make(
+for k in requirements:
+    shuffle(nutrients)
+    baker.make(
         RequirementNutrient,
-        requirement=cycle(requirements),
+        requirement=k,
         nutrient=cycle(nutrients),
-        value=fake.pyint(),
-        _quantity=400
-    ),
-    RequirementNutrient.objects.all()
-)
+        value=randint(0, 100),
+        _quantity=randint(1, 20)
+    )
 print('=> RequirementNutrient Done!')
 
 print('=> ALL DONE!')
