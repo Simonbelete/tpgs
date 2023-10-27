@@ -31,6 +31,7 @@ import {
   FormulaIngredient,
   FormulaRequirement,
   FormulaRation,
+  Requirement,
 } from "@/models";
 import { IngredientSelectDialog } from "@/features/ingredients";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
@@ -46,6 +47,7 @@ import SaveIcon from "@mui/icons-material/Save";
 import { useRouter } from "next/router";
 import { enqueueSnackbar } from "notistack";
 import dynamic from "next/dynamic";
+import RequirementSelectDialog from "@/features/requirements/requirement-select-dialog/RequirementSelectDialog";
 
 const AchivementChartComponent = dynamic(
   () => import("../components/achivement-chart"),
@@ -106,6 +108,7 @@ const Formulation = ({ saveRef }: { saveRef: React.Ref<unknown> }) => {
 
   const [isLoading, setIsLoading] = useState(false);
   const [isIngredientOpen, setIsIngredientOpen] = useState(false);
+  const [isRequirementOpen, setIsRequirementOpen] = useState(false);
   const [refState, setRefresh] = useState(1);
   const columns = useRef<Column[]>([]);
   const rows = useRef<any[]>([]);
@@ -270,8 +273,6 @@ const Formulation = ({ saveRef }: { saveRef: React.Ref<unknown> }) => {
   const onCellActivated = React.useCallback((cell: Item) => {}, []);
 
   const handleSelected = async (values?: Ingredient[]) => {
-    console.log(values);
-    console.log(rows.current);
     if (values?.length == 0) {
       setIsIngredientOpen(false);
       return;
@@ -420,6 +421,19 @@ const Formulation = ({ saveRef }: { saveRef: React.Ref<unknown> }) => {
     },
   }));
 
+  const handleRequirementSelected = async (value?: Requirement) => {
+    if(value == null) {
+      setIsRequirementOpen(false);
+      return;
+    }
+
+    try{
+      const response = 
+    } finally {
+
+    }
+  };
+
   return (
     <>
       <Loading open={nutrientIsLoading || isLoading} />
@@ -427,6 +441,11 @@ const Formulation = ({ saveRef }: { saveRef: React.Ref<unknown> }) => {
         open={isIngredientOpen}
         onSelected={handleSelected}
         onClose={() => setIsIngredientOpen(false)}
+      />
+      <RequirementSelectDialog
+        open={isRequirementOpen}
+        onSelected={handleRequirementSelected}
+        onClose={() => setIsRequirementOpen(false)}
       />
       <Box sx={{ my: 5, border: "1px solid #98AAC4" }}>
         <Accordion elevation={0} defaultExpanded>
@@ -657,10 +676,16 @@ const Formulation = ({ saveRef }: { saveRef: React.Ref<unknown> }) => {
         </Accordion>
       </Box>
       <Stack direction={"row"} sx={{ my: 5 }} gap={2}>
-        <Button variant="outlined" onClick={onRowAppended}>
+        <Button variant="outlined" size="small" onClick={onRowAppended}>
           Add Ingredients
         </Button>
-        <Button variant="outlined">Load Requirement</Button>
+        <Button
+          variant="outlined"
+          size="small"
+          onClick={() => setIsRequirementOpen(true)}
+        >
+          Load Requirement
+        </Button>
       </Stack>
       <Sizer>
         <DataEditor

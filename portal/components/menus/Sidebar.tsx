@@ -584,6 +584,7 @@ const SidebarMenu = () => {
         <MenuItem
           component={<Link href="/notifications" />}
           icon={<NotificationsIcon fontSize="small" />}
+          active={RegExp("^/notifications(.*)$").test(router.pathname)}
         >
           <Typography variant="body1" fontSize={14}>
             Notifications

@@ -37,7 +37,9 @@ const columns: GridColDef[] = [
       if (params.row.timestamp == null) return <></>;
       return (
         <Typography color={"link.primary"} variant="body2">
-          {dayjs(params.row.timestamp).fromNow()}
+          {dayjs(params.row.timestamp).format(
+            process.env.NEXT_PUBLIC_DATE_FORMAT
+          )}
         </Typography>
       );
     },
