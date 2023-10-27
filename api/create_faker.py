@@ -20,6 +20,7 @@ from requirements.models import *
 fake = Faker()
 
 # randomNames = set(fake.words(nb=200)) 
+range100 = list(range(100))
 
 def safe_execute(function, default, *args):
     try:
@@ -62,11 +63,12 @@ print('=> Requirement Done!')
 
 for k in requirements:
     shuffle(nutrients)
+    shuffle(range100)
     baker.make(
         RequirementNutrient,
         requirement=k,
         nutrient=cycle(nutrients),
-        value=randint(0, 100),
+        value=cycle(range100),
         _quantity=randint(1, 20)
     )
 print('=> RequirementNutrient Done!')
