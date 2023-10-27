@@ -42,7 +42,7 @@ const FlockDropdown = ({
       createForm={<IngredientForm />}
       createFormTitle="Create Ingredient"
       onInputChange={(event: any, newInputValue: any) => {
-        trigger({}, true);
+        trigger({ search: newInputValue }, false);
       }}
     />
   );

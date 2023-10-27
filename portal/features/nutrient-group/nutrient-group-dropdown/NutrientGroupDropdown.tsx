@@ -38,7 +38,7 @@ const NutrientGroupDropdown = ({
       onClose={handleOnClose}
       onChange={onChange}
       onInputChange={(event: any, newInputValue: any) => {
-        trigger({}, true);
+        trigger({ search: newInputValue }, false);
       }}
     />
   );

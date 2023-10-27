@@ -125,7 +125,12 @@ const RequirementForm = ({
               label="Nutrients"
               iconPosition="end"
               icon={
-                <Chip label={(selector.nutrients || []).length} size="small" />
+                <Chip
+                  label={
+                    selector.nutrients.length || requirement?.nutrient_count
+                  }
+                  size="small"
+                />
               }
               {...a11yProps(1)}
             />
@@ -203,8 +208,8 @@ const RequirementForm = ({
                               fullWidth
                               size="small"
                               value={value ?? ""}
-                              label={"Description [%]"}
-                              placeholder={"Description in %"}
+                              label={"Description"}
+                              placeholder={"Description"}
                               type="string"
                             />
                           )}

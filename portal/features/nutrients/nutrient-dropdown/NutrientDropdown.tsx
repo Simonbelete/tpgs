@@ -41,7 +41,7 @@ const NutrientDropdown = ({
       createForm={<NutrientForm />}
       createFormTitle="Create Nutrient"
       onInputChange={(event: any, newInputValue: any) => {
-        trigger({}, false);
+        trigger({ search: newInputValue }, false);
       }}
     />
   );

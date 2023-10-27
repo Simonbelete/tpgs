@@ -41,7 +41,7 @@ const HouseDropdown = ({
       createForm={<HouseForm />}
       createFormTitle="Create House"
       onInputChange={(event: any, newInputValue: any) => {
-        trigger({}, false);
+        trigger({ search: newInputValue }, false);
       }}
     />
   );

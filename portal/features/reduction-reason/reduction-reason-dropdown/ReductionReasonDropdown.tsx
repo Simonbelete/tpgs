@@ -43,7 +43,7 @@ const ReductionReasonDropdown = ({
       createForm={<ReductionReasonForm />}
       createFormTitle="Create ReductionReason"
       onInputChange={(event: any, newInputValue: any) => {
-        trigger({}, false);
+        trigger({ search: newInputValue }, false);
       }}
     />
   );

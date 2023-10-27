@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { AsyncDropdown } from "@/components/dropdowns";
-import { useLazyGetFormulasQuery } from '../services';
+import { useLazyGetFormulasQuery } from "../services";
 import { Formula } from "@/models";
 
 const FormulaDropdown = ({
@@ -9,20 +9,19 @@ const FormulaDropdown = ({
   onChange,
   helperText,
 }: {
-  value?: any,
-  error?: boolean
+  value?: any;
+  error?: boolean;
   helperText?: string;
   onChange?: (event: any, newValue: any) => void;
 }) => {
-  const [trigger, {isLoading, data}, lastPromiseInfo] = useLazyGetFormulasQuery();
+  const [trigger, { isLoading, data }, lastPromiseInfo] =
+    useLazyGetFormulasQuery();
 
   const handleOnOpen = () => {
     trigger({}, true);
-  }
+  };
 
-  const handleOnClose = () => {
-
-  }
+  const handleOnClose = () => {};
 
   return (
     <AsyncDropdown<Formula>
@@ -37,10 +36,10 @@ const FormulaDropdown = ({
       onClose={handleOnClose}
       onChange={onChange}
       onInputChange={(event: any, newInputValue: any) => {
-        trigger({}, true)
+        trigger({ search: newInputValue }, false);
       }}
     />
-  )
-}
+  );
+};
 
 export default FormulaDropdown;

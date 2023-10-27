@@ -43,7 +43,7 @@ const HatcheryDropdown = ({
       createForm={<HatcheryForm />}
       createFormTitle="Create Hatchery"
       onInputChange={(event: any, newInputValue: any) => {
-        trigger({}, false);
+        trigger({ search: newInputValue }, false);
       }}
     />
   );

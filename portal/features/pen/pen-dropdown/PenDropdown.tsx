@@ -42,7 +42,7 @@ const PenDropdown = ({
       createForm={<PenForm />}
       createFormTitle="Create Pen"
       onInputChange={(event: any, newInputValue: any) => {
-        trigger({}, false);
+        trigger({ search: newInputValue }, false);
       }}
     />
   );

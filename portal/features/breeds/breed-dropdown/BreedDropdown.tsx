@@ -41,7 +41,7 @@ const BreedDropdown = ({
       createForm={<BreedForm redirect={false} />}
       createFormTitle="Create Breed"
       onInputChange={(event: any, newInputValue: any) => {
-        trigger({}, false);
+        trigger({ search: newInputValue }, false);
       }}
     />
   );

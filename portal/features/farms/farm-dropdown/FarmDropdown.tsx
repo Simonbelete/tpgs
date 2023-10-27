@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { AsyncDropdown } from "@/components/dropdowns";
-import { useLazyGetFarmsQuery } from '../services';
+import { useLazyGetFarmsQuery } from "../services";
 import { Farm } from "@/models";
 
 const FarmDropdown = ({
@@ -11,22 +11,21 @@ const FarmDropdown = ({
   helperText,
   multiple,
 }: {
-  value?: any,
-  label?: string,
-  error?: boolean
+  value?: any;
+  label?: string;
+  error?: boolean;
   helperText?: string;
   multiple?: boolean;
   onChange?: (event: any, newValue: any) => void;
 }) => {
-  const [trigger, {isLoading, data}, lastPromiseInfo] = useLazyGetFarmsQuery();
+  const [trigger, { isLoading, data }, lastPromiseInfo] =
+    useLazyGetFarmsQuery();
 
   const handleOnOpen = () => {
     trigger({}, true);
-  }
+  };
 
-  const handleOnClose = () => {
-
-  }
+  const handleOnClose = () => {};
 
   return (
     <AsyncDropdown<Farm>
@@ -42,10 +41,10 @@ const FarmDropdown = ({
       onClose={handleOnClose}
       onChange={onChange}
       onInputChange={(event: any, newInputValue: any) => {
-        trigger({}, true)
+        trigger({ search: newInputValue }, false);
       }}
     />
-  )
-}
+  );
+};
 
 export default FarmDropdown;

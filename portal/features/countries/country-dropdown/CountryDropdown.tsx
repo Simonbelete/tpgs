@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { AsyncDropdown } from "@/components/dropdowns";
-import { useLazyGetCountriesQuery } from '../services';
+import { useLazyGetCountriesQuery } from "../services";
 import { Country } from "@/models";
 
 const CountryDropdown = ({
@@ -10,21 +10,20 @@ const CountryDropdown = ({
   onChange,
   helperText,
 }: {
-  value?: any,
-  label?: string,
-  error?: boolean
+  value?: any;
+  label?: string;
+  error?: boolean;
   helperText?: string;
   onChange?: (event: any, newValue: any) => void;
 }) => {
-  const [trigger, {isLoading, data}, lastPromiseInfo] = useLazyGetCountriesQuery();
+  const [trigger, { isLoading, data }, lastPromiseInfo] =
+    useLazyGetCountriesQuery();
 
   const handleOnOpen = () => {
     trigger({}, true);
-  }
+  };
 
-  const handleOnClose = () => {
-
-  }
+  const handleOnClose = () => {};
 
   return (
     <AsyncDropdown<Country>
@@ -39,10 +38,10 @@ const CountryDropdown = ({
       onClose={handleOnClose}
       onChange={onChange}
       onInputChange={(event: any, newInputValue: any) => {
-        trigger({}, true)
+        trigger({ search: newInputValue }, false);
       }}
     />
-  )
-}
+  );
+};
 
 export default CountryDropdown;

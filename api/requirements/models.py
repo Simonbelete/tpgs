@@ -24,3 +24,7 @@ class Requirement(CoreModel):
     @property
     def display_name(self):
         return self.name
+    
+    @property
+    def nutrient_count(self):
+        return self.nutrients.count()

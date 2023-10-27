@@ -42,7 +42,7 @@ const RequirementDropdown = ({
       createForm={<RequirementForm />}
       createFormTitle="Create Requirement"
       onInputChange={(event: any, newInputValue: any) => {
-        trigger({}, true);
+        trigger({ search: newInputValue }, false);
       }}
     />
   );

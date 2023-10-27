@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
 import { AsyncDropdown } from "@/components/dropdowns";
-import { useLazyGetUnitsQuery } from '../services';
+import { useLazyGetUnitsQuery } from "../services";
 import { Unit } from "@/models";
-import { UnitForm } from '../unit-form' 
+import { UnitForm } from "../unit-form";
 
 const UnitDropdown = ({
   value,
@@ -11,21 +11,20 @@ const UnitDropdown = ({
   onChange,
   helperText,
 }: {
-  value?: any,
-  label?: string,
-  error?: boolean
+  value?: any;
+  label?: string;
+  error?: boolean;
   helperText?: string;
   onChange?: (event: any, newValue: any) => void;
 }) => {
-  const [trigger, {isLoading, data}, lastPromiseInfo] = useLazyGetUnitsQuery();
+  const [trigger, { isLoading, data }, lastPromiseInfo] =
+    useLazyGetUnitsQuery();
 
   const handleOnOpen = () => {
     trigger({}, true);
-  }
+  };
 
-  const handleOnClose = () => {
-
-  }
+  const handleOnClose = () => {};
 
   return (
     <AsyncDropdown<Unit>
@@ -42,10 +41,10 @@ const UnitDropdown = ({
       createFormTitle="Create Unit"
       createForm={<UnitForm />}
       onInputChange={(event: any, newInputValue: any) => {
-        trigger({}, true)
+        trigger({ search: newInputValue }, false);
       }}
     />
-  )
-}
+  );
+};
 
 export default UnitDropdown;

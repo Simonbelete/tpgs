@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { AsyncDropdown } from "@/components/dropdowns";
-import { useLazyGetPurposesQuery } from '../services';
+import { useLazyGetPurposesQuery } from "../services";
 import { Purpose } from "@/models";
 
 const PurposeDropdown = ({
@@ -10,26 +10,25 @@ const PurposeDropdown = ({
   onChange,
   helperText,
 }: {
-  value?: any,
-  label?: string,
-  error?: boolean
+  value?: any;
+  label?: string;
+  error?: boolean;
   helperText?: string;
   onChange?: (event: any, newValue: any) => void;
 }) => {
-  const [trigger, {isLoading, data}, lastPromiseInfo] = useLazyGetPurposesQuery();
+  const [trigger, { isLoading, data }, lastPromiseInfo] =
+    useLazyGetPurposesQuery();
 
   const handleOnOpen = () => {
     trigger({}, true);
-  }
+  };
 
-  const handleOnClose = () => {
-
-  }
+  const handleOnClose = () => {};
 
   return (
     <AsyncDropdown<Purpose>
       value={value}
-      dataKey="name" 
+      dataKey="name"
       label={label}
       error={error}
       helperText={helperText}
@@ -39,10 +38,10 @@ const PurposeDropdown = ({
       onClose={handleOnClose}
       onChange={onChange}
       onInputChange={(event: any, newInputValue: any) => {
-        trigger({}, true)
+        trigger({ search: newInputValue }, false);
       }}
     />
-  )
-}
+  );
+};
 
 export default PurposeDropdown;
