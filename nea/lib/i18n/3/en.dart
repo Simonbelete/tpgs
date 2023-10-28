@@ -38,14 +38,14 @@ Course EN = Course(
       SubTitleText(text: "Recommendations for mothers during pregnancy"),
       Bullet(children: [
         "Weight gain during pregnancy is essential.",
-        "Strongly discourage clients who are obese from attempting to lose weight during pregnancy.",
-        "Encourage clients to plan meals carefully so that all nutrients needed during pregnancy can be included without excessive calories. Using a food guide for pregnancy is helpful.",
+        "Strongly discourage farmers who are obese from attempting to lose weight during pregnancy.",
+        "Encourage farmers to plan meals carefully so that all nutrients needed during pregnancy can be included without excessive calories. Using a food guide for pregnancy is helpful.",
         "Caffeine intake should be limited.",
-        "Instruct client to take only vitamins and minerals prescribed. Excessive amounts can be harmful",
-        "Advise clients that skipping meals is a poor practice, especially for pregnant women. The fetus needs a steady supply of nutrients.",
+        "Instruct farmer to take only vitamins and minerals prescribed. Excessive amounts can be harmful",
+        "Advise farmers that skipping meals is a poor practice, especially for pregnant women. The fetus needs a steady supply of nutrients.",
         "Encourage the pregnant mother to use high-fiber foods and plenty of fluids to avoid constipation.",
         "Give priority to helping pregnant teenagers improve their eating habits. Together with the teenagers, plan meals and snacks that are nutritious and, at the same time, acceptable to the teenagers. Teen age pregnancy is undesirable.",
-        "Take advantage of the client’s high motivation during pregnancy to provide nutrition education for the family and the pregnant woman. "
+        "Take advantage of the farmer’s high motivation during pregnancy to provide nutrition education for the family and the pregnant woman. "
       ])
     ],
   ),
