@@ -7,6 +7,7 @@ import 'package:nea/utils/preferencess.dart';
 import 'package:nea/widgets/my_button.dart';
 import 'package:nea/widgets/my_textfield.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:intl_phone_field/intl_phone_field.dart';
 
 class LoginBodyScreen extends StatefulWidget {
   const LoginBodyScreen({super.key});
@@ -216,15 +217,28 @@ class _LoginBodyScreenState extends State<LoginBodyScreen> {
                                   const SizedBox(
                                     height: 10,
                                   ),
-                                  MyTextField(
-                                    onChanged: ((String val) {
-                                      validatePhoneNumber(val);
-                                    }),
+                                  IntlPhoneField(
+                                    decoration: const InputDecoration(
+                                      labelText: 'Phone Number',
+                                      border: OutlineInputBorder(
+                                        borderSide: BorderSide(),
+                                      ),
+                                    ),
+                                    initialCountryCode: 'IN',
+                                    onChanged: (phone) {
+                                      print(phone.completeNumber);
+                                    },
                                     controller: phoneNumberController,
-                                    hintText: "091123456789",
-                                    obscureText: false,
-                                    prefixIcon: const Icon(Icons.phone),
                                   ),
+                                  // MyTextField(
+                                  //   onChanged: ((String val) {
+                                  //     validatePhoneNumber(val);
+                                  //   }),
+                                  //   controller: phoneNumberController,
+                                  //   hintText: "091123456789",
+                                  //   obscureText: false,
+                                  //   prefixIcon: const Icon(Icons.phone),
+                                  // ),
                                   Padding(
                                     padding:
                                         const EdgeInsets.fromLTRB(8, 0, 0, 0),
