@@ -13,6 +13,7 @@ import CancelIcon from "@mui/icons-material/Cancel";
 import LibraryAddIcon from "@mui/icons-material/LibraryAdd";
 import ManageHistoryIcon from "@mui/icons-material/ManageHistory";
 import { useRouter } from "next/router";
+import AnalyticsIcon from "@mui/icons-material/Analytics";
 
 const RequirementEditPage = ({ data }: { data: Requirement }) => {
   const { breadcrumbs } = useBreadcrumbs();
@@ -41,6 +42,17 @@ const Actions = () => {
       justifyContent="flex-start"
       alignItems="center"
     >
+      <Tooltip title="Dashboard">
+        <Link
+          href={`${router.pathname.split("/[id]")[0]}/${
+            router.query.id
+          }/dashboard`}
+        >
+          <IconButton color="secondary">
+            <AnalyticsIcon />
+          </IconButton>
+        </Link>
+      </Tooltip>
       <Tooltip title="Create New">
         <Link href="/requirements/create">
           <IconButton color="secondary">

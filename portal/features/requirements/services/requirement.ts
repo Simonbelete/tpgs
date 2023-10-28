@@ -4,6 +4,7 @@ import {
   Response,
   Requirement,
   RequirementNutrient,
+  RequirementAnalyses,
 } from "@/models";
 import { AxiosResponse } from "axios";
 import clientSSR from "@/services/client_ssr";
@@ -65,6 +66,12 @@ export const requirementApi = baseApi.injectEndpoints({
       }),
       deleteRequirement: build.mutation<any, number>({
         query: (id: number) => ({ url: `${URL}/${id}/`, method: "delete" }),
+      }),
+      getRequirementAnalyses: build.query<RequirementAnalyses, number>({
+        query: (id) => ({
+          url: `${URL}/${id}/analyses`,
+          method: "get",
+        }),
       }),
       // Nutrients
       getRequirementNutrients: build.query<
@@ -151,6 +158,7 @@ export const {
   useCreateRequirementMutation,
   useUpdateRequirementMutation,
   useDeleteRequirementMutation,
+  useGetRequirementAnalysesQuery,
 
   // Nutrients
   useGetRequirementNutrientsQuery,

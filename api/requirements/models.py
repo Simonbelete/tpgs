@@ -14,6 +14,16 @@ class RequirementNutrient(CoreModel):
     class Meta:
         ordering = ['nutrient']
         unique_together = ['requirement', 'nutrient']
+        
+    @property
+    def unit(self):
+        return self.nutrient.unit.name    
+    
+    @property
+    def as_feed_value(self):
+        """Dry matter to as feed conversion 
+        """
+        return self.value * self.requirement.desired_dm /100 
 
 class Requirement(CoreModel):
     name = models.CharField(max_length=100, unique=True)
@@ -42,7 +52,7 @@ class Requirement(CoreModel):
         return self.nutrients.count()
 
     def nutrient_count(self):
-        return RequirementNutrient.objects.filter(ingredient=self.id).count()
+        return RequirementNutrient.objects.filter(requirement=self.id).count()
     
     def composition_total(self):
         return self.nutrients.through.objects.all().aggregate(sum=Sum('value'))['sum'] or 0

@@ -6,4 +6,5 @@ export default interface RequirementNutrient extends AbstractBaseModel {
   requirement: number | Requirement;
   nutrient: number | Nutrient;
   value: number;
+  as_feed_value: number;
 }

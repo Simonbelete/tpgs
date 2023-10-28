@@ -11,7 +11,7 @@ class RequirementSerializer_GET(serializers.ModelSerializer):
         model = models.Requirement
         fields = ['id', 'name', 'display_name', 
                   'nutrient_count', 'weight', 'budget',
-                  'desired_ratio', 'desired_dm', 'created_at']
+                  'desired_ratio', 'desired_dm', ]
 
 class RequirementNutrientSerializer_REF(serializers.ModelSerializer):
     class Meta:
@@ -23,7 +23,7 @@ class RequirementSerializer_POST(serializers.ModelSerializer):
 
     class Meta:
         model = models.Requirement
-        fields = ['name', 'nutrients']
+        fields = ['name', 'nutrients', 'weight', 'budget', 'desired_ratio', 'desired_dm']
 
     @transaction.atomic
     def create(self, validated_data):
@@ -41,13 +41,13 @@ class RequirementHistorySerializer(serializers.ModelSerializer):
         model = models.Requirement.history.__dict__['model']
         fields = '__all__'
 
-# Nutrients
+# Requirement -> Nutrients
 class RequirementNutrientSerializer_GET(serializers.ModelSerializer):
     nutrient = NutrientSerializer_SLUG()
 
     class Meta:
         model = models.RequirementNutrient
-        fields = '__all__'
+        fields = ['id', 'nutrient', 'requirement', 'value', 'as_feed_value', 'unit']
 
 class RequirementNutrientSerializer_POST(serializers.ModelSerializer):
     class Meta:
