@@ -114,9 +114,10 @@ class FormulaIngredientSerializer_GET(serializers.ModelSerializer):
         fields = ['id', 'formula', 'ingredient', 'ratio_min', 'ratio_max', 'price', 'ration', 'ration_weight', 'ration_price']
 
 class IngredientSerializer_DEPTH_2(serializers.ModelSerializer):
+    
     class Meta:
         model = Ingredient
-        fields = ['id', 'name', '']
+        fields = ['id', 'name', 'nutrient']
 
 class FormulaIngredientSerializer_GET_DEPTH_2(serializers.ModelSerializer):
     ingredient = IngredientSerializer_GET()

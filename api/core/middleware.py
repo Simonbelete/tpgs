@@ -51,7 +51,6 @@ class FarmMiddleware(TenantMainMiddleware):
                     pk=request.user.id, farms__in=[tenant.id])
         except User.DoesNotExist:
             return HttpResponseForbidden(JsonResponse({'error': 'Unauthorized'}))
-
         tenant.domain_url = requested_farm
         request.tenant = tenant
         request.tenant_model = tenant_model

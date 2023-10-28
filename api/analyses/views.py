@@ -15,6 +15,7 @@ from farms.models import Farm
 from feeds.models import Feed
 from weights.models import Weight
 from chickens.models import Chicken
+from users.models import User
 
 class DirectoryListFilter(django_filters.FilterSet):
     farm_name = django_filters.CharFilter(
@@ -42,6 +43,20 @@ class DirectoryListRefresh(viewsets.ViewSet):
         except Exception as ex:
             print(ex)
             return Response({}, status=500)
+
+class CountViewSet(viewsets.ViewSet):
+    def list(self, request, **kwargs):
+        print('00000000000')
+        print(dir(self.request.tenant_model.pk))
+        print(dir(self.request.tenant_model.id))
+        print(self.request.tenant_model.id)
+        print(self.request.tenant)
+        return Response({
+            'user_count': User.objects.filter(farms__name__in=[self.request.tenant]).count(),
+            'total_users': User.objects.count(),
+            'farm_count': self.request.user.farms.all().count(),
+            'total_farms': Farm.objects.count(),
+        })
 
 class HDEPViewSet(viewsets.ViewSet):
     def get_query(self):

@@ -118,9 +118,9 @@ class Formula(CoreModel):
         'nutrients.Nutrient', null=True, blank=True, through=FormulaRequirement, related_name='formula_requirements')
     budget = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True, default=0) # per kg
     desired_ratio = models.DecimalField(
-        validators=PERCENTAGE_VALIDATOR, max_digits=15, decimal_places=3, default=100)
+        validators=PERCENTAGE_VALIDATOR, max_digits=15, decimal_places=3, default=100, null=True, blank=True)
     desired_dm = models.DecimalField(
-        validators=PERCENTAGE_VALIDATOR, max_digits=15, decimal_places=3, default=0)
+        validators=PERCENTAGE_VALIDATOR, max_digits=15, decimal_places=3, default=0, null=True, blank=True)
     # Rations - rations are computed based on the given weight
     # Rations shows result of formula for each nutrients
     rations = models.ManyToManyField(

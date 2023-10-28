@@ -16,6 +16,7 @@ from django.db import IntegrityError
 from nutrients.models import *
 from units.models import *
 from requirements.models import *
+from ingredients.models import *
 
 fake = Faker()
 
@@ -36,6 +37,11 @@ units = safe_execute(
 )
 print('=> Unit Done!')
 
+ingredient_types = safe_execute(
+    lambda: baker.make(IngredientType, name=seq('Ingredient Type-'), _quantity=100,  _bulk_create=True),
+    IngredientType.objects.all()
+)
+print('=> Unit Done!')
 
 nutrients = safe_execute(
     lambda: baker.make(
@@ -72,5 +78,28 @@ for k in requirements:
         _quantity=randint(1, 20)
     )
 print('=> RequirementNutrient Done!')
+
+
+ingredients = safe_execute(
+    lambda: baker.make(
+        Ingredient,
+        name=seq('Ingredient-'),
+        _quantity=100
+    ),
+    Ingredient.objects.all()
+)
+print('=> Ingredient Done!')
+
+for k in ingredients:
+    shuffle(nutrients)
+    shuffle(range100)
+    baker.make(
+        IngredientNutrient,
+        ingredient=k,
+        nutrient=cycle(nutrients),
+        value=cycle(range100),
+        _quantity=randint(1, 20)
+    )
+print('=> IngredientNutrient Done!')
 
 print('=> ALL DONE!')

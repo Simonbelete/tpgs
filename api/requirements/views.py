@@ -21,6 +21,7 @@ from core.views import (
     XlsImport,
     CsvImport
 )
+from core.pagination import AllPagination
 from core.serializers import UploadSerializer
 from . import models
 from . import serializers
@@ -49,7 +50,8 @@ class RequirementSummaryViewSet(SummaryViewSet):
         return models.Requirement.all.get(pk=self.id_pk)
     
 
-class RequirementNutrientViewSet(viewsets.ModelViewSet):
+class RequirementNutrientViewSet(CoreModelViewSet):
+    pagination_class = AllPagination
     serializer_class = serializers.RequirementNutrientSerializer_GET
 
     def get_queryset(self):
