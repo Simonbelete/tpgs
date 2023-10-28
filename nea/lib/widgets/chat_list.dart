@@ -23,7 +23,7 @@ class _ChatListState extends State<ChatList> {
   @override
   void initState() {
     super.initState();
-    Preferencess.getRole().then((value) => role = value);
+    Preferencess.getRole().then((value) => {setState(() => role = value)});
   }
 
   @override

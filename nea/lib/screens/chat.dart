@@ -55,11 +55,12 @@ class _ChatPageState extends State<ChatPage> {
               .collection('messages')
               .where(Filter.or(
                 Filter.and(
-                    Filter('receiver', isEqualTo: currentUser?['uid']),
+                    Filter('receiver', isEqualTo: currentUser?['uid'] ?? ""),
                     Filter('sender',
-                        isEqualTo: FirebaseAuth.instance.currentUser?.uid)),
+                        isEqualTo:
+                            FirebaseAuth.instance.currentUser?.uid ?? "")),
                 Filter.and(
-                    Filter('sender', isEqualTo: currentUser?['uid']),
+                    Filter('sender', isEqualTo: currentUser?['uid'] ?? ""),
                     Filter('receiver',
                         isEqualTo: FirebaseAuth.instance.currentUser?.uid)),
               ))

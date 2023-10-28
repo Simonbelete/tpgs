@@ -1,6 +1,6 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:nea/constants.dart';
-import 'package:nea/screens/chat_list.screen.dart';
 import 'package:nea/screens/message.dart';
 import 'package:nea/screens/users.dart';
 import 'package:nea/utils/responsive_widget.dart';
@@ -84,16 +84,20 @@ class HomeScreen extends StatelessWidget {
           floatingActionButton: Column(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              FloatingActionButton.small(
-                  backgroundColor: primaryColor,
-                  onPressed: () {
-                    Navigator.pushNamed(context, MessageScreen.routeName);
-                  },
-                  child: Icon(Icons.message)),
+              Platform.isAndroid
+                  ? FloatingActionButton.small(
+                      heroTag: "Chart",
+                      backgroundColor: primaryColor,
+                      onPressed: () {
+                        Navigator.pushNamed(context, MessageScreen.routeName);
+                      },
+                      child: const Icon(Icons.message))
+                  : Container(),
               const SizedBox(
                 height: 10,
               ),
               FloatingActionButton.small(
+                  heroTag: "Info",
                   backgroundColor: primaryColor,
                   onPressed: () {
                     _loadInfoDialog(context);
