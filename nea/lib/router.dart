@@ -3,7 +3,6 @@ import 'package:nea/i18n/courses.dart';
 import 'package:nea/i18n/foods.dart';
 import 'package:nea/models/course_model.dart';
 import 'package:nea/models/food_model.dart';
-import 'package:nea/screens/chat_list.screen.dart';
 import 'package:nea/screens/chat.dart';
 import 'package:nea/screens/food_screen.dart';
 import 'package:nea/screens/home_screen.dart';
@@ -31,25 +30,6 @@ List<Path> paths = [
   Path(
     r'^' + MessageScreen.routeName,
     (context, match) => const MessageScreen(),
-  ),
-  // Path(
-  //   r'^/chat/([\w-]+)$',
-  //   (
-  //     context,
-  //     match,
-  //   ) {
-  //     if (match == null) return const HomeScreen();
-  //     var index = match == null ? 0 : int.parse(match);
-  //     print('00000000000000000000000000000000000');
-  //     print(match);
-  //     return ChatPage(
-  //       local: match,
-  //     );
-  //   },
-  // ),
-  Path(
-    r'^' + ChatListScreen.routeName,
-    (context, match) => ChatListScreen(),
   ),
   Path(
     r'^' + UsersPage.routeName,
