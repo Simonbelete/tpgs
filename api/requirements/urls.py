@@ -6,6 +6,10 @@ from . import views
 router = routers.DefaultRouter()
 router.register(r'requirements', views.RequirementViewSet,
                 basename='api_requirement'),
+
+router.register(r'requirements/(?P<id>.+)/analyses', views.RequirementAnalysesViewSet,
+                basename='api_requirement_analyses')
+                
 router.register(r'requirements/(?P<id>.+)/histories',
                 views.RequirementHistoryViewSet, basename='api_requirement_histories'),
 

@@ -9,6 +9,7 @@ from tablib import Dataset
 from import_export import resources
 import pandas as pd
 from rest_framework.exceptions import NotFound
+from rest_framework.response import Response
 
 from core.views import (
     HistoryViewSet,
@@ -49,7 +50,6 @@ class RequirementSummaryViewSet(SummaryViewSet):
     def get_query(self):
         return models.Requirement.all.get(pk=self.id_pk)
     
-
 class RequirementNutrientViewSet(CoreModelViewSet):
     pagination_class = AllPagination
     serializer_class = serializers.RequirementNutrientSerializer_GET
@@ -66,3 +66,21 @@ class RequirementNutrientViewSet(CoreModelViewSet):
         if self.request.method in ['PUT', 'PATCH']:
             return serializers.RequirementNutrientSerializer_PATCH
         return serializers.RequirementNutrientSerializer_GET
+    
+class RequirementAnalysesViewSet(viewsets.ViewSet):
+    def get_queryset(self):
+        try:
+            return models.Requirement.all.get(pk=self.kwargs['id'])
+        except models.Requirement.DoesNotExist as ex:
+            raise NotFound()
+    
+    def list(self, request, id=None, **kwargs):
+        queryset = self.get_queryset()
+
+        return Response({
+            'weight': queryset.weight,
+            'desired_dm': queryset.desired_dm,
+            'budget': queryset.budget,
+            'nutrient_count': queryset.nutrient_count(),
+            'composition_total': queryset.composition_total()
+        }, status=200)

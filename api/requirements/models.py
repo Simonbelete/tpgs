@@ -1,5 +1,6 @@
 from django.db import models
 from simple_history.models import HistoricalRecords
+from django.db.models import Sum
 
 from core.models import CoreModel
 from core.validators import PERCENTAGE_VALIDATOR
@@ -39,3 +40,9 @@ class Requirement(CoreModel):
     @property
     def nutrient_count(self):
         return self.nutrients.count()
+
+    def nutrient_count(self):
+        return RequirementNutrient.objects.filter(ingredient=self.id).count()
+    
+    def composition_total(self):
+        return self.nutrients.through.objects.all().aggregate(sum=Sum('value'))['sum'] or 0
