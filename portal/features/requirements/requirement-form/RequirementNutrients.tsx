@@ -41,7 +41,7 @@ const EditToolbar = (props: {
   const dispatch = useDispatch();
   const rows: GridRowsProp<
     Partial<RequirementNutrient> & Partial<{ isNew?: boolean }>
-  > = useSelector((state: RootState) => state.ingredientForm.nutrients);
+  > = useSelector((state: RootState) => state.requirementForm.nutrients);
 
   const [open, setOpen] = useState(false);
 
@@ -108,14 +108,6 @@ const RequirementNutrients = ({ id }: { id?: number }) => {
     useDeleteRequirementNutrientMutation();
 
   const columns: GridColDef[] = [
-    {
-      field: "code",
-      headerName: "Code",
-      flex: 1,
-      minWidth: 100,
-      valueGetter: (params) =>
-        params.row.nutrient ? params.row.nutrient.code : "",
-    },
     {
       field: "nutrient",
       headerName: "Name",
@@ -232,8 +224,10 @@ const RequirementNutrients = ({ id }: { id?: number }) => {
   return (
     <>
       <EditableTable
+        hideFooterPagination={true}
         sx={{ background: "white", minHeight: "20px" }}
         rows={rows}
+        loading={isLoading}
         // editMode="row"
         rowHeight={40}
         columns={columns}

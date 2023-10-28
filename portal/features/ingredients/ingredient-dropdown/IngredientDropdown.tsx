@@ -28,7 +28,7 @@ const FlockDropdown = ({
 
   return (
     <AsyncDropdown<Ingredient>
-      multiple
+      multiple={multiple}
       value={value}
       dataKey="name"
       label={"Ingredient"}

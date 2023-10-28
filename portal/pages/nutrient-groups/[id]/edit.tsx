@@ -11,7 +11,6 @@ import { NutrientGroup } from "@/models";
 import { SeoHead } from "@/seo";
 import ManageHistoryIcon from "@mui/icons-material/ManageHistory";
 import CancelIcon from "@mui/icons-material/Cancel";
-import AnalyticsIcon from "@mui/icons-material/Analytics";
 import LibraryAddIcon from "@mui/icons-material/LibraryAdd";
 import { useRouter } from "next/router";
 

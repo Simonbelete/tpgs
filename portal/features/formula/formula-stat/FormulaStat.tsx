@@ -237,22 +237,6 @@ const FormulaStat = ({ id }: { id: number }) => {
               description="Dry Matter"
             />
           </Grid>
-          {/* <Grid item xs={2}>
-          <NumberStatisticsCard
-            value={`${data?.price} /kg`}
-            title="Price [kg]"
-            icon={<AttachMoneyIcon fontSize="large" />}
-            description="Ingredient price per kg"
-          />
-        </Grid>
-        <Grid item xs={2}>
-          <NumberStatisticsCard
-            value={`${data?.dm} %`}
-            title="Dry matter [%]"
-            icon={<WaterDropIcon fontSize="large" />}
-            description="Dry Matter"
-          />
-        </Grid> */}
         </Grid>
       </Box>
     </Box>

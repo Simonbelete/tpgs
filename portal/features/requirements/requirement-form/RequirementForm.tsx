@@ -13,7 +13,7 @@ import {
 import { Requirement } from "@/models";
 import RequirementInfoZone from "./RequirementInfoZone";
 import RequirementDangerZone from "./RequirementDangerZone";
-import RequirementNutrients from "./RequirementNutrients";
+// import RequirementNutrients from "./RequirementNutrients";
 import {
   useCreateRequirementMutation,
   useUpdateRequirementMutation,
@@ -29,8 +29,8 @@ import SaveIcon from "@mui/icons-material/Save";
 import { useCRUD } from "@/hooks";
 import { useRouter } from "next/router";
 import { RootState } from "@/store";
-import { setNutrients } from "./slice";
 import { useSelector, useDispatch } from "react-redux";
+import RequirementNutrients from "./RequirementNutrients";
 
 function a11yProps(index: number) {
   return {
@@ -95,20 +95,10 @@ const RequirementForm = ({
     else await updateRequirement({ ...body, id: requirement.id });
   };
 
-  // useEffect(() => {
-  //   if (requirement != null) {
-  //     requirementNutrientTrigger({ id: requirement.id, query: {} }).then(
-  //       (response) => {
-  //         dispatch(setNutrients(response.data?.results || []));
-  //       }
-  //     );
-  //   }
-  // }, []);
-
   return (
     <>
       <Grid container spacing={2}>
-        <Grid item xs={12} lg={9} xl={9.5}>
+        <Grid item xs={12} lg={8.5} xl={9}>
           <Tabs
             scrollButtons
             value={tab}
@@ -218,12 +208,43 @@ const RequirementForm = ({
                     </Grid>
                   </form>
                 </Card>
+                <Box sx={{ mt: 5 }}>
+                  <Stack
+                    spacing={2}
+                    direction={"row"}
+                    justifyContent="flex-start"
+                    alignItems="center"
+                  >
+                    <Box>
+                      <Button
+                        variant="contained"
+                        size="small"
+                        startIcon={<SaveIcon />}
+                        onClick={() => handleSubmit(onSubmit)()}
+                      >
+                        Save
+                      </Button>
+                    </Box>
+                    <Box>
+                      <Button
+                        variant="outlined"
+                        color="error"
+                        size="small"
+                        startIcon={<CloseIcon />}
+                        onClick={() => router.push("/houses")}
+                      >
+                        Cancel
+                      </Button>
+                    </Box>
+                  </Stack>
+                </Box>
               </>
             )}
             {tab == 1 && <RequirementNutrients id={requirement?.id} />}
           </Box>
         </Grid>
-        <Grid item xs={12} lg={3} xl={2.5}>
+        <Grid item xs={12} lg={0.5} xl={1} />
+        <Grid item xs={12} lg={3} xl={2}>
           <Stack spacing={3}>
             {requirement && (
               <>
@@ -236,38 +257,7 @@ const RequirementForm = ({
             )}
           </Stack>
         </Grid>
-        <Grid xs={12}>
-          <Box sx={{ mt: 5 }}>
-            <Stack
-              spacing={2}
-              direction={"row"}
-              justifyContent="flex-start"
-              alignItems="center"
-            >
-              <Box>
-                <Button
-                  variant="contained"
-                  size="small"
-                  startIcon={<SaveIcon />}
-                  onClick={() => handleSubmit(onSubmit)()}
-                >
-                  Save
-                </Button>
-              </Box>
-              <Box>
-                <Button
-                  variant="outlined"
-                  color="error"
-                  size="small"
-                  startIcon={<CloseIcon />}
-                  onClick={() => router.push("/houses")}
-                >
-                  Cancel
-                </Button>
-              </Box>
-            </Stack>
-          </Box>
-        </Grid>
+        <Grid xs={12}></Grid>
       </Grid>
     </>
   );

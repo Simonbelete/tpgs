@@ -10,14 +10,16 @@ import {
 import { Box, IconButton, LinearProgress, Tooltip } from "@mui/material";
 import { alpha, styled } from "@mui/material/styles";
 import VisibilityIcon from "@mui/icons-material/Visibility";
-import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
+// import DeleteIcon from "@mui/icons-material/DeleteForever";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { DeleteModal } from "../modals";
 import HistoryIcon from "@mui/icons-material/History";
 import ScheduleSendIcon from "@mui/icons-material/ScheduleSend";
-import AnalyticsIcon from "@mui/icons-material/Analytics";
+// import AnalyticsOutlinedIcon from "@mui/icons-material/Analytics";
 import DriveFileRenameOutlineIcon from "@mui/icons-material/DriveFileRenameOutline";
+import DeleteIcon from "@mui/icons-material/DeleteOutlined";
+import AnalyticsOutlinedIcon from "@mui/icons-material/AnalyticsOutlined";
 
 const ODD_OPACITY = 0.2;
 
@@ -151,6 +153,7 @@ export enum SETTING_COL {
   edit = "edit",
   email = "email",
   dashboard = "dashboard",
+  editDelete = "editDelete",
 }
 
 const DataTable = ({
@@ -234,7 +237,7 @@ const DataTable = ({
                     aria-label="delete"
                     onClick={() => handleDeleteModalOpen(params.id)}
                   >
-                    <DeleteForeverIcon fontSize="small" />
+                    <DeleteIcon fontSize="small" />
                   </IconButton>
                 </Tooltip>
               </Box>
@@ -277,7 +280,7 @@ const DataTable = ({
                     aria-label="delete"
                     onClick={() => handleDeleteModalOpen(params.id)}
                   >
-                    <DeleteForeverIcon fontSize="small" />
+                    <DeleteIcon fontSize="small" />
                   </IconButton>
                 </Tooltip>
               </Box>
@@ -333,7 +336,7 @@ const DataTable = ({
                     aria-label="delete"
                     onClick={() => handleDeleteModalOpen(params.id)}
                   >
-                    <DeleteForeverIcon fontSize="small" />
+                    <DeleteIcon fontSize="small" />
                   </IconButton>
                 </Tooltip>
               </Box>
@@ -356,7 +359,7 @@ const DataTable = ({
                     aria-label="delete"
                     onClick={() => handleDeleteModalOpen(params.id)}
                   >
-                    <DeleteForeverIcon fontSize="small" />
+                    <DeleteIcon fontSize="small" />
                   </IconButton>
                 </Tooltip>
               </Box>
@@ -380,7 +383,7 @@ const DataTable = ({
                 >
                   <Tooltip title="Dashboard">
                     <IconButton aria-label="edit">
-                      <AnalyticsIcon fontSize="small" />
+                      <AnalyticsOutlinedIcon fontSize="small" />
                     </IconButton>
                   </Tooltip>
                 </Link>
@@ -409,7 +412,7 @@ const DataTable = ({
                     aria-label="delete"
                     onClick={() => handleDeleteModalOpen(params.id)}
                   >
-                    <DeleteForeverIcon fontSize="small" />
+                    <DeleteIcon fontSize="small" />
                   </IconButton>
                 </Tooltip>
               </Box>
@@ -449,7 +452,7 @@ const DataTable = ({
         sx={{ background: "white", height: "100%" }}
         rows={rows}
         density="compact"
-        rowHeight={50}
+        rowHeight={55}
         columns={[...columns, ...settingColumn]}
         paginationMode="server"
         disableRowSelectionOnClick
@@ -457,9 +460,9 @@ const DataTable = ({
           noRowsOverlay: CustomNoRowsOverlay,
           loadingOverlay: LinearProgress,
         }}
-        getRowClassName={(params) =>
-          params.indexRelativeToCurrentPage % 2 === 0 ? "even" : "odd"
-        }
+        // getRowClassName={(params) =>
+        //   params.indexRelativeToCurrentPage % 2 === 0 ? "even" : "odd"
+        // }
         getRowId={props.getRowId && getRowById}
         {...props}
       />

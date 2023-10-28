@@ -72,7 +72,7 @@ export const requirementApi = baseApi.injectEndpoints({
         { id: number; query: Object }
       >({
         query: ({ id, query }) => ({
-          url: `${URL}/${id}/${NUTRIENT_URL}`,
+          url: `${URL}/${id}/${NUTRIENT_URL}/`,
           method: "get",
           params: query,
         }),
