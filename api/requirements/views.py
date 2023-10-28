@@ -45,10 +45,36 @@ class RequirementHistoryViewSet(HistoryViewSet):
     queryset = models.Requirement.history.all()
     serializer_class = serializers.RequirementHistorySerializer
 
- 
 class RequirementSummaryViewSet(SummaryViewSet):
     def get_query(self):
         return models.Requirement.all.get(pk=self.id_pk)
+
+
+## Requirement Export
+class RequirementXlsxExport(XlsxExport):
+    def get_dataset(self):
+        return admin.RequirementResource().export()
+
+class RequirementXlsExport(XlsExport):
+    def get_dataset(self):
+        return admin.RequirementResource().export()
+
+class RequirementCsvExport(CsvExport):
+    def get_dataset(self):
+        return admin.RequirementResource().export()
+
+## Requirement Import
+class RequirementXlsxImport(XlsxImport):
+    def get_model(self):
+        return models.Requirement
+
+class RequirementXlsImport(XlsImport):
+    def get_model(self):
+        return models.Requirement
+
+class RequirementCsvImport(CsvImport):
+    def get_model(self):
+        return models.Requirement
     
 class RequirementNutrientViewSet(CoreModelViewSet):
     pagination_class = AllPagination
