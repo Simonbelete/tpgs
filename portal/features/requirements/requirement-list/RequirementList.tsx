@@ -15,6 +15,10 @@ import buildPage from "@/util/buildPage";
 
 const columns: GridColDef[] = [
   { field: "name", headerName: "Name", flex: 1, minWidth: 150 },
+  { field: "weight", headerName: "Weight", flex: 1, minWidth: 150 },
+  { field: "budget", headerName: "Price", flex: 1, minWidth: 150 },
+  { field: "desired_ratio", headerName: "Ratio (%)", flex: 1, minWidth: 150 },
+  { field: "desired_dm", headerName: "Dry Matter (%)", flex: 1, minWidth: 150 },
   {
     field: "created_at",
     headerName: "Create at",

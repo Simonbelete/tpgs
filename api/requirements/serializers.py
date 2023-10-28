@@ -9,7 +9,9 @@ from . import models
 class RequirementSerializer_GET(serializers.ModelSerializer):
     class Meta:
         model = models.Requirement
-        fields = ['id', 'name', 'display_name', 'nutrient_count']
+        fields = ['id', 'name', 'display_name', 
+                  'nutrient_count', 'weight', 'budget',
+                  'desired_ratio', 'desired_dm', 'created_at']
 
 class RequirementNutrientSerializer_REF(serializers.ModelSerializer):
     class Meta:

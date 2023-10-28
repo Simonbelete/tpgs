@@ -42,7 +42,7 @@ const Actions = () => {
       alignItems="center"
     >
       <Tooltip title="Create New">
-        <Link href="/chickens/create">
+        <Link href="/requirements/create">
           <IconButton color="secondary">
             <LibraryAddIcon />
           </IconButton>

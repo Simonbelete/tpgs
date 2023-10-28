@@ -43,8 +43,11 @@ type Inputs = Partial<Requirement>;
 
 const schema = yup.object({
   name: yup.string().required(),
-  dm: yup.number().nullable(),
   description: yup.string().nullable(),
+  weight: yup.number().nullable(),
+  desired_dm: yup.string().nullable(),
+  budget: yup.number().nullable(),
+  desired_ratio: yup.number().default(100).required(),
 });
 
 const RequirementForm = ({
@@ -86,7 +89,11 @@ const RequirementForm = ({
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     const body = {
       name: data.name,
-      dm: data.dm,
+      description: data.description,
+      weight: data.weight,
+      desired_dm: data.desired_dm,
+      budget: data.budget,
+      desired_ratio: data.desired_ratio,
     };
     if (requirement == null)
       await createRequirement({ ...body, nutrients: selector.nutrients }).then(
@@ -156,7 +163,7 @@ const RequirementForm = ({
                       {/* dry material */}
                       <Grid item xs={12} md={6}>
                         <Controller
-                          name={"dm"}
+                          name={"desired_dm"}
                           control={control}
                           render={({
                             field: { onChange, value },
@@ -205,6 +212,90 @@ const RequirementForm = ({
                           )}
                         />
                       </Grid>
+                      <Grid item xs={12} md={6}>
+                        <Controller
+                          name={"weight"}
+                          control={control}
+                          render={({
+                            field: { onChange, value },
+                            fieldState: { invalid, isTouched, isDirty, error },
+                          }) => (
+                            <LabeledInput
+                              error={!!error?.message}
+                              helperText={error?.message}
+                              onChange={onChange}
+                              fullWidth
+                              size="small"
+                              value={value}
+                              label={"Weight [Kg]"}
+                              placeholder={"Weight"}
+                              InputProps={{
+                                endAdornment: (
+                                  <InputAdornment position="start">
+                                    Kg
+                                  </InputAdornment>
+                                ),
+                              }}
+                            />
+                          )}
+                        />
+                      </Grid>
+                      <Grid item xs={12} md={6}>
+                        <Controller
+                          name={"budget"}
+                          control={control}
+                          render={({
+                            field: { onChange, value },
+                            fieldState: { invalid, isTouched, isDirty, error },
+                          }) => (
+                            <LabeledInput
+                              error={!!error?.message}
+                              helperText={error?.message}
+                              onChange={onChange}
+                              fullWidth
+                              size="small"
+                              value={value}
+                              label={"Requirement Price [Kg]"}
+                              placeholder={"Requirement Price [Kg]"}
+                              InputProps={{
+                                endAdornment: (
+                                  <InputAdornment position="start">
+                                    Kg
+                                  </InputAdornment>
+                                ),
+                              }}
+                            />
+                          )}
+                        />
+                      </Grid>
+                      <Grid item xs={12} md={6}>
+                        <Controller
+                          name={"desired_ratio"}
+                          control={control}
+                          render={({
+                            field: { onChange, value },
+                            fieldState: { invalid, isTouched, isDirty, error },
+                          }) => (
+                            <LabeledInput
+                              error={!!error?.message}
+                              helperText={error?.message}
+                              onChange={onChange}
+                              fullWidth
+                              size="small"
+                              value={value}
+                              label={"Requirement Ratio [Kg]"}
+                              placeholder={"Requirement Ratio [Kg]"}
+                              InputProps={{
+                                endAdornment: (
+                                  <InputAdornment position="start">
+                                    %
+                                  </InputAdornment>
+                                ),
+                              }}
+                            />
+                          )}
+                        />
+                      </Grid>
                     </Grid>
                   </form>
                 </Card>
@@ -240,7 +331,9 @@ const RequirementForm = ({
                 </Box>
               </>
             )}
-            {tab == 1 && <RequirementNutrients id={requirement?.id} />}
+            {requirement && tab == 1 && (
+              <RequirementNutrients id={requirement?.id} />
+            )}
           </Box>
         </Grid>
         <Grid item xs={12} lg={0.5} xl={1} />
