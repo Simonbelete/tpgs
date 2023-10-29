@@ -47,6 +47,7 @@ const UnitConverterForm = ({
     defaultValues: {
       ...unit_converter,
     },
+    // @ts-ignore
     resolver: yupResolver(schema),
   });
 
@@ -83,92 +84,7 @@ const UnitConverterForm = ({
     }
   };
 
-  return (
-    <>
-      <Paper sx={{ px: 5, py: 5 }} elevation={6} variant="outlined" square>
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <Grid container spacing={4}>
-            {/* Unit From */}
-            <Grid item xs={12} md={6}>
-              <Controller
-                name={"unit_from"}
-                control={control}
-                render={({
-                  field: { onChange, value },
-                  fieldState: { error },
-                }) => (
-                  <AsyncDropdown
-                    url="/units/"
-                    key="name"
-                    onChange={(_, data) => onChange(data)}
-                    value={value}
-                    label="Unit From"
-                    error={!!error?.message}
-                    helperText={error?.message}
-                    createForm={<UnitForm redirect={false} />}
-                  />
-                )}
-              />
-            </Grid>
-            {/* Unit To */}
-            <Grid item xs={12} md={6}>
-              <Controller
-                name={"unit_to"}
-                control={control}
-                render={({
-                  field: { onChange, value },
-                  fieldState: { invalid, isTouched, isDirty, error },
-                }) => (
-                  <AsyncDropdown
-                    url="/units/"
-                    key="name"
-                    onChange={(_, data) => {
-                      // console.log("-----------");
-                      // console.log(value);
-                      // console.log(data);
-                      onChange(data);
-                    }}
-                    value={value}
-                    label="Unit To"
-                    error={!!error?.message}
-                    helperText={error?.message}
-                    createForm={<UnitForm redirect={false} />}
-                  />
-                )}
-              />
-            </Grid>
-            {/* Factor */}
-            <Grid item xs={12} md={6}>
-              <Controller
-                name={"factor"}
-                control={control}
-                render={({
-                  field: { onChange, value },
-                  fieldState: { invalid, isTouched, isDirty, error },
-                }) => (
-                  <LabeledInput
-                    error={!!error?.message}
-                    helperText={error?.message}
-                    onChange={onChange}
-                    fullWidth
-                    size="small"
-                    value={value}
-                    label={"Unit Factor"}
-                    placeholder={"Unit Factor"}
-                  />
-                )}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <Button variant="contained" type="submit">
-                Submit
-              </Button>
-            </Grid>
-          </Grid>
-        </form>
-      </Paper>
-    </>
-  );
+  return <></>;
 };
 
 export default UnitConverterForm;

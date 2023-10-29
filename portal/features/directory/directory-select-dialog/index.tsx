@@ -33,10 +33,10 @@ const DirectoryDialog = ({
       <DialogContent>
         <Box component="form" sx={{ display: "flex", flexWrap: "wrap" }}>
           <FormControl sx={{ m: 1, minWidth: 200, width: "100%" }}>
-            <AsyncDropdown<Directory>
+            {/* <AsyncDropdown<Directory>
               url="/directories/"
               onChange={(e, newValue) => setValue(newValue)}
-            />
+            /> */}
           </FormControl>
         </Box>
       </DialogContent>

@@ -197,6 +197,7 @@ const FormulaForm = ({
       );
 
       formulaRequirementTrigger({ id: formula.id, query: {} }).then((res) => {
+        // @ts-ignore
         dispatch(setRequirements(res.data?.results || []));
       });
     }

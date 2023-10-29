@@ -95,7 +95,7 @@ export default function CustomizedMenus({
         onClose={handleClose}
       >
         {menus &&
-          menus.map((e, key) => (
+          menus.map((e: any, key) => (
             <MenuItem key={key} onClick={() => e.onClick()} disableRipple>
               {e.children}
             </MenuItem>

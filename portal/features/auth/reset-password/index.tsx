@@ -14,7 +14,7 @@ import {
   Grid,
 } from "@mui/material";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter } from "next/router";
 import { LabeledInput } from "@/components/inputs";
 import LoadingButton from "@mui/lab/LoadingButton";
 import auth_service from "../services/auth_service";
@@ -48,7 +48,7 @@ const ResetPassword = () => {
     try {
       const response = await auth_service.reset_password_confirm({
         password: data.password,
-        token: router.query.token[0],
+        token: router.query?.token ? router.query?.token[0] : "",
       });
       if (response.status == 200) {
         setSuccess(

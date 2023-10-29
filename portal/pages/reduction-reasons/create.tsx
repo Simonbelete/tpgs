@@ -3,7 +3,7 @@ import { Typography } from "@mui/material";
 import { Breadcrumbs } from "@/components";
 import { useBreadcrumbs } from "@/hooks";
 import { CreateLayout } from "@/layouts";
-import { ReductionReasonF } from "@/features/reduction-reason";
+import { ReductionReasonForm } from "@/features/reduction-reason";
 import { SeoHead } from "@/seo";
 
 const ReductionReasonCreatePage = () => {

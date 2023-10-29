@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { Modal, Box, Typography, Tabs, Tab } from "@mui/material";
 import { ChartModal } from "@/components/modals";
-import { IngredientService } from "@/features/ingredients";
+// import { IngredientService } from "@/features/ingredients";
 import BarChartIcon from "@mui/icons-material/BarChart";
 import DonutSmallIcon from "@mui/icons-material/DonutSmall";
 import { Ingredient, IngredientNutrient, Nutrient } from "@/models";
@@ -111,96 +111,104 @@ const IngredientContributionModal = ({
   open?: boolean;
   onClose: () => void;
 }) => {
-  const dispatch = useDispatch();
-  const [nutrients, setNutrients] = useState<Nutrient[]>([]);
-  const [tabIndex, setTabIndex] = useState(0);
-  const [activeIndex, setActiveIndex] = useState(0);
-  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
-    setTabIndex(newValue);
-  };
-  const formula = useSelector((state: RootState) => state.formula);
+  // const dispatch = useDispatch();
+  // const [nutrients, setNutrients] = useState<Nutrient[]>([]);
+  // const [tabIndex, setTabIndex] = useState(0);
+  // const [activeIndex, setActiveIndex] = useState(0);
+  // const handleChange = (event: React.SyntheticEvent, newValue: number) => {
+  //   setTabIndex(newValue);
+  // };
+  // const formula = useSelector((state: RootState) => state.formula);
 
-  const onPieEnter = (index: number) => setActiveIndex(index);
+  // const onPieEnter = (index: number) => setActiveIndex(index);
 
-  useEffect(() => {
-    if (id == 0) return;
-    const curr_formula_ingr = formula.ingredients.find((e: any) => e.id == id);
-    const formula_id: number = curr_formula_ingr?.formula as number;
-    const formula_ingredient_id: number = curr_formula_ingr?.id as number;
-    const ingredient_id: number =
-      (curr_formula_ingr?.ingredient as Ingredient).id || 0;
+  // useEffect(() => {
+  //   if (id == 0) return;
+  //   const curr_formula_ingr = formula.ingredients.find((e: any) => e.id == id);
+  //   const formula_id: number = curr_formula_ingr?.formula as number;
+  //   const formula_ingredient_id: number = curr_formula_ingr?.id as number;
+  //   const ingredient_id: number =
+  //     (curr_formula_ingr?.ingredient as Ingredient).id || 0;
 
-    formula_service.ingredient.nutrient
-      .get(formula_id, formula_ingredient_id)
-      .then((response) => {
-        console.log(response.data.results);
-        if (response.status == 200) setNutrients(response.data.results);
-      })
-      .catch((ex) => {});
-  }, [id]);
+  //   formula_service.ingredient.nutrient
+  //     .get(formula_id, formula_ingredient_id)
+  //     .then((response) => {
+  //       console.log(response.data.results);
+  //       if (response.status == 200) setNutrients(response.data.results);
+  //     })
+  //     .catch((ex) => {});
+  // }, [id]);
 
-  return (
-    <ChartModal open={open} onClose={onClose}>
-      <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-        <Tabs value={tabIndex} onChange={handleChange}>
-          <Tab label="Bar Chart" iconPosition="start" icon={<BarChartIcon />} />
-          <Tab
-            label="Pie Chart"
-            iconPosition="start"
-            icon={<DonutSmallIcon />}
-          />
-        </Tabs>
-      </Box>
-      <Box mx={2} my={4} pb={4}>
-        {tabIndex == 0 && (
-          <>
-            <Typography variant="caption">Below chart shows each nutrient's contribution to the ingredient compared to the required nutrient</Typography>
-            <ResponsiveContainer width="100%" height={500}>
-              <BarChart
-                // width={500}
-                // height={300}
-                data={nutrients}
-                margin={{
-                  top: 5,
-                  right: 30,
-                  left: 20,
-                  bottom: 5,
-                }}
-              >
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="abbreviation" />
-                <YAxis />
-                <Tooltip />
-                <Legend />
-                <Bar dataKey="contribution" label={"Contribution"} fill={"#1972BC"} />
-                <Bar dataKey="requirement" fill="#82ca9d" />
-              </BarChart>
-            </ResponsiveContainer>
-          </>
-        )}
-        {tabIndex == 1 && (
-          <>
-            <ResponsiveContainer width="100%" height={500}>
-              <PieChart width={400} height={400}>
-                <Pie
-                  activeIndex={activeIndex}
-                  activeShape={renderActiveShape}
-                  data={nutrients}
-                  cx="50%"
-                  cy="50%"
-                  innerRadius={60}
-                  outerRadius={80}
-                  fill={randomColor()}
-                  dataKey="percentage"
-                  onMouseEnter={onPieEnter}
-                />
-              </PieChart>
-            </ResponsiveContainer>
-          </>
-        )}
-      </Box>
-    </ChartModal>
-  );
+  // return (
+  //   <ChartModal open={open} onClose={onClose}>
+  //     <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+  //       <Tabs value={tabIndex} onChange={handleChange}>
+  //         <Tab label="Bar Chart" iconPosition="start" icon={<BarChartIcon />} />
+  //         <Tab
+  //           label="Pie Chart"
+  //           iconPosition="start"
+  //           icon={<DonutSmallIcon />}
+  //         />
+  //       </Tabs>
+  //     </Box>
+  //     <Box mx={2} my={4} pb={4}>
+  //       {tabIndex == 0 && (
+  //         <>
+  //           <Typography variant="caption">
+  //             Below chart shows each nutrients contribution to the ingredient
+  //             compared to the required nutrient
+  //           </Typography>
+  //           <ResponsiveContainer width="100%" height={500}>
+  //             <BarChart
+  //               // width={500}
+  //               // height={300}
+  //               data={nutrients}
+  //               margin={{
+  //                 top: 5,
+  //                 right: 30,
+  //                 left: 20,
+  //                 bottom: 5,
+  //               }}
+  //             >
+  //               <CartesianGrid strokeDasharray="3 3" />
+  //               <XAxis dataKey="abbreviation" />
+  //               <YAxis />
+  //               <Tooltip />
+  //               <Legend />
+  //               <Bar
+  //                 dataKey="contribution"
+  //                 label={"Contribution"}
+  //                 fill={"#1972BC"}
+  //               />
+  //               <Bar dataKey="requirement" fill="#82ca9d" />
+  //             </BarChart>
+  //           </ResponsiveContainer>
+  //         </>
+  //       )}
+  //       {tabIndex == 1 && (
+  //         <>
+  //           <ResponsiveContainer width="100%" height={500}>
+  //             <PieChart width={400} height={400}>
+  //               <Pie
+  //                 activeIndex={activeIndex}
+  //                 activeShape={renderActiveShape}
+  //                 data={nutrients}
+  //                 cx="50%"
+  //                 cy="50%"
+  //                 innerRadius={60}
+  //                 outerRadius={80}
+  //                 fill={randomColor()}
+  //                 dataKey="percentage"
+  //                 onMouseEnter={onPieEnter}
+  //               />
+  //             </PieChart>
+  //           </ResponsiveContainer>
+  //         </>
+  //       )}
+  //     </Box>
+  //   </ChartModal>
+  // );
+  return <></>;
 };
 
 export default IngredientContributionModal;

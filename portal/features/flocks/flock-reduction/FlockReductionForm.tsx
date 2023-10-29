@@ -64,7 +64,7 @@ const FlockReductionForm = ({ flock }: { flock?: Flock }) => {
       <Card title="Flock Form">
         <form onSubmit={handleSubmit(onSubmit)}>
           <Grid container spacing={4}>
-            <Grid item xs={12} lg={6}>
+            {/* <Grid item xs={12} lg={6}>
               <Controller
                 name={"reduction_reason"}
                 control={control}
@@ -80,8 +80,8 @@ const FlockReductionForm = ({ flock }: { flock?: Flock }) => {
                   />
                 )}
               />
-            </Grid>
-            <Grid item xs={12} lg={6}>
+            </Grid> */}
+            {/* <Grid item xs={12} lg={6}>
               <Controller
                 name={"reduction_reason"}
                 control={control}
@@ -97,8 +97,8 @@ const FlockReductionForm = ({ flock }: { flock?: Flock }) => {
                   />
                 )}
               />
-            </Grid>
-            <Grid item xs={12} lg={6}>
+            </Grid> */}
+            {/* <Grid item xs={12} lg={6}>
               <Controller
                 name={"reduction_date"}
                 control={control}
@@ -120,7 +120,7 @@ const FlockReductionForm = ({ flock }: { flock?: Flock }) => {
                   />
                 )}
               />
-            </Grid>
+            </Grid> */}
           </Grid>
         </form>
       </Card>

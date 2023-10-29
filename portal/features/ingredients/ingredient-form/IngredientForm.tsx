@@ -91,7 +91,7 @@ const IngredientForm = ({
     const body = {
       name: data.name,
       code: data.code,
-      ingredient_type: data.ingredient_type?.map((e: any) => {
+      ingredient_type: ((data.ingredient_type as any) || []).map((e: any) => {
         if (e !== undefined) return e.id;
       }),
       dm: data.dm,

@@ -21,12 +21,16 @@ import service from "../services/invitation_service";
 import errorToForm from "@/util/errorToForm";
 import { VerifyInvitation } from "@/models";
 
-type Inputs = VerifyInvitation & {confirm_password?: string | null}
+type Inputs = VerifyInvitation & { confirm_password?: string | null };
 
 const schema = yup
   .object({
     password: yup.string().length(6).required(),
-    confirm_password: yup.string().label('confirm password').required().oneOf([yup.ref('password'), null], 'Passwords must match'),
+    confirm_password: yup
+      .string()
+      .label("confirm password")
+      .required()
+      .oneOf([yup.ref("password"), ""], "Passwords must match"),
     name: yup.string().required(),
   })
   .required();
@@ -48,18 +52,21 @@ const ResetPassword = () => {
     try {
       const response = await service.verify({
         password: data.password,
-        token: router.query.token as string || "",
-        name: data.name
+        token: (router.query.token as string) || "",
+        name: data.name,
       });
       if (response.status == 200) {
-        setSuccess(
-          "Creating account..."
-        );
-        router.push({pathname: '/login', query: {email: encodeURIComponent(response.data.email)}})
+        setSuccess("Creating account...");
+        router.push({
+          pathname: "/login",
+          query: { email: encodeURIComponent(response.data.email) },
+        });
       }
     } catch (ex: any) {
       if (ex.status == 400) {
-        setErrorMessage(`Please check your data and try again, ${ex.data.message}` );
+        setErrorMessage(
+          `Please check your data and try again, ${ex.data.message}`
+        );
         errorToForm(ex.data, setError);
       } else
         setErrorMessage(
@@ -73,7 +80,11 @@ const ResetPassword = () => {
   return (
     <Layout>
       <Stack>
-        <Box sx={{ mb: 4, width: '100%' }} justifyContent={"center"} alignItems={"center"}>
+        <Box
+          sx={{ mb: 4, width: "100%" }}
+          justifyContent={"center"}
+          alignItems={"center"}
+        >
           <Box sx={{ mb: 2, display: "flex", justifyContent: "center" }}>
             <Link href="/">
               <img src="/images/ilri_logo.png" height={50} />
@@ -102,26 +113,26 @@ const ResetPassword = () => {
           <form onSubmit={handleSubmit(onSubmit)}>
             <Grid container spacing={4} direction="column">
               <Grid item xs={12}>
-                  <Controller
-                    name={"name"}
-                    control={control}
-                    render={({
-                      field: { onChange, value },
-                      fieldState: { invalid, isTouched, isDirty, error },
-                    }) => (
-                      <LabeledInput
-                        error={!!error?.message}
-                        helperText={error?.message}
-                        onChange={onChange}
-                        fullWidth
-                        size="small"
-                        value={value}
-                        label={"Full Name"}
-                        placeholder={"Full Name"}
-                      />
-                    )}
-                  />
-                </Grid>
+                <Controller
+                  name={"name"}
+                  control={control}
+                  render={({
+                    field: { onChange, value },
+                    fieldState: { invalid, isTouched, isDirty, error },
+                  }) => (
+                    <LabeledInput
+                      error={!!error?.message}
+                      helperText={error?.message}
+                      onChange={onChange}
+                      fullWidth
+                      size="small"
+                      value={value}
+                      label={"Full Name"}
+                      placeholder={"Full Name"}
+                    />
+                  )}
+                />
+              </Grid>
 
               <Grid item xs={12}>
                 <Controller

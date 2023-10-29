@@ -1,10 +1,7 @@
 import React, { useEffect, useState } from "react";
-import {
-  GridRowsProp,
-  GridColDef,
-} from "@mui/x-data-grid";
+import { GridRowsProp, GridColDef } from "@mui/x-data-grid";
 import { DataTable } from "@/components/tables";
-import { Breed } from "@/models";
+import { City } from "@/models";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store";
 import { useGetCitiesQuery } from "../services";
@@ -18,8 +15,12 @@ const columns: GridColDef[] = [
   // { field: "subregion", headerName: "Subregion", flex: 1, minWidth: 150 },
   { field: "latitude", headerName: "Latitude", flex: 1, minWidth: 150 },
   { field: "longitude", headerName: "Longitude", flex: 1, minWidth: 150 },
-  { field: "population", headerName: "population", flex: 1, minWidth: 150,
-    valueGetter: (params) => formatNumber(params.row.population)
+  {
+    field: "population",
+    headerName: "population",
+    flex: 1,
+    minWidth: 150,
+    valueGetter: (params) => formatNumber(params.row.population),
   },
   { field: "feature_code", headerName: "Feature Code", flex: 1, minWidth: 150 },
 ];
@@ -31,11 +32,14 @@ const CityList = () => {
     pageSize: 10,
   });
 
-  const { data, isLoading, refetch } = useGetCitiesQuery({...buildPage(paginationModel), q: selector.search}); 
+  const { data, isLoading, refetch } = useGetCitiesQuery({
+    ...buildPage(paginationModel),
+    q: selector.search,
+  });
 
   return (
     <DataTable
-      rows={(data?.results ?? []) as GridRowsProp<Breed>}
+      rows={(data?.results ?? []) as GridRowsProp<City>}
       columns={columns}
       rowCount={data?.count || 0}
       loading={isLoading}

@@ -3,7 +3,7 @@ import { ListLayout } from "@/layouts";
 import { useBreadcrumbs } from "@/hooks";
 import { Breadcrumbs } from "@/components";
 import { Typography } from "@mui/material";
-import { EggHistoryList } from "@/features/eggs";
+// import { EggHistoryList } from "@/features/eggs";
 import { useRouter } from "next/router";
 import { NextPageContext } from "next";
 
@@ -17,7 +17,8 @@ const EggHistoryPage = ({ id }: { id: number }) => {
       header={<Typography variant="title">Egg Production Histories</Typography>}
       actions={<Actions />}
     >
-      <EggHistoryList id={id} />
+      {/* <EggHistoryList id={id} /> */}
+      <></>
     </ListLayout>
   );
 };

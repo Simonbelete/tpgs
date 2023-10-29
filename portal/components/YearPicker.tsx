@@ -47,9 +47,9 @@ const YearPicker = () => {
               <DatePicker
                 views={["year"]}
                 label="Year only"
-                value={selectedDate}
-                onChange={handleDateChange}
-                animateYearScrolling
+                // value={selectedDate}
+                // onChange={handleDateChange}
+                // animateYearScrolling
               />
             </Paper>
           </Popper>

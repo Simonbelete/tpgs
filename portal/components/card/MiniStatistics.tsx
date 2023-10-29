@@ -1,24 +1,39 @@
 import React from "react";
-import {
-  Grid,
-  Box,
-  Card,
-  Typography,
-  ButtonBase,
-  Avatar
-} from "@mui/material";
+import { Grid, Box, Card, Typography, ButtonBase, Avatar } from "@mui/material";
 import Shadow from "../Shadow";
-import { useTheme } from "@emotion/react";
+import { useTheme } from "@mui/material/styles";
 
-export default function Default({startContent, endContent, color, name, value, growth, growthName}: {startContent?: React.ReactNode, color?: string, endContent?: React.ReactNode ,name: string, value: string, growth?: string, growthName?: string}) {
+export default function Default({
+  startContent,
+  endContent,
+  color,
+  name,
+  value,
+  growth,
+  growthName,
+}: {
+  startContent?: React.ReactNode;
+  color?: string;
+  endContent?: React.ReactNode;
+  name: string;
+  value: string;
+  growth?: string;
+  growthName?: string;
+}) {
   const theme = useTheme();
 
   return (
     <Shadow radius={"56px"}>
-     <Grid container spacing={2} sx={{width: 200, py: 1, pl: 1}}>
+      <Grid container spacing={2} sx={{ width: 200, py: 1, pl: 1 }}>
         <Grid item>
-          <ButtonBase sx={{ width: 70, height: '100%' }}>
-            <Avatar sx={{ width: 56, height: 56, bgcolor: color || theme.palette.primary.main }}>
+          <ButtonBase sx={{ width: 70, height: "100%" }}>
+            <Avatar
+              sx={{
+                width: 56,
+                height: 56,
+                bgcolor: color || theme.palette.primary.main,
+              }}
+            >
               {startContent}
             </Avatar>
           </ButtonBase>
@@ -29,7 +44,12 @@ export default function Default({startContent, endContent, color, name, value, g
               <Typography variant="overline" color="text.secondary">
                 {name}
               </Typography>
-              <Typography variant="h5" fontWeight="600" color={"text.primary"} gutterBottom>
+              <Typography
+                variant="h5"
+                fontWeight="600"
+                color={"text.primary"}
+                gutterBottom
+              >
                 {value}
               </Typography>
             </Grid>

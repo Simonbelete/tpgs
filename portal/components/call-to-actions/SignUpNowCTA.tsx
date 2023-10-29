@@ -15,7 +15,7 @@ const Section = styled.section`
 `;
 
 const SectionDescription = styled(Typography)`
-  color: ${({ theme }) => theme.palette.white};
+  color: ${({ theme }) => "#fff"};
 `;
 
 const SignUpNowCTA = ({ ...props }) => {
