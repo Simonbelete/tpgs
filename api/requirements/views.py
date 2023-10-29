@@ -65,16 +65,16 @@ class RequirementCsvExport(CsvExport):
 
 ## Requirement Import
 class RequirementXlsxImport(XlsxImport):
-    def get_model(self):
-        return models.Requirement
+    def get_resource(self):
+        return admin.RequirementResource()
 
 class RequirementXlsImport(XlsImport):
-    def get_model(self):
-        return models.Requirement
+    def get_resource(self):
+        return admin.RequirementResource()
 
 class RequirementCsvImport(CsvImport):
-    def get_model(self):
-        return models.Requirement
+    def get_resource(self):
+        return admin.RequirementResource()
     
 class RequirementNutrientViewSet(CoreModelViewSet):
     pagination_class = AllPagination

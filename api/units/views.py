@@ -59,16 +59,16 @@ class UnitConverterCsvExport(CsvExport):
 
 ## Unit Converter Import
 class UnitConverterXlsxImport(XlsxImport):
-    def get_model(self):
-        return models.UnitConverter
+    def get_resource(self):
+        return admin.UnitConverterResource()
     
 class UnitConverterXlsImport(XlsImport):
-    def get_model(self):
-        return models.UnitConverter
+    def get_resource(self):
+        return admin.UnitConverterResource()
 
 class UnitConverterCsvImport(CsvImport):
-    def get_model(self):
-        return models.UnitConverter
+    def get_resource(self):
+        return admin.UnitConverterResource()
 
 
 ## Unit
@@ -103,13 +103,13 @@ class UnitCsvExport(CsvExport):
 
 ## Unit Import
 class UnitXlsxImport(XlsxImport):
-    def get_model(self):
-        return models.Unit
+    def get_resource(self):
+        return admin.UnitResource()
 
 class UnitXlsImport(XlsImport):
-    def get_model(self):
-        return models.Unit
+    def get_resource(self):
+        return admin.UnitResource()
     
 class UnitCsvImport(CsvImport):
-    def get_model(self):
-        return models.Unit
+    def get_resource(self):
+        return admin.UnitResource()

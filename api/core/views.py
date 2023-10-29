@@ -156,15 +156,14 @@ class XlsxImport(APIView):
     renderer_classes = [TemplateHTMLRenderer]
     template_name = 'import_result.html'
 
-    def get_model(self):
+    def get_resource(self):
         raise NotImplemented()
 
     def post(self, request):
         file = request.FILES.get('file')
         df = pd.read_excel(file, header=0)
         dataset = Dataset().load(df)
-        resource = resources.modelresource_factory(
-            model=self.get_model())()
+        resource = self.get_resource()
         result = resource.import_data(dataset, dry_run=True)
         if not result.has_errors():
             result = resource.import_data(dataset, dry_run=False)
@@ -176,15 +175,14 @@ class XlsImport(APIView):
     renderer_classes = [TemplateHTMLRenderer]
     template_name = 'import_result.html'
 
-    def get_model(self):
+    def get_resource(self):
         raise NotImplemented()
 
     def post(self, request):
         file = request.FILES.get('file')
         df = pd.read_excel(file, header=0)
         dataset = Dataset().load(df)
-        resource = resources.modelresource_factory(
-            model=self.get_model())()
+        resource = self.get_resource()
         result = resource.import_data(dataset, dry_run=True)
         if not result.has_errors():
             result = resource.import_data(dataset, dry_run=False)
@@ -196,15 +194,14 @@ class CsvImport(APIView):
     renderer_classes = [TemplateHTMLRenderer]
     template_name = 'import_result.html'
 
-    def get_model(self):
+    def get_resource(self):
         raise NotImplemented()
 
     def post(self, request):
         file = request.FILES.get('file')
         df = pd.read_csv(file, header=0)
         dataset = Dataset().load(df)
-        resource = resources.modelresource_factory(
-            model=self.get_model())()
+        resource = self.get_resource()
         result = resource.import_data(dataset, dry_run=True)
         if not result.has_errors():
             result = resource.import_data(dataset, dry_run=False)

@@ -18,8 +18,10 @@ class NutrientResource(resources.ModelResource):
     # name = fields.Field(attribute='name', column_name='Name')
     # abbreviation = fields.Field(
     #     attribute='abbreviation', column_name='Abbreviation')
-    unit = fields.Field(attribute='unit', column_name='unit',
-                        widget=widgets.ForeignKeyWidget(Unit, field='name'))
+    unit = fields.Field(
+        column_name='unit',
+        attribute='unit',
+        widget=widgets.ForeignKeyWidget(Unit, field='name'))
     # nutrient_group = fields.Field(attribute='nutrient_group',
     #                               column_name='Nutrient Group', widget=widgets.ForeignKeyWidget(models.NutrientGroup, field='name'))
     # description = fields.Field(

@@ -62,17 +62,16 @@ class IngredientTypeCsvExport(CsvExport):
 
 ## Ingredient type import
 class IngredientTypeXlsxImport(XlsxImport):
-    def get_model(self):
-        return models.IngredientType
-
+    def get_resource(self):
+        return admin.IngredientTypeResource
     
 class IngredientTypeXlsImport(XlsImport):
-    def get_model(self):
-        return models.IngredientType
+    def get_resource(self):
+        return admin.IngredientTypeResource
         
 class IngredientTypeCsvImport(CsvImport):
-    def get_model(self):
-        return models.IngredientType
+    def get_resource(self):
+        return admin.IngredientTypeResource
         
 
 ## Ingredient
@@ -129,16 +128,16 @@ class IngredientCsvExport(CsvExport):
 
 ## Ingredient Import        
 class IngredientXlsxImport(XlsxImport):
-    def get_model(self):
-        return models.Ingredient
+    def get_resource(self):
+        return admin.IngredientResource()
 
 class IngredientXlsImport(XlsImport):
-    def get_model(self):
-        return models.Ingredient
+    def get_resource(self):
+        return admin.IngredientResource()
 
 class IngredientCsvImport(CsvImport):
-    def get_model(self):
-        return models.Ingredient
+    def get_resource(self):
+        return admin.IngredientResource()
 
 
 class IngredientNutrientViewSet(viewsets.ModelViewSet):

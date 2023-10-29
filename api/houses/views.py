@@ -60,13 +60,13 @@ class HouseCsvExport(CsvExport):
 
 ## House Import
 class HouseXlsxImport(XlsxImport):
-    def get_model(self):
-        return models.House
+    def get_resource(self):
+        return admin.HouseResource()
 
 class HouseXlsImport(XlsxImport):
-    def get_model(self):
-        return models.House
+    def get_resource(self):
+        return admin.HouseResource()
 
 class HouseCsvImport(CsvImport):
-    def get_model(self):
-        return models.House
+    def get_resource(self):
+        return admin.HouseResource()

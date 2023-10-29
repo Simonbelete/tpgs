@@ -62,16 +62,16 @@ class NutrientGroupCsvExport(CsvExport):
 
 ## Nutrient Group Import
 class NutrientGroupXlsxImport(XlsxImport):
-    def get_model(self):
-        return models.NutrientGroup
+    def get_resource(self):
+        return admin.NutrientGroupResource
 
 class NutrientGroupXlsImport(XlsImport):
-    def get_model(self):
-        return models.NutrientGroup
+    def get_resource(self):
+        return admin.NutrientGroupResource
 
 class NutrientGroupCsvImport(CsvImport):
-    def get_model(self):
-        return models.NutrientGroup
+    def get_resource(self):
+        return admin.NutrientGroupResource
 
 ##
 ## Nutrient
@@ -109,13 +109,13 @@ class NutrientCsvExport(CsvExport):
         return admin.NutrientResource().export()
 
 class NutrientXlsxImport(XlsxImport):
-    def get_model(self):
-        return models.Nutrient
+    def get_resource(self):
+        return admin.NutrientResource()
     
 class NutrientXlsImport(XlsImport):
-    def get_model(self):
-        return models.Nutrient
+    def get_resource(self):
+        return admin.NutrientResource()
 
 class NutrientCsvImport(CsvImport):
-    def get_model(self):
-        return models.Nutrient
+    def get_resource(self):
+        return admin.NutrientResource()

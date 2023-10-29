@@ -62,13 +62,13 @@ class PenCsvExport(CsvExport):
 
 ## Pen Import
 class PenXlsxImport(XlsxImport):
-    def get_model(self):
-        return models.Pen
+    def get_resource(self):
+        return admin.PenResource()
 
 class PenXlsImport(XlsImport):
-    def get_model(self):
-        return models.Pen
+    def get_resource(self):
+        return admin.PenResource()
 
 class PenCsvImport(CsvImport):
-    def get_model(self):
-        return models.Pen
+    def get_resource(self):
+        return admin.PenResource()
