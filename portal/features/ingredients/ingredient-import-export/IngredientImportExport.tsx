@@ -145,6 +145,7 @@ const IngredientImportExport = () => {
           Import
           <input
             type="file"
+            value=""
             onChange={handleFileUpload}
             accept=".csv,.xlsx,.xls"
             hidden

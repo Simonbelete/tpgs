@@ -74,10 +74,10 @@ id,ingredient,nutrient,value
  ,Rice bran Cambodia,CP,10.1
  ,Rice bran Cambodia,EE,14.0
  ,Rice bran Cambodia,CF,21.6
- ,Soybean meal Cambodia,ME,4292
- ,Soybean meal Cambodia,CP,50.3
- ,Soybean meal Cambodia,EE,0.72
- ,Soybean meal Cambodia,CF,4.73
+ ,Soybean meal 1 Cambodia,ME,4292
+ ,Soybean meal 1 Cambodia,CP,50.3
+ ,Soybean meal 1 Cambodia,EE,0.72
+ ,Soybean meal 1 Cambodia,CF,4.73
  ,Water Spinach  Cambodia,ME,4516
  ,Water Spinach  Cambodia,CP,27.7
  ,Water Spinach  Cambodia,CF,12.4
@@ -85,10 +85,10 @@ id,ingredient,nutrient,value
  ,Maize Cambodia,CP,9.86
  ,Maize Cambodia,EE,4.04
  ,Maize Cambodia,CF,3.13
- ,Meat and bone meal Cambodia,ME,345
- ,Meat and bone meal Cambodia,CP,51.5
- ,Meat and bone meal Cambodia,EE,11.9
- ,Meat and bone meal Cambodia,CF,16.1
+ ,Meat and bone meal 1 Cambodia,ME,345
+ ,Meat and bone meal 1 Cambodia,CP,51.5
+ ,Meat and bone meal 1 Cambodia,EE,11.9
+ ,Meat and bone meal 1 Cambodia,CF,16.1
  ,Blood meal Cambodia,ME,4208
  ,Blood meal Cambodia,CP,88.4
  ,Broken Rice Cambodia,ME,4502

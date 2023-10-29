@@ -142,6 +142,8 @@ class IngredientCsvImport(CsvImport):
 
 class IngredientNutrientViewSet(viewsets.ModelViewSet):
     pagination_class = AllPagination
+    filterset_class = filters.IngredientNutrientFilter
+    ordering_fields = '__all__'
     serializer_class = serializers.IngredientNutrientSerializer_GET
 
     def get_queryset(self):
@@ -158,6 +160,7 @@ class IngredientNutrientViewSet(viewsets.ModelViewSet):
 class AllIngredientNutrientViewSet(viewsets.ModelViewSet):
     queryset = models.IngredientNutrient.all.all()
     serializer_class = serializers.IngredientNutrientSerializer_GET
+    filterset_class = filters.IngredientNutrientFilter
 
     def get_serializer_class(self):
         if self.request.method == 'POST':

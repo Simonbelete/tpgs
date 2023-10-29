@@ -21,7 +21,7 @@ import {
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import * as yup from "yup";
 import { useLazyGetNutrientsQuery } from "@/features/nutrients/services";
-import { useLazyGetIngredientNutrientsQuery } from "@/features/ingredients/services";
+import { useLazyGetNutrientsOfIngredientQuery } from "@/features/ingredients/services";
 import { Loading } from "@/components";
 import { Sizer } from "../components";
 import {
@@ -89,7 +89,7 @@ const Formulation = ({ saveRef }: { saveRef: React.Ref<unknown> }) => {
     getNutrients,
     { data: nutreints, isUninitialized, isLoading: nutrientIsLoading },
   ] = useLazyGetNutrientsQuery();
-  const [getIngredientNutrients] = useLazyGetIngredientNutrientsQuery();
+  const [getIngredientNutrients] = useLazyGetNutrientsOfIngredientQuery();
   const [getRequirementNutrients] = useLazyGetRequirementNutrientsQuery();
 
   const [createFormula, createResult] = useCreateFormulaMutation();

@@ -1,0 +1,9 @@
+[
+    {
+        "model": "nutrients.NutrientGroup",
+        "pk": 1,
+        "fields": {
+            "name": "Energy"
+        }
+    }
+]

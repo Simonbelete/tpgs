@@ -1,0 +1,11 @@
+[
+    {
+        "model": "nutrients.Nutrient",
+        "pk": 1,
+        "fields": {
+            "name": "Metabolizable Energy",
+            "abbreviation": "ME",
+            "nutrient_group": 1
+        }
+    }
+]
