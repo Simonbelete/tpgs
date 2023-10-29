@@ -29,7 +29,7 @@ const IngredientComposition = ({ id }: { id: number }) => {
 
   const { data, isLoading, status } = useGetNutrientsOfIngredientQuery({
     id,
-    query: {},
+    query: { nutrient_group_not: "Energy" },
   });
 
   useEffect(() => {

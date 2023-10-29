@@ -29,7 +29,7 @@ const RequirementComposition = ({ id }: { id: number }) => {
 
   const { data, isLoading, status } = useGetRequirementNutrientsQuery({
     id,
-    query: {},
+    query: { nutrient_group_not: "Energy" },
   });
 
   useEffect(() => {

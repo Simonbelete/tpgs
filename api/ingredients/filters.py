@@ -6,12 +6,12 @@ from . import models
 class IngredientTypeFilter(CoreFilterSet):
     class Meta:
         model = models.IngredientType
-        fields = ['name']
+        fields = ['name', 'is_active']
 
 class IngredientFilter(CoreFilterSet):
     class Meta:
         model = models.Ingredient
-        fields = ['name', 'code']
+        fields = ['name', 'code', 'is_active']
         
 class IngredientNutrientFilter(CoreFilterSet):
     nutrient_group = filters.CharFilter(field_name='nutrient__nutrient_group__name', lookup_expr="exact")
@@ -20,4 +20,4 @@ class IngredientNutrientFilter(CoreFilterSet):
 
     class Meta:
         model = models.IngredientNutrient
-        fields = ['nutrient_group_id', 'nutrient_group', 'nutrient_group_not']
+        fields = ['nutrient_group_id', 'nutrient_group', 'nutrient_group_not', 'is_active']

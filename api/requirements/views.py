@@ -79,6 +79,8 @@ class RequirementCsvImport(CsvImport):
 class RequirementNutrientViewSet(CoreModelViewSet):
     pagination_class = AllPagination
     serializer_class = serializers.RequirementNutrientSerializer_GET
+    filterset_class = filters.RequirementNutrientFilter
+    ordering_fields = '__all__'
 
     def get_queryset(self):
         try:
