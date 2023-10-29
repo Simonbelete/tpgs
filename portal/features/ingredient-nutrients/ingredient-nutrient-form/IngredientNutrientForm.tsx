@@ -28,10 +28,10 @@ const schema = yup.object({
 });
 
 const IngredientNutrientForm = ({
-  pen,
+  ingredient_nutrient,
   redirect = true,
 }: {
-  pen?: IngredientNutrient;
+  ingredient_nutrient?: IngredientNutrient;
   redirect?: boolean;
 }) => {
   const router = useRouter();
@@ -43,7 +43,7 @@ const IngredientNutrientForm = ({
 
   const { handleSubmit, control, setError } = useForm<Inputs>({
     defaultValues: {
-      ...pen,
+      ...ingredient_nutrient,
     },
     // @ts-ignore
     resolver: yupResolver(schema),
@@ -61,11 +61,12 @@ const IngredientNutrientForm = ({
       nutrient: (data.nutrient as Nutrient).id || 0,
     };
 
-    if (pen == null)
+    if (ingredient_nutrient == null)
       await createIngredientNutrient(body).then(
-        () => redirect && router.push("/pen")
+        () => redirect && router.push("/ingredient_nutrient")
       );
-    else await updateIngredientNutrient({ ...body, id: pen.id });
+    else
+      await updateIngredientNutrient({ ...body, id: ingredient_nutrient.id });
   };
 
   return (
@@ -94,7 +95,7 @@ const IngredientNutrientForm = ({
                 </Grid>
                 <Grid item xs={12}>
                   <Controller
-                    name={"ingredient"}
+                    name={"nutrient"}
                     control={control}
                     render={({
                       field: { onChange, value },
@@ -166,12 +167,12 @@ const IngredientNutrientForm = ({
         </Grid>
         <Grid item xs={3}>
           <Stack spacing={3}>
-            {pen && (
+            {ingredient_nutrient && (
               <>
-                <IngredientNutrientInfoZone id={pen?.id} />
+                <IngredientNutrientInfoZone id={ingredient_nutrient?.id} />
                 <IngredientNutrientDangerZone
-                  id={pen.id}
-                  is_active={pen.is_active}
+                  id={ingredient_nutrient.id}
+                  is_active={ingredient_nutrient.is_active}
                 />
               </>
             )}

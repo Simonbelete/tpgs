@@ -15,7 +15,7 @@ class IngredientTypeResource(resources.ModelResource):
 class IngredientResource(resources.ModelResource):
     class Meta:
         model = models.Ingredient
-        fields = ['id', 'code', 'name']
+        fields = ['id', 'code', 'name', 'price', 'dm']
 
 class IngredientNutrientResource(resources.ModelResource):
     ingredient = fields.Field(
@@ -25,7 +25,7 @@ class IngredientNutrientResource(resources.ModelResource):
     nutrient = fields.Field(
         column_name='nutrient',
         attribute='nutrient',
-        widget=widgets.ForeignKeyWidget(Nutrient, field='name'))
+        widget=widgets.ForeignKeyWidget(Nutrient, field='abbreviation'))
     class Meta:
         model = models.IngredientNutrient
         fields = ['id', 'ingredient', 'nutrient', 'value']

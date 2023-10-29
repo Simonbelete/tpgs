@@ -1,4 +1,4 @@
-import React, { ChangeEvent, ReactElement } from "react";
+import React, { ChangeEvent, useState } from "react";
 import Link from "next/link";
 import { AxiosResponse } from "axios";
 import { useSnackbar } from "notistack";
@@ -9,22 +9,27 @@ import messages from "@/util/messages";
 import { ButtonMenu } from "@/components/buttons";
 import AddIcon from "@mui/icons-material/Add";
 import FileUploadIcon from "@mui/icons-material/FileUpload";
-import { 
+import {
   exportIngredientsXLSX,
   exportIngredientsXLS,
   exportIngredientsCSV,
   importIngredientsXLSX,
   importIngredientsCSV,
-  importIngredientsXLS
- } from "../services";
+  importIngredientsXLS,
+} from "../services";
+import { HtmlModal } from "@/components";
 
 const IngredientImportExport = () => {
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+  const [responseHtml, setResponseHtml] = useState({
+    open: false,
+    html: "",
+  });
 
   const handleExport = async (type: string) => {
     try {
       let response: Partial<AxiosResponse> = {};
-      if (type == "xlsx") response = await exportIngredientsXLSX ();
+      if (type == "xlsx") response = await exportIngredientsXLSX();
       if (type == "xls") response = await exportIngredientsXLS();
       if (type == "csv") response = await exportIngredientsCSV();
       if (response.status == 200) {
@@ -62,6 +67,10 @@ const IngredientImportExport = () => {
         if (file.name.includes(".csv"))
           response = await importIngredientsCSV(formData);
         if (response.status == 200) {
+          setResponseHtml({
+            open: true,
+            html: response.data,
+          });
           enqueueSnackbar(messages.importSuccess(), { variant: "success" });
         } else {
           enqueueSnackbar(messages.importError_400(), { variant: "error" });
@@ -76,12 +85,18 @@ const IngredientImportExport = () => {
 
   return (
     <>
+      <HtmlModal
+        open={responseHtml.open}
+        onClose={() => setResponseHtml({ open: false, html: "" })}
+        html={responseHtml.html}
+      />
       <Stack
         spacing={2}
         direction={"row"}
         justifyContent="flex-start"
         alignItems="center"
-        useFlexGap flexWrap="wrap"
+        useFlexGap
+        flexWrap="wrap"
       >
         <Link href="/ingredients/create">
           <Button variant="contained" size={"small"} startIcon={<AddIcon />}>

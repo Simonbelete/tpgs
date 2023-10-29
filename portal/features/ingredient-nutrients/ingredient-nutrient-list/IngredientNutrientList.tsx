@@ -20,22 +20,37 @@ import buildQuery from "@/util/buildQuery";
 import buildPage from "@/util/buildPage";
 
 const columns: GridColDef[] = [
-  { field: "name", headerName: "Name", flex: 1 },
   {
-    field: "house",
-    headerName: "House",
+    field: "ingredient",
+    headerName: "Ingredient",
     flex: 1,
     renderCell: (params: GridRenderCellParams<any>) => {
-      if (params.row.house == null) return <></>;
+      if (params.row.ingredient == null) return <></>;
       return (
         <Typography color={"link.primary"} variant="body2">
-          <Link href={`/houses/${params.row.house.id}`}>
-            {params.row.house.name}
+          <Link href={`/ingredients/${params.row.ingredient.id}`}>
+            {params.row.ingredient.name}
           </Link>
         </Typography>
       );
     },
   },
+  {
+    field: "nutrient",
+    headerName: "Nutrient",
+    flex: 1,
+    renderCell: (params: GridRenderCellParams<any>) => {
+      if (params.row.nutrient == null) return <></>;
+      return (
+        <Typography color={"link.primary"} variant="body2">
+          <Link href={`/ingredients/${params.row.nutrient.id}`}>
+            {params.row.nutrient.name}
+          </Link>
+        </Typography>
+      );
+    },
+  },
+  { field: "value", headerName: "Value", flex: 1 },
 ];
 
 const IngredientNutrientList = () => {

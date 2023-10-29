@@ -1,15 +1,27 @@
-id,name
- ,Maize Vietnam
- ,Rice broken Vietnam
- ,Rice bran Vietnam
- ,Rice bran de-oil Vietnam
- ,Cassava meal Vietnam
- ,Wheat Vietnam
- ,Wheat bran Vietnam
- ,DDGS Vietnam
- ,Soybean full fat Vietnam
- ,Soybean meal Vietnam
- ,Meat and bone meal Vietnam
- ,Rapeseed meal Vietnam
- ,Blood meal Vietnam
- ,Concentrate feed Vietnam
+id,name,dm
+ ,Maize Vietnam,86.9
+ ,Rice broken Vietnam,88.27
+ ,Rice bran Vietnam,89.73
+ ,Rice bran de-oil Vietnam,89.19
+ ,Cassava meal Vietnam,88.09
+ ,Wheat Vietnam,89.01
+ ,Wheat bran Vietnam,89.02
+ ,DDGS Vietnam,89.63
+ ,Soybean full fat Vietnam,90.69
+ ,Soybean meal Vietnam,89.1
+ ,Meat and bone meal Vietnam,94.1
+ ,Rapeseed meal Vietnam,90.73
+ ,Blood meal Vietnam,91.27
+ ,Concentrate feed Vietnam,88
+
+
+
+
+
+
+
+
+
+
+
+

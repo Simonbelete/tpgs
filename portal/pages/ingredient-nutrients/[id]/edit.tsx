@@ -27,7 +27,7 @@ const IngredientNutrientEditPage = ({ data }: { data: IngredientNutrient }) => {
         }
         actions={<Actions />}
       >
-        <IngredientNutrientForm pen={data} />
+        <IngredientNutrientForm ingredient_nutrient={data} />
       </EditLayout>
     </>
   );

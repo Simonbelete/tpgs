@@ -5,6 +5,11 @@ from nutrients.models import Nutrient
 from django.db import transaction
 
 
+class IngredientSerializer_SLUG(serializers.ModelSerializer):
+    class Meta:
+        model = models.Ingredient
+        fields = ['id', 'name']
+
 class IngredientTypeSerializer_GET(serializers.ModelSerializer):
     class Meta:
         model = models.IngredientType
@@ -16,9 +21,10 @@ class IngredientTypeHistorySerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-# Ingredient -> Nutrients
+# Ingredient Nutrients
 class IngredientNutrientSerializer_GET(serializers.ModelSerializer):
     nutrient = NutrientSerializer_SLUG()
+    ingredient = IngredientSerializer_SLUG()
 
     class Meta:
         model = models.IngredientNutrient

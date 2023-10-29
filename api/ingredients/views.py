@@ -156,6 +156,7 @@ class IngredientNutrientViewSet(viewsets.ModelViewSet):
 
 ## Ingredient Nutrients
 class AllIngredientNutrientViewSet(viewsets.ModelViewSet):
+    queryset = models.IngredientNutrient.all.all()
     serializer_class = serializers.IngredientNutrientSerializer_GET
 
     def get_serializer_class(self):
