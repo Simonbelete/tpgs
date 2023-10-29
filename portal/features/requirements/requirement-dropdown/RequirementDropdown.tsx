@@ -28,10 +28,10 @@ const RequirementDropdown = ({
 
   return (
     <AsyncDropdown<Requirement>
-      multiple
+      multiple={multiple}
       value={value}
       dataKey="name"
-      label={"Ingredient"}
+      label={"Requirement"}
       error={error}
       helperText={helperText}
       options={data?.results ?? []}

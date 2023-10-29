@@ -35,7 +35,7 @@ const RequirementSelectDialog = ({
         <Box component="form" sx={{ display: "flex", flexWrap: "wrap" }}>
           <FormControl sx={{ m: 1, minWidth: 200, width: "100%" }}>
             <RequirementDropdown
-              multiple
+              multiple={multiple}
               onChange={(e, newValue) => setValue(newValue)}
             />
           </FormControl>

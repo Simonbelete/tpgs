@@ -434,6 +434,8 @@ const Formulation = ({ saveRef }: { saveRef: React.Ref<unknown> }) => {
       return;
     }
 
+    console.log(value);
+
     try {
       setIsRequirementOpen(false);
       const response = await getRequirementNutrients(
