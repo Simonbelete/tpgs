@@ -1,14 +1,14 @@
-import React, { ReactNode, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
   GridColDef,
   GridRenderCellParams,
-  GridRowProps,
   GridValidRowModel,
 } from "@mui/x-data-grid";
 import { Box, LinearProgress } from "@mui/material";
 import StripedDataGrid, {
   CustomNoRowsOverlay,
 } from "../components/StripedDataGrid";
+import DeleteModal from "../components/DeleteModal";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store";
 import {
@@ -18,7 +18,6 @@ import {
 import {
   QueryDefinition,
   MutationDefinition,
-  BaseQueryFn,
 } from "@reduxjs/toolkit/dist/query";
 import { EndpointDefinitions } from "@reduxjs/toolkit/dist/query/endpointDefinitions";
 import {
@@ -27,10 +26,15 @@ import {
 } from "@reduxjs/toolkit/dist/query/react/buildHooks";
 import { ClientQueyFn, Query } from "@/types";
 import { Response } from "@/models";
+import PermanentlyDeleteAction from "../actions/PermanentlyDeleteAction";
 
 export interface ListProps<T> {
   columns: GridColDef[];
-  actions: React.FC<GridRenderCellParams>[];
+  actions: React.FC<
+    GridRenderCellParams & {
+      onClick?: (id: number) => void;
+    }
+  >[];
   getEndpoint: ApiEndpointQuery<
     QueryDefinition<Query, ClientQueyFn, any, Response<T[]>, any>,
     EndpointDefinitions
@@ -51,6 +55,9 @@ export default function List<T>({
 }: ListProps<T>) {
   const selector = useSelector((state: RootState) => state.filter);
 
+  const [selectedId, setSelectedId] = useState<number>(0);
+  const [deleteConfirmation, setDeleteConfirmation] = useState<boolean>(false);
+
   const [trigger, { data, isLoading }] = getEndpoint.useLazyQuery();
   const [deleteTrigger, deleteResult] = deleteEndpoint.useMutation();
 
@@ -63,12 +70,32 @@ export default function List<T>({
     renderCell(params) {
       return (
         <Box>
-          {actions.map((E, i) => (
-            <E key={i} {...params} />
-          ))}
+          {actions.map((E, i) => {
+            if (E.name == PermanentlyDeleteAction.name) {
+              return (
+                <E
+                  key={i}
+                  {...params}
+                  onClick={(id) => handleOpenDeleteConfirmation(id)}
+                />
+              );
+            } else {
+              return <E key={i} {...params} />;
+            }
+          })}
         </Box>
       );
     },
+  };
+
+  const handleCloseDeleteConfirmation = () => setDeleteConfirmation(false);
+  const handleOpenDeleteConfirmation = (id: number) => {
+    setSelectedId(id);
+    setDeleteConfirmation(true);
+    console.log(id);
+  };
+  const deletePermanently = async () => {
+    await deleteTrigger(selectedId).then(() => trigger({}));
   };
 
   const getRowById = (row: any) => {
@@ -80,24 +107,33 @@ export default function List<T>({
     trigger("", true);
   }, []);
 
+  const handleOnDelete = () => {};
+
   return (
-    <StripedDataGrid
-      sx={{ background: "white", height: "100%" }}
-      rows={(data?.results || []) as GridValidRowModel[]}
-      loading={isLoading}
-      density="compact"
-      rowHeight={55}
-      columns={[...columns, settingColumn]}
-      paginationMode="server"
-      disableRowSelectionOnClick
-      slots={{
-        noRowsOverlay: CustomNoRowsOverlay,
-        loadingOverlay: LinearProgress,
-      }}
-      getRowClassName={(params) =>
-        params.indexRelativeToCurrentPage % 2 === 0 ? "even" : "odd"
-      }
-      getRowId={getRowById}
-    />
+    <>
+      <DeleteModal
+        open={deleteConfirmation}
+        onClose={handleCloseDeleteConfirmation}
+        onYes={handleOnDelete}
+      />
+      <StripedDataGrid
+        sx={{ background: "white", height: "100%" }}
+        rows={(data?.results || []) as GridValidRowModel[]}
+        loading={isLoading}
+        density="compact"
+        rowHeight={55}
+        columns={[...columns, settingColumn]}
+        paginationMode="server"
+        disableRowSelectionOnClick
+        slots={{
+          noRowsOverlay: CustomNoRowsOverlay,
+          loadingOverlay: LinearProgress,
+        }}
+        getRowClassName={(params) =>
+          params.indexRelativeToCurrentPage % 2 === 0 ? "even" : "odd"
+        }
+        getRowId={getRowById}
+      />
+    </>
   );
 }

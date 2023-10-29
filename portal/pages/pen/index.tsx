@@ -6,8 +6,8 @@ import { Typography } from "@mui/material";
 import { PenList, PenListFilter, PenImportExport } from "@/features/pen";
 import { SeoHead } from "@/seo";
 
-import { List, DashboardAction } from "@/lib/crud";
-import { GridColDef, GridRenderCellParams } from "@mui/x-data-grid";
+import { List, DashboardAction, PermanentlyDeleteAction } from "@/lib/crud";
+import { GridColDef } from "@mui/x-data-grid";
 import Link from "next/link";
 import { nutrientApi } from "@/features/nutrients/services";
 import { Nutrient } from "@/models";
@@ -31,7 +31,7 @@ const PenPage = () => {
         {/* <PenList /> */}
         <List<Nutrient>
           columns={columns}
-          actions={[DashboardAction]}
+          actions={[DashboardAction, PermanentlyDeleteAction]}
           getEndpoint={nutrientApi.endpoints.getNutrients}
           deleteEndpoint={nutrientApi.endpoints.deleteNutrient}
         />
