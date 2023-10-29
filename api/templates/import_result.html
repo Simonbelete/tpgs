@@ -25,6 +25,35 @@
         </style>    
 <body>
     {% if result %}
+    {% if result.has_validation_errors %}
+        <h2>Validation Error</h2>
+        <table id="import-result-table">
+            <thead>
+                <tr>
+                    <th>Field</th>
+                    <th>Errors</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for row_result in result %}
+                    <tr>
+                        {% for key, errors in row_result.validation_error %}
+                        <td>
+                           {{ key }}
+                        </td>
+                        <td>
+                            <ul>
+                                {% for err in errors %}
+                                    <li>{{ err }}</li>
+                                {% endfor %}
+                            </ul>
+                       </td>
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
     {% if result.has_errors %}
         <h2>Errors</h2>
         <table id="import-result-table">
