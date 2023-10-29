@@ -21,7 +21,6 @@ import { HtmlModal } from "@/components";
 
 const BreedImportExport = () => {
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
-  const [openResult, setOpenResult] = useState(false);
   const [responseHtml, setResponseHtml] = useState({
     open: false,
     html: "",

@@ -6,8 +6,17 @@ import { Typography } from "@mui/material";
 import { PenList, PenListFilter, PenImportExport } from "@/features/pen";
 import { SeoHead } from "@/seo";
 
+import { List, DashboardAction } from "@/lib/crud";
+import { GridColDef, GridRenderCellParams } from "@mui/x-data-grid";
+import Link from "next/link";
+import { nutrientApi } from "@/features/nutrients/services";
+
 const PenPage = () => {
   const { breadcrumbs } = useBreadcrumbs();
+
+  const columns: GridColDef[] = [
+    { field: "name", headerName: "Name", flex: 1 },
+  ];
 
   return (
     <>
@@ -18,7 +27,12 @@ const PenPage = () => {
         actions={<PenImportExport />}
         filter={<PenListFilter />}
       >
-        <PenList />
+        {/* <PenList /> */}
+        <List
+          columns={columns}
+          actions={[DashboardAction]}
+          endpoint={nutrientApi.endpoints.getNutrients}
+        />
       </ListLayout>
     </>
   );
