@@ -1,0 +1,199 @@
+id,ingredient,nutrient,value
+ ,Maize Kenya,ME,3300
+ ,Maize Kenya,CP,10.0
+ ,Maize Kenya,Lys,0.24
+ ,Maize Kenya,m+c,0.0
+ ,Maize Kenya,Met,1.05
+ ,Maize Kenya,EE,3.8
+ ,Maize Kenya,CF,2.5
+ ,Maize Kenya,Ca,0.03
+ ,Maize Kenya,P,0.29
+ ,Maize bran Kenya,ME,1700
+ ,Maize bran Kenya,CP,12
+ ,Maize bran Kenya,Lys,0.4
+ ,Maize bran Kenya,m+c,0.0
+ ,Maize bran Kenya,Met,0.3
+ ,Maize bran Kenya,EE,6.0
+ ,Maize bran Kenya,CF,12.0
+ ,Maize bran Kenya,Ca,0.1
+ ,Maize bran Kenya,P,0.2
+ ,Maize germ Kenya,ME,1700
+ ,Maize germ Kenya,CP,10.6
+ ,Maize germ Kenya,Lys,0.4
+ ,Maize germ Kenya,m+c,0.0
+ ,Maize germ Kenya,Met,0.3
+ ,Maize germ Kenya,EE,12.3
+ ,Maize germ Kenya,CF,15.2
+ ,Maize germ Kenya,Ca,0.1
+ ,Maize germ Kenya,P,0.2
+ ,Gluten feed Kenya,ME,1700
+ ,Gluten feed Kenya,CP,22.0
+ ,Gluten feed Kenya,Lys,0.7
+ ,Gluten feed Kenya,m+c,0.0
+ ,Gluten feed Kenya,Met,0.5
+ ,Gluten feed Kenya,EE,2.5
+ ,Gluten feed Kenya,CF,9.0
+ ,Gluten feed Kenya,Ca,0.4
+ ,Gluten feed Kenya,P,0.8
+ ,Gluten meal Kenya,ME,3700
+ ,Gluten meal Kenya,CP,60
+ ,Gluten meal Kenya,Lys,1
+ ,Gluten meal Kenya,m+c,0
+ ,Gluten meal Kenya,Met,1.3
+ ,Gluten meal Kenya,EE,2.5
+ ,Gluten meal Kenya,CF,2.5
+ ,Gluten meal Kenya,Ca,0.1
+ ,Gluten meal Kenya,P,0.5
+ ,Wheat Kenya,ME,3250
+ ,Wheat Kenya,CP,12
+ ,Wheat Kenya,Lys,0.38
+ ,Wheat Kenya,m+c,0
+ ,Wheat Kenya,Met,0.22
+ ,Wheat Kenya,EE,2.1
+ ,Wheat Kenya,CF,4
+ ,Wheat Kenya,Ca,0.05
+ ,Wheat Kenya,P,0.3
+ ,Pollard Kenya,ME,2700
+ ,Pollard Kenya,CP,16
+ ,Pollard Kenya,Lys,0.48
+ ,Pollard Kenya,m+c,0
+ ,Pollard Kenya,Met,0.16
+ ,Pollard Kenya,EE,4.5
+ ,Pollard Kenya,CF,7.5
+ ,Pollard Kenya,Ca,0.13
+ ,Pollard Kenya,P,0.9
+ ,Wheat bran Kenya,ME,1600
+ ,Wheat bran Kenya,CP,14
+ ,Wheat bran Kenya,Lys,0.42
+ ,Wheat bran Kenya,m+c,0
+ ,Wheat bran Kenya,Met,0.08
+ ,Wheat bran Kenya,EE,4.5
+ ,Wheat bran Kenya,CF,13.2
+ ,Wheat bran Kenya,Ca,0.14
+ ,Wheat bran Kenya,P,1.38
+ ,Rice bran Kenya,ME,1630
+ ,Rice bran Kenya,CP,12
+ ,Rice bran Kenya,Lys,0.77
+ ,Rice bran Kenya,m+c,0
+ ,Rice bran Kenya,Met,0.29
+ ,Rice bran Kenya,EE,13
+ ,Rice bran Kenya,CF,12
+ ,Rice bran Kenya,Ca,0.12
+ ,Rice bran Kenya,P,1.5
+ ,Sorghum Kenya,ME,3250
+ ,Sorghum Kenya,CP,12
+ ,Sorghum Kenya,Lys,0.2
+ ,Sorghum Kenya,m+c,0
+ ,Sorghum Kenya,Met,0.13
+ ,Sorghum Kenya,EE,3.5
+ ,Sorghum Kenya,CF,2.9
+ ,Sorghum Kenya,Ca,0.04
+ ,Sorghum Kenya,P,0.33
+ ,Cotton s. cake Kenya,ME,2000
+ ,Cotton s. cake Kenya,CP,35
+ ,Cotton s. cake Kenya,Lys,1.1
+ ,Cotton s. cake Kenya,m+c,0
+ ,Cotton s. cake Kenya,Met,0.3
+ ,Cotton s. cake Kenya,EE,9
+ ,Cotton s. cake Kenya,CF,19.2
+ ,Cotton s. cake Kenya,Ca,0.19
+ ,Cotton s. cake Kenya,P,0.9
+ ,Sunflower S. cake Kenya,ME,1600
+ ,Sunflower S. cake Kenya,CP,20
+ ,Sunflower S. cake Kenya,Lys,0.7
+ ,Sunflower S. cake Kenya,m+c,0
+ ,Sunflower S. cake Kenya,Met,0.45
+ ,Sunflower S. cake Kenya,EE,4
+ ,Sunflower S. cake Kenya,CF,28
+ ,Sunflower S. cake Kenya,Ca,0.3
+ ,Sunflower S. cake Kenya,P,0.9
+ ,Sunflower seed Kenya,ME,3300
+ ,Sunflower seed Kenya,CP,13
+ ,Sunflower seed Kenya,Lys,0.5
+ ,Sunflower seed Kenya,m+c,0
+ ,Sunflower seed Kenya,Met,0.25
+ ,Sunflower seed Kenya,EE,40
+ ,Sunflower seed Kenya,CF,28
+ ,Sunflower seed Kenya,Ca,0.21
+ ,Sunflower seed Kenya,P,0.59
+ ,Omena Kenya,ME,2700
+ ,Omena Kenya,CP,55
+ ,Omena Kenya,Lys,3.5
+ ,Omena Kenya,m+c,0
+ ,Omena Kenya,Met,1.2
+ ,Omena Kenya,EE,12.8
+ ,Omena Kenya,CF,1.78
+ ,Omena Kenya,Ca,6
+ ,Omena Kenya,P,3.2
+ ,Nile perch Kenya,ME,2400
+ ,Nile perch Kenya,CP,40
+ ,Nile perch Kenya,Lys,2.5
+ ,Nile perch Kenya,m+c,0
+ ,Nile perch Kenya,Met,1
+ ,Nile perch Kenya,EE,12
+ ,Nile perch Kenya,CF,2
+ ,Nile perch Kenya,Ca,6
+ ,Nile perch Kenya,P,2
+ ,Urea Kenya,ME,0
+ ,Urea Kenya,CP,262
+ ,Urea Kenya,Lys,0
+ ,Urea Kenya,m+c,0
+ ,Urea Kenya,Met,0
+ ,Urea Kenya,EE,0
+ ,Urea Kenya,CF,0
+ ,Urea Kenya,Ca,0
+ ,Urea Kenya,P,0
+ ,Blood meal Kenya,ME,2750
+ ,Blood meal Kenya,CP,80
+ ,Blood meal Kenya,Lys,6.9
+ ,Blood meal Kenya,m+c,0
+ ,Blood meal Kenya,Met,0.6
+ ,Blood meal Kenya,EE,1.6
+ ,Blood meal Kenya,CF,1
+ ,Blood meal Kenya,Ca,0.28
+ ,Blood meal Kenya,P,0.22
+ ,Brewers yeast Kenya,ME,2020
+ ,Brewers yeast Kenya,CP,42
+ ,Brewers yeast Kenya,Lys,3.25
+ ,Brewers yeast Kenya,m+c,0
+ ,Brewers yeast Kenya,Met,0.7
+ ,Brewers yeast Kenya,EE,1
+ ,Brewers yeast Kenya,CF,3
+ ,Brewers yeast Kenya,Ca,0.1
+ ,Brewers yeast Kenya,P,1.4
+ ,Simsim cake Kenya,ME,0
+ ,Simsim cake Kenya,CP,47
+ ,Simsim cake Kenya,Lys,0
+ ,Simsim cake Kenya,m+c,0
+ ,Simsim cake Kenya,Met,0
+ ,Simsim cake Kenya,EE,9.6
+ ,Simsim cake Kenya,CF,8.8
+ ,Simsim cake Kenya,Ca,2.52
+ ,Simsim cake Kenya,P,1.42
+ ,Molasses (cane) Kenya,ME,1960
+ ,Molasses (cane) Kenya,CP,5.8
+ ,Molasses (cane) Kenya,Lys,0
+ ,Molasses (cane) Kenya,m+c,0
+ ,Molasses (cane) Kenya,Met,0
+ ,Molasses (cane) Kenya,EE,0.1
+ ,Molasses (cane) Kenya,CF,0
+ ,Molasses (cane) Kenya,Ca,0.9
+ ,Molasses (cane) Kenya,P,0.1
+ ,Cassava flour Kenya,ME,3720
+ ,Cassava flour Kenya,CP,2.2
+ ,Cassava flour Kenya,Lys,0
+ ,Cassava flour Kenya,m+c,0
+ ,Cassava flour Kenya,Met,0 
+ ,Cassava flour Kenya,EE,1.8
+ ,Cassava flour Kenya,CF,1.3
+ ,Cassava flour Kenya,Ca,0.3
+ ,Cassava flour Kenya,P,0.35
+ ,Copra cake Kenya,ME,1540
+ ,Copra cake Kenya,CP,21
+ ,Copra cake Kenya,Lys,0.64
+ ,Copra cake Kenya,m+c,0
+ ,Copra cake Kenya,Met,0.29
+ ,Copra cake Kenya,EE,1.8
+ ,Copra cake Kenya,CF,15
+ ,Copra cake Kenya,Ca,0.2
+ ,Copra cake Kenya,P,0.6
