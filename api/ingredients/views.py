@@ -13,16 +13,27 @@ from tablib import Dataset
 from rest_framework.response import Response
 from rest_framework.exceptions import NotFound
 
-from core.views import HistoryViewSet, SummaryViewSet, CoreModelViewSet
+from core.views import (
+    HistoryViewSet,
+    SummaryViewSet,
+    CoreModelViewSet,
+    XlsxExport,
+    XlsExport,
+    CsvExport,
+    XlsxImport,
+    XlsImport,
+    CsvImport
+)
+from core.pagination import AllPagination
 from core.serializers import UploadSerializer
 from . import models
 from . import serializers
 from . import admin
 from . import filters
 
-#### Ingredient type 
-class IngredientTypeViewSet(viewsets.ModelViewSet):
-    queryset = models.IngredientType.objects.all()
+## Ingredient type 
+class IngredientTypeViewSet(CoreModelViewSet):
+    queryset = models.IngredientType.all.all()
     serializer_class = serializers.IngredientTypeSerializer_GET
     filterset_class = filters.IngredientTypeFilter
     search_fields = ['name']
@@ -36,74 +47,35 @@ class IngredientTypeSummaryViewSet(SummaryViewSet):
     def get_query(self):
         return models.IngredientType.all.get(pk=self.id_pk)
 
-# Xlsx
-class IngredientTypeXlsxExport(APIView):
-    def get(self, request):
-        dataset = admin.IngredientTypeResource().export()
-        response = HttpResponse(
-            dataset.xlsx, content_type='application/ms-excel')
-        response['Content-Disposition'] = 'attachment; filename="ingredients_%s.xlsx"' % (
-            date.today().strftime(settings.DATETIME_FORMAT))
-        return response
-class IngredientTypeXlsxImport(APIView):
-    serializer_class = UploadSerializer
-    parser_classes = [MultiPartParser]
-    def post(self, request):
-        file = request.FILES.get('file')
-        df = pd.read_excel(file, header=0)
-        dataset = Dataset().load(df)
-        resource = resources.modelresource_factory(model=models.IngredientType)()
-        result = resource.import_data(dataset, dry_run=True, raise_errors=True)
-        if not result.has_errors():
-            return JsonResponse({'message': 'Imported Successfully'}, status=200)
-        return JsonResponse({'errors': ['Import Failed']}, status=400)
+## Ingredient type export
+class IngredientTypeXlsxExport(XlsxExport):
+    def get_dataset(self):
+        return admin.IngredientTypeResource().export()
 
-# Xls
-class IngredientTypeXlsExport(APIView):
-    def get(self, request):
-        dataset = admin.IngredientTypeResource().export()
-        response = HttpResponse(
-            dataset.xls, content_type='application/ms-excel')
-        response['Content-Disposition'] = 'attachment; filename="ingredient_types_%s.xls"' % (
-            date.today().strftime(settings.DATETIME_FORMAT))
-        return response
-class IngredientTypeXlsImport(APIView):
-    serializer_class = UploadSerializer
-    parser_classes = [MultiPartParser]
-    def post(self, request):
-        file = request.FILES.get('file')
-        df = pd.read_excel(file, header=0)
-        dataset = Dataset().load(df)
-        resource = resources.modelresource_factory(model=models.IngredientType)()
-        result = resource.import_data(dataset, dry_run=True, raise_errors=True)
-        if not result.has_errors():
-            return JsonResponse({'message': 'Imported Successfully'}, status=200)
-        return JsonResponse({'errors': ['Import Failed']}, status=400)
+class IngredientTypeXlsExport(XlsExport):
+    def get_dataset(self):
+        return admin.IngredientTypeResource().export()
 
-# Csv
-class IngredientTypeCsvExport(APIView):
-    def get(self, request):
-        dataset = admin.IngredientTypeResource().export()
-        response = HttpResponse(
-            dataset.csv, content_type='application/ms-excel')
-        response['Content-Disposition'] = 'attachment; filename="ingredient_type_%s.csv"' % (
-            date.today().strftime(settings.DATETIME_FORMAT))
-        return response
-class IngredientTypeCsvImport(APIView):
-    serializer_class = UploadSerializer
-    parser_classes = [MultiPartParser]
-    def post(self, request):
-        file = request.FILES.get('file')
-        df = pd.read_csv(file, header=0)
-        dataset = Dataset().load(df)
-        resource = resources.modelresource_factory(model=models.IngredientType)()
-        result = resource.import_data(dataset, dry_run=True, raise_errors=True)
-        if not result.has_errors():
-            return JsonResponse({'message': 'Imported Successfully'}, status=200)
-        return JsonResponse({'errors': ['Import Failed']}, status=400)
+class IngredientTypeCsvExport(CsvExport):
+    def get_dataset(self):
+        return admin.IngredientTypeResource().export()
 
+## Ingredient type import
+class IngredientTypeXlsxImport(XlsxImport):
+    def get_model(self):
+        return models.IngredientType
 
-#### Ingredient
+    
+class IngredientTypeXlsImport(XlsImport):
+    def get_model(self):
+        return models.IngredientType
+        
+class IngredientTypeCsvImport(CsvImport):
+    def get_model(self):
+        return models.IngredientType
+        
+
+## Ingredient
 class IngredientViewSet(viewsets.ModelViewSet):
     queryset = models.Ingredient.objects.all()
     serializer_class = serializers.IngredientSerializer_GET
@@ -141,74 +113,36 @@ class IngredientAnalysesViewSet(viewsets.ViewSet):
             'composition_total': queryset.composition_total()
         }, status=200)
 
-# Xlsx
-class IngredientXlsxExport(APIView):
-    def list(self, request):
-        dataset = admin.IngredientResource().export()
-        response = HttpResponse(
-            dataset.xlsx, content_type='application/ms-excel')
-        response['Content-Disposition'] = 'attachment; filename="ingredients_%s.xlsx"' % (
-            date.today().strftime(settings.DATETIME_FORMAT))
-        return response
-class IngredientXlsxImport(APIView):
-    serializer_class = UploadSerializer
-    parser_classes = [MultiPartParser]
-    def post(self, request):
-        file = request.FILES.get('file')
-        df = pd.read_excel(file, header=0)
-        dataset = Dataset().load(df)
-        resource = resources.modelresource_factory(model=models.Ingredient)()
-        result = resource.import_data(dataset, dry_run=True, raise_errors=True)
-        if not result.has_errors():
-            return JsonResponse({'message': 'Imported Successfully'}, status=200)
-        return JsonResponse({'errors': ['Import Failed']}, status=400)
+## Ingredient Export
+class IngredientXlsxExport(XlsxExport):
+    def get_dataset(self):
+        return admin.IngredientResource().export()
 
-# Xls
-class IngredientXlsExport(APIView):
-    def get(self, request):
-        dataset = admin.IngredientResource().export()
-        response = HttpResponse(
-            dataset.xls, content_type='application/ms-excel')
-        response['Content-Disposition'] = 'attachment; filename="ingredient_types_%s.xls"' % (
-            date.today().strftime(settings.DATETIME_FORMAT))
-        return response
-class IngredientXlsImport(APIView):
-    serializer_class = UploadSerializer
-    parser_classes = [MultiPartParser]
-    def post(self, request):
-        file = request.FILES.get('file')
-        df = pd.read_excel(file, header=0)
-        dataset = Dataset().load(df)
-        resource = resources.modelresource_factory(model=models.Ingredient)()
-        result = resource.import_data(dataset, dry_run=True, raise_errors=True)
-        if not result.has_errors():
-            return JsonResponse({'message': 'Imported Successfully'}, status=200)
-        return JsonResponse({'errors': ['Import Failed']}, status=400)
+class IngredientXlsExport(XlsExport):
+    def get_dataset(self):
+        return admin.IngredientResource().export()
 
-# Csv
-class IngredientCsvExport(APIView):
-    def get(self, request):
-        dataset = admin.IngredientResource().export()
-        response = HttpResponse(
-            dataset.csv, content_type='application/ms-excel')
-        response['Content-Disposition'] = 'attachment; filename="ingredient_type_%s.csv"' % (
-            date.today().strftime(settings.DATETIME_FORMAT))
-        return response
-class IngredientCsvImport(APIView):
-    serializer_class = UploadSerializer
-    parser_classes = [MultiPartParser]
-    def post(self, request):
-        file = request.FILES.get('file')
-        df = pd.read_csv(file, header=0)
-        dataset = Dataset().load(df)
-        resource = resources.modelresource_factory(model=models.Ingredient)()
-        result = resource.import_data(dataset, dry_run=True, raise_errors=True)
-        if not result.has_errors():
-            return JsonResponse({'message': 'Imported Successfully'}, status=200)
-        return JsonResponse({'errors': ['Import Failed']}, status=400)
+class IngredientCsvExport(CsvExport):
+    def get_dataset(self):
+        return admin.IngredientResource().export()
+      
+
+## Ingredient Import        
+class IngredientXlsxImport(XlsxImport):
+    def get_model(self):
+        return models.Ingredient
+
+class IngredientXlsImport(XlsImport):
+    def get_model(self):
+        return models.Ingredient
+
+class IngredientCsvImport(CsvImport):
+    def get_model(self):
+        return models.Ingredient
 
 
 class IngredientNutrientViewSet(viewsets.ModelViewSet):
+    pagination_class = AllPagination
     serializer_class = serializers.IngredientNutrientSerializer_GET
 
     def get_queryset(self):

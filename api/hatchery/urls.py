@@ -5,13 +5,17 @@ from rest_framework import routers
 from . import views
 
 router = routers.DefaultRouter()
-router.register(r'hatchery', views.FormulaViewSet,
-                basename='api_formulas')
+router.register(r'hatchery', views.HatcheryViewSet,
+                basename='api_hatchery')
 
 hatchery_egg_router = NestedDefaultRouter(
     router, r'hatchery', lookup='hatchery')
-hatchery_egg_router.register(r'eggs', views.HatcheryEggViewSet,
+hatchery_egg_router.register(r'eggs', views.HatcherysEggViewSet,
                             basename='api_hatchery_eggs')
+
+eggs_router = routers.DefaultRouter()
+eggs_router.register(r'hatchery-eggs', views.HatcheryEggViewSet,
+                basename='api_hatchery_eggs_list')
 
 urlpatterns = [
     path('', include(router.urls)),

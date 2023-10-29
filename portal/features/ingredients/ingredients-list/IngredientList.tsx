@@ -1,5 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { GridRowsProp, GridColDef } from "@mui/x-data-grid";
+import {
+  GridRowsProp,
+  GridColDef,
+  GridRenderCellParams,
+} from "@mui/x-data-grid";
 import { DataTable } from "@/components/tables";
 import { Ingredient } from "@/models";
 import { useSelector } from "react-redux";
@@ -12,9 +16,31 @@ import {
 } from "../services";
 import buildQuery from "@/util/buildQuery";
 import buildPage from "@/util/buildPage";
+import { Typography } from "@mui/material";
+import Link from "next/link";
 
 const columns: GridColDef[] = [
   { field: "name", headerName: "Name", flex: 1, minWidth: 150 },
+  { field: "dm", headerName: "Dry Matter (%)", flex: 1, minWidth: 150 },
+  { field: "price", headerName: "Price (/kg)", flex: 1, minWidth: 150 },
+  {
+    field: "ingredient_type",
+    headerName: "Ingredient Type",
+    flex: 1,
+    minWidth: 150,
+    valueGetter: (params) =>
+      params.row.ingredient_type ? params.row.ingredient_type.name : "",
+    renderCell: (params: GridRenderCellParams<any>) => {
+      if (params.row.unit == null) return <></>;
+      return (
+        <Typography color={"link.primary"} variant="body2">
+          <Link href={`/ingredient-types/${params.row.ingredient_type.id}`}>
+            {params.row.ingredient_type.name}
+          </Link>
+        </Typography>
+      );
+    },
+  },
   {
     field: "created_at",
     headerName: "Create at",

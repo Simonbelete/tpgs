@@ -30,6 +30,7 @@ class HatcheryEgg(CoreModel):
     canndle_date = models.DateField(null=True, blank=True)
     candled_eggs = models.IntegerField(null=True, blank=True)
     infertile_egg = models.IntegerField(null=True, blank=True)
+    # Hatchery
     no_of_hatched = models.IntegerField(null=True, blank=True)
     no_dead = models.IntegerField(null=True, blank=True)
     no_culled = models.IntegerField(null=True, blank=True)
