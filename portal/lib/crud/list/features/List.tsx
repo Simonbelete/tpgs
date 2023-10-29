@@ -9,7 +9,7 @@ import StripedDataGrid, {
   CustomNoRowsOverlay,
 } from "../components/StripedDataGrid";
 import DeleteModal from "../components/DeleteModal";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "@/store";
 import {
   ApiEndpointMutation,
@@ -27,6 +27,8 @@ import {
 import { ClientQueyFn, Query } from "@/types";
 import { Response } from "@/models";
 import PermanentlyDeleteAction from "../actions/PermanentlyDeleteAction";
+import buildQuery from "@/util/buildQuery";
+import buildPage from "@/util/buildPage";
 
 export interface ListProps<T> {
   columns: GridColDef[];
@@ -53,12 +55,20 @@ export default function List<T>({
   getEndpoint,
   deleteEndpoint,
 }: ListProps<T>) {
+  const dispatch = useDispatch();
   const selector = useSelector((state: RootState) => state.filter);
+
+  const [paginationModel, setPaginationModel] = useState({
+    page: 0,
+    pageSize: 10,
+  });
 
   const [selectedId, setSelectedId] = useState<number>(0);
   const [deleteConfirmation, setDeleteConfirmation] = useState<boolean>(false);
 
-  const [trigger, { data, isLoading }] = getEndpoint.useLazyQuery();
+  const { data, isLoading, refetch } = getEndpoint.useQuery(
+    buildQuery({ ...buildPage(paginationModel), ...selector })
+  );
   const [deleteTrigger, deleteResult] = deleteEndpoint.useMutation();
 
   const settingColumn: GridColDef = {
@@ -92,10 +102,10 @@ export default function List<T>({
   const handleOpenDeleteConfirmation = (id: number) => {
     setSelectedId(id);
     setDeleteConfirmation(true);
-    console.log(id);
   };
   const deletePermanently = async () => {
-    await deleteTrigger(selectedId).then(() => trigger({}));
+    setDeleteConfirmation(false);
+    await deleteTrigger(selectedId).then(() => refetch());
   };
 
   const getRowById = (row: any) => {
@@ -103,18 +113,12 @@ export default function List<T>({
     return row.id;
   };
 
-  useEffect(() => {
-    trigger("", true);
-  }, []);
-
-  const handleOnDelete = () => {};
-
   return (
     <>
       <DeleteModal
         open={deleteConfirmation}
         onClose={handleCloseDeleteConfirmation}
-        onYes={handleOnDelete}
+        onYes={deletePermanently}
       />
       <StripedDataGrid
         sx={{ background: "white", height: "100%" }}
@@ -123,7 +127,6 @@ export default function List<T>({
         density="compact"
         rowHeight={55}
         columns={[...columns, settingColumn]}
-        paginationMode="server"
         disableRowSelectionOnClick
         slots={{
           noRowsOverlay: CustomNoRowsOverlay,
@@ -133,6 +136,10 @@ export default function List<T>({
           params.indexRelativeToCurrentPage % 2 === 0 ? "even" : "odd"
         }
         getRowId={getRowById}
+        pageSizeOptions={[5, 10, 25, 50, 100]}
+        paginationModel={paginationModel}
+        paginationMode="server"
+        onPaginationModelChange={setPaginationModel}
       />
     </>
   );
