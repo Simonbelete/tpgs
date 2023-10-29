@@ -22,7 +22,7 @@ class IngredientNutrientSerializer_GET(serializers.ModelSerializer):
 
     class Meta:
         model = models.IngredientNutrient
-        fields = ['id', 'nutrient', 'ingredient', 'value', 'as_feed_value', 'unit']
+        fields = ['id', 'display_name', 'nutrient', 'ingredient', 'value', 'as_feed_value', 'unit']
 
 
 class IngredientNutrientSerializer_POST(serializers.ModelSerializer):

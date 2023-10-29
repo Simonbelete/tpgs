@@ -19,6 +19,13 @@ class IngredientNutrient(CoreModel):
     value = models.DecimalField(max_digits=7, decimal_places=3,null=True, blank=True, default=0)
 
     @property
+    def display_name(self):
+        return "{ingredient} - {nutrient}".format(
+            ingredient=self.ingredient.name,
+            nutrient=self.nutrient.name
+        )
+
+    @property
     def unit(self):
         return self.nutrient.unit.name
 

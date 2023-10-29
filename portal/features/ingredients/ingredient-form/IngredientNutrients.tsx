@@ -26,10 +26,10 @@ import {
   clearAll,
 } from "./slice";
 import {
-  useDeleteIngredientNutrientMutation,
-  useCreateIngredientNutrientMutation,
-  useUpdateIngredientNutrietMutation,
-  useLazyGetIngredientNutrientsQuery,
+  useLazyGetNutrientsOfIngredientQuery,
+  useCreateNutrientForIngredientMutation,
+  useUpdateNutrietOfIngredientMutation,
+  useDeleteNutrientOfIngredientMutation,
 } from "../services";
 import { enqueueSnackbar } from "notistack";
 import messages from "@/util/messages";
@@ -98,14 +98,14 @@ const IngredientNutrients = ({ id }: { id?: number }) => {
   > = useSelector((state: RootState) => state.ingredientForm.nutrients);
 
   const [trigger, { isLoading, data }, lastPromiseInfo] =
-    useLazyGetIngredientNutrientsQuery();
+    useLazyGetNutrientsOfIngredientQuery();
 
   const [createIngredientNutrient, createResult] =
-    useCreateIngredientNutrientMutation();
+    useCreateNutrientForIngredientMutation();
   const [updateIngredientNutrient, updateResult] =
-    useUpdateIngredientNutrietMutation();
+    useUpdateNutrietOfIngredientMutation();
   const [deleteIngredientNutrient, deleteResult] =
-    useDeleteIngredientNutrientMutation();
+    useDeleteNutrientOfIngredientMutation();
 
   const columns: GridColDef[] = [
     {

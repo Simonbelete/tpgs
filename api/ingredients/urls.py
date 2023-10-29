@@ -30,12 +30,17 @@ ingredient_nutrients_router = NestedDefaultRouter(
     router, r'ingredients', lookup='ingredient')
 ingredient_nutrients_router.register(r'nutrients', views.IngredientNutrientViewSet,
                                      basename='api_ingredient_nutrients')
+
+nutrient_router = routers.DefaultRouter()
+nutrient_router.register(r'ingredient-nutrients', views.AllIngredientNutrientViewSet,
+                basename='api_ingredient_nutrients')
+
 urlpatterns = [
     path('', include(router.urls)),
     path('', include(ingredient_nutrients_router.urls)),
     path('', include(summary_router.urls)),
     path('', include(summary_ing_type_router.urls)),
-    # path('', include(analyses_router.urls)),
+    path('', include(nutrient_router.urls)),
 
     path('ingredients/export/', include([
           path('xlsx', views.IngredientXlsxExport.as_view(),
@@ -71,5 +76,23 @@ urlpatterns = [
                name="ingredient_types_import_xls"),
           path('csv', views.IngredientTypeCsvImport.as_view(),
                name="ingredient_types_import_csv")
-    ]))
+    ])),
+     
+      path('ingredient-nutrients/export/', include([
+          path('xlsx', views.IngredientNutrientXlsxExport.as_view(),
+              name="ingredient_nutrients_export_xlsx"),
+          path('xls', views.IngredientNutrientXlsExport.as_view(),
+               name="ingredient_nutrients_export_xls"),
+          path('csv', views.IngredientNutrientCsvExport.as_view(),
+               name="ingredient_nutrients_export_csv"),
+     ])),
+
+     path('ingredient-nutrients/import/', include([
+          path('xlsx', views.IngredientNutrientXlsxImport.as_view(),
+              name="ingredient_nutrients_import_xlsx"),
+          path('xls', views.IngredientNutrientXlsImport.as_view(),
+               name="ingredient_nutrients_import_xls"),
+          path('csv', views.IngredientNutrientCsvImport.as_view(),
+               name="ingredient_nutrients_import_csv")
+    ])),
 ]

@@ -265,6 +265,15 @@ const SidebarMenu = () => {
             </Typography>
           </MenuItem>
           <MenuItem
+            component={<Link href="/ingredient-nutrients" />}
+            icon={<AdjustIcon fontSize="small" />}
+            active={RegExp("/ingredient-nutrients(.*)$").test(router.pathname)}
+          >
+            <Typography variant="body1" fontSize={14}>
+              Nutrients
+            </Typography>
+          </MenuItem>
+          <MenuItem
             component={<Link href="/ingredient-types" />}
             icon={<AdjustIcon fontSize="small" />}
             active={RegExp("/ingredient-types(.*)$").test(router.pathname)}

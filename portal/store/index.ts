@@ -32,6 +32,8 @@ import { formulaApi } from "@/features/formula/services";
 import { reductionReasonApi } from "@/features/reduction-reason/services";
 import { notificationApi } from "@/features/notification/services";
 import { requirementApi } from "@/features/requirements/services";
+import { ingredientNutrientApi } from "@/features/ingredient-nutrients/services";
+import { ingredientApi } from "@/features/ingredients/services";
 
 import { rtkQueryErrorLogger } from "./middlewares/rtkQueryErrorLogger";
 import { urlQueryBuilder } from "./middlewares/urlQueryBuilder";
@@ -70,6 +72,8 @@ export const store = configureStore({
     [reductionReasonApi.reducerPath]: reductionReasonApi.reducer,
     [notificationApi.reducerPath]: notificationApi.reducer,
     [requirementApi.reducerPath]: requirementApi.reducer,
+    [ingredientNutrientApi.reducerPath]: ingredientNutrientApi.reducer,
+    [ingredientApi.reducerPath]: ingredientApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(

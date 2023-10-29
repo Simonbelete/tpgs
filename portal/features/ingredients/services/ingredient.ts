@@ -74,7 +74,7 @@ export const ingredientApi = baseApi.injectEndpoints({
         }),
       }),
       // Nutrients
-      getIngredientNutrients: build.query<
+      getNutrientsOfIngredient: build.query<
         Response<IngredientNutrient[]>,
         { id: number; query: Object }
       >({
@@ -84,7 +84,7 @@ export const ingredientApi = baseApi.injectEndpoints({
           params: query,
         }),
       }),
-      createIngredientNutrient: build.mutation<
+      createNutrientForIngredient: build.mutation<
         Promise<AxiosResponse<IngredientNutrient>>,
         { id: number; data: Partial<Ingredient> }
       >({
@@ -94,7 +94,7 @@ export const ingredientApi = baseApi.injectEndpoints({
           data: data,
         }),
       }),
-      updateIngredientNutriet: build.mutation<
+      updateNutrietOfIngredient: build.mutation<
         IngredientNutrient,
         Pick<IngredientNutrient, "ingredient"> & Partial<Ingredient>
       >({
@@ -104,7 +104,7 @@ export const ingredientApi = baseApi.injectEndpoints({
           data: patch,
         }),
       }),
-      deleteIngredientNutrient: build.mutation<
+      deleteNutrientOfIngredient: build.mutation<
         Promise<AxiosResponse<IngredientNutrient>>,
         { id: number; nutrient_id: number }
       >({
@@ -158,9 +158,9 @@ export const {
   useGetIngredientAnalysesQuery,
 
   // Nutrients
-  useGetIngredientNutrientsQuery,
-  useLazyGetIngredientNutrientsQuery,
-  useCreateIngredientNutrientMutation,
-  useUpdateIngredientNutrietMutation,
-  useDeleteIngredientNutrientMutation,
+  useGetNutrientsOfIngredientQuery,
+  useLazyGetNutrientsOfIngredientQuery,
+  useCreateNutrientForIngredientMutation,
+  useUpdateNutrietOfIngredientMutation,
+  useDeleteNutrientOfIngredientMutation,
 } = ingredientApi;

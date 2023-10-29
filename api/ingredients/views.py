@@ -153,3 +153,42 @@ class IngredientNutrientViewSet(viewsets.ModelViewSet):
         if self.request.method in ['PUT', 'PATCH']:
             return serializers.IngredientNutrientSerializer_PATCH
         return serializers.IngredientNutrientSerializer_GET
+
+## Ingredient Nutrients
+class AllIngredientNutrientViewSet(viewsets.ModelViewSet):
+    serializer_class = serializers.IngredientNutrientSerializer_GET
+
+    def get_serializer_class(self):
+        if self.request.method == 'POST':
+            return serializers.IngredientNutrientSerializer_POST
+        if self.request.method in ['PUT', 'PATCH']:
+            return serializers.IngredientNutrientSerializer_PATCH
+        return serializers.IngredientNutrientSerializer_GET
+
+
+## Ingredient Export
+class IngredientNutrientXlsxExport(XlsxExport):
+    def get_dataset(self):
+        return admin.IngredientNutrientResource().export()
+
+class IngredientNutrientXlsExport(XlsExport):
+    def get_dataset(self):
+        return admin.IngredientNutrientResource().export()
+
+class IngredientNutrientCsvExport(CsvExport):
+    def get_dataset(self):
+        return admin.IngredientNutrientResource().export()
+      
+
+## Ingredient Nutrient Import        
+class IngredientNutrientXlsxImport(XlsxImport):
+    def get_resource(self):
+        return admin.IngredientNutrientResource()
+
+class IngredientNutrientXlsImport(XlsImport):
+    def get_resource(self):
+        return admin.IngredientNutrientResource()
+
+class IngredientNutrientCsvImport(CsvImport):
+    def get_resource(self):
+        return admin.IngredientNutrientResource()

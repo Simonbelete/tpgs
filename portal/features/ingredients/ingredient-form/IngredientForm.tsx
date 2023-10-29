@@ -17,7 +17,7 @@ import IngredientNutrients from "./IngredientNutrients";
 import {
   useCreateIngredientMutation,
   useUpdateIngredientMutation,
-  useLazyGetIngredientNutrientsQuery,
+  useLazyGetNutrientsOfIngredientQuery,
 } from "../services";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -66,7 +66,7 @@ const IngredientForm = ({
   const [
     ingredientNutrientTrigger,
     { isLoading: ingredientNutrientIsLoading, data: ingredientNutrient },
-  ] = useLazyGetIngredientNutrientsQuery();
+  ] = useLazyGetNutrientsOfIngredientQuery();
 
   const handleTabChange = (event: React.SyntheticEvent, newValue: number) =>
     setTab(newValue);
