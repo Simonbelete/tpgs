@@ -1,18 +1,58 @@
 import React, { ReactNode, useEffect } from "react";
-import { GridColDef, GridRenderCellParams } from "@mui/x-data-grid";
+import {
+  GridColDef,
+  GridRenderCellParams,
+  GridRowProps,
+  GridValidRowModel,
+} from "@mui/x-data-grid";
 import { Box, LinearProgress } from "@mui/material";
 import StripedDataGrid, {
   CustomNoRowsOverlay,
 } from "../components/StripedDataGrid";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store";
+import {
+  ApiEndpointMutation,
+  ApiEndpointQuery,
+} from "@reduxjs/toolkit/dist/query/core/module";
+import {
+  QueryDefinition,
+  MutationDefinition,
+  BaseQueryFn,
+} from "@reduxjs/toolkit/dist/query";
+import { EndpointDefinitions } from "@reduxjs/toolkit/dist/query/endpointDefinitions";
+import {
+  MutationHooks,
+  QueryHooks,
+} from "@reduxjs/toolkit/dist/query/react/buildHooks";
+import { ClientQueyFn, Query } from "@/types";
+import { Response } from "@/models";
 
-export interface ListProps {
+export interface ListProps<T> {
   columns: GridColDef[];
   actions: React.FC<GridRenderCellParams>[];
-  endpoint: any;
+  getEndpoint: ApiEndpointQuery<
+    QueryDefinition<Query, ClientQueyFn, any, Response<T[]>, any>,
+    EndpointDefinitions
+  > &
+    QueryHooks<QueryDefinition<Query, ClientQueyFn, any, Response<T[]>, any>>;
+  deleteEndpoint: ApiEndpointMutation<
+    MutationDefinition<number, ClientQueyFn, any, T, any>,
+    EndpointDefinitions
+  > &
+    MutationHooks<MutationDefinition<number, ClientQueyFn, any, T, any>>;
 }
 
-const List = ({ columns, actions, endpoint }: ListProps) => {
-  const [trigger, { data, isLoading }] = endpoint.useLazyQuery();
+export default function List<T>({
+  columns,
+  actions,
+  getEndpoint,
+  deleteEndpoint,
+}: ListProps<T>) {
+  const selector = useSelector((state: RootState) => state.filter);
+
+  const [trigger, { data, isLoading }] = getEndpoint.useLazyQuery();
+  const [deleteTrigger, deleteResult] = deleteEndpoint.useMutation();
 
   const settingColumn: GridColDef = {
     field: "Actions",
@@ -24,7 +64,7 @@ const List = ({ columns, actions, endpoint }: ListProps) => {
       return (
         <Box>
           {actions.map((E, i) => (
-            <E key={i} />
+            <E key={i} {...params} />
           ))}
         </Box>
       );
@@ -37,17 +77,13 @@ const List = ({ columns, actions, endpoint }: ListProps) => {
   };
 
   useEffect(() => {
-    trigger({}, true);
+    trigger("", true);
   }, []);
-
-  {
-    console.log(data);
-  }
 
   return (
     <StripedDataGrid
       sx={{ background: "white", height: "100%" }}
-      rows={data?.results || []}
+      rows={(data?.results || []) as GridValidRowModel[]}
       loading={isLoading}
       density="compact"
       rowHeight={55}
@@ -64,6 +100,4 @@ const List = ({ columns, actions, endpoint }: ListProps) => {
       getRowId={getRowById}
     />
   );
-};
-
-export default List;
+}

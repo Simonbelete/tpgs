@@ -10,6 +10,7 @@ import { List, DashboardAction } from "@/lib/crud";
 import { GridColDef, GridRenderCellParams } from "@mui/x-data-grid";
 import Link from "next/link";
 import { nutrientApi } from "@/features/nutrients/services";
+import { Nutrient } from "@/models";
 
 const PenPage = () => {
   const { breadcrumbs } = useBreadcrumbs();
@@ -28,10 +29,11 @@ const PenPage = () => {
         filter={<PenListFilter />}
       >
         {/* <PenList /> */}
-        <List
+        <List<Nutrient>
           columns={columns}
           actions={[DashboardAction]}
-          endpoint={nutrientApi.endpoints.getNutrients}
+          getEndpoint={nutrientApi.endpoints.getNutrients}
+          deleteEndpoint={nutrientApi.endpoints.deleteNutrient}
         />
       </ListLayout>
     </>

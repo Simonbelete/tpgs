@@ -374,7 +374,7 @@ const DataTable = ({
           minWidth: 150,
           headerAlign: "center",
           align: "right",
-          renderCell(params: any) {
+          renderCell(params) {
             return (
               <Box>
                 <Link

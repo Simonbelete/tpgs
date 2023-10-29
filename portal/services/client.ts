@@ -1,9 +1,9 @@
 import { Response } from "@/models";
-import axios, { AxiosResponse, AxiosError, AxiosRequestConfig } from "axios";
-import { getCsrfToken, getSession } from "next-auth/react";
+import axios, { AxiosResponse, AxiosError } from "axios";
+import { getSession } from "next-auth/react";
 import NProgress from "nprogress";
 import Cookies from "universal-cookie";
-import type { BaseQueryFn } from "@reduxjs/toolkit/query";
+import { ClientQueyFn } from "@/types";
 
 const cookies = new Cookies();
 
@@ -67,18 +67,7 @@ if (typeof window !== "undefined") {
 }
 
 export const clientBaseQuery =
-  (
-    { baseUrl }: { baseUrl: string } = { baseUrl: "/api" }
-  ): BaseQueryFn<
-    {
-      url: string;
-      method: AxiosRequestConfig["method"];
-      data?: AxiosRequestConfig["data"];
-      params?: AxiosRequestConfig["params"];
-    },
-    unknown,
-    unknown
-  > =>
+  ({ baseUrl }: { baseUrl: string } = { baseUrl: "/api" }): ClientQueyFn =>
   async ({ url, method, data, params }) => {
     try {
       const result = await instance({
