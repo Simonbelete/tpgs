@@ -18,6 +18,10 @@ class IngredientNutrient(CoreModel):
     # Value by Dry Matter
     value = models.DecimalField(max_digits=7, decimal_places=3,null=True, blank=True, default=0)
 
+    class Meta:
+        unique_together = ['ingredient', 'nutrient']
+
+
     @property
     def display_name(self):
         return "{ingredient} - {nutrient}".format(

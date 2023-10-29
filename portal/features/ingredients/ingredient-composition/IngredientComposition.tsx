@@ -1,17 +1,8 @@
 import React, { useEffect, useState } from "react";
-import {
-  Box,
-  Paper,
-  Divider,
-  Stack,
-  Typography,
-  Tooltip,
-  Chip,
-  Grid,
-} from "@mui/material";
+import { Grid } from "@mui/material";
 import dynamic from "next/dynamic";
 import { Skeleton } from "@mui/material";
-import { useGetIngredientNutrientsQuery } from "../services";
+import { useGetNutrientsOfIngredientQuery } from "../services";
 import { Nutrient } from "@/models";
 import { StatisticsCard } from "@/components";
 
@@ -36,7 +27,7 @@ const IngredientComposition = ({ id }: { id: number }) => {
 
   const [chartData2, setChartData2] = useState<any>([]);
 
-  const { data, isLoading, status } = useGetIngredientNutrientsQuery({
+  const { data, isLoading, status } = useGetNutrientsOfIngredientQuery({
     id,
     query: {},
   });

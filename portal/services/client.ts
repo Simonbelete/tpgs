@@ -3,7 +3,7 @@ import axios, { AxiosResponse, AxiosError, AxiosRequestConfig } from "axios";
 import { getCsrfToken, getSession } from "next-auth/react";
 import NProgress from "nprogress";
 import Cookies from "universal-cookie";
-import type { BaseQueryFn } from '@reduxjs/toolkit/query'
+import type { BaseQueryFn } from "@reduxjs/toolkit/query";
 
 const cookies = new Cookies();
 
@@ -12,7 +12,7 @@ const calculatePercentage = (loaded: number, total: number) =>
 
 const instance = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL + "/api",
-  timeout: 1000,
+  timeout: 5000,
 });
 
 instance.interceptors.request.use(async (config) => {
@@ -66,38 +66,43 @@ if (typeof window !== "undefined") {
   );
 }
 
-export const clientBaseQuery =  (
-  { baseUrl }: { baseUrl: string } = { baseUrl: '/api' }
-): BaseQueryFn<
-  {
-    url: string
-    method: AxiosRequestConfig['method']
-    data?: AxiosRequestConfig['data']
-    params?: AxiosRequestConfig['params']
-  },
-  unknown,
-  unknown
-> =>
-async ({ url, method, data, params }) => {
-  try {
-    const result = await instance({ url: baseUrl + url, method, data, params })
-    return {
-      data: {
-        ...result.data,
-        status: result.status,
-      }
+export const clientBaseQuery =
+  (
+    { baseUrl }: { baseUrl: string } = { baseUrl: "/api" }
+  ): BaseQueryFn<
+    {
+      url: string;
+      method: AxiosRequestConfig["method"];
+      data?: AxiosRequestConfig["data"];
+      params?: AxiosRequestConfig["params"];
+    },
+    unknown,
+    unknown
+  > =>
+  async ({ url, method, data, params }) => {
+    try {
+      const result = await instance({
+        url: baseUrl + url,
+        method,
+        data,
+        params,
+      });
+      return {
+        data: {
+          ...result.data,
+          status: result.status,
+        },
+      };
+    } catch (axiosError) {
+      let err = axiosError as AxiosError;
+      return {
+        error: {
+          // @ts-ignore
+          data: err?.data || {},
+          status: err.status,
+        },
+      };
     }
-  } catch (axiosError) {
-    let err = axiosError as AxiosError
-    return {
-      error: {
-        // @ts-ignore
-        data: err?.data || {},
-        status: err.status
-      }
-    }
-  }  
-}
-
+  };
 
 export default instance;

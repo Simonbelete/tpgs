@@ -7,7 +7,7 @@ import { useBreadcrumbs } from "@/hooks";
 import { Formula } from "@/models";
 import { useRouter } from "next/router";
 import { IngredientStat, IngredientComposition } from "@/features/ingredients";
-import { getFormulaByIdSSR } from "@/features/formula/services";
+import { getIngredientByIdSSR } from "@/features/ingredients/services";
 import EditNoteIcon from "@mui/icons-material/EditNote";
 
 const FormulaDashboardEditPage = ({ data }: { data: Formula }) => {
@@ -56,7 +56,7 @@ export async function getServerSideProps(context: NextPageContext) {
   const { id } = context.query;
 
   try {
-    const res = await getFormulaByIdSSR(context, Number(id));
+    const res = await getIngredientByIdSSR(context, Number(id));
 
     if (res.status != 200)
       return {
