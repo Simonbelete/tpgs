@@ -42,7 +42,7 @@ export interface ListProps<T> {
     EndpointDefinitions
   > &
     QueryHooks<QueryDefinition<Query, ClientQueyFn, any, Response<T[]>, any>>;
-  deleteEndpoint: ApiEndpointMutation<
+  deleteEndpoint?: ApiEndpointMutation<
     MutationDefinition<number, ClientQueyFn, any, T, any>,
     EndpointDefinitions
   > &
@@ -71,7 +71,8 @@ export default function List<T>({
   const { data, isLoading, refetch } = getEndpoint.useQuery(
     buildQuery({ ...buildPage(paginationModel), ...selector })
   );
-  const [deleteTrigger, deleteResult] = deleteEndpoint.useMutation();
+  const [deleteTrigger, deleteResult] =
+    deleteEndpoint != null ? deleteEndpoint.useMutation() : [() => {}, {}];
 
   const settingColumn: GridColDef = {
     field: "Actions",
@@ -107,7 +108,8 @@ export default function List<T>({
   };
   const deletePermanently = async () => {
     setDeleteConfirmation(false);
-    await deleteTrigger(selectedId).then(() => refetch());
+    if (deleteEndpoint !== null)
+      await deleteTrigger(selectedId).then(() => refetch());
   };
 
   const getRowById = (row: any) => {

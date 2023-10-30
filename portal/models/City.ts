@@ -1,4 +1,6 @@
-export default interface City {
+import AbstractBaseModel from "./AbstractBaseModel";
+
+export default interface City extends AbstractBaseModel {
   country: string;
   region: string;
   subregion: string;

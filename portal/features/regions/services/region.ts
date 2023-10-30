@@ -6,8 +6,6 @@ import client from "@/services/client";
 import { NextPageContext } from "next";
 
 const URL = "/regions";
-const HISTORY_URL = `histories`;
-const SUMMARY_URL = `summary`;
 const EXPORT_URL = `${URL}/export`;
 const IMPORT_URL = `${URL}/import`;
 
@@ -20,45 +18,6 @@ export const regionApi = baseApi.injectEndpoints({
           method: "get",
           params: query,
         }),
-      }),
-      getRegionHistory: build.query<
-        Response<Region>,
-        { id: number; query: Object }
-      >({
-        query: ({ id, query }) => ({
-          url: `${URL}/${id}/${HISTORY_URL}`,
-          method: "get",
-          params: query,
-        }),
-      }),
-      getRegionSummary: build.query<AbstractSummary, number>({
-        query: (id: number) => ({
-          url: `${URL}/${id}/${SUMMARY_URL}/`,
-          method: "get",
-        }),
-      }),
-      createRegion: build.mutation<
-        Promise<AxiosResponse<Region>>,
-        Partial<Region>
-      >({
-        query: (data: Partial<Region>) => ({
-          url: `${URL}/`,
-          method: "post",
-          data: data,
-        }),
-      }),
-      updateRegion: build.mutation<
-        Promise<AxiosResponse<Region>>,
-        Pick<Region, "id"> & Partial<Region>
-      >({
-        query: ({ id, ...patch }) => ({
-          url: `${URL}/${id}/`,
-          method: "patch",
-          data: patch,
-        }),
-      }),
-      deleteRegion: build.mutation<any, number>({
-        query: (id: number) => ({ url: `${URL}/${id}/`, method: "delete" }),
       }),
     };
   },
@@ -93,12 +52,4 @@ export const importRegionsXLS = async (data: FormData) =>
     },
   });
 
-export const {
-  useGetRegionsQuery,
-  useLazyGetRegionsQuery,
-  useGetRegionHistoryQuery,
-  useGetRegionSummaryQuery,
-  useCreateRegionMutation,
-  useUpdateRegionMutation,
-  useDeleteRegionMutation,
-} = regionApi;
+export const { useGetRegionsQuery, useLazyGetRegionsQuery } = regionApi;
