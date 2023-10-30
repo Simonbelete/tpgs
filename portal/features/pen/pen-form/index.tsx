@@ -6,8 +6,6 @@ import { penApi } from "../services";
 import { houseApi } from "@/features/houses/services";
 import { HouseForm } from "@/features/houses";
 
-type Inputs = Partial<Pen>;
-
 const schema = yup.object({
   name: yup.string().required(),
   house: yup.object().required(),
@@ -31,10 +29,19 @@ export const PenForm = ({
         updateEndpoint={penApi.endpoints.updatePen}
         deleteEndpoint={penApi.endpoints.deletePen}
         summaryEndpoint={penApi.endpoints.getPenSummary}
+        beforeSubmit={(values: Partial<Pen>) => {
+          const cleaned_data: Partial<Pen> = {
+            name: values.name,
+            house: (values.house as House).id || 0,
+          };
+
+          return cleaned_data;
+        }}
         fields={{
-          name: { label: "Name" },
+          name: { label: "Name", placeholder: "Name" },
           house: {
             label: "House",
+            placeholder: "House",
             endpoint: houseApi.endpoints.getHouses,
             form: <HouseForm />,
           },

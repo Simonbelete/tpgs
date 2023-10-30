@@ -3,6 +3,7 @@ import FileUploadIcon from "@mui/icons-material/FileUpload";
 import { Button } from "@mui/material";
 import { AxiosResponse } from "axios";
 import { useSnackbar } from "notistack";
+import { HtmlModal } from "@/components";
 
 export interface ImportProps {
   importCsv: (data: FormData) => Promise<AxiosResponse>;
@@ -63,15 +64,22 @@ const Import = ({ importCsv, importXlsx, importXls }: ImportProps) => {
     }
   };
   return (
-    <Button startIcon={<FileUploadIcon />} size="small" component="label">
-      Import
-      <input
-        type="file"
-        onChange={handleFileUpload}
-        accept=".csv,.xlsx,.xls"
-        hidden
+    <>
+      <HtmlModal
+        open={responseHtml.open}
+        onClose={() => setResponseHtml({ open: false, html: "" })}
+        html={responseHtml.html}
       />
-    </Button>
+      <Button startIcon={<FileUploadIcon />} size="small" component="label">
+        Import
+        <input
+          type="file"
+          onChange={handleFileUpload}
+          accept=".csv,.xlsx,.xls"
+          hidden
+        />
+      </Button>
+    </>
   );
 };
 

@@ -1,4 +1,4 @@
-import React, { ReactNode } from "react";
+import React, { ReactNode, useCallback } from "react";
 import { ObjectSchema } from "yup";
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -47,6 +47,7 @@ export interface FormProps<T> {
   baseUrl: string;
   data?: T;
   schema: ObjectSchema<any>;
+  beforeSubmit?: (values: Partial<T>) => Partial<T>;
   fields: {
     [K in keyof Partial<T>]: Field<T[K]>;
   };
@@ -97,6 +98,7 @@ export default function Form<T>({
   schema,
   createEndpoint,
   updateEndpoint,
+  beforeSubmit,
 }: FormProps<T>) {
   type Inputs = Partial<T>;
 
@@ -111,8 +113,9 @@ export default function Form<T>({
   });
 
   const onSubmit: SubmitHandler<Inputs> = async (values) => {
-    if (data == null) await createTrigger(values as T);
-    else await updateTrigger(values as any);
+    const cleaned_data = beforeSubmit == null ? values : beforeSubmit(values);
+    if (data == null) await createTrigger(cleaned_data as T);
+    else await updateTrigger(cleaned_data as any);
   };
 
   const useCRUDHook = useCRUD({
@@ -130,11 +133,26 @@ export default function Form<T>({
           if (options.endpoint) {
             return (
               <Grid key={i} item xs={options.xs || 12} md={options.md || 6}>
-                <AsyncDropdown
-                  label={options.label}
-                  dataKey="name"
-                  endpoint={options.endpoint}
-                  createForm={options.form}
+                <Controller
+                  // @ts-ignore
+                  name={key}
+                  control={control}
+                  render={({
+                    field: { onChange, value },
+                    fieldState: { error },
+                  }) => (
+                    <AsyncDropdown
+                      label={options.label}
+                      dataKey="name"
+                      endpoint={options.endpoint}
+                      createForm={options.form}
+                      placeholder={options.placeholder}
+                      onChange={(_, data) => onChange(data)}
+                      value={value}
+                      error={!!error?.message}
+                      helperText={error?.message}
+                    />
+                  )}
                 />
               </Grid>
             );
@@ -156,7 +174,7 @@ export default function Form<T>({
                     onChange={onChange}
                     fullWidth
                     size="small"
-                    value={value ?? 0}
+                    value={value ?? ""}
                     label={options.label}
                     placeholder={options.placeholder}
                     InputProps={{

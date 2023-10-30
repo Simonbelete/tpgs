@@ -5,7 +5,15 @@ import {
   DashboardAction,
   PermanentlyDeleteAction,
 } from "@/lib/crud";
-import { penApi } from "../services";
+import {
+  penApi,
+  exportPensCSV,
+  exportPensXLS,
+  exportPensXLSX,
+  importPensCSV,
+  importPensXLS,
+  importPensXLSX,
+} from "../services";
 
 export const PenList = () => {
   const columns: GridColDef[] = [
@@ -13,6 +21,7 @@ export const PenList = () => {
   ];
   return (
     <ListLayout
+      baseUrl="/pen"
       title="Pen"
       columns={columns}
       actions={[DashboardAction, PermanentlyDeleteAction]}
@@ -21,6 +30,12 @@ export const PenList = () => {
       filters={{
         is_active: { label: "Active" },
       }}
+      exportCsv={exportPensCSV}
+      exportXls={exportPensXLS}
+      exportXlsx={exportPensXLSX}
+      importCsv={importPensCSV}
+      importXls={importPensXLS}
+      importXlsx={importPensXLSX}
     />
   );
 };

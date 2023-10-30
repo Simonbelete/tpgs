@@ -25,6 +25,7 @@ export default function FormLayout<T extends AbstractBaseModel>({
   deleteEndpoint,
   summaryEndpoint,
   fields,
+  beforeSubmit,
 }: FormLayoutProps<T>) {
   return (
     <Grid container spacing={2}>
@@ -37,6 +38,7 @@ export default function FormLayout<T extends AbstractBaseModel>({
             createEndpoint={createEndpoint}
             updateEndpoint={updateEndpoint}
             fields={fields}
+            beforeSubmit={beforeSubmit}
           />
         </Card>
       </Grid>

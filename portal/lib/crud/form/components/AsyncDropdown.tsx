@@ -26,6 +26,7 @@ export default function AsyncDropdown<T>({
   onChange,
   onInputChange,
   endpoint,
+  placeholder,
   ...props
 }: {
   id?: string;
@@ -36,6 +37,7 @@ export default function AsyncDropdown<T>({
   error?: boolean;
   multiple?: boolean;
   helperText?: string;
+  placeholder?: string;
   createForm?: React.ReactNode;
   createFormTitle?: string;
   onChange?: (event: any, newValue: any) => void;
@@ -97,6 +99,7 @@ export default function AsyncDropdown<T>({
         loading={isLoading}
         isOptionEqualToValue={(option, val) => option[dataKey] === val[dataKey]}
         onInputChange={handleInputChange}
+        placeholder={placeholder}
         renderInput={(params) => (
           <TextField
             {...params}
