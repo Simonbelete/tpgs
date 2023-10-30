@@ -37,7 +37,6 @@ export const PenList = () => {
       getEndpoint={penApi.endpoints.getPens}
       deleteEndpoint={penApi.endpoints.deletePen}
       filters={{
-        is_active: { label: "Active" },
         house: {
           label: "House",
           dataDisplayKey: "name",
