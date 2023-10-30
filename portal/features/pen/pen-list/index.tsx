@@ -16,13 +16,15 @@ import {
   importPensXLS,
   importPensXLSX,
 } from "../services";
+import { Pen } from "@/models";
+import { houseApi } from "@/features/houses/services";
 
 export const PenList = () => {
   const columns: GridColDef[] = [
     { field: "name", headerName: "Name", flex: 1 },
   ];
   return (
-    <ListLayout
+    <ListLayout<Pen>
       baseUrl="/pen"
       title="Pen"
       columns={columns}
@@ -36,6 +38,11 @@ export const PenList = () => {
       deleteEndpoint={penApi.endpoints.deletePen}
       filters={{
         is_active: { label: "Active" },
+        house: {
+          label: "House",
+          dataDisplayKey: "name",
+          endpoint: houseApi.endpoints.getHouses,
+        },
       }}
       exportCsv={exportPensCSV}
       exportXls={exportPensXLS}

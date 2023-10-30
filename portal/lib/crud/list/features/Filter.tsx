@@ -45,6 +45,7 @@ export type FilterField<T> = {
   md?: number;
   placeholder?: string;
   label?: string;
+  dataDisplayKey: string;
 };
 
 export interface FilterProps<T> {
@@ -130,38 +131,8 @@ export default function Filter<T>({ filters }: FilterProps<T>) {
       </Grid>
       <Divider sx={{ my: 1 }} />
       <Grid container spacing={2}>
-        {Object.keys(filters).map((key, i) => {
-          // @ts-ignore
-          const options = filters[key] as Field;
-
-          if (options.endpoint) {
-            return (
-              <Grid key={i} item xs={options.xs || 12} md={options.md || 6}>
-                <AsyncCheckboxDropdown
-                  query={{}}
-                  label={options.label}
-                  onChange={(event: SelectChangeEvent) => {}}
-                  selected={[]}
-                  dataValueKey="id"
-                  dataLableKey="name"
-                  endpoint={options.endpoint}
-                />
-              </Grid>
-            );
-          }
-
-          return (
-            <Grid
-              key={i}
-              item
-              xs={options.xs || 12}
-              md={options.md || 6}
-            ></Grid>
-          );
-        })}
-
         <Grid item xs={12}>
-          <Stack direction={"row"}>
+          <Stack direction={"row"} spacing={2}>
             <CheckboxDropdown
               multiple={false}
               menus={activeMenu}
@@ -171,20 +142,73 @@ export default function Filter<T>({ filters }: FilterProps<T>) {
               selected={[{ value: selector.is_active }]}
               onChange={handleActiveChange}
             />
+            {Object.keys(filters).map((key, i) => {
+              // @ts-ignore
+              const options = filters[key] as Field;
+
+              if (options.endpoint) {
+                return (
+                  <AsyncCheckboxDropdown
+                    key={i}
+                    query={{}}
+                    label={options.label}
+                    onChange={(event: SelectChangeEvent) => {
+                      dispatch(
+                        filterSlice.actions.pushFilter({
+                          key: key,
+                          value: event.target.value,
+                        })
+                      );
+                    }}
+                    selected={selector.filters[key] || []}
+                    dataValueKey="id"
+                    dataLableKey="name"
+                    endpoint={options.endpoint}
+                  />
+                );
+              }
+
+              return <Box key={i}></Box>;
+            })}
           </Stack>
         </Grid>
         <Grid item xs={12}>
           <Divider />
         </Grid>
         <Grid item xs={12}>
-          <Stack>
-            <ListItem>
-              <Chip
-                label={`State: ${selector.is_active}`}
-                size="small"
-                onDelete={() => {}}
-              />
-            </ListItem>
+          <Stack direction={"row"} spacing={2}>
+            <Chip
+              label={`State: ${selector.is_active}`}
+              size="small"
+              onDelete={() => {}}
+            />
+            {Object.keys(selector.filters).map((key, i) => {
+              if (Array.isArray(selector.filters[key])) {
+                // @ts-ignore
+                const dataDisplayKey = (filters[key] as any).dataDisplayKey;
+
+                return (selector.filters[key] || []).map((e: any, j: any) => (
+                  <Chip
+                    key={j}
+                    label={`${key}: ${e[dataDisplayKey]}`}
+                    size="small"
+                    onDelete={() =>
+                      dispatch(
+                        filterSlice.actions.popFilter({ key: key, value: e })
+                      )
+                    }
+                  />
+                ));
+              }
+              return (
+                <Chip
+                  key={i}
+                  label={`${key}: ${selector.filters[key]}`}
+                  size="small"
+                  onDelete={() => {}}
+                />
+              );
+            })}
           </Stack>
         </Grid>
       </Grid>
