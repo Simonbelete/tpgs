@@ -22,7 +22,7 @@ export interface InfoZoneProps {
 }
 
 const InfoZone = ({ id, summaryEndpoint }: InfoZoneProps) => {
-  const { data, error, isLoading } = summaryEndpoint.useQuery({});
+  const { data, error, isLoading } = summaryEndpoint.useQuery(id);
 
   return <InfoZoneCard data={data} isLoading={isLoading} />;
 };
