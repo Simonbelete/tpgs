@@ -16,8 +16,44 @@ import { SearchInput } from "@/components/inputs";
 import { CheckboxDropdown } from "@/components/dropdowns";
 import { filterSlice } from "@/store/slices";
 import { RootState } from "@/store";
+import { Response, AbstractBaseModel } from "@/models";
+import AsyncCheckboxDropdown from "../components/AsyncCheckboxDropdown";
+import {
+  ApiEndpointMutation,
+  ApiEndpointQuery,
+} from "@reduxjs/toolkit/dist/query/core/module";
+import {
+  QueryDefinition,
+  MutationDefinition,
+} from "@reduxjs/toolkit/dist/query";
+import { EndpointDefinitions } from "@reduxjs/toolkit/dist/query/endpointDefinitions";
+import {
+  MutationHooks,
+  QueryHooks,
+} from "@reduxjs/toolkit/dist/query/react/buildHooks";
+import { ClientQueyFn, Query } from "@/types";
 
-const PenFilter = () => {
+export type FilterField<T> = {
+  endpoint?: ApiEndpointQuery<
+    QueryDefinition<Query, ClientQueyFn, any, Response<T[] | any>, any>,
+    EndpointDefinitions
+  > &
+    QueryHooks<
+      QueryDefinition<Query, ClientQueyFn, any, Response<T[] | any>, any>
+    >;
+  xs?: number;
+  md?: number;
+  placeholder?: string;
+  label?: string;
+};
+
+export interface FilterProps<T> {
+  filters: {
+    [K in keyof Partial<T>]: FilterField<T[K]>;
+  };
+}
+
+export default function Filter<T>({ filters }: FilterProps<T>) {
   const dispatch = useDispatch();
   const activeMenu = [
     { name: "Active", value: true },
@@ -94,6 +130,36 @@ const PenFilter = () => {
       </Grid>
       <Divider sx={{ my: 1 }} />
       <Grid container spacing={2}>
+        {Object.keys(filters).map((key, i) => {
+          // @ts-ignore
+          const options = filters[key] as Field;
+
+          if (options.endpoint) {
+            return (
+              <Grid key={i} item xs={options.xs || 12} md={options.md || 6}>
+                <AsyncCheckboxDropdown
+                  query={{}}
+                  label={options.label}
+                  onChange={(event: SelectChangeEvent) => {}}
+                  selected={[]}
+                  dataValueKey="id"
+                  dataLableKey="name"
+                  endpoint={options.endpoint}
+                />
+              </Grid>
+            );
+          }
+
+          return (
+            <Grid
+              key={i}
+              item
+              xs={options.xs || 12}
+              md={options.md || 6}
+            ></Grid>
+          );
+        })}
+
         <Grid item xs={12}>
           <Stack direction={"row"}>
             <CheckboxDropdown
@@ -124,6 +190,4 @@ const PenFilter = () => {
       </Grid>
     </Paper>
   );
-};
-
-export default PenFilter;
+}

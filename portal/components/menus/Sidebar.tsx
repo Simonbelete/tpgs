@@ -436,11 +436,12 @@ const SidebarMenu = () => {
             </Typography>
           }
           icon={<CabinIcon fontSize="small" />}
-          defaultOpen={["/weights", "/weights/mass"].includes(router.pathname)}
+          defaultOpen={RegExp("^/(pen|houses)(.*)$").test(router.pathname)}
         >
           <MenuItem
             component={<Link href="/houses" />}
             icon={<AdjustIcon fontSize="small" />}
+            active={RegExp("^/houses(.*)$").test(router.pathname)}
           >
             <Typography variant="body1" fontSize={14}>
               House
@@ -449,6 +450,7 @@ const SidebarMenu = () => {
           <MenuItem
             component={<Link href="/pen" />}
             icon={<AdjustIcon fontSize="small" />}
+            active={RegExp("^/pen(.*)$").test(router.pathname)}
           >
             <Typography variant="body1" fontSize={14}>
               Pen
