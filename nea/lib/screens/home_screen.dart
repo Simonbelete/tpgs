@@ -1,4 +1,4 @@
-import 'dart:io';
+import 'dart:io' show Platform;
 import 'package:flutter/material.dart';
 import 'package:nea/constants.dart';
 import 'package:nea/screens/message.dart';
@@ -16,6 +16,7 @@ import 'package:nea/widgets/paragraph.dart';
 import 'package:nea/widgets/search_bar.dart';
 import 'package:nea/bloc/search/bloc.dart';
 import 'package:nea/bloc/search/events.dart';
+import 'package:flutter/foundation.dart';
 
 import '../i18n/app.dart';
 
@@ -57,6 +58,21 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
+  Widget getChatIcon(BuildContext context) {
+    if (defaultTargetPlatform == TargetPlatform.android) {
+      return FloatingActionButton.small(
+          heroTag: "Chart",
+          backgroundColor: primaryColor,
+          onPressed: () {
+            Navigator.pushNamed(context, MessageScreen.routeName);
+          },
+          child: const Icon(Icons.message));
+    }
+    return SizedBox(
+      height: 1,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -84,15 +100,7 @@ class HomeScreen extends StatelessWidget {
           floatingActionButton: Column(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              Platform.isAndroid
-                  ? FloatingActionButton.small(
-                      heroTag: "Chart",
-                      backgroundColor: primaryColor,
-                      onPressed: () {
-                        Navigator.pushNamed(context, MessageScreen.routeName);
-                      },
-                      child: const Icon(Icons.message))
-                  : Container(),
+              getChatIcon(context),
               const SizedBox(
                 height: 10,
               ),

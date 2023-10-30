@@ -1,8 +1,11 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:nea/models/course_model.dart';
+import 'package:nea/utils/open_url.dart';
 import 'package:nea/widgets/bmi_calculator.dart';
 import 'package:nea/widgets/bullet.dart';
 import 'package:nea/widgets/course_body_image.dart';
+import 'package:nea/widgets/course_video_player.dart';
 import 'package:nea/widgets/keymessages.dart';
 import 'package:nea/widgets/objectives.dart';
 import 'package:nea/widgets/paragraph.dart';
@@ -15,12 +18,12 @@ Course EN = Course(
   coverImage: "assets/materials/images/imag_4.png",
   body: Column(
     crossAxisAlignment: CrossAxisAlignment.start,
-    children: const [
-      Objectives(
+    children: [
+      const Objectives(
           title: "OBJECTIVES",
           children: ['Understand why good nutrition is important']),
-      CourseBodyImage(image: "assets/materials/images/imag_4.png"),
-      KeyMessages(children: [
+      const CourseBodyImage(image: "assets/materials/images/imag_4.png"),
+      const KeyMessages(children: [
         'Good nutrition is important at all stages of life.',
         'Our bodies need enough food to give us energy, enable us to grow, learn, work and stay healthy.',
         'Health and nutrition are closely linked - a person must be well nourished to be healthy, while poor health can affect  nutritional status',
@@ -28,8 +31,8 @@ Course EN = Course(
         'The fetus and children under the age of two have high nutrient needs because their bodies are growing and changing quickly, even before birth.',
         'The three key principles of good nutrition are: \n\nAdequate diet - eating enough of the right foods.\n\nAbsence of disease - staying healthy.\n\nAppropriate caring practices – good care, rest, hygiene, and a stimulating and loving environment for young children and the whole family.',
       ]),
-      Remember(children: ['The family need a balanced meal everyday']),
-      CourseBodyImage(
+      const Remember(children: ['The family need a balanced meal everyday']),
+      const CourseBodyImage(
         image: 'assets/materials/images/imag_4.png',
         description:
             "A poorly nourished pregnant woman is likely to give birth to an underweight baby who grows up as a weaker adolescent and likely to give birth to an underweight baby in future.",
@@ -124,32 +127,56 @@ Course EN = Course(
         title: "Consequences of malnutrition",
         body: "",
       ),
-      Bullet(children: [
+      const Bullet(children: [
         "Children experiencing stunting may never grow to their full height or develop their full cognitive potential",
         "43 percent of children under five in low and middle-income countries are at increased risk of poverty because of stunting",
         "Stunted children earn 20 percent less as adults than their non-stunted counterparts",
         "Mothers affected by undernutrition are more likely to have children who suffer from stunting or wasting, perpetuating the cycle of poverty and undernutrition"
       ]),
-      CourseBodyImage(
+      const CourseBodyImage(
         image: 'assets/materials/images/c_2.png',
         description: "The Above child is Stunted and Underweight",
       ),
-      CourseBodyImage(
+      const CourseBodyImage(
         image: 'assets/materials/images/c_3.png',
         description: "The Above child is Normal",
       ),
 
-      SubTitleText(
+      const SubTitleText(
         text: "Deficiencies in vitamins and minerals",
         fontSize: 16.0,
       ),
-      Paragraph(
+     const Paragraph(
           title: "Deficiencies in vitamins and minerals ",
           body:
               "result from a poor-quality diet. Micronutrient deficiencies can also result from frequent illness, which may increase requirement, utilization, or loss of nutrients. "),
-      Paragraph(
+      const Paragraph(
           title: "NOTE: ",
           body: " All these children may also be micronutrient deficient"),
+      const CourseVideoPlayer(video: 'assets/videos/child_malnutrition_en.mp4'),
+      InkWell(
+        onTap: () {
+          openUrl(
+              'https://www.youtube.com/watch?v=bqEIcMMmj5M&ab_channel=iheed');
+        },
+        child: const Text(
+          'Credit - Youtube iheed',
+          style: TextStyle(color: Colors.blueAccent),
+        ),
+      ),
+      const SubTitleText(text: 'The Cycle of malnutrition'),
+      const CourseVideoPlayer(
+          video: 'assets/videos/the_cycle_of_malnutrition_en.mp4'),
+      InkWell(
+        onTap: () {
+          openUrl(
+              'https://www.youtube.com/watch?v=AY_7756MFBw&ab_channel=THPAustralia');
+        },
+        child: const Text(
+          'Credit - Youtube THPAustralia',
+          style: TextStyle(color: Colors.blueAccent),
+        ),
+      ),
       // SizedBox(
       //   child: BmiCalculator(),
       // )

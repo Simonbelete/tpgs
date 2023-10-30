@@ -56,3 +56,4 @@ export type { default as Requirement } from "./Requirement";
 export type { default as RequirementNutrient } from "./RequirementNutrient";
 export type { default as ChangePassword } from "./ChangePassword";
 export type { default as RequirementAnalyses } from "./RequirementAnalyses";
+export type { default as AbstractBaseModel } from "./AbstractBaseModel";

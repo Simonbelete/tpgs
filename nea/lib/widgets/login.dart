@@ -27,6 +27,7 @@ class _LoginBodyScreenState extends State<LoginBodyScreen> {
   String verificationId = "";
   String otp = "";
   bool loading = false;
+  String _phoneNumber = "";
 
   void signUserIn() async {
     validatePhoneNumber(phoneNumberController.text);
@@ -39,7 +40,7 @@ class _LoginBodyScreenState extends State<LoginBodyScreen> {
     try {
       // Masuk menggunakan email dan password
       await auth.verifyPhoneNumber(
-          phoneNumber: phoneNumberController.text,
+          phoneNumber: _phoneNumber,
           verificationCompleted: (PhoneAuthCredential credential) async {},
           verificationFailed: (FirebaseAuthException e) {
             if (e.code == 'invalid-phone-number') {
@@ -62,6 +63,9 @@ class _LoginBodyScreenState extends State<LoginBodyScreen> {
           codeAutoRetrievalTimeout: (String verificationId) {});
     } on FirebaseAuthException catch (e) {
       showErrorMessage(e.code);
+      setState(() {
+        loading = false;
+      });
     }
   }
 
@@ -226,7 +230,9 @@ class _LoginBodyScreenState extends State<LoginBodyScreen> {
                                     ),
                                     initialCountryCode: 'IN',
                                     onChanged: (phone) {
-                                      print(phone.completeNumber);
+                                      setState(() {
+                                        _phoneNumber = phone.completeNumber;
+                                      });
                                     },
                                     controller: phoneNumberController,
                                   ),

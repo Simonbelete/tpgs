@@ -1,8 +1,11 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:nea/i18n/foods.dart';
 import 'package:nea/models/course_model.dart';
+import 'package:nea/utils/open_url.dart';
 import 'package:nea/widgets/bullet.dart';
 import 'package:nea/widgets/course_body_image.dart';
+import 'package:nea/widgets/course_video_player.dart';
 import 'package:nea/widgets/food_grid_list.dart';
 import 'package:nea/widgets/objectives.dart';
 import 'package:nea/widgets/paragraph.dart';
@@ -136,7 +139,18 @@ Course EN = Course(
       const Paragraph(
           title: "Nutrient requirements ",
           body:
-              "refer to the different nutrients the body requires for energy, growth and repair, and protection from disease. They differ according to age, gender, physical activity, height, weight, and health status of the individual. ")
+              "refer to the different nutrients the body requires for energy, growth and repair, and protection from disease. They differ according to age, gender, physical activity, height, weight, and health status of the individual. "),
+      CourseVideoPlayer(video: 'assets/videos/food_groups_en.mp4'),
+      InkWell(
+        onTap: () {
+          openUrl(
+              'https://www.youtube.com/watch?v=Z51bWG17m-Q&t=78s&ab_channel=ClickView');
+        },
+        child: const Text(
+          'Credit - Youtube ClickView',
+          style: TextStyle(color: Colors.blueAccent),
+        ),
+      ),
     ],
   ),
 );

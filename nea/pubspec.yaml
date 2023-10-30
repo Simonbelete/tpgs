@@ -84,6 +84,7 @@ flutter:
   assets:
     - assets/database.db
     - assets/images/
+    - assets/videos/
     - assets/icons/
     - assets/materials/images/
     - assets/materials/foods/

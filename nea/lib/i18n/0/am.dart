@@ -1,8 +1,11 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:nea/i18n/foods.dart';
 import 'package:nea/models/course_model.dart';
+import 'package:nea/utils/open_url.dart';
 import 'package:nea/widgets/bullet.dart';
 import 'package:nea/widgets/course_body_image.dart';
+import 'package:nea/widgets/course_video_player.dart';
 import 'package:nea/widgets/food_grid_list.dart';
 import 'package:nea/widgets/objectives.dart';
 import 'package:nea/widgets/paragraph.dart';
@@ -133,6 +136,17 @@ Course AM = Course(
         fontSize: 14,
       ),
       FoodGridList(foods: mineralsFood),
+      const CourseVideoPlayer(video: 'assets/videos/food_groups.mp4'),
+      InkWell(
+        onTap: () {
+          openUrl(
+              'https://www.youtube.com/watch?v=Y3dtjjO4Kk4&t=2s&ab_channel=CertaNutritio');
+        },
+        child: const Text(
+          'ምንጭ - Youtube Certa Nutritio',
+          style: TextStyle(color: Colors.blueAccent),
+        ),
+      ),
       // const Paragraph(
       //     title: "Nutrient requirements ",
       //     body:

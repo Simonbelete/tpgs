@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:nea/models/course_model.dart';
 import 'package:nea/screens/home_screen.dart';
+import 'package:nea/utils/open_url.dart';
 import 'package:nea/widgets/bullet.dart';
 import 'package:nea/widgets/course_body_image.dart';
+import 'package:nea/widgets/course_video_player.dart';
 import 'package:nea/widgets/paragraph.dart';
 import 'package:nea/widgets/sub_title_text.dart';
 
 Course AM = Course(
   coverImage: 'assets/materials/images/image1057.png',
   title: 'የምግብ ዝግጅት የጥንቃቄ መስፈርቶች',
-  body: Column(crossAxisAlignment: CrossAxisAlignment.start, children: const [
+  body: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
     CourseBodyImage(image: 'assets/materials/images/image1057.png'),
     SubTitleText(text: 'በምግብ ዝግጅት ጊዜ መወሰድ ያለባቸው የንጽህና ጥንቃቄዎች'),
     Paragraph(
@@ -63,6 +65,17 @@ Course AM = Course(
     Paragraph(
         title: '',
         body:
-            'ምግብዎትን ከጀርሞች ለመከላከል እጅወትን ከምግብ በፊትና ከምግብ በኋላ ለ 60 ሰከንድ በውሃና በሳሙና ይታጠቡ')
+            'ምግብዎትን ከጀርሞች ለመከላከል እጅወትን ከምግብ በፊትና ከምግብ በኋላ ለ 60 ሰከንድ በውሃና በሳሙና ይታጠቡ'),
+    CourseVideoPlayer(video: 'assets/videos/hyigene_food.mp4'),
+    InkWell(
+      onTap: () {
+        openUrl(
+            'https://www.youtube.com/watch?v=TDFB75pMqx0&list=PLOS5MMmDL-YfeyCd_9XH9OroWjFENho6P&index=7&ab_channel=CertaNutritio');
+      },
+      child: const Text(
+        'ምንጭ - Youtube Certa Nutritio',
+        style: TextStyle(color: Colors.blueAccent),
+      ),
+    ),
   ]),
 );
