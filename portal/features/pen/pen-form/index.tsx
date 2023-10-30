@@ -31,6 +31,7 @@ export const PenForm = ({
         summaryEndpoint={penApi.endpoints.getPenSummary}
         beforeSubmit={(values: Partial<Pen>) => {
           const cleaned_data: Partial<Pen> = {
+            id: values.id,
             name: values.name,
             house: (values.house as House).id || 0,
           };

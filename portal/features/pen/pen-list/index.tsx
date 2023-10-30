@@ -4,6 +4,8 @@ import {
   ListLayout,
   DashboardAction,
   PermanentlyDeleteAction,
+  EditAction,
+  HistoryAction,
 } from "@/lib/crud";
 import {
   penApi,
@@ -24,7 +26,12 @@ export const PenList = () => {
       baseUrl="/pen"
       title="Pen"
       columns={columns}
-      actions={[DashboardAction, PermanentlyDeleteAction]}
+      actions={[
+        DashboardAction,
+        EditAction,
+        HistoryAction,
+        PermanentlyDeleteAction,
+      ]}
       getEndpoint={penApi.endpoints.getPens}
       deleteEndpoint={penApi.endpoints.deletePen}
       filters={{
