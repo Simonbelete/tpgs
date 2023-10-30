@@ -1,5 +1,5 @@
 id,name,abbreviation,unit
-1,Metabolizable Energy,ME,kcal/kg
+ ,Metabolizable Energy,ME,kcal/kg
  ,Crude protein,CP,%
  ,Lysine,Lys,%
  ,m+c,m+c,%
@@ -7,4 +7,4 @@ id,name,abbreviation,unit
  ,Ether extract,EE,%
  ,Crude fiber,CF,%
  ,Calcium,Ca,%
- ,Phosphorus,P,%z
+ ,Phosphorus,P,%

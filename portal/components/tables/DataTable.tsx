@@ -410,7 +410,7 @@ const DataTable = ({
                 <Tooltip title="Delete" id="data-table-delete">
                   <IconButton
                     aria-label="delete"
-                    onClick={() => handleDeleteModalOpen(params.id)}
+                    onClick={() => handleDeleteModalOpen(Number(params.id))}
                   >
                     <DeleteIcon fontSize="small" />
                   </IconButton>

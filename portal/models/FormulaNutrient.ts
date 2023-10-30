@@ -5,5 +5,6 @@ export default interface FormulaNutrient extends Partial<Nutrient> {
   ration_value: number;
   requirement_id: number;
   requirement_value: number;
-  achived_goal: number
+  achived_goal: number;
+  nutrient_group_id: number;
 }

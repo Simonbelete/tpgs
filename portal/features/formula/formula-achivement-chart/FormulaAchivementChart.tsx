@@ -40,6 +40,7 @@ const FormulaAchivementChart = ({ formula }: { formula: Formula }) => {
     const response = data?.results || [];
 
     for (let i = 0; i < response.length; i += 1) {
+      if (response[i].nutrient_group_id == 1) continue;
       x.push(response[i].name || "");
       y.push(response[i].achived_goal);
       y1.push(response[i].ration_value);

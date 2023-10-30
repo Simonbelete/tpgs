@@ -17,7 +17,7 @@ class NutrientResource(resources.ModelResource):
         column_name='unit',
         attribute='unit',
         widget=widgets.ForeignKeyWidget(Unit, field='name'))
-    unit = fields.Field(
+    nutrient_group = fields.Field(
         column_name='nutrient_group',
         attribute='nutrient_group',
         widget=widgets.ForeignKeyWidget(models.NutrientGroup, field='name'))

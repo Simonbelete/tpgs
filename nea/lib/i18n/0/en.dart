@@ -44,10 +44,10 @@ Course EN = Course(
           title: "",
           body:
               "What major food sources of carbohydrates does a diet include?"),
-      const CourseBodyImage(
-        image: "assets/materials/images/carbohydrates.png",
-        // description: "Sources of carbohydrates",
-      ),
+      // const CourseBodyImage(
+      //   image: "assets/materials/images/carbohydrates.png",
+      //   // description: "Sources of carbohydrates",
+      // ),
       const SubTitleText(
         text: "Source of Carbohydrates",
         fontSize: 14,
@@ -64,10 +64,10 @@ Course EN = Course(
       const Paragraph(
           title: "",
           body: "What major food sources of proteins does a diet include?"),
-      const CourseBodyImage(
-        image: "assets/materials/images/proteins.png",
-        // description: "Sources of proteins",
-      ),
+      // const CourseBodyImage(
+      //   image: "assets/materials/images/proteins.png",
+      //   // description: "Sources of proteins",
+      // ),
       // Fats
       const SubTitleText(
         text: "Fats",
@@ -80,10 +80,10 @@ Course EN = Course(
       const Paragraph(
           title: "",
           body: "What major food sources of fats does a diet include?"),
-      const CourseBodyImage(
-        image: "assets/materials/images/fats.png",
-        // description: "Sources of Fats",
-      ),
+      // const CourseBodyImage(
+      //   image: "assets/materials/images/fats.png",
+      //   // description: "Sources of Fats",
+      // ),
       const SubTitleText(
         text: "Source of Fats",
         fontSize: 14,
@@ -109,10 +109,10 @@ Course EN = Course(
           title: "Vitamins ",
           body:
               "play different roles in helping the body in important ways. Some examples include building protein and cells, protecting cells from damage, building bones, protecting vision, metabolizing macronutrients, and helping to heal wounds. Without essential vitamins, multiple nutritional diseases can result."),
-      const CourseBodyImage(
-        image: "assets/materials/images/vitamins.png",
-        // description: "Sources of Vitamins",
-      ),
+      // const CourseBodyImage(
+      //   image: "assets/materials/images/vitamins.png",
+      //   // description: "Sources of Vitamins",
+      // ),
       const SubTitleText(
         text: "Source of Vitamins",
         fontSize: 14,
@@ -127,10 +127,10 @@ Course EN = Course(
           title: "Minerals ",
           body:
               "are solid, inorganic groups of compounds like essential building blocks of different types of cells. Essential minerals include iron, zinc, calcium, and iodine. For example, iron is part of red blood cells, which transport oxygen through the body. Zinc has many critical functions in the body, including the make-up of cells and body systems, including immune function."),
-      const CourseBodyImage(
-        image: "assets/materials/images/minerals.png",
-        // description: "Sources of Minerals",
-      ),
+      // const CourseBodyImage(
+      //   image: "assets/materials/images/minerals.png",
+      //   // description: "Sources of Minerals",
+      // ),
       const SubTitleText(
         text: "Source of Minerals",
         fontSize: 14,

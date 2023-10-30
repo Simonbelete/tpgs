@@ -242,7 +242,7 @@ class FormulaNutrients(viewsets.ViewSet):
         cursor = connection.cursor()
         cursor.execute("""
             SELECT 
-                fr.nutrient_id AS id, nn.name AS name,
+                fr.nutrient_id AS id, nn.name AS name,nn.nutrient_group_id,
                 fr.id AS ration_id, fr.value AS ration_value,
                 frq.id AS requirement_id, frq.value AS requirement_value,
                 ((fr.value * frq.value) / 100) AS achived_goal
@@ -255,7 +255,7 @@ class FormulaNutrients(viewsets.ViewSet):
                 AND frq.formula_id = {formula_id};
         """.format(formula_id=formula.id))
 
-        columns = ['id', 'name', 'ration_id','ration_value', 'requirement_id', 'requirement_value', 'achived_goal']
+        columns = ['id', 'name', 'nutrient_group_id', 'ration_id','ration_value', 'requirement_id', 'requirement_value', 'achived_goal']
 
         return Response({
             'results': [dict(zip(columns, row)) for row in cursor.fetchall()]
@@ -274,7 +274,7 @@ class FormulaMatrix(viewsets.ViewSet):
         queryset = models.FormulaIngredient.objects.filter(formula=formula)
         result = []
         for query in queryset.iterator():
-            ingredient_nutrients = IngredientNutrient.objects.filter(ingredient=query.ingredient.id)
+            ingredient_nutrients = IngredientNutrient.objects.filter(ingredient=query.ingredient.id).exclude(nutrient__nutrient_group__name="Energy")
             nutrients = ingredient_nutrients.values_list('nutrient__name', flat=True)
             values = ingredient_nutrients.values_list('value', flat=True)
             values = query.ration * np.array(values) / 100
