@@ -48,12 +48,14 @@ const PenPage = () => {
           deleteEndpoint={nutrientApi.endpoints.deleteNutrient}
         /> */}
         <FormLayout<Nutrient>
+          baseUrl="/pen"
           schema={schema}
           createEndpoint={nutrientApi.endpoints.createNutrient}
           updateEndpoint={nutrientApi.endpoints.updateNutrient}
           fields={[
             {
               name: "name",
+              label: "Name",
               xs: 12,
               md: 6,
             },

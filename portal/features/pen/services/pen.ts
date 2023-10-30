@@ -41,7 +41,10 @@ export const penApi = baseApi.injectEndpoints({
           data: data,
         }),
       }),
-      updatePen: build.mutation<Pen, Pick<Pen, "id"> & Partial<Pen>>({
+      updatePen: build.mutation<
+        Promise<AxiosResponse<Pen>>,
+        Pick<Pen, "id"> & Partial<Pen>
+      >({
         query: ({ id, ...patch }) => ({
           url: `${URL}/${id}/`,
           method: "patch",

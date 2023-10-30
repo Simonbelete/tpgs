@@ -8,6 +8,7 @@ interface FormLayoutProps<T> extends FormProps<T> {}
 
 export default function FormLayout<T>({
   data,
+  baseUrl,
   schema,
   createEndpoint,
   updateEndpoint,
@@ -18,6 +19,7 @@ export default function FormLayout<T>({
       <Grid item xs={12} lg={8.5} xl={9}>
         <Card title="Requirement Form">
           <Form
+            baseUrl={baseUrl}
             data={data}
             schema={schema}
             createEndpoint={createEndpoint}
