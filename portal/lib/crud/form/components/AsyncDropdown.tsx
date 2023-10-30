@@ -63,6 +63,10 @@ export default function AsyncDropdown<T>({
     setOpen(false);
   };
 
+  const handleInputChange = (event: any, newValue: any) => {
+    trigger({ search: newValue }, false);
+  };
+
   return (
     <Stack gap={1} id={id}>
       <FullScreenModal
@@ -92,7 +96,7 @@ export default function AsyncDropdown<T>({
         options={data?.results || []}
         loading={isLoading}
         isOptionEqualToValue={(option, val) => option[dataKey] === val[dataKey]}
-        onInputChange={onInputChange}
+        onInputChange={handleInputChange}
         renderInput={(params) => (
           <TextField
             {...params}
