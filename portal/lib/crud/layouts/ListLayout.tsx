@@ -36,6 +36,7 @@ export default function ListLayout<T>({
   importCsv,
   importXls,
   importXlsx,
+  getRowId,
 }: ListLayoutProps<T>) {
   return (
     <>
@@ -72,6 +73,7 @@ export default function ListLayout<T>({
       </Box>
       <div style={{ minHeight: "400px" }}>
         <List
+          getRowId={getRowId}
           columns={columns}
           actions={actions}
           getEndpoint={getEndpoint}

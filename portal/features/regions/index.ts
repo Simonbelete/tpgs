@@ -1,1 +1,1 @@
-export * from './region-list';
+export * from "./region-list";

@@ -47,6 +47,7 @@ export interface ListProps<T> {
     EndpointDefinitions
   > &
     MutationHooks<MutationDefinition<number, ClientQueyFn, any, T, any>>;
+  getRowId?: (row: any) => any;
 }
 
 export default function List<T>({
@@ -54,6 +55,7 @@ export default function List<T>({
   actions,
   getEndpoint,
   deleteEndpoint,
+  getRowId,
 }: ListProps<T>) {
   const dispatch = useDispatch();
   const selector = useSelector((state: RootState) => state.filter);
@@ -109,7 +111,6 @@ export default function List<T>({
   };
 
   const getRowById = (row: any) => {
-    // if (setting == SETTING_COL.history) return row.history_id;
     return row.id;
   };
 
@@ -135,7 +136,7 @@ export default function List<T>({
         getRowClassName={(params) =>
           params.indexRelativeToCurrentPage % 2 === 0 ? "even" : "odd"
         }
-        getRowId={getRowById}
+        getRowId={getRowId != null ? getRowId : getRowById}
         pageSizeOptions={[5, 10, 25, 50, 100]}
         paginationModel={paginationModel}
         paginationMode="server"

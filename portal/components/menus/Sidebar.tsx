@@ -565,10 +565,14 @@ const SidebarMenu = () => {
             </Typography>
           }
           icon={<PublicIcon fontSize="small" />}
+          defaultOpen={RegExp("^/(countries|cities|regions)(.*)$").test(
+            router.pathname
+          )}
         >
           <MenuItem
             component={<Link href="/countries" />}
             icon={<AdjustIcon fontSize="small" />}
+            active={RegExp("/countries(.*)$").test(router.pathname)}
           >
             <Typography variant="body1" fontSize={14}>
               Countries
@@ -577,14 +581,16 @@ const SidebarMenu = () => {
           <MenuItem
             component={<Link href="/cities" />}
             icon={<AdjustIcon fontSize="small" />}
+            active={RegExp("/cities(.*)$").test(router.pathname)}
           >
             <Typography variant="body1" fontSize={14}>
               Cities
             </Typography>
           </MenuItem>
           <MenuItem
-            component={<Link href="/flocks/reduction" />}
+            component={<Link href="/regions" />}
             icon={<AdjustIcon fontSize="small" />}
+            active={RegExp("/regions(.*)$").test(router.pathname)}
           >
             <Typography variant="body1" fontSize={14}>
               Regions
