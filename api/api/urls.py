@@ -58,7 +58,7 @@ urlpatterns = [
 
     path('adminactions/', include('adminactions.urls')),
     path('api/', include([
-        path('', include('cities_light.contrib.restframework3')),
+        # path('', include('cities_light.contrib.restframework3')),
         path('', include('users.urls')),
         path('', include('auths.urls')),
         path('', include('flocks.urls')),
@@ -84,6 +84,7 @@ urlpatterns = [
         path('', include('inbox.urls')),
         path('', include('hatchery.urls')), 
         path('', include('requirements.urls')),
+        path('', include('city.urls')),
     ])),
 
     path('api/schema/', SpectacularAPIView.as_view(), name='schema'),
