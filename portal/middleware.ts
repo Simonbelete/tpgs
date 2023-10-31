@@ -21,10 +21,11 @@ export const config = {
     "/nutrient-groups/:path*",
     "/nutrients/:path*",
     "/purposes/:path*",
-    "/setting/:path*",
+    "/settings/:path*",
     "/unit-converters/:path*",
     "/units/:path*",
     "/users/:path*",
     "/weights/:path*",
+    "/reduction-reasons/:path*",
   ],
 };

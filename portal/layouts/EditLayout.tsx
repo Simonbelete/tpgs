@@ -18,19 +18,21 @@ const EditLayout = ({
   return (
     <>
       <Box mb={2}>{breadcrumbs}</Box>
-      <Box
-        sx={{ display: "flex" }}
-        flexDirection={{ xs: "column", lg: "row" }}
-        mb={5}
-      >
-        {header}
-        <Box sx={{ flexGrow: 1 }} />
-        {actions && (
-          <Stack direction="row" spacing={2} useFlexGap flexWrap="wrap">
-            {actions}
-          </Stack>
-        )}
-      </Box>
+      {header && (
+        <Box
+          sx={{ display: "flex" }}
+          flexDirection={{ xs: "column", lg: "row" }}
+          mb={5}
+        >
+          {header}
+          <Box sx={{ flexGrow: 1 }} />
+          {actions && (
+            <Stack direction="row" spacing={2} useFlexGap flexWrap="wrap">
+              {actions}
+            </Stack>
+          )}
+        </Box>
+      )}
       <Box sx={{ height: "auto" }}>{children}</Box>
     </>
   );

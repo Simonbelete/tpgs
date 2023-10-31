@@ -7,11 +7,13 @@ import LibraryAddIcon from "@mui/icons-material/LibraryAdd";
 export default function CreateNewIcon() {
   const router = useRouter();
 
+  {
+    console.log(router.pathname.split("/[id]")[0]);
+  }
+
   return (
     <Tooltip title="Create new">
-      <Link
-        href={`${router.pathname.split("/[id]")[0]}/${router.query.id}/create`}
-      >
+      <Link href={`${router.pathname.split("/[id]")[0]}/create`}>
         <IconButton color="secondary">
           <LibraryAddIcon />
         </IconButton>

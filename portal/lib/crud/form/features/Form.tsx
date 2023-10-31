@@ -78,6 +78,7 @@ export interface FormProps<T> {
         any
       >
     >;
+  shallowRoute?: boolean;
 }
 
 export default function Form<
@@ -91,6 +92,7 @@ export default function Form<
   updateEndpoint,
   beforeSubmit,
   onCreateSuccess,
+  shallowRoute = true,
 }: FormProps<T>) {
   type Inputs = Partial<T>;
 
@@ -108,10 +110,15 @@ export default function Form<
     const cleaned_data = beforeSubmit == null ? values : beforeSubmit(values);
     if (data == null) {
       const response = await createTrigger(cleaned_data as T).unwrap();
-      console.log(response.status);
-      if (response?.status == 201 && onCreateSuccess != undefined)
+      if (response?.status == 201 && onCreateSuccess != undefined) {
         onCreateSuccess(response);
-    } else await updateTrigger(cleaned_data as any);
+        router.push(
+          `${router.pathname.split("/create")[0]}/${response.id}`,
+          undefined,
+          { shallow: true }
+        );
+      }
+    } else await updateTrigger({ ...cleaned_data, id: data.id });
   };
 
   const useCRUDHook = useCRUD({
@@ -186,43 +193,6 @@ export default function Form<
             </Grid>
           );
         })}
-        {/* {fields.map((e, i) => {
-          if (e.endpoint) {
-            return <></>;
-          }
-
-          return (
-            <Grid key={i} item xs={e.xs || 12} md={e.md || 6}>
-              <Controller
-                // @ts-ignore
-                name={e.name}
-                control={control}
-                render={({
-                  field: { onChange, value },
-                  fieldState: { invalid, isTouched, isDirty, error },
-                }) => (
-                  <LabeledInput
-                    error={!!error?.message}
-                    helperText={error?.message}
-                    onChange={onChange}
-                    fullWidth
-                    size="small"
-                    value={value ?? 0}
-                    label={e.label}
-                    placeholder={e.placeholder}
-                    InputProps={{
-                      endAdornment: (
-                        <InputAdornment position="start">
-                          {e.postfix}
-                        </InputAdornment>
-                      ),
-                    }}
-                  />
-                )}
-              />
-            </Grid>
-          );
-        })} */}
       </Grid>
       <Box sx={{ mt: 5 }}>
         <Stack
@@ -238,7 +208,7 @@ export default function Form<
               startIcon={<SaveIcon />}
               onClick={() => handleSubmit(onSubmit)()}
             >
-              Save
+              {data ? "Update" : "Create"}
             </Button>
           </Box>
           <Box>

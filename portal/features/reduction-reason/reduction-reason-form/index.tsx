@@ -29,7 +29,6 @@ export const ReductionReasonForm = ({
         summaryEndpoint={reductionReasonApi.endpoints.getReductionReasonSummary}
         beforeSubmit={(values: Partial<ReductionReason>) => {
           const cleaned_data: Partial<ReductionReason> = {
-            id: values.id,
             name: values.name,
           };
 

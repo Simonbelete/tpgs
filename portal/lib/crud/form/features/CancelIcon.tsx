@@ -9,7 +9,7 @@ export default function CancelIconMenu() {
 
   return (
     <Tooltip title="Dashboard">
-      <Link href={`${router.pathname.split("/[id]")[0]}/${router.query.id}/`}>
+      <Link href={`${router.pathname.split("/[id]")[0]}/`}>
         <IconButton color="secondary">
           <CancelIcon />
         </IconButton>

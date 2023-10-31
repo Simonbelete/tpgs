@@ -34,7 +34,8 @@ class UserViewSet(mixins.CreateModelMixin,
         superuser_mode = eval(superuser_mode.capitalize())
         if (superuser_mode and self.request.user.is_superuser):
             return super().get_queryset() #.filter(~Q(pk=self.request.user.id))
-        return super().get_queryset().filter(farms__name__in=[self.request.tenant]) #.filter(~Q(pk=self.request.user.id))
+        # TODO:
+        return super().get_queryset() #.filter(farms__name__in=[self.request.tenant]) #.filter(~Q(pk=self.request.user.id))
 
     def get_serializer_class(self):
         if self.request.method in ['POST', 'PATCH']:

@@ -20,11 +20,7 @@ const ReductionReasonEditPage = ({ data }: { data: ReductionReason }) => {
   return (
     <>
       <SeoHead title={`${data.name || ""} - Edit`} />
-      <EditLayout
-        breadcrumbs={<Breadcrumbs items={breadcrumbs} />}
-        header={<Typography variant="title">{data.name} - Edit</Typography>}
-        actions={<Actions />}
-      >
+      <EditLayout breadcrumbs={<Breadcrumbs items={breadcrumbs} />}>
         <ReductionReasonForm data={data} />
       </EditLayout>
     </>
