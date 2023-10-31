@@ -45,7 +45,6 @@ export default function ListLayout<T>({
             spacing={2}
           >
             {menus}
-            <CreateButton baseUrl={baseUrl} />
           </Stack>
         </Grid>
       </Grid>

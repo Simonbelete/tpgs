@@ -2,11 +2,7 @@ import React from "react";
 import { ListLayout } from "@/layouts";
 import { useBreadcrumbs } from "@/hooks";
 import { Breadcrumbs } from "@/components";
-import { Typography } from "@mui/material";
-import {
-  CountryList,
-  CountryListFilter
-} from "@/features/countries";
+import { CountryList } from "@/features/countries";
 import { SeoHead } from "@/seo";
 
 const CountryPage = () => {
@@ -14,18 +10,12 @@ const CountryPage = () => {
 
   return (
     <>
-      <SeoHead title="Countries"/>
-      <ListLayout
-        breadcrumbs={<Breadcrumbs items={breadcrumbs} />}
-        header={<Typography variant="title">Countries</Typography>}
-        filter={<CountryListFilter />}
-      >
+      <SeoHead title="Countries" />
+      <ListLayout breadcrumbs={<Breadcrumbs items={breadcrumbs} />}>
         <CountryList />
       </ListLayout>
     </>
   );
 };
-
-
 
 export default CountryPage;
