@@ -1,17 +1,13 @@
 import { DangerZoneCard } from "@/components";
-import React, { useState } from "react";
+import React from "react";
 import { useRouter } from "next/router";
 import { useCRUD } from "@/hooks";
 import { ApiEndpointMutation } from "@reduxjs/toolkit/dist/query/core/module";
 import { MutationDefinition } from "@reduxjs/toolkit/dist/query";
 import { EndpointDefinitions } from "@reduxjs/toolkit/dist/query/endpointDefinitions";
-import {
-  MutationHooks,
-  QueryHooks,
-} from "@reduxjs/toolkit/dist/query/react/buildHooks";
+import { MutationHooks } from "@reduxjs/toolkit/dist/query/react/buildHooks";
 import { ClientQueyFn, Query } from "@/types";
-import { Response, AbstractBaseModel } from "@/models";
-import { AxiosResponse } from "axios";
+import { AbstractBaseModel } from "@/models";
 
 export interface DangerZoneProps<T> {
   id: number;
@@ -21,7 +17,7 @@ export interface DangerZoneProps<T> {
       Pick<AbstractBaseModel, "id"> & Partial<T>,
       ClientQueyFn,
       any,
-      Promise<AxiosResponse<T>>,
+      Promise<T>,
       any
     >,
     EndpointDefinitions
@@ -31,7 +27,7 @@ export interface DangerZoneProps<T> {
         Pick<AbstractBaseModel, "id"> & Partial<T>,
         ClientQueyFn,
         any,
-        Promise<AxiosResponse<T>>,
+        Promise<T>,
         any
       >
     >;
@@ -73,6 +69,7 @@ export default function DangerZone<T>({
       isUpdating={updateResult.isLoading}
       isDeleting={deleteResult.isLoading}
       is_active={
+        // @ts-ignore
         updateResult.data == undefined ? is_active : updateResult.data.is_active
       }
     />

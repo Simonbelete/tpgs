@@ -8,20 +8,12 @@ import {
   InfoZoneProps,
 } from "../form";
 import { AbstractBaseModel } from "@/models";
-import {
-  Grid,
-  Stack,
-  Box,
-  Typography,
-  Button,
-  IconButton,
-} from "@mui/material";
+import { Grid, Stack, Box, Typography, IconButton } from "@mui/material";
 import { Card } from "@/components";
-import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
-import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import { useRouter } from "next/router";
 import getPreviousUrl from "@/util/getPreviousUrl";
+import Link from "next/link";
 
 interface FormLayoutProps<T>
   extends FormProps<T>,
@@ -35,7 +27,6 @@ export default function FormLayout<T extends AbstractBaseModel>({
   data,
   title,
   menus,
-  baseUrl,
   schema,
   createEndpoint,
   updateEndpoint,
@@ -56,13 +47,11 @@ export default function FormLayout<T extends AbstractBaseModel>({
       <Grid container mb={5}>
         <Grid item xs={12} md={6}>
           <Box sx={{ display: "flex" }} justifyContent={"start"}>
-            <IconButton
-              onClick={() => router.push(getPreviousUrl(router.pathname))}
-              sx={{ mr: 1 }}
-              color="primary"
-            >
-              <ArrowBackIosIcon />
-            </IconButton>
+            <Link href={getPreviousUrl(router.pathname)}>
+              <IconButton sx={{ mr: 1 }} color="primary">
+                <ArrowBackIosIcon />
+              </IconButton>
+            </Link>
             <Typography variant="title">
               {formData ? `${formData.display_name || ""} - Edit` : title}
             </Typography>
@@ -83,7 +72,6 @@ export default function FormLayout<T extends AbstractBaseModel>({
         <Grid item xs={12} lg={8.5} xl={9}>
           <Card title={title}>
             <Form
-              baseUrl={baseUrl}
               data={formData}
               schema={schema}
               createEndpoint={createEndpoint}

@@ -45,7 +45,7 @@ export const requirementApi = baseApi.injectEndpoints({
         }),
       }),
       createRequirement: build.mutation<
-        Promise<AxiosResponse<Requirement>>,
+        Promise<Requirement>,
         Partial<Requirement>
       >({
         query: (data: Partial<Requirement>) => ({
@@ -55,7 +55,7 @@ export const requirementApi = baseApi.injectEndpoints({
         }),
       }),
       updateRequirement: build.mutation<
-        Requirement,
+        Promise<Requirement>,
         Pick<Requirement, "id"> & Partial<Requirement>
       >({
         query: ({ id, ...patch }) => ({

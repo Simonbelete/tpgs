@@ -25,6 +25,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import SaveIcon from "@mui/icons-material/Save";
 import { useRouter } from "next/router";
 import AsyncDropdown from "../../components/AsyncDropdown";
+import getPreviousUrl from "@/util/getPreviousUrl";
 
 export type Field<T> = {
   prefix?: string | ReactNode;
@@ -44,7 +45,6 @@ export type Field<T> = {
 };
 
 export interface FormProps<T> {
-  baseUrl: string;
   data?: T;
   schema: ObjectSchema<any>;
   beforeSubmit?: (values: Partial<T>) => Partial<T>;
@@ -64,7 +64,7 @@ export interface FormProps<T> {
       Pick<AbstractBaseModel, "id"> & Partial<T>,
       ClientQueyFn,
       any,
-      Promise<AxiosResponse<T>>,
+      Promise<T>,
       any
     >,
     EndpointDefinitions
@@ -74,7 +74,7 @@ export interface FormProps<T> {
         Pick<AbstractBaseModel, "id"> & Partial<T>,
         ClientQueyFn,
         any,
-        Promise<AxiosResponse<T>>,
+        Promise<T>,
         any
       >
     >;
@@ -85,7 +85,6 @@ export default function Form<
   T extends AbstractBaseModel & { status?: number }
 >({
   fields,
-  baseUrl,
   data,
   schema,
   createEndpoint,
@@ -217,7 +216,7 @@ export default function Form<
               color="error"
               size="small"
               startIcon={<CloseIcon />}
-              onClick={() => router.push(baseUrl)}
+              onClick={() => router.push(getPreviousUrl(router.pathname))}
             >
               Cancel
             </Button>

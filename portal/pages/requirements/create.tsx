@@ -12,10 +12,7 @@ const RequirementCreatePage = () => {
   return (
     <>
       <SeoHead title="Create Requirement" />
-      <CreateLayout
-        breadcrumbs={<Breadcrumbs items={breadcrumbs} />}
-        header={<Typography variant="title">Create Requirement</Typography>}
-      >
+      <CreateLayout breadcrumbs={<Breadcrumbs items={breadcrumbs} />}>
         <RequirementForm />
       </CreateLayout>
     </>
