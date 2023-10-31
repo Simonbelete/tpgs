@@ -128,6 +128,7 @@ export default function List<T>({
       <StripedDataGrid
         sx={{ background: "white", height: "100%" }}
         rows={(data?.results || []) as GridValidRowModel[]}
+        rowCount={data?.count || 0}
         loading={isLoading}
         density="compact"
         rowHeight={55}
@@ -141,7 +142,7 @@ export default function List<T>({
           params.indexRelativeToCurrentPage % 2 === 0 ? "even" : "odd"
         }
         getRowId={getRowId != null ? getRowId : getRowById}
-        pageSizeOptions={[5, 10, 25, 50, 100]}
+        pageSizeOptions={[10, 25, 50, 100]}
         paginationModel={paginationModel}
         paginationMode="server"
         onPaginationModelChange={setPaginationModel}

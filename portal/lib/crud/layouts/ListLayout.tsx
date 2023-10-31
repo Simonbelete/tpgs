@@ -6,36 +6,26 @@ import {
   Filter,
   CreateButton,
   CreateButtonProps,
-  Export,
   ExportProps,
-  Import,
   ImportProps,
 } from "../list/";
 import { Grid, Box, Typography, Stack } from "@mui/material";
 
-interface ListLayoutProps<T>
-  extends ListProps<T>,
-    FilterProps<T>,
-    CreateButtonProps,
-    ExportProps,
-    ImportProps {
+interface ListLayoutProps<T> extends ListProps<T>, FilterProps<T> {
   title: string;
+  menus?: React.ReactNode;
+  baseUrl: string;
 }
 
 export default function ListLayout<T>({
+  baseUrl,
   title,
   columns,
   actions,
   getEndpoint,
   deleteEndpoint,
   filters,
-  baseUrl,
-  exportCsv,
-  exportXls,
-  exportXlsx,
-  importCsv,
-  importXls,
-  importXlsx,
+  menus,
   getRowId,
 }: ListLayoutProps<T>) {
   return (
@@ -54,17 +44,8 @@ export default function ListLayout<T>({
             justifyContent={{ xs: "start", md: "end" }}
             spacing={2}
           >
+            {menus}
             <CreateButton baseUrl={baseUrl} />
-            <Export
-              exportCsv={exportCsv}
-              exportXls={exportXls}
-              exportXlsx={exportXlsx}
-            />
-            <Import
-              importCsv={importCsv}
-              importXls={importXls}
-              importXlsx={importXlsx}
-            />
           </Stack>
         </Grid>
       </Grid>

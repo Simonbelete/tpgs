@@ -58,18 +58,12 @@ class SubRegionSerializer(ModelSerializer):
         fields = ['id', 'name', 'country', 'region']
 
 
-class RegionSerializer(HyperlinkedModelSerializer):
-    """
-    HyperlinkedModelSerializer for Region.
-    """
-    url = relations.HyperlinkedIdentityField(
-        view_name='cities-light-api-region-detail')
-    country = relations.HyperlinkedRelatedField(
-        view_name='cities-light-api-country-detail', read_only=True)
-
+class RegionSerializer(ModelSerializer):
+    country = relations.SlugRelatedField(read_only=True,
+        slug_field='name')
     class Meta:
         model = Region
-        exclude = ('slug',)
+        fields = ['id', 'name', 'display_name', 'country']
 
 
 class CountrySerializer(ModelSerializer):
@@ -85,8 +79,8 @@ class CitiesLightListModelViewSet(viewsets.ReadOnlyModelViewSet):
         """
         queryset = super().get_queryset()
 
-        if self.request.GET.get('q', None):
-            return queryset.filter(name_ascii__icontains=self.request.GET['q'])
+        if self.request.GET.get('search', None):
+            return queryset.filter(name_ascii__icontains=self.request.GET['search'])
 
         return queryset
 
@@ -127,13 +121,13 @@ class CityModelViewSet(CitiesLightListModelViewSet):
 
 
 router = routers.SimpleRouter()
-router.register(r'cities', CityModelViewSet, basename='cities-light-api-city')
+router.register(r'cities', CityModelViewSet, basename='city_cities-light-api-city')
 router.register(r'countries', CountryModelViewSet,
-                basename='cities-light-api-country')
+                basename='city_cities-light-api-country')
 router.register(r'regions', RegionModelViewSet,
-                basename='cities-light-api-region')
+                basename='city_cities-light-api-region')
 router.register(r'subregions', SubRegionModelViewSet,
-                basename='cities-light-api-subregion')
+                basename='city_cities-light-api-subregion')
 
 urlpatterns = [
     path('', include(router.urls)),

@@ -1,8 +1,8 @@
 export { default as List } from "./features/List";
 export { default as Filter } from "./features/Filter";
 export { default as CreateButton } from "./features/CreateButton";
-export { default as Export } from "./features/Export";
-export { default as Import } from "./features/Import";
+export { default as ExportButton } from "./features/Export";
+export { default as ImportButton } from "./features/Import";
 export { default as DashboardAction } from "./actions/DashboardAction";
 export { default as PermanentlyDeleteAction } from "./actions/PermanentlyDeleteAction";
 export { default as EditAction } from "./actions/EditAction";
