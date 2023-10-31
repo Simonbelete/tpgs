@@ -22,52 +22,72 @@ import AddIcon from "@mui/icons-material/Add";
 import { enqueueSnackbar } from "notistack";
 import _ from "lodash";
 import randomId from "@/util/randomId";
+import { EditMode } from "@/types";
 
-export interface EditToolbarProps<
-  T extends GridValidRowModel & AsyncDropdownProps<T> & { isNew: boolean }
-> extends AsyncDropdownProps<T>,
-    AbstractBaseModel {
+export interface EditToolbarProps<T extends EditMode, T2>
+  extends AsyncDropdownProps<T2> {
   setRows: (newRows: (oldRows: GridRowsProp<T>) => GridRowsProp<T>) => void;
   rows: GridRowsProp<T>;
+  // T2 key
+  mapperKey: string;
 }
 
 export default function EditToolbar<
-  T extends GridValidRowModel & AsyncDropdownProps<T> & { isNew: boolean }
->({ setRows, rows, label, endpoint, multiple, dataKey }: EditToolbarProps<T>) {
+  T extends EditMode & AbstractBaseModel,
+  T2 extends AbstractBaseModel
+>({ setRows, rows, label, endpoint, mapperKey }: EditToolbarProps<T, T2>) {
   const [openDialog, setOpenDialog] = useState(false);
-  const [selectedValues, setSelectedValues] = useState<T[]>([]);
+  const [selectedValues, setSelectedValues] = useState<T2[]>([]);
 
   const handleOpenDialog = () => setOpenDialog(true);
   const handleCloseDialog = () => setOpenDialog(false);
 
-  const checkDuplicate = () => {
-    return rows.some((e) => selectedValues.some((o) => e.id == o.id));
+  /**
+   *
+   * @param id T2 id
+   * @returns
+   */
+  const checkDuplicate = (id: any) => {
+    return rows.some((e: any) => e[mapperKey].id == id);
   };
 
-  const generateIdForNewRow = (row: T) => {
-    return { ...row, id: randomId(), isNew: true };
+  const buildNewRow = (row: T2): Partial<T> => {
+    const newRow: Partial<T> = {
+      id: randomId(),
+      isNew: true,
+    } as Partial<T>;
+
+    // @ts-ignore
+    newRow[mapperKey] = row;
+
+    return newRow;
   };
 
-  const handleOnChange = (event: any, newValue: T | T[]) => {
+  const handleOnChange = (event: any, newValue: T2 | T2[]) => {
     if (Array.isArray(newValue)) {
-      const processedRows = newValue.map((e) => generateIdForNewRow(e));
-      setSelectedValues(processedRows || []);
+      setSelectedValues([...selectedValues, ...newValue]);
     } else {
-      const newRow = generateIdForNewRow(newValue);
-      setSelectedValues([newRow]);
+      setSelectedValues([newValue]);
     }
   };
 
   const handleSelected = () => {
-    if (selectedValues.length != 0) {
-      // TODO: isNew
-      if (checkDuplicate())
-        enqueueSnackbar("Duplicate, Already exists", { variant: "warning" });
-      else {
-        const newRows = selectedValues.map((v) => ({ ...v, isNew: true }));
+    const newRows: Partial<T>[] = [];
 
-        setRows((oldRows) => [...oldRows, ...newRows]);
+    if (selectedValues.length != 0) {
+      for (let rowVal of selectedValues) {
+        if (checkDuplicate(rowVal.id)) {
+          enqueueSnackbar(
+            `${rowVal.display_name} is duplicate, already exists`,
+            { variant: "warning" }
+          );
+        } else {
+          const newRow = buildNewRow(rowVal);
+          newRows.push(newRow);
+        }
       }
+
+      setRows((oldRows) => [...oldRows, ...(newRows as T[])]);
     }
     setSelectedValues([]);
     handleCloseDialog();
@@ -80,7 +100,7 @@ export default function EditToolbar<
         <DialogContent>
           <Box component="form" sx={{ display: "flex", flexWrap: "wrap" }}>
             <FormControl sx={{ m: 1, minWidth: 200, width: "100%" }}>
-              <AsyncDropdown<T>
+              <AsyncDropdown<T2>
                 dataKey="name"
                 label={label}
                 endpoint={endpoint}

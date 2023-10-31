@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import * as yup from "yup";
-import { Requirement } from "@/models";
+import { GridColDef, GridValidRowModel, GridRowsProp } from "@mui/x-data-grid";
+import { Requirement, RequirementNutrient, Nutrient } from "@/models";
 import {
   TabFormLayout,
   CreateNewIcon,
@@ -8,10 +9,15 @@ import {
   CancelIcon,
   Form,
   DashboardIcon,
+  EditableList,
+  EditToolbar,
 } from "@/lib/crud";
-import { Tabs, Tab, Box, tabsClasses, Chip } from "@mui/material";
+import { Tabs, Tab, Box, tabsClasses, Chip, Button } from "@mui/material";
 import { Card } from "@/components";
 import { requirementApi } from "../services";
+import { AsyncDropdownProps } from "@/lib/crud/components/AsyncDropdown";
+import { nutrientApi } from "@/features/nutrients/services";
+import { EditMode } from "@/types";
 
 const schema = yup.object({
   name: yup.string().required(),
@@ -29,6 +35,31 @@ function a11yProps(index: number) {
   };
 }
 
+export interface EditableRequirementNutrient
+  extends RequirementNutrient,
+    EditMode {}
+
+const RequirementNutrientToolbar = ({
+  setRows,
+  rows,
+}: {
+  setRows: (
+    newRows: (
+      oldRows: GridRowsProp<EditableRequirementNutrient>
+    ) => GridRowsProp<EditableRequirementNutrient>
+  ) => void;
+  rows: GridRowsProp<EditableRequirementNutrient>;
+}) => {
+  return (
+    <EditToolbar<EditableRequirementNutrient, Nutrient>
+      setRows={setRows}
+      rows={rows}
+      endpoint={nutrientApi.endpoints.getNutrients}
+      mapperKey="nutrient"
+    />
+  );
+};
+
 export const RequirementForm = ({ data }: { data?: Requirement }) => {
   const [formData, setFormData] = useState<Requirement | undefined>(data);
   const [tab, setTab] = useState(0);
@@ -40,9 +71,55 @@ export const RequirementForm = ({ data }: { data?: Requirement }) => {
     return values;
   };
 
+  const cleanRequirementNutrient = (
+    values: Partial<RequirementNutrient>
+  ): Partial<RequirementNutrient> => {
+    return {
+      id: values?.id,
+      requirement: data?.id,
+      nutrient: (values.nutrient as Nutrient).id || undefined,
+      value: values.value,
+    };
+  };
+
   const handleCreated = (value: Requirement) => {
     setFormData(value);
   };
+
+  const columns: GridColDef[] = [
+    {
+      field: "name",
+      headerName: "Name",
+      flex: 1,
+      minWidth: 100,
+      valueGetter: (params) =>
+        params.row.nutrient ? params.row.nutrient.name : "",
+    },
+    {
+      field: "abbreviation",
+      headerName: "Abbreviation",
+      flex: 1,
+      minWidth: 150,
+      valueGetter: (params) =>
+        params.row.nutrient ? params.row.nutrient.abbreviation : "",
+    },
+    {
+      field: "value",
+      headerName: "Value [%]",
+      flex: 1,
+      minWidth: 150,
+      editable: true,
+      type: "number",
+    },
+    {
+      field: "unit",
+      headerName: "Unit",
+      flex: 1,
+      minWidth: 150,
+      valueGetter: (params) =>
+        params.row.nutrient ? params.row.nutrient.unit.name : "",
+    },
+  ];
 
   return (
     <>
@@ -128,6 +205,24 @@ export const RequirementForm = ({ data }: { data?: Requirement }) => {
                 onCreateSuccess={handleCreated}
               />
             </Card>
+          )}
+          {formData && tab == 1 && (
+            <EditableList<RequirementNutrient>
+              getQuery={{ id: formData?.id, query: {} }}
+              toolbar={RequirementNutrientToolbar}
+              columns={columns}
+              beforeSubmit={cleanRequirementNutrient}
+              getEndpoint={requirementApi.endpoints.getNutrientsOfRequirement}
+              createEndpoint={
+                requirementApi.endpoints.createNutrientForRequirement
+              }
+              updateEndpoint={
+                requirementApi.endpoints.updateNutrientOfRequirement
+              }
+              deleteEndpoint={
+                requirementApi.endpoints.deleteNutrientOfRequirement
+              }
+            />
           )}
         </Box>
       </TabFormLayout>

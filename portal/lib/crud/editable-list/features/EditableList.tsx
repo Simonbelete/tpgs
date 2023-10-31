@@ -1,5 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { GridColDef, GridValidRowModel } from "@mui/x-data-grid";
+import {
+  GridColDef,
+  GridValidRowModel,
+  GridActionsCellItem,
+} from "@mui/x-data-grid";
 import {
   ApiEndpointMutation,
   ApiEndpointQuery,
@@ -13,74 +17,77 @@ import {
   MutationHooks,
   QueryHooks,
 } from "@reduxjs/toolkit/dist/query/react/buildHooks";
-import { ClientQueyFn, Query } from "@/types";
+import { ClientQueyFn, EditMode } from "@/types";
 import { Response, AbstractBaseModel } from "@/models";
-import { AxiosResponse } from "axios";
 import EditableTable, {
   EditableTableCustomNoRowsOverlay,
 } from "../../components/EditableTable";
 import { LinearProgress } from "@mui/material";
+import DeleteIcon from "@mui/icons-material/DeleteOutlined";
 
 export interface EditableListProps<
-  T extends AbstractBaseModel & GridValidRowModel & { isNew: boolean }
+  T extends AbstractBaseModel & GridValidRowModel
 > {
-  getQuery: Query;
-  toolbar: React.FC;
+  getQuery: { id: number; query: Object };
+  toolbar: React.FC<any>;
   columns: GridColDef[];
   beforeSubmit?: (values: Partial<T>) => Partial<T>;
   getEndpoint: ApiEndpointQuery<
-    QueryDefinition<Query, ClientQueyFn, any, Response<T[]>, any>,
-    EndpointDefinitions
-  > &
-    QueryHooks<QueryDefinition<Query, ClientQueyFn, any, Response<T[]>, any>>;
-  deleteEndpoint: ApiEndpointMutation<
-    MutationDefinition<number, ClientQueyFn, any, T, any>,
-    EndpointDefinitions
-  > &
-    MutationHooks<MutationDefinition<number, ClientQueyFn, any, T, any>>;
-  updateEndpoint: ApiEndpointMutation<
-    MutationDefinition<
-      Pick<AbstractBaseModel, "id"> & Partial<T>,
+    QueryDefinition<
+      { id: number; query: Object },
       ClientQueyFn,
       any,
-      Promise<AxiosResponse<T>>,
+      Response<T[]>,
       any
     >,
     EndpointDefinitions
   > &
-    MutationHooks<
-      MutationDefinition<
-        Pick<AbstractBaseModel, "id"> & Partial<T>,
+    QueryHooks<
+      QueryDefinition<
+        { id: number; query: Object },
         ClientQueyFn,
         any,
-        Promise<AxiosResponse<T>>,
+        Response<T[]>,
         any
       >
     >;
+  deleteEndpoint: ApiEndpointMutation<
+    MutationDefinition<any, ClientQueyFn, any, T, any>,
+    EndpointDefinitions
+  > &
+    MutationHooks<MutationDefinition<any, ClientQueyFn, any, T, any>>;
+  updateEndpoint: ApiEndpointMutation<
+    MutationDefinition<Partial<T>, ClientQueyFn, any, Promise<T>, any>,
+    EndpointDefinitions
+  > &
+    MutationHooks<
+      MutationDefinition<Partial<T>, ClientQueyFn, any, Promise<T>, any>
+    >;
   createEndpoint: ApiEndpointMutation<
     MutationDefinition<
-      Partial<T>,
+      { id: number; data: Partial<T> },
       ClientQueyFn,
       any,
-      Promise<AxiosResponse<T>>,
+      Promise<T>,
       any
     >,
     EndpointDefinitions
   > &
     MutationHooks<
       MutationDefinition<
-        Partial<T>,
+        { id: number; data: Partial<T> },
         ClientQueyFn,
         any,
-        Promise<AxiosResponse<T>>,
+        Promise<T>,
         any
       >
     >;
 }
-
-export default function EditableList<
-  T extends AbstractBaseModel & { isNew: boolean }
->({
+/**
+ *
+ * T.id is current row id
+ */
+export default function EditableList<T extends AbstractBaseModel & EditMode>({
   getQuery,
   toolbar,
   columns,
@@ -108,13 +115,44 @@ export default function EditableList<
     const cleaned_data =
       beforeSubmit == null ? updatedRow : beforeSubmit(updatedRow);
 
-    if (updatedRow.isNew) await createTrigger(cleaned_data);
+    if (updatedRow.isNew)
+      await createTrigger({ id: cleaned_data.id, data: cleaned_data });
     else await updateTrigger(cleaned_data as any);
 
     const newRow = { ...updatedRow, isNew: false };
 
     // TODO: check if refetch is needed
     return newRow;
+  };
+
+  const settingCol: GridColDef = {
+    field: "actions",
+    type: "actions",
+    headerName: "Actions",
+    width: 100,
+    cellClassName: "actions",
+    getActions: ({ id, row }) => {
+      return [
+        <GridActionsCellItem
+          showInMenu={false}
+          key={id}
+          icon={<DeleteIcon />}
+          label="Delete"
+          onClick={() => handleDeleteRow(id, row)}
+          color="inherit"
+        />,
+      ];
+    },
+  };
+
+  const handleDeleteRow = async (id: any, row: T) => {
+    if (row.isNew) {
+      setRows(rows.filter((e) => e.id != row.id));
+    } else {
+      const cleaned_data = beforeSubmit == null ? row : beforeSubmit(row);
+      await deleteTrigger(cleaned_data);
+      refetch();
+    }
   };
 
   return (
@@ -125,7 +163,7 @@ export default function EditableList<
       loading={isLoading}
       // editMode="row"
       rowHeight={40}
-      columns={columns}
+      columns={[...columns, settingCol]}
       disableRowSelectionOnClick
       slots={{
         toolbar: toolbar,
@@ -134,7 +172,7 @@ export default function EditableList<
       }}
       processRowUpdate={processRowUpdate}
       slotProps={{
-        toolbar: { setRows },
+        toolbar: { setRows, rows },
       }}
       onProcessRowUpdateError={handleOnProcessRowUpdateError}
     />

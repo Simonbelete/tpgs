@@ -10,6 +10,7 @@ import { AxiosResponse } from "axios";
 import clientSSR from "@/services/client_ssr";
 import client from "@/services/client";
 import { NextPageContext } from "next";
+import { Query, CreateFormData } from "@/types";
 
 const URL = "/requirements";
 const HISTORY_URL = `histories`;
@@ -74,7 +75,7 @@ export const requirementApi = baseApi.injectEndpoints({
         }),
       }),
       // Nutrients
-      getRequirementNutrients: build.query<
+      getNutrientsOfRequirement: build.query<
         Response<RequirementNutrient[]>,
         { id: number; query: Object }
       >({
@@ -84,8 +85,8 @@ export const requirementApi = baseApi.injectEndpoints({
           params: query,
         }),
       }),
-      createRequirementNutrient: build.mutation<
-        Promise<AxiosResponse<RequirementNutrient>>,
+      createNutrientForRequirement: build.mutation<
+        Promise<RequirementNutrient>,
         { id: number; data: Partial<RequirementNutrient> }
       >({
         query: ({ id, data }) => ({
@@ -94,11 +95,9 @@ export const requirementApi = baseApi.injectEndpoints({
           data: data,
         }),
       }),
-      updateRequirementNutrient: build.mutation<
-        RequirementNutrient,
-        Pick<RequirementNutrient, "requirement"> &
-          Pick<RequirementNutrient, "id"> &
-          Partial<RequirementNutrient>
+      updateNutrientOfRequirement: build.mutation<
+        Promise<RequirementNutrient>,
+        Partial<RequirementNutrient>
       >({
         query: ({ requirement, id, ...patch }) => ({
           url: `${URL}/${requirement}/${NUTRIENT_URL}/${id}/`,
@@ -106,12 +105,12 @@ export const requirementApi = baseApi.injectEndpoints({
           data: patch,
         }),
       }),
-      deleteRequirementNutrient: build.mutation<
-        Promise<AxiosResponse<RequirementNutrient>>,
-        { id: number; nutrient_id: number }
+      deleteNutrientOfRequirement: build.mutation<
+        any,
+        Pick<RequirementNutrient, "requirement" | "id">
       >({
-        query: ({ id, nutrient_id }) => ({
-          url: `${URL}/${id}/${NUTRIENT_URL}/${nutrient_id}`,
+        query: ({ requirement, id }) => ({
+          url: `${URL}/${requirement}/${NUTRIENT_URL}/${id}`,
           method: "delete",
         }),
       }),
@@ -161,9 +160,9 @@ export const {
   useGetRequirementAnalysesQuery,
 
   // Nutrients
-  useGetRequirementNutrientsQuery,
-  useLazyGetRequirementNutrientsQuery,
-  useCreateRequirementNutrientMutation,
-  useUpdateRequirementNutrientMutation,
-  useDeleteRequirementNutrientMutation,
+  useGetNutrientsOfRequirementQuery,
+  useLazyGetNutrientsOfRequirementQuery,
+  useCreateNutrientForRequirementMutation,
+  useUpdateNutrientOfRequirementMutation,
+  useDeleteNutrientOfRequirementMutation,
 } = requirementApi;

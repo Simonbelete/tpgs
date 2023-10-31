@@ -54,7 +54,7 @@ class RequirementNutrientSerializer_GET(serializers.ModelSerializer):
 class RequirementNutrientSerializer_POST(serializers.ModelSerializer):
     class Meta:
         model = models.RequirementNutrient
-        fields = ['id', 'nutrient', 'value']
+        fields = ['nutrient', 'value']
 
     def create(self, validated_data):
         requirement = models.Requirement.objects.get(
