@@ -55,7 +55,10 @@ export default function DangerZone<T>({
   const handleToggleActive = async (value: boolean) =>
     await updateTrigger({ id: id, is_active: value } as any);
   const handleDelete = async () =>
-    id && (await deleteTrigger(id).then(() => router.push("/houses")));
+    id &&
+    (await deleteTrigger(id).then(() =>
+      router.push(router.pathname.split("/[id]")[0])
+    ));
 
   const useCRUDHook = useCRUD({
     results: [updateResult, deleteTrigger],

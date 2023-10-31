@@ -539,10 +539,14 @@ const SidebarMenu = () => {
             </Typography>
           }
           icon={<MoreHorizIcon fontSize="small" />}
+          defaultOpen={RegExp("^/(reduction-reasons)(.*)$").test(
+            router.pathname
+          )}
         >
           <MenuItem
             component={<Link href="/reduction-reasons" />}
             icon={<AdjustIcon fontSize="small" />}
+            active={RegExp("/reduction-reasons(.*)$").test(router.pathname)}
           >
             <Typography variant="body1" fontSize={14}>
               Cull reasons

@@ -35,8 +35,6 @@ export default function FormLayout<T extends AbstractBaseModel>({
   const [formData, setFormData] = useState<T | undefined>(data);
 
   const handleCreated = (newData: T) => {
-    console.log("abc");
-    console.log(newData);
     setFormData(newData);
   };
 

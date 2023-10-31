@@ -42,6 +42,7 @@ const DangerZoneCard = ({
   const handleClose = () => setIsOpen(false);
 
   const handleDelete = useCallback(() => {
+    handleClose();
     onDelete();
   }, [onDelete]);
 
