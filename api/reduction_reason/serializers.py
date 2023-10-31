@@ -11,7 +11,7 @@ class ReductionReasonSerializer_SLUG(serializers.ModelSerializer):
 class ReductionReasonSerializer_GET(serializers.ModelSerializer):
     class Meta:
         model = models.ReductionReason
-        fields = ['id', 'name', 'is_active']
+        fields = ['id', 'display_name', 'name', 'created_at', 'is_active']
 
 
 class ReductionReasonHistorySerializer(serializers.ModelSerializer):

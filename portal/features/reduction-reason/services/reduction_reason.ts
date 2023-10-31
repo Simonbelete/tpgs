@@ -38,7 +38,7 @@ export const reductionReasonApi = baseApi.injectEndpoints({
         }),
       }),
       createReductionReason: build.mutation<
-        Promise<AxiosResponse<ReductionReason>>,
+        Promise<ReductionReason>,
         Partial<ReductionReason>
       >({
         query: (data: Partial<ReductionReason>) => ({

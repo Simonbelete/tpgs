@@ -1,4 +1,4 @@
-import React, { ReactNode, useCallback } from "react";
+import React, { ReactNode, useCallback, useEffect } from "react";
 import { ObjectSchema } from "yup";
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -51,24 +51,13 @@ export interface FormProps<T> {
   fields: {
     [K in keyof Partial<T>]: Field<T[K]>;
   };
+  onCreateSuccess?: (data: T) => void;
   createEndpoint: ApiEndpointMutation<
-    MutationDefinition<
-      Partial<T>,
-      ClientQueyFn,
-      any,
-      Promise<AxiosResponse<T>>,
-      any
-    >,
+    MutationDefinition<Partial<T>, ClientQueyFn, any, Promise<T>, any>,
     EndpointDefinitions
   > &
     MutationHooks<
-      MutationDefinition<
-        Partial<T>,
-        ClientQueyFn,
-        any,
-        Promise<AxiosResponse<T>>,
-        any
-      >
+      MutationDefinition<Partial<T>, ClientQueyFn, any, Promise<T>, any>
     >;
   updateEndpoint: ApiEndpointMutation<
     MutationDefinition<
@@ -91,7 +80,9 @@ export interface FormProps<T> {
     >;
 }
 
-export default function Form<T>({
+export default function Form<
+  T extends AbstractBaseModel & { status?: number }
+>({
   fields,
   baseUrl,
   data,
@@ -99,6 +90,7 @@ export default function Form<T>({
   createEndpoint,
   updateEndpoint,
   beforeSubmit,
+  onCreateSuccess,
 }: FormProps<T>) {
   type Inputs = Partial<T>;
 
@@ -114,8 +106,12 @@ export default function Form<T>({
 
   const onSubmit: SubmitHandler<Inputs> = async (values) => {
     const cleaned_data = beforeSubmit == null ? values : beforeSubmit(values);
-    if (data == null) await createTrigger(cleaned_data as T);
-    else await updateTrigger(cleaned_data as any);
+    if (data == null) {
+      const response = await createTrigger(cleaned_data as T).unwrap();
+      console.log(response.status);
+      if (response?.status == 201 && onCreateSuccess != undefined)
+        onCreateSuccess(response);
+    } else await updateTrigger(cleaned_data as any);
   };
 
   const useCRUDHook = useCRUD({

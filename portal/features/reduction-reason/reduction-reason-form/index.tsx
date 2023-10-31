@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import * as yup from "yup";
 import { ReductionReason } from "@/models";
-import { FormLayout } from "@/lib/crud";
+import { FormLayout, CreateNewIcon, HistoryIcon, CancelIcon } from "@/lib/crud";
 import { reductionReasonApi } from "../services";
 
 const schema = yup.object({
@@ -38,6 +38,13 @@ export const ReductionReasonForm = ({
         fields={{
           name: { label: "Name", placeholder: "Name", xs: 12, md: 12 },
         }}
+        menus={
+          <>
+            <CreateNewIcon />
+            <HistoryIcon />
+            <CancelIcon />
+          </>
+        }
       />
     </>
   );

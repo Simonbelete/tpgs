@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Form,
   FormProps,
@@ -32,13 +32,21 @@ export default function FormLayout<T extends AbstractBaseModel>({
   fields,
   beforeSubmit,
 }: FormLayoutProps<T>) {
+  const [formData, setFormData] = useState<T | undefined>(data);
+
+  const handleCreated = (newData: T) => {
+    console.log("abc");
+    console.log(newData);
+    setFormData(newData);
+  };
+
   return (
     <>
       <Grid container mb={5}>
         <Grid item xs={12} md={6}>
           <Box sx={{ display: "flex" }} justifyContent={"start"}>
             <Typography variant="title">
-              {data ? `${data.display_name || ""} - Edit` : title}
+              {formData ? `${formData.display_name || ""} - Edit` : title}
             </Typography>
           </Box>
         </Grid>
@@ -47,7 +55,7 @@ export default function FormLayout<T extends AbstractBaseModel>({
           <Stack
             direction="row"
             justifyContent={{ xs: "start", md: "end" }}
-            spacing={2}
+            spacing={0}
           >
             {menus}
           </Stack>
@@ -55,30 +63,31 @@ export default function FormLayout<T extends AbstractBaseModel>({
       </Grid>
       <Grid container spacing={2}>
         <Grid item xs={12} lg={8.5} xl={9}>
-          <Card title="Requirement Form">
+          <Card title={title}>
             <Form
               baseUrl={baseUrl}
-              data={data}
+              data={formData}
               schema={schema}
               createEndpoint={createEndpoint}
               updateEndpoint={updateEndpoint}
               fields={fields}
               beforeSubmit={beforeSubmit}
+              onCreateSuccess={handleCreated}
             />
           </Card>
         </Grid>
         <Grid item xs={12} lg={0.5} xl={1} />
         <Grid item xs={12} lg={3} xl={2}>
           <Stack spacing={3}>
-            {data && (
+            {formData && (
               <>
                 <InfoZone
-                  id={data?.id || 0}
+                  id={formData?.id || 0}
                   summaryEndpoint={summaryEndpoint}
                 />
                 <DangerZone
-                  id={data?.id || 0}
-                  is_active={data?.is_active || false}
+                  id={formData?.id || 0}
+                  is_active={formData?.is_active || false}
                   updateEndpoint={updateEndpoint}
                   deleteEndpoint={deleteEndpoint}
                 />
