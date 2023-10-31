@@ -550,8 +550,9 @@ const SidebarMenu = () => {
           </MenuItem>
         </SubMenu>
         <MenuItem
-          component={<Link href="/feeds" />}
+          component={<Link href="/currencies" />}
           icon={<PaidIcon fontSize="small" />}
+          active={RegExp("/currencies(.*)$").test(router.pathname)}
         >
           <Typography variant="body1" fontSize={14}>
             Currencies

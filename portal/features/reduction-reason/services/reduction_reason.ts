@@ -48,7 +48,7 @@ export const reductionReasonApi = baseApi.injectEndpoints({
         }),
       }),
       updateReductionReason: build.mutation<
-        ReductionReason,
+        Promise<AxiosResponse<ReductionReason>>,
         Pick<ReductionReason, "id"> & Partial<ReductionReason>
       >({
         query: ({ id, ...patch }) => ({

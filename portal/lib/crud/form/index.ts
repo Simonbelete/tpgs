@@ -1,6 +1,10 @@
 export { default as Form } from "./features/Form";
 export { default as DangerZone } from "./features/DangerZone";
 export { default as InfoZone } from "./features/InfoZone";
+export { default as CancelIcon } from "./features/CancelIcon";
+export { default as CreateNewIcon } from "./features/CreateNewIcon";
+export { default as DashboardIcon } from "./features/DashboardIcon";
+export { default as HistoryIcon } from "./features/HistoryIcon";
 export * from "./features/Form";
 export * from "./features/DangerZone";
 export * from "./features/InfoZone";

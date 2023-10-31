@@ -12,10 +12,7 @@ const ReductionReasonCreatePage = () => {
   return (
     <>
       <SeoHead title="Create" />
-      <CreateLayout
-        breadcrumbs={<Breadcrumbs items={breadcrumbs} />}
-        header={<Typography variant="title">Create </Typography>}
-      >
+      <CreateLayout breadcrumbs={<Breadcrumbs items={breadcrumbs} />}>
         <ReductionReasonForm />
       </CreateLayout>
     </>

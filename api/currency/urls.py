@@ -2,6 +2,13 @@ from django.urls import path, include
 from rest_framework import routers
 from . import views
 
+router = routers.DefaultRouter()
+router.register(r'currencies', views.CurrencyViewSet,
+                            basename='api_currencies')
+
+
 urlpatterns = [
-    path('currencies', views.CurrencyList.as_view()),
+    path('', include(router.urls)),
+    
+    # path('currencies', views.CurrencyList.as_view()),
 ]

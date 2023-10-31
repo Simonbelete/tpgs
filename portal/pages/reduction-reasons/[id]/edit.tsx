@@ -3,18 +3,18 @@ import { NextPageContext } from "next";
 import { Typography, Stack, IconButton, Tooltip } from "@mui/material";
 import Link from "next/link";
 import { EditLayout } from "@/layouts";
-import { PenForm } from "@/features/pen";
-import { getPenByIdSSR } from "@/features/pen/services";
+import { ReductionReasonForm } from "@/features/reduction-reason";
+import { getReductionReasonByIdSSR } from "@/features/reduction-reason/services";
 import { Breadcrumbs, Loading } from "@/components";
 import { useBreadcrumbs } from "@/hooks";
-import { Pen } from "@/models";
+import { ReductionReason } from "@/models";
 import { SeoHead } from "@/seo";
 import CancelIcon from "@mui/icons-material/Cancel";
 import LibraryAddIcon from "@mui/icons-material/LibraryAdd";
 import ManageHistoryIcon from "@mui/icons-material/ManageHistory";
 import { useRouter } from "next/router";
 
-const PenEditPage = ({ data }: { data: Pen }) => {
+const ReductionReasonEditPage = ({ data }: { data: ReductionReason }) => {
   const { breadcrumbs } = useBreadcrumbs();
 
   return (
@@ -25,7 +25,7 @@ const PenEditPage = ({ data }: { data: Pen }) => {
         header={<Typography variant="title">{data.name} - Edit</Typography>}
         actions={<Actions />}
       >
-        <PenForm pen={data} />
+        <ReductionReasonForm data={data} />
       </EditLayout>
     </>
   );
@@ -70,7 +70,7 @@ export async function getServerSideProps(context: NextPageContext) {
   const { id } = context.query;
 
   try {
-    const res = await getPenByIdSSR(context, Number(id));
+    const res = await getReductionReasonByIdSSR(context, Number(id));
 
     if (res.status != 200)
       return {
@@ -91,4 +91,4 @@ export async function getServerSideProps(context: NextPageContext) {
   }
 }
 
-export default PenEditPage;
+export default ReductionReasonEditPage;

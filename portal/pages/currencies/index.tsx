@@ -2,20 +2,20 @@ import React from "react";
 import { ListLayout } from "@/layouts";
 import { useBreadcrumbs } from "@/hooks";
 import { Breadcrumbs } from "@/components";
-import { ReductionReasonList } from "@/features/reduction-reason";
+import { CurrencyList } from "@/features/currencies";
 import { SeoHead } from "@/seo";
 
-const ReductionReasonsPage = () => {
+const CityPage = () => {
   const { breadcrumbs } = useBreadcrumbs();
 
   return (
     <>
-      <SeoHead title="Remove" />
+      <SeoHead title="Currency" />
       <ListLayout breadcrumbs={<Breadcrumbs items={breadcrumbs} />}>
-        <ReductionReasonList />
+        <CurrencyList />
       </ListLayout>
     </>
   );
 };
 
-export default ReductionReasonsPage;
+export default CityPage;
