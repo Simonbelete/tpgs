@@ -7,8 +7,8 @@ import {
 import { Box, LinearProgress } from "@mui/material";
 import StripedDataGrid, {
   CustomNoRowsOverlay,
-} from "../components/StripedDataGrid";
-import DeleteModal from "../components/DeleteModal";
+} from "../../components/StripedDataGrid";
+import DeleteModal from "../../components/DeleteModal";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "@/store";
 import {
@@ -72,7 +72,9 @@ export default function List<T>({
     buildQuery({ ...buildPage(paginationModel), ...selector })
   );
   const [deleteTrigger, deleteResult] =
-    deleteEndpoint != null ? deleteEndpoint.useMutation() : [() => {}, {}];
+    deleteEndpoint != null
+      ? deleteEndpoint.useMutation()
+      : [async () => {}, {}];
 
   const settingColumn: GridColDef = {
     field: "Actions",

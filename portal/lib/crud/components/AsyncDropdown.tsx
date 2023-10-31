@@ -12,24 +12,7 @@ import { QueryHooks } from "@reduxjs/toolkit/dist/query/react/buildHooks";
 import { ClientQueyFn, Query } from "@/types";
 import { Response } from "@/models";
 
-export default function AsyncDropdown<T>({
-  id,
-  dataKey = "name",
-  value,
-  label,
-  defaultOptions,
-  error,
-  helperText,
-  createForm,
-  createFormTitle = "Create New",
-  multiple,
-  onChange,
-  onInputChange,
-  endpoint,
-  placeholder,
-  ...props
-}: {
-  id?: string;
+export interface AsyncDropdownProps<T> {
   dataKey?: string;
   value?: any;
   label?: string;
@@ -41,13 +24,28 @@ export default function AsyncDropdown<T>({
   createForm?: React.ReactNode;
   createFormTitle?: string;
   onChange?: (event: any, newValue: any) => void;
-  onInputChange?: (event: any, newInputValue: any) => void;
   endpoint: ApiEndpointQuery<
     QueryDefinition<Query, ClientQueyFn, any, Response<T[]>, any>,
     EndpointDefinitions
   > &
     QueryHooks<QueryDefinition<Query, ClientQueyFn, any, Response<T[]>, any>>;
-}) {
+}
+
+export default function AsyncDropdown<T>({
+  dataKey = "name",
+  value,
+  label,
+  defaultOptions,
+  error,
+  helperText,
+  createForm,
+  createFormTitle = "Create New",
+  multiple,
+  onChange,
+  endpoint,
+  placeholder,
+  ...props
+}: AsyncDropdownProps<T>) {
   const [open, setOpen] = React.useState(false);
 
   const [trigger, { data, isLoading }] = endpoint.useLazyQuery();
@@ -70,7 +68,7 @@ export default function AsyncDropdown<T>({
   };
 
   return (
-    <Stack gap={1} id={id}>
+    <Stack gap={1}>
       <FullScreenModal
         title={createFormTitle}
         open={modalOpen}

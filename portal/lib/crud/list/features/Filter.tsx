@@ -17,7 +17,7 @@ import { CheckboxDropdown } from "@/components/dropdowns";
 import { filterSlice } from "@/store/slices";
 import { RootState } from "@/store";
 import { Response, AbstractBaseModel } from "@/models";
-import AsyncCheckboxDropdown from "../components/AsyncCheckboxDropdown";
+import AsyncCheckboxDropdown from "../../components/AsyncCheckboxDropdown";
 import {
   ApiEndpointMutation,
   ApiEndpointQuery,

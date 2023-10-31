@@ -24,7 +24,7 @@ import { LabeledInput } from "@/components/inputs";
 import CloseIcon from "@mui/icons-material/Close";
 import SaveIcon from "@mui/icons-material/Save";
 import { useRouter } from "next/router";
-import AsyncDropdown from "../components/AsyncDropdown";
+import AsyncDropdown from "../../components/AsyncDropdown";
 
 export type Field<T> = {
   prefix?: string | ReactNode;
