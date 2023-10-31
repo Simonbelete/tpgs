@@ -75,7 +75,7 @@ export const RequirementForm = ({ data }: { data?: Requirement }) => {
     values: Partial<RequirementNutrient>
   ): Partial<RequirementNutrient> => {
     return {
-      id: values?.id,
+      id: data?.id, // Only for post data
       requirement: data?.id,
       nutrient: (values.nutrient as Nutrient).id || undefined,
       value: values.value,

@@ -117,7 +117,7 @@ export default function EditableList<T extends AbstractBaseModel & EditMode>({
 
     if (updatedRow.isNew)
       await createTrigger({ id: cleaned_data.id, data: cleaned_data });
-    else await updateTrigger(cleaned_data as any);
+    else await updateTrigger({ ...cleaned_data, id: updatedRow.id });
 
     const newRow = { ...updatedRow, isNew: false };
 
@@ -150,7 +150,7 @@ export default function EditableList<T extends AbstractBaseModel & EditMode>({
       setRows(rows.filter((e) => e.id != row.id));
     } else {
       const cleaned_data = beforeSubmit == null ? row : beforeSubmit(row);
-      await deleteTrigger(cleaned_data);
+      await deleteTrigger({ ...cleaned_data, id: id });
       refetch();
     }
   };
