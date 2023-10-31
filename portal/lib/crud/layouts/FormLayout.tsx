@@ -21,6 +21,7 @@ import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import { useRouter } from "next/router";
+import getPreviousUrl from "@/util/getPreviousUrl";
 
 interface FormLayoutProps<T>
   extends FormProps<T>,
@@ -56,7 +57,7 @@ export default function FormLayout<T extends AbstractBaseModel>({
         <Grid item xs={12} md={6}>
           <Box sx={{ display: "flex" }} justifyContent={"start"}>
             <IconButton
-              onClick={() => router.push(router.pathname.split("/[id]")[0])}
+              onClick={() => router.push(getPreviousUrl(router.pathname))}
               sx={{ mr: 1 }}
               color="primary"
             >
