@@ -111,11 +111,14 @@ export default function Form<
       const response = await createTrigger(cleaned_data as T).unwrap();
       if (response?.status == 201 && onCreateSuccess != undefined) {
         onCreateSuccess(response);
-        router.push(
-          `${router.pathname.split("/create")[0]}/${response.id}`,
-          undefined,
-          { shallow: true }
-        );
+        console.log(response);
+        if (shallowRoute) {
+          router.push(
+            `${router.pathname.split("/create")[0]}/${response.id}`,
+            undefined,
+            { shallow: true }
+          );
+        }
       }
     } else await updateTrigger({ ...cleaned_data, id: data.id });
   };

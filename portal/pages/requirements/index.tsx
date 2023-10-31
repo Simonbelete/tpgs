@@ -3,11 +3,7 @@ import { ListLayout } from "@/layouts";
 import { useBreadcrumbs } from "@/hooks";
 import { Breadcrumbs } from "@/components";
 import { Typography } from "@mui/material";
-import {
-  RequirementList,
-  RequirementListFilter,
-  RequirementImportExport,
-} from "@/features/requirements";
+import { RequirementList } from "@/features/requirements";
 import { SeoHead } from "@/seo";
 
 const RequirementPage = () => {
@@ -16,12 +12,7 @@ const RequirementPage = () => {
   return (
     <>
       <SeoHead title="Requirement" />
-      <ListLayout
-        breadcrumbs={<Breadcrumbs items={breadcrumbs} />}
-        header={<Typography variant="title">Requirement</Typography>}
-        actions={<RequirementImportExport />}
-        filter={<RequirementListFilter />}
-      >
+      <ListLayout breadcrumbs={<Breadcrumbs items={breadcrumbs} />}>
         <RequirementList />
       </ListLayout>
     </>

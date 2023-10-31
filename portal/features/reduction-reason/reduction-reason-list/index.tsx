@@ -27,7 +27,6 @@ export const ReductionReasonList = () => {
   ];
   return (
     <ListLayout<ReductionReason>
-      baseUrl="/reduction-reason"
       title="Reduction Reason"
       columns={columns}
       actions={[EditAction, HistoryAction, PermanentlyDeleteAction]}

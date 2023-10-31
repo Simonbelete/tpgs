@@ -5,11 +5,9 @@ import { Grid, Box, Typography, Stack, Button } from "@mui/material";
 interface ListLayoutProps<T> extends ListProps<T>, FilterProps<T> {
   title: string;
   menus?: React.ReactNode;
-  baseUrl: string;
 }
 
 export default function ListLayout<T>({
-  baseUrl,
   title,
   columns,
   actions,

@@ -18,13 +18,15 @@ const CreateLayout = ({
   return (
     <>
       <Box mb={2}>{breadcrumbs}</Box>
-      <Box sx={{ display: "flex" }} mb={5}>
-        {header}
-        <Box sx={{ flexGrow: 1 }} />
-        <Stack direction="row" spacing={2}>
-          {actions}
-        </Stack>
-      </Box>
+      {header && (
+        <Box sx={{ display: "flex" }} mb={5}>
+          {header}
+          <Box sx={{ flexGrow: 1 }} />
+          <Stack direction="row" spacing={2}>
+            {actions}
+          </Stack>
+        </Box>
+      )}
       <Box sx={{ height: "auto" }}>{children}</Box>
     </>
   );

@@ -15,6 +15,11 @@ import { requirementApi } from "../services";
 
 const schema = yup.object({
   name: yup.string().required(),
+  description: yup.string().nullable(),
+  weight: yup.number().nullable(),
+  desired_dm: yup.string().nullable(),
+  budget: yup.number().nullable(),
+  desired_ratio: yup.number().default(100).required(),
 });
 
 function a11yProps(index: number) {
@@ -35,14 +40,16 @@ export const RequirementForm = ({ data }: { data?: Requirement }) => {
     return values;
   };
 
-  const handleCreated = (value: Requirement) => {};
+  const handleCreated = (value: Requirement) => {
+    setFormData(value);
+  };
 
   return (
     <>
       <TabFormLayout<Requirement>
         id={formData?.id || 0}
         data={formData}
-        title="Create Reduction Reason"
+        title="Create Requirement"
         updateEndpoint={requirementApi.endpoints.updateRequirement}
         deleteEndpoint={requirementApi.endpoints.deleteRequirement}
         summaryEndpoint={requirementApi.endpoints.getRequirementSummary}
@@ -85,7 +92,37 @@ export const RequirementForm = ({ data }: { data?: Requirement }) => {
                 createEndpoint={requirementApi.endpoints.createRequirement}
                 updateEndpoint={requirementApi.endpoints.updateRequirement}
                 fields={{
-                  name: { label: "Name", placeholder: "Name", xs: 12, md: 12 },
+                  name: { label: "Name", placeholder: "Name", xs: 12, md: 6 },
+                  desired_dm: {
+                    label: "Dry Matter (%)",
+                    placeholder: "Dry Matter",
+                    postfix: "%",
+                    xs: 12,
+                    md: 6,
+                  },
+                  weight: {
+                    label: "Weight (kg)",
+                    placeholder: "Weight (kg)",
+                    xs: 12,
+                    md: 6,
+                    postfix: "kg",
+                  },
+                  budget: {
+                    label: "Requirement Price (/kg)",
+                    placeholder: "Requirement Price (/kg)",
+                    postfix: "/kg",
+                  },
+                  desired_ratio: {
+                    label: "Requirement Ratio (%)",
+                    placeholder: "Requirement Ratio (%)",
+                    postfix: "%",
+                  },
+                  description: {
+                    label: "Description",
+                    placeholder: "Description",
+                    xs: 12,
+                    md: 6,
+                  },
                 }}
                 beforeSubmit={cleanData}
                 onCreateSuccess={handleCreated}

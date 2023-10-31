@@ -23,15 +23,17 @@ class RequirementSerializer_POST(serializers.ModelSerializer):
 
     class Meta:
         model = models.Requirement
-        fields = ['name', 'nutrients', 'weight', 'budget', 'desired_ratio', 'desired_dm']
+        # TODO:
+        fields = ['id', 'display_name', 'name', 'nutrients', 'weight', 'budget', 'desired_ratio', 'desired_dm']
 
     @transaction.atomic
     def create(self, validated_data):
-        nutrients = validated_data.pop('requirementnutrient')
+        nutrients = validated_data.pop('requirementnutrient', [])
         instance = models.Requirement.objects.create(**validated_data)
         for nutrient in nutrients:
             models.RequirementNutrient.objects.create(
                 requirement=instance, **nutrient)
+        print(instance)
         return instance
     
 class RequirementHistorySerializer(serializers.ModelSerializer):
