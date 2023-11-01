@@ -25,8 +25,8 @@ class BreedHDEPGuide(CoreModel):
     breed = models.ForeignKey(
         Breed, on_delete=models.CASCADE)
     week = models.PositiveIntegerField(validators=WEEK_VALIDATOR)
-    hdep = models.PositiveIntegerField(
-        validators=PERCENTAGE_VALIDATOR, default=0)
+    hdep = models.DecimalField(
+        validators=PERCENTAGE_VALIDATOR, max_digits=6, decimal_places=3, default=0, null=True, blank=True)
 
 
 class BreedHHEPGuide(CoreModel):
@@ -35,18 +35,25 @@ class BreedHHEPGuide(CoreModel):
     breed = models.ForeignKey(
         Breed, on_delete=models.CASCADE)
     week = models.PositiveIntegerField(validators=WEEK_VALIDATOR)
-    hhep = models.PositiveIntegerField(
-        validators=PERCENTAGE_VALIDATOR, default=0)
+    hhep = models.DecimalField(
+        validators=PERCENTAGE_VALIDATOR, max_digits=6, decimal_places=3, default=0, null=True, blank=True)
 
 
 class BreedWeightGuide(CoreModel):
     breed = models.ForeignKey(
         Breed, on_delete=models.CASCADE)
     week = models.PositiveIntegerField(validators=WEEK_VALIDATOR)
-    weight = models.FloatField()
-    weight_unit = models.ForeignKey(
-        Unit, on_delete=models.SET_NULL, null=True, blank=True)
+    weight = models.DecimalField(max_digits=7, decimal_places=3,null=True, blank=True, default=0) #kg
 
+class BreedFeedGuide(CoreModel):
+    breed = models.ForeignKey(
+        Breed, on_delete=models.CASCADE)
+    week = models.PositiveIntegerField(validators=WEEK_VALIDATOR)
+    feed = models.DecimalField(max_digits=7, decimal_places=3,null=True, blank=True, default=0) #kg
 
 class BreedEggGuide(CoreModel):
-    pass
+    breed = models.ForeignKey(
+        Breed, on_delete=models.CASCADE)
+    week = models.PositiveIntegerField(validators=WEEK_VALIDATOR)
+    egg = models.IntegerField(null=True, blank=True)
+    weight = models.FloatField(null=True, blank=True) # in g

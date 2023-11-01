@@ -9,15 +9,23 @@ from tablib import Dataset
 from import_export import resources
 import pandas as pd
 
-from core.views import HistoryViewSet
+from core.views import (
+    HistoryViewSet,
+    SummaryViewSet,
+    CoreModelViewSet,
+    XlsxExport,
+    XlsExport,
+    CsvExport,
+    XlsxImport,
+    XlsImport,
+    CsvImport
+)
 from core.serializers import UploadSerializer
 from . import models
 from . import serializers
 from . import admin
 
-# Create your views here.
-
-
+## Breed
 class BreedViewSet(viewsets.ModelViewSet):
     queryset = models.Breed.objects.all()
     serializer_class = serializers.BreedSerializer_GET
@@ -27,93 +35,33 @@ class BreedHistoryViewSet(HistoryViewSet):
     queryset = models.Breed.history.all()
     serializer_class = serializers.BreedHistorySerializer
 
-# Xlsx
+## Breed Import & Export
+class BreedXlsxExport(XlsxExport):
+    def get_dataset(self):
+        return admin.BreedResource().export()
 
+class BreedXlsExport(XlsExport):
+    def get_dataset(self):
+        return admin.BreedResource().export()
 
-class BreedXlsxExport(APIView):
-    def get(self, request):
-        dataset = admin.BreedResource().export()
-        response = HttpResponse(
-            dataset.xlsx, content_type='application/ms-excel')
-        response['Content-Disposition'] = 'attachment; filename="export_data_%s.xlsx"' % (
-            date.today().strftime(settings.DATETIME_FORMAT))
-        return response
+class BreedCsvExport(CsvExport):
+    def get_dataset(self):
+        return admin.BreedResource().export()
+    
+class BreedXlsxImport(XlsxImport):
+    def get_dataset(self):
+        return admin.BreedResource().export()
+    
+class BreedXlsImport(XlsImport):
+    def get_dataset(self):
+        return admin.BreedResource().export()
 
+class BreedCsvImport(CsvImport):
+    def get_dataset(self):
+        return admin.BreedResource().export()
 
-class BreedXlsxImport(APIView):
-    serializer_class = UploadSerializer
-    parser_classes = [MultiPartParser]
-
-    def post(self, request):
-        file = request.FILES.get('file')
-        df = pd.read_excel(file, header=0)
-        dataset = Dataset().load(df)
-        resource = resources.modelresource_factory(
-            model=models.Breed)()
-        result = resource.import_data(dataset, raise_errors=True)
-        if not result.has_errors():
-            return JsonResponse({'message': 'Imported Successfully'}, status=200)
-        return JsonResponse({'errors': ['Import Failed']}, status=400)
-
-# Xls
-
-
-class BreedXlsExport(APIView):
-    def get(self, request):
-        dataset = admin.BreedResource().export()
-        response = HttpResponse(
-            dataset.xls, content_type='application/ms-excel')
-        response['Content-Disposition'] = 'attachment; filename="export_data_%s.xls"' % (
-            date.today().strftime(settings.DATETIME_FORMAT))
-        return response
-
-
-class BreedXlsImport(APIView):
-    serializer_class = UploadSerializer
-    parser_classes = [MultiPartParser]
-
-    def post(self, request):
-        file = request.FILES.get('file')
-        df = pd.read_excel(file, header=0)
-        dataset = Dataset().load(df)
-        resource = resources.modelresource_factory(
-            model=models.Breed)()
-        result = resource.import_data(dataset, raise_errors=True)
-        if not result.has_errors():
-            return JsonResponse({'message': 'Imported Successfully'}, status=200)
-        return JsonResponse({'errors': ['Import Failed']}, status=400)
-
-# Csv
-
-
-class BreedCsvExport(APIView):
-    def get(self, request):
-        dataset = admin.BreedResource().export()
-        response = HttpResponse(
-            dataset.csv, content_type='application/ms-excel')
-        response['Content-Disposition'] = 'attachment; filename="export_data%s.csv"' % (
-            date.today().strftime(settings.DATETIME_FORMAT))
-        return response
-
-
-class BreedCsvImport(APIView):
-    serializer_class = UploadSerializer
-    parser_classes = [MultiPartParser]
-
-    def post(self, request):
-        file = request.FILES.get('file')
-        df = pd.read_csv(file, header=0)
-        dataset = Dataset().load(df)
-        resource = resources.modelresource_factory(
-            model=models.Breed)()
-        result = resource.import_data(dataset, raise_errors=True)
-        if not result.has_errors():
-            return JsonResponse({'message': 'Imported Successfully'}, status=200)
-        return JsonResponse({'errors': ['Import Failed']}, status=400)
 
 # Breed HDEP Guid
-
-
 class BreedHDEPGuideViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.BreedHDEPGuideSerializer_GET
 
@@ -140,9 +88,8 @@ class BreedHHEPGuideViewSet(viewsets.ModelViewSet):
             return serializers.BreedHHEPGuideSerializer_POST
         return serializers.BreedHHEPGuideSerializer_GET
 
-# Breed Weight Guide
 
-
+## Breed Weight Guide
 class BreedWeightGuideViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.BreedWeightGuideSerializer_GET
 
@@ -153,3 +100,109 @@ class BreedWeightGuideViewSet(viewsets.ModelViewSet):
         if self.request.method in ['POST', 'PUT', 'PATCH']:
             return serializers.BreedWeightGuideSerializer_POST
         return serializers.BreedWeightGuideSerializer_GET
+
+## Weight Guide
+class WeightGuideViewSet(viewsets.ModelViewSet):
+    queryset = models.BreedWeightGuide.objects.all()
+    serializer_class = serializers.WeightGuidSerializer_GET
+
+    def get_serializer_class(self):
+        if self.request.method in ['POST', 'PUT', 'PATCH']:
+            return serializers.WeightGuidSerializer_POST
+        return serializers.WeightGuidSerializer_GET
+
+## Weight Guide Import & Export
+class WeightGuideXlsxExport(XlsxExport):
+    def get_dataset(self):
+        return admin.BreedWeightGuideResource().export()
+
+class WeightGuideXlsExport(XlsExport):
+    def get_dataset(self):
+        return admin.BreedWeightGuideResource().export()
+
+class WeightGuideCsvExport(CsvExport):
+    def get_dataset(self):
+        return admin.BreedWeightGuideResource().export()
+    
+class WeightGuideXlsxImport(XlsxImport):
+    def get_dataset(self):
+        return admin.BreedWeightGuideResource().export()
+    
+class WeightGuideXlsImport(XlsImport):
+    def get_dataset(self):
+        return admin.BreedWeightGuideResource().export()
+
+class WeightGuideCsvImport(CsvImport):
+    def get_dataset(self):
+        return admin.BreedWeightGuideResource().export()
+    
+## Feed Guide
+class FeedGuideViewSet(viewsets.ModelViewSet):
+    queryset = models.BreedWeightGuide.objects.all()
+    serializer_class = serializers.FeedGuideSerializer_GET
+
+    def get_serializer_class(self):
+        if self.request.method in ['POST', 'PUT', 'PATCH']:
+            return serializers.FeedGuideSerializer_POST
+        return serializers.FeedGuideSerializer_GET
+
+## Feed Guide Import & Export
+class FeedGuideXlsxExport(XlsxExport):
+    def get_dataset(self):
+        return admin.BreedFeedGuideResource().export()
+
+class FeedGuideXlsExport(XlsExport):
+    def get_dataset(self):
+        return admin.BreedFeedGuideResource().export()
+
+class FeedGuideCsvExport(CsvExport):
+    def get_dataset(self):
+        return admin.BreedFeedGuideResource().export()
+    
+class FeedGuideXlsxImport(XlsxImport):
+    def get_dataset(self):
+        return admin.BreedFeedGuideResource().export()
+    
+class FeedGuideXlsImport(XlsImport):
+    def get_dataset(self):
+        return admin.BreedFeedGuideResource().export()
+
+class FeedGuideCsvImport(CsvImport):
+    def get_dataset(self):
+        return admin.BreedFeedGuideResource().export()
+    
+    
+## Egg Guide
+class EggGuideViewSet(viewsets.ModelViewSet):
+    queryset = models.BreedEggGuide.objects.all()
+    serializer_class = serializers.EggGuideSerializer_GET
+
+    def get_serializer_class(self):
+        if self.request.method in ['POST', 'PUT', 'PATCH']:
+            return serializers.EggGuideSerializer_POST
+        return serializers.EggGuideSerializer_GET
+
+## Egg Guide Import & Export
+class EggGuideXlsxExport(XlsxExport):
+    def get_dataset(self):
+        return admin.BreedEggGuideResource().export()
+
+class EggGuideXlsExport(XlsExport):
+    def get_dataset(self):
+        return admin.BreedEggGuideResource().export()
+
+class EggGuideCsvExport(CsvExport):
+    def get_dataset(self):
+        return admin.BreedEggGuideResource().export()
+    
+class EggGuideXlsxImport(XlsxImport):
+    def get_dataset(self):
+        return admin.BreedEggGuideResource().export()
+    
+class EggGuideXlsImport(XlsImport):
+    def get_dataset(self):
+        return admin.BreedEggGuideResource().export()
+
+class EggGuideCsvImport(CsvImport): 
+    def get_dataset(self):
+        return admin.BreedEggGuideResource().export()

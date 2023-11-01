@@ -48,7 +48,7 @@ import { useRouter } from "next/router";
 import { enqueueSnackbar } from "notistack";
 import dynamic from "next/dynamic";
 import { RequirementSelectDialog } from "@/features/requirements";
-import { useLazyGetRequirementNutrientsQuery } from "@/features/requirements/services";
+import { useLazyGetNutrientsOfRequirementQuery } from "@/features/requirements/services";
 
 const AchivementChartComponent = dynamic(
   () => import("../components/achivement-chart"),
@@ -90,7 +90,7 @@ const Formulation = ({ saveRef }: { saveRef: React.Ref<unknown> }) => {
     { data: nutreints, isUninitialized, isLoading: nutrientIsLoading },
   ] = useLazyGetNutrientsQuery();
   const [getIngredientNutrients] = useLazyGetNutrientsOfIngredientQuery();
-  const [getRequirementNutrients] = useLazyGetRequirementNutrientsQuery();
+  const [getRequirementNutrients] = useLazyGetNutrientsOfRequirementQuery();
 
   const [createFormula, createResult] = useCreateFormulaMutation();
 
