@@ -38,10 +38,7 @@ export const hatcheryApi = baseApi.injectEndpoints({
           method: "get",
         }),
       }),
-      createHatchery: build.mutation<
-        Promise<AxiosResponse<Hatchery>>,
-        Partial<Hatchery>
-      >({
+      createHatchery: build.mutation<Promise<Hatchery>, Partial<Hatchery>>({
         query: (data: Partial<Hatchery>) => ({
           url: `${URL}/`,
           method: "post",
@@ -49,7 +46,7 @@ export const hatcheryApi = baseApi.injectEndpoints({
         }),
       }),
       updateHatchery: build.mutation<
-        Hatchery,
+        Promise<Hatchery>,
         Pick<Hatchery, "id"> & Partial<Hatchery>
       >({
         query: ({ id, ...patch }) => ({
@@ -63,7 +60,7 @@ export const hatcheryApi = baseApi.injectEndpoints({
       }),
 
       // Eggs
-      getHatcheryEggs: build.query<
+      getEggsOfHatchery: build.query<
         Response<HatcheryEgg[]>,
         { id: number; query: Object }
       >({
@@ -73,8 +70,8 @@ export const hatcheryApi = baseApi.injectEndpoints({
           params: query,
         }),
       }),
-      createHatcheryEgg: build.mutation<
-        Promise<AxiosResponse<HatcheryEgg>>,
+      createEggForHatchery: build.mutation<
+        Promise<HatcheryEgg>,
         { id: number; data: Partial<HatcheryEgg> }
       >({
         query: ({ id, data }) => ({
@@ -83,9 +80,9 @@ export const hatcheryApi = baseApi.injectEndpoints({
           data: data,
         }),
       }),
-      updateIngredientNutriet: build.mutation<
-        HatcheryEgg,
-        Pick<HatcheryEgg, "hatchery">
+      updateEggOfHatchery: build.mutation<
+        Promise<HatcheryEgg>,
+        Partial<HatcheryEgg>
       >({
         query: ({ hatchery, ...patch }) => ({
           url: `${URL}/${hatchery}/`,
@@ -93,12 +90,12 @@ export const hatcheryApi = baseApi.injectEndpoints({
           data: patch,
         }),
       }),
-      deleteHatcheryEgg: build.mutation<
+      deleteEggOfHatchery: build.mutation<
         Promise<AxiosResponse<HatcheryEgg>>,
-        { id: number; nutrient_id: number }
+        Pick<HatcheryEgg, "hatchery" | "id">
       >({
-        query: ({ id, nutrient_id }) => ({
-          url: `${URL}/${id}/${EGGS_URL}/${nutrient_id}`,
+        query: ({ hatchery, id }) => ({
+          url: `${URL}/${id}/${EGGS_URL}/${hatchery}`,
           method: "delete",
         }),
       }),
@@ -144,10 +141,10 @@ export const {
   useUpdateHatcheryMutation,
   useDeleteHatcheryMutation,
 
-  // Nutrients
-  useGetHatcheryEggsQuery,
-  useLazyGetHatcheryEggsQuery,
-  useCreateHatcheryEggMutation,
-  useUpdateIngredientNutrietMutation,
-  useDeleteHatcheryEggMutation,
+  // Eggs
+  useGetEggsOfHatcheryQuery,
+  useLazyGetEggsOfHatcheryQuery,
+  useCreateEggForHatcheryMutation,
+  useUpdateEggOfHatcheryMutation,
+  useDeleteEggOfHatcheryMutation,
 } = hatcheryApi;

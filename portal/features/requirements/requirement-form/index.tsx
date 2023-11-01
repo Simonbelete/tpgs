@@ -15,7 +15,6 @@ import {
 import { Tabs, Tab, Box, tabsClasses, Chip, Button } from "@mui/material";
 import { Card } from "@/components";
 import { requirementApi } from "../services";
-import { AsyncDropdownProps } from "@/lib/crud/components/AsyncDropdown";
 import { nutrientApi } from "@/features/nutrients/services";
 import { EditMode } from "@/types";
 

@@ -17,15 +17,23 @@ import {
 } from "@reduxjs/toolkit/dist/query/react/buildHooks";
 import { ClientQueyFn, Query } from "@/types";
 import { useCRUD } from "@/hooks";
-import { AxiosResponse } from "axios";
 import { Response, AbstractBaseModel } from "@/models";
-import { Grid, InputAdornment, Box, Stack, Button } from "@mui/material";
+import {
+  Grid,
+  InputAdornment,
+  Box,
+  Stack,
+  Button,
+  Typography,
+} from "@mui/material";
 import { LabeledInput } from "@/components/inputs";
 import CloseIcon from "@mui/icons-material/Close";
 import SaveIcon from "@mui/icons-material/Save";
 import { useRouter } from "next/router";
+import { DatePicker } from "@mui/x-date-pickers";
 import AsyncDropdown from "../../components/AsyncDropdown";
 import getPreviousUrl from "@/util/getPreviousUrl";
+import dayjs from "dayjs";
 
 export type Field<T> = {
   prefix?: string | ReactNode;
@@ -42,6 +50,7 @@ export type Field<T> = {
   placeholder?: string;
   label?: string;
   form?: ReactNode;
+  type?: "string" | "number" | "date";
 };
 
 export interface FormProps<T> {
@@ -161,9 +170,7 @@ export default function Form<
                 />
               </Grid>
             );
-          }
-
-          return (
+          } else if (options.type == "date") {
             <Grid key={i} item xs={options.xs || 12} md={options.md || 6}>
               <Controller
                 // @ts-ignore
@@ -173,27 +180,59 @@ export default function Form<
                   field: { onChange, value },
                   fieldState: { error },
                 }) => (
-                  <LabeledInput
-                    error={!!error?.message}
-                    helperText={error?.message}
-                    onChange={onChange}
-                    fullWidth
-                    size="small"
-                    value={value ?? ""}
-                    label={options.label}
-                    placeholder={options.placeholder}
-                    InputProps={{
-                      endAdornment: (
-                        <InputAdornment position="start">
-                          {options.postfix}
-                        </InputAdornment>
-                      ),
-                    }}
-                  />
+                  <Stack gap={1}>
+                    <Typography variant="body2" fontWeight={700}>
+                      {options.label}
+                    </Typography>
+                    <DatePicker
+                      slotProps={{
+                        textField: {
+                          size: "small",
+                          fullWidth: true,
+                          error: !!error?.message,
+                          helperText: error?.message,
+                        },
+                      }}
+                      onChange={onChange}
+                      value={dayjs(value as string)}
+                    />
+                  </Stack>
                 )}
               />
-            </Grid>
-          );
+            </Grid>;
+          } else {
+            return (
+              <Grid key={i} item xs={options.xs || 12} md={options.md || 6}>
+                <Controller
+                  // @ts-ignore
+                  name={key}
+                  control={control}
+                  render={({
+                    field: { onChange, value },
+                    fieldState: { error },
+                  }) => (
+                    <LabeledInput
+                      error={!!error?.message}
+                      helperText={error?.message}
+                      onChange={onChange}
+                      fullWidth
+                      size="small"
+                      value={value ?? ""}
+                      label={options.label}
+                      placeholder={options.placeholder}
+                      InputProps={{
+                        endAdornment: (
+                          <InputAdornment position="start">
+                            {options.postfix}
+                          </InputAdornment>
+                        ),
+                      }}
+                    />
+                  )}
+                />
+              </Grid>
+            );
+          }
         })}
       </Grid>
       <Box sx={{ mt: 5 }}>

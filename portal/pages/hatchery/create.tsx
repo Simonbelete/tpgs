@@ -1,5 +1,4 @@
-import React, { useEffect } from "react";
-import { Typography } from "@mui/material";
+import React from "react";
 import { Breadcrumbs } from "@/components";
 import { useBreadcrumbs } from "@/hooks";
 import { CreateLayout } from "@/layouts";
@@ -12,10 +11,7 @@ const HatcheryCreatePage = () => {
   return (
     <>
       <SeoHead title="Create Hatchery" />
-      <CreateLayout
-        breadcrumbs={<Breadcrumbs items={breadcrumbs} />}
-        header={<Typography variant="title">Create Hatchery</Typography>}
-      >
+      <CreateLayout breadcrumbs={<Breadcrumbs items={breadcrumbs} />}>
         <HatcheryForm />
       </CreateLayout>
     </>
