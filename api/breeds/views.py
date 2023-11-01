@@ -18,7 +18,8 @@ from core.views import (
     CsvExport,
     XlsxImport,
     XlsImport,
-    CsvImport
+    CsvImport,
+    GenericExportView
 )
 from core.serializers import UploadSerializer
 from . import models
@@ -29,6 +30,11 @@ from . import admin
 class BreedViewSet(viewsets.ModelViewSet):
     queryset = models.Breed.objects.all()
     serializer_class = serializers.BreedSerializer_GET
+    
+    def get_serializer_class(self):
+        if self.request.method in ['POST', 'PUT', 'PATCH']:
+            return serializers.BreedSerializer_POST
+        return serializers.BreedSerializer_GET
 
 
 class BreedHistoryViewSet(HistoryViewSet):
@@ -75,8 +81,6 @@ class BreedHDEPGuideViewSet(viewsets.ModelViewSet):
 
 
 # Breed HHEP Guid
-
-
 class BreedHHEPGuideViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.BreedHHEPGuideSerializer_GET
 
@@ -91,48 +95,22 @@ class BreedHHEPGuideViewSet(viewsets.ModelViewSet):
 
 ## Breed Weight Guide
 class BreedWeightGuideViewSet(viewsets.ModelViewSet):
+    queryset = models.BreedWeightGuide.all.all()
     serializer_class = serializers.BreedWeightGuideSerializer_GET
 
     def get_queryset(self):
-        return models.BreedWeightGuide.objects.filter(breed=self.kwargs['breed_pk'])
+        if('breed_pk' in self.kwargs):
+            return self.queryset.filter(breed=self.kwargs['breed_pk'])
+        return self.queryset
 
     def get_serializer_class(self):
         if self.request.method in ['POST', 'PUT', 'PATCH']:
             return serializers.BreedWeightGuideSerializer_POST
         return serializers.BreedWeightGuideSerializer_GET
 
-## Weight Guide
-class WeightGuideViewSet(viewsets.ModelViewSet):
-    queryset = models.BreedWeightGuide.objects.all()
-    serializer_class = serializers.WeightGuidSerializer_GET
 
-    def get_serializer_class(self):
-        if self.request.method in ['POST', 'PUT', 'PATCH']:
-            return serializers.WeightGuidSerializer_POST
-        return serializers.WeightGuidSerializer_GET
-
-## Weight Guide Import & Export
-class WeightGuideXlsxExport(XlsxExport):
-    def get_dataset(self):
-        return admin.BreedWeightGuideResource().export()
-
-class WeightGuideXlsExport(XlsExport):
-    def get_dataset(self):
-        return admin.BreedWeightGuideResource().export()
-
-class WeightGuideCsvExport(CsvExport):
-    def get_dataset(self):
-        return admin.BreedWeightGuideResource().export()
-    
-class WeightGuideXlsxImport(XlsxImport):
-    def get_dataset(self):
-        return admin.BreedWeightGuideResource().export()
-    
-class WeightGuideXlsImport(XlsImport):
-    def get_dataset(self):
-        return admin.BreedWeightGuideResource().export()
-
-class WeightGuideCsvImport(CsvImport):
+## Breed Weight Guid Import & Export
+class BreedWeightGuideImportExport(GenericExportView):
     def get_dataset(self):
         return admin.BreedWeightGuideResource().export()
     

@@ -112,8 +112,49 @@ class SummaryViewSet(viewsets.ViewSet):
                 'last_history_type': None,
                 'history_count': 0
             }, status=200)
-
+            
+            
 ## Exports
+class GenericExportView(APIView):
+    def get_dataset(self):
+        raise NotImplemented()
+    
+    def export_xlsx(self):
+        dataset = self.get_dataset()
+        response = HttpResponse(
+            dataset.xlsx, content_type='application/ms-excel')
+        response['Content-Disposition'] = 'attachment; filename="export_%s.xlsx"' % (
+            date.today().strftime(settings.DATETIME_FORMAT))
+        return response
+    
+    def export_xls(self):
+        dataset = self.get_dataset()
+        response = HttpResponse(
+            dataset.xls, content_type='application/ms-excel')
+        response['Content-Disposition'] = 'attachment; filename="export_%s.xls"' % (
+            date.today().strftime(settings.DATETIME_FORMAT))
+        return response
+
+    def export_csv(self):
+        dataset = self.get_dataset()
+        response = HttpResponse(
+            dataset.csv, content_type='application/ms-excel')
+        response['Content-Disposition'] = 'attachment; filename="export_%s.csv"' % (
+            date.today().strftime(settings.DATETIME_FORMAT))
+        return response
+
+    def get(self, request, export_type = None):
+        # export_type = self.kwargs['export_type']
+        if(export_type == 'xlsx'):
+            return self.export_xlsx()
+        elif(export_type == 'xls'):
+            return self.export_xls()
+        elif(export_type == 'csv'):
+            return self.export_csv()
+        else:
+            return Response({'error': ['export type']})
+        
+
 class XlsxExport(APIView):
     def get_dataset(self):
         raise NotImplemented()

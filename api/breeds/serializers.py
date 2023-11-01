@@ -17,7 +17,7 @@ class BreedSerializer_GET(serializers.ModelSerializer):
 class BreedSerializer_POST(serializers.ModelSerializer):
     class Meta:
         model = models.Breed
-        fields = ['name', 'color']
+        fields = ['id', 'name', 'color']
 
 
 class BreedHistorySerializer(serializers.ModelSerializer):
@@ -65,7 +65,7 @@ class BreedHHEPGuideSerializer_POST(serializers.ModelSerializer):
         return super().create(validated_data)
 
 
-## Breed -> Weight Guide
+## Breed Weight Guide
 class BreedWeightGuideSerializer_GET(serializers.ModelSerializer):
     class Meta:
         model = models.BreedWeightGuide
@@ -78,24 +78,11 @@ class BreedWeightGuideSerializer_POST(serializers.ModelSerializer):
         fields = ['id', 'week', 'weight']
 
     def create(self, validated_data):
-        breed = models.Breed.objects.get(
-            pk=self.context["view"].kwargs["breed_pk"])
-        validated_data['breed'] = breed
+        if(self.context["view"].kwargs["breed_pk"]):
+            breed = models.Breed.objects.get(
+                pk=self.context["view"].kwargs["breed_pk"])
+            validated_data['breed'] = breed
         return super().create(validated_data)
-
-
-## Weight Guide
-class WeightGuidSerializer_GET(serializers.ModelSerializer):
-    class Meta:
-        model = models.BreedWeightGuide
-        fields = '__all__'
-
-
-class WeightGuidSerializer_POST(serializers.ModelSerializer):
-    class Meta:
-        model = models.BreedWeightGuide
-        fields = ['breed', 'week', 'weight']
-
 
 ## Feed Guide
 class FeedGuideSerializer_GET(serializers.ModelSerializer):
