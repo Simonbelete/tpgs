@@ -18,6 +18,7 @@ import { hatcheryApi } from "../services";
 import { EditMode } from "@/types";
 import { eggApi } from "@/features/eggs/services";
 import { breedApi } from "@/features/breeds/services";
+import { BreedForm } from "@/features/breeds";
 
 const schema = yup.object({
   name: yup.string().required(),
@@ -182,12 +183,13 @@ export const HatcheryForm = ({ data }: { data?: Hatchery }) => {
                     md: 6,
                   },
                   breed: {
-                    label: "Weight (kg)",
-                    placeholder: "Weight (kg)",
+                    label: "Breed",
+                    placeholder: "Weight",
                     endpoint: breedApi.endpoints.getBreeds,
                     xs: 12,
                     md: 6,
                     postfix: "kg",
+                    form: <BreedForm />,
                   },
                   note: {
                     label: "Note",

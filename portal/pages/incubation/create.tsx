@@ -3,20 +3,20 @@ import { Typography } from "@mui/material";
 import { Breadcrumbs } from "@/components";
 import { useBreadcrumbs } from "@/hooks";
 import { CreateLayout } from "@/layouts";
-import { RequirementForm } from "@/features/requirements";
+import { IncubationForm } from "@/features/incubation";
 import { SeoHead } from "@/seo";
 
-const RequirementCreatePage = () => {
+const IncubationCreatePage = () => {
   const { breadcrumbs } = useBreadcrumbs();
 
   return (
     <>
-      <SeoHead title="Create Requirement" />
+      <SeoHead title="Create Incubation" />
       <CreateLayout breadcrumbs={<Breadcrumbs items={breadcrumbs} />}>
-        <RequirementForm />
+        <IncubationForm />
       </CreateLayout>
     </>
   );
 };
 
-export default RequirementCreatePage;
+export default IncubationCreatePage;

@@ -23,7 +23,6 @@ export const PenForm = ({
       <FormLayout<Pen>
         id={pen?.id || 0}
         data={pen}
-        baseUrl="/pen"
         schema={schema}
         createEndpoint={penApi.endpoints.createPen}
         updateEndpoint={penApi.endpoints.updatePen}
