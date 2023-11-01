@@ -12,10 +12,7 @@ const PenCreatePage = () => {
   return (
     <>
       <SeoHead title="Create Pen" />
-      <CreateLayout
-        breadcrumbs={<Breadcrumbs items={breadcrumbs} />}
-        header={<Typography variant="title">Create Pen</Typography>}
-      >
+      <CreateLayout breadcrumbs={<Breadcrumbs items={breadcrumbs} />}>
         <PenForm />
       </CreateLayout>
     </>

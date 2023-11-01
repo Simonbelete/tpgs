@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import * as yup from "yup";
 import { House, Pen } from "@/models";
-import { FormLayout } from "@/lib/crud";
+import { CancelIcon, CreateNewIcon, FormLayout, HistoryIcon } from "@/lib/crud";
 import { penApi } from "../services";
 import { houseApi } from "@/features/houses/services";
 import { HouseForm } from "@/features/houses";
@@ -21,6 +21,7 @@ export const PenForm = ({
   return (
     <>
       <FormLayout<Pen>
+        title="Pen Form"
         id={pen?.id || 0}
         data={pen}
         schema={schema}
@@ -38,14 +39,23 @@ export const PenForm = ({
           return cleaned_data;
         }}
         fields={{
-          name: { label: "Name", placeholder: "Name" },
+          name: { label: "Name", placeholder: "Name", xs: 12, md: 12 },
           house: {
             label: "House",
             placeholder: "House",
             endpoint: houseApi.endpoints.getHouses,
             form: <HouseForm />,
+            xs: 12,
+            md: 12,
           },
         }}
+        menus={
+          <>
+            <CreateNewIcon />
+            <HistoryIcon />
+            <CancelIcon />
+          </>
+        }
       />
     </>
   );

@@ -18,7 +18,7 @@ class PenSerializer_GET(serializers.ModelSerializer):
 class PenSerializer_POST(serializers.ModelSerializer):
     class Meta:
         model = models.Pen
-        fields = ['name', 'house', 'is_active']
+        fields = ['id', 'name', 'house', 'is_active']
 
 class PenHistorySerializer(serializers.ModelSerializer):
     history_user = UserSerializer_SLUG()

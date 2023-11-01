@@ -20,49 +20,10 @@ const PenEditPage = ({ data }: { data: Pen }) => {
   return (
     <>
       <SeoHead title={`${data.name || ""} - Edit`} />
-      <EditLayout
-        breadcrumbs={<Breadcrumbs items={breadcrumbs} />}
-        header={<Typography variant="title">{data.name} - Edit</Typography>}
-        actions={<Actions />}
-      >
+      <EditLayout breadcrumbs={<Breadcrumbs items={breadcrumbs} />}>
         <PenForm pen={data} />
       </EditLayout>
     </>
-  );
-};
-
-const Actions = () => {
-  const router = useRouter();
-
-  return (
-    <Stack
-      spacing={0}
-      direction={"row"}
-      justifyContent="flex-start"
-      alignItems="center"
-    >
-      <Tooltip title="Create New">
-        <Link href="/chickens/create">
-          <IconButton color="secondary">
-            <LibraryAddIcon />
-          </IconButton>
-        </Link>
-      </Tooltip>
-      <Tooltip title="Histories">
-        <Link href={`${router.pathname.split("/edit")[0]}/histories`}>
-          <IconButton color="secondary">
-            <ManageHistoryIcon />
-          </IconButton>
-        </Link>
-      </Tooltip>
-      <Tooltip title="Cancel">
-        <Link href="/chickens">
-          <IconButton color="secondary">
-            <CancelIcon />
-          </IconButton>
-        </Link>
-      </Tooltip>
-    </Stack>
   );
 };
 

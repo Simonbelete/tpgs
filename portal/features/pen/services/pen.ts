@@ -1,5 +1,5 @@
 import { baseApi } from "@/services/baseApi";
-import { AbstractSummary, Response, Pen } from "@/models";
+import { AbstractSummary, Response, Pen, PenHistory } from "@/models";
 import { AxiosResponse } from "axios";
 import clientSSR from "@/services/client_ssr";
 import client from "@/services/client";
@@ -21,7 +21,10 @@ export const penApi = baseApi.injectEndpoints({
           params: query,
         }),
       }),
-      getPenHistory: build.query<Response<Pen>, { id: number; query: Object }>({
+      getPenHistory: build.query<
+        Response<PenHistory>,
+        { id: number; query: Object }
+      >({
         query: ({ id, query }) => ({
           url: `${URL}/${id}/${HISTORY_URL}`,
           method: "get",
@@ -34,17 +37,14 @@ export const penApi = baseApi.injectEndpoints({
           method: "get",
         }),
       }),
-      createPen: build.mutation<Promise<AxiosResponse<Pen>>, Partial<Pen>>({
+      createPen: build.mutation<Promise<Pen>, Partial<Pen>>({
         query: (data: Partial<Pen>) => ({
           url: `${URL}/`,
           method: "post",
           data: data,
         }),
       }),
-      updatePen: build.mutation<
-        Promise<AxiosResponse<Pen>>,
-        Pick<Pen, "id"> & Partial<Pen>
-      >({
+      updatePen: build.mutation<Promise<Pen>, Pick<Pen, "id"> & Partial<Pen>>({
         query: ({ id, ...patch }) => ({
           url: `${URL}/${id}/`,
           method: "patch",

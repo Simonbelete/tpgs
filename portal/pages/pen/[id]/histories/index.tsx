@@ -4,22 +4,23 @@ import { useBreadcrumbs } from "@/hooks";
 import { Breadcrumbs } from "@/components";
 import { Typography } from "@mui/material";
 import { PenHistoryList } from "@/features/pen";
-import { useRouter } from "next/router";
 import { NextPageContext } from "next";
 import { SeoHead } from "@/seo";
+import { getServerSidePropsContext } from "@/services/getServerSidePropsContext";
+import { getPenByIdSSR } from "@/features/pen/services";
+import { Pen } from "@/models";
 
-const PenHistoryPage = ({ id }: { id: number }) => {
+const PenHistoryPage = ({ data }: { data: Pen }) => {
   const { breadcrumbs } = useBreadcrumbs();
-  const router = useRouter();
 
   return (
     <>
       <SeoHead title="Pen Histories" />
       <ListLayout
         breadcrumbs={<Breadcrumbs items={breadcrumbs} />}
-        header={<Typography variant="title">Histories</Typography>}
+        header={<Typography variant="title">Pen History</Typography>}
       >
-        <PenHistoryList id={id} />
+        <PenHistoryList data={data} />
       </ListLayout>
     </>
   );
@@ -28,9 +29,11 @@ const PenHistoryPage = ({ id }: { id: number }) => {
 export async function getServerSideProps(context: NextPageContext) {
   const { id } = context.query;
 
-  return {
-    props: { id },
-  };
+  return getServerSidePropsContext<Pen>({
+    context,
+    id: Number(id),
+    getByIdSSR: getPenByIdSSR,
+  });
 }
 
 export default PenHistoryPage;
