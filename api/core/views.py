@@ -12,6 +12,7 @@ from tablib import Dataset
 from import_export import resources
 import pandas as pd
 from rest_framework.renderers import TemplateHTMLRenderer
+from django_tenants.utils import schema_context
 
 from core.serializers import UploadSerializer
 

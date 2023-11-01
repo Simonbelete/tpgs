@@ -83,15 +83,12 @@ const columns: GridColDef[] = [
     renderCell: (params: GridRenderCellParams<any>) => {
       return (
         <Stack direction="row" spacing={1}>
-          {params.row.is_active && (
-            // @ts-ignore
-            <Chip
-              variant="outlined"
-              label={params.row.is_active ? "Active" : "Deleted"}
-              size="small"
-              color={params.row.is_active ? "info" : "error"}
-            />
-          )}
+          <Chip
+            variant="outlined"
+            label={params.row.is_active ? "Active" : "Deleted"}
+            size="small"
+            color={params.row.is_active ? "info" : "error"}
+          />
         </Stack>
       );
     },

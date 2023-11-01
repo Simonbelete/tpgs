@@ -12,19 +12,20 @@ const schema = yup.object({
 });
 
 export const PenForm = ({
-  pen,
-  redirect = true,
+  data,
+  shallowRoute = true,
 }: {
-  pen?: Pen;
-  redirect?: boolean;
+  data?: Pen;
+  shallowRoute?: boolean;
 }) => {
   return (
     <>
       <FormLayout<Pen>
         title="Pen Form"
-        id={pen?.id || 0}
-        data={pen}
+        id={data?.id || 0}
+        data={data}
         schema={schema}
+        shallowRoute={shallowRoute}
         createEndpoint={penApi.endpoints.createPen}
         updateEndpoint={penApi.endpoints.updatePen}
         deleteEndpoint={penApi.endpoints.deletePen}

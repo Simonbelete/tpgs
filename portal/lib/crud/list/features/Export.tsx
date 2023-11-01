@@ -22,7 +22,7 @@ const Export = ({ exportCsv, exportXlsx, exportXls }: ExportProps) => {
       if (type == "xls") response = await exportXlsx();
       if (type == "csv") response = await exportXls();
       if (response.status == 200) {
-        fileDownload(response.data, `nutrients_.${type}`);
+        fileDownload(response.data as any, `export_.${type}`);
       } else {
         enqueueSnackbar(
           "Error: Failed to download data, try changing to the correct farm",

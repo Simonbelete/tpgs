@@ -1,7 +1,5 @@
 import React from "react";
 import { NextPageContext } from "next";
-import { Typography, Stack, IconButton, Tooltip } from "@mui/material";
-import Link from "next/link";
 import { EditLayout } from "@/layouts";
 import { PenForm } from "@/features/pen";
 import { getPenByIdSSR } from "@/features/pen/services";
@@ -9,10 +7,7 @@ import { Breadcrumbs, Loading } from "@/components";
 import { useBreadcrumbs } from "@/hooks";
 import { Pen } from "@/models";
 import { SeoHead } from "@/seo";
-import CancelIcon from "@mui/icons-material/Cancel";
-import LibraryAddIcon from "@mui/icons-material/LibraryAdd";
-import ManageHistoryIcon from "@mui/icons-material/ManageHistory";
-import { useRouter } from "next/router";
+import { getServerSidePropsContext } from "@/services/getServerSidePropsContext";
 
 const PenEditPage = ({ data }: { data: Pen }) => {
   const { breadcrumbs } = useBreadcrumbs();
@@ -21,7 +16,7 @@ const PenEditPage = ({ data }: { data: Pen }) => {
     <>
       <SeoHead title={`${data.name || ""} - Edit`} />
       <EditLayout breadcrumbs={<Breadcrumbs items={breadcrumbs} />}>
-        <PenForm pen={data} />
+        <PenForm data={data} />
       </EditLayout>
     </>
   );
@@ -30,26 +25,11 @@ const PenEditPage = ({ data }: { data: Pen }) => {
 export async function getServerSideProps(context: NextPageContext) {
   const { id } = context.query;
 
-  try {
-    const res = await getPenByIdSSR(context, Number(id));
-
-    if (res.status != 200)
-      return {
-        redirect: {
-          permanent: false,
-          destination: `/${res.status}?id=${id}&from=/houses&next=/houses`,
-        },
-      };
-
-    return { props: { data: res.data } };
-  } catch (ex) {
-    return {
-      redirect: {
-        permanent: false,
-        destination: `/404?id=${id}&from=/houses&next=/units&error=unknown`,
-      },
-    };
-  }
+  return getServerSidePropsContext<Pen>({
+    context,
+    id: Number(id),
+    getByIdSSR: getPenByIdSSR,
+  });
 }
 
 export default PenEditPage;
