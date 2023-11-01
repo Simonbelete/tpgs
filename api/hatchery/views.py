@@ -45,3 +45,12 @@ class HatcheryEggViewSet(CoreModelViewSet):
         if self.request.method in ['PUT', 'PATCH']:
             return serializers.HatcheryEggSerializer_PATCH
         return serializers.HatcheryEggSerializer_GET
+    
+class IncubationViewSet(CoreModelViewSet):
+    queryset = models.Incubation.all.all()
+    serializer_class = serializers.IncubationSerializer_GET
+
+    def get_serializer_class(self):
+        if self.request.method in ['POST', 'PATCH']:
+            return serializers.IncubationSerializer_POST
+        return serializers.IncubationSerializer_GET

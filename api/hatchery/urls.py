@@ -17,7 +17,14 @@ eggs_router = routers.DefaultRouter()
 eggs_router.register(r'hatchery-eggs', views.HatcheryEggViewSet,
                 basename='api_hatchery_eggs_list')
 
+incubations_router = routers.DefaultRouter()
+incubations_router.register(r'incubations', views.IncubationViewSet,
+                basename='api_incubation_list')
+
+
 urlpatterns = [
     path('', include(router.urls)),
     path('', include(hatchery_egg_router.urls)),
+    path('', include(eggs_router.urls)),
+    path('', include(incubations_router.urls))
 ]

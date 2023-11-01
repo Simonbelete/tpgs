@@ -38,3 +38,15 @@ class HatcheryEggSerializer_PATCH(serializers.ModelSerializer):
     #     validated_data['hatchery'] = hatchery
     #     validated_data['ingredient'] = ingredient
     #     return super().create(validated_data)
+    
+    
+## Incubations
+class IncubationSerializer_GET(serializers.ModelSerializer):
+    class Meta:
+        model = models.Incubation
+        fields = ['hatchery', 'date_time', 'temperature_celsius', 'humidity_fahrenheit', 'humidity_percent', 'remark']
+
+class IncubationSerializer_POST(serializers.ModelSerializer):
+    class Meta:
+        model = models.Incubation
+        fields = '__all__'
