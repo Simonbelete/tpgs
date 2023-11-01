@@ -29,7 +29,6 @@ from . import filters
 
 class HouseViewSet(CoreModelViewSet):
     queryset = models.House.all.all()
-    # all_queryset = models.House.all.all()
     serializer_class = serializers.HouseSerializer_GET
     filterset_class = filters.HouseFilter
     search_fields = ['name']
@@ -63,7 +62,7 @@ class HouseXlsxImport(XlsxImport):
     def get_resource(self):
         return admin.HouseResource()
 
-class HouseXlsImport(XlsxImport):
+class HouseXlsImport(XlsImport):
     def get_resource(self):
         return admin.HouseResource()
 

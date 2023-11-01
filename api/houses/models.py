@@ -14,3 +14,7 @@ class House(CoreModel):
 
     def __str__(self):
         return self.name
+    
+    @property
+    def display_name(self):
+        return self.name

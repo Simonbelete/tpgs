@@ -14,7 +14,7 @@ const PenEditPage = ({ data }: { data: Pen }) => {
 
   return (
     <>
-      <SeoHead title={`${data.name || ""} - Edit`} />
+      <SeoHead title={`${data.display_name || ""} - Edit`} />
       <EditLayout breadcrumbs={<Breadcrumbs items={breadcrumbs} />}>
         <PenForm data={data} />
       </EditLayout>

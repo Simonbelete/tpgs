@@ -1,5 +1,4 @@
-import React, { useEffect } from "react";
-import { Typography } from "@mui/material";
+import React from "react";
 import { Breadcrumbs } from "@/components";
 import { useBreadcrumbs } from "@/hooks";
 import { CreateLayout } from "@/layouts";
@@ -12,11 +11,8 @@ const HouseCreatePage = () => {
   return (
     <>
       <SeoHead title="Create House" />
-      <CreateLayout
-        breadcrumbs={<Breadcrumbs items={breadcrumbs} />}
-        header={<Typography variant="title">Create House</Typography>}
-      >
-        <HouseForm redirect />
+      <CreateLayout breadcrumbs={<Breadcrumbs items={breadcrumbs} />}>
+        <HouseForm />
       </CreateLayout>
     </>
   );

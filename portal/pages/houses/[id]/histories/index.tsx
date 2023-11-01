@@ -7,8 +7,11 @@ import { HouseHistoryList } from "@/features/houses";
 import { useRouter } from "next/router";
 import { NextPageContext } from "next";
 import { SeoHead } from "@/seo";
+import { getServerSidePropsContext } from "@/services/getServerSidePropsContext";
+import { getHouseByIdSSR } from "@/features/houses/services";
+import { House } from "@/models";
 
-const HouseHistoryPage = ({ id }: { id: number }) => {
+const HouseHistoryPage = ({ data }: { data: House }) => {
   const { breadcrumbs } = useBreadcrumbs();
   const router = useRouter();
 
@@ -17,9 +20,9 @@ const HouseHistoryPage = ({ id }: { id: number }) => {
       <SeoHead title="House Histories" />
       <ListLayout
         breadcrumbs={<Breadcrumbs items={breadcrumbs} />}
-        header={<Typography variant="title">Histories</Typography>}
+        header={<Typography variant="title">House History</Typography>}
       >
-        <HouseHistoryList id={id} />
+        <HouseHistoryList data={data} />
       </ListLayout>
     </>
   );
@@ -28,9 +31,11 @@ const HouseHistoryPage = ({ id }: { id: number }) => {
 export async function getServerSideProps(context: NextPageContext) {
   const { id } = context.query;
 
-  return {
-    props: { id },
-  };
+  return getServerSidePropsContext<House>({
+    context,
+    id: Number(id),
+    getByIdSSR: getHouseByIdSSR,
+  });
 }
 
 export default HouseHistoryPage;
