@@ -50,7 +50,7 @@ export type Field<T> = {
   placeholder?: string;
   label?: string;
   form?: ReactNode;
-  type?: "string" | "number" | "date";
+  type?: "string" | "number" | "date" | "datetime";
 };
 
 export interface FormProps<T> {
@@ -171,35 +171,37 @@ export default function Form<
               </Grid>
             );
           } else if (options.type == "date") {
-            <Grid key={i} item xs={options.xs || 12} md={options.md || 6}>
-              <Controller
-                // @ts-ignore
-                name={key}
-                control={control}
-                render={({
-                  field: { onChange, value },
-                  fieldState: { error },
-                }) => (
-                  <Stack gap={1}>
-                    <Typography variant="body2" fontWeight={700}>
-                      {options.label}
-                    </Typography>
-                    <DatePicker
-                      slotProps={{
-                        textField: {
-                          size: "small",
-                          fullWidth: true,
-                          error: !!error?.message,
-                          helperText: error?.message,
-                        },
-                      }}
-                      onChange={onChange}
-                      value={dayjs(value as string)}
-                    />
-                  </Stack>
-                )}
-              />
-            </Grid>;
+            return (
+              <Grid key={i} item xs={options.xs || 12} md={options.md || 6}>
+                <Controller
+                  // @ts-ignore
+                  name={key}
+                  control={control}
+                  render={({
+                    field: { onChange, value },
+                    fieldState: { error },
+                  }) => (
+                    <Stack gap={1}>
+                      <Typography variant="body2" fontWeight={700}>
+                        {options.label}
+                      </Typography>
+                      <DatePicker
+                        slotProps={{
+                          textField: {
+                            size: "small",
+                            fullWidth: true,
+                            error: !!error?.message,
+                            helperText: error?.message,
+                          },
+                        }}
+                        onChange={onChange}
+                        value={dayjs(value as string)}
+                      />
+                    </Stack>
+                  )}
+                />
+              </Grid>
+            );
           } else {
             return (
               <Grid key={i} item xs={options.xs || 12} md={options.md || 6}>
