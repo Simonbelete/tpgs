@@ -58,3 +58,4 @@ export type { default as ChangePassword } from "./ChangePassword";
 export type { default as RequirementAnalyses } from "./RequirementAnalyses";
 export type { default as AbstractBaseModel } from "./AbstractBaseModel";
 export type { default as Currency } from "./Currency";
+export type { default as IncubationAnalyses } from "./IncubationAnalyses";

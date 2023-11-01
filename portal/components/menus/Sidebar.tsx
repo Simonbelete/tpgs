@@ -366,14 +366,45 @@ const SidebarMenu = () => {
             </Typography>
           </MenuItem>
         </SubMenu>
-        <MenuItem
-          component={<Link href="/hatchery" />}
+        <SubMenu
+          label={
+            <Typography variant="body1" fontSize={14}>
+              Hatchery
+            </Typography>
+          }
           icon={<ChickenEasterIcon width="20" height="20" fill="inherit" />}
+          defaultOpen={RegExp("^/(hatchery|candling|incubation)(.*)$").test(
+            router.pathname
+          )}
         >
-          <Typography variant="body1" fontSize={14}>
-            Hatchery
-          </Typography>
-        </MenuItem>
+          <MenuItem
+            component={<Link href="/hatchery" />}
+            icon={<AdjustIcon fontSize="small" />}
+            active={RegExp("^/hatchery(.*)$").test(router.pathname)}
+          >
+            <Typography variant="body1" fontSize={14}>
+              Hatchery
+            </Typography>
+          </MenuItem>
+          <MenuItem
+            component={<Link href="/candling" />}
+            icon={<AdjustIcon fontSize="small" />}
+            active={RegExp("^/candling(.*)$").test(router.pathname)}
+          >
+            <Typography variant="body1" fontSize={14}>
+              Candling
+            </Typography>
+          </MenuItem>
+          <MenuItem
+            component={<Link href="/incubation" />}
+            icon={<AdjustIcon fontSize="small" />}
+            active={RegExp("^/incubation(.*)$").test(router.pathname)}
+          >
+            <Typography variant="body1" fontSize={14}>
+              Incubation
+            </Typography>
+          </MenuItem>
+        </SubMenu>
         <MenuItem
           component={<Link href="/eggs" />}
           icon={<EggIcon fontSize="small" />}
