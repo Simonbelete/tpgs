@@ -16,7 +16,7 @@ const SUMMARY_URL = `summary`;
 const EXPORT_URL = `${URL}/export`;
 const IMPORT_URL = `${URL}/import`;
 
-export const requirementApi = baseApi.injectEndpoints({
+export const incubationApi = baseApi.injectEndpoints({
   endpoints: (build) => {
     return {
       getIncubations: build.query<Response<Incubation[]>, Object>({
@@ -114,4 +114,4 @@ export const {
   useUpdateIncubationMutation,
   useDeleteIncubationMutation,
   useGetIncubationAnalysesQuery,
-} = requirementApi;
+} = incubationApi;
