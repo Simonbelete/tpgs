@@ -61,3 +61,5 @@ export type { default as AbstractBaseModel } from "./AbstractBaseModel";
 export type { default as Currency } from "./Currency";
 export type { default as IncubationAnalyses } from "./IncubationAnalyses";
 export type { default as HouseHistory } from "./HouseHistory";
+export type { default as WeightGuideline } from "./WeightGuideline";
+export type { default as WeightGuidelineHistory } from "./WeightGuidelineHistory";

@@ -18,10 +18,24 @@ export interface HistoryListProps<T> {
   columns: GridColDef[];
   getHistoryQuery: { id: number; query: Query };
   getHistoryEndpoint: ApiEndpointQuery<
-    QueryDefinition<Query, ClientQueyFn, any, Response<T[]>, any>,
+    QueryDefinition<
+      { id: number; query: Query },
+      ClientQueyFn,
+      any,
+      Response<T[]>,
+      any
+    >,
     EndpointDefinitions
   > &
-    QueryHooks<QueryDefinition<Query, ClientQueyFn, any, Response<T[]>, any>>;
+    QueryHooks<
+      QueryDefinition<
+        { id: number; query: Query },
+        ClientQueyFn,
+        any,
+        Response<T[]>,
+        any
+      >
+    >;
 }
 
 export default function HistoryList<T>({
@@ -34,9 +48,12 @@ export default function HistoryList<T>({
     pageSize: 10,
   });
 
-  const { data, isLoading, refetch } = getHistoryEndpoint.useQuery(
-    buildQuery({ ...buildPage(paginationModel), ...getHistoryQuery })
-  );
+  console.log(getHistoryQuery);
+
+  const { data, isLoading, refetch } = getHistoryEndpoint.useQuery({
+    ...getHistoryQuery,
+    ...buildQuery({ ...buildPage(paginationModel) }),
+  });
 
   return (
     <StripedDataGrid

@@ -17,6 +17,9 @@ export async function getServerSidePropsContext<T>({
 }) {
   try {
     const res = await getByIdSSR(context, id);
+    console.log(res.data);
+    console.log(id);
+
     if (res.status != 200)
       return {
         redirect: {

@@ -42,6 +42,7 @@ import { useRouter } from "next/router";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import FactoryIcon from "@mui/icons-material/Factory";
 import ChecklistIcon from "@mui/icons-material/Checklist";
+import AssignmentTurnedInIcon from "@mui/icons-material/AssignmentTurnedIn";
 
 function menuProps(key: string) {
   return {
@@ -485,6 +486,63 @@ const SidebarMenu = () => {
           >
             <Typography variant="body1" fontSize={14}>
               Pen
+            </Typography>
+          </MenuItem>
+        </SubMenu>
+        <SubMenu
+          label={
+            <Typography variant="body1" fontSize={14}>
+              Guidelines
+            </Typography>
+          }
+          icon={<AssignmentTurnedInIcon fontSize="small" />}
+          defaultOpen={RegExp(
+            "^/(guidelines/weight|guidelines/feed|guidelines/eggs)(.*)$"
+          ).test(router.pathname)}
+        >
+          <MenuItem
+            component={<Link href="/guidelines/hdep" />}
+            icon={<AdjustIcon fontSize="small" />}
+            active={RegExp("^/guidelines/hdep(.*)$").test(router.pathname)}
+          >
+            <Typography variant="body1" fontSize={14}>
+              HDEP Guideline
+            </Typography>
+          </MenuItem>
+          <MenuItem
+            component={<Link href="/guidelines/hhep" />}
+            icon={<AdjustIcon fontSize="small" />}
+            active={RegExp("^/guidelines/hhep(.*)$").test(router.pathname)}
+          >
+            <Typography variant="body1" fontSize={14}>
+              HHEP Guideline
+            </Typography>
+          </MenuItem>
+          <MenuItem
+            component={<Link href="/guidelines/weight" />}
+            icon={<AdjustIcon fontSize="small" />}
+            active={RegExp("^/guidelines/weight(.*)$").test(router.pathname)}
+          >
+            <Typography variant="body1" fontSize={14}>
+              Weight Guideline
+            </Typography>
+          </MenuItem>
+          <MenuItem
+            component={<Link href="/guidelines/feed" />}
+            icon={<AdjustIcon fontSize="small" />}
+            active={RegExp("^/guidelines/feed(.*)$").test(router.pathname)}
+          >
+            <Typography variant="body1" fontSize={14}>
+              Feed Guideline
+            </Typography>
+          </MenuItem>
+          <MenuItem
+            component={<Link href="/guidelines/egg" />}
+            icon={<AdjustIcon fontSize="small" />}
+            active={RegExp("^/guidelines/egg(.*)$").test(router.pathname)}
+          >
+            <Typography variant="body1" fontSize={14}>
+              Egg Guideline
             </Typography>
           </MenuItem>
         </SubMenu>

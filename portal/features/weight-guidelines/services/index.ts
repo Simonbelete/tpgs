@@ -1,28 +1,33 @@
 import { baseApi } from "@/services/baseApi";
-import { AbstractSummary, Response, Pen, PenHistory } from "@/models";
+import {
+  AbstractSummary,
+  Response,
+  WeightGuideline,
+  WeightGuidelineHistory,
+} from "@/models";
 import { AxiosResponse } from "axios";
 import clientSSR from "@/services/client_ssr";
 import client from "@/services/client";
 import { NextPageContext } from "next";
 
-const URL = "/pen";
+const URL = "/breeds/weight/guidelines";
 const HISTORY_URL = `histories`;
 const SUMMARY_URL = `summary`;
 const EXPORT_URL = `${URL}/export`;
 const IMPORT_URL = `${URL}/import`;
 
-export const penApi = baseApi.injectEndpoints({
+export const weightGuidelineApi = baseApi.injectEndpoints({
   endpoints: (build) => {
     return {
-      getPens: build.query<Response<Pen[]>, Object>({
+      getWeightGuidelines: build.query<Response<WeightGuideline[]>, Object>({
         query: (query?: Object) => ({
           url: `${URL}/`,
           method: "get",
           params: query,
         }),
       }),
-      getPenHistory: build.query<
-        Response<PenHistory[]>,
+      getWeightGuidelineHistory: build.query<
+        Response<WeightGuidelineHistory[]>,
         { id: number; query: Object }
       >({
         query: ({ id, query }) => ({
@@ -31,27 +36,33 @@ export const penApi = baseApi.injectEndpoints({
           params: query,
         }),
       }),
-      getPenSummary: build.query<AbstractSummary, number>({
+      getWeightGuidelineSummary: build.query<AbstractSummary, number>({
         query: (id: number) => ({
           url: `${URL}/${id}/${SUMMARY_URL}/`,
           method: "get",
         }),
       }),
-      createPen: build.mutation<Promise<Pen>, Partial<Pen>>({
-        query: (data: Partial<Pen>) => ({
+      createWeightGuideline: build.mutation<
+        Promise<WeightGuideline>,
+        Partial<WeightGuideline>
+      >({
+        query: (data: Partial<WeightGuideline>) => ({
           url: `${URL}/`,
           method: "post",
           data: data,
         }),
       }),
-      updatePen: build.mutation<Promise<Pen>, Pick<Pen, "id"> & Partial<Pen>>({
+      updateWeightGuideline: build.mutation<
+        Promise<WeightGuideline>,
+        Pick<WeightGuideline, "id"> & Partial<WeightGuideline>
+      >({
         query: ({ id, ...patch }) => ({
           url: `${URL}/${id}/`,
           method: "patch",
           data: patch,
         }),
       }),
-      deletePen: build.mutation<any, number>({
+      deleteWeightGuideline: build.mutation<any, number>({
         query: (id: number) => ({ url: `${URL}/${id}/`, method: "delete" }),
       }),
     };
@@ -59,28 +70,30 @@ export const penApi = baseApi.injectEndpoints({
   overrideExisting: false,
 });
 
-export const getPenByIdSSR = async (
+export const getWeightGuidelineByIdSSR = async (
   context: NextPageContext,
   id: number
-): Promise<AxiosResponse<Response<Pen>>> =>
+): Promise<AxiosResponse<Response<WeightGuideline>>> =>
   clientSSR(context).get(`${URL}/${id}`);
-export const exportPensXLSX = async () => client.get(`${EXPORT_URL}/xlsx`);
-export const exportPensXLS = async () => client.get(`${EXPORT_URL}/xls`);
-export const exportPensCSV = async () =>
+export const exportWeightGuidelinesXLSX = async () =>
+  client.get(`${EXPORT_URL}/xlsx`);
+export const exportWeightGuidelinesXLS = async () =>
+  client.get(`${EXPORT_URL}/xls`);
+export const exportWeightGuidelinesCSV = async () =>
   client.get(`${EXPORT_URL}/csv`, { responseType: "blob" });
-export const importPensXLSX = async (data: FormData) =>
+export const importWeightGuidelinesXLSX = async (data: FormData) =>
   client.post(`${IMPORT_URL}/xlsx`, data, {
     headers: {
       "Content-Type": "multipart/form-data",
     },
   });
-export const importPensCSV = async (data: FormData) =>
+export const importWeightGuidelinesCSV = async (data: FormData) =>
   client.post(`${IMPORT_URL}/csv`, data, {
     headers: {
       "Content-Type": "multipart/form-data",
     },
   });
-export const importPensXLS = async (data: FormData) =>
+export const importWeightGuidelinesXLS = async (data: FormData) =>
   client.post(`${IMPORT_URL}/xls`, data, {
     headers: {
       "Content-Type": "multipart/form-data",
@@ -88,11 +101,11 @@ export const importPensXLS = async (data: FormData) =>
   });
 
 export const {
-  useGetPensQuery,
-  useLazyGetPensQuery,
-  useGetPenHistoryQuery,
-  useGetPenSummaryQuery,
-  useCreatePenMutation,
-  useUpdatePenMutation,
-  useDeletePenMutation,
-} = penApi;
+  useGetWeightGuidelinesQuery,
+  useLazyGetWeightGuidelinesQuery,
+  useGetWeightGuidelineHistoryQuery,
+  useGetWeightGuidelineSummaryQuery,
+  useCreateWeightGuidelineMutation,
+  useUpdateWeightGuidelineMutation,
+  useDeleteWeightGuidelineMutation,
+} = weightGuidelineApi;
