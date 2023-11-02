@@ -8,65 +8,63 @@ router = routers.DefaultRouter()
 router.register(r'hatchery', views.HatcheryViewSet,
                 basename='api_hatchery')
 
+router.register(r'hatchery/(?P<id>.+)/histories',
+                views.HatcheryHistoryViewSet, basename='api_breeds_histories'),
+
+# Hatchery Eggs
+router.register(r'hatchery-eggs', views.HatcheryEggViewSet,
+                basename='api_hatchery_egg')
+
+hatchery_egg_summary_router = NestedDefaultRouter(
+    router, r'hatchery-eggs', lookup='id')
+hatchery_egg_summary_router.register(r'summary', views.HatcheryEggSummaryViewSet,
+                                     basename='api_hatchery_egg_summary')
+
+router.register(r'hatchery-eggs/(?P<id>.+)/histories',
+                views.HatcheryEggHistoryViewSet, basename='api_hatchery_egg_hisory'),
+
 hatchery_egg_router = NestedDefaultRouter(
     router, r'hatchery', lookup='hatchery')
-hatchery_egg_router.register(r'eggs', views.HatcherysEggViewSet,
-                            basename='api_hatchery_eggs')
+hatchery_egg_router.register(r'eggs', views.HatcheryEggViewSet,
+                             basename='api_hatchery_eggs')
 
-eggs_router = routers.DefaultRouter()
-eggs_router.register(r'hatchery-eggs', views.HatcheryEggViewSet,
-                basename='api_hatchery_eggs_list')
+# Incubation
+router.register(r'incubations', views.IncubationViewSet,
+                basename='api_incubation')
+
+incubation_summary_router = NestedDefaultRouter(
+    router, r'incubations', lookup='id')
+incubation_summary_router.register(r'summary', views.IncubationSummaryViewSet,
+                                   basename='api_incubation_summary')
+
+router.register(r'incubations/(?P<id>.+)/histories',
+                views.IncubationSummaryViewSet, basename='api_incubation_hisory'),
 
 hatchery_incubation_router = NestedDefaultRouter(
     router, r'hatchery', lookup='hatchery')
-hatchery_incubation_router.register(r'incubations', views.HatcheryIncubationViewSet,
-                            basename='api_hatchery_incubation')
-
-incubations_router = routers.DefaultRouter()
-incubations_router.register(r'incubations', views.IncubationViewSet,
-                basename='api_incubation_list')
+hatchery_incubation_router.register(r'incubations', views.HatcheryEggViewSet,
+                                    basename='api_hatchery_incubations')
 
 
 urlpatterns = [
     path('', include(router.urls)),
+    path('', include(hatchery_egg_summary_router.urls)),
     path('', include(hatchery_egg_router.urls)),
-    path('', include(eggs_router.urls)),
-    path('', include(incubations_router.urls)),
+    path('', include(incubation_summary_router.urls)),
     path('', include(hatchery_incubation_router.urls)),
-    
-    path('incubations/export/', include([
-          path('xlsx', views.IncubationXlsxExport.as_view(),
-              name="incubations_export_xlsx"),
-          path('xls', views.IncubationXlsExport.as_view(),
-               name="incubations_export_xls"),
-          path('csv', views.IncubationCsvExport.as_view(),
-               name="incubations_export_csv"),
-     ])),
 
-     path('incubations/import/', include([
-          path('xlsx', views.HatcheryEggsXlsxImport.as_view(),
-              name="incubations_import_xlsx"),
-          path('xls', views.HatcheryEggsXlsImport.as_view(),
-               name="incubations_import_xls"),
-          path('csv', views.HatcheryEggsCsvImport.as_view(),
-               name="incubations_import_csv")
-    ])),
-     
-     path('hatchery-eggs/export/', include([
-          path('xlsx', views.HatcheryEggsXlsxExport.as_view(),
-              name="hatchery_eggs_export_xlsx"),
-          path('xls', views.HatcheryEggsXlsExport.as_view(),
-               name="hatchery_eggs_export_xls"),
-          path('csv', views.HatcheryEggsCsvExport.as_view(),
-               name="hatchery_eggs_export_csv"),
-     ])),
+    path('hatchery/export/<str:export_type>/',
+         views.HatcheryExport.as_view(), name="api_hatchery_export"),
+    path('hatchery/import/<str:import_type>/',
+         views.HatcheryImport.as_view(), name="api_hatchery_import"),
 
-     path('hatchery-eggs/import/', include([
-          path('xlsx', views.HatcheryEggsXlsxImport.as_view(),
-              name="hatchery_eggs_import_xlsx"),
-          path('xls', views.HatcheryEggsXlsImport.as_view(),
-               name="hatchery_eggs_import_xls"),
-          path('csv', views.HatcheryEggsCsvImport.as_view(),
-               name="hatchery_eggs_import_csv")
-    ])),
+    path('hatchery-eggs/export/<str:export_type>/',
+         views.HatcheryEggExport.as_view(), name="api_hatchery_egg_export"),
+    path('hatchery-eggs/import/<str:import_type>/',
+         views.HatcheryEggImport.as_view(), name="api_hatchery_egg_import"),
+
+    path('incubations/export/<str:export_type>/',
+         views.IncubationExport.as_view(), name="api_incubation_export"),
+    path('incubations/import/<str:import_type>/',
+         views.IncubationImport.as_view(), name="api_incubation_import"),
 ]

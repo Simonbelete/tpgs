@@ -153,7 +153,7 @@ class BreedEggGuidelineSerializer_GET(serializers.ModelSerializer):
 class BreedEggGuideSerializer_POST(serializers.ModelSerializer):
     class Meta:
         model = models.BreedEggGuideline
-        fields = ['breed', 'week', 'egg', 'weight']
+        fields = ['id', 'breed', 'week', 'egg', 'weight']
 
     def create(self, validated_data):
         if ('breed_pk' in self.context["view"].kwargs):

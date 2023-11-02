@@ -5,6 +5,7 @@ from core.models import CoreModel
 from eggs.models import Egg
 from breeds.models import Breed
 
+
 class Hatchery(CoreModel):
     name = models.CharField(max_length=250, unique=True)
     incubation_moved_date = models.DateField(null=True, blank=True)
@@ -17,7 +18,8 @@ class Hatchery(CoreModel):
     @property
     def display_name(self):
         return self.name
-    
+
+
 class HatcheryEgg(CoreModel):
     """ Single Chicken's egg """
     hatchery = models.ForeignKey(
@@ -34,6 +36,8 @@ class HatcheryEgg(CoreModel):
     no_of_hatched = models.IntegerField(null=True, blank=True)
     no_dead = models.IntegerField(null=True, blank=True)
     no_culled = models.IntegerField(null=True, blank=True)
+    history = HistoricalRecords()
+
 
 class Incubation(CoreModel):
     hatchery = models.ForeignKey(
@@ -46,5 +50,4 @@ class Incubation(CoreModel):
     humidity_percent = models.DecimalField(
         max_digits=6, decimal_places=3, default=0)
     remark = models.TextField(null=True, blank=True)
-
     history = HistoricalRecords()

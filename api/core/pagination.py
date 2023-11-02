@@ -2,10 +2,12 @@ from rest_framework.pagination import PageNumberPagination, LimitOffsetPaginatio
 from rest_framework.response import Response
 from collections import OrderedDict
 
+
 class LimitPageNumberPagination(PageNumberPagination):
     page_size_query_param = 'limit'
 
-class AllPagination(BasePagination):    
+
+class AllPagination(BasePagination):
     def paginate_queryset(self, queryset, request, view=None):  # pragma: no cover
         self.count = self.get_count(queryset)
         return queryset

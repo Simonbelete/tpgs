@@ -1,3 +1,4 @@
+from typing import Any
 from django.shortcuts import render
 from rest_framework import viewsets
 from rest_framework.exceptions import NotFound
@@ -6,12 +7,8 @@ from core.views import (
     HistoryViewSet,
     SummaryViewSet,
     CoreModelViewSet,
-    XlsxExport,
-    XlsExport,
-    CsvExport,
-    XlsxImport,
-    XlsImport,
-    CsvImport
+    GenericExportView,
+    GenericImportView
 )
 from core.pagination import AllPagination
 from . import models
@@ -19,148 +16,111 @@ from . import serializers
 from . import admin
 from . import filters
 
-## Hatchery
-class HatcheryViewSet(viewsets.ModelViewSet):
+# Hatchery
+
+
+class HatcheryViewSet(CoreModelViewSet):
     queryset = models.Hatchery.objects.all()
     serializer_class = serializers.HatcherySerializer_GET
 
     def get_serializer_class(self):
-        if self.request.method in ['POST', 'PATCH']:
+        if self.request.method in ['POST', 'PUT', 'PATCH']:
             return serializers.HatcherySerializer_POST
         return serializers.HatcherySerializer_GET
 
-## Hatchery Export & Export
-class HatcheryXlsxExport(XlsxExport):
+
+class HatcheryHistoryViewSet(HistoryViewSet):
+    queryset = models.Hatchery.history.all()
+    serializer_class = serializers.HatcheryHistorySerializer
+
+
+class HatcherySummaryViewSet(SummaryViewSet):
+    def get_query(self):
+        return models.Hatchery.all.get(pk=self.id_pk)
+
+
+class HatcheryExport(GenericExportView):
     def get_dataset(self):
         return admin.HatcheryResource().export()
 
-class HatcheryXlsExport(XlsExport):
-    def get_dataset(self):
-        return admin.HatcheryResource().export()
 
-class HatcheryCsvExport(CsvExport):
-    def get_dataset(self):
-        return admin.HatcheryResource().export()
-
-class HatcheryXlsxImport(XlsxImport):
+class HatcheryImport(GenericImportView):
     def get_resource(self):
-        return admin.HatcheryResource
-    
-class HatcheryXlsImport(XlsImport):
-    def get_resource(self):
-        return admin.HatcheryResource
-        
-class HatcheryCsvImport(CsvImport):
-    def get_resource(self):
-        return admin.HatcheryResource
+        return admin.HatcheryResource()
 
 
-## Eggs Of Hatchery
-class HatcherysEggViewSet(viewsets.ModelViewSet):
-    serializer_class = serializers.HatcheryEggSerializer_GET
-
-    def get_queryset(self):
-        try:
-            return models.HatcheryEgg.all.filter(hatchery=self.kwargs['hatchery_pk'])
-        except models.HatcheryEgg.DoesNotExist as ex:
-            raise NotFound()
-
-    def get_serializer_class(self):
-        if self.request.method == 'POST':
-            return serializers.HatcheryEggSerializer_POST
-        if self.request.method in ['PUT', 'PATCH']:
-            return serializers.HatcheryEggSerializer_PATCH
-        return serializers.HatcheryEggSerializer_GET
-    
-## Hatchery Eggs 
+# Hatchery Eggs
 class HatcheryEggViewSet(CoreModelViewSet):
     queryset = models.HatcheryEgg.all.all()
     serializer_class = serializers.HatcheryEggSerializer_GET
 
+    def __init__(self, **kwargs: Any) -> None:
+        super().__init__(**kwargs)
+        if ('hatchery_pk' in kwargs):
+            self.pagination_class = AllPagination
+
+    def get_queryset(self):
+        if ('hatchery_pk' in self.kwargs):
+            return self.queryset.filter(hatchery=self.kwargs['hatchery_pk'])
+        return self.queryset
+
     def get_serializer_class(self):
-        if self.request.method == 'POST':
+        if self.request.method in ['POST', 'PUT', 'PATCH']:
             return serializers.HatcheryEggSerializer_POST
-        if self.request.method in ['PUT', 'PATCH']:
-            return serializers.HatcheryEggSerializer_PATCH
         return serializers.HatcheryEggSerializer_GET
 
-## Hatchery Export & Export
-class HatcheryEggsXlsxExport(XlsxExport):
-    def get_dataset(self):
-        return admin.HatcheryEggsResource().export()
 
-class HatcheryEggsXlsExport(XlsExport):
+class HatcheryEggExport(GenericExportView):
     def get_dataset(self):
-        return admin.HatcheryEggsResource().export()
+        return admin.HatcheryEggResource().export()
 
-class HatcheryEggsCsvExport(CsvExport):
-    def get_dataset(self):
-        return admin.HatcheryEggsResource().export()
 
-class HatcheryEggsXlsxImport(XlsxImport):
+class HatcheryEggImport(GenericImportView):
     def get_resource(self):
-        return admin.HatcheryEggsResource
-    
-class HatcheryEggsXlsImport(XlsImport):
-    def get_resource(self):
-        return admin.HatcheryEggsResource
-        
-class HatcheryEggsCsvImport(CsvImport):
-    def get_resource(self):
-        return admin.HatcheryEggsResource
-    
-    
-## Incubations
+        return admin.HatcheryEggResource()
+
+
+class HatcheryEggHistoryViewSet(HistoryViewSet):
+    queryset = models.HatcheryEgg.history.all()
+    serializer_class = serializers.HatcheryEggHistorySerializer
+
+
+class HatcheryEggSummaryViewSet(SummaryViewSet):
+    def get_query(self):
+        return models.HatcheryEgg.all.get(pk=self.id_pk)
+
+
+# Incubations
 class IncubationViewSet(CoreModelViewSet):
     queryset = models.Incubation.all.all()
     serializer_class = serializers.IncubationSerializer_GET
 
-    def get_serializer_class(self):
-        if self.request.method in ['POST', 'PATCH']:
-            return serializers.IncubationSerializer_POST
-        return serializers.IncubationSerializer_GET
-    
-## Incubation Export & Export
-class IncubationXlsxExport(XlsxExport):
-    def get_dataset(self):
-        return admin.IncubationResource().export()
-
-class IncubationXlsExport(XlsExport):
-    def get_dataset(self):
-        return admin.IncubationResource().export()
-
-class IncubationCsvExport(CsvExport):
-    def get_dataset(self):
-        return admin.IncubationResource().export()
-
-class IncubationXlsxImport(XlsxImport):
-    def get_resource(self):
-        return admin.IncubationResource
-    
-class IncubationXlsImport(XlsImport):
-    def get_resource(self):
-        return admin.IncubationResource
-        
-class IncubationCsvImport(CsvImport):
-    def get_resource(self):
-        return admin.IncubationResource
-    
-## Hatchery -> Incubation
-class HatcheryIncubationViewSet(CoreModelViewSet):
-    pagination_class = AllPagination
-    serializer_class = serializers.HatcheryIncubationSerializer_GET
-    filterset_class = filters.IncubationFilter
-    ordering_fields = '__all__'
-
     def get_queryset(self):
-        try:
-            return models.Incubation.all.filter(requirement=self.kwargs['hatchery_pk'])
-        except models.Incubation.DoesNotExist as ex:
-            raise NotFound()
+        if ('hatchery_pk' in self.kwargs):
+            return self.queryset.filter(hatchery=self.kwargs['hatchery_pk'])
+        return self.queryset
 
     def get_serializer_class(self):
-        if self.request.method == 'POST':
-            return serializers.HatcheryIncubationSerializer_POST
-        if self.request.method in ['PUT', 'PATCH']:
-            return serializers.HatcheryIncubationSerializer_PATCH
-        return serializers.HatcheryIncubationSerializer_GET
+        if self.request.method in ['POST', 'PUT', 'PATCH']:
+            return serializers.HatcheryEggSerializer_POST
+        return serializers.HatcheryEggSerializer_GET
+
+
+class IncubationExport(GenericExportView):
+    def get_dataset(self):
+        return admin.IncubationResource().export()
+
+
+class IncubationImport(GenericImportView):
+    def get_resource(self):
+        return admin.IncubationResource()
+
+
+class IncubationHistoryViewSet(HistoryViewSet):
+    queryset = models.Incubation.history.all()
+    serializer_class = serializers.IncubationHistorySerializer
+
+
+class IncubationSummaryViewSet(SummaryViewSet):
+    def get_query(self):
+        return models.Incubation.all.get(pk=self.id_pk)
