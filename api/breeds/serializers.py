@@ -25,6 +25,35 @@ class BreedHistorySerializer(serializers.ModelSerializer):
         model = models.Breed.history.__dict__['model']
         fields = '__all__'
 
+
+## Breed Weight Guideline
+class BreedWeightGuidelineSerializer_GET(serializers.ModelSerializer):
+    breed = BreedSerializer_SLUG()
+    class Meta:
+        model = models.BreedWeightGuideline
+        fields = ['id', 'breed', 'week', 'weight', 'display_name']
+
+
+class BreedWeightGuideSerializer_POST(serializers.ModelSerializer):
+    class Meta:
+        model = models.BreedWeightGuideline
+        fields = ['id', 'breed', 'week', 'weight']
+
+    def create(self, validated_data):
+        if('breed_pk' in self.context["view"].kwargs):
+            breed = models.Breed.objects.get(
+                pk=self.context["view"].kwargs["breed_pk"])
+            validated_data['breed'] = breed
+        return super().create(validated_data)
+
+class BreedHistorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Breed.history.__dict__['model']
+        fields = '__all__'
+
+
+
+
 # Breed HDEP Guide
 
 
@@ -64,47 +93,27 @@ class BreedHHEPGuideSerializer_POST(serializers.ModelSerializer):
         validated_data['breed'] = breed
         return super().create(validated_data)
 
-
-## Breed Weight Guide
-class BreedWeightGuideSerializer_GET(serializers.ModelSerializer):
-    class Meta:
-        model = models.BreedWeightGuide
-        fields = '__all__'
-
-
-class BreedWeightGuideSerializer_POST(serializers.ModelSerializer):
-    class Meta:
-        model = models.BreedWeightGuide
-        fields = ['id', 'week', 'weight']
-
-    def create(self, validated_data):
-        if(self.context["view"].kwargs["breed_pk"]):
-            breed = models.Breed.objects.get(
-                pk=self.context["view"].kwargs["breed_pk"])
-            validated_data['breed'] = breed
-        return super().create(validated_data)
-
 ## Feed Guide
 class FeedGuideSerializer_GET(serializers.ModelSerializer):
     class Meta:
-        model = models.BreedFeedGuide
+        model = models.BreedFeedGuideline
         fields = '__all__'
 
 
 class FeedGuideSerializer_POST(serializers.ModelSerializer):
     class Meta:
-        model = models.BreedFeedGuide
+        model = models.BreedFeedGuideline
         fields = ['breed', 'week', 'feed']
     
         
 ## Egg Guide
 class EggGuideSerializer_GET(serializers.ModelSerializer):
     class Meta:
-        model = models.BreedEggGuide
+        model = models.BreedEggGuideline
         fields = '__all__'
 
 
 class EggGuideSerializer_POST(serializers.ModelSerializer):
     class Meta:
-        model = models.BreedEggGuide
+        model = models.BreedEggGuideline
         fields = ['breed', 'week', 'egg', 'weight']

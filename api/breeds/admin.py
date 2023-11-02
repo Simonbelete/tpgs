@@ -10,19 +10,19 @@ class BreedResource(resources.ModelResource):
         model = models.Breed
         fields = ['id', 'name', 'color']
 
-class BreedWeightGuideResource(resources.ModelResource):
+class BreedWeightGuidelineResource(resources.ModelResource):
     class Meta:
-        model = models.BreedWeightGuide
+        model = models.BreedWeightGuideline
         fields = ['id', 'breed', 'week']
 
 class BreedFeedGuideResource(resources.ModelResource):
     class Meta:
-        model = models.BreedFeedGuide
+        model = models.BreedFeedGuideline
         fields = ['id', 'breed', 'week']
         
 class BreedEggGuideResource(resources.ModelResource):
     class Meta:
-        model = models.BreedEggGuide
+        model = models.BreedEggGuideline
         fields = ['id', 'breed', 'week']
 
 admin.site.register(models.Breed, SimpleHistoryAdmin)

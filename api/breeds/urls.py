@@ -10,12 +10,21 @@ router.register(r'breeds', views.BreedViewSet,
 router.register(r'breeds/(?P<id>.+)/histories',
                 views.BreedHistoryViewSet, basename='api_breeds_histories'),
 
-router.register(r'breeds/weight/guidelines', views.BreedWeightGuideViewSet,
-                basename='api_breeds')
+## Breed Weight Guideline
+router.register(r'breeds/weight/guidelines', views.BreedWeightGuidelineViewSet,
+                basename='api_breed_weight_guideline')
+
+weight_summary_router = NestedDefaultRouter(
+    router, r'breeds/weight/guidelines', lookup='id')
+weight_summary_router.register(r'summary', views.BreedWeightGuidelineSummaryViewSet,
+                        basename='api_breed_weight_guideline_summary')
+
+router.register(r'breeds/weight/guideline/(?P<id>.+)/histories',
+                views.BreedWeightGuidelineHistoryViewSet, basename='api_breed_weight_guideline-histories'),
 
 breed_weight_guide_router = NestedDefaultRouter(
     router, r'breeds', lookup='breed')
-breed_weight_guide_router.register(r'weight/guidelines', views.BreedWeightGuideViewSet,
+breed_weight_guide_router.register(r'weight/guidelines', views.BreedWeightGuidelineViewSet,
                        basename='api_breed_weight_guide')
 
 # hdep_router = NestedDefaultRouter(
@@ -29,12 +38,12 @@ breed_weight_guide_router.register(r'weight/guidelines', views.BreedWeightGuideV
 #                      basename='api_breed_hhep')
 
 # breed_weight_guide_router = routers.DefaultRouter()
-# breed_weight_guide_router.register(r'breed-weight-guides', views.BreedWeightGuideViewSet,
+# breed_weight_guide_router.register(r'breed-weight-guides', views.BreedWeightGuidelineViewSet,
 #                 basename='api_weight_guide')
 
 # breed_pk_breed_weight_guide_router = NestedDefaultRouter(
 #     router, r'breeds', lookup='breed')
-# breed_pk_breed_weight_guide_router.register(r'weight-guides', views.BreedWeightGuideViewSet,
+# breed_pk_breed_weight_guide_router.register(r'weight-guides', views.BreedWeightGuidelineViewSet,
 #                        basename='api_breed_weight_guide')
 
 # router.register(r'breeds/weight/guidelines/(?P<export_type>.+)', 
@@ -44,12 +53,12 @@ breed_weight_guide_router.register(r'weight/guidelines', views.BreedWeightGuideV
 
 # breed_feed_router = NestedDefaultRouter(
 #     router, r'breeds', lookup='breed')
-# breed_feed_router.register(r'feed-guides', views.BreedWeightGuideViewSet,
+# breed_feed_router.register(r'feed-guides', views.BreedWeightGuidelineViewSet,
 #                        basename='api_breed_feed_guide')
 
 # breed_egg_router = NestedDefaultRouter(
 #     router, r'breeds', lookup='breed')
-# breed_egg_router.register(r'egg-guides', views.BreedWeightGuideViewSet,
+# breed_egg_router.register(r'egg-guides', views.BreedWeightGuidelineViewSet,
 #                        basename='api_breed_egg_guides')
 
 # feed_guide_router = routers.DefaultRouter()
@@ -63,7 +72,11 @@ breed_weight_guide_router.register(r'weight/guidelines', views.BreedWeightGuideV
 urlpatterns = [
     path('', include(router.urls)),
     path('', include(breed_weight_guide_router.urls)),
-    path('breeds/weight/guidelines/<export_type>', views.BreedWeightGuideImportExport.as_view(), name="addfssdfsdf")
+    path('', include(weight_summary_router.urls)),
+    path('breeds/weight/guidelines/export/<str:export_type>/', views.BreedWeightGuidelineExport.as_view(), name="api_guidelines_weight_export"),
+    path('breeds/weight/guidelines/import/<str:import_type>/', views.BreedWeightGuidelineImport.as_view(), name="api_guidelines_weight_import"),
+
+
 #     path('', include(hdep_router.urls)),
 #     path('', include(breed_pk_breed_weight_guide_router.urls)),
 #     path('', include(breed_weight_guide_router.urls)),
@@ -88,20 +101,20 @@ urlpatterns = [
     
     
 #     path('breed-weight-guides/export/', include([
-#          path('xlsx', views.BreedWeightGuideXlsxExport.as_view(),
+#          path('xlsx', views.BreedWeightGuidelineXlsxExport.as_view(),
 #               name="breed_weight_guide_export_xlsx"),
-#          path('xls', views.BreedWeightGuideXlsExport.as_view(),
+#          path('xls', views.BreedWeightGuidelineXlsExport.as_view(),
 #              name="breed_weight_guide_export_xls"),
-#          path('csv', views.BreedWeightGuideCsvExport.as_view(),
+#          path('csv', views.BreedWeightGuidelineCsvExport.as_view(),
 #               name="breed_weight_guide_export_csv"),
 #      ])),
 
 #     path('breed-weight-guides/import/', include([
-#          path('xlsx', views.BreedWeightGuideXlsxImport.as_view(),
+#          path('xlsx', views.BreedWeightGuidelineXlsxImport.as_view(),
 #               name="breed_weight_guide_import_xlsx"),
-#          path('xls', views.BreedWeightGuideXlsImport.as_view(),
+#          path('xls', views.BreedWeightGuidelineXlsImport.as_view(),
 #               name="breed_weight_guide_import_xls"),
-#          path('csv', views.BreedWeightGuideCsvImport.as_view(),
+#          path('csv', views.BreedWeightGuidelineCsvImport.as_view(),
 #               name="breed_weight_guide_import_csv")
 #      ])),
     

@@ -153,7 +153,55 @@ class GenericExportView(APIView):
             return self.export_csv()
         else:
             return Response({'error': ['export type']})
-        
+     
+class GenericImportView(APIView): 
+    serializer_class = UploadSerializer
+    parser_classes = [MultiPartParser]
+    renderer_classes = [TemplateHTMLRenderer]
+    template_name = 'import_result.html'
+    
+    def get_resource(self):
+        raise NotImplemented()
+    
+    def import_xlsx(self, request):
+        file = request.FILES.get('file')
+        df = pd.read_excel(file, header=0)
+        dataset = Dataset().load(df)
+        resource = self.get_resource()
+        result = resource.import_data(dataset, dry_run=True)
+        if not result.has_errors():
+            result = resource.import_data(dataset, dry_run=False)
+        return Response({'result': result})
+
+    def import_xls(self, request):
+        file = request.FILES.get('file')
+        df = pd.read_excel(file, header=0)
+        dataset = Dataset().load(df)
+        resource = self.get_resource()
+        result = resource.import_data(dataset, dry_run=True)
+        if not result.has_errors():
+            result = resource.import_data(dataset, dry_run=False)
+        return Response({'result': result})
+
+    def import_csv(self, request):
+        file = request.FILES.get('file')
+        df = pd.read_csv(file, header=0)
+        dataset = Dataset().load(df)
+        resource = self.get_resource()
+        result = resource.import_data(dataset, dry_run=True)
+        if not result.has_errors():
+            result = resource.import_data(dataset, dry_run=False)
+        return Response({'result': result})
+
+    def post(self, request, import_type = None):
+        if(import_type == 'xlsx'):
+            return self.import_xlsx(request)
+        elif(import_type == 'xls'):
+            return self.import_xls()
+        elif(import_type == 'csv'):
+            return self.import_csv()
+        else:
+            return Response({'error': ['import type']})
 
 class XlsxExport(APIView):
     def get_dataset(self):
