@@ -22,16 +22,17 @@ from core.views import (
     GenericExportView,
     GenericImportView
 )
-from core.serializers import UploadSerializer
 from . import models
 from . import serializers
 from . import admin
 
-## Breed
-class BreedViewSet(viewsets.ModelViewSet):
+# Breed
+
+
+class BreedViewSet(CoreModelViewSet):
     queryset = models.Breed.objects.all()
     serializer_class = serializers.BreedSerializer_GET
-    
+
     def get_serializer_class(self):
         if self.request.method in ['POST', 'PUT', 'PATCH']:
             return serializers.BreedSerializer_POST
@@ -42,158 +43,202 @@ class BreedHistoryViewSet(HistoryViewSet):
     queryset = models.Breed.history.all()
     serializer_class = serializers.BreedHistorySerializer
 
-## Breed Import & Export
-class BreedXlsxExport(XlsxExport):
-    def get_dataset(self):
-        return admin.BreedResource().export()
 
-class BreedXlsExport(XlsExport):
-    def get_dataset(self):
-        return admin.BreedResource().export()
+class BreedSummaryViewSet(SummaryViewSet):
+    def get_query(self):
+        return models.Breed.all.get(pk=self.id_pk)
 
-class BreedCsvExport(CsvExport):
-    def get_dataset(self):
-        return admin.BreedResource().export()
-    
-class BreedXlsxImport(XlsxImport):
-    def get_dataset(self):
-        return admin.BreedResource().export()
-    
-class BreedXlsImport(XlsImport):
-    def get_dataset(self):
-        return admin.BreedResource().export()
 
-class BreedCsvImport(CsvImport):
+class BreedExport(GenericExportView):
     def get_dataset(self):
         return admin.BreedResource().export()
 
 
-## Breed Weight Guide
+class BreedImport(GenericImportView):
+    def get_resource(self):
+        return admin.BreedResource()
+
+
+# Breed Weight Guide
+
 class BreedWeightGuidelineViewSet(viewsets.ModelViewSet):
     queryset = models.BreedWeightGuideline.all.all()
     serializer_class = serializers.BreedWeightGuidelineSerializer_GET
 
     def get_queryset(self):
-        if('breed_pk' in self.kwargs):
+        if ('breed_pk' in self.kwargs):
             return self.queryset.filter(breed=self.kwargs['breed_pk'])
         return self.queryset
 
     def get_serializer_class(self):
         if self.request.method in ['POST', 'PUT', 'PATCH']:
-            return serializers.BreedWeightGuideSerializer_POST
+            return serializers.BreedWeightGuidelineSerializer_POST
         return serializers.BreedWeightGuidelineSerializer_GET
+
 
 class BreedWeightGuidelineExport(GenericExportView):
     def get_dataset(self):
         return admin.BreedWeightGuidelineResource().export()
 
+
 class BreedWeightGuidelineImport(GenericImportView):
     def get_resource(self):
         return admin.BreedWeightGuidelineResource()
-    
-  
+
+
 class BreedWeightGuidelineHistoryViewSet(HistoryViewSet):
     queryset = models.BreedWeightGuideline.history.all()
-    serializer_class = serializers.BreedHistorySerializer
-  
+    serializer_class = serializers.BreedWeightGuidelineHistorySerializer
+
+
 class BreedWeightGuidelineSummaryViewSet(SummaryViewSet):
     def get_query(self):
         return models.BreedWeightGuideline.all.get(pk=self.id_pk)
 
 
-# Breed HDEP Guid
-# class BreedHDEPGuideViewSet(viewsets.ModelViewSet):
-#     serializer_class = serializers.BreedHDEPGuideSerializer_GET
+# Breed Egg Guide
 
-#     def get_queryset(self):
-#         return models.BreedHDEPGuid.objects.filter(breed=self.kwargs['breed_pk'])
+class BreedEggGuidelineViewSet(viewsets.ModelViewSet):
+    queryset = models.BreedEggGuideline.all.all()
+    serializer_class = serializers.BreedEggGuidelineSerializer_GET
 
-#     def get_serializer_class(self):
-#         if self.request.method in ['POST', 'PUT', 'PATCH']:
-#             return serializers.BreedHDEPGuideSerializer_POST
-#         return serializers.BreedHDEPGuideSerializer_GET
-
-
-# Breed HHEP Guid
-# class BreedHHEPGuideViewSet(viewsets.ModelViewSet):
-#     serializer_class = serializers.BreedHHEPGuideSerializer_GET
-
-#     def get_queryset(self):
-#         return models.BreedHHEPGuid.objects.filter(breed=self.kwargs['breed_pk'])
-
-#     def get_serializer_class(self):
-#         if self.request.method in ['POST', 'PUT', 'PATCH']:
-#             return serializers.BreedHHEPGuideSerializer_POST
-#         return serializers.BreedHHEPGuideSerializer_GET
-    
-    
-## Feed Guide
-# class FeedGuideViewSet(viewsets.ModelViewSet):
-#     queryset = models.BreedWeightGuide.objects.all()
-#     serializer_class = serializers.FeedGuideSerializer_GET
-
-#     def get_serializer_class(self):
-#         if self.request.method in ['POST', 'PUT', 'PATCH']:
-#             return serializers.FeedGuideSerializer_POST
-#         return serializers.FeedGuideSerializer_GET
-
-## Feed Guide Import & Export
-class FeedGuideXlsxExport(XlsxExport):
-    def get_dataset(self):
-        return admin.BreedFeedGuideResource().export()
-
-class FeedGuideXlsExport(XlsExport):
-    def get_dataset(self):
-        return admin.BreedFeedGuideResource().export()
-
-class FeedGuideCsvExport(CsvExport):
-    def get_dataset(self):
-        return admin.BreedFeedGuideResource().export()
-    
-class FeedGuideXlsxImport(XlsxImport):
-    def get_dataset(self):
-        return admin.BreedFeedGuideResource().export()
-    
-class FeedGuideXlsImport(XlsImport):
-    def get_dataset(self):
-        return admin.BreedFeedGuideResource().export()
-
-class FeedGuideCsvImport(CsvImport):
-    def get_dataset(self):
-        return admin.BreedFeedGuideResource().export()
-    
-    
-## Egg Guide
-class EggGuideViewSet(viewsets.ModelViewSet):
-    queryset = models.BreedEggGuideline.objects.all()
-    serializer_class = serializers.EggGuideSerializer_GET
+    def get_queryset(self):
+        if ('breed_pk' in self.kwargs):
+            return self.queryset.filter(breed=self.kwargs['breed_pk'])
+        return self.queryset
 
     def get_serializer_class(self):
         if self.request.method in ['POST', 'PUT', 'PATCH']:
-            return serializers.EggGuideSerializer_POST
-        return serializers.EggGuideSerializer_GET
+            return serializers.BreedEggGuideSerializer_POST
+        return serializers.BreedEggGuidelineSerializer_GET
 
-## Egg Guide Import & Export
-class EggGuideXlsxExport(XlsxExport):
-    def get_dataset(self):
-        return admin.BreedEggGuideResource().export()
 
-class EggGuideXlsExport(XlsExport):
+class BreedEggGuidelineExport(GenericExportView):
     def get_dataset(self):
-        return admin.BreedEggGuideResource().export()
+        return admin.BreedEggGuidelineResource().export()
 
-class EggGuideCsvExport(CsvExport):
-    def get_dataset(self):
-        return admin.BreedEggGuideResource().export()
-    
-class EggGuideXlsxImport(XlsxImport):
-    def get_dataset(self):
-        return admin.BreedEggGuideResource().export()
-    
-class EggGuideXlsImport(XlsImport):
-    def get_dataset(self):
-        return admin.BreedEggGuideResource().export()
 
-class EggGuideCsvImport(CsvImport): 
+class BreedEggGuidelineImport(GenericImportView):
+    def get_resource(self):
+        return admin.BreedEggGuidelineResource()
+
+
+class BreedEggGuidelineHistoryViewSet(HistoryViewSet):
+    queryset = models.BreedEggGuideline.history.all()
+    serializer_class = serializers.BreedEggGuidelineHistorySerializer
+
+
+class BreedEggGuidelineSummaryViewSet(SummaryViewSet):
+    def get_query(self):
+        return models.BreedEggGuideline.all.get(pk=self.id_pk)
+
+
+# Breed Feed Guideline
+
+class BreedFeedGuidelineViewSet(viewsets.ModelViewSet):
+    queryset = models.BreedFeedGuideline.all.all()
+    serializer_class = serializers.BreedFeedGuidelineSerializer_GET
+
+    def get_queryset(self):
+        if ('breed_pk' in self.kwargs):
+            return self.queryset.filter(breed=self.kwargs['breed_pk'])
+        return self.queryset
+
+    def get_serializer_class(self):
+        if self.request.method in ['POST', 'PUT', 'PATCH']:
+            return serializers.BreedFeedGuideSerializer_POST
+        return serializers.BreedFeedGuidelineSerializer_GET
+
+
+class BreedFeedGuidelineExport(GenericExportView):
     def get_dataset(self):
-        return admin.BreedEggGuideResource().export()
+        return admin.BreedFeedGuidelineResource().export()
+
+
+class BreedFeedGuidelineImport(GenericImportView):
+    def get_resource(self):
+        return admin.BreedFeedGuidelineResource()
+
+
+class BreedFeedGuidelineHistoryViewSet(HistoryViewSet):
+    queryset = models.BreedFeedGuideline.history.all()
+    serializer_class = serializers.BreedFeedGuidelineHistorySerializer
+
+
+class BreedFeedGuidelineSummaryViewSet(SummaryViewSet):
+    def get_query(self):
+        return models.BreedFeedGuideline.all.get(pk=self.id_pk)
+
+
+# Breed HDEP Guid
+
+class BreedHDEPGuidelineViewSet(viewsets.ModelViewSet):
+    queryset = models.BreedHDEPGuideline.all.all()
+    serializer_class = serializers.BreedHDEPGuidelineSerializer_GET
+
+    def get_queryset(self):
+        if ('breed_pk' in self.kwargs):
+            return self.queryset.filter(breed=self.kwargs['breed_pk'])
+        return self.queryset
+
+    def get_serializer_class(self):
+        if self.request.method in ['POST', 'PUT', 'PATCH']:
+            return serializers.BreedHDEPGuidelineSerializer_POST
+        return serializers.BreedHDEPGuidelineSerializer_GET
+
+
+class BreedHDEPGuidelineExport(GenericExportView):
+    def get_dataset(self):
+        return admin.BreedHDEPGuidelineResource().export()
+
+
+class BreedHDEPGuidelineImport(GenericImportView):
+    def get_resource(self):
+        return admin.BreedHDEPGuidelineResource()
+
+
+class BreedHDEPGuidelineHistoryViewSet(HistoryViewSet):
+    queryset = models.BreedHDEPGuideline.history.all()
+    serializer_class = serializers.BreedHDEPGuidelineHistorySerializer
+
+
+class BreedHDEPGuidelineSummaryViewSet(SummaryViewSet):
+    def get_query(self):
+        return models.BreedHDEPGuideline.all.get(pk=self.id_pk)
+
+
+# Breed HHEP Guideline
+
+class BreedHHEPGuidelineViewSet(viewsets.ModelViewSet):
+    queryset = models.BreedHHEPGuideline.all.all()
+    serializer_class = serializers.BreedHHEPGuidelineSerializer_GET
+
+    def get_queryset(self):
+        if ('breed_pk' in self.kwargs):
+            return self.queryset.filter(breed=self.kwargs['breed_pk'])
+        return self.queryset
+
+    def get_serializer_class(self):
+        if self.request.method in ['POST', 'PUT', 'PATCH']:
+            return serializers.BreedHHEPGuidelineSerializer_POST
+        return serializers.BreedHHEPGuidelineSerializer_GET
+
+
+class BreedHHEPGuidelineExport(GenericExportView):
+    def get_dataset(self):
+        return admin.BreedHHEPGuidelineResource().export()
+
+
+class BreedHHEPGuidelineImport(GenericImportView):
+    def get_resource(self):
+        return admin.BreedHHEPGuidelineResource()
+
+
+class BreedHHEPGuidelineHistoryViewSet(HistoryViewSet):
+    queryset = models.BreedHHEPGuideline.history.all()
+    serializer_class = serializers.BreedHHEPGuidelineHistorySerializer
+
+
+class BreedHHEPGuidelineSummaryViewSet(SummaryViewSet):
+    def get_query(self):
+        return models.BreedHHEPGuideline.all.get(pk=self.id_pk)
