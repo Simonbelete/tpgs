@@ -3,7 +3,6 @@ from simple_history.models import HistoricalRecords
 
 from core.models import CoreModel
 from core.validators import WEEK_VALIDATOR, PERCENTAGE_VALIDATOR
-from units.models import Unit
 
 
 class Breed(CoreModel):
@@ -89,6 +88,7 @@ class BreedEggGuideline(CoreModel):
         Breed, on_delete=models.CASCADE)
     week = models.PositiveIntegerField(validators=WEEK_VALIDATOR)
     egg = models.IntegerField(null=True, blank=True)
+    # total egg weight
     weight = models.FloatField(null=True, blank=True)  # in g
     history = HistoricalRecords()
 
