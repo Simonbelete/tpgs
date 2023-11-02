@@ -16,6 +16,7 @@ from django_tenants.utils import schema_context
 
 from core.serializers import UploadSerializer
 
+
 class CoreModelViewSet(viewsets.ModelViewSet):
     # def get_queryset(self):
     #     is_active = self.request.GET.get('is_active')
@@ -112,13 +113,13 @@ class SummaryViewSet(viewsets.ViewSet):
                 'last_history_type': None,
                 'history_count': 0
             }, status=200)
-            
-            
-## Exports
+
+
+# Exports
 class GenericExportView(APIView):
     def get_dataset(self):
         raise NotImplemented()
-    
+
     def export_xlsx(self):
         dataset = self.get_dataset()
         response = HttpResponse(
@@ -126,7 +127,7 @@ class GenericExportView(APIView):
         response['Content-Disposition'] = 'attachment; filename="export_%s.xlsx"' % (
             date.today().strftime(settings.DATETIME_FORMAT))
         return response
-    
+
     def export_xls(self):
         dataset = self.get_dataset()
         response = HttpResponse(
@@ -143,26 +144,27 @@ class GenericExportView(APIView):
             date.today().strftime(settings.DATETIME_FORMAT))
         return response
 
-    def get(self, request, export_type = None):
+    def get(self, request, export_type=None):
         # export_type = self.kwargs['export_type']
-        if(export_type == 'xlsx'):
+        if (export_type == 'xlsx'):
             return self.export_xlsx()
-        elif(export_type == 'xls'):
+        elif (export_type == 'xls'):
             return self.export_xls()
-        elif(export_type == 'csv'):
+        elif (export_type == 'csv'):
             return self.export_csv()
         else:
             return Response({'error': ['export type']})
-     
-class GenericImportView(APIView): 
+
+
+class GenericImportView(APIView):
     serializer_class = UploadSerializer
     parser_classes = [MultiPartParser]
     renderer_classes = [TemplateHTMLRenderer]
     template_name = 'import_result.html'
-    
+
     def get_resource(self):
         raise NotImplemented()
-    
+
     def import_xlsx(self, request):
         file = request.FILES.get('file')
         df = pd.read_excel(file, header=0)
@@ -193,15 +195,16 @@ class GenericImportView(APIView):
             result = resource.import_data(dataset, dry_run=False)
         return Response({'result': result})
 
-    def post(self, request, import_type = None):
-        if(import_type == 'xlsx'):
+    def post(self, request, import_type=None):
+        if (import_type == 'xlsx'):
             return self.import_xlsx(request)
-        elif(import_type == 'xls'):
+        elif (import_type == 'xls'):
             return self.import_xls()
-        elif(import_type == 'csv'):
+        elif (import_type == 'csv'):
             return self.import_csv()
         else:
             return Response({'error': ['import type']})
+
 
 class XlsxExport(APIView):
     def get_dataset(self):
@@ -215,10 +218,11 @@ class XlsxExport(APIView):
             date.today().strftime(settings.DATETIME_FORMAT))
         return response
 
+
 class XlsExport(APIView):
     def get_dataset(self):
         raise NotImplemented()
-        
+
     def get(self, request):
         dataset = self.get_dataset()
         response = HttpResponse(
@@ -226,6 +230,7 @@ class XlsExport(APIView):
         response['Content-Disposition'] = 'attachment; filename="export_%s.xls"' % (
             date.today().strftime(settings.DATETIME_FORMAT))
         return response
+
 
 class CsvExport(APIView):
     def get_dataset(self):
@@ -239,7 +244,9 @@ class CsvExport(APIView):
             date.today().strftime(settings.DATETIME_FORMAT))
         return response
 
-## Imports
+# Imports
+
+
 class XlsxImport(APIView):
     serializer_class = UploadSerializer
     parser_classes = [MultiPartParser]
@@ -259,6 +266,7 @@ class XlsxImport(APIView):
             result = resource.import_data(dataset, dry_run=False)
         return Response({'result': result})
 
+
 class XlsImport(APIView):
     serializer_class = UploadSerializer
     parser_classes = [MultiPartParser]
@@ -277,7 +285,8 @@ class XlsImport(APIView):
         if not result.has_errors():
             result = resource.import_data(dataset, dry_run=False)
         return Response({'result': result})
-    
+
+
 class CsvImport(APIView):
     serializer_class = UploadSerializer
     parser_classes = [MultiPartParser]

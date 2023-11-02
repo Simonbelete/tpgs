@@ -12,7 +12,6 @@ export const WeightGuidelineHistoryList = ({
   data: WeightGuideline;
 }) => {
   const columns: GridColDef[] = [
-    { field: "name", headerName: "Name" },
     {
       field: "breed",
       headerName: "Breed",
@@ -35,6 +34,8 @@ export const WeightGuidelineHistoryList = ({
         );
       },
     },
+    { field: "week", headerName: "Week" },
+    { field: "weight", headerName: "Weight (g)" },
   ];
 
   return (

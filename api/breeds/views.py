@@ -13,12 +13,6 @@ from core.views import (
     HistoryViewSet,
     SummaryViewSet,
     CoreModelViewSet,
-    XlsxExport,
-    XlsExport,
-    CsvExport,
-    XlsxImport,
-    XlsImport,
-    CsvImport,
     GenericExportView,
     GenericImportView
 )
@@ -61,7 +55,7 @@ class BreedImport(GenericImportView):
 
 # Breed Weight Guide
 
-class BreedWeightGuidelineViewSet(viewsets.ModelViewSet):
+class BreedWeightGuidelineViewSet(CoreModelViewSet):
     queryset = models.BreedWeightGuideline.all.all()
     serializer_class = serializers.BreedWeightGuidelineSerializer_GET
 
@@ -98,7 +92,7 @@ class BreedWeightGuidelineSummaryViewSet(SummaryViewSet):
 
 # Breed Egg Guide
 
-class BreedEggGuidelineViewSet(viewsets.ModelViewSet):
+class BreedEggGuidelineViewSet(CoreModelViewSet):
     queryset = models.BreedEggGuideline.all.all()
     serializer_class = serializers.BreedEggGuidelineSerializer_GET
 
@@ -135,7 +129,7 @@ class BreedEggGuidelineSummaryViewSet(SummaryViewSet):
 
 # Breed Feed Guideline
 
-class BreedFeedGuidelineViewSet(viewsets.ModelViewSet):
+class BreedFeedGuidelineViewSet(CoreModelViewSet):
     queryset = models.BreedFeedGuideline.all.all()
     serializer_class = serializers.BreedFeedGuidelineSerializer_GET
 
@@ -172,7 +166,7 @@ class BreedFeedGuidelineSummaryViewSet(SummaryViewSet):
 
 # Breed HDEP Guid
 
-class BreedHDEPGuidelineViewSet(viewsets.ModelViewSet):
+class BreedHDEPGuidelineViewSet(CoreModelViewSet):
     queryset = models.BreedHDEPGuideline.all.all()
     serializer_class = serializers.BreedHDEPGuidelineSerializer_GET
 
@@ -209,7 +203,7 @@ class BreedHDEPGuidelineSummaryViewSet(SummaryViewSet):
 
 # Breed HHEP Guideline
 
-class BreedHHEPGuidelineViewSet(viewsets.ModelViewSet):
+class BreedHHEPGuidelineViewSet(CoreModelViewSet):
     queryset = models.BreedHHEPGuideline.all.all()
     serializer_class = serializers.BreedHHEPGuidelineSerializer_GET
 

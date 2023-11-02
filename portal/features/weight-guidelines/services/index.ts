@@ -10,7 +10,7 @@ import clientSSR from "@/services/client_ssr";
 import client from "@/services/client";
 import { NextPageContext } from "next";
 
-const URL = "/breeds/weight/guidelines";
+const URL = "/breed-guideline/weights";
 const HISTORY_URL = `histories`;
 const SUMMARY_URL = `summary`;
 const EXPORT_URL = `${URL}/export`;
