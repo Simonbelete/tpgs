@@ -18,8 +18,8 @@ class Migration(migrations.Migration):
                     max_length=255, primary_key=True, serialize=False)),
                 ('farm_name', models.TextField()),
                 ('farm_id', models.IntegerField()),
-                ('flock_id', models.IntegerField()),
-                ('flock_name', models.TextField()),
+                ('hatchery_id', models.IntegerField()),
+                ('hatchery_name', models.TextField()),
                 ('house_id', models.IntegerField()),
                 ('house_name', models.TextField()),
             ],
@@ -29,22 +29,44 @@ class Migration(migrations.Migration):
             },
         ),
 
+        # Add your schemas here
         migrations.RunSQL(
             """
             CREATE MATERIALIZED VIEW directory_list AS 
-                SELECT concat(ff.id, ff2.id, hh.id, pp.id) AS unique_id, 
+
+                -- scheam_name = test
+
+                (SELECT concat(ff.id, hh2.id, hh.id, pp.id) AS unique_id, 
                     ff.schema_name AS farm_name, ff.id AS farm_id,
-                	ff2.name AS flock_name, ff2.id AS flock_id,
+                	hh2.name AS hatchery_name, hh2.id AS hatchery_id,
                 	hh.name as house_name, hh.id AS house_id,
                     pp.name as pen_name, pp.id AS pen_id
                 FROM farms_farm ff
                 CROSS JOIN
-                    test.flocks_flock ff2, 
+                    test.hatchery_hatchery hh2, 
                     test.houses_house hh,
-                    test.pen_pen pp;
+                    test.pen_pen pp
+                WHERE ff.schema_name = 'test')
+
+                UNION ALL
+
+                -- schema_name = ilri_eth
+
+                (SELECT concat(ff.id, hh2.id, hh.id, pp.id) AS unique_id, 
+                    ff.schema_name AS farm_name, ff.id AS farm_id,
+                	hh2.name AS hatchery_name, hh2.id AS hatchery_id,
+                	hh.name as house_name, hh.id AS house_id,
+                    pp.name as pen_name, pp.id AS pen_id
+                FROM farms_farm ff
+                CROSS JOIN
+                    ilri_eth.hatchery_hatchery hh2, 
+                    ilri_eth.houses_house hh,
+                    ilri_eth.pen_pen pp
+                WHERE ff.schema_name = 'ilri_eth');
+                
 
                 CREATE UNIQUE INDEX ON directory_list(unique_id);
             """,
-            """DROP VIEW directory_list"""
+            """DROP MATERIALIZED VIEW directory_list"""
         )
     ]

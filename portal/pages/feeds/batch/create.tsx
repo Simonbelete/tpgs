@@ -12,10 +12,7 @@ const BreedCreatePage = () => {
   return (
     <>
       <SeoHead title="Create Batch Feed Intake" />
-      <CreateLayout
-        breadcrumbs={<Breadcrumbs items={breadcrumbs} />}
-        header={<Typography variant="title">Batch Feed Intake</Typography>}
-      >
+      <CreateLayout breadcrumbs={<Breadcrumbs items={breadcrumbs} />}>
         <BatchFeedForm />
       </CreateLayout>
     </>

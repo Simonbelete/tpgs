@@ -98,6 +98,16 @@ export default function AsyncDropdown<T>({
         isOptionEqualToValue={(option, val) => option[dataKey] === val[dataKey]}
         onInputChange={handleInputChange}
         placeholder={placeholder}
+        // TODO:
+        // renderOption={(props, option, { selected }) => (
+        //   <li {...props}>
+        //     {option.name.split("/").map((e: string, idx: any) => (
+        //       <span key={idx}>
+        //         {e} <span style={{ fontWeight: "700" }}>/</span>
+        //       </span>
+        //     ))}
+        //   </li>
+        // )}
         renderInput={(params) => (
           <TextField
             {...params}

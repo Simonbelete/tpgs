@@ -51,6 +51,7 @@ export type Field<T> = {
   label?: string;
   form?: ReactNode;
   type?: "string" | "number" | "date" | "datetime";
+  dataKey?: string;
 };
 
 export interface FormProps<T> {
@@ -157,7 +158,7 @@ export default function Form<
                   }) => (
                     <AsyncDropdown
                       label={options.label}
-                      dataKey="name"
+                      dataKey={options?.dataKey || "name"}
                       endpoint={options.endpoint}
                       createForm={options.form}
                       placeholder={options.placeholder}

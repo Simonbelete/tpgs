@@ -4,6 +4,7 @@ from . import models
 from chickens.serializers import ChickenSerializer_SLUG
 from flocks.serializers import FlockSerializer_SLUG
 
+
 class FeedSerializer_GET(serializers.ModelSerializer):
     chicken = ChickenSerializer_SLUG()
     flock = FlockSerializer_SLUG()
@@ -16,7 +17,8 @@ class FeedSerializer_GET(serializers.ModelSerializer):
 class FeedSerializer_POST(serializers.ModelSerializer):
     class Meta:
         model = models.Feed
-        fields = ['chicken', 'flock', 'pen', 'week', 'weight', 'formula']
+        fields = ['chicken', 'pen',
+                  'week', 'weight', 'hatchery', 'formula']
 
 
 class FeedHistorySerializer(serializers.ModelSerializer):

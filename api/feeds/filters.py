@@ -5,11 +5,11 @@ from . import models
 
 
 class FeedFilter(CoreFilterSet):
-    flock__isnull = filters.BooleanFilter(
-        field_name='flock', lookup_expr='isnull')
+    hatchery__isnull = filters.BooleanFilter(
+        field_name='hatchery', lookup_expr='isnull')
     chicken__isnull = filters.BooleanFilter(
         field_name='chicken', lookup_expr='isnull')
 
     class Meta:
         model = models.Feed
-        fields = ['chicken', 'flock', 'flock__isnull', 'chicken__isnull']
+        fields = ['chicken', 'hatchery', 'hatchery__isnull', 'chicken__isnull']

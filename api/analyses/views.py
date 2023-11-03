@@ -33,7 +33,7 @@ class DirectoryListViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = models.DirectoryList.objects.all()
     serializer_class = serializers.DirectoryListSerializer_GET
     filterset_class = DirectoryListFilter
-    search_fields = ['field_name', 'flock_name', 'house_name']
+    search_fields = ['farm_name', 'hatchery_name', 'house_name']
     ordering_fields = '__all__'
 
 
@@ -41,15 +41,14 @@ class BatchDirectoryListViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = models.DirectoryList.objects.all()
     serializer_class = serializers.DirectoryListSerializer_GET
     filterset_class = DirectoryListFilter
-    search_fields = ['field_name', 'flock_name', 'house_name']
+    search_fields = ['farm_name', 'hatchery_name', 'house_name']
     ordering_fields = '__all__'
 
     def get_queryset(self):
         self.request.tenant
         return self.queryset.filter(
-            Q(farm_name=self.request.tenant)
-            &
-            ~Q(hatchery_id=1) & ~Q(house_id=1) & ~Q(pen_id=1)
+            Q(farm_name=self.request.tenant) &
+            ~Q(pen_id=1) & ~Q(hatchery_id=1), ~Q(house_id=1)
         )
 
 

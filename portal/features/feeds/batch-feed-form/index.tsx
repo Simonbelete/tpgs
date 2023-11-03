@@ -28,7 +28,7 @@ export const BatchFeedForm = ({
   return (
     <>
       <FormLayout<Feed>
-        title="Feed Form"
+        title="Batch Feed Form"
         id={data?.id || 0}
         data={data}
         schema={schema}
@@ -42,7 +42,8 @@ export const BatchFeedForm = ({
             id: values.id,
             week: values.week,
             weight: values.weight,
-            chicken: (values.chicken as Chicken).id || 0,
+            pen: values.batch?.pen_id || 0,
+            hatchery: values.batch?.hatchery_id || 0,
           };
 
           return cleaned_data;
@@ -52,6 +53,7 @@ export const BatchFeedForm = ({
             label: "Batch",
             placeholder: "Batch",
             endpoint: directoryApi.endpoints.getBatchDdrectories,
+            dataKey: "batch_name",
             xs: 12,
             md: 12,
           },

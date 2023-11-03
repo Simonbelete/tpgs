@@ -43,6 +43,7 @@ wbft_router.register(
 
 urlpatterns = [
     path('', include(count_router.urls)),
+    path('', include(batch_directories_router.urls)),
     path('', include(directories_ref_router.urls)),
     path('', include(directories_router.urls)),
     path('', include(hdep_router.urls)),

@@ -1,13 +1,13 @@
 import AbstractBaseModel from "./AbstractBaseModel";
-import Flock from "./Flock";
 import Chicken from "./Chicken";
 import Formula from "./Formula";
 import Directory from "./Directory";
 import Pen from "./Pen";
+import Hatchery from "./Hatchery";
 
 export default interface Feed extends AbstractBaseModel {
   batch?: Directory;
-  flock: number | Flock;
+  hatchery: number | Hatchery;
   pen: number | Pen;
   chicken: number | Chicken;
   week: number;

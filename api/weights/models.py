@@ -13,9 +13,8 @@ class Weight(CoreModel):
     chicken = models.ForeignKey(
         Chicken, on_delete=models.CASCADE, null=True, blank=True, related_name='weights')
     week = models.IntegerField(default=0)
-    weight = models.FloatField(null=True, blank=True)
-    weight_unit = models.ForeignKey(
-        Unit, on_delete=models.SET_NULL, null=True, blank=True, related_name='weights')
+    weight = models.DecimalField(
+        max_digits=7, decimal_places=3, null=True, blank=True, default=0)  # g
     history = HistoricalRecords()
 
     class Meta:
