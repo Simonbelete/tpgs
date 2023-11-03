@@ -345,31 +345,6 @@ const SidebarMenu = () => {
         <SubMenu
           label={
             <Typography variant="body1" fontSize={14}>
-              Flocks
-            </Typography>
-          }
-          icon={<GroupWorkIcon width="20" height="20" fill="inherit" />}
-        >
-          <MenuItem
-            component={<Link href="/flocks" />}
-            icon={<AdjustIcon fontSize="small" />}
-          >
-            <Typography variant="body1" fontSize={14}>
-              Flocks
-            </Typography>
-          </MenuItem>
-          <MenuItem
-            component={<Link href="/flocks/reductions" />}
-            icon={<AdjustIcon fontSize="small" />}
-          >
-            <Typography variant="body1" fontSize={14}>
-              Cull
-            </Typography>
-          </MenuItem>
-        </SubMenu>
-        <SubMenu
-          label={
-            <Typography variant="body1" fontSize={14}>
               Hatchery
             </Typography>
           }

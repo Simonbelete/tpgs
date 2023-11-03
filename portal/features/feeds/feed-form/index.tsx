@@ -5,6 +5,7 @@ import { CancelIcon, CreateNewIcon, FormLayout, HistoryIcon } from "@/lib/crud";
 import { feedApi } from "../services";
 import { chickenApi } from "@/features/chickens/services";
 import { ChickenForm } from "@/features/chickens";
+import { formulaApi } from "@/features/formula/services";
 
 const schema = yup.object({
   chicken: yup.object().nullable(),

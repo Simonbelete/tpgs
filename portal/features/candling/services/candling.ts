@@ -1,28 +1,33 @@
 import { baseApi } from "@/services/baseApi";
-import { AbstractSummary, Response, Egg, EggHistory } from "@/models";
+import {
+  AbstractSummary,
+  Response,
+  HatcheryEgg,
+  HatcheryEggAnalyses,
+} from "@/models";
 import { AxiosResponse } from "axios";
 import clientSSR from "@/services/client_ssr";
 import client from "@/services/client";
 import { NextPageContext } from "next";
 
-const URL = "/eggs";
+const URL = "/candlings";
 const HISTORY_URL = `histories`;
 const SUMMARY_URL = `summary`;
 const EXPORT_URL = `${URL}/export`;
 const IMPORT_URL = `${URL}/import`;
 
-export const eggApi = baseApi.injectEndpoints({
+export const candlingApi = baseApi.injectEndpoints({
   endpoints: (build) => {
     return {
-      getEggs: build.query<Response<Egg[]>, Object>({
+      getHatcheryEggs: build.query<Response<HatcheryEgg[]>, Object>({
         query: (query?: Object) => ({
           url: `${URL}/`,
           method: "get",
           params: query,
         }),
       }),
-      getEggHistory: build.query<
-        Response<EggHistory[]>,
+      getHatcheryEggHistory: build.query<
+        Response<HatcheryEgg>,
         { id: number; query: Object }
       >({
         query: ({ id, query }) => ({
@@ -31,56 +36,70 @@ export const eggApi = baseApi.injectEndpoints({
           params: query,
         }),
       }),
-      getEggSummary: build.query<AbstractSummary, number>({
+      getHatcheryEggSummary: build.query<AbstractSummary, number>({
         query: (id: number) => ({
           url: `${URL}/${id}/${SUMMARY_URL}/`,
           method: "get",
         }),
       }),
-      createEgg: build.mutation<Promise<Egg>, Partial<Egg>>({
-        query: (data: Partial<Egg>) => ({
+      createHatcheryEgg: build.mutation<
+        Promise<HatcheryEgg>,
+        Partial<HatcheryEgg>
+      >({
+        query: (data: Partial<HatcheryEgg>) => ({
           url: `${URL}/`,
           method: "post",
           data: data,
         }),
       }),
-      updateEgg: build.mutation<Promise<Egg>, Pick<Egg, "id"> & Partial<Egg>>({
+      updateHatcheryEgg: build.mutation<
+        Promise<HatcheryEgg>,
+        Pick<HatcheryEgg, "id"> & Partial<HatcheryEgg>
+      >({
         query: ({ id, ...patch }) => ({
           url: `${URL}/${id}/`,
           method: "patch",
           data: patch,
         }),
       }),
-      deleteEgg: build.mutation<any, number>({
+      deleteHatcheryEgg: build.mutation<any, number>({
         query: (id: number) => ({ url: `${URL}/${id}/`, method: "delete" }),
+      }),
+      getHatcheryEggAnalyses: build.query<HatcheryEggAnalyses, number>({
+        query: (id) => ({
+          url: `${URL}/${id}/analyses`,
+          method: "get",
+        }),
       }),
     };
   },
   overrideExisting: false,
 });
 
-export const getEggByIdSSR = async (
+export const getHatcheryEggByIdSSR = async (
   context: NextPageContext,
   id: number
-): Promise<AxiosResponse<Response<Egg>>> =>
+): Promise<AxiosResponse<Response<HatcheryEgg>>> =>
   clientSSR(context).get(`${URL}/${id}`);
-export const exportEggsXLSX = async () => client.get(`${EXPORT_URL}/xlsx`);
-export const exportEggsXLS = async () => client.get(`${EXPORT_URL}/xls`);
-export const exportEggsCSV = async () =>
+export const exportHatcheryEggsXLSX = async () =>
+  client.get(`${EXPORT_URL}/xlsx`);
+export const exportHatcheryEggsXLS = async () =>
+  client.get(`${EXPORT_URL}/xls`);
+export const exportHatcheryEggsCSV = async () =>
   client.get(`${EXPORT_URL}/csv`, { responseType: "blob" });
-export const importEggsXLSX = async (data: FormData) =>
+export const importHatcheryEggsXLSX = async (data: FormData) =>
   client.post(`${IMPORT_URL}/xlsx`, data, {
     headers: {
       "Content-Type": "multipart/form-data",
     },
   });
-export const importEggsCSV = async (data: FormData) =>
+export const importHatcheryEggsCSV = async (data: FormData) =>
   client.post(`${IMPORT_URL}/csv`, data, {
     headers: {
       "Content-Type": "multipart/form-data",
     },
   });
-export const importEggsXLS = async (data: FormData) =>
+export const importHatcheryEggsXLS = async (data: FormData) =>
   client.post(`${IMPORT_URL}/xls`, data, {
     headers: {
       "Content-Type": "multipart/form-data",
@@ -88,10 +107,12 @@ export const importEggsXLS = async (data: FormData) =>
   });
 
 export const {
-  useGetEggsQuery,
-  useGetEggHistoryQuery,
-  useGetEggSummaryQuery,
-  useCreateEggMutation,
-  useUpdateEggMutation,
-  useDeleteEggMutation,
-} = eggApi;
+  useGetHatcheryEggsQuery,
+  useLazyGetHatcheryEggsQuery,
+  useGetHatcheryEggHistoryQuery,
+  useGetHatcheryEggSummaryQuery,
+  useCreateHatcheryEggMutation,
+  useUpdateHatcheryEggMutation,
+  useDeleteHatcheryEggMutation,
+  useGetHatcheryEggAnalysesQuery,
+} = candlingApi;

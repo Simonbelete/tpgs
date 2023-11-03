@@ -3,24 +3,24 @@ import { ListLayout } from "@/layouts";
 import { useBreadcrumbs } from "@/hooks";
 import { Breadcrumbs } from "@/components";
 import { Typography } from "@mui/material";
-import { EggHistoryList } from "@/features/eggs";
+import { PenHistoryList } from "@/features/pen";
 import { NextPageContext } from "next";
 import { SeoHead } from "@/seo";
 import { getServerSidePropsContext } from "@/services/getServerSidePropsContext";
-import { getEggByIdSSR } from "@/features/eggs/services";
-import { Egg } from "@/models";
+import { getPenByIdSSR } from "@/features/pen/services";
+import { Pen } from "@/models";
 
-const EggHistoryPage = ({ data }: { data: Egg }) => {
+const PenHistoryPage = ({ data }: { data: Pen }) => {
   const { breadcrumbs } = useBreadcrumbs();
 
   return (
     <>
-      <SeoHead title="Egg Histories" />
+      <SeoHead title="Pen Histories" />
       <ListLayout
         breadcrumbs={<Breadcrumbs items={breadcrumbs} />}
-        header={<Typography variant="title">Egg History</Typography>}
+        header={<Typography variant="title">Pen History</Typography>}
       >
-        <EggHistoryList data={data} />
+        <PenHistoryList data={data} />
       </ListLayout>
     </>
   );
@@ -29,11 +29,11 @@ const EggHistoryPage = ({ data }: { data: Egg }) => {
 export async function getServerSideProps(context: NextPageContext) {
   const { id } = context.query;
 
-  return getServerSidePropsContext<Egg>({
+  return getServerSidePropsContext<Pen>({
     context,
     id: Number(id),
-    getByIdSSR: getEggByIdSSR,
+    getByIdSSR: getPenByIdSSR,
   });
 }
 
-export default EggHistoryPage;
+export default PenHistoryPage;

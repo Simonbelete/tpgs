@@ -71,3 +71,4 @@ export type { default as HDEPGuideline } from "./HDEPGuideline";
 export type { default as HDEPGuidelineHistory } from "./HDEPGuidelineHistory";
 export type { default as HHEPGuideline } from "./HHEPGuideline";
 export type { default as HHEPGuidelineHistory } from "./HHEPGuidelineHistory";
+export type { default as HatcheryEggAnalyses } from "./HatcheryEggAnalyses";
