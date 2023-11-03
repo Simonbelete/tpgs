@@ -41,11 +41,15 @@ class Migration(migrations.Migration):
                 	hh2.name AS hatchery_name, hh2.id AS hatchery_id,
                 	hh.name as house_name, hh.id AS house_id,
                     pp.name as pen_name, pp.id AS pen_id
+                    cc.generation,
+                    bb.id AS breed_id, bb.name AS breed_name
                 FROM farms_farm ff
                 CROSS JOIN
                     test.hatchery_hatchery hh2, 
                     test.houses_house hh,
-                    test.pen_pen pp
+                    test.pen_pen pp,
+                    test.breeds_breed bb,
+                    (select distinct(generation) from test.chickens_chicken) cc
                 WHERE ff.schema_name = 'test'
                     AND hh2.is_active = true 
                 	AND hh.is_active = true
@@ -61,11 +65,15 @@ class Migration(migrations.Migration):
                 	hh2.name AS hatchery_name, hh2.id AS hatchery_id,
                 	hh.name as house_name, hh.id AS house_id,
                     pp.name as pen_name, pp.id AS pen_id
+                    cc.generation,
+                    bb.id AS breed_id, bb.name AS breed_name
                 FROM farms_farm ff
                 CROSS JOIN
                     ilri_eth.hatchery_hatchery hh2, 
                     ilri_eth.houses_house hh,
-                    ilri_eth.pen_pen pp
+                    ilri_eth.pen_pen pp,
+                    ilri_eth.breeds_breed bb,
+                    (select distinct(generation) from ilri_eth.chickens_chicken) cc
                 WHERE ff.schema_name = 'ilri_eth'
                     AND hh2.is_active = true 
                 	AND hh.is_active = true

@@ -23,7 +23,7 @@ from . import admin
 from . import filters
 
 
-class ChickenViewSet(viewsets.ModelViewSet):
+class ChickenViewSet(CoreModelViewSet):
     queryset = models.Chicken.all.all()
     serializer_class = serializers.ChickenSerializer_GET
     filterset_class = filters.ChickenFilter
@@ -34,10 +34,6 @@ class ChickenViewSet(viewsets.ModelViewSet):
         if self.request.method in ['POST', 'PATCH']:
             return serializers.ChickenSerializer_POST
         return serializers.ChickenSerializer_GET
-
-    def list(self, request, *args, **kwargs):
-        build_pedigree_tree()
-        return Response()
 
 
 class ChickenHistoryViewSet(HistoryViewSet):
