@@ -4,10 +4,9 @@ import { Feed, Chicken } from "@/models";
 import { CancelIcon, CreateNewIcon, FormLayout, HistoryIcon } from "@/lib/crud";
 import { feedApi } from "../services";
 import { chickenApi } from "@/features/chickens/services";
+import { ChickenForm } from "@/features/chickens";
 
 const schema = yup.object({
-  batch: yup.object().nullable(),
-  flock: yup.object().nullable(),
   chicken: yup.object().nullable(),
   formula: yup.object().nullable(),
   week: yup
@@ -28,7 +27,7 @@ export const FeedForm = ({
   return (
     <>
       <FormLayout<Feed>
-        title="Feed Intake Form"
+        title="Feed Form"
         id={data?.id || 0}
         data={data}
         schema={schema}
@@ -49,9 +48,10 @@ export const FeedForm = ({
         }}
         fields={{
           chicken: {
-            label: "House",
-            placeholder: "House",
+            label: "chicken",
+            placeholder: "Chicken",
             endpoint: chickenApi.endpoints.getChickens,
+            form: <ChickenForm />,
             xs: 12,
             md: 12,
           },

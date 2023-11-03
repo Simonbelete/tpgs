@@ -3,7 +3,6 @@ import * as yup from "yup";
 import { Chicken, Weight } from "@/models";
 import { CancelIcon, CreateNewIcon, FormLayout, HistoryIcon } from "@/lib/crud";
 import { weightApi } from "../services";
-import { HouseForm } from "@/features/houses";
 import { chickenApi } from "@/features/chickens/services";
 import { ChickenForm } from "@/features/chickens";
 

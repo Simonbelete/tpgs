@@ -3,11 +3,7 @@ import { ListLayout } from "@/layouts";
 import { useBreadcrumbs } from "@/hooks";
 import { Breadcrumbs } from "@/components";
 import { Typography } from "@mui/material";
-import {
-  FeedList,
-  FeedListFilter,
-  FeedImportExport,
-} from "@/features/feeds";
+import { FeedList } from "@/features/feeds";
 import { SeoHead } from "@/seo";
 
 const FeedPage = () => {
@@ -15,19 +11,12 @@ const FeedPage = () => {
 
   return (
     <>
-      <SeoHead title="Individual Feed Intake"/>
-      <ListLayout
-        breadcrumbs={<Breadcrumbs items={breadcrumbs} />}
-        header={<Typography variant="title">Individual Feed Intake</Typography>}
-        actions={<FeedImportExport />}
-        filter={<FeedListFilter />}
-      >
+      <SeoHead title="Individual Feed Intake" />
+      <ListLayout breadcrumbs={<Breadcrumbs items={breadcrumbs} />}>
         <FeedList />
       </ListLayout>
     </>
   );
 };
-
-
 
 export default FeedPage;

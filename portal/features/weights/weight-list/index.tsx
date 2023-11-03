@@ -26,7 +26,6 @@ import Link from "next/link";
 
 export const WeightList = () => {
   const columns: GridColDef[] = [
-    { field: "name", headerName: "Name", flex: 1 },
     {
       field: "chicken",
       headerName: "Chicken",
