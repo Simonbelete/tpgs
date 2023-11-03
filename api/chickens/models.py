@@ -23,6 +23,7 @@ class Chicken(CoreModel):
     tag = models.CharField(max_length=250, unique=True)
     sex = models.CharField(max_length=1, choices=SEX_CHOICES,
                            null=True, blank=True, default=None)
+    hatch_date = models.DateField(null=True, blank=True)
     sire = models.ForeignKey(
         'self', models.SET_NULL, blank=True, null=True, limit_choices_to={'sex': 'M'}, related_name='children_of_sire')
     dam = models.ForeignKey(

@@ -9,6 +9,12 @@ from . import views
     analyses/{{farm}}/{{flock}}/{{house}}/*
 """
 
+router = routers.DefaultRouter()
+
+router.register(r'analyses/egg-production', views.EggProduction,
+                basename='api_analyses_egg_production')
+
+
 count_router = routers.DefaultRouter()
 count_router.register(r'analyses/count', views.CountViewSet,
                       basename='api_count')
@@ -42,6 +48,7 @@ wbft_router.register(
     r'analyses/(?P<farm_id>.+)/(?P<flock_id>.+)/(?P<house_id>.+)/wbft', views.WBFT, basename="api_wbft")
 
 urlpatterns = [
+    path('', include(router.urls)),
     path('', include(count_router.urls)),
     path('', include(directories_ref_router.urls)),
     path('', include(batch_directories_router.urls)),

@@ -12,6 +12,9 @@ class DirectoryList(models.Model):
     house_name = models.TextField()
     pen_id = models.IntegerField()
     pen_name = models.TextField()
+    breed_id = models.IntegerField()
+    breed_name = models.TextField()
+    generation = models.TextField()
 
     class Meta:
         managed = False
@@ -25,10 +28,12 @@ class DirectoryList(models.Model):
 
     @property
     def name(self):
-        return "{farm} / {house} / {pen} / {flock}".format(farm=self.farm_name,
-                                                           house=self.house_name,
-                                                           pen=self.pen_name,
-                                                           flock=self.hatchery_name)
+        return "{farm} / {breed} / {generation} / {hatchery} / {house} / {pen}".format(farm=self.farm_name,
+                                                                                       breed=self.house_name,
+                                                                                       generation=self.house_name,
+                                                                                       hatchery=self.house_name,
+                                                                                       house=self.pen_name,
+                                                                                       pen=self.hatchery_name)
 
     @property
     def display_name(self):

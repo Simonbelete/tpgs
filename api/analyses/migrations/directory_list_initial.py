@@ -20,8 +20,11 @@ class Migration(migrations.Migration):
                 ('farm_id', models.IntegerField()),
                 ('hatchery_id', models.IntegerField()),
                 ('hatchery_name', models.TextField()),
+                ('generation', models.TextField()),
                 ('house_id', models.IntegerField()),
                 ('house_name', models.TextField()),
+                ('breed_id', models.IntegerField()),
+                ('breed_name', models.TextField()),
             ],
             options={
                 'db_table': 'directory_list',
