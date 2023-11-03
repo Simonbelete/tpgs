@@ -11,15 +11,19 @@ from . import views
 
 count_router = routers.DefaultRouter()
 count_router.register(r'analyses/count', views.CountViewSet,
-                            basename='api_count')
+                      basename='api_count')
 
 directories_router = routers.DefaultRouter()
 directories_router.register(r'directories', views.DirectoryListViewSet,
                             basename='api_directories_lists')
 
+batch_directories_router = routers.DefaultRouter()
+batch_directories_router.register(r'directories/batch', views.BatchDirectoryListViewSet,
+                                  basename='api_batch_directories_lists')
+
 directories_ref_router = routers.DefaultRouter()
 directories_ref_router.register(r'directories/refresh', views.DirectoryListRefresh,
-                            basename='api_directories_lists_refresh')
+                                basename='api_directories_lists_refresh')
 
 hdep_router = routers.DefaultRouter()
 hdep_router.register(

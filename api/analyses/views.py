@@ -17,10 +17,12 @@ from weights.models import Weight
 from chickens.models import Chicken
 from users.models import User
 
+
 class DirectoryListFilter(django_filters.FilterSet):
     farm_name = django_filters.CharFilter(
         field_name='farm_name', lookup_expr='contains')
-    farm_id = django_filters.NumberFilter(field_name='farm_id', lookup_expr='exact')
+    farm_id = django_filters.NumberFilter(
+        field_name='farm_id', lookup_expr='exact')
 
     class Meta:
         model = models.DirectoryList
@@ -35,6 +37,22 @@ class DirectoryListViewSet(viewsets.ReadOnlyModelViewSet):
     ordering_fields = '__all__'
 
 
+class BatchDirectoryListViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = models.DirectoryList.objects.all()
+    serializer_class = serializers.DirectoryListSerializer_GET
+    filterset_class = DirectoryListFilter
+    search_fields = ['field_name', 'flock_name', 'house_name']
+    ordering_fields = '__all__'
+
+    def get_queryset(self):
+        self.request.tenant
+        return self.queryset.filter(
+            Q(farm_name=self.request.tenant)
+            &
+            ~Q(hatchery_id=1) & ~Q(house_id=1) & ~Q(pen_id=1)
+        )
+
+
 class DirectoryListRefresh(viewsets.ViewSet):
     def create(self, request):
         try:
@@ -44,19 +62,16 @@ class DirectoryListRefresh(viewsets.ViewSet):
             print(ex)
             return Response({}, status=500)
 
+
 class CountViewSet(viewsets.ViewSet):
     def list(self, request, **kwargs):
-        print('00000000000')
-        print(dir(self.request.tenant_model.pk))
-        print(dir(self.request.tenant_model.id))
-        print(self.request.tenant_model.id)
-        print(self.request.tenant)
         return Response({
             'user_count': User.objects.filter(farms__name__in=[self.request.tenant]).count(),
             'total_users': User.objects.count(),
             'farm_count': self.request.user.farms.all().count(),
             'total_farms': Farm.objects.count(),
         })
+
 
 class HDEPViewSet(viewsets.ViewSet):
     def get_query(self):
@@ -219,22 +234,24 @@ class AverageWeight(viewsets.ViewSet):
 class FarmHeatMap(viewsets.ViewSet):
     def list(self, request, **kwargs):
         farms = Farm.objects.all().execlude(name='public')
-        cities = farms.values('city').annotate(total=Count('city')).order_by('total')
+        cities = farms.values('city').annotate(
+            total=Count('city')).order_by('total')
         print('------')
         print(cities)
         return Response({'geojson': []})
-    
+
+
 class PedigreeViewset(viewsets.ViewSet):
     def get_query(self):
         return Chicken.objects.all()
-    
+
     def filter_by_flock(self, queryset, flock_id):
-        if(flock_id != 'all'):
+        if (flock_id != 'all'):
             return queryset.filter(flock=flock_id)
         return queryset
-    
+
     def filter_by_house(self, queryset, house_id):
-        if(house_id != 'all'):
+        if (house_id != 'all'):
             return queryset.filter(house=house_id)
         return queryset
 
@@ -249,7 +266,7 @@ class PedigreeViewset(viewsets.ViewSet):
                     'farm can not be all'
                 ]
             })
-        
+
         try:
             farm = Farm.objects.get(pk=farm_id)
             queryset = self.get_query().filter(reduction_date__isnull=False)
@@ -262,12 +279,12 @@ class PedigreeViewset(viewsets.ViewSet):
                 links = []
 
                 for chicken in queryset.iterator():
-                    if(chicken.sire):
+                    if (chicken.sire):
                         links.append({
                             'source': chicken.sire.id,
                             'target': chicken.id
                         })
-                    if(chicken.dam):
+                    if (chicken.dam):
                         links.append({
                             'source': chicken.dam.id,
                             'target': chicken.id
@@ -284,20 +301,21 @@ class PedigreeViewset(viewsets.ViewSet):
             print(ex)
             return Response({}, status=500)
 
+
 class WBFT(viewsets.ViewSet):
     """Weight By Feed Type(Formula)
     """
 
     def filter_by_flock(self, queryset, flock_id):
-        if(flock_id != 'all'):
+        if (flock_id != 'all'):
             return queryset.filter(flock=flock_id)
         return queryset
-    
+
     def filter_by_house(self, queryset, house_id):
-        if(house_id != 'all'):
+        if (house_id != 'all'):
             return queryset.filter(house=house_id)
         return queryset
-    
+
     @extend_schema(
         parameters=[
             OpenApiParameter(
@@ -318,7 +336,7 @@ class WBFT(viewsets.ViewSet):
                     'farm can not be all'
                 ]
             })
-        
+
         try:
             farm = Farm.objects.get(pk=farm_id)
 
@@ -328,8 +346,10 @@ class WBFT(viewsets.ViewSet):
                 queryset = self.filter_by_house(queryset, house_id)
 
                 weight_queryset = Weight.objects.filter(week=week)
-                weight_queryset = self.filter_by_flock(weight_queryset, flock_id)
-                weight_queryset = self.filter_by_house(weight_queryset, house_id)
+                weight_queryset = self.filter_by_flock(
+                    weight_queryset, flock_id)
+                weight_queryset = self.filter_by_house(
+                    weight_queryset, house_id)
 
                 cursor = connection.cursor()
                 cursor.execute("""
@@ -340,7 +360,7 @@ class WBFT(viewsets.ViewSet):
                             ON ff.flock_id = ww.flock_id
                                 OR ff.chicken_id = ww.flock_id;
                 """.format(farm=farm))
-                
+
                 return Response({
                     'results': cursor.fetchall()
                 }, status=200)

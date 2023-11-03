@@ -1,28 +1,26 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { ListLayout } from "@/layouts";
 import { useBreadcrumbs } from "@/hooks";
 import { Breadcrumbs } from "@/components";
 import { Typography } from "@mui/material";
-import { BreedHistoryList } from "@/features/breeds";
-import { useRouter } from "next/router";
+import { WeightHistoryList } from "@/features/weights";
 import { NextPageContext } from "next";
 import { SeoHead } from "@/seo";
 import { getServerSidePropsContext } from "@/services/getServerSidePropsContext";
-import { getBreedByIdSSR } from "@/features/breeds/services";
-import { Breed } from "@/models";
+import { getWeightByIdSSR } from "@/features/weights/services";
+import { Weight } from "@/models";
 
-const BreedHistoryPage = ({ data }: { data: Breed }) => {
+const WeightHistoryPage = ({ data }: { data: Weight }) => {
   const { breadcrumbs } = useBreadcrumbs();
-  const router = useRouter();
 
   return (
     <>
-      <SeoHead title="Breed History" />
+      <SeoHead title="Weight Histories" />
       <ListLayout
         breadcrumbs={<Breadcrumbs items={breadcrumbs} />}
-        header={<Typography variant="title">History</Typography>}
+        header={<Typography variant="title">Weight History</Typography>}
       >
-        <BreedHistoryList data={data} />
+        <WeightHistoryList data={data} />
       </ListLayout>
     </>
   );
@@ -31,11 +29,11 @@ const BreedHistoryPage = ({ data }: { data: Breed }) => {
 export async function getServerSideProps(context: NextPageContext) {
   const { id } = context.query;
 
-  return getServerSidePropsContext<Breed>({
+  return getServerSidePropsContext<Weight>({
     context,
     id: Number(id),
-    getByIdSSR: getBreedByIdSSR,
+    getByIdSSR: getWeightByIdSSR,
   });
 }
 
-export default BreedHistoryPage;
+export default WeightHistoryPage;

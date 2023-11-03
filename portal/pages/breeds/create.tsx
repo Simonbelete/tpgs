@@ -1,11 +1,8 @@
 import React, { useEffect } from "react";
-import { Typography } from "@mui/material";
 import { Breadcrumbs } from "@/components";
 import { useBreadcrumbs } from "@/hooks";
 import { CreateLayout } from "@/layouts";
-import {
-  BreedForm,
-} from "@/features/breeds";
+import { BreedForm } from "@/features/breeds";
 import { SeoHead } from "@/seo";
 
 const BreedCreatePage = () => {
@@ -14,10 +11,7 @@ const BreedCreatePage = () => {
   return (
     <>
       <SeoHead title="Create Breed" />
-      <CreateLayout
-        breadcrumbs={<Breadcrumbs items={breadcrumbs} />}
-        header={<Typography variant="title">Create Breed</Typography>}
-      >
+      <CreateLayout breadcrumbs={<Breadcrumbs items={breadcrumbs} />}>
         <BreedForm />
       </CreateLayout>
     </>

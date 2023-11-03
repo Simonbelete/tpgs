@@ -1,6 +1,6 @@
 [
     {
-        "model": "flocks.Flock",
+        "model": "hatchery.Hatch",
         "pk": 1,
         "fields": {
             "name": "all",
@@ -10,6 +10,14 @@
     },
     {
         "model": "houses.House",
+        "pk": 1,
+        "fields": {
+            "name": "all",
+            "is_active": false
+        }
+    },
+    {
+        "model": "pen.Pen",
         "pk": 1,
         "fields": {
             "name": "all",

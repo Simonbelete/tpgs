@@ -1,11 +1,8 @@
 import React, { useEffect } from "react";
-import { Typography } from "@mui/material";
 import { Breadcrumbs } from "@/components";
 import { useBreadcrumbs } from "@/hooks";
 import { CreateLayout } from "@/layouts";
-import {
-  WeightForm,
-} from "@/features/weights";
+import { WeightForm } from "@/features/weights";
 import { SeoHead } from "@/seo";
 
 const WeightCreatePage = () => {
@@ -14,10 +11,7 @@ const WeightCreatePage = () => {
   return (
     <>
       <SeoHead title="Create Body Weight" />
-      <CreateLayout
-        breadcrumbs={<Breadcrumbs items={breadcrumbs} />}
-        header={<Typography variant="title">Create Body Weight</Typography>}
-      >
+      <CreateLayout breadcrumbs={<Breadcrumbs items={breadcrumbs} />}>
         <WeightForm />
       </CreateLayout>
     </>

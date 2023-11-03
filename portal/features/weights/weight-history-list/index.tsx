@@ -1,52 +1,41 @@
-import React, { useEffect, useState } from "react";
-import { GridRowsProp, GridColDef, GridToolbar } from "@mui/x-data-grid";
-import { DataTable } from "@/components/tables";
-import weight_service from "../services/weight_service";
-import { WeightHistory } from "@/models";
-import { historyColDef } from "@/components/gird-col-def";
+import React from "react";
+import { GridColDef, GridRenderCellParams } from "@mui/x-data-grid";
+import { HistoryList } from "@/lib/crud";
+import { weightApi } from "../services";
+import { Weight, WeightHistory } from "@/models";
+import { IconButton, Tooltip, Typography, Button } from "@mui/material";
+import Link from "next/link";
 
-const columns: GridColDef[] = [
-  ...historyColDef,
-  { field: "name", headerName: "Name", flex: 1, minWidth: 150 },
-];
-
-const WeightHistoryList = ({ id }: { id: number }) => {
-  const [rows, setRows] = useState<GridRowsProp<WeightHistory>>([]);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [paginationModel, setPaginationModel] = useState({
-    page: 0,
-    pageSize: 10,
-  });
-
-  useEffect(() => {
-    setIsLoading(true);
-    try {
-      weight_service.history.get(id).then((response) => {
-        setRows(response.data.results);
-      });
-    } catch (ex) {
-    } finally {
-      setIsLoading(false);
-    }
-  }, [paginationModel]);
-
-  const refresh = () => {
-    setPaginationModel({ page: 0, pageSize: 10 });
-  };
-
+export const WeightHistoryList = ({ data }: { data: Weight }) => {
+  const columns: GridColDef[] = [
+    {
+      field: "chicken",
+      headerName: "chicken",
+      flex: 1,
+      minWidth: 150,
+      renderCell: (params: GridRenderCellParams<any>) => {
+        if (params.row.chicken == null) return <></>;
+        return (
+          <Link href={`/chickens/${params.row.chicken}`}>
+            <Tooltip title="Click to view">
+              <Button>
+                <Typography color={"link.primary"} variant="body2">
+                  {params.row.chicken}
+                </Typography>
+              </Button>
+            </Tooltip>
+          </Link>
+        );
+      },
+    },
+    { field: "week", headerName: "Week" },
+    { field: "weight", headerName: "Body Weight" },
+  ];
   return (
-    <DataTable
-      rows={rows}
+    <HistoryList<WeightHistory>
       columns={columns}
-      rowCount={rows.length}
-      loading={isLoading}
-      pageSizeOptions={[5]}
-      paginationModel={paginationModel}
-      paginationMode="server"
-      onPaginationModelChange={setPaginationModel}
-      setting={DataTable.SETTING_COL.history}
+      getHistoryQuery={{ id: data.id, query: {} }}
+      getHistoryEndpoint={weightApi.endpoints.getWeightHistory}
     />
   );
 };
-
-export default WeightHistoryList;

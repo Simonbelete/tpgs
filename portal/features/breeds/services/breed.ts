@@ -22,7 +22,7 @@ export const breedApi = baseApi.injectEndpoints({
         }),
       }),
       getBreedHistory: build.query<
-        Response<BreedHistory>,
+        Response<BreedHistory[]>,
         { id: number; query: Object }
       >({
         query: ({ id, query }) => ({

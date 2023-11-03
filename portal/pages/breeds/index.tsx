@@ -3,11 +3,7 @@ import { ListLayout } from "@/layouts";
 import { useBreadcrumbs } from "@/hooks";
 import { Breadcrumbs } from "@/components";
 import { Typography } from "@mui/material";
-import {
-  BreedList,
-  BreedListFilter,
-  BreedImportExport,
-} from "@/features/breeds";
+import { BreedList } from "@/features/breeds";
 import { SeoHead } from "@/seo";
 
 const BreedPage = () => {
@@ -15,19 +11,12 @@ const BreedPage = () => {
 
   return (
     <>
-      <SeoHead title="Breeds"/>
-      <ListLayout
-        breadcrumbs={<Breadcrumbs items={breadcrumbs} />}
-        header={<Typography variant="title">Breeds</Typography>}
-        actions={<BreedImportExport />}
-        filter={<BreedListFilter />}
-      >
+      <SeoHead title="Breeds" />
+      <ListLayout breadcrumbs={<Breadcrumbs items={breadcrumbs} />}>
         <BreedList />
       </ListLayout>
     </>
   );
 };
-
-
 
 export default BreedPage;

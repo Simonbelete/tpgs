@@ -8,6 +8,8 @@ class DirectoryList(models.Model):
     farm_id = models.IntegerField()
     flock_id = models.IntegerField()
     flock_name = models.TextField()
+    hatchery_id = models.IntegerField()
+    hatchery_name = models.TextField()
     house_id = models.IntegerField()
     house_name = models.TextField()
     pen_id = models.IntegerField()
