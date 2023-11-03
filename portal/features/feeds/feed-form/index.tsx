@@ -42,6 +42,7 @@ export const FeedForm = ({
             week: values.week,
             weight: values.weight,
             chicken: (values.chicken as Chicken).id || 0,
+            formula: (values.formula as any)?.id || 0,
           };
 
           return cleaned_data;
@@ -62,6 +63,14 @@ export const FeedForm = ({
             xs: 12,
             md: 12,
             postfix: "g",
+          },
+          formula: {
+            label: "Formula",
+            placeholder: "Formula",
+            endpoint: formulaApi.endpoints.getFormulas,
+            dataKey: "name",
+            xs: 12,
+            md: 12,
           },
         }}
         menus={

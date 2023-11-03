@@ -3,9 +3,8 @@ import * as yup from "yup";
 import { Feed, Chicken } from "@/models";
 import { CancelIcon, CreateNewIcon, FormLayout, HistoryIcon } from "@/lib/crud";
 import { feedApi } from "../services";
-import { chickenApi } from "@/features/chickens/services";
-import { ChickenForm } from "@/features/chickens";
 import { directoryApi } from "@/features/directory/services";
+import { formulaApi } from "@/features/formula/services";
 
 const schema = yup.object({
   chicken: yup.object().nullable(),
@@ -44,6 +43,7 @@ export const BatchFeedForm = ({
             weight: values.weight,
             pen: values.batch?.pen_id || 0,
             hatchery: values.batch?.hatchery_id || 0,
+            formula: (values.formula as any)?.id || 0,
           };
 
           return cleaned_data;
@@ -64,6 +64,14 @@ export const BatchFeedForm = ({
             xs: 12,
             md: 12,
             postfix: "g",
+          },
+          formula: {
+            label: "Formula",
+            placeholder: "Formula",
+            endpoint: formulaApi.endpoints.getFormulas,
+            dataKey: "name",
+            xs: 12,
+            md: 12,
           },
         }}
         menus={
