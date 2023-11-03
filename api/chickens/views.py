@@ -13,7 +13,7 @@ from tablib import Dataset
 from django.db.models import Q
 from rest_framework.response import Response
 from rest_framework.exceptions import NotFound
-
+from .tasks import build_pedigree_tree
 
 from core.views import HistoryViewSet, SummaryViewSet, CoreModelViewSet
 from core.serializers import UploadSerializer
@@ -22,7 +22,8 @@ from . import serializers
 from . import admin
 from . import filters
 
-class ChickenViewSet(CoreModelViewSet):
+
+class ChickenViewSet(viewsets.ModelViewSet):
     queryset = models.Chicken.all.all()
     serializer_class = serializers.ChickenSerializer_GET
     filterset_class = filters.ChickenFilter
@@ -34,13 +35,20 @@ class ChickenViewSet(CoreModelViewSet):
             return serializers.ChickenSerializer_POST
         return serializers.ChickenSerializer_GET
 
+    def list(self, request, *args, **kwargs):
+        build_pedigree_tree()
+        return Response()
+
+
 class ChickenHistoryViewSet(HistoryViewSet):
     queryset = models.Chicken.history.all()
     serializer_class = serializers.ChickenHistorySerializer
 
+
 class ChickenSummaryViewSet(SummaryViewSet):
     def get_query(self):
         return models.Chicken.all.get(pk=self.id_pk)
+
 
 class ChickenOffspringViewSet(viewsets.GenericViewSet):
     serializer_class = serializers.ChickenSerializer_GET
@@ -58,6 +66,7 @@ class ChickenOffspringViewSet(viewsets.GenericViewSet):
         serializer = self.get_serializer(queryset, many=True)
         return Response(serializer.data)
 
+
 class ChickenAncestorViewSet(viewsets.GenericViewSet):
     serializer_class = serializers.ChickenSerializer_GET
 
@@ -74,6 +83,7 @@ class ChickenAncestorViewSet(viewsets.GenericViewSet):
         serializer = self.get_serializer(queryset, many=True)
         return Response(serializer.data)
 
+
 class SiblingsViewSet(viewsets.GenericViewSet):
     serializer_class = serializers.ChickenSerializer_GET
 
@@ -86,11 +96,12 @@ class SiblingsViewSet(viewsets.GenericViewSet):
 
     def list(self, request, id=None, **kwargs):
         id = self.kwargs['id']
-        
+
         chicken = self.get_queryset()
         queryset = []
-        if(chicken.sire and chicken.dam):
-            queryset = models.Chicken.objects.exclude(pk=chicken.id).filter(sire=chicken.sire, dam=chicken.dam)
+        if (chicken.sire and chicken.dam):
+            queryset = models.Chicken.objects.exclude(
+                pk=chicken.id).filter(sire=chicken.sire, dam=chicken.dam)
         page = self.paginate_queryset(queryset)
 
         if page is not None:
@@ -99,6 +110,7 @@ class SiblingsViewSet(viewsets.GenericViewSet):
 
         serializer = self.get_serializer(queryset, many=True)
         return Response(serializer.data)
+
 
 class BatchChickenReductionViewSet(APIView):
     serializer_class = serializers.ChickenBatchReductionSerializer_POST

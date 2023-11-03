@@ -2,9 +2,9 @@ from django.db import models
 from simple_history.models import HistoricalRecords
 
 from core.models import CoreModel
-from units.models import Unit
 from houses.models import House
 from reduction_reason.models import ReductionReason
+
 
 class Chicken(CoreModel):
     SEX_CHOICES = (
@@ -36,6 +36,9 @@ class Chicken(CoreModel):
     reduction_reason = models.ForeignKey(
         ReductionReason, on_delete=models.SET_NULL, null=True, blank=True, related_name='chickens')
 
+    generation = models.PositiveIntegerField(
+        null=True, blank=True)
+
     history = HistoricalRecords()
 
     def __str__(self):
@@ -47,7 +50,7 @@ class Chicken(CoreModel):
             tag=self.tag,
             sex=self.sex
         )
-    
+
     def offspring(self):
         if self.sex == 'M':
             return self.children_of_sire.all()
@@ -55,7 +58,7 @@ class Chicken(CoreModel):
             return self.children_of_dam.all()
         else:
             return []
-    
+
     def ancestors(self):
         '''Returns a list of this person's ancestors (their parents and all of
         their parents' ancestors).'''
@@ -75,3 +78,11 @@ class Chicken(CoreModel):
     #     if self.father:
     #         yield self.father
     #         yield from self.father.ancestors()
+
+
+class Pedigree(models.Model):
+    source = models.ForeignKey(
+        Chicken, on_delete=models.CASCADE, related_name="pedigree_source")
+    target = models.ForeignKey(
+        Chicken, on_delete=models.CASCADE, related_name="pedigree_target")
+    parent_type = models.CharField(max_length=250)

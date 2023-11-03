@@ -7,6 +7,7 @@ from sklearn.ensemble import IsolationForest
 
 from feeds.models import Feed
 
+
 @shared_task
 def generate_breed_anomaly(x, y):
     tenants = get_tenant_model().objects.all()
