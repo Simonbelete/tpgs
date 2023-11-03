@@ -36,6 +36,6 @@ class DirectoryList(models.Model):
 
     @property
     def batch_name(self):
-        return "{hatchery}/{house}/{pen}".format(house=self.house_name,
-                                                 pen=self.pen_name,
-                                                 hatchery=self.hatchery_name)
+        return "{hatchery} / {house} / {pen}".format(house=self.house_name,
+                                                     pen=self.pen_name,
+                                                     hatchery=self.hatchery_name)

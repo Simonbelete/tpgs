@@ -46,7 +46,11 @@ class Migration(migrations.Migration):
                     test.hatchery_hatchery hh2, 
                     test.houses_house hh,
                     test.pen_pen pp
-                WHERE ff.schema_name = 'test')
+                WHERE ff.schema_name = 'test'
+                    AND hh2.is_active = true 
+                	AND hh.is_active = true
+                	AND pp.is_active = true
+                )
 
                 UNION ALL
 
@@ -62,7 +66,11 @@ class Migration(migrations.Migration):
                     ilri_eth.hatchery_hatchery hh2, 
                     ilri_eth.houses_house hh,
                     ilri_eth.pen_pen pp
-                WHERE ff.schema_name = 'ilri_eth');
+                WHERE ff.schema_name = 'ilri_eth'
+                    AND hh2.is_active = true 
+                	AND hh.is_active = true
+                	AND pp.is_active = true
+                );
                 
 
                 CREATE UNIQUE INDEX ON directory_list(unique_id);
