@@ -1,6 +1,6 @@
 [
     {
-        "model": "hatchery.Hatch",
+        "model": "hatchery.Hatchery",
         "pk": 1,
         "fields": {
             "name": "all",

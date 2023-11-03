@@ -27,15 +27,15 @@ import { chickenApi } from "@/features/chickens/services";
 export const BatchFeedList = () => {
   const columns: GridColDef[] = [
     {
-      field: "chicken",
-      headerName: "Chicken",
+      field: "hatchery",
+      headerName: "Hatchery",
       flex: 1,
       renderCell: (params: GridRenderCellParams<any>) => {
-        if (params.row.chicken == null) return <></>;
+        if (params.row.hatchery == null) return <></>;
         return (
           <Typography color={"link.primary"} variant="body2">
-            <Link href={`/chickens/${params.row.chicken.id}`}>
-              {params.row.chicken.name}
+            <Link href={`/hatchery/${params.row.hatchery.id}`}>
+              {params.row.hatchery.name}
             </Link>
           </Typography>
         );

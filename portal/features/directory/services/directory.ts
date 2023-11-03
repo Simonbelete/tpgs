@@ -24,7 +24,7 @@ export const directoryApi = baseApi.injectEndpoints({
         }),
       }),
       refreshDirectory: build.mutation<Promise<AxiosResponse<any>>, null>({
-        query: () => ({ url: `${URL}/`, method: "post" }),
+        query: () => ({ url: `${URL}/refresh/`, method: "post" }),
       }),
     };
   },

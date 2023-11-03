@@ -6,6 +6,13 @@ from breeds.serializers import BreedSerializer_SLUG
 # Hatchery
 
 
+class HatcherySerializer_SLUG(serializers.ModelSerializer):
+
+    class Meta:
+        model = models.Hatchery
+        fields = ['id', 'name', 'display_name']
+
+
 class HatcherySerializer_GET(serializers.ModelSerializer):
     breed = BreedSerializer_SLUG()
 

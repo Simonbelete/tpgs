@@ -23,7 +23,7 @@ class FeedViewSet(CoreModelViewSet):
     queryset = models.Feed.objects.all()
     serializer_class = serializers.FeedSerializer_GET
     filterset_class = filters.FeedFilter
-    search_fields = ['chicken__tag', 'flock__name']
+    search_fields = ['chicken__tag', 'hatchery__name']
     ordering_fields = '__all__'
 
     def get_serializer_class(self):
@@ -31,15 +31,18 @@ class FeedViewSet(CoreModelViewSet):
             return serializers.FeedSerializer_POST
         return serializers.FeedSerializer_GET
 
+
 class FeedHistoryViewSet(HistoryViewSet):
     queryset = models.Feed.history.all()
     serializer_class = serializers.FeedHistorySerializer
+
 
 class FeedSummaryViewSet(SummaryViewSet):
     def get_query(self):
         return models.Feed.all.get(pk=self.id_pk)
 
 # Xlsx
+
 
 class FeedXlsxExport(APIView):
     def get(self, request):
