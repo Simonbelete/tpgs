@@ -1,26 +1,34 @@
 [
     {
-        "model": "hatchery.Hatchery",
-        "pk": 1,
+        "model": "breeds.Breed",
+        "pk": 0,
         "fields": {
-            "name": "all",
+            "name": "any",
+            "is_active": false
+        }
+    },
+    {
+        "model": "hatchery.Hatchery",
+        "pk": 0,
+        "fields": {
+            "name": "any",
             "note": "*",
             "is_active": false
         }
     },
     {
         "model": "houses.House",
-        "pk": 1,
+        "pk": 0,
         "fields": {
-            "name": "all",
+            "name": "any",
             "is_active": false
         }
     },
     {
         "model": "pen.Pen",
-        "pk": 1,
+        "pk": 0,
         "fields": {
-            "name": "all",
+            "name": "any",
             "is_active": false
         }
     }
