@@ -1,5 +1,7 @@
 import React, { ReactElement } from "react";
-import { Box, Stack, Grid } from "@mui/material";
+import { Box, Stack, Grid, Typography, IconButton } from "@mui/material";
+import Link from "next/link";
+import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 
 interface ListLayoutProps {
   breadcrumbs?: ReactElement;
@@ -20,10 +22,18 @@ const ReportingLayout = ({
     <>
       <Box mb={1}>{breadcrumbs}</Box>
       <Grid container mb={5}>
-        <Grid item xs={12} md={4}>
+        <Grid item xs={12} md={8}>
           <Box sx={{ display: "flex" }} justifyContent={"start"}>
+            <Link href={"/reports"}>
+              <IconButton sx={{ mr: 1 }} color="primary">
+                <ArrowBackIosIcon />
+              </IconButton>
+            </Link>
             {header}
           </Box>
+          {/* <Box sx={{ display: "flex" }} justifyContent={"start"}>
+            {header}
+          </Box> */}
         </Grid>
         {/* <Box sx={{ flexGrow: 1 }} /> */}
         <Grid item xs={12} md />
