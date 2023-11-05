@@ -1,3 +1,3 @@
-export * from "./weight-guideline-form";
-export * from "./weight-guideline-list";
-export * from "./weight-guideline-history-list";
+export * from "./hdep-guideline-form";
+export * from "./hdep-guideline-list";
+export * from "./hdep-guideline-history-list";

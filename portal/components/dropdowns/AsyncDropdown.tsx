@@ -1,6 +1,6 @@
 import * as React from "react";
 import TextField from "@mui/material/TextField";
-import Autocomplete from "@mui/material/Autocomplete";
+import Autocomplete, { AutocompleteProps } from "@mui/material/Autocomplete";
 import CircularProgress from "@mui/material/CircularProgress";
 import { IconButton, Tooltip, Stack, Typography, Box } from "@mui/material";
 import AddToQueueIcon from "@mui/icons-material/AddToQueue";

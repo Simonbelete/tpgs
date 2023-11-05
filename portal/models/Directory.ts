@@ -10,4 +10,5 @@ export default interface Directory {
   house_id: number;
   pen_id: number;
   pen_name: string;
+  generation: string | number;
 }
