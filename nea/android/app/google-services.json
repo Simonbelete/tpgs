@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "647746666321",
+    "firebase_url": "https://ilri-nutrition-education-default-rtdb.firebaseio.com",
     "project_id": "ilri-nutrition-education",
     "storage_bucket": "ilri-nutrition-education.appspot.com"
   },

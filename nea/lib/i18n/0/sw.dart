@@ -41,10 +41,10 @@ Course SW = Course(
           title: "",
           body:
               "Je, ni vyanzo gani vikuu vya vyakula vya wanga ambavyo mlo unajumuisha?"),
-      const CourseBodyImage(
-        image: "assets/materials/images/carbohydrates.png",
-        // description: "Vyanzo vya wanga",
-      ),
+      // const CourseBodyImage(
+      //   image: "assets/materials/images/carbohydrates.png",
+      //   // description: "Vyanzo vya wanga",
+      // ),
       const SubTitleText(
         text: "Chanzo cha Wanga",
         fontSize: 14,
@@ -62,10 +62,10 @@ Course SW = Course(
           title: "",
           body:
               "Ni vyanzo gani vikuu vya chakula vya protini ambavyo lishe inajumuisha?"),
-      const CourseBodyImage(
-        image: "assets/materials/images/proteins.png",
-        description: "Vyanzo vya protini",
-      ),
+      // const CourseBodyImage(
+      //   image: "assets/materials/images/proteins.png",
+      //   description: "Vyanzo vya protini",
+      // ),
       // Fats
       const SubTitleText(
         text: "Mafuta",
@@ -79,10 +79,10 @@ Course SW = Course(
           title: "",
           body:
               "Je, ni vyanzo gani vikuu vya vyakula vya mafuta ambavyo mlo unajumuisha?"),
-      const CourseBodyImage(
-        image: "assets/materials/images/fats.png",
-        // description: "Vyanzo vya Mafuta",
-      ),
+      // const CourseBodyImage(
+      //   image: "assets/materials/images/fats.png",
+      //   // description: "Vyanzo vya Mafuta",
+      // ),
       const SubTitleText(
         text: "Chanzo cha Mafuta",
         fontSize: 14,
@@ -108,10 +108,10 @@ Course SW = Course(
           title: "Vitamini ",
           body:
               "kucheza majukumu tofauti katika kusaidia mwili kwa njia muhimu. Baadhi ya mifano ni pamoja na kujenga protini na seli, kulinda seli kutokana na uharibifu, kujenga mifupa, kulinda maono, kumetaboli madini kuu, na kusaidia kuponya majeraha. Bila vitamini muhimu, magonjwa mengi ya lishe yanaweza kusababisha."),
-      const CourseBodyImage(
-        image: "assets/materials/images/vitamins.png",
-        // description: "Vyanzo vya Vitamini",
-      ),
+      // const CourseBodyImage(
+      //   image: "assets/materials/images/vitamins.png",
+      //   // description: "Vyanzo vya Vitamini",
+      // ),
       const SubTitleText(
         text: "Chanzo cha Vitamini",
         fontSize: 14,
@@ -126,10 +126,10 @@ Course SW = Course(
           title: "Minerals ",
           body:
               "ni vikundi vilivyo thabiti, isokaboni vya misombo kama vile vijenzi muhimu vya aina tofauti za seli. Madini muhimu ni pamoja na chuma, zinki, kalsiamu na iodini. Kwa mfano, chuma ni sehemu ya chembe nyekundu za damu, ambazo husafirisha oksijeni kupitia mwili. Zinki ina kazi nyingi muhimu katika mwili, ikiwa ni pamoja na uundaji wa seli na mifumo ya mwili, ikiwa ni pamoja na kazi ya kinga."),
-      const CourseBodyImage(
-        image: "assets/materials/images/minerals.png",
-        // description: "Vyanzo vya Madini",
-      ),
+      // const CourseBodyImage(
+      //   image: "assets/materials/images/minerals.png",
+      //   // description: "Vyanzo vya Madini",
+      // ),
       const SubTitleText(
         text: "Chanzo cha Madini",
         fontSize: 14,

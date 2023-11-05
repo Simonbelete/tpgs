@@ -50,6 +50,7 @@ class _LoginBodyScreenState extends State<LoginBodyScreen> {
             } else {
               setState(() {
                 _errorMessage = "Failed to verify, please try again";
+                loading = false;
               });
             }
           },

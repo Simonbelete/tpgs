@@ -34,7 +34,8 @@ class DirectoryListViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = models.DirectoryList.objects.all()
     serializer_class = serializers.DirectoryListSerializer_GET
     filterset_class = DirectoryListFilter
-    search_fields = ['farm_name', 'hatchery_name', 'house_name']
+    search_fields = ['farm_name', 'breed_name', 'generation',
+                     'hatchery_name', 'house_name', 'pen_name']
     ordering_fields = '__all__'
 
 

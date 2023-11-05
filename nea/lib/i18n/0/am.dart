@@ -44,10 +44,10 @@ Course AM = Course(
       //     title: "",
       //     body:
       //         "What major food sources of carbohydrates does a diet include?"),
-      const CourseBodyImage(
-        image: "assets/materials/images/carbohydrates.png",
-        // description: "በካርቦሀይድሬት የበለፀጉ ምግቦች",
-      ),
+      // const CourseBodyImage(
+      //   image: "assets/materials/images/carbohydrates.png",
+      //   // description: "በካርቦሀይድሬት የበለፀጉ ምግቦች",
+      // ),
       const SubTitleText(
         text: "በካርቦሀይድሬት የበለፀጉ ምግቦች መካከል ፥",
         fontSize: 14,
@@ -64,10 +64,10 @@ Course AM = Course(
       // const Paragraph(
       //     title: "",
       //     body: "What major food sources of proteins does a diet include?"),
-      const CourseBodyImage(
-        image: "assets/materials/images/proteins.png",
-        description: "በፕሮቲን የበለፀጉ ምግቦች",
-      ),
+      // const CourseBodyImage(
+      //   image: "assets/materials/images/proteins.png",
+      //   description: "በፕሮቲን የበለፀጉ ምግቦች",
+      // ),
       // Fats
       const SubTitleText(
         text: "ስብ",
@@ -80,10 +80,10 @@ Course AM = Course(
       // const Paragraph(
       //     title: "",
       //     body: "What major food sources of fats does a diet include?"),
-      const CourseBodyImage(
-        image: "assets/materials/images/fats.png",
-        // description: "በስብ የበለፀጉ ምግቦች",
-      ),
+      // const CourseBodyImage(
+      //   image: "assets/materials/images/fats.png",
+      //   // description: "በስብ የበለፀጉ ምግቦች",
+      // ),
       const SubTitleText(
         text: "በስብ የበለፀጉ ምግቦች መካከል ፥",
         fontSize: 14,
@@ -109,10 +109,10 @@ Course AM = Course(
           title: "ቫይታሚኖች ",
           body:
               "በሰውነት ውስጥ ጠቃሚ ተግባራትን የሚጫወቱ የኦርጋኒክ ውህዶች ቡድን ናቸው:: ነገር ግን በሰውነት ውስጥ ሊፈጠሩ አይችሉም :: በቅባት የሚሟሙ ቪታሚኖች ( ኤ፣ ዲ፣ ኢ እና ኬ) በሰውነት ውስጥ ሊቀመጡ ስለሚችሉ በየቀኑ ላንመገባቸው አንችላለን ሌሎች(በውሃ የሚሟሙ ቢ ቪታሚኖች፣ ቫይታሚን ሲ) ደግሞ በሰውነታችን ውስጥ ሊከማቹ ስለማይችሉ በየቀኑ መወሰድ አለባቸው፡፡ ቫይታሚኖች አካልን በአስፈላጊ መንገዶች በመጠገን ረገድ የተለያዩ ሚናዎችን ይጫወታሉ። ለምሳሌ ፕሮቲን እና ህዋሶችን መገንባት፣ ሴሎችን ከጉዳት መከላከል፣ አጥንቶችን መገንባት፡ ማክሮ ንጥረ ነገሮችን ማስተካከል እና ቁስሎችን መፈወስን ያካትታሉ።"),
-      const CourseBodyImage(
-        image: "assets/materials/images/vitamins.png",
-        // description: "በቫይታሚን የበለፀጉ ምግቦች",
-      ),
+      // const CourseBodyImage(
+      //   image: "assets/materials/images/vitamins.png",
+      //   // description: "በቫይታሚን የበለፀጉ ምግቦች",
+      // ),
       const SubTitleText(
         text: "በቫይታሚን የበለፀጉ ምግቦች መካከል ፥",
         fontSize: 14,
@@ -127,10 +127,10 @@ Course AM = Course(
           title: "ማዕድናት ",
           body:
               "እንደሌሎች የሕዋስ ዓይነቶች አስፈላጊ የግንባታ ብሎኮች ጠንካራ፣ ኦርጋኒክ ያልሆኑ ውህዶች ናቸው። ከጠቃሚ ማዕድናት መካከል ብረት ፡ ዚንክ ፡ ካልሲየም ፡ አዮዲን እና ሌሎችም ያካትታሉ፡፡ ለምሳሌ ብረት በሰውነት ውስጥ ኦክስጅንን የሚያጓጉዙ ቀይ የደም ሴሎች አካል ነው ፡፡ ዚንክ በሰውነት ውስጥ የሴሎች እና የሰውነት ስርዓቶችን መፈጠርን ጨምሮ የበሽታ መቋቋም እና ሌሎች ወሳኝ ተግባራት አሉት፡፡"),
-      const CourseBodyImage(
-        image: "assets/materials/images/minerals.png",
-        // description: "በማዕድን የበለፀጉ ምግቦች",
-      ),
+      // const CourseBodyImage(
+      //   image: "assets/materials/images/minerals.png",
+      //   // description: "በማዕድን የበለፀጉ ምግቦች",
+      // ),
       const SubTitleText(
         text: "በማዕድን የበለፀጉ ምግቦች መካከል ፥",
         fontSize: 14,

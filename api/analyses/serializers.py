@@ -11,7 +11,7 @@ class DirectoryListSerializer_GET(serializers.ModelSerializer):
         fields = ['name', 'unique_id', 'farm_name',
                   'farm_id', 'hatchery_id', 'hatchery_name',
                   'house_id', 'house_name', 'pen_id', 'pen_name',
-                  'display_name', 'batch_name']
+                  'display_name', 'batch_name', 'generation']
 
 
 class PedigreeSerializer(serializers.ModelSerializer):
