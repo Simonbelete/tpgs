@@ -53,7 +53,7 @@ const DirectoryDropdown = ({
       }}
       // @ts-ignore
       renderOption={(props, option, { selected }) => (
-        <li {...props}>
+        <li {...props} key={option["unique_id"]}>
           <Stack
             direction={"row"}
             divider={

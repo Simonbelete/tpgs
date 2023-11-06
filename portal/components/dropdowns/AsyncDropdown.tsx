@@ -21,16 +21,16 @@ export default function AsyncDropdown<T>({
   multiple,
   onChange,
   options,
-  dataValueKey,
-  dataLableKey,
+  dataValueKey = "name",
+  dataLableKey = "id",
   onInputChange,
   ...props
 }: {
   id?: string;
   onOpen: () => void;
   onClose: () => void;
-  dataValueKey: string;
-  dataLableKey: string;
+  dataValueKey?: string;
+  dataLableKey?: string;
   value?: any;
   label?: string;
   defaultOptions?: any;
