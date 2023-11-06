@@ -469,16 +469,23 @@ class EggProduction(viewsets.ViewSet):
             alive_female_chickens = queryset.filter(
                 sex="F").exclude(hatch_date=None).annotate(
                     current_date=F('hatch_date')+timedelta(weeks=week)
-            ).filter(current_date__lte=F('reduction_date')).count()
+            ).filter(Q(current_date__lte=F('reduction_date')) | Q(reduction_date=None)).count()
 
+            # Total Sum of eggs
             weekly_eggs = Egg.objects.all().filter(
                 chicken__in=queryset_ids,
                 week=week).aggregate(sum=Sum('eggs'))['sum'] or 0
+
+            # Number of layer chickens
+            weekly_layers = Egg.objects.all().filter(
+                chicken__in=queryset_ids,
+                week=week).count()
 
             results.append({
                 'week': week,
                 'no_of_chickens': alive_female_chickens,
                 'no_of_eggs': weekly_eggs,
+                'no_of_layers': weekly_layers,
                 'production': weekly_eggs / alive_female_chickens * 100 if alive_female_chickens != 0 else 0
             })
 
