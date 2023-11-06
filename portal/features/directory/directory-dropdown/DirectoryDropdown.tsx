@@ -1,9 +1,10 @@
 import * as React from "react";
 
-import { useLazyGetDdrectoriesQuery } from "../services";
+import { useLazyGetDdrectoriesQuery, directoryApi } from "../services";
 import { Directory } from "@/models";
 import Image from "next/image";
-import { AsyncDropdown } from "@/components/dropdowns";
+// import { AsyncDropdown } from "@/components/dropdowns";
+import AsyncDropdown from "@/lib/crud/components/AsyncDropdown";
 import { Typography, Box, Stack } from "@mui/material";
 
 const DirectoryDropdown = ({
@@ -38,19 +39,21 @@ const DirectoryDropdown = ({
     <AsyncDropdown<Directory>
       multiple={multiple}
       value={value}
-      dataLableKey={dataLableKey || "display_name"}
-      dataValueKey="unique_id"
+      dataKey={dataLableKey || "display_name"}
+      // dataLableKey={dataLableKey || "display_name"}
+      // dataValueKey="unique_id"
       label={label}
       error={error}
       helperText={helperText}
-      options={data?.results ?? []}
-      isLoading={isLoading}
-      onOpen={handleOnOpen}
-      onClose={handleOnClose}
+      // options={data?.results ?? []}
+      // isLoading={isLoading}
+      endpoint={directoryApi.endpoints.getDdrectories}
+      // onOpen={handleOnOpen}
+      // onClose={handleOnClose}
       onChange={onChange}
-      onInputChange={(event: any, newInputValue: any) => {
-        trigger({ ...(query || {}) }, false);
-      }}
+      // onInputChange={(event: any, newInputValue: any) => {
+      //   trigger({ ...(query || {}) }, false);
+      // }}
       // @ts-ignore
       renderOption={(props, option, { selected }) => (
         <li {...props} key={option["unique_id"]}>

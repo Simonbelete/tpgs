@@ -11,6 +11,7 @@ import { EndpointDefinitions } from "@reduxjs/toolkit/dist/query/endpointDefinit
 import { QueryHooks } from "@reduxjs/toolkit/dist/query/react/buildHooks";
 import { ClientQueyFn, Query } from "@/types";
 import { Response } from "@/models";
+import buildPage from "@/util/buildPage";
 
 export interface AsyncDropdownProps<T> {
   dataKey?: string;
@@ -55,16 +56,70 @@ export default function AsyncDropdown<T>({
   const handleModalOpen = () => setModalOpen(true);
   const handleModalClose = () => setModalOpen(false);
 
-  const handleOnOpen = () => {
+  const [paginationModel, setPaginationModel] = React.useState({
+    page: 0,
+    pageSize: 10,
+  });
+
+  const handleOnOpen = async () => {
     setOpen(true);
-    trigger({}, false);
+    if (options.length == 0) {
+      const response = await trigger(
+        buildPage(paginationModel),
+        false
+      ).unwrap();
+      setOptions(response?.results || []);
+    }
   };
   const handleOnClose = () => {
     setOpen(false);
   };
 
-  const handleInputChange = (event: any, newValue: any) => {
-    trigger({ search: newValue }, false);
+  const handleInputChange = async (event: any, newValue: any) => {
+    const response = await trigger(
+      { search: newValue, ...buildPage(paginationModel) },
+      false
+    ).unwrap();
+    setOptions(response?.results || []);
+  };
+
+  const [options, setOptions] = React.useState<T[]>([]);
+
+  const [position, setPosition] = React.useState(0);
+
+  const [listboxNode, setListboxNode] = React.useState<any>("");
+
+  React.useEffect(() => {
+    if (listboxNode !== "") {
+      listboxNode.scrollTop = position;
+    }
+  }, [position, listboxNode]);
+
+  const loadMoreResults = async () => {
+    const nextPage = paginationModel.page + 1;
+    setPaginationModel({ ...paginationModel, page: nextPage });
+
+    const response = await trigger(
+      buildPage({ ...paginationModel, page: nextPage }),
+      false
+    ).unwrap();
+    setOptions([...options, ...(response?.results || [])]);
+  };
+
+  const handleScroll = (event: any) => {
+    if (
+      paginationModel.page >=
+      Math.floor((data?.count || 0) / paginationModel.pageSize)
+    )
+      return;
+
+    setListboxNode(event.currentTarget);
+    const x = listboxNode.scrollTop + listboxNode.clientHeight;
+
+    if (listboxNode.scrollHeight - x <= 1) {
+      setPosition(x);
+      loadMoreResults();
+    }
   };
 
   return (
@@ -93,21 +148,14 @@ export default function AsyncDropdown<T>({
         value={value}
         defaultValue={value}
         getOptionLabel={(option) => option[dataKey] ?? ""}
-        options={data?.results || []}
+        options={options}
         loading={isLoading}
         isOptionEqualToValue={(option, val) => option[dataKey] === val[dataKey]}
         onInputChange={handleInputChange}
         placeholder={placeholder}
-        // TODO:
-        // renderOption={(props, option, { selected }) => (
-        //   <li {...props}>
-        //     {option.name.split("/").map((e: string, idx: any) => (
-        //       <span key={idx}>
-        //         {e} <span style={{ fontWeight: "700" }}>/</span>
-        //       </span>
-        //     ))}
-        //   </li>
-        // )}
+        ListboxProps={{
+          onScroll: handleScroll,
+        }}
         renderInput={(params) => (
           <TextField
             {...params}
