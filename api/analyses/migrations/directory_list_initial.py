@@ -35,15 +35,17 @@ class Migration(migrations.Migration):
         # Add your schemas here
         migrations.RunSQL(
             """
+            CREATE sequence IF NOT EXISTS directory_list_seq CYCLE;
+
             CREATE MATERIALIZED VIEW directory_list AS 
 
                 -- scheam_name = test
 
-                (SELECT concat(ff.id, hh2.id, hh.id, pp.id) AS unique_id, 
+                (SELECT nextval('directory_list_seq'::regclass) AS unique_id, 
                     ff.schema_name AS farm_name, ff.id AS farm_id,
                 	hh2.name AS hatchery_name, hh2.id AS hatchery_id,
                 	hh.name as house_name, hh.id AS house_id,
-                    pp.name as pen_name, pp.id AS pen_id
+                    pp.name as pen_name, pp.id AS pen_id,
                     cc.generation,
                     bb.id AS breed_id, bb.name AS breed_name
                 FROM farms_farm ff
@@ -63,11 +65,11 @@ class Migration(migrations.Migration):
 
                 -- schema_name = ilri_eth
 
-                (SELECT concat(ff.id, hh2.id, hh.id, pp.id) AS unique_id, 
+                (SELECT nextval('directory_list_seq'::regclass) AS unique_id, 
                     ff.schema_name AS farm_name, ff.id AS farm_id,
                 	hh2.name AS hatchery_name, hh2.id AS hatchery_id,
                 	hh.name as house_name, hh.id AS house_id,
-                    pp.name as pen_name, pp.id AS pen_id
+                    pp.name as pen_name, pp.id AS pen_id,
                     cc.generation,
                     bb.id AS breed_id, bb.name AS breed_name
                 FROM farms_farm ff
