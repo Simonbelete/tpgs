@@ -1,10 +1,10 @@
-import React, { useEffect } from "react";
-import { AsyncDropdown } from "@/components/dropdowns";
+import * as React from "react";
+
 import { useLazyGetDdrectoriesQuery } from "../services";
 import { Directory } from "@/models";
-import { Box, Divider, Grid, Stack, Typography } from "@mui/material";
-import { LabeledInput } from "@/components/inputs";
 import Image from "next/image";
+import { AsyncDropdown } from "@/components/dropdowns";
+import { Typography, Box, Stack } from "@mui/material";
 
 const DirectoryDropdown = ({
   value,
@@ -14,6 +14,7 @@ const DirectoryDropdown = ({
   helperText,
   query,
   dataKey,
+  multiple = false,
 }: {
   value?: any;
   label?: string;
@@ -22,6 +23,7 @@ const DirectoryDropdown = ({
   query?: Object;
   dataKey?: string;
   onChange?: (event: any, newValue: any) => void;
+  multiple?: boolean;
 }) => {
   const [trigger, { isLoading, data }, lastPromiseInfo] =
     useLazyGetDdrectoriesQuery();
@@ -34,6 +36,7 @@ const DirectoryDropdown = ({
 
   return (
     <AsyncDropdown<Directory>
+      multiple={multiple}
       value={value}
       dataKey={dataKey || "name"}
       label={label}
@@ -73,7 +76,7 @@ const DirectoryDropdown = ({
                 Farm
               </Typography>
               <Typography variant="caption" color="text.primary">
-                {option.farm_name}
+                {option.farm_name && option.farm_name}
               </Typography>
             </Stack>
             <Stack direction={"column"}>
@@ -85,7 +88,7 @@ const DirectoryDropdown = ({
                 Breed
               </Typography>
               <Typography variant="caption" color="text.primary">
-                {option.breed_name}
+                {option.breed_name && option.breed_name}
               </Typography>
             </Stack>
             <Stack direction={"column"}>
@@ -97,7 +100,7 @@ const DirectoryDropdown = ({
                 Generation
               </Typography>
               <Typography variant="caption" color="text.primary">
-                G{option.generation}
+                G{option.generation && option.generation}
               </Typography>
             </Stack>
             <Stack direction={"column"}>
@@ -109,7 +112,7 @@ const DirectoryDropdown = ({
                 Hatchery
               </Typography>
               <Typography variant="caption" color="text.primary">
-                {option.hatchery_name}
+                {option.hatchery_name && option.hatchery_name}
               </Typography>
             </Stack>
             <Stack direction={"column"}>
@@ -121,7 +124,7 @@ const DirectoryDropdown = ({
                 House
               </Typography>
               <Typography variant="caption" color="text.primary">
-                {option.house_name}
+                {option.house_name && option.house_name}
               </Typography>
             </Stack>
             <Stack direction={"column"}>
@@ -133,7 +136,7 @@ const DirectoryDropdown = ({
                 Pen
               </Typography>
               <Typography variant="caption" color="text.primary">
-                {option.pen_name}
+                {option.pen_name && option.pen_name}
               </Typography>
             </Stack>
           </Stack>

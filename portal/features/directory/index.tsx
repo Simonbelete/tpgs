@@ -4,3 +4,4 @@ export * from "./slices";
 export * from "./directory-dropdown";
 export * from "./directory-list";
 export * from "./directory-filter";
+export * from "./directory-select-dialog";

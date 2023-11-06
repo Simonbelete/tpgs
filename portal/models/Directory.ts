@@ -4,6 +4,8 @@ export default interface Directory {
   unique_id: string;
   farm_name: string;
   farm_id: number;
+  breed_name: string;
+  breed_id: number;
   hatchery_name: string;
   hatchery_id: number;
   house_name: string;

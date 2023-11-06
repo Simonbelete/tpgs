@@ -10,8 +10,9 @@ import {
 } from "@mui/material";
 import { AsyncDropdown } from "@/components/dropdowns";
 import { Directory } from "@/models";
+import { DirectoryDropdown } from "../directory-dropdown";
 
-const DirectoryDialog = ({
+export const DirectoryDialog = ({
   open = false,
   onSelected,
   onClose,
@@ -37,6 +38,7 @@ const DirectoryDialog = ({
               url="/directories/"
               onChange={(e, newValue) => setValue(newValue)}
             /> */}
+            <DirectoryDropdown onChange={(e, newValue) => setValue(newValue)} />
           </FormControl>
         </Box>
       </DialogContent>
@@ -51,5 +53,3 @@ const DirectoryDialog = ({
     </Dialog>
   );
 };
-
-export default DirectoryDialog;

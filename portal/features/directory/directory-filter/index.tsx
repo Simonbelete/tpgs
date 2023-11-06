@@ -1,79 +1,206 @@
-import React from "react";
-import { DirectoryDropdown } from "@/features/directory";
+import React, { useState } from "react";
+import { DirectoryDropdown, DirectoryDialog } from "@/features/directory";
 import { Card } from "@/components";
-import { Box, Chip, Divider, Grid, Stack, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  Chip,
+  Divider,
+  Grid,
+  IconButton,
+  Stack,
+  Typography,
+} from "@mui/material";
 import { LabeledInput } from "@/components/inputs";
 import Image from "next/image";
+import { Directory } from "@/models";
+import AddIcon from "@mui/icons-material/Add";
+import CloseIcon from "@mui/icons-material/Close";
 
 export const DirectoryFilter = () => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const [data, setData] = useState<{
+    directories: Directory[];
+    start_week: number;
+    end_week: number;
+  }>({
+    directories: [],
+    start_week: 0,
+    end_week: 20,
+  });
+
+  const handleSelected = (value?: Directory) => {
+    setIsOpen(false);
+    if (value) {
+      setData({
+        ...data,
+        directories: [...data.directories, value],
+      });
+    }
+  };
+
+  const handleRemoveFilter = (value: Directory) => {
+    const newFilters = data.directories.filter(
+      (e) => e.unique_id != value.unique_id
+    );
+
+    setData({
+      ...data,
+      directories: newFilters,
+    });
+  };
+
   return (
     <>
+      <DirectoryDialog
+        open={isOpen}
+        onClose={() => setIsOpen(false)}
+        onSelected={handleSelected}
+      />
       <Card title="Filters">
         <Grid container spacing={3}>
           <Grid item xs={12}>
-            <DirectoryDropdown />
-          </Grid>
-          <Grid item xs={6}>
             <LabeledInput
               size="small"
-              value={""}
+              value={data.start_week}
               label={"Start Week"}
               placeholder={"Start Week"}
+              onChange={(val) => setData({ ...data, start_week: Number(val) })}
             />
           </Grid>
-          <Grid item xs={6}>
+          <Grid item xs={12}>
             <LabeledInput
               size="small"
-              value={""}
+              value={data.end_week}
               label={"End Week"}
               placeholder={"End Week"}
+              onChange={(val) => setData({ ...data, start_week: Number(val) })}
             />
+          </Grid>
+          <Grid item xs={12}>
+            <Stack spacing={2} direction={"row"}>
+              <Button
+                variant="outlined"
+                startIcon={<AddIcon fontSize="small" />}
+                size="small"
+                onClick={() => setIsOpen(true)}
+              >
+                Add Filter
+              </Button>
+              <Button
+                variant="contained"
+                disableElevation
+                size="small"
+                onClick={() => {}}
+              >
+                Generate
+              </Button>
+            </Stack>
           </Grid>
         </Grid>
         <Divider sx={{ mt: 5 }} />
-        <Box>
-          <Stack direction={"column"} mt={3}>
-            <Stack
-              direction={"row"}
-              divider={
-                <Box sx={{ display: "flex", alignItems: "flex-end" }}>
-                  <Image
-                    alt="slash_arrow"
-                    src="/slash_forward_icon_134959.png"
-                    height={26}
-                    width={15}
-                  />
+        <Box mt={3}>
+          <Stack direction={"column"} spacing={1} divider={<Divider />}>
+            {data.directories.map((e, i) => (
+              <Stack key={i} direction={"row"} justifyContent={"space-between"}>
+                <Stack
+                  direction={"row"}
+                  divider={
+                    <Box sx={{ display: "flex", alignItems: "flex-end" }}>
+                      <Image
+                        alt="slash_arrow"
+                        src="/slash_forward_icon_134959.png"
+                        height={18}
+                        width={15}
+                      />
+                    </Box>
+                  }
+                  spacing={0.5}
+                >
+                  <Stack direction={"column"}>
+                    <Typography
+                      variant="caption"
+                      fontSize={"0.67rem"}
+                      color="text.secondary"
+                    >
+                      Farm
+                    </Typography>
+                    <Typography variant="caption" color="text.primary">
+                      {e.farm_name}
+                    </Typography>
+                  </Stack>
+                  <Stack direction={"column"}>
+                    <Typography
+                      variant="caption"
+                      fontSize={"0.67rem"}
+                      color="text.secondary"
+                    >
+                      Breed
+                    </Typography>
+                    <Typography variant="caption" color="text.primary">
+                      {e.breed_name}
+                    </Typography>
+                  </Stack>
+                  <Stack direction={"column"}>
+                    <Typography
+                      variant="caption"
+                      fontSize={"0.67rem"}
+                      color="text.secondary"
+                    >
+                      Generation
+                    </Typography>
+                    <Typography variant="caption" color="text.primary">
+                      G{e.generation}
+                    </Typography>
+                  </Stack>
+                  <Stack direction={"column"}>
+                    <Typography
+                      variant="caption"
+                      fontSize={"0.67rem"}
+                      color="text.secondary"
+                    >
+                      Hatchery
+                    </Typography>
+                    <Typography variant="caption" color="text.primary">
+                      {e.hatchery_name}
+                    </Typography>
+                  </Stack>
+                  <Stack direction={"column"}>
+                    <Typography
+                      variant="caption"
+                      fontSize={"0.67rem"}
+                      color="text.secondary"
+                    >
+                      House
+                    </Typography>
+                    <Typography variant="caption" color="text.primary">
+                      {e.house_name}
+                    </Typography>
+                  </Stack>
+                  <Stack direction={"column"}>
+                    <Typography
+                      variant="caption"
+                      fontSize={"0.67rem"}
+                      color="text.secondary"
+                    >
+                      Pen
+                    </Typography>
+                    <Typography variant="caption" color="text.primary">
+                      {e.pen_name}
+                    </Typography>
+                  </Stack>
+                </Stack>
+                <Box>
+                  <IconButton onClick={() => handleRemoveFilter(e)}>
+                    <CloseIcon />
+                  </IconButton>
                 </Box>
-              }
-              spacing={0.5}
-            >
-              <Stack direction={"column"}>
-                <Typography
-                  variant="caption"
-                  fontSize={"0.67rem"}
-                  color="text.secondary"
-                >
-                  Farm
-                </Typography>
-                <Typography variant="caption" color="text.primary">
-                  ILIR Ethiopia
-                </Typography>
               </Stack>
-              <Stack direction={"column"}>
-                <Typography
-                  variant="caption"
-                  fontSize={"0.67rem"}
-                  color="text.secondary"
-                >
-                  Breed
-                </Typography>
-                <Typography variant="caption" color="text.primary">
-                  ILIR Ethiopia
-                </Typography>
-              </Stack>
-            </Stack>
+            ))}
           </Stack>
         </Box>
+        <Box mt={5}></Box>
       </Card>
     </>
   );
