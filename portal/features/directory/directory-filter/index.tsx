@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { DirectoryDialog } from "@/features/directory";
 import { Card } from "@/components";
 import {
@@ -16,6 +16,7 @@ import Image from "next/image";
 import { Directory } from "@/models";
 import AddIcon from "@mui/icons-material/Add";
 import CloseIcon from "@mui/icons-material/Close";
+import CircularProgress from "@mui/material/CircularProgress";
 
 export interface DirectoryFilterData {
   directories: Directory[];
@@ -24,9 +25,13 @@ export interface DirectoryFilterData {
 }
 
 export const DirectoryFilter = ({
+  computedData,
+  isLoading,
   onSubmit,
 }: {
   onSubmit: (filters: DirectoryFilterData) => void;
+  computedData: any[];
+  isLoading?: boolean;
 }) => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -60,6 +65,16 @@ export const DirectoryFilter = ({
   const handleGenerate = useCallback(() => {
     onSubmit(data);
   }, [onSubmit]);
+
+  useEffect(() => {
+    console.log("****");
+    console.log(computedData);
+  }, [computedData]);
+
+  const loadState = (i: number) => {
+    if (computedData[i] == null && isLoading) return false;
+    return true;
+  };
 
   return (
     <>
@@ -110,6 +125,7 @@ export const DirectoryFilter = ({
           </Grid>
         </Grid>
         <Divider sx={{ mt: 5 }} />
+
         <Box mt={3}>
           <Stack direction={"column"} spacing={1} divider={<Divider />}>
             {data.directories.map((e, i) => (
@@ -202,9 +218,16 @@ export const DirectoryFilter = ({
                   </Stack>
                 </Stack>
                 <Box>
-                  <IconButton onClick={() => handleRemoveFilter(e)}>
-                    <CloseIcon />
-                  </IconButton>
+                  {loadState(i) && (
+                    <IconButton onClick={() => handleRemoveFilter(e)}>
+                      <CloseIcon />
+                    </IconButton>
+                  )}
+                  {!loadState(i) && (
+                    <Box sx={{ display: "flex" }}>
+                      <CircularProgress size={"20px"} color="secondary" />
+                    </Box>
+                  )}
                 </Box>
               </Stack>
             ))}

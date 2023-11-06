@@ -462,8 +462,6 @@ class EggProduction(viewsets.ViewSet):
         end_week = int(request.GET.get('end_week', 20))
 
         queryset = self.filter_by_directory(**kwargs)
-        print('---------------')
-        print(queryset)
         queryset_ids = list(zip(*queryset.values_list('id')))[0]
 
         results = []

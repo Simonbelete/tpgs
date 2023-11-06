@@ -13,17 +13,17 @@ const DirectoryDropdown = ({
   onChange,
   helperText,
   query,
-  dataKey,
   multiple = false,
+  dataLableKey,
 }: {
   value?: any;
   label?: string;
   error?: boolean;
   helperText?: string;
   query?: Object;
-  dataKey?: string;
   onChange?: (event: any, newValue: any) => void;
   multiple?: boolean;
+  dataLableKey?: string;
 }) => {
   const [trigger, { isLoading, data }, lastPromiseInfo] =
     useLazyGetDdrectoriesQuery();
@@ -38,7 +38,8 @@ const DirectoryDropdown = ({
     <AsyncDropdown<Directory>
       multiple={multiple}
       value={value}
-      dataKey={dataKey || "name"}
+      dataLableKey={dataLableKey || "display_name"}
+      dataValueKey="unique_id"
       label={label}
       error={error}
       helperText={helperText}

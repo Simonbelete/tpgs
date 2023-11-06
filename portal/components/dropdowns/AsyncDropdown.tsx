@@ -10,7 +10,6 @@ export default function AsyncDropdown<T>({
   id,
   onOpen,
   onClose,
-  dataKey = "name",
   value,
   label,
   defaultOptions,
@@ -22,13 +21,16 @@ export default function AsyncDropdown<T>({
   multiple,
   onChange,
   options,
+  dataValueKey,
+  dataLableKey,
   onInputChange,
   ...props
 }: {
   id?: string;
   onOpen: () => void;
   onClose: () => void;
-  dataKey?: string;
+  dataValueKey: string;
+  dataLableKey: string;
   value?: any;
   label?: string;
   defaultOptions?: any;
@@ -87,10 +89,12 @@ export default function AsyncDropdown<T>({
         onChange={onChange}
         value={value}
         defaultValue={value}
-        getOptionLabel={(option) => option[dataKey] ?? ""}
+        getOptionLabel={(option) => option[dataLableKey] ?? ""}
         options={options}
         loading={isLoading}
-        isOptionEqualToValue={(option, val) => option[dataKey] === val[dataKey]}
+        isOptionEqualToValue={(option, val) =>
+          option[dataValueKey] === val[dataValueKey]
+        }
         onInputChange={onInputChange}
         renderInput={(params) => (
           <TextField

@@ -12,15 +12,15 @@ const Plot = dynamic(() => import("react-plotly.js"), {
 
 export const EggProductive = () => {
   const [data, setData] = useState<any[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   const [trigger] = useLazyGetEggProductionQuery();
 
-  const buildDirectoryQuery = () => {
-    return {};
-  };
+  const delay = (ms) => new Promise((res) => setTimeout(res, ms));
 
   const handleSubmit = async (filters: DirectoryFilterData) => {
     setData([]);
+    setIsLoading(true);
     for (let i = 0; i <= filters.directories.length; i += 1) {
       const query = {
         start_week: filters.start_week,
@@ -32,22 +32,23 @@ export const EggProductive = () => {
       if (response.results) {
         for (let val in response.results) {
           chartData.x.push(Number(response.results[val]["week"]) || 0);
-          chartData.x.push(Number(response.results[val]["week"]) || 0);
+          chartData.y.push(Number(response.results[val]["production"]) || 0);
         }
       }
-
-      console.log(chartData);
       setData([chartData]);
+      await delay(5000);
     }
-
-    console.log("0000000000000000000000");
-    console.log(data);
+    setIsLoading(false);
   };
 
   return (
     <Box>
-      <DirectoryFilter onSubmit={handleSubmit} />
-      <Box>
+      <DirectoryFilter
+        onSubmit={handleSubmit}
+        computedData={data}
+        isLoading={isLoading}
+      />
+      <Box mt={10}>
         <Plot
           layout={{
             title:
