@@ -478,6 +478,7 @@ class EggProduction(viewsets.ViewSet):
                 week=week).aggregate(sum=Sum('eggs'))['sum'] or 0
 
             results.append({
+                'week': week,
                 'no_of_chickens': alive_female_chickens,
                 'no_of_eggs': weekly_eggs,
                 'production': weekly_eggs / alive_female_chickens * 100 if alive_female_chickens != 0 else 0

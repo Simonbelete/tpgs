@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { DirectoryDropdown, DirectoryDialog } from "@/features/directory";
+import React, { useCallback, useState } from "react";
+import { DirectoryDialog } from "@/features/directory";
 import { Card } from "@/components";
 import {
   Box,
@@ -17,14 +17,20 @@ import { Directory } from "@/models";
 import AddIcon from "@mui/icons-material/Add";
 import CloseIcon from "@mui/icons-material/Close";
 
-export const DirectoryFilter = () => {
+export interface DirectoryFilterData {
+  directories: Directory[];
+  start_week: number;
+  end_week: number;
+}
+
+export const DirectoryFilter = ({
+  onSubmit,
+}: {
+  onSubmit: (filters: DirectoryFilterData) => void;
+}) => {
   const [isOpen, setIsOpen] = useState(false);
 
-  const [data, setData] = useState<{
-    directories: Directory[];
-    start_week: number;
-    end_week: number;
-  }>({
+  const [data, setData] = useState<DirectoryFilterData>({
     directories: [],
     start_week: 0,
     end_week: 20,
@@ -50,6 +56,10 @@ export const DirectoryFilter = () => {
       directories: newFilters,
     });
   };
+
+  const handleGenerate = useCallback(() => {
+    onSubmit(data);
+  }, [onSubmit]);
 
   return (
     <>
@@ -92,7 +102,7 @@ export const DirectoryFilter = () => {
                 variant="contained"
                 disableElevation
                 size="small"
-                onClick={() => {}}
+                onClick={handleGenerate}
               >
                 Generate
               </Button>
