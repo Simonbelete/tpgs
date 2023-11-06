@@ -16,12 +16,12 @@ export const EggProductive = () => {
 
   const [trigger] = useLazyGetEggProductionQuery();
 
-  const delay = (ms) => new Promise((res) => setTimeout(res, ms));
+  const delay = (ms: number) => new Promise((res) => setTimeout(res, ms));
 
   const handleSubmit = async (filters: DirectoryFilterData) => {
     setData([]);
     setIsLoading(true);
-    for (let i = 0; i <= filters.directories.length; i += 1) {
+    for (let i = 0; i < filters.directories.length; i += 1) {
       const query = {
         start_week: filters.start_week,
         end_week: filters.end_week,
@@ -36,7 +36,7 @@ export const EggProductive = () => {
         }
       }
       setData([chartData]);
-      await delay(5000);
+      await delay(3000);
     }
     setIsLoading(false);
   };

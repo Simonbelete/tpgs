@@ -43,6 +43,7 @@ import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import FactoryIcon from "@mui/icons-material/Factory";
 import ChecklistIcon from "@mui/icons-material/Checklist";
 import AssignmentTurnedInIcon from "@mui/icons-material/AssignmentTurnedIn";
+import AutoGraphIcon from "@mui/icons-material/AutoGraph";
 
 function menuProps(key: string) {
   return {
@@ -533,7 +534,17 @@ const SidebarMenu = () => {
           Reporting
         </Typography>
       </div>
+
       <Menu menuItemStyles={menuItemStyles}>
+        <MenuItem
+          component={<Link href="/reports" />}
+          icon={<AutoGraphIcon fontSize="small" />}
+          active={RegExp("/reports(.*)$").test(router.pathname)}
+        >
+          <Typography variant="body1" fontSize={14}>
+            Reports
+          </Typography>
+        </MenuItem>
         <SubMenu
           label={
             <Typography variant="body1" fontSize={14}>

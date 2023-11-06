@@ -66,11 +66,6 @@ export const DirectoryFilter = ({
     onSubmit(data);
   }, [onSubmit]);
 
-  useEffect(() => {
-    console.log("****");
-    console.log(computedData);
-  }, [computedData]);
-
   const loadState = (i: number) => {
     if (computedData[i] == null && isLoading) return false;
     return true;
