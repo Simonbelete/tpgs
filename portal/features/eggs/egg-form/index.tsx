@@ -57,14 +57,19 @@ export const EggForm = ({
             md: 12,
           },
           week: { label: "Week", placeholder: "Week", xs: 12, md: 12 },
+          eggs: {
+            label: "No of eggs",
+            placeholder: "No of eggs",
+            xs: 12,
+            md: 12,
+          },
           weight: {
-            label: "Body weight (g)",
-            placeholder: "Body weight (g)",
+            label: "Total eggs weight (g)",
+            placeholder: "Total eggs weight (g)",
             xs: 12,
             md: 12,
             postfix: "g",
           },
-          eggs: { label: "Eggs", placeholder: "Eggs", xs: 12, md: 12 },
         }}
         menus={
           <>
