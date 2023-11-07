@@ -39,6 +39,10 @@ fcre_router = routers.DefaultRouter()
 fcre_router.register(
     r'analyses/fcre', views.FCRE, basename="api_fcre")
 
+fcrw_router = routers.DefaultRouter()
+fcrw_router.register(
+    r'analyses/fcrw', views.FCRE, basename="api_fcre")
+
 hhep_router = routers.DefaultRouter()
 hhep_router.register(
     r'analyses/hhep', views.HHEPViewSet, basename="api_hhep")
@@ -61,5 +65,6 @@ urlpatterns = [
     path('', include(hhep_router.urls)),
     path('', include(pedigree_router.urls)),
     path('', include(wbft_router.urls)),
-    path('', include(fcre_router.urls))
+    path('', include(fcre_router.urls)),
+    path('', include(fcrw_router.urls)),
 ]

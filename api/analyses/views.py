@@ -762,3 +762,143 @@ class FCRE(viewsets.ViewSet):
 class FCRW(viewsets.ViewSet):
     """Feed Conversion ratio for body weiht/ weight gain
     """
+    queryset = Chicken.objects.all()
+
+    def filter_by_directory(self, **kwargs):
+        queryset = self.queryset
+
+        breed_id = kwargs['breed_id'] if 'breed_id' in kwargs else 0
+        generation = kwargs['generation'] if 'generation' in kwargs else 'any'
+        hatchery_id = kwargs['hatchery_id'] if 'hatchery_id' in kwargs else 0
+        house_id = kwargs['house_id'] if 'house_id' in kwargs else 0
+        pen_id = kwargs['pen_id'] if 'pen_id' in kwargs else 0
+
+        if (breed_id != 0):
+            queryset = queryset.filter(breed=breed_id)
+
+        if (generation != 'any'):
+            queryset = queryset.filter(generation=generation)
+
+        if (hatchery_id != 0):
+            queryset = queryset.filter(hatchery=hatchery_id)
+
+        if (house_id != 0):
+            queryset = queryset.filter(house=house_id)
+
+        if (pen_id != 0):
+            queryset = queryset.filter(pen=pen_id)
+
+        return queryset
+
+    def get_farm(self, farm_id):
+        try:
+            return Farm.objects.get(pk=farm_id)
+        except Farm.DoesNotExist:
+            raise NotFound
+
+    @extend_schema(
+        parameters=[
+            OpenApiParameter(
+                name='start_week',
+                description='Start Week',
+                location=OpenApiParameter.QUERY,
+                required=False,
+                default=0,
+                type=int),
+            OpenApiParameter(
+                name='end_week',
+                description='End Week',
+                location=OpenApiParameter.QUERY,
+                required=False,
+                default=20,
+                type=int),
+            OpenApiParameter(
+                name='farm_id',
+                description='farm',
+                location=OpenApiParameter.QUERY,
+                required=False,
+                type=int),
+            OpenApiParameter(
+                name='breed_id',
+                description='Breed id',
+                location=OpenApiParameter.QUERY,
+                required=False,
+                type=int),
+            OpenApiParameter(
+                name='generation',
+                description='Generation',
+                location=OpenApiParameter.QUERY,
+                required=False,
+                type=int),
+            OpenApiParameter(
+                name='hatchery_id',
+                description='Hatchery',
+                location=OpenApiParameter.QUERY,
+                required=False,
+                type=int),
+            OpenApiParameter(
+                name='house_id',
+                description='House',
+                location=OpenApiParameter.QUERY,
+                required=False,
+                type=int),
+            OpenApiParameter(
+                name='pen_id',
+                description='Pen',
+                location=OpenApiParameter.QUERY,
+                required=False,
+                type=int),
+        ]
+    )
+    def list(self, request, **kwargs):
+        start_week = int(request.GET.get('start_week', 0))
+        end_week = int(request.GET.get('end_week', 20))
+
+        with tenant_context(self.get_farm(request.GET.get('farm_id', 0))):
+            queryset = self.filter_by_directory(**kwargs)
+            queryset_ids = list(zip(*queryset.values_list('id')))
+            queryset_ids = queryset_ids if len(
+                queryset_ids) == 0 else queryset_ids[0]
+
+            weight_queryset = Weight.objects.filter(chicken__in=queryset_ids)
+            results = []
+            for week in range(start_week, end_week + 1):
+                previous_week_avg = weight_queryset.filter(
+                    week=week - 1).aggregate(weight_avg=Avg('weight'))['weight_avg'] or 0
+                current_week_avg = weight_queryset.filter(
+                    week=week).aggregate(weight_avg=Avg('weight'))['weight_avg'] or 0
+
+                # Feed Intake
+                batch_feeds_queryset = Feed.objects.filter(week=week)
+                individual_queyset = Feed.objects.filter(
+                    chicken__in=queryset_ids)
+
+                if (request.GET.get('hatchery_id', 0) != 0):
+                    batch_feeds_queryset = batch_feeds_queryset.filter(
+                        hatchery=request.GET.get('hatchery_id'))
+
+                if (request.GET.get('pen_id', 0) != 0):
+                    batch_feeds_queryset = batch_feeds_queryset.filter(
+                        hatchery=request.GET.get('pen_id'))
+
+                batches_weight = batch_feeds_queryset.aggregate(
+                    weight_sum=Sum('weight'))['weight_sum'] or 0
+
+                chickens_weight = individual_queyset.aggregate(
+                    weight_sum=Sum('weight'))['weight_sum'] or 0
+
+                total_chickens = queryset.count()
+                total_feed_weight = (batches_weight /
+                                     total_chickens) + chickens_weight
+
+                weight_gain = current_week_avg - previous_week_avg
+                fcr = total_feed_weight / weight_gain if weight_gain != 0 else 0
+
+                results.append({
+                    'week': week,
+                    'previous_week_avg': previous_week_avg,
+                    'current_week_avg': current_week_avg,
+                    'weight_gain': weight_gain,
+                    'fcr': fcr
+                })
+            return Response({'results': results})
