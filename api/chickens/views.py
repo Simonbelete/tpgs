@@ -2,7 +2,7 @@ import io
 import pandas as pd
 import django_filters
 from django.shortcuts import render
-from rest_framework import viewsets, status
+from rest_framework import viewsets, mixins
 from rest_framework.views import APIView
 from django.http import HttpResponse, JsonResponse
 from datetime import date
@@ -149,3 +149,11 @@ class ChickenXlsImport(XlsImport):
 class ChickenCsvImport(CsvImport):
     def get_resource(self):
         return admin.ChickenResource()
+
+
+# Generation
+class GenerationViewSet(viewsets.GenericViewSet, mixins.ListModelMixin):
+    queryset = models.Chicken.all.distinct(
+        'generation').exclude(generation__isnull=True)
+    serializer_class = serializers.GenerationSerializer_GET
+    ordering_fields = '__all__'

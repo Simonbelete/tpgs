@@ -21,7 +21,12 @@ router.register(r'chickens/(?P<id>.+)/histories',
                 views.ChickenHistoryViewSet, basename='api_chickens_histories'),
 
 
+gen_router = routers.DefaultRouter()
+gen_router.register(r'chickens/generations', views.GenerationViewSet,
+                    basename='api_generations')
+
 urlpatterns = [
+    path('', include(gen_router.urls)),
     path('', include(router.urls)),
     path('', include(summary_router.urls)),
 

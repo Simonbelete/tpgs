@@ -39,3 +39,9 @@ class ChickenHistorySerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Chicken.history.__dict__['model']
         fields = '__all__'
+
+
+class GenerationSerializer_GET(serializers.ModelSerializer):
+    class Meta:
+        model = models.Chicken
+        fields = ['generation']
