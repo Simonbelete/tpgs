@@ -33,7 +33,7 @@ directories_ref_router.register(r'directories/refresh', views.DirectoryListRefre
 
 hdep_router = routers.DefaultRouter()
 hdep_router.register(
-    r'analyses/(?P<farm_id>.+)/(?P<flock_id>.+)/(?P<house_id>.+)/hdep', views.HDEPViewSet, basename="api_hdep")
+    r'analyses/hdep', views.HDEPViewSet, basename="api_hdep")
 
 hhep_router = routers.DefaultRouter()
 hhep_router.register(

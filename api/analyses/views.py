@@ -7,6 +7,7 @@ from django_tenants.utils import tenant_context
 from drf_spectacular.utils import extend_schema, OpenApiParameter, OpenApiExample
 from django.db import connection
 from datetime import timedelta, date
+from rest_framework.exceptions import NotFound
 
 from . import models
 from . import serializers
@@ -75,66 +76,118 @@ class CountViewSet(viewsets.ViewSet):
 
 
 class HDEPViewSet(viewsets.ViewSet):
-    def get_query(self):
-        return Egg.objects.all()
+    queryset = Chicken.objects.all()
+
+    def filter_by_directory(self, **kwargs):
+        queryset = self.queryset
+
+        breed_id = kwargs['breed_id'] if 'breed_id' in kwargs else 0
+        generation = kwargs['generation'] if 'generation' in kwargs else 'any'
+        hatchery_id = kwargs['hatchery_id'] if 'hatchery_id' in kwargs else 0
+        house_id = kwargs['house_id'] if 'house_id' in kwargs else 0
+        pen_id = kwargs['pen_id'] if 'pen_id' in kwargs else 0
+
+        if (breed_id != 0):
+            queryset = queryset.filter(breed=breed_id)
+
+        if (generation != 'any'):
+            queryset = queryset.filter(generation=generation)
+
+        if (hatchery_id != 0):
+            queryset = queryset.filter(hatchery=hatchery_id)
+
+        if (house_id != 0):
+            queryset = queryset.filter(house=house_id)
+
+        if (pen_id != 0):
+            queryset = queryset.filter(pen=pen_id)
+
+        return queryset
+
+    def get_farm(self, farm_id):
+        try:
+            return Farm.objects.get(pk=farm_id)
+        except Farm.DoesNotExist:
+            raise NotFound
 
     @extend_schema(
         parameters=[
             OpenApiParameter(
-                name='start_week', description='Start Week', location=OpenApiParameter.QUERY, required=False, type=int),
+                name='start_week',
+                description='Start Week',
+                location=OpenApiParameter.QUERY,
+                required=False,
+                default=0,
+                type=int),
             OpenApiParameter(
-                name='end_week', description='End Week', location=OpenApiParameter.QUERY, required=False, type=int),
+                name='end_week',
+                description='End Week',
+                location=OpenApiParameter.QUERY,
+                required=False,
+                default=20,
+                type=int),
+            OpenApiParameter(
+                name='farm_id',
+                description='farm',
+                location=OpenApiParameter.QUERY,
+                required=False,
+                type=int),
+            OpenApiParameter(
+                name='breed_id',
+                description='Breed id',
+                location=OpenApiParameter.QUERY,
+                required=False,
+                type=int),
+            OpenApiParameter(
+                name='generation',
+                description='Generation',
+                location=OpenApiParameter.QUERY,
+                required=False,
+                type=int),
+            OpenApiParameter(
+                name='hatchery_id',
+                description='Hatchery',
+                location=OpenApiParameter.QUERY,
+                required=False,
+                type=int),
+            OpenApiParameter(
+                name='house_id',
+                description='House',
+                location=OpenApiParameter.QUERY,
+                required=False,
+                type=int),
+            OpenApiParameter(
+                name='pen_id',
+                description='Pen',
+                location=OpenApiParameter.QUERY,
+                required=False,
+                type=int),
         ]
     )
     def list(self, request, **kwargs):
         start_week = int(request.GET.get('start_week', 0))
-        end_week = int(request.GET.get('end_week', 0))
-        flock_id = kwargs['flock_id']
-        farm_id = kwargs['farm_id']
-        eggs = self.get_query()
-        if (kwargs['farm_id'] == 'all'):
-            return Response({
-                'errors': [
-                    'farm can not be all'
-                ]
-            })
-        farm = Farm.objects.get(pk=farm_id)
-        with tenant_context(farm):
-            if (kwargs['flock_id'] != 'all'):
-                eggs = eggs.filter(Q(flock=kwargs['flock_id']) | Q(
-                    chicken__flock=kwargs['flock_id']))
-            if (kwargs['house_id'] != 'all'):
-                eggs = eggs.filter(chicken__house=kwargs['house_id'])
+        end_week = int(request.GET.get('end_week', 20))
 
+        print('--------------------')
+        with tenant_context(self.get_farm(request.GET.get('farm_id', 0))):
+            queryset = self.filter_by_directory(**kwargs)
+            queryset_ids = list(zip(*queryset.values_list('id')))[0]
+
+            eggs_queryset = Egg.objects.filter(chicken__in=queryset_ids)
             results = []
             for week in range(start_week, end_week + 1):
-                print('***')
-                weekly_no_eggs = eggs.filter(week=week).aggregate(
+                weekly_no_eggs = eggs_queryset.filter(week=week).aggregate(
                     sum=Sum('eggs'))['sum'] or 0
+                hen_days = queryset.filter(
+                    sex="F").exclude(hatch_date=None).annotate(
+                    current_date=F('hatch_date')+timedelta(weeks=week)
+                ).filter(Q(current_date__lte=F('reduction_date')) | Q(reduction_date=None)).count()
 
-                flock_accusation = FlockAccusation.objects.filter(
-                    flock=flock_id)
-                total_accusation = 0
-                for x in flock_accusation.iterator():
-                    if x.accusation_week <= week:
-                        total_accusation += x.total_female_chickens
-
-                flock_reduction = FlockReduction.objects.filter(flock=flock_id)
-                total_reduction = 0
-                for x in flock_reduction.iterator():
-                    if x.reduction_week <= week:
-                        total_reduction += x.total_female_chickens
-
-                alive_chickens = total_accusation - total_reduction
-                alive_chickens = 1 if alive_chickens == 0 else alive_chickens
-
-                hdep = weekly_no_eggs / alive_chickens * 100
                 results.append({
                     'week': week,
-                    'hdep': hdep,
-                    'accusation': total_accusation,
-                    'reduction': total_reduction,
-                    'no_eggs': weekly_no_eggs
+                    'no_of_eggs': weekly_no_eggs,
+                    'no_of_hen_days': hen_days,
+                    'hdep': weekly_no_eggs / hen_days * 100 if hen_days != 0 else 0
                 })
             return Response({'results': results})
 
