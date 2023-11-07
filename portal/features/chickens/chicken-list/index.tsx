@@ -34,7 +34,7 @@ export const ChickenList = () => {
       flex: 1,
       minWidth: 150,
       renderCell: (params: GridRenderCellParams<any>) => {
-        if (params.row.house == null) return <></>;
+        if (params.row.pen == null) return <></>;
         return (
           <Typography color={"link.primary"} variant="body2">
             <Link href={`/pen/${params.row.pen.id}`}>

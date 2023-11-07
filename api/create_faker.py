@@ -21,8 +21,10 @@ from model_bakery import baker
 from itertools import islice, cycle
 from random import shuffle, randint
 from django_tenants.utils import get_tenant_model, get_tenant_domain_model
-
-
+from eggs.models import *
+from feeds.models import *
+from weights.models import *
+from django.db.models import Q
 
 fake = Faker()
 
@@ -37,6 +39,15 @@ def randomize(data):
 
 def random_date():
     return fake.date()
+
+def random_body_weight():
+    return round(random.uniform(200, 4000), 3)
+
+def random_feed_weight():
+    return round(random.uniform(100, 2000), 3)
+
+def random_egg_weight():
+    return round(random.uniform(100, 2000), 3)
 
 def safe_execute(function, default, *args):
     try:
@@ -177,7 +188,7 @@ for tenant in ['test']:
                 _quantity=100,
                 _bulk_create=True
             ),
-            Chicken.objects.all()
+            Chicken.objects.filter(reduction_date__isnull=True)
         )
 
         print('=> Chicken Done!')
@@ -205,10 +216,64 @@ for tenant in ['test']:
                 _quantity=50,
                 _bulk_create=True
             ),
-            Chicken.objects.all()
+            Chicken.objects.filter(reduction_date__isnull=False)
         )
 
         print('=> Chicken Done!')
+
+        for c in chickens + chickens_dead:
+            eggs = safe_execute(
+                lambda: baker.make(
+                    Egg,
+                    chicken=c,
+                    week=cycle(list(range(21, 150))),
+                    eggs=randomize(range(0, 7)),
+                    weight=random_egg_weight,
+                    _quantity=randint(10, 100),
+                    _bulk_create=True
+                ),
+                Egg.objects.all()
+            )
+
+            feeds = safe_execute(
+                lambda: baker.make(
+                    Feed,
+                    chicken=c,
+                    week=cycle(list(range(0, 150))),
+                    weight=random_feed_weight,
+                    _quantity=randint(10, 100),
+                    _bulk_create=True
+                ),
+                Feed.objects.all()
+            )
+
+            weight = safe_execute(
+                lambda: baker.make(
+                    Weight,
+                    chicken=c,
+                    week=cycle(list(range(0, 150))),
+                    weight=random_body_weight,
+                    _quantity=randint(10, 100),
+                    _bulk_create=True
+                ),
+                Weight.objects.all()
+            )
+
+        batch_feeds = safe_execute(
+                lambda: baker.make(
+                    Feed,
+                    hatchery=randomize(hatchery),
+                    pen=randomize(pen),
+                    week=cycle(list(range(0, 150))),
+                    weight=random_body_weight,
+                    _quantity=200,
+                    _bulk_create=True
+                ),
+                Feed.objects.all()
+            )
+
+        print('=> Egg Done!')
+
 
     print('=> {tenant} Done!'.format(tenant=tenant))
 
