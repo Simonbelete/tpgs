@@ -18,9 +18,13 @@ Course AM = Course(
     children: const [
       Objectives(title: 'ዓላማ', children: ['ስለ የተመጣጠነ ምግብ እጥረት እና መንስኤዎች ማወቅ']),
       CourseBodyImage(
-        image: 'assets/materials/images/10_am.png',
+        image: 'assets/materials/images/10_am.jpg',
         description: "ስድስቱ የምግብ አይነቶች",
       ),
+      Paragraph(
+          title: "",
+          body:
+              "ከላይ በምስሉ ከተዘረዘሩት የምግብ አይነቶች  መካከል የስጋ እና የስጋ ውጤቶች በሚለው ዝርዝር ውስጥ ሁለት የምግብ አይነቶች ተቀላቅለው ይገኛሉ።"),
       KeyMessages(title: 'ጭብጥ መልዕክቶች', children: [
         Paragraph(
             title: "",
@@ -43,7 +47,7 @@ Course AM = Course(
       Remember(title: "ያስታውሱ፦", children: ["በየቀኑ የተለያዩ ምግቦችን ይመገቡ"]),
       // Food Groups
       SubTitleText(
-        text: 'የምግብ አይነቶች ምንድናቸው?',
+        text: 'የምግብ አይነቶች ምንድን ናቸው?',
         fontSize: 27.0,
       ),
       Paragraph(

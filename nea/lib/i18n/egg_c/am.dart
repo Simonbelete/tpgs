@@ -32,11 +32,11 @@ Course AM = Course(
             children: const [
               CategoryButton(
                   horizontal: true,
-                  text: 'ቫይታሚን ኤ 6% የ አርዲኤ(የሚመከር ዕለታዊ አበል)',
+                  text: 'ቫይታሚን ኤ 6% የ አርዲኤ(በቀን መወሰድ ያለበት መጠን)',
                   icon: 'assets/icons/vitamin-a.png'),
               CategoryButton(
                   horizontal: true,
-                  text: 'ፎሌት 5% የ አርዲኤ(የሚመከር ዕለታዊ አበል)',
+                  text: 'ፎሌት 5% የ አርዲኤ(በቀን መወሰድ ያለበት መጠን)',
                   icon: 'assets/icons/vitamins.png'),
             ],
           ),
@@ -48,11 +48,11 @@ Course AM = Course(
             children: const [
               CategoryButton(
                   horizontal: true,
-                  text: 'ቫይታሚን ቢ5 7% የ አርዲኤ(የሚመከር ዕለታዊ አበል)',
+                  text: 'ቫይታሚን ቢ5 7% የ አርዲኤ(በቀን መወሰድ ያለበት መጠን)',
                   icon: 'assets/icons/vitamin_b5.png'),
               CategoryButton(
                   horizontal: true,
-                  text: 'ቫይታሚን ቢ5 9% የ አርዲኤ(የሚመከር ዕለታዊ አበል)',
+                  text: 'ቫይታሚን ቢ5 9% የ አርዲኤ(በቀን መወሰድ ያለበት መጠን)',
                   icon: 'assets/icons/vitamin_b12.png'),
             ],
           ),
@@ -64,11 +64,11 @@ Course AM = Course(
             children: const [
               CategoryButton(
                   horizontal: true,
-                  text: 'ቫይታሚን ቢ5 15% የ አርዲኤ(የሚመከር ዕለታዊ አበል)',
+                  text: 'ቫይታሚን ቢ5 15% የ አርዲኤ(በቀን መወሰድ ያለበት መጠን)',
                   icon: 'assets/icons/vitamin_b2.png'),
               CategoryButton(
                   horizontal: true,
-                  text: 'ፎስፈረስ 9% የ አርዲኤ(የሚመከር ዕለታዊ አበል)',
+                  text: 'ፎስፈረስ 9% የ አርዲኤ(በቀን መወሰድ ያለበት መጠን)',
                   icon: 'assets/icons/phosphorus.png'),
             ],
           ),
@@ -80,7 +80,7 @@ Course AM = Course(
             children: const [
               CategoryButton(
                   horizontal: true,
-                  text: 'ሴሊኒየም 22% የ አርዲኤ(የሚመከር ዕለታዊ አበል)',
+                  text: 'ሴሊኒየም 22% የ አርዲኤ(በቀን መወሰድ ያለበት መጠን)',
                   icon: 'assets/icons/selenium_icon.png'),
             ],
           )
@@ -91,7 +91,7 @@ Course AM = Course(
         const Paragraph(
             title: '',
             body:
-                'እንቁላሎች ጥሩ መጠን ያለው ቫይታሚን ዲ፣ ቫይታሚን ኢ፣ ቫይታሚን ኬ፣ ቫይታሚን B6፣ ካልሲየም እና ዚንክ ይይዛሉ ይህ ከ77 ካሎሪ፣ 6 ግራም ፕሮቲን እና 5 ግራም ጤናማ ስብ ጋር አብሮ ይመጣል። እንቁላሎች ለጤና ጠቃሚ የሆኑ የተለያዩ የመከታተያ ንጥረ ነገሮችን ይዘዋል እንደ እውነቱ ከሆነ እንቁላሎች በጣም ጥሩው ምግብ ናቸው። ከሞላ ጎደል ከሚፈልጓቸው ንጥረ ነገሮች ውስጥ በጥቂቱ ይይዛሉ።'),
+                'እንቁላሎች ጥሩ መጠን ያለው ቫይታሚን ዲ፣ ቫይታሚን ኢ፣ ቫይታሚን ኬ፣ ቫይታሚን ቢ6፣ ካልሲየም እና ዚንክ ይይዛሉ ይህ ከ77 ካሎሪ፣ 6 ግራም ፕሮቲን እና 5 ግራም ጤናማ ስብ ጋር አብሮ ይመጣል። እንቁላሎች ለጤና ጠቃሚ የሆኑ የተለያዩ የመከታተያ ንጥረ ነገሮችን ይዘዋል እንደ እውነቱ ከሆነ እንቁላሎች በጣም ጥሩው ምግብ ናቸው። ከሞላ ጎደል ከሚፈልጓቸው ንጥረ ነገሮች ውስጥ በጥቂቱ ይይዛሉ።'),
         const SubTitleText(text: 'እንቁላሎች ተጨማሪ ንጥረ ነገሮች አሏቸው'),
         const Paragraph(
             title: '',
@@ -105,25 +105,25 @@ Course AM = Course(
           'ቫይታሚን ቢ12',
           'የሴሎችዎን ጤና ለመጠበቅ የሚረዱ ብዙ ፀረ-ንጥረ-ምግቦች'
         ]),
-        const SubTitleText(text: 'እንቁላል ዓይኖችዎን ይረዳሉ'),
+        const SubTitleText(text: 'እንቁላል ለዓይን ጤና ጠቃሚ ነው'),
         const Paragraph(
             title: '',
             body:
                 'ዶክተሮች ሉቲን እና ዜአክሳንቲን የተባሉት አንቲኦክሲደንትስ እንደ የዓይን ሞራ ግርዶሽ እና ከእድሜ ጋር ተዛማጅነት ያለው ማኩላር ዲጄኔሬሽን ያሉ የአይን በሽታዎች እንዳይያዙ እንደሚረዳዎት ያውቃሉ። እንደ ስፒናች እና ጎመን ያሉ አረንጓዴ፣ ቅጠላማ አትክልቶችም አሏቸው። ነገር ግን እንቁላል የተሻለ ምንጭ ነው. ይህ የሆነበት ምክንያት የእነሱ ስብ ለሰውነትዎ ጠቃሚ ንጥረ ነገሮችን ለመጠቀም ቀላል ያደርገዋል።'),
-        const SubTitleText(text: 'እንቁላል መብላት'),
+        const SubTitleText(text: 'እንቁላል መመገብ የሚሰጠው ተጨማሪ ጥቅም'),
         const CourseBodyImage(image: 'assets/materials/foods/egg_boiled.png'),
         const Paragraph(
-            title: 'አንጎልን ለማንፀባረቅ ያግዙ ',
+            title: 'አንጎልን ለማዳበር ያግዛል ',
             body:
                 'እንቁላሎች ቫይታሚን ዲ አላቸው፣ ይህም ለግራጫ ጉዳይዎ ጠቃሚ እና ከምግብ ለማግኘት ከባድ ነው። እና በ ጭንቅላት ውስጥ ያሉ የነርቭ ሴሎች (ኒውሮኖች) እርስ በርስ እንዲነጋገሩ የሚረዳ ቾሊን የሚባል ነገር አላቸው። ቾሊን ለነፍሰ ጡር እና ጡት ለሚያጠቡ ሴቶችም በጣም አስፈላጊ ነው ምክንያቱም በአንጎል እድገት ውስጥ ያለው ሚና ከፍተኛ ነው።'),
         const Paragraph(
-            title: 'የፕሮቲን እና የአሚኖ አሲዶች ምንጭ ',
+            title: 'የፕሮቲን እና የአሚኖ አሲዶች ምንጭ ነው ',
             body:
                 'በአመጋገባችን ውስጥ በቂ ፕሮቲን ማግኘታችን የሰውነታችንን ጤና የምንረዳበት ወሳኝ መንገድ ነው። እያንዳንዱ እንቁላል ወደ ስድስት ግራም ፕሮቲን እንዲሁም ጠቃሚ አሚኖ አሲዶች ይዟል. የእለቱን የፕሮቲን ድርሻ ማግኘታችን ክብደትን ለመቆጣጠር፣ የጡንቻን ብዛት ለመጨመር፣ የደም ግፊትን ለመቀነስ እና አጥንታችንን ለመርዳት ይረዳል።'),
         const CourseBodyImage(
             image: 'assets/materials/foods/egg_scrumbled.png'),
         const Paragraph(
-            title: 'ጥሩ የ ኮሊን ምንጭ ',
+            title: 'ጥሩ የ ኮሊን ምንጭ ነው ',
             body:
                 'ቾሊን በውሃ ውስጥ የሚሟሟ ቫይታሚን ሲሆን ብዙውን ጊዜ ከ ቢ ቫይታሚኖች ጋር ይመደባል. የሴል ሽፋኖችን ለመገንባት የሚያገለግል ሲሆን በአንጎል ውስጥ ምልክት ሰጪ ሞለኪውሎችን ለማምረት ይረዳል። አንድ ጠንካራ የተቀቀለ እንቁላል 147 ሚሊ ግራም ቾሊን አለው፣ ይህም በአሜሪካ የምግብ እና የመድሃኒት አስተዳደር (ኤፍዲኤ) ከሚመከረው የቀን እሴት 27% ነው።'),
         const Paragraph(

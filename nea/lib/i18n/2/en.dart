@@ -23,6 +23,10 @@ Course EN = Course(
         image: 'assets/materials/images/10.png',
         description: "The six food groups",
       ),
+      Paragraph(
+          title: "",
+          body:
+              "Among the types of food groups listed in the image above, there are two food groups in the list of meat and meat products."),
       KeyMessages(children: [
         Bullet(children: [
           "To have a healthy and balanced diet means eating a variety of foods that supply nutrients that are important for the body. It does not mean eating expensive food. The food we eat is grouped into 6 groups"

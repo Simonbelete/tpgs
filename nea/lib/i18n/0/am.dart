@@ -85,7 +85,7 @@ Course AM = Course(
       //   // description: "በስብ የበለፀጉ ምግቦች",
       // ),
       const SubTitleText(
-        text: "በስብ የበለፀጉ ምግቦች መካከል ፥",
+        text: "በስብ የበለፀጉ ምግቦች ፥",
         fontSize: 14,
       ),
       FoodGridList(foods: fatsFood),
@@ -114,7 +114,7 @@ Course AM = Course(
       //   // description: "በቫይታሚን የበለፀጉ ምግቦች",
       // ),
       const SubTitleText(
-        text: "በቫይታሚን የበለፀጉ ምግቦች መካከል ፥",
+        text: "በቫይታሚን የበለፀጉ ምግቦች ፥",
         fontSize: 14,
       ),
       FoodGridList(foods: vitaminsFood),
@@ -132,7 +132,7 @@ Course AM = Course(
       //   // description: "በማዕድን የበለፀጉ ምግቦች",
       // ),
       const SubTitleText(
-        text: "በማዕድን የበለፀጉ ምግቦች መካከል ፥",
+        text: "በማዕድን የበለፀጉ ምግቦች ፥",
         fontSize: 14,
       ),
       FoodGridList(foods: mineralsFood),

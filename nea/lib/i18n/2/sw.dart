@@ -23,6 +23,10 @@ Course SW = Course(
         image: 'assets/materials/images/10_sw.png',
         description: "Vikundi sita vya chakula",
       ),
+      Paragraph(
+          title: "",
+          body:
+              "Miongoni mwa aina za makundi ya chakula yaliyoorodheshwa kwenye picha hapo juu, kuna makundi mawili ya chakula katika orodha ya bidhaa za nyama na nyama."),
       KeyMessages(title: "Ujumbe Muhimu", children: [
         Bullet(children: [
           "Kuwa na lishe bora na yenye uwiano kunamaanisha kula vyakula mbalimbali vinavyotoa virutubisho ambavyo ni muhimu kwa mwili. Haimaanishi kula chakula cha gharama kubwa. Chakula tunachokula kimegawanywa katika vikundi 5"
