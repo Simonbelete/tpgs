@@ -173,9 +173,6 @@ class HDEPViewSet(viewsets.ViewSet):
             queryset_ids = list(zip(*queryset.values_list('id')))
             queryset_ids = queryset_ids if len(
                 queryset_ids) == 0 else queryset_ids[0]
-            print('------------')
-            print(queryset_ids)
-            print(len(queryset_ids))
 
             eggs_queryset = Egg.objects.filter(chicken__in=queryset_ids)
             results = []

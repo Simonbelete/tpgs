@@ -17,10 +17,21 @@ export const analyseApi = baseApi.injectEndpoints({
           params: query,
         }),
       }),
+      getHdep: build.query<Response<any[]>, Object>({
+        query: (query?: Object) => ({
+          url: `${URL}/hdep/`,
+          method: "get",
+          params: query,
+        }),
+      }),
     };
   },
   overrideExisting: false,
 });
 
-export const { useGetEggProductionQuery, useLazyGetEggProductionQuery } =
-  analyseApi;
+export const {
+  useGetEggProductionQuery,
+  useLazyGetEggProductionQuery,
+  useGetHdepQuery,
+  useLazyGetHdepQuery,
+} = analyseApi;

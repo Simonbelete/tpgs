@@ -3,11 +3,7 @@ import { ListLayout } from "@/layouts";
 import { useBreadcrumbs } from "@/hooks";
 import { Breadcrumbs } from "@/components";
 import { Typography } from "@mui/material";
-import {
-  ChickenList,
-  ChickenListFilter,
-  ChickenImportExport,
-} from "@/features/chickens";
+import { ChickenList } from "@/features/chickens";
 import { SeoHead } from "@/seo";
 
 const ChickenPage = () => {
@@ -15,19 +11,12 @@ const ChickenPage = () => {
 
   return (
     <>
-      <SeoHead title="Chickens"/>
-      <ListLayout
-        breadcrumbs={<Breadcrumbs items={breadcrumbs} />}
-        header={<Typography variant="title">Chickens</Typography>}
-        actions={<ChickenImportExport />}
-        filter={<ChickenListFilter />}
-      >
+      <SeoHead title="Chickens" />
+      <ListLayout breadcrumbs={<Breadcrumbs items={breadcrumbs} />}>
         <ChickenList />
       </ListLayout>
     </>
   );
 };
-
-
 
 export default ChickenPage;

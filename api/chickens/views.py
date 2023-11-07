@@ -15,7 +15,17 @@ from rest_framework.response import Response
 from rest_framework.exceptions import NotFound
 from .tasks import build_pedigree_tree
 
-from core.views import HistoryViewSet, SummaryViewSet, CoreModelViewSet
+from core.views import (
+    HistoryViewSet,
+    SummaryViewSet,
+    CoreModelViewSet,
+    XlsxExport,
+    XlsExport,
+    CsvExport,
+    XlsxImport,
+    XlsImport,
+    CsvImport
+)
 from core.serializers import UploadSerializer
 from . import models
 from . import serializers
@@ -108,94 +118,34 @@ class SiblingsViewSet(viewsets.GenericViewSet):
         return Response(serializer.data)
 
 
-class BatchChickenReductionViewSet(APIView):
-    serializer_class = serializers.ChickenBatchReductionSerializer_POST
-
-    def post(self, request):
-        chickens = self.serializer_class(request.data)
-        print('-----------')
-        print(chickens)
-        print('**')
-        print(chickens.data)
-        return Response()
+# Chicken Export
+class ChickenXlsxExport(XlsxExport):
+    def get_dataset(self):
+        return admin.ChickenResource().export()
 
 
-# Xlsx
-
-class ChickenXlsxExport(APIView):
-    def get(self, request):
-        dataset = admin.ChickenResource().export()
-        response = HttpResponse(
-            dataset.xlsx, content_type='application/ms-excel')
-        response['Content-Disposition'] = 'attachment; filename="flocks_%s.xlsx"' % (
-            date.today().strftime(settings.DATETIME_FORMAT))
-        return response
+class ChickenXlsExport(XlsExport):
+    def get_dataset(self):
+        return admin.ChickenResource().export()
 
 
-class ChickenXlsxImport(APIView):
-    serializer_class = UploadSerializer
-    parser_classes = [MultiPartParser]
+class ChickenCsvExport(CsvExport):
+    def get_dataset(self):
+        return admin.ChickenResource().export()
 
-    def post(self, request):
-        file = request.FILES.get('file')
-        df = pd.read_excel(file, header=0)
-        dataset = Dataset().load(df)
-        resource = resources.modelresource_factory(model=models.Chicken)()
-        result = resource.import_data(dataset, dry_run=True, raise_errors=True)
-        if not result.has_errors():
-            return JsonResponse({'message': 'Imported Successfully'}, status=200)
-        return JsonResponse({'errors': ['Import Failed']}, status=400)
-
-# Xls
+# Chicken Import
 
 
-class ChickenXlsExport(APIView):
-    def get(self, request):
-        dataset = admin.ChickenResource().export()
-        response = HttpResponse(
-            dataset.xls, content_type='application/ms-excel')
-        response['Content-Disposition'] = 'attachment; filename="flocks_%s.xls"' % (
-            date.today().strftime(settings.DATETIME_FORMAT))
-        return response
+class ChickenXlsxImport(XlsxImport):
+    def get_resource(self):
+        return admin.ChickenResource()
 
 
-class ChickenXlsImport(APIView):
-    serializer_class = UploadSerializer
-    parser_classes = [MultiPartParser]
-
-    def post(self, request):
-        file = request.FILES.get('file')
-        df = pd.read_excel(file, header=0)
-        dataset = Dataset().load(df)
-        resource = resources.modelresource_factory(model=models.Chicken)()
-        result = resource.import_data(dataset, dry_run=True, raise_errors=True)
-        if not result.has_errors():
-            return JsonResponse({'message': 'Imported Successfully'}, status=200)
-        return JsonResponse({'errors': ['Import Failed']}, status=400)
-
-# Csv
+class ChickenXlsImport(XlsImport):
+    def get_resource(self):
+        return admin.ChickenResource()
 
 
-class ChickenCsvExport(APIView):
-    def get(self, request):
-        dataset = admin.ChickenResource().export()
-        response = HttpResponse(
-            dataset.csv, content_type='application/ms-excel')
-        response['Content-Disposition'] = 'attachment; filename="flocks_%s.csv"' % (
-            date.today().strftime(settings.DATETIME_FORMAT))
-        return response
-
-
-class ChickenCsvImport(APIView):
-    serializer_class = UploadSerializer
-    parser_classes = [MultiPartParser]
-
-    def post(self, request):
-        file = request.FILES.get('file')
-        df = pd.read_csv(file, header=0)
-        dataset = Dataset().load(df)
-        resource = resources.modelresource_factory(model=models.Chicken)()
-        result = resource.import_data(dataset, dry_run=True, raise_errors=True)
-        if not result.has_errors():
-            return JsonResponse({'message': 'Imported Successfully'}, status=200)
-        return JsonResponse({'errors': ['Import Failed']}, status=400)
+class ChickenCsvImport(CsvImport):
+    def get_resource(self):
+        return admin.ChickenResource()

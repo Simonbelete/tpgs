@@ -25,9 +25,9 @@ const ReportsPage = () => {
       link: "/reports/egg-productive",
     },
     {
-      title: "Egg production",
-      description: "shows the number of eggs produced over a period of time",
-      link: "/reports/egg-productive",
+      title: "Hen-Day Egg Production (HDEP)",
+      description: "",
+      link: "/reports/hdep",
     },
   ];
 

@@ -2,7 +2,7 @@ from django.db import models
 from simple_history.models import HistoricalRecords
 
 from core.models import CoreModel
-from houses.models import House
+from pen.models import Pen
 from reduction_reason.models import ReductionReason
 
 
@@ -11,14 +11,6 @@ class Chicken(CoreModel):
         ('F', 'Female',),
         ('M', 'Male',),
     )
-    REDUCTION_REASON = [
-        ('C', 'Cull'),
-        ('D', 'Death'),
-        ('S', 'Sold'),
-        ('L', 'Lost'),
-        ('T', 'Tagged'),
-        ('O', 'Other')
-    ]
 
     tag = models.CharField(max_length=250, unique=True)
     sex = models.CharField(max_length=1, choices=SEX_CHOICES,
@@ -28,11 +20,10 @@ class Chicken(CoreModel):
         'self', models.SET_NULL, blank=True, null=True, limit_choices_to={'sex': 'M'}, related_name='children_of_sire')
     dam = models.ForeignKey(
         'self', models.SET_NULL, blank=True, null=True, limit_choices_to={'sex': 'F'}, related_name='children_of_dam')
-    flock = models.ForeignKey(
-        'flocks.Flock', on_delete=models.SET_NULL, null=True, blank=True, related_name='chickens')
-    house = models.ForeignKey(
-        House, on_delete=models.SET_NULL, null=True, blank=True, related_name='chickens')
-    pen = models.CharField(max_length=250, null=True, blank=True)
+    hatchery = models.ForeignKey(
+        'hatchery.Hatchery', on_delete=models.SET_NULL, null=True, blank=True, related_name='chickens')
+    pen = models.ForeignKey(
+        Pen, on_delete=models.CASCADE, null=True, blank=True, related_name='chickens')
     reduction_date = models.DateField(null=True, blank=True)
     reduction_reason = models.ForeignKey(
         ReductionReason, on_delete=models.SET_NULL, null=True, blank=True, related_name='chickens')
@@ -46,7 +37,7 @@ class Chicken(CoreModel):
         return self.tag
 
     @property
-    def name(self):
+    def display_name(self):
         return "{tag} {sex}".format(
             tag=self.tag,
             sex=self.sex
