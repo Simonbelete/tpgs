@@ -168,10 +168,14 @@ class HDEPViewSet(viewsets.ViewSet):
         start_week = int(request.GET.get('start_week', 0))
         end_week = int(request.GET.get('end_week', 20))
 
-        print('--------------------')
         with tenant_context(self.get_farm(request.GET.get('farm_id', 0))):
             queryset = self.filter_by_directory(**kwargs)
-            queryset_ids = list(zip(*queryset.values_list('id')))[0]
+            queryset_ids = list(zip(*queryset.values_list('id')))
+            queryset_ids = queryset_ids if len(
+                queryset_ids) == 0 else queryset_ids[0]
+            print('------------')
+            print(queryset_ids)
+            print(len(queryset_ids))
 
             eggs_queryset = Egg.objects.filter(chicken__in=queryset_ids)
             results = []
@@ -183,60 +187,133 @@ class HDEPViewSet(viewsets.ViewSet):
                     current_date=F('hatch_date')+timedelta(weeks=week)
                 ).filter(Q(current_date__lte=F('reduction_date')) | Q(reduction_date=None)).count()
 
+                hdep = weekly_no_eggs / \
+                    (hen_days * 7) * 100 if hen_days != 0 else 0
+
                 results.append({
                     'week': week,
                     'no_of_eggs': weekly_no_eggs,
                     'no_of_hen_days': hen_days,
-                    'hdep': weekly_no_eggs / hen_days * 100 if hen_days != 0 else 0
+                    'hdep': "{:.2f}".format(hdep)
                 })
             return Response({'results': results})
 
 
 class HHEPViewSet(viewsets.ViewSet):
-    def get_query(self):
-        return Egg.objects.all()
+    queryset = Chicken.objects.all()
+
+    def filter_by_directory(self, **kwargs):
+        queryset = self.queryset
+
+        breed_id = kwargs['breed_id'] if 'breed_id' in kwargs else 0
+        generation = kwargs['generation'] if 'generation' in kwargs else 'any'
+        hatchery_id = kwargs['hatchery_id'] if 'hatchery_id' in kwargs else 0
+        house_id = kwargs['house_id'] if 'house_id' in kwargs else 0
+        pen_id = kwargs['pen_id'] if 'pen_id' in kwargs else 0
+
+        if (breed_id != 0):
+            queryset = queryset.filter(breed=breed_id)
+
+        if (generation != 'any'):
+            queryset = queryset.filter(generation=generation)
+
+        if (hatchery_id != 0):
+            queryset = queryset.filter(hatchery=hatchery_id)
+
+        if (house_id != 0):
+            queryset = queryset.filter(house=house_id)
+
+        if (pen_id != 0):
+            queryset = queryset.filter(pen=pen_id)
+
+        return queryset
+
+    def get_farm(self, farm_id):
+        try:
+            return Farm.objects.get(pk=farm_id)
+        except Farm.DoesNotExist:
+            raise NotFound
 
     @extend_schema(
         parameters=[
             OpenApiParameter(
-                name='start_week', description='Start Week', location=OpenApiParameter.QUERY, required=False, type=int),
+                name='start_week',
+                description='Start Week',
+                location=OpenApiParameter.QUERY,
+                required=False,
+                default=0,
+                type=int),
             OpenApiParameter(
-                name='end_week', description='End Week', location=OpenApiParameter.QUERY, required=False, type=int),
+                name='end_week',
+                description='End Week',
+                location=OpenApiParameter.QUERY,
+                required=False,
+                default=20,
+                type=int),
+            OpenApiParameter(
+                name='farm_id',
+                description='farm',
+                location=OpenApiParameter.QUERY,
+                required=False,
+                type=int),
+            OpenApiParameter(
+                name='breed_id',
+                description='Breed id',
+                location=OpenApiParameter.QUERY,
+                required=False,
+                type=int),
+            OpenApiParameter(
+                name='generation',
+                description='Generation',
+                location=OpenApiParameter.QUERY,
+                required=False,
+                type=int),
+            OpenApiParameter(
+                name='hatchery_id',
+                description='Hatchery',
+                location=OpenApiParameter.QUERY,
+                required=False,
+                type=int),
+            OpenApiParameter(
+                name='house_id',
+                description='House',
+                location=OpenApiParameter.QUERY,
+                required=False,
+                type=int),
+            OpenApiParameter(
+                name='pen_id',
+                description='Pen',
+                location=OpenApiParameter.QUERY,
+                required=False,
+                type=int),
         ]
     )
     def list(self, request, **kwargs):
         start_week = int(request.GET.get('start_week', 0))
-        end_week = int(request.GET.get('end_week', 0))
-        flock_id = kwargs['flock_id']
-        farm_id = kwargs['farm_id']
-        eggs = self.get_query()
-        if (kwargs['farm_id'] == 'all'):
-            return Response({
-                'errors': [
-                    'farm can not be all'
-                ]
-            })
-        farm = Farm.objects.get(pk=farm_id)
-        with tenant_context(farm):
-            if (kwargs['flock_id'] != 'all'):
-                eggs = eggs.filter(Q(flock=kwargs['flock_id']) | Q(
-                    chicken__flock=kwargs['flock_id']))
-            if (kwargs['house_id'] != 'all'):
-                eggs = eggs.filter(chicken__house=kwargs['house_id'])
+        end_week = int(request.GET.get('end_week', 20))
 
+        with tenant_context(self.get_farm(request.GET.get('farm_id', 0))):
+            queryset = self.filter_by_directory(**kwargs)
+            queryset_ids = list(zip(*queryset.values_list('id')))
+            queryset_ids = queryset_ids if len(
+                queryset_ids) == 0 else queryset_ids[0]
+
+            eggs_queryset = Egg.objects.filter(chicken__in=queryset_ids)
             results = []
             for week in range(start_week, end_week + 1):
-                weekly_no_eggs = eggs.filter(week=week).aggregate(
+                weekly_no_eggs = eggs_queryset.filter(week=week).aggregate(
                     sum=Sum('eggs'))['sum'] or 0
-                total_female_chickens = Flock.objects.get(
-                    pk=flock_id).total_female_accusation
-                total_female_chickens = 1 if total_female_chickens == 0 else total_female_chickens
+                hen_days = queryset.filter(
+                    sex="F").exclude(hatch_date=None).count()
 
-                hhep = weekly_no_eggs / total_female_chickens * 100
+                hhep = weekly_no_eggs / \
+                    (hen_days * 7) * 100 if hen_days != 0 else 0
+
                 results.append({
                     'week': week,
-                    'hhep': hhep,
-                    'no_eggs': weekly_no_eggs
+                    'no_of_eggs': weekly_no_eggs,
+                    'no_of_hen_days': hen_days,
+                    'hhep': "{:.2f}".format(hhep)
                 })
             return Response({'results': results})
 
@@ -543,3 +620,145 @@ class EggProduction(viewsets.ViewSet):
             })
 
         return Response({'results': results})
+
+
+class FCRE(viewsets.ViewSet):
+    """Feed Conversion ratio for eggs
+    """
+    queryset = Chicken.objects.all()
+
+    def filter_by_directory(self, **kwargs):
+        queryset = self.queryset
+
+        breed_id = kwargs['breed_id'] if 'breed_id' in kwargs else 0
+        generation = kwargs['generation'] if 'generation' in kwargs else 'any'
+        hatchery_id = kwargs['hatchery_id'] if 'hatchery_id' in kwargs else 0
+        house_id = kwargs['house_id'] if 'house_id' in kwargs else 0
+        pen_id = kwargs['pen_id'] if 'pen_id' in kwargs else 0
+
+        if (breed_id != 0):
+            queryset = queryset.filter(breed=breed_id)
+
+        if (generation != 'any'):
+            queryset = queryset.filter(generation=generation)
+
+        if (hatchery_id != 0):
+            queryset = queryset.filter(hatchery=hatchery_id)
+
+        if (house_id != 0):
+            queryset = queryset.filter(house=house_id)
+
+        if (pen_id != 0):
+            queryset = queryset.filter(pen=pen_id)
+
+        return queryset
+
+    def get_farm(self, farm_id):
+        try:
+            return Farm.objects.get(pk=farm_id)
+        except Farm.DoesNotExist:
+            raise NotFound
+
+    @extend_schema(
+        parameters=[
+            OpenApiParameter(
+                name='start_week',
+                description='Start Week',
+                location=OpenApiParameter.QUERY,
+                required=False,
+                default=0,
+                type=int),
+            OpenApiParameter(
+                name='end_week',
+                description='End Week',
+                location=OpenApiParameter.QUERY,
+                required=False,
+                default=20,
+                type=int),
+            OpenApiParameter(
+                name='farm_id',
+                description='farm',
+                location=OpenApiParameter.QUERY,
+                required=False,
+                type=int),
+            OpenApiParameter(
+                name='breed_id',
+                description='Breed id',
+                location=OpenApiParameter.QUERY,
+                required=False,
+                type=int),
+            OpenApiParameter(
+                name='generation',
+                description='Generation',
+                location=OpenApiParameter.QUERY,
+                required=False,
+                type=int),
+            OpenApiParameter(
+                name='hatchery_id',
+                description='Hatchery',
+                location=OpenApiParameter.QUERY,
+                required=False,
+                type=int),
+            OpenApiParameter(
+                name='house_id',
+                description='House',
+                location=OpenApiParameter.QUERY,
+                required=False,
+                type=int),
+            OpenApiParameter(
+                name='pen_id',
+                description='Pen',
+                location=OpenApiParameter.QUERY,
+                required=False,
+                type=int),
+        ]
+    )
+    def list(self, request, **kwargs):
+        start_week = int(request.GET.get('start_week', 0))
+        end_week = int(request.GET.get('end_week', 20))
+
+        with tenant_context(self.get_farm(request.GET.get('farm_id', 0))):
+            queryset = self.filter_by_directory(**kwargs)
+            queryset_ids = list(zip(*queryset.values_list('id')))
+            queryset_ids = queryset_ids if len(
+                queryset_ids) == 0 else queryset_ids[0]
+
+            eggs_queryset = Egg.objects.filter(chicken__in=queryset_ids)
+            results = []
+            for week in range(start_week, end_week + 1):
+                batch_feeds_queryset = Feed.objects.filter(week=week)
+                individual_queyset = Feed.objects.filter(
+                    chicken__in=queryset_ids)
+
+                if (request.GET.get('hatchery_id', 0) != 0):
+                    batch_feeds_queryset = batch_feeds_queryset.filter(
+                        hatchery=request.GET.get('hatchery_id'))
+
+                if (request.GET.get('pen_id', 0) != 0):
+                    batch_feeds_queryset = batch_feeds_queryset.filter(
+                        hatchery=request.GET.get('pen_id'))
+
+                batches_weight = batch_feeds_queryset.aggregate(
+                    weight_sum=Sum('weight'))['weight_sum'] or 0
+
+                chickens_weight = individual_queyset.aggregate(
+                    weight_sum=Sum('weight'))['weight_sum'] or 0
+
+                total_chickens = queryset.count()
+                total_weight = (batches_weight /
+                                total_chickens) + chickens_weight
+
+                weekly_no_eggs = eggs_queryset.filter(week=week).aggregate(
+                    sum=Sum('eggs'))['sum'] or 0
+                fcr = total_weight / weekly_no_eggs if weekly_no_eggs != 0 else 0
+
+                results.append({
+                    'week': week,
+                    'fcr': fcr
+                })
+            return Response({'results': results})
+
+
+class FCRW(viewsets.ViewSet):
+    """Feed Conversion ratio for body weiht/ weight gain
+    """
