@@ -26,5 +26,9 @@ export default function (data: Directory) {
     name += " / " + (data.pen as any).name;
   }
 
+  if (data.sex) {
+    name += " / " + (data.sex as any).name;
+  }
+
   return name;
 }

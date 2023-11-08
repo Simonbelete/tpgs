@@ -21,20 +21,24 @@ import Image from "next/image";
 import { Chicken, Directory } from "@/models";
 import AddIcon from "@mui/icons-material/Add";
 import CloseIcon from "@mui/icons-material/Close";
-import CircularProgress from "@mui/material/CircularProgress";
-import AsyncDropdown from "@/lib/crud/components/AsyncDropdown";
-import { directoryApi } from "../services";
 import { FarmDropdown } from "@/features/farms";
 import { PenDropdown } from "@/features/pen";
 import { HatcheryDropdown } from "@/features/hatchery";
-import { GenerationDropdown } from "@/features/chickens";
+import { ChickenDropdown, GenerationDropdown } from "@/features/chickens";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import { Dropdown } from "@/components/dropdowns";
 import { HouseDropdown } from "@/features/houses";
 
+export interface IndividualFilterProps {
+  chicken: Chicken;
+  start_week: number;
+  end_week: number;
+}
+
 type Inputs = Partial<Directory>;
+type Inputs2 = IndividualFilterProps;
 
 const sexOptions = [
   { value: null, name: "---" },
@@ -53,11 +57,9 @@ const schema = yup.object({
   end_week: yup.number().min(0).required(),
 });
 
-export interface IndividualFilterProps {
-  chicken: Chicken;
-  start_week: number;
-  end_week: number;
-}
+const schema2 = yup.object({
+  chicken: yup.object().required("Select chicken"),
+});
 
 export interface DirectoryFilterData {
   directories: Directory[];
@@ -68,17 +70,23 @@ export interface DirectoryFilterData {
 export const DirectoryFilter = ({
   onBatchFilterApply,
   onBatchFilterRemove,
+  onIndividualFilterApply,
+  onIndividualFilterRemove,
   default_start_week = 0,
   default_end_week = 20,
 }: {
   onBatchFilterApply: (data: Directory) => void;
   onBatchFilterRemove: (data: number) => void;
+  onIndividualFilterApply: (data: IndividualFilterProps) => void;
+  onIndividualFilterRemove: (index: number) => void;
   default_start_week?: number;
   default_end_week?: number;
 }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isOpen2, setIsOpen2] = useState(false);
 
   const handleClose = () => setIsOpen(false);
+  const handleClose2 = () => setIsOpen2(false);
 
   const [batchFilters, setBatchFilters] = useState<Inputs[]>([]);
   const [individualFilters, setIndividualFilters] = useState<
@@ -94,6 +102,19 @@ export const DirectoryFilter = ({
     resolver: yupResolver(schema),
   });
 
+  const {
+    handleSubmit: handleSubmit2,
+    control: control2,
+    setError: setError2,
+  } = useForm<Inputs2>({
+    defaultValues: {
+      start_week: default_start_week,
+      end_week: default_end_week,
+    },
+    // @ts-ignore
+    resolver: yupResolver(schema2),
+  });
+
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     setIsOpen(false);
     setBatchFilters([...batchFilters, data]);
@@ -106,8 +127,115 @@ export const DirectoryFilter = ({
     onBatchFilterRemove(index);
   };
 
+  const onSubmit2: SubmitHandler<Inputs2> = async (data) => {
+    setIsOpen2(false);
+    setIndividualFilters([...individualFilters, data]);
+    onIndividualFilterApply(data);
+  };
+
+  const handleIndividualFilterRemove = (index: number) => {
+    const newFilters = individualFilters.filter((e, i) => index != i);
+    setIndividualFilters(newFilters);
+    onIndividualFilterRemove(index + batchFilters.length);
+  };
+
   return (
     <>
+      <Dialog disableEscapeKeyDown open={isOpen2} maxWidth="md" fullWidth>
+        <DialogTitle>
+          <Stack direction={"row"} justifyContent={"space-between"}>
+            <Typography variant="h5" fontWeight={500} color={"text.main"}>
+              Add Chicken Filter
+            </Typography>
+            <IconButton onClick={handleClose2}>
+              <CloseIcon />
+            </IconButton>
+          </Stack>
+          <Divider />
+        </DialogTitle>
+        <DialogContent>
+          <form onSubmit={handleSubmit2(onSubmit2)}>
+            <Box component="form" sx={{ display: "flex", flexWrap: "wrap" }}>
+              <Grid container spacing={2}>
+                <Grid item xs={12}>
+                  <Controller
+                    name={"chicken"}
+                    control={control2}
+                    render={({
+                      field: { onChange, value },
+                      fieldState: { error },
+                    }) => (
+                      <ChickenDropdown
+                        onChange={(_, data) => onChange(data)}
+                        value={value}
+                        error={!!error?.message}
+                        helperText={error?.message}
+                      />
+                    )}
+                  />
+                </Grid>
+                <Grid item xs={12} md={6}>
+                  <Controller
+                    name={"start_week"}
+                    control={control2}
+                    render={({
+                      field: { onChange, value },
+                      fieldState: { invalid, isTouched, isDirty, error },
+                    }) => (
+                      <LabeledInput
+                        error={!!error?.message}
+                        helperText={error?.message}
+                        onChange={onChange}
+                        fullWidth
+                        size="small"
+                        value={value}
+                        label={"Start Week"}
+                        placeholder={"Start Week"}
+                      />
+                    )}
+                  />
+                </Grid>
+                <Grid item xs={12} md={6}>
+                  <Controller
+                    name={"end_week"}
+                    control={control2}
+                    render={({
+                      field: { onChange, value },
+                      fieldState: { invalid, isTouched, isDirty, error },
+                    }) => (
+                      <LabeledInput
+                        error={!!error?.message}
+                        helperText={error?.message}
+                        onChange={onChange}
+                        fullWidth
+                        size="small"
+                        value={value}
+                        label={"End Week"}
+                        placeholder={"End Week"}
+                      />
+                    )}
+                  />
+                </Grid>
+              </Grid>
+            </Box>
+          </form>
+        </DialogContent>
+        <DialogActions
+          sx={{ display: "felx", justifyContent: "space-between" }}
+        >
+          <Button onClick={handleClose2} color="error">
+            Cancel
+          </Button>
+          <Button
+            onClick={() => handleSubmit2(onSubmit2)()}
+            variant="contained"
+            disableElevation
+            size="small"
+          >
+            Add
+          </Button>
+        </DialogActions>
+      </Dialog>
       <Dialog disableEscapeKeyDown open={isOpen} maxWidth="md" fullWidth>
         <DialogTitle>
           <Stack direction={"row"} justifyContent={"space-between"}>
@@ -311,7 +439,7 @@ export const DirectoryFilter = ({
               variant="outlined"
               startIcon={<AddIcon fontSize="small" />}
               size="small"
-              onClick={() => setIsOpen(true)}
+              onClick={() => setIsOpen2(true)}
               disableElevation
             >
               Individual
@@ -424,7 +552,7 @@ export const DirectoryFilter = ({
                       Sex
                     </Typography>
                     <Typography variant="caption" color="text.primary">
-                      {e.sex ? e.sex || 0 : "all"}
+                      {e.sex ? e.sex.name || 0 : "all"}
                     </Typography>
                   </Stack>
                 </Stack>
@@ -441,6 +569,26 @@ export const DirectoryFilter = ({
               </Stack>
             ))}
           </Stack>
+
+          <Box mt={3}>
+            {individualFilters.map((e, i) => (
+              <Stack key={i} direction={"row"} justifyContent={"space-between"}>
+                <Typography variant="caption" color="text.primary">
+                  {e.chicken ? (e.chicken as any).display_name || 0 : "-"}
+                </Typography>
+                <Box>
+                  <Typography variant="caption" fontWeight={600}>
+                    ({e.start_week}, {e.end_week})
+                  </Typography>
+                </Box>
+                <Box>
+                  <IconButton onClick={() => handleIndividualFilterRemove(i)}>
+                    <CloseIcon />
+                  </IconButton>
+                </Box>
+              </Stack>
+            ))}
+          </Box>
         </Box>
         <Box mt={5}></Box>
       </Card>

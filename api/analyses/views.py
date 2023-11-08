@@ -503,7 +503,7 @@ class WBFT(viewsets.ViewSet):
 
 class EggProduction(viewsets.ViewSet):
 
-    def filter_by_directory(self, **kwargs):
+    def filter_by_directory(self):
         queryset = Chicken.objects.all()
 
         breed_id = self.request.GET.get('breed', None)
@@ -539,20 +539,108 @@ class EggProduction(viewsets.ViewSet):
         except Farm.DoesNotExist:
             raise NotFound("Farm Not found")
 
+    def get_by_flock(self):
+        with tenant_context(self.get_farm(self.request.GET.get('farm', 0))):
+            start_week = int(self.request.GET.get('start_week', 0))
+            end_week = int(self.request.GET.get('end_week', 20))
+
+            queryset = self.filter_by_directory()
+            queryset_ids = list(zip(*queryset.values_list('id')))
+            queryset_ids = queryset_ids if len(
+                queryset_ids) == 0 else queryset_ids[0]
+
+            results = []
+            for week in range(start_week, end_week + 1):
+                alive_female_chickens = queryset.filter(
+                    sex="F").exclude(hatch_date=None).annotate(
+                        current_date=F('hatch_date')+timedelta(weeks=week)
+                ).filter(Q(current_date__lte=F('reduction_date')) | Q(reduction_date=None)).count()
+
+                # Total Sum of eggs
+                weekly_eggs = Egg.objects.all().filter(
+                    chicken__in=queryset_ids,
+                    week=week).aggregate(sum=Sum('eggs'))['sum'] or 0
+
+                # Number of layer chickens
+                weekly_layers = Egg.objects.all().filter(
+                    chicken__in=queryset_ids, eggs__gt=0,
+                    week=week).count()
+
+                production = weekly_layers / alive_female_chickens * \
+                    100 if alive_female_chickens != 0 else 0
+
+                results.append({
+                    'week': week,
+                    'no_of_chickens': alive_female_chickens,
+                    'no_of_eggs': weekly_eggs,
+                    'no_of_layers': weekly_layers,
+                    'production': "{:.3f}".format(production)
+                })
+
+            return Response({'results': results})
+
+    def get_by_chicken(self):
+        try:
+            start_week = int(self.request.GET.get('start_week', 0))
+            end_week = int(self.request.GET.get('end_week', 20))
+
+            results = []
+            for week in range(start_week, end_week + 1):
+                chicken = Chicken.all.filter(
+                    pk=self.request.GET.get('chicken', 0), sex="F").exclude(hatch_date=None).annotate(
+                    current_date=F('hatch_date')+timedelta(weeks=week)
+                ).filter(Q(current_date__lte=F('reduction_date')) | Q(reduction_date=None))
+
+                chicken_ids = list(zip(*chicken.values_list('id')))
+                chicken_ids = chicken_ids if len(
+                    chicken_ids) == 0 else chicken_ids[0]
+
+                alive_female_chickens = chicken.count()
+
+                # Total Number of eggs
+                weekly_eggs = Egg.objects.all().filter(
+                    chicken__in=chicken_ids,
+                    week=week).aggregate(sum=Sum('eggs'))['sum'] or 0
+
+                # Number of layer chickens
+                weekly_layers = Egg.objects.all().filter(
+                    chicken__in=chicken_ids, eggs__gt=0,
+                    week=week).count()
+
+                production = weekly_layers / alive_female_chickens * \
+                    100 if alive_female_chickens != 0 else 0
+
+                results.append({
+                    'week': week,
+                    'no_of_chickens': alive_female_chickens,
+                    'no_of_eggs': weekly_eggs,
+                    'no_of_layers': weekly_layers,
+                    'production': "{:.3f}".format(production)
+                })
+            return Response({'results': results})
+        except Chicken.DoesNotExist:
+            raise NotFound('Chicken not found')
+
     @extend_schema(
         parameters=[
+            OpenApiParameter(
+                name='chicken',
+                description='chicken',
+                location=OpenApiParameter.QUERY,
+                required=False,
+                type=int),
             OpenApiParameter(
                 name='start_week',
                 description='Start Week',
                 location=OpenApiParameter.QUERY,
-                required=False,
+                required=True,
                 default=21,
                 type=int),
             OpenApiParameter(
                 name='end_week',
                 description='End Week',
                 location=OpenApiParameter.QUERY,
-                required=False,
+                required=True,
                 default=41,
                 type=int),
             OpenApiParameter(
@@ -600,44 +688,10 @@ class EggProduction(viewsets.ViewSet):
         ]
     )
     def list(self, request, **kwargs):
-        with tenant_context(self.get_farm(request.GET.get('farm', 0))):
-            start_week = int(request.GET.get('start_week', 0))
-            end_week = int(request.GET.get('end_week', 20))
-
-            queryset = self.filter_by_directory(**kwargs)
-            queryset_ids = list(zip(*queryset.values_list('id')))
-            queryset_ids = queryset_ids if len(
-                queryset_ids) == 0 else queryset_ids[0]
-
-            results = []
-            for week in range(start_week, end_week + 1):
-                alive_female_chickens = queryset.filter(
-                    sex="F").exclude(hatch_date=None).annotate(
-                        current_date=F('hatch_date')+timedelta(weeks=week)
-                ).filter(Q(current_date__lte=F('reduction_date')) | Q(reduction_date=None)).count()
-
-                # Total Sum of eggs
-                weekly_eggs = Egg.objects.all().filter(
-                    chicken__in=queryset_ids,
-                    week=week).aggregate(sum=Sum('eggs'))['sum'] or 0
-
-                # Number of layer chickens
-                weekly_layers = Egg.objects.all().filter(
-                    chicken__in=queryset_ids,
-                    week=week).count()
-
-                production = weekly_eggs / alive_female_chickens * \
-                    100 if alive_female_chickens != 0 else 0
-
-                results.append({
-                    'week': week,
-                    'no_of_chickens': alive_female_chickens,
-                    'no_of_eggs': weekly_eggs,
-                    'no_of_layers': weekly_layers,
-                    'production': "{:.3f}".format(production)
-                })
-
-            return Response({'results': results})
+        if (request.GET.get('chicken', None)):
+            return self.get_by_chicken()
+        else:
+            return self.get_by_chicken()
 
 
 class FCRE(viewsets.ViewSet):

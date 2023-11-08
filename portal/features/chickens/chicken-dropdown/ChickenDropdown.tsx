@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { AsyncDropdown } from "@/components/dropdowns";
-import { useLazyGetChickensQuery } from "../services";
+import { chickenApi, useLazyGetChickensQuery } from "../services";
 import { Chicken } from "@/models";
 
 const ChickenDropdown = ({
@@ -18,30 +18,17 @@ const ChickenDropdown = ({
   helperText?: string;
   onChange?: (event: any, newValue: any) => void;
 }) => {
-  const [trigger, { isLoading, data }, lastPromiseInfo] =
-    useLazyGetChickensQuery();
-
-  const handleOnOpen = () => {
-    trigger({ sex: sex }, true);
-  };
-
-  const handleOnClose = () => {};
-
   return (
     <AsyncDropdown<Chicken>
       value={value}
-      dataKey="name"
+      dataKey="display_name"
       label={label}
       error={error}
+      placeholder="Select Chicken"
       helperText={helperText}
-      options={data?.results ?? []}
-      isLoading={isLoading}
-      onOpen={handleOnOpen}
-      onClose={handleOnClose}
+      query={{ ...(sex ? { sex: sex } : {}) }}
+      endpoint={chickenApi.endpoints.getChickens}
       onChange={onChange}
-      onInputChange={(event: any, newInputValue: any) => {
-        trigger({ search: newInputValue, sex: sex }, false);
-      }}
     />
   );
 };

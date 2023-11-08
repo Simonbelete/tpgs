@@ -25,7 +25,7 @@ export default interface Directory {
   generation: number;
   house: number | House;
   pen: number | Pen;
-  sex: string;
+  sex: any;
   start_week: number;
   end_week: number;
 }

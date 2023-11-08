@@ -14,6 +14,7 @@ import { Response } from "@/models";
 import buildPage from "@/util/buildPage";
 
 export interface AsyncDropdownProps<T> {
+  query?: Object;
   dataKey?: string;
   value?: any;
   label?: string;
@@ -34,6 +35,7 @@ export interface AsyncDropdownProps<T> {
 
 export default function AsyncDropdown<T>({
   dataKey = "name",
+  query,
   value,
   label,
   defaultOptions,
@@ -65,7 +67,7 @@ export default function AsyncDropdown<T>({
     setOpen(true);
     if (options.length == 0) {
       const response = await trigger(
-        buildPage(paginationModel),
+        { ...buildPage(paginationModel), ...(query || {}) },
         false
       ).unwrap();
       setOptions(response?.results || []);
@@ -77,7 +79,7 @@ export default function AsyncDropdown<T>({
 
   const handleInputChange = async (event: any, newValue: any) => {
     const response = await trigger(
-      { search: newValue, ...buildPage(paginationModel) },
+      { search: newValue, ...buildPage(paginationModel), ...(query || {}) },
       false
     ).unwrap();
     setOptions(response?.results || []);
@@ -100,7 +102,7 @@ export default function AsyncDropdown<T>({
     setPaginationModel({ ...paginationModel, page: nextPage });
 
     const response = await trigger(
-      buildPage({ ...paginationModel, page: nextPage }),
+      buildPage({ ...paginationModel, page: nextPage, ...(query || {}) }),
       false
     ).unwrap();
     setOptions([...options, ...(response?.results || [])]);
