@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { AsyncDropdown } from "@/components/dropdowns";
-import { useLazyGetHousesQuery } from "../services";
+import { houseApi, useLazyGetHousesQuery } from "../services";
 import { House } from "@/models";
 import { HouseForm } from "../house-form";
 
@@ -12,7 +12,7 @@ const HouseDropdown = ({
   helperText,
 }: {
   value?: any;
-  label: string;
+  label?: string;
   error?: boolean;
   helperText?: string;
   onChange?: (event: any, newValue: any) => void;
@@ -32,17 +32,12 @@ const HouseDropdown = ({
       dataKey="name"
       label={label}
       error={error}
+      placeholder="Select House"
       helperText={helperText}
-      options={data?.results ?? []}
-      isLoading={isLoading}
-      onOpen={handleOnOpen}
-      onClose={handleOnClose}
+      endpoint={houseApi.endpoints.getHouses}
       onChange={onChange}
       createForm={<HouseForm />}
       createFormTitle="Create House"
-      onInputChange={(event: any, newInputValue: any) => {
-        trigger({ search: newInputValue }, false);
-      }}
     />
   );
 };

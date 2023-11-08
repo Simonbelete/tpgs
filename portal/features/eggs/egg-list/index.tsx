@@ -36,7 +36,7 @@ export const EggList = () => {
         return (
           <Typography color={"link.primary"} variant="body2">
             <Link href={`/chickens/${params.row.chicken.id}`}>
-              {params.row.chicken.name}
+              {params.row.chicken.display_name}
             </Link>
           </Typography>
         );

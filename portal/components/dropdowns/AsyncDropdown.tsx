@@ -1,15 +1,39 @@
 import * as React from "react";
 import TextField from "@mui/material/TextField";
-import Autocomplete, { AutocompleteProps } from "@mui/material/Autocomplete";
+import Autocomplete from "@mui/material/Autocomplete";
 import CircularProgress from "@mui/material/CircularProgress";
 import { IconButton, Tooltip, Stack, Typography, Box } from "@mui/material";
 import AddToQueueIcon from "@mui/icons-material/AddToQueue";
-import { FullScreenModal } from "../modals";
+import { FullScreenModal } from "@/components/modals";
+import { ApiEndpointQuery } from "@reduxjs/toolkit/dist/query/core/module";
+import { QueryDefinition } from "@reduxjs/toolkit/dist/query";
+import { EndpointDefinitions } from "@reduxjs/toolkit/dist/query/endpointDefinitions";
+import { QueryHooks } from "@reduxjs/toolkit/dist/query/react/buildHooks";
+import { ClientQueyFn, Query } from "@/types";
+import { Response } from "@/models";
+import buildPage from "@/util/buildPage";
+
+export interface AsyncDropdownProps<T> {
+  dataKey?: string;
+  value?: any;
+  label?: string;
+  defaultOptions?: any;
+  error?: boolean;
+  multiple?: boolean;
+  helperText?: string;
+  placeholder?: string;
+  createForm?: React.ReactNode;
+  createFormTitle?: string;
+  onChange?: (event: any, newValue: any) => void;
+  endpoint: ApiEndpointQuery<
+    QueryDefinition<Query, ClientQueyFn, any, Response<T[]>, any>,
+    EndpointDefinitions
+  > &
+    QueryHooks<QueryDefinition<Query, ClientQueyFn, any, Response<T[]>, any>>;
+}
 
 export default function AsyncDropdown<T>({
-  id,
-  onOpen,
-  onClose,
+  dataKey = "name",
   value,
   label,
   defaultOptions,
@@ -17,60 +41,95 @@ export default function AsyncDropdown<T>({
   helperText,
   createForm,
   createFormTitle = "Create New",
-  isLoading,
   multiple,
   onChange,
-  options,
-  dataValueKey = "name",
-  dataLableKey = "id",
-  onInputChange,
+  endpoint,
+  placeholder,
   ...props
-}: {
-  id?: string;
-  onOpen: () => void;
-  onClose: () => void;
-  dataValueKey?: string;
-  dataLableKey?: string;
-  value?: any;
-  label?: string;
-  defaultOptions?: any;
-  options: T[];
-  error?: boolean;
-  multiple?: boolean;
-  helperText?: string;
-  createForm?: React.ReactElement;
-  createFormTitle?: string;
-  isLoading?: boolean;
-  onChange?: (event: any, newValue: any) => void;
-  onInputChange?: (event: any, newInputValue: any) => void;
-}) {
+}: AsyncDropdownProps<T>) {
   const [open, setOpen] = React.useState(false);
+
+  const [trigger, { data, isLoading }] = endpoint.useLazyQuery();
 
   // Modal
   const [modalOpen, setModalOpen] = React.useState(false);
   const handleModalOpen = () => setModalOpen(true);
   const handleModalClose = () => setModalOpen(false);
 
-  const handleOnOpen = React.useCallback(() => {
-    setOpen(true);
-    onOpen();
-  }, [onOpen]);
+  const [paginationModel, setPaginationModel] = React.useState({
+    page: 0,
+    pageSize: 15,
+  });
 
-  const handleOnClose = React.useCallback(() => {
+  const handleOnOpen = async () => {
+    setOpen(true);
+    if (options.length == 0) {
+      const response = await trigger(
+        buildPage(paginationModel),
+        false
+      ).unwrap();
+      setOptions(response?.results || []);
+    }
+  };
+  const handleOnClose = () => {
     setOpen(false);
-    onClose();
-  }, [onClose]);
+  };
+
+  const handleInputChange = async (event: any, newValue: any) => {
+    const response = await trigger(
+      { search: newValue, ...buildPage(paginationModel) },
+      false
+    ).unwrap();
+    setOptions(response?.results || []);
+  };
+
+  const [options, setOptions] = React.useState<T[]>([]);
+
+  const [position, setPosition] = React.useState(0);
+
+  const [listboxNode, setListboxNode] = React.useState<any>("");
+
+  React.useEffect(() => {
+    if (listboxNode !== "") {
+      listboxNode.scrollTop = position;
+    }
+  }, [position, listboxNode]);
+
+  const loadMoreResults = async () => {
+    const nextPage = paginationModel.page + 1;
+    setPaginationModel({ ...paginationModel, page: nextPage });
+
+    const response = await trigger(
+      buildPage({ ...paginationModel, page: nextPage }),
+      false
+    ).unwrap();
+    setOptions([...options, ...(response?.results || [])]);
+  };
+
+  const handleScroll = (event: any) => {
+    console.log("----------------");
+    if (
+      paginationModel.page >=
+      Math.floor((data?.count || 0) / paginationModel.pageSize)
+    )
+      return;
+
+    setListboxNode(event.currentTarget);
+    const x = listboxNode.scrollTop + listboxNode.clientHeight;
+
+    if (listboxNode.scrollHeight - x <= 1) {
+      setPosition(x);
+      loadMoreResults();
+    }
+  };
 
   return (
-    <Stack gap={1} id={id}>
+    <Stack gap={1}>
       <FullScreenModal
         title={createFormTitle}
         open={modalOpen}
         onClose={handleModalClose}
       >
-        {/* <Box>
-          <Typography variant="title">{createFormTitle}</Typography>
-        </Box> */}
         {createForm}
       </FullScreenModal>
       {label && (
@@ -89,13 +148,15 @@ export default function AsyncDropdown<T>({
         onChange={onChange}
         value={value}
         defaultValue={value}
-        getOptionLabel={(option) => option[dataLableKey] ?? ""}
+        getOptionLabel={(option) => option[dataKey] ?? ""}
         options={options}
         loading={isLoading}
-        isOptionEqualToValue={(option, val) =>
-          option[dataValueKey] === val[dataValueKey]
-        }
-        onInputChange={onInputChange}
+        isOptionEqualToValue={(option, val) => option[dataKey] === val[dataKey]}
+        onInputChange={handleInputChange}
+        placeholder={placeholder}
+        ListboxProps={{
+          onScroll: handleScroll,
+        }}
         renderInput={(params) => (
           <TextField
             {...params}
@@ -103,6 +164,7 @@ export default function AsyncDropdown<T>({
             helperText={helperText}
             fullWidth
             // label={value ? "" : label}
+            placeholder={placeholder}
             label={""}
             InputLabelProps={{ shrink: false }}
             InputProps={{
@@ -130,7 +192,7 @@ export default function AsyncDropdown<T>({
             }}
           />
         )}
-        {...props}
+        // {...props}
       />
     </Stack>
   );

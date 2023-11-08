@@ -1,36 +1,33 @@
 import React, { useEffect } from "react";
 import { AsyncDropdown } from "@/components/dropdowns";
-import { farmApi, useLazyGetFarmsQuery } from "../services";
-import { Farm } from "@/models";
+import { chickenApi, useLazyGetChickensQuery } from "../services";
+import { Chicken } from "@/models";
 
-const FarmDropdown = ({
+export const GenerationDropdown = ({
+  sex,
   value,
-  label = "Farm",
+  label = "Generation",
   error,
   onChange,
   helperText,
-  multiple,
 }: {
+  sex?: string;
   value?: any;
   label?: string;
   error?: boolean;
   helperText?: string;
-  multiple?: boolean;
   onChange?: (event: any, newValue: any) => void;
 }) => {
   return (
-    <AsyncDropdown<Farm>
-      multiple={multiple}
+    <AsyncDropdown<Pick<Chicken, "generation">>
       value={value}
       dataKey="name"
-      placeholder="Select Farm"
       label={label}
       error={error}
+      placeholder="Select Generation"
       helperText={helperText}
-      endpoint={farmApi.endpoints.getFarms}
+      endpoint={chickenApi.endpoints.getGenerations}
       onChange={onChange}
     />
   );
 };
-
-export default FarmDropdown;

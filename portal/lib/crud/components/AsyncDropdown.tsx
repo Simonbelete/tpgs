@@ -58,7 +58,7 @@ export default function AsyncDropdown<T>({
 
   const [paginationModel, setPaginationModel] = React.useState({
     page: 0,
-    pageSize: 10,
+    pageSize: 15,
   });
 
   const handleOnOpen = async () => {

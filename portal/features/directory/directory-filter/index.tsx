@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { DirectoryDialog } from "@/features/directory";
+import { DirectoryDialog, DirectoryDropdown } from "@/features/directory";
 import { Card } from "@/components";
 import {
   Box,
@@ -10,13 +10,54 @@ import {
   IconButton,
   Stack,
   Typography,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  FormControl,
+  DialogActions,
 } from "@mui/material";
 import { LabeledInput } from "@/components/inputs";
 import Image from "next/image";
-import { Directory } from "@/models";
+import { Chicken, Directory } from "@/models";
 import AddIcon from "@mui/icons-material/Add";
 import CloseIcon from "@mui/icons-material/Close";
 import CircularProgress from "@mui/material/CircularProgress";
+import AsyncDropdown from "@/lib/crud/components/AsyncDropdown";
+import { directoryApi } from "../services";
+import { FarmDropdown } from "@/features/farms";
+import { PenDropdown } from "@/features/pen";
+import { HatcheryDropdown } from "@/features/hatchery";
+import { GenerationDropdown } from "@/features/chickens";
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { useForm, SubmitHandler, Controller } from "react-hook-form";
+import { Dropdown } from "@/components/dropdowns";
+import { HouseDropdown } from "@/features/houses";
+
+type Inputs = Partial<Directory>;
+
+const sexOptions = [
+  { value: null, name: "---" },
+  { value: "M", name: "Male" },
+  { value: "F", name: "Female" },
+];
+
+const schema = yup.object({
+  farm: yup.object().required("Farm can not be all"),
+  breed: yup.object().nullable(),
+  hatchery: yup.object().nullable(),
+  sex: yup.object().nullable(),
+  house: yup.object().nullable(),
+  pen: yup.object().nullable(),
+  start_week: yup.number().min(0).required(),
+  end_week: yup.number().min(0).required(),
+});
+
+export interface IndividualFilterProps {
+  chicken: Chicken;
+  start_week: number;
+  end_week: number;
+}
 
 export interface DirectoryFilterData {
   directories: Directory[];
@@ -25,110 +66,273 @@ export interface DirectoryFilterData {
 }
 
 export const DirectoryFilter = ({
-  computedData,
-  isLoading,
-  onSubmit,
+  onBatchFilterApply,
+  onBatchFilterRemove,
+  default_start_week = 0,
+  default_end_week = 20,
 }: {
-  onSubmit: (filters: DirectoryFilterData) => void;
-  computedData: any[];
-  isLoading?: boolean;
+  onBatchFilterApply: (data: Directory) => void;
+  onBatchFilterRemove: (data: number) => void;
+  default_start_week?: number;
+  default_end_week?: number;
 }) => {
   const [isOpen, setIsOpen] = useState(false);
 
-  const [data, setData] = useState<DirectoryFilterData>({
-    directories: [],
-    start_week: 0,
-    end_week: 20,
+  const handleClose = () => setIsOpen(false);
+
+  const [batchFilters, setBatchFilters] = useState<Inputs[]>([]);
+  const [individualFilters, setIndividualFilters] = useState<
+    IndividualFilterProps[]
+  >([]);
+
+  const { handleSubmit, control, setError } = useForm<Inputs>({
+    defaultValues: {
+      start_week: default_start_week,
+      end_week: default_end_week,
+    },
+    // @ts-ignore
+    resolver: yupResolver(schema),
   });
 
-  const handleSelected = (value?: Directory) => {
+  const onSubmit: SubmitHandler<Inputs> = async (data) => {
     setIsOpen(false);
-    if (value) {
-      setData({
-        ...data,
-        directories: [...data.directories, value],
-      });
-    }
+    setBatchFilters([...batchFilters, data]);
+    onBatchFilterApply(data as Directory);
   };
 
-  const handleRemoveFilter = (value: Directory) => {
-    const newFilters = data.directories.filter(
-      (e) => e.unique_id != value.unique_id
-    );
-
-    setData({
-      ...data,
-      directories: newFilters,
-    });
-  };
-
-  const handleGenerate = useCallback(() => {
-    onSubmit(data);
-  }, [onSubmit]);
-
-  const loadState = (i: number) => {
-    if (computedData[i] == null && isLoading) return false;
-    return true;
+  const handleBatchFilterRemove = (index: number) => {
+    const newFilters = batchFilters.filter((e, i) => index != i);
+    setBatchFilters(newFilters);
+    onBatchFilterRemove(index);
   };
 
   return (
     <>
-      <DirectoryDialog
-        open={isOpen}
-        onClose={() => setIsOpen(false)}
-        onSelected={handleSelected}
-      />
-      <Card title="Filters">
-        <Grid container spacing={3}>
-          <Grid item xs={12}>
-            <LabeledInput
+      <Dialog disableEscapeKeyDown open={isOpen} maxWidth="md" fullWidth>
+        <DialogTitle>
+          <Stack direction={"row"} justifyContent={"space-between"}>
+            <Typography variant="h5" fontWeight={500} color={"text.main"}>
+              Add Filter
+            </Typography>
+            <IconButton onClick={handleClose}>
+              <CloseIcon />
+            </IconButton>
+          </Stack>
+          <Divider />
+        </DialogTitle>
+        <DialogContent>
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <Box component="form" sx={{ display: "flex", flexWrap: "wrap" }}>
+              <Typography variant="caption" mb={2}>
+                *Leave empty field will consider all values
+              </Typography>
+              <Grid container spacing={2}>
+                <Grid item xs={12} md={6}>
+                  <Controller
+                    name={"farm"}
+                    control={control}
+                    render={({
+                      field: { onChange, value },
+                      fieldState: { error },
+                    }) => (
+                      <FarmDropdown
+                        onChange={(_, data) => onChange(data)}
+                        value={value}
+                        error={!!error?.message}
+                        helperText={error?.message}
+                      />
+                    )}
+                  />
+                </Grid>
+                <Grid item xs={12} md={6}>
+                  <Controller
+                    name={"hatchery"}
+                    control={control}
+                    render={({
+                      field: { onChange, value },
+                      fieldState: { error },
+                    }) => (
+                      <HatcheryDropdown
+                        onChange={(_, data) => onChange(data)}
+                        value={value}
+                        error={!!error?.message}
+                        helperText={error?.message}
+                      />
+                    )}
+                  />
+                </Grid>
+                <Grid item xs={12} md={6}>
+                  <Controller
+                    name={"generation"}
+                    control={control}
+                    render={({
+                      field: { onChange, value },
+                      fieldState: { error },
+                    }) => (
+                      <GenerationDropdown
+                        onChange={(_, data) => onChange(data)}
+                        value={value}
+                        error={!!error?.message}
+                        helperText={error?.message}
+                      />
+                    )}
+                  />
+                </Grid>
+                <Grid item xs={12} md={6}>
+                  <Controller
+                    name={"sex"}
+                    control={control}
+                    render={({
+                      field: { onChange, value },
+                      fieldState: { invalid, isTouched, isDirty, error },
+                    }) => (
+                      <Dropdown
+                        options={sexOptions}
+                        dataKey="name"
+                        onChange={(_, data) => onChange(data)}
+                        value={value}
+                        label="Sex"
+                        error={!!error?.message}
+                        helperText={error?.message}
+                      />
+                    )}
+                  />
+                </Grid>
+                <Grid item xs={12} md={6}>
+                  <Controller
+                    name={"house"}
+                    control={control}
+                    render={({
+                      field: { onChange, value },
+                      fieldState: { error },
+                    }) => (
+                      <HouseDropdown
+                        onChange={(_, data) => onChange(data)}
+                        value={value}
+                        error={!!error?.message}
+                        helperText={error?.message}
+                      />
+                    )}
+                  />
+                </Grid>
+                <Grid item xs={12} md={6}>
+                  <Controller
+                    name={"pen"}
+                    control={control}
+                    render={({
+                      field: { onChange, value },
+                      fieldState: { error },
+                    }) => (
+                      <PenDropdown
+                        onChange={(_, data) => onChange(data)}
+                        value={value}
+                        error={!!error?.message}
+                        helperText={error?.message}
+                      />
+                    )}
+                  />
+                </Grid>
+                <Grid item xs={12} md={6}>
+                  <Controller
+                    name={"start_week"}
+                    control={control}
+                    render={({
+                      field: { onChange, value },
+                      fieldState: { invalid, isTouched, isDirty, error },
+                    }) => (
+                      <LabeledInput
+                        error={!!error?.message}
+                        helperText={error?.message}
+                        onChange={onChange}
+                        fullWidth
+                        size="small"
+                        value={value}
+                        label={"Start Week"}
+                        placeholder={"Start Week"}
+                      />
+                    )}
+                  />
+                </Grid>
+                <Grid item xs={12} md={6}>
+                  <Controller
+                    name={"end_week"}
+                    control={control}
+                    render={({
+                      field: { onChange, value },
+                      fieldState: { invalid, isTouched, isDirty, error },
+                    }) => (
+                      <LabeledInput
+                        error={!!error?.message}
+                        helperText={error?.message}
+                        onChange={onChange}
+                        fullWidth
+                        size="small"
+                        value={value}
+                        label={"End Week"}
+                        placeholder={"End Week"}
+                      />
+                    )}
+                  />
+                </Grid>
+              </Grid>
+            </Box>
+          </form>
+        </DialogContent>
+        <DialogActions
+          sx={{ display: "felx", justifyContent: "space-between" }}
+        >
+          <Button onClick={handleClose} color="error">
+            Cancel
+          </Button>
+          <Button
+            onClick={() => handleSubmit(onSubmit)()}
+            variant="contained"
+            disableElevation
+            size="small"
+          >
+            Add
+          </Button>
+        </DialogActions>
+      </Dialog>
+      <Card
+        title="Filters"
+        actions={
+          <>
+            <Button
+              variant="contained"
+              startIcon={<AddIcon fontSize="small" />}
               size="small"
-              value={data.start_week}
-              label={"Start Week"}
-              placeholder={"Start Week"}
-              onChange={(val) => setData({ ...data, start_week: Number(val) })}
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <LabeledInput
+              onClick={() => setIsOpen(true)}
+              disableElevation
+            >
+              Flock Filter
+            </Button>
+            <Button
+              variant="outlined"
+              startIcon={<AddIcon fontSize="small" />}
               size="small"
-              value={data.end_week}
-              label={"End Week"}
-              placeholder={"End Week"}
-              onChange={(val) => setData({ ...data, start_week: Number(val) })}
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <Stack spacing={2} direction={"row"}>
-              <Button
-                variant="outlined"
-                startIcon={<AddIcon fontSize="small" />}
-                size="small"
-                onClick={() => setIsOpen(true)}
-              >
-                Add Filter
-              </Button>
-              <Button
-                variant="contained"
-                disableElevation
-                size="small"
-                onClick={handleGenerate}
-              >
-                Generate
-              </Button>
-            </Stack>
-          </Grid>
-        </Grid>
-        <Divider sx={{ mt: 5 }} />
-
+              onClick={() => setIsOpen(true)}
+              disableElevation
+            >
+              Individual
+            </Button>
+          </>
+        }
+      >
         <Box mt={3}>
           <Stack direction={"column"} spacing={1} divider={<Divider />}>
-            {data.directories.map((e, i) => (
+            {batchFilters.map((e, i) => (
               <Stack key={i} direction={"row"} justifyContent={"space-between"}>
                 <Stack
                   direction={"row"}
                   divider={
-                    <Box sx={{ display: "flex", alignItems: "flex-end" }}>
+                    <Box
+                      sx={{
+                        display: "flex",
+                        alignItems: "center",
+                        mt: "13px !important",
+                      }}
+                    >
                       <Image
                         alt="slash_arrow"
                         src="/slash_forward_icon_134959.png"
@@ -148,7 +352,7 @@ export const DirectoryFilter = ({
                       Farm
                     </Typography>
                     <Typography variant="caption" color="text.primary">
-                      {e.farm_name}
+                      {e.farm ? (e.farm as any).name || 0 : "all"}
                     </Typography>
                   </Stack>
                   <Stack direction={"column"}>
@@ -160,7 +364,7 @@ export const DirectoryFilter = ({
                       Breed
                     </Typography>
                     <Typography variant="caption" color="text.primary">
-                      {e.breed_name}
+                      {e.breed ? (e.breed as any).name || 0 : "all"}
                     </Typography>
                   </Stack>
                   <Stack direction={"column"}>
@@ -172,7 +376,7 @@ export const DirectoryFilter = ({
                       Generation
                     </Typography>
                     <Typography variant="caption" color="text.primary">
-                      G{e.generation}
+                      {e.generation ? e.generation || 0 : "all"}
                     </Typography>
                   </Stack>
                   <Stack direction={"column"}>
@@ -184,7 +388,7 @@ export const DirectoryFilter = ({
                       Hatchery
                     </Typography>
                     <Typography variant="caption" color="text.primary">
-                      {e.hatchery_name}
+                      {e.hatchery ? (e.hatchery as any).name || 0 : "all"}
                     </Typography>
                   </Stack>
                   <Stack direction={"column"}>
@@ -196,7 +400,7 @@ export const DirectoryFilter = ({
                       House
                     </Typography>
                     <Typography variant="caption" color="text.primary">
-                      {e.house_name}
+                      {e.house ? (e.house as any).name || 0 : "all"}
                     </Typography>
                   </Stack>
                   <Stack direction={"column"}>
@@ -208,21 +412,31 @@ export const DirectoryFilter = ({
                       Pen
                     </Typography>
                     <Typography variant="caption" color="text.primary">
-                      {e.pen_name}
+                      {e.pen ? (e.pen as any).name || 0 : "all"}
+                    </Typography>
+                  </Stack>
+                  <Stack direction={"column"}>
+                    <Typography
+                      variant="caption"
+                      fontSize={"0.67rem"}
+                      color="text.secondary"
+                    >
+                      Sex
+                    </Typography>
+                    <Typography variant="caption" color="text.primary">
+                      {e.sex ? e.sex || 0 : "all"}
                     </Typography>
                   </Stack>
                 </Stack>
                 <Box>
-                  {loadState(i) && (
-                    <IconButton onClick={() => handleRemoveFilter(e)}>
-                      <CloseIcon />
-                    </IconButton>
-                  )}
-                  {!loadState(i) && (
-                    <Box sx={{ display: "flex" }}>
-                      <CircularProgress size={"20px"} color="secondary" />
-                    </Box>
-                  )}
+                  <Typography variant="caption" fontWeight={600}>
+                    ({e.start_week}, {e.end_week})
+                  </Typography>
+                </Box>
+                <Box>
+                  <IconButton onClick={() => handleBatchFilterRemove(i)}>
+                    <CloseIcon />
+                  </IconButton>
                 </Box>
               </Stack>
             ))}

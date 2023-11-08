@@ -1,3 +1,9 @@
+import Farm from "./Farm";
+import Breed from "./Breed";
+import Hatchery from "./Hatchery";
+import House from "./House";
+import Pen from "./Pen";
+
 export default interface Directory {
   id: number;
   name: string;
@@ -12,5 +18,14 @@ export default interface Directory {
   house_id: number;
   pen_id: number;
   pen_name: string;
-  generation: string | number;
+
+  farm: number | Farm;
+  breed: number | Breed;
+  hatchery: number | Hatchery;
+  generation: number;
+  house: number | House;
+  pen: number | Pen;
+  sex: string;
+  start_week: number;
+  end_week: number;
 }

@@ -4,6 +4,7 @@ from simple_history.models import HistoricalRecords
 from core.models import CoreModel
 from pen.models import Pen
 from reduction_reason.models import ReductionReason
+from breeds.models import Breed
 
 
 class Chicken(CoreModel):
@@ -24,6 +25,8 @@ class Chicken(CoreModel):
         'hatchery.Hatchery', on_delete=models.SET_NULL, null=True, blank=True, related_name='chickens')
     pen = models.ForeignKey(
         Pen, on_delete=models.CASCADE, null=True, blank=True, related_name='chickens')
+    breed = models.ForeignKey(
+        Breed, on_delete=models.SET_NULL, null=True, blank=True)
     reduction_date = models.DateField(null=True, blank=True)
     reduction_reason = models.ForeignKey(
         ReductionReason, on_delete=models.SET_NULL, null=True, blank=True, related_name='chickens')

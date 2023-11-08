@@ -502,33 +502,42 @@ class WBFT(viewsets.ViewSet):
 
 
 class EggProduction(viewsets.ViewSet):
-    queryset = Chicken.objects.all()
 
     def filter_by_directory(self, **kwargs):
-        queryset = self.queryset
+        queryset = Chicken.objects.all()
 
-        breed_id = kwargs['breed_id'] if 'breed_id' in kwargs else 0
-        generation = kwargs['generation'] if 'generation' in kwargs else 'any'
-        hatchery_id = kwargs['hatchery_id'] if 'hatchery_id' in kwargs else 0
-        house_id = kwargs['house_id'] if 'house_id' in kwargs else 0
-        pen_id = kwargs['pen_id'] if 'pen_id' in kwargs else 0
+        breed_id = self.request.GET.get('breed', None)
+        generation = self.request.GET.get('generation', None)
+        hatchery_id = self.request.GET.get('hatchery', None)
+        house_id = self.request.GET.get('house', None)
+        pen_id = self.request.GET.get('pen', None)
+        sex = self.request.GET.get('sex', None)
 
-        if (breed_id != 0):
+        if (breed_id):
             queryset = queryset.filter(breed=breed_id)
 
-        if (generation != 'any'):
+        if (generation):
             queryset = queryset.filter(generation=generation)
 
-        if (hatchery_id != 0):
+        if (hatchery_id):
             queryset = queryset.filter(hatchery=hatchery_id)
 
-        if (house_id != 0):
-            queryset = queryset.filter(house=house_id)
+        if (house_id):
+            queryset = queryset.filter(pen__house=house_id)
 
-        if (pen_id != 0):
+        if (pen_id):
             queryset = queryset.filter(pen=pen_id)
 
+        if (sex):
+            queryset = queryset.filter(sex=sex)
+
         return queryset
+
+    def get_farm(self, farm_id):
+        try:
+            return Farm.objects.get(pk=farm_id)
+        except Farm.DoesNotExist:
+            raise NotFound("Farm Not found")
 
     @extend_schema(
         parameters=[
@@ -537,23 +546,23 @@ class EggProduction(viewsets.ViewSet):
                 description='Start Week',
                 location=OpenApiParameter.QUERY,
                 required=False,
-                default=0,
+                default=21,
                 type=int),
             OpenApiParameter(
                 name='end_week',
                 description='End Week',
                 location=OpenApiParameter.QUERY,
                 required=False,
-                default=20,
+                default=41,
                 type=int),
             OpenApiParameter(
-                name='farm_id',
+                name='farm',
                 description='farm',
                 location=OpenApiParameter.QUERY,
                 required=False,
                 type=int),
             OpenApiParameter(
-                name='breed_id',
+                name='breed',
                 description='Breed id',
                 location=OpenApiParameter.QUERY,
                 required=False,
@@ -565,58 +574,70 @@ class EggProduction(viewsets.ViewSet):
                 required=False,
                 type=int),
             OpenApiParameter(
-                name='hatchery_id',
+                name='hatchery',
                 description='Hatchery',
                 location=OpenApiParameter.QUERY,
                 required=False,
                 type=int),
             OpenApiParameter(
-                name='house_id',
+                name='house',
                 description='House',
                 location=OpenApiParameter.QUERY,
                 required=False,
                 type=int),
             OpenApiParameter(
-                name='pen_id',
+                name='pen',
                 description='Pen',
                 location=OpenApiParameter.QUERY,
                 required=False,
                 type=int),
+            OpenApiParameter(
+                name='sex',
+                description='Sex M | F',
+                location=OpenApiParameter.QUERY,
+                required=False,
+                type=str),
         ]
     )
     def list(self, request, **kwargs):
-        start_week = int(request.GET.get('start_week', 0))
-        end_week = int(request.GET.get('end_week', 20))
+        with tenant_context(self.get_farm(request.GET.get('farm', 0))):
+            start_week = int(request.GET.get('start_week', 0))
+            end_week = int(request.GET.get('end_week', 20))
 
-        queryset = self.filter_by_directory(**kwargs)
-        queryset_ids = list(zip(*queryset.values_list('id')))[0]
+            queryset = self.filter_by_directory(**kwargs)
+            queryset_ids = list(zip(*queryset.values_list('id')))
+            queryset_ids = queryset_ids if len(
+                queryset_ids) == 0 else queryset_ids[0]
 
-        results = []
-        for week in range(start_week, end_week + 1):
-            alive_female_chickens = queryset.filter(
-                sex="F").exclude(hatch_date=None).annotate(
-                    current_date=F('hatch_date')+timedelta(weeks=week)
-            ).filter(Q(current_date__lte=F('reduction_date')) | Q(reduction_date=None)).count()
+            results = []
+            for week in range(start_week, end_week + 1):
+                alive_female_chickens = queryset.filter(
+                    sex="F").exclude(hatch_date=None).annotate(
+                        current_date=F('hatch_date')+timedelta(weeks=week)
+                ).filter(Q(current_date__lte=F('reduction_date')) | Q(reduction_date=None)).count()
 
-            # Total Sum of eggs
-            weekly_eggs = Egg.objects.all().filter(
-                chicken__in=queryset_ids,
-                week=week).aggregate(sum=Sum('eggs'))['sum'] or 0
+                # Total Sum of eggs
+                weekly_eggs = Egg.objects.all().filter(
+                    chicken__in=queryset_ids,
+                    week=week).aggregate(sum=Sum('eggs'))['sum'] or 0
 
-            # Number of layer chickens
-            weekly_layers = Egg.objects.all().filter(
-                chicken__in=queryset_ids,
-                week=week).count()
+                # Number of layer chickens
+                weekly_layers = Egg.objects.all().filter(
+                    chicken__in=queryset_ids,
+                    week=week).count()
 
-            results.append({
-                'week': week,
-                'no_of_chickens': alive_female_chickens,
-                'no_of_eggs': weekly_eggs,
-                'no_of_layers': weekly_layers,
-                'production': weekly_eggs / alive_female_chickens * 100 if alive_female_chickens != 0 else 0
-            })
+                production = weekly_eggs / alive_female_chickens * \
+                    100 if alive_female_chickens != 0 else 0
 
-        return Response({'results': results})
+                results.append({
+                    'week': week,
+                    'no_of_chickens': alive_female_chickens,
+                    'no_of_eggs': weekly_eggs,
+                    'no_of_layers': weekly_layers,
+                    'production': "{:.3f}".format(production)
+                })
+
+            return Response({'results': results})
 
 
 class FCRE(viewsets.ViewSet):
