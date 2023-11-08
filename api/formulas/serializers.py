@@ -60,26 +60,6 @@ class FormulaRequirementSerializer_PATCH(serializers.ModelSerializer):
 # Formula -> Ration
 
 
-class FormulaRationSerializer_GET(serializers.ModelSerializer):
-    nutrient = NutrientSerializer_GET()
-
-    class Meta:
-        model = models.FormulaRation
-        fields = ['id', 'formula', 'nutrient', 'value']
-
-
-class FormulaRationSerializer_POST(serializers.ModelSerializer):
-    class Meta:
-        model = models.FormulaRation
-        fields = ['id', 'nutrient', 'value']
-
-    def create(self, validated_data):
-        formula = models.Formula.objects.get(
-            pk=self.context["view"].kwargs["formula_pk"])
-        validated_data['formula'] = formula
-        return super().create(validated_data)
-
-
 class FormulaRationSerializer_REF(serializers.ModelSerializer):
     # nutrient = serializers.PrimaryKeyRelatedField(read_only=True)
     # Nutrient Id
@@ -88,21 +68,6 @@ class FormulaRationSerializer_REF(serializers.ModelSerializer):
     class Meta:
         model = models.FormulaRation
         fields = ['nutrient', 'value']
-
-
-class FormulaRationSerializer_PATCH(serializers.ModelSerializer):
-    class Meta:
-        model = models.FormulaRation
-        fields = '__all__'
-
-    def create(self, validated_data):
-        formula = models.Formula.objects.get(
-            pk=self.context["view"].kwargs["formula_pk"])
-        nutrient = Nutrient.objects.get(
-            pk=self.context["view"].kwargs["id"])
-        validated_data['formula'] = formula
-        validated_data['nutrient'] = nutrient
-        return super().create(validated_data)
 
 
 # Formula -> Ingredient
@@ -167,9 +132,8 @@ class FormulaIngredientSerializer_PATCH(serializers.ModelSerializer):
         validated_data['ingredient'] = ingredient
         return super().create(validated_data)
 
+
 # Formula
-
-
 class FormulaSerializer_GET(serializers.ModelSerializer):
     purpose = PurposeSerializer_GET()
 
@@ -289,4 +253,61 @@ class FormulaRequirementSerializer_POST(serializers.ModelSerializer):
 class FormulaRequirementHistorySerializer(serializers.ModelSerializer):
     class Meta:
         model = models.FormulaRequirement.history.__dict__['model']
+        fields = '__all__'
+
+
+# Formula Rations
+class FormulaRationSerializer_GET(serializers.ModelSerializer):
+    nutrient = NutrientSerializer_SLUG()
+
+    class Meta:
+        model = models.FormulaRation
+        fields = ['id', 'formula', 'nutrient', 'value']
+
+
+class FormulaRationSerializer_POST(serializers.ModelSerializer):
+    class Meta:
+        model = models.FormulaRation
+        fields = ['id', 'nutrient', 'value']
+
+        def create(self, validated_data):
+            if ('formula_pk' in self.context["view"].kwargs):
+                formula = models.Formula.objects.get(
+                    pk=self.context["view"].kwargs["formula_pk"])
+                validated_data['formula'] = formula
+            return super().create(validated_data)
+
+
+class FormulaRationHistorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.FormulaRation.history.__dict__['model']
+        fields = '__all__'
+
+
+# Formula Ingredients
+class FormulaIngredientSerializer_GET(serializers.ModelSerializer):
+    ingredient = IngredientSerializer_GET()
+
+    class Meta:
+        model = models.FormulaIngredient
+        fields = ['id', 'formula', 'ingredient', 'ratio_min',
+                  'ratio_max', 'price', 'ration', 'ration_weight', 'ration_price']
+
+
+class FormulaIngredientSerializer_POST(serializers.ModelSerializer):
+    class Meta:
+        model = models.FormulaIngredient
+        fields = ['id', 'ingredient', 'ratio_min', 'ratio_max', 'ration']
+
+        def create(self, validated_data):
+            if ('formula_pk' in self.context["view"].kwargs):
+                formula = models.Formula.objects.get(
+                    pk=self.context["view"].kwargs["formula_pk"])
+                validated_data['formula'] = formula
+            return super().create(validated_data)
+
+
+class FormulaIngredientHistorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.FormulaIngredient.history.__dict__['model']
         fields = '__all__'

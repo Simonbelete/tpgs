@@ -77,52 +77,78 @@ class FormulaRequirementSummaryViewSet(SummaryViewSet):
 
 
 # Formula Rations
-class FormulaRationViewSet(viewsets.ModelViewSet):
+
+class FormulaRationViewSet(CoreModelViewSet):
+    queryset = models.FormulaRation.all.all()
     serializer_class = serializers.FormulaRationSerializer_GET
 
     def get_queryset(self):
-        try:
-            return models.FormulaRation.all.filter(formula=self.kwargs['formula_pk'])
-        except models.FormulaRation.DoesNotExist as ex:
-            raise NotFound()
+        if ('formula_pk' in self.kwargs):
+            return self.queryset.filter(formula=self.kwargs['formula_pk'])
+        return self.queryset
 
     def get_serializer_class(self):
-        if self.request.method == 'POST':
+        if self.request.method in ['POST', 'PUT', 'PATCH']:
             return serializers.FormulaRationSerializer_POST
-        if self.request.method in ['PUT', 'PATCH']:
-            return serializers.FormulaRationSerializer_PATCH
         return serializers.FormulaRationSerializer_GET
 
-    @transaction.atomic
-    def create(self, validated_data):
-        requirements = validated_data.pop('requirements', [])
-        rations = validated_data.pop('rations', [])
-        instance = models.Formula.objects.create(**validated_data)
-        for req in requirements:
-            nutrient = Nutrient.objects.get(
-                pk=req['nutrient'])
-            models.FormulaRation.objects.create(
-                formula=instance, nutrient=nutrient, value=req['value'])
-        return instance
+
+class FormulaRationExport(GenericExportView):
+    def get_dataset(self):
+        return admin.FormulaRationResource().export()
 
 
-class FormulaIngredientViewSet(viewsets.ModelViewSet):
+class FormulaRationImport(GenericImportView):
+    def get_resource(self):
+        return admin.FormulaRationResource()
+
+
+class FormulaRationHistoryViewSet(HistoryViewSet):
+    queryset = models.FormulaRation.history.all()
+    serializer_class = serializers.FormulaRationHistorySerializer
+
+
+class FormulaRationSummaryViewSet(SummaryViewSet):
+    def get_query(self):
+        return models.FormulaRation.all.get(pk=self.id_pk)
+
+
+# Formula Ingredients
+
+class FormulaIngredientViewSet(CoreModelViewSet):
+    queryset = models.FormulaIngredient.all.all()
     serializer_class = serializers.FormulaIngredientSerializer_GET
 
     def get_queryset(self):
-        try:
-            return models.FormulaIngredient.all.filter(formula=self.kwargs['formula_pk'])
-        except models.FormulaIngredient.DoesNotExist as ex:
-            raise NotFound()
+        if ('formula_pk' in self.kwargs):
+            return self.queryset.filter(formula=self.kwargs['formula_pk'])
+        return self.queryset
 
     def get_serializer_class(self):
-        if self.request.method == 'POST':
+        if self.request.method in ['POST', 'PUT', 'PATCH']:
             return serializers.FormulaIngredientSerializer_POST
-        if self.request.method in ['PUT', 'PATCH']:
-            return serializers.FormulaIngredientSerializer_PATCH
-        if self.request.query_params.get('depth', 0) == 2:
-            return serializers.FormulaIngredientSerializer_GET_DEPTH_2
         return serializers.FormulaIngredientSerializer_GET
+
+
+class FormulaIngredientExport(GenericExportView):
+    def get_dataset(self):
+        return admin.FormulaIngredientResource().export()
+
+
+class FormulaIngredientImport(GenericImportView):
+    def get_resource(self):
+        return admin.FormulaIngredientResource()
+
+
+class FormulaIngredientHistoryViewSet(HistoryViewSet):
+    queryset = models.FormulaIngredient.history.all()
+    serializer_class = serializers.FormulaIngredientHistorySerializer
+
+
+class FormulaIngredientSummaryViewSet(SummaryViewSet):
+    def get_query(self):
+        return models.FormulaIngredient.all.get(pk=self.id_pk)
+
 
 # Formulate Calculation
 

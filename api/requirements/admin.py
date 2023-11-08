@@ -4,9 +4,17 @@ from simple_history.admin import SimpleHistoryAdmin
 
 from . import models
 
+
 class RequirementResource(resources.ModelResource):
     class Meta:
         model = models.Requirement
         fields = ['id', 'name', 'weight']
+
+
+class RequirementNutrientResource(resources.ModelResource):
+    class Meta:
+        model = models.RequirementNutrient
+        fields = ['id']
+
 
 admin.site.register(models.Requirement, SimpleHistoryAdmin)

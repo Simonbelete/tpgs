@@ -115,7 +115,7 @@ urlpatterns = [
 
     path('breed-guideline/weights/export/<str:export_type>/',
          views.BreedWeightGuidelineExport.as_view(), name="api_weight_guidelines_export"),
-    path('breed-guideline/weights//import/<str:import_type>/',
+    path('breed-guideline/weights/import/<str:import_type>/',
          views.BreedWeightGuidelineImport.as_view(), name="api_weight_guidelines_import"),
 
     path('breed-guideline/feeds/export/<str:export_type>/',

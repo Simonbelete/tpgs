@@ -12,12 +12,18 @@ from rest_framework.parsers import MultiPartParser
 from tablib import Dataset
 
 
-from core.views import HistoryViewSet, SummaryViewSet, CoreModelViewSet
-from core.serializers import UploadSerializer
+from core.views import (
+    HistoryViewSet,
+    SummaryViewSet,
+    CoreModelViewSet,
+    GenericExportView,
+    GenericImportView
+)
 from . import models
 from . import serializers
 from . import admin
 from . import filters
+
 
 class WeightViewSet(CoreModelViewSet):
     queryset = models.Weight.objects.all()
@@ -42,82 +48,11 @@ class WeightSummaryViewSet(SummaryViewSet):
         return models.Weight.all.get(pk=self.id_pk)
 
 
-# Xlsx
-
-class WeightXlsxExport(APIView):
-    def get(self, request):
-        dataset = admin.WeightResource().export()
-        response = HttpResponse(
-            dataset.xlsx, content_type='application/ms-excel')
-        response['Content-Disposition'] = 'attachment; filename="weights_%s.xlsx"' % (
-            date.today().strftime(settings.DATETIME_FORMAT))
-        return response
+class WeightExport(GenericExportView):
+    def get_dataset(self):
+        return admin.WeightResource().export()
 
 
-class WeightXlsxImport(APIView):
-    serializer_class = UploadSerializer
-    parser_classes = [MultiPartParser]
-
-    def post(self, request):
-        file = request.FILES.get('file')
-        df = pd.read_excel(file, header=0)
-        dataset = Dataset().load(df)
-        resource = resources.modelresource_factory(model=models.Weight)()
-        result = resource.import_data(dataset, dry_run=True, raise_errors=True)
-        if not result.has_errors():
-            return JsonResponse({'message': 'Imported Successfully'}, status=200)
-        return JsonResponse({'errors': ['Import Failed']}, status=400)
-
-# Xls
-
-
-class WeightXlsExport(APIView):
-    def get(self, request):
-        dataset = admin.WeightResource().export()
-        response = HttpResponse(
-            dataset.xls, content_type='application/ms-excel')
-        response['Content-Disposition'] = 'attachment; filename="weights_%s.xls"' % (
-            date.today().strftime(settings.DATETIME_FORMAT))
-        return response
-
-
-class WeightXlsImport(APIView):
-    serializer_class = UploadSerializer
-    parser_classes = [MultiPartParser]
-
-    def post(self, request):
-        file = request.FILES.get('file')
-        df = pd.read_excel(file, header=0)
-        dataset = Dataset().load(df)
-        resource = resources.modelresource_factory(model=models.Weight)()
-        result = resource.import_data(dataset, dry_run=True, raise_errors=True)
-        if not result.has_errors():
-            return JsonResponse({'message': 'Imported Successfully'}, status=200)
-        return JsonResponse({'errors': ['Import Failed']}, status=400)
-
-# Csv
-
-
-class WeightCsvExport(APIView):
-    def get(self, request):
-        dataset = admin.WeightResource().export()
-        response = HttpResponse(
-            dataset.csv, content_type='application/ms-excel')
-        response['Content-Disposition'] = 'attachment; filename="weights_%s.csv"' % (
-            date.today().strftime(settings.DATETIME_FORMAT))
-        return response
-
-
-class WeightCsvImport(APIView):
-    serializer_class = UploadSerializer
-    parser_classes = [MultiPartParser]
-
-    def post(self, request):
-        file = request.FILES.get('file')
-        df = pd.read_csv(file, header=0)
-        dataset = Dataset().load(df)
-        resource = resources.modelresource_factory(model=models.Weight)()
-        result = resource.import_data(dataset, dry_run=True, raise_errors=True)
-        if not result.has_errors():
-            return JsonResponse({'message': 'Imported Successfully'}, status=200)
-        return JsonResponse({'errors': ['Import Failed']}, status=400)
+class WeightImport(GenericImportView):
+    def get_resource(self):
+        return admin.WeightResource()

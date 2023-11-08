@@ -31,17 +31,43 @@ formula_req_router = NestedDefaultRouter(
 formula_req_router.register(r'requirements', views.FormulaRequirementViewSet,
                             basename='api_formulas_requirements')
 
-# # Formula Rations
+# Formula Rations
+router.register(r'formula-rations', views.FormulaRationViewSet,
+                basename='api_ration')
+
+req_summary_router = NestedDefaultRouter(
+    router, r'formula-rations', lookup='id')
+req_summary_router.register(r'summary', views.FormulaRationSummaryViewSet,
+                            basename='api_ration_summary')
+
+router.register(r'formula-rations/(?P<id>.+)/histories',
+                views.FormulaRationHistoryViewSet, basename='api_ration-histories'),
+
 formula_ration_router = NestedDefaultRouter(
     router, r'formulas', lookup='formula')
 formula_ration_router.register(r'rations', views.FormulaRationViewSet,
                                basename='api_formulas_rations')
+
+
+# Formula Ingredients
+
+router.register(r'formula-ingredients', views.FormulaIngredientViewSet,
+                basename='api_requirements')
+
+ing_summary_router = NestedDefaultRouter(
+    router, r'formula-ingredients', lookup='id')
+ing_summary_router.register(r'summary', views.FormulaIngredientSummaryViewSet,
+                            basename='api_req_guideline_summary')
+
+router.register(r'formula-ingredients/(?P<id>.+)/histories',
+                views.FormulaIngredientHistoryViewSet, basename='api_req_guideline-histories'),
 
 formula_ingredient_router = NestedDefaultRouter(
     router, r'formulas', lookup='formula')
 formula_ingredient_router.register(r'ingredients', views.FormulaIngredientViewSet,
                                    basename='api_formulas_ingredients')
 
+#
 formulate_router = NestedDefaultRouter(
     router, r'formulas', lookup='formula')
 formulate_router.register(r'formulate', views.FormulateViewSet,
@@ -61,6 +87,7 @@ urlpatterns = [
     path('', include(router.urls)),
     path('', include(req_summary_router.urls)),
     path('', include(formula_req_router.urls)),
+    path('', include(ing_summary_router.urls)),
     path('', include(formula_ingredient_router.urls)),
     path('', include(formulate_router.urls)),
     path('', include(ingredient_nutrient_router.urls)),

@@ -9,3 +9,15 @@ class FormulaRequirementResource(resources.ModelResource):
     class Meta:
         model = models.FormulaRequirement
         fields = ['id']
+
+
+class FormulaRationResource(resources.ModelResource):
+    class Meta:
+        model = models.FormulaRation
+        fields = ['id']
+
+
+class FormulaIngredientResource(resources.ModelResource):
+    class Meta:
+        model = models.FormulaIngredient
+        fields = ['id']

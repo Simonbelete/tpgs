@@ -15,19 +15,14 @@ from core.views import (
     HistoryViewSet,
     SummaryViewSet,
     CoreModelViewSet,
-    XlsxExport,
-    XlsExport,
-    CsvExport,
-    XlsxImport,
-    XlsImport,
-    CsvImport
+    GenericExportView,
+    GenericImportView
 )
-from core.pagination import AllPagination
-from core.serializers import UploadSerializer
 from . import models
 from . import serializers
 from . import admin
 from . import filters
+
 
 class RequirementViewSet(CoreModelViewSet):
     queryset = models.Requirement.all.all()
@@ -41,67 +36,72 @@ class RequirementViewSet(CoreModelViewSet):
             return serializers.RequirementSerializer_GET
         return serializers.RequirementSerializer_POST
 
+
 class RequirementHistoryViewSet(HistoryViewSet):
     queryset = models.Requirement.history.all()
     serializer_class = serializers.RequirementHistorySerializer
+
 
 class RequirementSummaryViewSet(SummaryViewSet):
     def get_query(self):
         return models.Requirement.all.get(pk=self.id_pk)
 
 
-## Requirement Export
-class RequirementXlsxExport(XlsxExport):
+class RequirementExport(GenericExportView):
     def get_dataset(self):
         return admin.RequirementResource().export()
 
-class RequirementXlsExport(XlsExport):
-    def get_dataset(self):
-        return admin.RequirementResource().export()
 
-class RequirementCsvExport(CsvExport):
-    def get_dataset(self):
-        return admin.RequirementResource().export()
-
-## Requirement Import
-class RequirementXlsxImport(XlsxImport):
+class RequirementImport(GenericImportView):
     def get_resource(self):
         return admin.RequirementResource()
 
-class RequirementXlsImport(XlsImport):
-    def get_resource(self):
-        return admin.RequirementResource()
 
-class RequirementCsvImport(CsvImport):
-    def get_resource(self):
-        return admin.RequirementResource()
-    
+# Requirement Nutrients
 class RequirementNutrientViewSet(CoreModelViewSet):
-    pagination_class = AllPagination
+    queryset = models.RequirementNutrient.all.all()
     serializer_class = serializers.RequirementNutrientSerializer_GET
     filterset_class = filters.RequirementNutrientFilter
     ordering_fields = '__all__'
 
     def get_queryset(self):
-        try:
-            return models.RequirementNutrient.all.filter(requirement=self.kwargs['requirement_pk'])
-        except models.RequirementNutrient.DoesNotExist as ex:
-            raise NotFound()
+        if ('requirement_pk' in self.kwargs):
+            return self.queryset.filter(requirement=self.kwargs['requirement_pk'])
+        return self.queryset
 
     def get_serializer_class(self):
-        if self.request.method == 'POST':
+        if self.request.method in ['POST', 'PUT', 'PATCH']:
             return serializers.RequirementNutrientSerializer_POST
-        if self.request.method in ['PUT', 'PATCH']:
-            return serializers.RequirementNutrientSerializer_PATCH
         return serializers.RequirementNutrientSerializer_GET
-    
+
+
+class RequirementNutrientHistoryViewSet(HistoryViewSet):
+    queryset = models.RequirementNutrient.history.all()
+    serializer_class = serializers.RequirementNutrientHistorySerializer
+
+
+class RequirementNutrientSummaryViewSet(SummaryViewSet):
+    def get_query(self):
+        return models.RequirementNutrient.all.get(pk=self.id_pk)
+
+
+class RequirementNutrientExport(GenericExportView):
+    def get_dataset(self):
+        return admin.RequirementNutrientResource().export()
+
+
+class RequirementNutrientImport(GenericImportView):
+    def get_resource(self):
+        return admin.RequirementNutrientResource()
+
+
 class RequirementAnalysesViewSet(viewsets.ViewSet):
     def get_queryset(self):
         try:
             return models.Requirement.all.get(pk=self.kwargs['id'])
         except models.Requirement.DoesNotExist as ex:
             raise NotFound()
-    
+
     def list(self, request, id=None, **kwargs):
         queryset = self.get_queryset()
 
