@@ -599,7 +599,12 @@ class FCRE(AnalysesViewSet):
             queryset_ids = queryset_ids if len(
                 queryset_ids) == 0 else queryset_ids[0]
 
+            # all_chickens_queryset =
+
             eggs_queryset = Egg.objects.filter(chicken__in=queryset_ids)
+
+            batch_feeds_queryset = Feed.objects.filter(week=week)
+
             results = []
             for week in range(start_week, end_week + 1):
                 batch_feeds_queryset = Feed.objects.filter(week=week)

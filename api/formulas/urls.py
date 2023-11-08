@@ -14,11 +14,24 @@ router.register(
 router.register(
     r'formulas/(?P<id>.+)/matrix', views.FormulaMatrix, basename="api_formual_matrix")
 
+# Formula Requirements
+router.register(r'formula-requirements', views.FormulaRequirementViewSet,
+                basename='api_requirements')
+
+req_summary_router = NestedDefaultRouter(
+    router, r'formula-requirements', lookup='id')
+req_summary_router.register(r'summary', views.FormulaRequirementSummaryViewSet,
+                            basename='api_req_guideline_summary')
+
+router.register(r'formula-requirements/(?P<id>.+)/histories',
+                views.FormulaRequirementHistoryViewSet, basename='api_req_guideline-histories'),
+
 formula_req_router = NestedDefaultRouter(
     router, r'formulas', lookup='formula')
 formula_req_router.register(r'requirements', views.FormulaRequirementViewSet,
                             basename='api_formulas_requirements')
 
+# # Formula Rations
 formula_ration_router = NestedDefaultRouter(
     router, r'formulas', lookup='formula')
 formula_ration_router.register(r'rations', views.FormulaRationViewSet,
@@ -37,7 +50,7 @@ formulate_router.register(r'formulate', views.FormulateViewSet,
 formulate_print = NestedDefaultRouter(
     router, r'formulas', lookup='formula')
 formulate_print.register(r'print/pdf', views.FormulaPrintPdf,
-                          basename='api_formula_formulate')
+                         basename='api_formula_formulate')
 
 ingredient_nutrient_router = NestedDefaultRouter(
     formula_ingredient_router, r'ingredients', lookup='ingredient')
@@ -46,6 +59,7 @@ ingredient_nutrient_router.register(r'nutrients', views.FormulaIngredientNutrien
 
 urlpatterns = [
     path('', include(router.urls)),
+    path('', include(req_summary_router.urls)),
     path('', include(formula_req_router.urls)),
     path('', include(formula_ingredient_router.urls)),
     path('', include(formulate_router.urls)),

@@ -18,7 +18,9 @@ class FormulaRequirement(CoreModel):
     formula = models.ForeignKey('formulas.Formula', on_delete=models.CASCADE)
     nutrient = models.ForeignKey(
         'nutrients.Nutrient', on_delete=models.CASCADE)
-    value = models.DecimalField(max_digits=7, decimal_places=3,null=True, blank=True, default=0)
+    value = models.DecimalField(
+        max_digits=7, decimal_places=3, null=True, blank=True, default=0)
+    history = HistoricalRecords()
 
     class Meta:
         unique_together = ['formula', 'nutrient']
@@ -30,7 +32,9 @@ class FormulaRation(CoreModel):
     formula = models.ForeignKey('formulas.Formula', on_delete=models.CASCADE)
     nutrient = models.ForeignKey(
         'nutrients.Nutrient', on_delete=models.CASCADE)
-    value = models.DecimalField(max_digits=7, decimal_places=3,null=True, blank=True, default=0)
+    value = models.DecimalField(
+        max_digits=7, decimal_places=3, null=True, blank=True, default=0)
+    history = HistoricalRecords()
 
     class Meta:
         unique_together = ['formula', 'nutrient']
@@ -39,7 +43,8 @@ class FormulaRation(CoreModel):
     def achived_goal(self):
         """Percentage acived based on formula requirement 
         """
-        req = FormulaRequirement.objects.filter(formula=self.formula, nutrient=self.nutrient).aggregate(sum=Sum('value'))['sum'] or 0
+        req = FormulaRequirement.objects.filter(
+            formula=self.formula, nutrient=self.nutrient).aggregate(sum=Sum('value'))['sum'] or 0
         if req == 0:
             return 0
         return self.value / req * 100
@@ -55,6 +60,7 @@ class FormulaIngredient(CoreModel):
         validators=PERCENTAGE_VALIDATOR, max_digits=6, decimal_places=3, default=0, null=True, blank=True)
     ration = models.DecimalField(
         validators=PERCENTAGE_VALIDATOR, max_digits=6, decimal_places=3, default=0, null=True, blank=True)
+    history = HistoricalRecords()
 
     class Meta:
         unique_together = ['formula', 'ingredient']
@@ -99,7 +105,8 @@ class Formula(CoreModel):
     name = models.CharField(max_length=100)
     purpose = models.ForeignKey(
         Purpose, on_delete=models.SET_NULL, null=True, blank=True)
-    weight = models.DecimalField(max_digits=7, decimal_places=3,null=True, blank=True, default=0) #kg
+    weight = models.DecimalField(
+        max_digits=7, decimal_places=3, null=True, blank=True, default=0)  # kg
     # weight_unit = models.ForeignKey(
     #     Unit, on_delete=models.SET_NULL, null=True, blank=True, default=3)  # kg
     country = models.ForeignKey(
@@ -116,7 +123,8 @@ class Formula(CoreModel):
     # Requirements
     requirements = models.ManyToManyField(
         'nutrients.Nutrient', null=True, blank=True, through=FormulaRequirement, related_name='formula_requirements')
-    budget = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True, default=0) # per kg
+    budget = models.DecimalField(
+        max_digits=10, decimal_places=2, null=True, blank=True, default=0)  # per kg
     desired_ratio = models.DecimalField(
         validators=PERCENTAGE_VALIDATOR, max_digits=15, decimal_places=3, default=100, null=True, blank=True)
     desired_dm = models.DecimalField(
@@ -125,12 +133,15 @@ class Formula(CoreModel):
     # Rations shows result of formula for each nutrients
     rations = models.ManyToManyField(
         'nutrients.Nutrient', null=True, blank=True, through=FormulaRation, related_name='formula_rations')
-    ration_price = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True, default=0)
+    ration_price = models.DecimalField(
+        max_digits=10, decimal_places=2, null=True, blank=True, default=0)
     ration_ratio = models.DecimalField(
         validators=PERCENTAGE_VALIDATOR, max_digits=15, decimal_places=3, default=0)
-    ration_weight = models.DecimalField(max_digits=7, decimal_places=3,null=True, blank=True, default=0)
+    ration_weight = models.DecimalField(
+        max_digits=7, decimal_places=3, null=True, blank=True, default=0)
     ration_dm = models.DecimalField(
         validators=PERCENTAGE_VALIDATOR, max_digits=15, decimal_places=3, default=0)
+    history = HistoricalRecords()
 
     @property
     def requirement_count(self):
