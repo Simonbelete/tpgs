@@ -18,6 +18,45 @@ from feeds.models import Feed
 from weights.models import Weight
 from chickens.models import Chicken
 from users.models import User
+from .calculate_analyses import calculate_hdep, calculate_hhep, calculate_egg_mass
+
+
+class AnalysesViewSet(viewsets.ViewSet):
+    def get_farm(self, farm_id):
+        try:
+            return Farm.objects.get(pk=farm_id)
+        except Farm.DoesNotExist:
+            raise NotFound("Farm Not found")
+
+    def filter_by_directory(self):
+        queryset = Chicken.objects.all()
+
+        breed_id = self.request.GET.get('breed', None)
+        generation = self.request.GET.get('generation', None)
+        hatchery_id = self.request.GET.get('hatchery', None)
+        house_id = self.request.GET.get('house', None)
+        pen_id = self.request.GET.get('pen', None)
+        sex = self.request.GET.get('sex', None)
+
+        if (breed_id):
+            queryset = queryset.filter(breed=breed_id)
+
+        if (generation):
+            queryset = queryset.filter(generation=generation)
+
+        if (hatchery_id):
+            queryset = queryset.filter(hatchery=hatchery_id)
+
+        if (house_id):
+            queryset = queryset.filter(pen__house=house_id)
+
+        if (pen_id):
+            queryset = queryset.filter(pen=pen_id)
+
+        if (sex):
+            queryset = queryset.filter(sex=sex)
+
+        return queryset
 
 
 class DirectoryListFilter(django_filters.FilterSet):
@@ -75,43 +114,7 @@ class CountViewSet(viewsets.ViewSet):
         })
 
 
-class HDEPViewSet(viewsets.ViewSet):
-    def filter_by_directory(self):
-        queryset = Chicken.objects.all()
-
-        breed_id = self.request.GET.get('breed', None)
-        generation = self.request.GET.get('generation', None)
-        hatchery_id = self.request.GET.get('hatchery', None)
-        house_id = self.request.GET.get('house', None)
-        pen_id = self.request.GET.get('pen', None)
-        sex = self.request.GET.get('sex', None)
-
-        if (breed_id):
-            queryset = queryset.filter(breed=breed_id)
-
-        if (generation):
-            queryset = queryset.filter(generation=generation)
-
-        if (hatchery_id):
-            queryset = queryset.filter(hatchery=hatchery_id)
-
-        if (house_id):
-            queryset = queryset.filter(pen__house=house_id)
-
-        if (pen_id):
-            queryset = queryset.filter(pen=pen_id)
-
-        if (sex):
-            queryset = queryset.filter(sex=sex)
-
-        return queryset
-
-    def get_farm(self, farm_id):
-        try:
-            return Farm.objects.get(pk=farm_id)
-        except Farm.DoesNotExist:
-            raise NotFound("Farm Not found")
-
+class HDEPViewSet(AnalysesViewSet):
     def get_by_flock(self):
         start_week = int(self.request.GET.get('start_week', 0))
         end_week = int(self.request.GET.get('end_week', 20))
@@ -125,22 +128,9 @@ class HDEPViewSet(viewsets.ViewSet):
             eggs_queryset = Egg.objects.filter(chicken__in=queryset_ids)
             results = []
             for week in range(start_week, end_week + 1):
-                weekly_no_eggs = eggs_queryset.filter(week=week).aggregate(
-                    sum=Sum('eggs'))['sum'] or 0
-                hen_days = queryset.filter(
-                    sex="F").exclude(hatch_date=None).annotate(
-                    current_date=F('hatch_date')+timedelta(weeks=week)
-                ).filter(Q(current_date__lte=F('reduction_date')) | Q(reduction_date=None)).count()
+                res = calculate_hdep(queryset, eggs_queryset, week)
+                results.append(res)
 
-                hdep = weekly_no_eggs / \
-                    (hen_days * 7) * 100 if hen_days != 0 else 0
-
-                results.append({
-                    'week': week,
-                    'no_of_eggs': weekly_no_eggs,
-                    'no_of_hen_days': hen_days,
-                    'hdep': "{:.3f}".format(hdep)
-                })
             return Response({'results': results})
 
     def get_by_chicken(self):
@@ -157,22 +147,9 @@ class HDEPViewSet(viewsets.ViewSet):
             eggs_queryset = Egg.objects.filter(chicken__in=queryset_ids)
             results = []
             for week in range(start_week, end_week + 1):
-                weekly_no_eggs = eggs_queryset.filter(week=week).aggregate(
-                    sum=Sum('eggs'))['sum'] or 0
-                hen_days = queryset.filter(
-                    sex="F").exclude(hatch_date=None).annotate(
-                    current_date=F('hatch_date')+timedelta(weeks=week)
-                ).filter(Q(current_date__lte=F('reduction_date')) | Q(reduction_date=None)).count()
+                res = calculate_hdep(queryset, eggs_queryset, week)
+                results.append(res)
 
-                hdep = weekly_no_eggs / \
-                    (hen_days * 7) * 100 if hen_days != 0 else 0
-
-                results.append({
-                    'week': week,
-                    'no_of_eggs': weekly_no_eggs,
-                    'no_of_hen_days': hen_days,
-                    'hdep': "{:.3f}".format(hdep)
-                })
             return Response({'results': results})
         except Chicken.DoesNotExist:
             raise NotFound('Chicken not found')
@@ -187,43 +164,7 @@ class HDEPViewSet(viewsets.ViewSet):
             return self.get_by_flock()
 
 
-class HHEPViewSet(viewsets.ViewSet):
-    def filter_by_directory(self):
-        queryset = Chicken.objects.all()
-
-        breed_id = self.request.GET.get('breed', None)
-        generation = self.request.GET.get('generation', None)
-        hatchery_id = self.request.GET.get('hatchery', None)
-        house_id = self.request.GET.get('house', None)
-        pen_id = self.request.GET.get('pen', None)
-        sex = self.request.GET.get('sex', None)
-
-        if (breed_id):
-            queryset = queryset.filter(breed=breed_id)
-
-        if (generation):
-            queryset = queryset.filter(generation=generation)
-
-        if (hatchery_id):
-            queryset = queryset.filter(hatchery=hatchery_id)
-
-        if (house_id):
-            queryset = queryset.filter(pen__house=house_id)
-
-        if (pen_id):
-            queryset = queryset.filter(pen=pen_id)
-
-        if (sex):
-            queryset = queryset.filter(sex=sex)
-
-        return queryset
-
-    def get_farm(self, farm_id):
-        try:
-            return Farm.objects.get(pk=farm_id)
-        except Farm.DoesNotExist:
-            raise NotFound("Farm not found")
-
+class HHEPViewSet(AnalysesViewSet):
     def get_by_flock(self):
         start_week = int(self.request.GET.get('start_week', 0))
         end_week = int(self.request.GET.get('end_week', 20))
@@ -237,20 +178,9 @@ class HHEPViewSet(viewsets.ViewSet):
             eggs_queryset = Egg.objects.filter(chicken__in=queryset_ids)
             results = []
             for week in range(start_week, end_week + 1):
-                weekly_no_eggs = eggs_queryset.filter(week=week).aggregate(
-                    sum=Sum('eggs'))['sum'] or 0
-                hen_days = queryset.filter(
-                    sex="F").exclude(hatch_date=None).count()
+                res = calculate_hhep(queryset, eggs_queryset, week)
+                results.append(res)
 
-                hhep = weekly_no_eggs / \
-                    (hen_days * 7) * 100 if hen_days != 0 else 0
-
-                results.append({
-                    'week': week,
-                    'no_of_eggs': weekly_no_eggs,
-                    'no_of_hen_days': hen_days,
-                    'hhep': "{:.3f}".format(hhep)
-                })
             return Response({'results': results})
 
     def get_by_chicken(self):
@@ -267,20 +197,60 @@ class HHEPViewSet(viewsets.ViewSet):
             eggs_queryset = Egg.objects.filter(chicken__in=queryset_ids)
             results = []
             for week in range(start_week, end_week + 1):
-                weekly_no_eggs = eggs_queryset.filter(week=week).aggregate(
-                    sum=Sum('eggs'))['sum'] or 0
-                hen_days = queryset.filter(
-                    sex="F").exclude(hatch_date=None).count()
+                res = calculate_hhep(queryset, eggs_queryset, week)
+                results.append(res)
 
-                hhep = weekly_no_eggs / \
-                    (hen_days * 7) * 100 if hen_days != 0 else 0
+            return Response({'results': results})
 
-                results.append({
-                    'week': week,
-                    'no_of_eggs': weekly_no_eggs,
-                    'no_of_hen_days': hen_days,
-                    'hhep': "{:.3f}".format(hhep)
-                })
+        except Chicken.DoesNotExist:
+            raise NotFound('Chicken not found')
+
+    @extend_schema(
+        parameters=ANALYSES_PARAMETERS
+    )
+    def list(self, request, **kwargs):
+        if (request.GET.get('chicken', None)):
+            return self.get_by_chicken()
+        else:
+            return self.get_by_flock()
+
+
+class EggMassViewSet(AnalysesViewSet):
+    def get_by_flock(self):
+        start_week = int(self.request.GET.get('start_week', 0))
+        end_week = int(self.request.GET.get('end_week', 20))
+
+        with tenant_context(self.get_farm(self.request.GET.get('farm', 0))):
+            queryset = self.filter_by_directory()
+            queryset_ids = list(zip(*queryset.values_list('id')))
+            queryset_ids = queryset_ids if len(
+                queryset_ids) == 0 else queryset_ids[0]
+
+            eggs_queryset = Egg.objects.filter(chicken__in=queryset_ids)
+            results = []
+            for week in range(start_week, end_week + 1):
+                res = calculate_egg_mass(queryset, eggs_queryset, week)
+                results.append(res)
+
+            return Response({'results': results})
+
+    def get_by_chicken(self):
+        try:
+            start_week = int(self.request.GET.get('start_week', 0))
+            end_week = int(self.request.GET.get('end_week', 20))
+
+            queryset = Chicken.all.filter(
+                pk=self.request.GET.get('chicken', 0))
+            queryset_ids = list(zip(*queryset.values_list('id')))
+            queryset_ids = queryset_ids if len(
+                queryset_ids) == 0 else queryset_ids[0]
+
+            eggs_queryset = Egg.objects.filter(chicken__in=queryset_ids)
+            results = []
+            for week in range(start_week, end_week + 1):
+                res = calculate_egg_mass(queryset, eggs_queryset, week)
+                results.append(res)
+
             return Response({'results': results})
 
         except Chicken.DoesNotExist:

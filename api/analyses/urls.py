@@ -47,6 +47,11 @@ hhep_router = routers.DefaultRouter()
 hhep_router.register(
     r'analyses/hhep', views.HHEPViewSet, basename="api_hhep")
 
+egg_mass_router = routers.DefaultRouter()
+egg_mass_router.register(
+    r'analyses/egg-mass', views.EggMassViewSet, basename="api_egg_mass")
+
+
 pedigree_router = routers.DefaultRouter()
 pedigree_router.register(
     r'analyses/(?P<farm_id>.+)/(?P<flock_id>.+)/(?P<house_id>.+)/pedigree', views.PedigreeViewset, basename="api_pedigree")
@@ -67,4 +72,5 @@ urlpatterns = [
     path('', include(wbft_router.urls)),
     path('', include(fcre_router.urls)),
     path('', include(fcrw_router.urls)),
+    path('', include(egg_mass_router.urls)),
 ]
