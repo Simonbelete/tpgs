@@ -691,7 +691,7 @@ class EggProduction(viewsets.ViewSet):
         if (request.GET.get('chicken', None)):
             return self.get_by_chicken()
         else:
-            return self.get_by_chicken()
+            return self.get_by_flock()
 
 
 class FCRE(viewsets.ViewSet):

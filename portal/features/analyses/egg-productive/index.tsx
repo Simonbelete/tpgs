@@ -43,7 +43,7 @@ export const EggProductive = () => {
       pen: directory.pen ? (directory.pen as any).id || null : null,
       start_week: directory.start_week,
       end_week: directory.end_week,
-      sex: directory.sex.value,
+      sex: directory.sex ? directory.sex.value : null,
     };
     const response = await trigger(query, false).unwrap();
     const chartData: GraphProps = {
