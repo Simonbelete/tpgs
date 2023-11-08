@@ -2,11 +2,11 @@ import React from "react";
 import { useBreadcrumbs } from "@/hooks";
 import { Breadcrumbs } from "@/components";
 import { SeoHead } from "@/seo";
-import { HDEPAnalyses } from "@/features/analyses";
+import { HDEPAnalyses, HHEPAnalyses } from "@/features/analyses";
 import { Typography } from "@mui/material";
 import { ReportingLayout } from "@/layouts";
 
-const HDEPPage = () => {
+const HHEPPage = () => {
   const { breadcrumbs } = useBreadcrumbs();
 
   return (
@@ -15,13 +15,15 @@ const HDEPPage = () => {
       <ReportingLayout
         breadcrumbs={<Breadcrumbs items={breadcrumbs} />}
         header={
-          <Typography variant="title">Hen-Day Egg Production (HDEP)</Typography>
+          <Typography variant="title">
+            Hen-Housed Egg Production (HHEP)
+          </Typography>
         }
       >
-        <HDEPAnalyses />
+        <HHEPAnalyses />
       </ReportingLayout>
     </>
   );
 };
 
-export default HDEPPage;
+export default HHEPPage;

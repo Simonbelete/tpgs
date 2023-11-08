@@ -23,7 +23,7 @@ interface GraphProps {
   name?: string;
 }
 
-export const HDEPAnalyses = () => {
+export const HHEPAnalyses = () => {
   const [data, setData] = useState<any[]>([]);
 
   const [trigger] = useLazyGetHdepQuery();
@@ -89,7 +89,7 @@ export const HDEPAnalyses = () => {
     if (response.results) {
       for (let val in response.results) {
         chartData.x.push(Number(response.results[val]["week"]) || 0);
-        chartData.y.push(Number(response.results[val]["hdep"]) || 0);
+        chartData.y.push(Number(response.results[val]["hhep"]) || 0);
       }
 
       setData([...data, chartData]);
@@ -114,13 +114,13 @@ export const HDEPAnalyses = () => {
       <Box mt={10}>
         <Plot
           layout={{
-            title: "Hen-Day Egg Production",
+            title: "Hen-Housed Egg Production (HHEP)",
             height: 500,
             xaxis: {
               title: "Age of birds (weeks)",
             },
             yaxis: {
-              title: "Hen-Day Egg Production (%)",
+              title: "Hen-Housed Egg Production (%)",
             },
           }}
           config={{ responsive: true }}

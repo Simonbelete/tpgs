@@ -29,6 +29,11 @@ const ReportsPage = () => {
       description: "",
       link: "/reports/hdep",
     },
+    {
+      title: "Hen-Housed Egg Production (HHEP)",
+      description: "",
+      link: "/reports/hhep",
+    },
   ];
 
   return (

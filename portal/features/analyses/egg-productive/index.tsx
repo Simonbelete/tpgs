@@ -16,7 +16,7 @@ const Plot = dynamic(() => import("react-plotly.js"), {
   loading: () => <BarChartSkeleton />,
 });
 
-export interface GraphProps {
+interface GraphProps {
   x: number[];
   y: number[];
   mode?: string;
