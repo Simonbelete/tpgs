@@ -1,53 +1,115 @@
 import React, { useState } from "react";
-import { DirectoryFilter, DirectoryFilterData } from "@/features/directory";
+import {
+  DirectoryFilter,
+  DirectoryFilterData,
+  IndividualFilterProps,
+} from "@/features/directory";
 import { useLazyGetHdepQuery } from "../services";
 import dynamic from "next/dynamic";
 import { BarChartSkeleton } from "@/components";
 import { Box } from "@mui/material";
+import directoryToLabel from "@/util/directoryToLabel";
+import { Directory } from "@/models";
 
 const Plot = dynamic(() => import("react-plotly.js"), {
   ssr: false,
   loading: () => <BarChartSkeleton />,
 });
 
+export interface GraphProps {
+  x: number[];
+  y: number[];
+  mode?: string;
+  name?: string;
+}
+
 export const HDEPAnalyses = () => {
   const [data, setData] = useState<any[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
 
   const [trigger] = useLazyGetHdepQuery();
 
-  const delay = (ms: number) => new Promise((res) => setTimeout(res, ms));
+  const handleOnBatchFilterApplay = async (directory: Directory) => {
+    const query = {
+      farm: (directory.farm as any).id || null,
+      hatchery: directory.hatchery
+        ? (directory.hatchery as any).id || null
+        : null,
+      generation: directory.generation || null,
+      breed: directory.breed ? (directory.breed as any).id || null : null,
+      house: directory.house ? (directory.house as any).id || null : null,
+      pen: directory.pen ? (directory.pen as any).id || null : null,
+      start_week: directory.start_week,
+      end_week: directory.end_week,
+      sex: directory.sex ? directory.sex.value : null,
+    };
+    const response = await trigger(query, false).unwrap();
+    const chartData: GraphProps = {
+      x: [],
+      y: [],
+      mode: "lines+markers",
+      name: directoryToLabel(directory),
+    };
+    const chartData2: GraphProps = {
+      x: [],
+      y: [],
+      mode: "lines+markers",
+      name: directoryToLabel(directory),
+    };
 
-  const handleSubmit = async (filters: DirectoryFilterData) => {
-    setData([]);
-    setIsLoading(true);
-    for (let i = 0; i < filters.directories.length; i += 1) {
-      const query = {
-        start_week: filters.start_week,
-        end_week: filters.end_week,
-        ...filters.directories[i],
-      };
-      const response = await trigger(query, false).unwrap();
-      const chartData: { x: number[]; y: number[] } = { x: [], y: [] };
-      const chartData2: { x: number[]; y: number[] } = { x: [], y: [] };
-      if (response.results) {
-        for (let val in response.results) {
-          chartData.x.push(Number(response.results[val]["week"]) || 0);
-          chartData.y.push(Number(response.results[val]["hdep"]) || 0);
-        }
+    if (response.results) {
+      for (let val in response.results) {
+        chartData.x.push(Number(response.results[val]["week"]) || 0);
+        chartData.y.push(Number(response.results[val]["hdep"]) || 0);
       }
-      setData([chartData]);
-      await delay(3000);
+      setData([...data, chartData]);
     }
-    setIsLoading(false);
+  };
+
+  const handleonBatchFilterRemove = (index: number) => {
+    const newData = data.filter((e, i) => i != index);
+    setData(newData);
+  };
+
+  const handleOnIndividualFilterApply = async (
+    indvData: IndividualFilterProps
+  ) => {
+    const query = {
+      chicken: indvData.chicken ? (indvData.chicken as any).id || null : null,
+      start_week: indvData.start_week,
+      end_week: indvData.end_week,
+    };
+    const response = await trigger(query, false).unwrap();
+    const chartData: GraphProps = {
+      x: [],
+      y: [],
+      mode: "lines+markers",
+      name: indvData.chicken.display_name,
+    };
+
+    if (response.results) {
+      for (let val in response.results) {
+        chartData.x.push(Number(response.results[val]["week"]) || 0);
+        chartData.y.push(Number(response.results[val]["hdep"]) || 0);
+      }
+
+      setData([...data, chartData]);
+    }
+  };
+
+  const handleOnIndividualFilterRemove = (index: number) => {
+    const newData = data.filter((e, i) => i != index);
+    setData(newData);
   };
 
   return (
     <Box>
       <DirectoryFilter
-        onSubmit={handleSubmit}
-        computedData={data}
-        isLoading={isLoading}
+        onBatchFilterApply={handleOnBatchFilterApplay}
+        onBatchFilterRemove={handleonBatchFilterRemove}
+        default_start_week={21}
+        default_end_week={41}
+        onIndividualFilterApply={handleOnIndividualFilterApply}
+        onIndividualFilterRemove={handleOnIndividualFilterRemove}
       />
       <Box mt={10}>
         <Plot

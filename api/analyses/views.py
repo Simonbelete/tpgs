@@ -11,8 +11,8 @@ from rest_framework.exceptions import NotFound
 
 from . import models
 from . import serializers
+from core.schemas import ANALYSES_PARAMETERS
 from eggs.models import Egg
-from flocks.models import Flock, FlockReduction, FlockAccusation
 from farms.models import Farm
 from feeds.models import Feed
 from weights.models import Weight
@@ -76,31 +76,33 @@ class CountViewSet(viewsets.ViewSet):
 
 
 class HDEPViewSet(viewsets.ViewSet):
-    queryset = Chicken.objects.all()
+    def filter_by_directory(self):
+        queryset = Chicken.objects.all()
 
-    def filter_by_directory(self, **kwargs):
-        queryset = self.queryset
+        breed_id = self.request.GET.get('breed', None)
+        generation = self.request.GET.get('generation', None)
+        hatchery_id = self.request.GET.get('hatchery', None)
+        house_id = self.request.GET.get('house', None)
+        pen_id = self.request.GET.get('pen', None)
+        sex = self.request.GET.get('sex', None)
 
-        breed_id = kwargs['breed_id'] if 'breed_id' in kwargs else 0
-        generation = kwargs['generation'] if 'generation' in kwargs else 'any'
-        hatchery_id = kwargs['hatchery_id'] if 'hatchery_id' in kwargs else 0
-        house_id = kwargs['house_id'] if 'house_id' in kwargs else 0
-        pen_id = kwargs['pen_id'] if 'pen_id' in kwargs else 0
-
-        if (breed_id != 0):
+        if (breed_id):
             queryset = queryset.filter(breed=breed_id)
 
-        if (generation != 'any'):
+        if (generation):
             queryset = queryset.filter(generation=generation)
 
-        if (hatchery_id != 0):
+        if (hatchery_id):
             queryset = queryset.filter(hatchery=hatchery_id)
 
-        if (house_id != 0):
-            queryset = queryset.filter(house=house_id)
+        if (house_id):
+            queryset = queryset.filter(pen__house=house_id)
 
-        if (pen_id != 0):
+        if (pen_id):
             queryset = queryset.filter(pen=pen_id)
+
+        if (sex):
+            queryset = queryset.filter(sex=sex)
 
         return queryset
 
@@ -108,68 +110,14 @@ class HDEPViewSet(viewsets.ViewSet):
         try:
             return Farm.objects.get(pk=farm_id)
         except Farm.DoesNotExist:
-            raise NotFound
+            raise NotFound("Farm Not found")
 
-    @extend_schema(
-        parameters=[
-            OpenApiParameter(
-                name='start_week',
-                description='Start Week',
-                location=OpenApiParameter.QUERY,
-                required=False,
-                default=0,
-                type=int),
-            OpenApiParameter(
-                name='end_week',
-                description='End Week',
-                location=OpenApiParameter.QUERY,
-                required=False,
-                default=20,
-                type=int),
-            OpenApiParameter(
-                name='farm_id',
-                description='farm',
-                location=OpenApiParameter.QUERY,
-                required=False,
-                type=int),
-            OpenApiParameter(
-                name='breed_id',
-                description='Breed id',
-                location=OpenApiParameter.QUERY,
-                required=False,
-                type=int),
-            OpenApiParameter(
-                name='generation',
-                description='Generation',
-                location=OpenApiParameter.QUERY,
-                required=False,
-                type=int),
-            OpenApiParameter(
-                name='hatchery_id',
-                description='Hatchery',
-                location=OpenApiParameter.QUERY,
-                required=False,
-                type=int),
-            OpenApiParameter(
-                name='house_id',
-                description='House',
-                location=OpenApiParameter.QUERY,
-                required=False,
-                type=int),
-            OpenApiParameter(
-                name='pen_id',
-                description='Pen',
-                location=OpenApiParameter.QUERY,
-                required=False,
-                type=int),
-        ]
-    )
-    def list(self, request, **kwargs):
-        start_week = int(request.GET.get('start_week', 0))
-        end_week = int(request.GET.get('end_week', 20))
+    def get_by_flock(self):
+        start_week = int(self.request.GET.get('start_week', 0))
+        end_week = int(self.request.GET.get('end_week', 20))
 
-        with tenant_context(self.get_farm(request.GET.get('farm_id', 0))):
-            queryset = self.filter_by_directory(**kwargs)
+        with tenant_context(self.get_farm(self.request.GET.get('farm', 0))):
+            queryset = self.filter_by_directory()
             queryset_ids = list(zip(*queryset.values_list('id')))
             queryset_ids = queryset_ids if len(
                 queryset_ids) == 0 else queryset_ids[0]
@@ -191,9 +139,52 @@ class HDEPViewSet(viewsets.ViewSet):
                     'week': week,
                     'no_of_eggs': weekly_no_eggs,
                     'no_of_hen_days': hen_days,
-                    'hdep': "{:.2f}".format(hdep)
+                    'hdep': "{:.3f}".format(hdep)
                 })
             return Response({'results': results})
+
+    def get_by_chicken(self):
+        try:
+            start_week = int(self.request.GET.get('start_week', 0))
+            end_week = int(self.request.GET.get('end_week', 20))
+
+            queryset = Chicken.all.filter(
+                pk=self.request.GET.get('chicken', 0))
+            queryset_ids = list(zip(*queryset.values_list('id')))
+            queryset_ids = queryset_ids if len(
+                queryset_ids) == 0 else queryset_ids[0]
+
+            eggs_queryset = Egg.objects.filter(chicken__in=queryset_ids)
+            results = []
+            for week in range(start_week, end_week + 1):
+                weekly_no_eggs = eggs_queryset.filter(week=week).aggregate(
+                    sum=Sum('eggs'))['sum'] or 0
+                hen_days = queryset.filter(
+                    sex="F").exclude(hatch_date=None).annotate(
+                    current_date=F('hatch_date')+timedelta(weeks=week)
+                ).filter(Q(current_date__lte=F('reduction_date')) | Q(reduction_date=None)).count()
+
+                hdep = weekly_no_eggs / \
+                    (hen_days * 7) * 100 if hen_days != 0 else 0
+
+                results.append({
+                    'week': week,
+                    'no_of_eggs': weekly_no_eggs,
+                    'no_of_hen_days': hen_days,
+                    'hdep': "{:.3f}".format(hdep)
+                })
+            return Response({'results': results})
+        except Chicken.DoesNotExist:
+            raise NotFound('Chicken not found')
+
+    @extend_schema(
+        parameters=ANALYSES_PARAMETERS
+    )
+    def list(self, request, **kwargs):
+        if (request.GET.get('chicken', None)):
+            return self.get_by_chicken()
+        else:
+            return self.get_by_flock()
 
 
 class HHEPViewSet(viewsets.ViewSet):
@@ -232,58 +223,7 @@ class HHEPViewSet(viewsets.ViewSet):
             raise NotFound
 
     @extend_schema(
-        parameters=[
-            OpenApiParameter(
-                name='start_week',
-                description='Start Week',
-                location=OpenApiParameter.QUERY,
-                required=False,
-                default=0,
-                type=int),
-            OpenApiParameter(
-                name='end_week',
-                description='End Week',
-                location=OpenApiParameter.QUERY,
-                required=False,
-                default=20,
-                type=int),
-            OpenApiParameter(
-                name='farm_id',
-                description='farm',
-                location=OpenApiParameter.QUERY,
-                required=False,
-                type=int),
-            OpenApiParameter(
-                name='breed_id',
-                description='Breed id',
-                location=OpenApiParameter.QUERY,
-                required=False,
-                type=int),
-            OpenApiParameter(
-                name='generation',
-                description='Generation',
-                location=OpenApiParameter.QUERY,
-                required=False,
-                type=int),
-            OpenApiParameter(
-                name='hatchery_id',
-                description='Hatchery',
-                location=OpenApiParameter.QUERY,
-                required=False,
-                type=int),
-            OpenApiParameter(
-                name='house_id',
-                description='House',
-                location=OpenApiParameter.QUERY,
-                required=False,
-                type=int),
-            OpenApiParameter(
-                name='pen_id',
-                description='Pen',
-                location=OpenApiParameter.QUERY,
-                required=False,
-                type=int),
-        ]
+        parameters=ANALYSES_PARAMETERS
     )
     def list(self, request, **kwargs):
         start_week = int(request.GET.get('start_week', 0))
@@ -622,70 +562,7 @@ class EggProduction(viewsets.ViewSet):
             raise NotFound('Chicken not found')
 
     @extend_schema(
-        parameters=[
-            OpenApiParameter(
-                name='chicken',
-                description='chicken',
-                location=OpenApiParameter.QUERY,
-                required=False,
-                type=int),
-            OpenApiParameter(
-                name='start_week',
-                description='Start Week',
-                location=OpenApiParameter.QUERY,
-                required=True,
-                default=21,
-                type=int),
-            OpenApiParameter(
-                name='end_week',
-                description='End Week',
-                location=OpenApiParameter.QUERY,
-                required=True,
-                default=41,
-                type=int),
-            OpenApiParameter(
-                name='farm',
-                description='farm',
-                location=OpenApiParameter.QUERY,
-                required=False,
-                type=int),
-            OpenApiParameter(
-                name='breed',
-                description='Breed id',
-                location=OpenApiParameter.QUERY,
-                required=False,
-                type=int),
-            OpenApiParameter(
-                name='generation',
-                description='Generation',
-                location=OpenApiParameter.QUERY,
-                required=False,
-                type=int),
-            OpenApiParameter(
-                name='hatchery',
-                description='Hatchery',
-                location=OpenApiParameter.QUERY,
-                required=False,
-                type=int),
-            OpenApiParameter(
-                name='house',
-                description='House',
-                location=OpenApiParameter.QUERY,
-                required=False,
-                type=int),
-            OpenApiParameter(
-                name='pen',
-                description='Pen',
-                location=OpenApiParameter.QUERY,
-                required=False,
-                type=int),
-            OpenApiParameter(
-                name='sex',
-                description='Sex M | F',
-                location=OpenApiParameter.QUERY,
-                required=False,
-                type=str),
-        ]
+        parameters=ANALYSES_PARAMETERS
     )
     def list(self, request, **kwargs):
         if (request.GET.get('chicken', None)):
