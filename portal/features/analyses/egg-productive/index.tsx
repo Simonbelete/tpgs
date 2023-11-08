@@ -75,7 +75,12 @@ export const EggProductive = () => {
       mode: "lines+markers",
       name: directoryToLabel(directory),
     };
-    const chartData2: GraphProps = { x: [], y: [] };
+    const chartData2: GraphProps = {
+      x: [],
+      y: [],
+      mode: "lines+markers",
+      name: directoryToLabel(directory),
+    };
 
     if (response.results) {
       for (let val in response.results) {
@@ -93,7 +98,7 @@ export const EggProductive = () => {
 
   const handleonBatchFilterRemove = (index: number) => {
     const newData = data.filter((e, i) => i != index);
-    const newData2 = data.filter((e, i) => i != index);
+    const newData2 = data2.filter((e, i) => i != index);
     setData(newData);
     setData2(newData2);
   };
