@@ -582,96 +582,12 @@ class EggProduction(viewsets.ViewSet):
             return self.get_by_flock()
 
 
-class FCRE(viewsets.ViewSet):
+class FCRE(AnalysesViewSet):
     """Feed Conversion ratio for eggs
     """
-    queryset = Chicken.objects.all()
-
-    def filter_by_directory(self, **kwargs):
-        queryset = self.queryset
-
-        breed_id = kwargs['breed_id'] if 'breed_id' in kwargs else 0
-        generation = kwargs['generation'] if 'generation' in kwargs else 'any'
-        hatchery_id = kwargs['hatchery_id'] if 'hatchery_id' in kwargs else 0
-        house_id = kwargs['house_id'] if 'house_id' in kwargs else 0
-        pen_id = kwargs['pen_id'] if 'pen_id' in kwargs else 0
-
-        if (breed_id != 0):
-            queryset = queryset.filter(breed=breed_id)
-
-        if (generation != 'any'):
-            queryset = queryset.filter(generation=generation)
-
-        if (hatchery_id != 0):
-            queryset = queryset.filter(hatchery=hatchery_id)
-
-        if (house_id != 0):
-            queryset = queryset.filter(house=house_id)
-
-        if (pen_id != 0):
-            queryset = queryset.filter(pen=pen_id)
-
-        return queryset
-
-    def get_farm(self, farm_id):
-        try:
-            return Farm.objects.get(pk=farm_id)
-        except Farm.DoesNotExist:
-            raise NotFound
 
     @extend_schema(
-        parameters=[
-            OpenApiParameter(
-                name='start_week',
-                description='Start Week',
-                location=OpenApiParameter.QUERY,
-                required=False,
-                default=0,
-                type=int),
-            OpenApiParameter(
-                name='end_week',
-                description='End Week',
-                location=OpenApiParameter.QUERY,
-                required=False,
-                default=20,
-                type=int),
-            OpenApiParameter(
-                name='farm_id',
-                description='farm',
-                location=OpenApiParameter.QUERY,
-                required=False,
-                type=int),
-            OpenApiParameter(
-                name='breed_id',
-                description='Breed id',
-                location=OpenApiParameter.QUERY,
-                required=False,
-                type=int),
-            OpenApiParameter(
-                name='generation',
-                description='Generation',
-                location=OpenApiParameter.QUERY,
-                required=False,
-                type=int),
-            OpenApiParameter(
-                name='hatchery_id',
-                description='Hatchery',
-                location=OpenApiParameter.QUERY,
-                required=False,
-                type=int),
-            OpenApiParameter(
-                name='house_id',
-                description='House',
-                location=OpenApiParameter.QUERY,
-                required=False,
-                type=int),
-            OpenApiParameter(
-                name='pen_id',
-                description='Pen',
-                location=OpenApiParameter.QUERY,
-                required=False,
-                type=int),
-        ]
+        parameters=ANALYSES_PARAMETERS
     )
     def list(self, request, **kwargs):
         start_week = int(request.GET.get('start_week', 0))

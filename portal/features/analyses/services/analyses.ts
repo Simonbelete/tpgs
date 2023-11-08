@@ -24,6 +24,13 @@ export const analyseApi = baseApi.injectEndpoints({
           params: query,
         }),
       }),
+      getEggMass: build.query<Response<any[]>, Object>({
+        query: (query?: Object) => ({
+          url: `${URL}/egg-mass/`,
+          method: "get",
+          params: query,
+        }),
+      }),
     };
   },
   overrideExisting: false,
@@ -34,4 +41,6 @@ export const {
   useLazyGetEggProductionQuery,
   useGetHdepQuery,
   useLazyGetHdepQuery,
+  useGetEggMassQuery,
+  useLazyGetEggMassQuery,
 } = analyseApi;

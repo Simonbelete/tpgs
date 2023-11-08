@@ -34,6 +34,12 @@ const ReportsPage = () => {
       description: "",
       link: "/reports/hhep",
     },
+    {
+      title: "Egg Mass",
+      description:
+        "The use of egg mass rather than egg numbers will lead to better comparisons of flocks or strains of birds.",
+      link: "/reports/egg-mass",
+    },
   ];
 
   return (
