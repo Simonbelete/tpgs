@@ -1,25 +1,26 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { ListLayout } from "@/layouts";
 import { useBreadcrumbs } from "@/hooks";
 import { Breadcrumbs } from "@/components";
 import { Typography } from "@mui/material";
 import { RequirementHistoryList } from "@/features/requirements";
-import { useRouter } from "next/router";
 import { NextPageContext } from "next";
 import { SeoHead } from "@/seo";
+import { getServerSidePropsContext } from "@/services/getServerSidePropsContext";
+import { getRequirementByIdSSR } from "@/features/requirements/services";
+import { Requirement } from "@/models";
 
-const RequirementHistoryPage = ({ id }: { id: number }) => {
+const RequirementHistoryPage = ({ data }: { data: Requirement }) => {
   const { breadcrumbs } = useBreadcrumbs();
-  const router = useRouter();
 
   return (
     <>
       <SeoHead title="Requirement Histories" />
       <ListLayout
         breadcrumbs={<Breadcrumbs items={breadcrumbs} />}
-        header={<Typography variant="title">Histories</Typography>}
+        header={<Typography variant="title">Requirement History</Typography>}
       >
-        <RequirementHistoryList id={id} />
+        <RequirementHistoryList data={data} />
       </ListLayout>
     </>
   );
@@ -28,9 +29,11 @@ const RequirementHistoryPage = ({ id }: { id: number }) => {
 export async function getServerSideProps(context: NextPageContext) {
   const { id } = context.query;
 
-  return {
-    props: { id },
-  };
+  return getServerSidePropsContext<Requirement>({
+    context,
+    id: Number(id),
+    getByIdSSR: getRequirementByIdSSR,
+  });
 }
 
 export default RequirementHistoryPage;

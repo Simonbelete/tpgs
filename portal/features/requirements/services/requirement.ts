@@ -5,6 +5,7 @@ import {
   Requirement,
   RequirementNutrient,
   RequirementAnalyses,
+  RequirementHistory,
 } from "@/models";
 import { AxiosResponse } from "axios";
 import clientSSR from "@/services/client_ssr";
@@ -30,7 +31,7 @@ export const requirementApi = baseApi.injectEndpoints({
         }),
       }),
       getRequirementHistory: build.query<
-        Response<Requirement>,
+        Response<RequirementHistory[]>,
         { id: number; query: Object }
       >({
         query: ({ id, query }) => ({
