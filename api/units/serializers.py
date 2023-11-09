@@ -7,7 +7,7 @@ from . import models
 class UnitSerializer_GET(serializers.ModelSerializer):
     class Meta:
         model = models.Unit
-        fields = ['id', 'name', 'display_name' 'is_active']
+        fields = ['id', 'name', 'display_name', 'is_active']
 
 
 class UnitSerializer_POST(serializers.ModelSerializer):

@@ -1,25 +1,26 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { ListLayout } from "@/layouts";
 import { useBreadcrumbs } from "@/hooks";
 import { Breadcrumbs } from "@/components";
 import { Typography } from "@mui/material";
 import { UnitHistoryList } from "@/features/units";
-import { useRouter } from "next/router";
 import { NextPageContext } from "next";
 import { SeoHead } from "@/seo";
+import { getServerSidePropsContext } from "@/services/getServerSidePropsContext";
+import { getUnitByIdSSR } from "@/features/units/services";
+import { Unit } from "@/models";
 
-const UnitHistoryPage = ({ id }: { id: number }) => {
+const UnitHistoryPage = ({ data }: { data: Unit }) => {
   const { breadcrumbs } = useBreadcrumbs();
-  const router = useRouter();
 
   return (
     <>
       <SeoHead title="Unit Histories" />
       <ListLayout
         breadcrumbs={<Breadcrumbs items={breadcrumbs} />}
-        header={<Typography variant="title">Histories</Typography>}
+        header={<Typography variant="title">Unit History</Typography>}
       >
-        <UnitHistoryList id={id} />
+        <UnitHistoryList data={data} />
       </ListLayout>
     </>
   );
@@ -28,9 +29,11 @@ const UnitHistoryPage = ({ id }: { id: number }) => {
 export async function getServerSideProps(context: NextPageContext) {
   const { id } = context.query;
 
-  return {
-    props: { id },
-  };
+  return getServerSidePropsContext<Unit>({
+    context,
+    id: Number(id),
+    getByIdSSR: getUnitByIdSSR,
+  });
 }
 
 export default UnitHistoryPage;

@@ -3,6 +3,7 @@ from simple_history.models import HistoricalRecords
 
 from core.models import CoreModel
 
+
 class Unit(CoreModel):
     name = models.CharField(max_length=100, unique=True)
     history = HistoricalRecords()
@@ -12,6 +13,11 @@ class Unit(CoreModel):
 
     def __str__(self):
         return self.name
+
+    @property
+    def display_name(self):
+        return self.name
+
 
 class UnitConverter(CoreModel):
     unit_from = models.ForeignKey(

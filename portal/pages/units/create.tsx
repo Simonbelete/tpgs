@@ -3,9 +3,7 @@ import { Typography } from "@mui/material";
 import { Breadcrumbs } from "@/components";
 import { useBreadcrumbs } from "@/hooks";
 import { CreateLayout } from "@/layouts";
-import {
-  UnitForm,
-} from "@/features/units";
+import { UnitForm } from "@/features/units";
 import { SeoHead } from "@/seo";
 
 const UnitCreatePage = () => {
@@ -14,10 +12,7 @@ const UnitCreatePage = () => {
   return (
     <>
       <SeoHead title="Create Unit" />
-      <CreateLayout
-        breadcrumbs={<Breadcrumbs items={breadcrumbs} />}
-        header={<Typography variant="title">Create Unit</Typography>}
-      >
+      <CreateLayout breadcrumbs={<Breadcrumbs items={breadcrumbs} />}>
         <UnitForm />
       </CreateLayout>
     </>

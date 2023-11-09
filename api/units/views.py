@@ -50,6 +50,11 @@ class UnitViewSet(CoreModelViewSet):
     search_fields = ['name']
     ordering_fields = '__all__'
 
+    def get_serializer_class(self):
+        if self.request.method in ['POST', 'PUT', 'PATCH']:
+            return serializers.UnitSerializer_POST
+        return serializers.UnitSerializer_GET
+
 
 class UnitHistoryViewSet(HistoryViewSet):
     queryset = models.Unit.history.all()
