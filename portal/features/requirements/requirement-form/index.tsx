@@ -41,6 +41,7 @@ export interface EditableRequirementNutrient
 const RequirementNutrientToolbar = ({
   setRows,
   rows,
+  refetch,
 }: {
   setRows: (
     newRows: (
@@ -48,9 +49,11 @@ const RequirementNutrientToolbar = ({
     ) => GridRowsProp<EditableRequirementNutrient>
   ) => void;
   rows: GridRowsProp<EditableRequirementNutrient>;
+  refetch: () => void;
 }) => {
   return (
     <EditToolbar<EditableRequirementNutrient, Nutrient>
+      refetch={refetch}
       title="Add Nutrient"
       setRows={setRows}
       rows={rows}
@@ -90,7 +93,6 @@ export const RequirementForm = ({ data }: { data?: Requirement }) => {
     {
       field: "nutrient__name",
       headerName: "Name",
-      flex: 1,
       filterable: false,
       valueGetter: (params) =>
         params.row.nutrient ? params.row.nutrient.name : "",
@@ -99,6 +101,7 @@ export const RequirementForm = ({ data }: { data?: Requirement }) => {
       field: "nutrient__abbreviation",
       headerName: "Abbreviation",
       flex: 1,
+      minWidth: 50,
       filterable: false,
       valueGetter: (params) =>
         params.row.nutrient ? params.row.nutrient.abbreviation : "",
@@ -106,7 +109,7 @@ export const RequirementForm = ({ data }: { data?: Requirement }) => {
     {
       field: "value",
       headerName: "Value [%]",
-      flex: 1,
+      minWidth: 100,
       filterable: false,
       editable: true,
       type: "number",
@@ -114,6 +117,7 @@ export const RequirementForm = ({ data }: { data?: Requirement }) => {
     {
       field: "nutrient__unit",
       headerName: "Unit",
+      flex: 1,
       filterable: false,
       valueGetter: (params) =>
         params.row.nutrient ? params.row.nutrient.unit.name : "",

@@ -30,6 +30,7 @@ import _ from "lodash";
 import randomId from "@/util/randomId";
 import { EditMode } from "@/types";
 import CloseIcon from "@mui/icons-material/Close";
+import RefreshIcon from "@mui/icons-material/Refresh";
 
 export interface EditToolbarProps<T extends EditMode, T2>
   extends AsyncDropdownProps<T2> {
@@ -38,6 +39,7 @@ export interface EditToolbarProps<T extends EditMode, T2>
   // T2 key
   mapperKey: string;
   title?: string;
+  refetch: () => void;
 }
 
 export default function EditToolbar<
@@ -50,6 +52,7 @@ export default function EditToolbar<
   endpoint,
   mapperKey,
   title,
+  refetch,
 }: EditToolbarProps<T, T2>) {
   const [openDialog, setOpenDialog] = useState(false);
   const [selectedValues, setSelectedValues] = useState<T2[]>([]);
@@ -155,6 +158,15 @@ export default function EditToolbar<
         <Box>
           <GridToolbarColumnsButton />
           <GridToolbarDensitySelector />
+          <Button
+            color="primary"
+            startIcon={<RefreshIcon />}
+            variant="text"
+            onClick={() => refetch()}
+            size={"small"}
+          >
+            Refresh
+          </Button>
           <Button
             color="primary"
             startIcon={<AddIcon />}

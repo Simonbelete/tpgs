@@ -113,7 +113,7 @@ export default function EditableList<T extends AbstractBaseModel & EditMode>({
   const updateQuery = (q: Object) =>
     setQuery({ id: getQuery.id, query: { ...getQuery.query, ...q } });
 
-  const { data, isLoading, refetch } = getEndpoint.useQuery(query);
+  const { data, isLoading, isFetching, refetch } = getEndpoint.useQuery(query);
 
   const [createTrigger, createResult] = createEndpoint.useMutation();
   const [updateTrigger, updateResult] = updateEndpoint.useMutation();
@@ -196,7 +196,7 @@ export default function EditableList<T extends AbstractBaseModel & EditMode>({
       sx={{ background: "white", minHeight: "20px" }}
       rows={rows}
       rowCount={data?.count || 0}
-      loading={isLoading}
+      loading={isFetching}
       // editMode="row"
       rowHeight={40}
       columns={[...columns, settingCol]}
@@ -208,7 +208,7 @@ export default function EditableList<T extends AbstractBaseModel & EditMode>({
       }}
       processRowUpdate={processRowUpdate}
       slotProps={{
-        toolbar: { setRows, rows },
+        toolbar: { setRows, rows, refetch },
       }}
       onProcessRowUpdateError={handleOnProcessRowUpdateError}
       pageSizeOptions={[10, 25, 50, 100]}
