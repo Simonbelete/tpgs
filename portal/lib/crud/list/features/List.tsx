@@ -3,6 +3,7 @@ import {
   GridColDef,
   GridRenderCellParams,
   GridValidRowModel,
+  GridSortModel,
 } from "@mui/x-data-grid";
 import { Box, LinearProgress } from "@mui/material";
 import StripedDataGrid, {
@@ -29,6 +30,8 @@ import { Response } from "@/models";
 import PermanentlyDeleteAction from "../actions/PermanentlyDeleteAction";
 import buildQuery from "@/util/buildQuery";
 import buildPage from "@/util/buildPage";
+import Toolbar from "./Toolbar";
+import buildSorting from "@/util/buildSorting";
 
 export interface ListProps<T> {
   columns: GridColDef[];
@@ -65,11 +68,13 @@ export default function List<T>({
     pageSize: 10,
   });
 
+  const [sortingQuery, setSortingQuery] = useState<Object>({});
+
   const [selectedId, setSelectedId] = useState<number>(0);
   const [deleteConfirmation, setDeleteConfirmation] = useState<boolean>(false);
 
-  const { data, isLoading, refetch } = getEndpoint.useQuery(
-    buildQuery({ ...buildPage(paginationModel), ...selector })
+  const { data, isLoading, isFetching, refetch } = getEndpoint.useQuery(
+    buildQuery({ ...buildPage(paginationModel), ...selector, ...sortingQuery })
   );
   const [deleteTrigger, deleteResult] =
     deleteEndpoint != null
@@ -118,6 +123,15 @@ export default function List<T>({
     return row.id;
   };
 
+  const handleSortModelChange = React.useCallback(
+    (sortModel: GridSortModel) => {
+      if (sortModel.length != 0) {
+        setSortingQuery(buildSorting(sortModel));
+      }
+    },
+    []
+  );
+
   return (
     <>
       <DeleteModal
@@ -129,14 +143,18 @@ export default function List<T>({
         sx={{ background: "white", height: "100%" }}
         rows={(data?.results || []) as GridValidRowModel[]}
         rowCount={data?.count || 0}
-        loading={isLoading}
+        loading={isFetching}
         density="compact"
         rowHeight={55}
         columns={[...columns, settingColumn]}
         disableRowSelectionOnClick
         slots={{
+          toolbar: Toolbar,
           noRowsOverlay: CustomNoRowsOverlay,
           loadingOverlay: LinearProgress,
+        }}
+        slotProps={{
+          toolbar: { refetch },
         }}
         getRowClassName={(params) =>
           params.indexRelativeToCurrentPage % 2 === 0 ? "even" : "odd"
@@ -146,6 +164,8 @@ export default function List<T>({
         paginationModel={paginationModel}
         paginationMode="server"
         onPaginationModelChange={setPaginationModel}
+        sortingMode="server"
+        onSortModelChange={handleSortModelChange}
       />
     </>
   );
