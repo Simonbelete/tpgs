@@ -4,6 +4,7 @@ import {
   GridValidRowModel,
   GridActionsCellItem,
   GridFilterModel,
+  GridSortModel,
 } from "@mui/x-data-grid";
 import {
   ApiEndpointMutation,
@@ -27,6 +28,7 @@ import { LinearProgress } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/DeleteOutlined";
 import buildQuery from "@/util/buildQuery";
 import buildPage from "@/util/buildPage";
+import buildSorting from "@/util/buildSorting";
 
 export interface EditableListProps<
   T extends AbstractBaseModel & GridValidRowModel
@@ -138,6 +140,8 @@ export default function EditableList<T extends AbstractBaseModel & EditMode>({
     const newRow = { ...updatedRow, isNew: false };
 
     // TODO: check if refetch is needed
+    refetch();
+
     return newRow;
   };
 
@@ -172,13 +176,19 @@ export default function EditableList<T extends AbstractBaseModel & EditMode>({
   };
 
   const onFilterChange = React.useCallback((filterModel: GridFilterModel) => {
-    // Here you save the data you need from the filter model
-    // setQueryOptions({ filterModel: { ...filterModel } });
-
     if (filterModel.quickFilterValues) {
       updateQuery({ search: filterModel.quickFilterValues[0] });
     }
   }, []);
+
+  const handleSortModelChange = React.useCallback(
+    (sortModel: GridSortModel) => {
+      if (sortModel.length != 0) {
+        updateQuery(buildSorting(sortModel));
+      }
+    },
+    []
+  );
 
   return (
     <EditableTable
@@ -207,6 +217,8 @@ export default function EditableList<T extends AbstractBaseModel & EditMode>({
       onPaginationModelChange={setPaginationModel}
       filterMode="server"
       onFilterModelChange={onFilterChange}
+      sortingMode="server"
+      onSortModelChange={handleSortModelChange}
     />
   );
 }

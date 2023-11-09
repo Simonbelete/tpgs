@@ -77,7 +77,7 @@ export const requirementApi = baseApi.injectEndpoints({
       // Nutrients
       getNutrientsOfRequirement: build.query<
         Response<RequirementNutrient[]>,
-        { id: number; query: Object }
+        { id: number; query?: Object }
       >({
         query: ({ id, query }) => ({
           url: `${URL}/${id}/${NUTRIENT_URL}/`,

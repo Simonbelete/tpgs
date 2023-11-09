@@ -63,7 +63,7 @@ export const RequirementList = () => {
       filters={{}}
       menus={
         <>
-          <CreateButton baseUrl="/requirements" />
+          <CreateButton />
           <ExportButton
             exportCsv={exportRequirementsCSV}
             exportXls={exportRequirementsXLS}

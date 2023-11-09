@@ -62,7 +62,8 @@ class RequirementNutrientViewSet(CoreModelViewSet):
     queryset = models.RequirementNutrient.all.all()
     serializer_class = serializers.RequirementNutrientSerializer_GET
     filterset_class = filters.RequirementNutrientFilter
-    ordering_fields = '__all__'
+    ordering_fields = ['nutrient__name',
+                       'nutrient__abbreviation', 'nutrient__unit', 'value']
     search_fields = ['nutrient__name', 'nutrient__abbreviation', 'value']
 
     def get_queryset(self):

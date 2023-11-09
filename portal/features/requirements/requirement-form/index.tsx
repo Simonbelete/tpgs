@@ -51,6 +51,7 @@ const RequirementNutrientToolbar = ({
 }) => {
   return (
     <EditToolbar<EditableRequirementNutrient, Nutrient>
+      title="Add Nutrient"
       setRows={setRows}
       rows={rows}
       endpoint={nutrientApi.endpoints.getNutrients}
@@ -87,18 +88,18 @@ export const RequirementForm = ({ data }: { data?: Requirement }) => {
 
   const columns: GridColDef[] = [
     {
-      field: "name",
+      field: "nutrient__name",
       headerName: "Name",
       flex: 1,
-      minWidth: 100,
+      filterable: false,
       valueGetter: (params) =>
         params.row.nutrient ? params.row.nutrient.name : "",
     },
     {
-      field: "abbreviation",
+      field: "nutrient__abbreviation",
       headerName: "Abbreviation",
       flex: 1,
-      minWidth: 150,
+      filterable: false,
       valueGetter: (params) =>
         params.row.nutrient ? params.row.nutrient.abbreviation : "",
     },
@@ -106,15 +107,14 @@ export const RequirementForm = ({ data }: { data?: Requirement }) => {
       field: "value",
       headerName: "Value [%]",
       flex: 1,
-      minWidth: 150,
+      filterable: false,
       editable: true,
       type: "number",
     },
     {
-      field: "unit",
+      field: "nutrient__unit",
       headerName: "Unit",
-      flex: 1,
-      minWidth: 150,
+      filterable: false,
       valueGetter: (params) =>
         params.row.nutrient ? params.row.nutrient.unit.name : "",
     },
