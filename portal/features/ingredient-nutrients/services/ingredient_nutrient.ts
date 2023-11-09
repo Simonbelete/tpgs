@@ -1,5 +1,10 @@
 import { baseApi } from "@/services/baseApi";
-import { AbstractSummary, Response, IngredientNutrient } from "@/models";
+import {
+  AbstractSummary,
+  Response,
+  IngredientNutrient,
+  IngredientNutrientHistory,
+} from "@/models";
 import { AxiosResponse } from "axios";
 import clientSSR from "@/services/client_ssr";
 import client from "@/services/client";
@@ -25,7 +30,7 @@ export const ingredientNutrientApi = baseApi.injectEndpoints({
         }),
       }),
       getIngredientNutrientHistory: build.query<
-        Response<IngredientNutrient>,
+        Response<IngredientNutrientHistory[]>,
         { id: number; query: Object }
       >({
         query: ({ id, query }) => ({
@@ -41,7 +46,7 @@ export const ingredientNutrientApi = baseApi.injectEndpoints({
         }),
       }),
       createIngredientNutrient: build.mutation<
-        Promise<AxiosResponse<IngredientNutrient>>,
+        Promise<IngredientNutrient>,
         Partial<IngredientNutrient>
       >({
         query: (data: Partial<IngredientNutrient>) => ({
@@ -51,7 +56,7 @@ export const ingredientNutrientApi = baseApi.injectEndpoints({
         }),
       }),
       updateIngredientNutrient: build.mutation<
-        IngredientNutrient,
+        Promise<IngredientNutrient>,
         Pick<IngredientNutrient, "id"> & Partial<IngredientNutrient>
       >({
         query: ({ id, ...patch }) => ({

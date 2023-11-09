@@ -64,7 +64,13 @@ const IngredientNutrientToolbar = ({
   );
 };
 
-export const IngredientForm = ({ data }: { data?: Ingredient }) => {
+export const IngredientForm = ({
+  data,
+  shallowRoute = true,
+}: {
+  data?: Ingredient;
+  shallowRoute?: boolean;
+}) => {
   const [formData, setFormData] = useState<Ingredient | undefined>(data);
   const [tab, setTab] = useState(0);
 
@@ -168,6 +174,7 @@ export const IngredientForm = ({ data }: { data?: Ingredient }) => {
           {tab == 0 && (
             <Card title="Ingredient Detail">
               <Form
+                shallowRoute={shallowRoute}
                 data={formData}
                 schema={schema}
                 createEndpoint={ingredientApi.endpoints.createIngredient}

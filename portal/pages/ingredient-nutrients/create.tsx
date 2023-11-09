@@ -12,12 +12,7 @@ const IngredientNutrientCreatePage = () => {
   return (
     <>
       <SeoHead title="Create Ingredient Nutrients" />
-      <CreateLayout
-        breadcrumbs={<Breadcrumbs items={breadcrumbs} />}
-        header={
-          <Typography variant="title">Create Ingredient Nutrients</Typography>
-        }
-      >
+      <CreateLayout breadcrumbs={<Breadcrumbs items={breadcrumbs} />}>
         <IngredientNutrientForm />
       </CreateLayout>
     </>

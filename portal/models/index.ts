@@ -77,3 +77,4 @@ export type { default as UnitHistory } from "./UnitHistory";
 export type { default as IngredientTypeHistory } from "./IngredientTypeHistory";
 export type { default as RequirementHistory } from "./RequirementHistory";
 export type { default as IngredientHistory } from "./IngredientHistory";
+export type { default as IngredientNutrientHistory } from "./IngredientNutrientHistory";
