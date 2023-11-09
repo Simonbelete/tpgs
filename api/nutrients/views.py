@@ -1,35 +1,19 @@
-from django.shortcuts import render
-from rest_framework import viewsets, status
-from rest_framework.views import APIView
-from django.http import HttpResponse, JsonResponse
-from datetime import date
-from django.conf import settings
-from rest_framework.parsers import MultiPartParser
-from tablib import Dataset
-from import_export import resources
-import pandas as pd
 from rest_framework.permissions import DjangoModelPermissions
 
 from core.views import (
     HistoryViewSet,
     SummaryViewSet,
     CoreModelViewSet,
-    XlsxExport,
-    XlsExport,
-    CsvExport,
-    XlsxImport,
-    XlsImport,
-    CsvImport
+    GenericExportView,
+    GenericImportView
 )
-from core.serializers import UploadSerializer
 from . import models
 from . import serializers
 from . import admin
 from . import filters
 
-##
-## Nutrient Group
-##
+# Nutrient Group
+
 
 class NutrientGroupViewSet(CoreModelViewSet):
     permission_classes = [DjangoModelPermissions]
@@ -39,43 +23,28 @@ class NutrientGroupViewSet(CoreModelViewSet):
     search_fields = ['name']
     ordering_fields = '__all__'
 
+
 class NutrientGroupHistoryViewSet(HistoryViewSet):
     queryset = models.NutrientGroup.history.all()
     serializer_class = serializers.NutrientGroupHistorySerializer
+
 
 class NutrientGroupSummaryViewSet(SummaryViewSet):
     def get_query(self):
         return models.NutrientGroup.all.get(pk=self.id_pk)
 
-## Nutrient Group Export
-class NutrientGroupXlsxExport(XlsxExport):
+
+class NutrientGroupExport(GenericExportView):
     def get_dataset(self):
         return admin.NutrientGroupResource().export()
 
-class NutrientGroupXlsExport(XlsExport):
-    def get_dataset(self):
-        return admin.NutrientGroupResource().export()
 
-class NutrientGroupCsvExport(CsvExport):
-    def get_dataset(self):
-        return admin.NutrientGroupResource().export()
-
-## Nutrient Group Import
-class NutrientGroupXlsxImport(XlsxImport):
+class NutrientGroupImport(GenericImportView):
     def get_resource(self):
-        return admin.NutrientGroupResource
+        return admin.NutrientGroupResource()
 
-class NutrientGroupXlsImport(XlsImport):
-    def get_resource(self):
-        return admin.NutrientGroupResource
 
-class NutrientGroupCsvImport(CsvImport):
-    def get_resource(self):
-        return admin.NutrientGroupResource
-
-##
-## Nutrient
-##
+# Nutrient
 class NutrientViewSet(CoreModelViewSet):
     queryset = models.Nutrient.all.all()
     serializer_class = serializers.NutrientSerializer_GET
@@ -88,34 +57,22 @@ class NutrientViewSet(CoreModelViewSet):
             return serializers.NutrientSerializer_GET
         return serializers.NutrientSerializer_POST
 
+
 class NutrientHistoryViewSet(HistoryViewSet):
     queryset = models.Nutrient.history.all()
     serializer_class = serializers.NutrientHistorySerializer
-    
+
+
 class NutrientSummaryViewSet(SummaryViewSet):
     def get_query(self):
         return models.Nutrient.all.get(pk=self.id_pk)
 
-class NutrientXlsxExport(XlsxExport):
+
+class NutrientExport(GenericExportView):
     def get_dataset(self):
         return admin.NutrientResource().export()
 
-class NutrientXlsExport(XlsExport):
-    def get_dataset(self):
-        return admin.NutrientResource().export()
 
-class NutrientCsvExport(CsvExport):
-   def get_dataset(self):
-        return admin.NutrientResource().export()
-
-class NutrientXlsxImport(XlsxImport):
-    def get_resource(self):
-        return admin.NutrientResource()
-    
-class NutrientXlsImport(XlsImport):
-    def get_resource(self):
-        return admin.NutrientResource()
-
-class NutrientCsvImport(CsvImport):
+class NutrientImport(GenericImportView):
     def get_resource(self):
         return admin.NutrientResource()

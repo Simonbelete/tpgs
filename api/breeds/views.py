@@ -1,14 +1,3 @@
-from django.shortcuts import render
-from rest_framework import viewsets, status
-from rest_framework.views import APIView
-from django.http import HttpResponse, JsonResponse
-from datetime import date
-from django.conf import settings
-from rest_framework.parsers import MultiPartParser
-from tablib import Dataset
-from import_export import resources
-import pandas as pd
-
 from core.views import (
     HistoryViewSet,
     SummaryViewSet,

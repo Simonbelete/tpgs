@@ -10,6 +10,12 @@ class NutrientGroupSerializer_GET(serializers.ModelSerializer):
         fields = '__all__'
 
 
+class NutrientGroupSerializer_POST(serializers.ModelSerializer):
+    class Meta:
+        model = models.NutrientGroup
+        fields = ['id', 'name']
+
+
 class NutrientGroupHistorySerializer(serializers.ModelSerializer):
     history_user = UserSerializer_GET()
 
@@ -26,18 +32,22 @@ class NutrientSerializer_GET(serializers.ModelSerializer):
         model = models.Nutrient
         fields = '__all__'
 
+
 class NutrientSerializer_SLUG(serializers.ModelSerializer):
-    nutrient_group = serializers.SlugRelatedField(read_only=True, slug_field='name')
+    nutrient_group = serializers.SlugRelatedField(
+        read_only=True, slug_field='name')
     unit = serializers.SlugRelatedField(read_only=True, slug_field='name')
 
     class Meta:
         model = models.Nutrient
         fields = ['id', 'name', 'abbreviation', 'nutrient_group', 'unit']
 
+
 class NutrientSerializer_POST(serializers.ModelSerializer):
     class Meta:
         model = models.Nutrient
         fields = '__all__'
+
 
 class NutrientHistorySerializer(serializers.ModelSerializer):
     history_user = UserSerializer_GET()
