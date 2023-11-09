@@ -58,6 +58,11 @@ class NutrientViewSet(CoreModelViewSet):
         return serializers.NutrientSerializer_POST
 
 
+class NutrientSummaryViewSet(SummaryViewSet):
+    def get_query(self):
+        return models.Nutrient.all.get(pk=self.id_pk)
+
+
 class NutrientHistoryViewSet(HistoryViewSet):
     queryset = models.Nutrient.history.all()
     serializer_class = serializers.NutrientHistorySerializer

@@ -1,54 +1,49 @@
 from django.urls import path, include
 from rest_framework import routers
+from rest_framework_nested.routers import NestedDefaultRouter
+
 from . import views
 
+
 router = routers.DefaultRouter()
+
+# Nutrient
 router.register(r'nutrients', views.NutrientViewSet,
                 basename='api_nutrients'),
+
+router.register(r'nutrients/(?P<id>.+)/histories',
+                views.NutrientHistoryViewSet, basename='api_nutrients_histories'),
+
+nutrient_summary_router = NestedDefaultRouter(
+    router, r'nutrients', lookup='id')
+
+nutrient_summary_router.register(r'summary', views.NutrientSummaryViewSet,
+                                 basename='api_nutrient_summary')
+
+# Nutrient Group
 router.register(r'nutrient-groups', views.NutrientGroupViewSet,
                 basename='api_nutrients_groups'),
 router.register(r'nutrient-groups/(?P<id>.+)/histories',
                 views.NutrientGroupHistoryViewSet, basename='api_nutrients_groups_histories'),
 
+group_summary_router = NestedDefaultRouter(
+    router, r'nutrient-groups', lookup='id')
+group_summary_router.register(r'summary', views.NutrientGroupSummaryViewSet,
+                              basename='api_nutrient_group_summary')
+
 
 urlpatterns = [
     path('', include(router.urls)),
+    path('', include(nutrient_summary_router.urls)),
+    path('', include(group_summary_router.urls)),
 
-    # Nutrient Group
-    path('nutrient-groups/export/', include([
-        path('xlsx', views.NutrientGroupXlsxExport.as_view(),
-             name="nutrient_groups_export_xlsx"),
-        path('xls', views.NutrientGroupXlsExport.as_view(),
-             name="nutrient_groups_export_xls"),
-        path('csv', views.NutrientGroupCsvExport.as_view(),
-             name="nutrient_groups_export_csv"),
-    ])),
+    path('nutrients/export/<str:export_type>/',
+         views.NutrientExport.as_view(), name="api_nutrient_export"),
+    path('nutrients/import/<str:import_type>/',
+         views.NutrientImport.as_view(), name="api_nutrient_import"),
 
-    path('nutrient-groups/import/', include([
-        path('xlsx', views.NutrientGroupXlsxImport.as_view(),
-             name="nutrient_groups_import_xlsx"),
-        path('xls', views.NutrientGroupXlsImport.as_view(),
-             name="nutrient_groups_import_xls"),
-        path('csv', views.NutrientGroupCsvImport.as_view(),
-             name="nutrient_groups_import_csv")
-    ])),
-
-    # Nutrients
-    path('nutrients/export/', include([
-         path('xlsx', views.NutrientXlsxExport.as_view(),
-              name="nutrients_export_xlsx"),
-         path('xls', views.NutrientXlsExport.as_view(),
-              name="nutrients_export_xls"),
-         path('csv', views.NutrientCsvExport.as_view(),
-              name="nutrients_export_csv"),
-         ])),
-
-    path('nutrients/import/', include([
-        path('xlsx', views.NutrientXlsxImport.as_view(),
-             name="nutrients_import_xlsx"),
-        path('xls', views.NutrientXlsImport.as_view(),
-             name="nutrients_import_xls"),
-        path('csv', views.NutrientCsvImport.as_view(),
-             name="nutrients_import_csv")
-    ]))
+    path('nutrient-groups/export/<str:export_type>/',
+         views.NutrientExport.as_view(), name="api_nutrient_group_export"),
+    path('nutrient-groups/import/<str:import_type>/',
+         views.NutrientImport.as_view(), name="api_nutrient_group_import"),
 ]
