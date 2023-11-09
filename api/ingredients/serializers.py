@@ -12,6 +12,12 @@ class IngredientTypeSerializer_GET(serializers.ModelSerializer):
         fields = ['id', 'name', 'display_name', 'is_active']
 
 
+class IngredientTypeSerializer_SLUG(serializers.ModelSerializer):
+    class Meta:
+        model = models.IngredientType
+        fields = ['id', 'name', 'display_name']
+
+
 class IngredientTypeSerializer_POST(serializers.ModelSerializer):
     class Meta:
         model = models.IngredientType
@@ -33,9 +39,12 @@ class IngredientSerializer_SLUG(serializers.ModelSerializer):
 
 
 class IngredientSerializer_GET(serializers.ModelSerializer):
+    ingredient_type = IngredientTypeSerializer_SLUG()
+
     class Meta:
         model = models.Ingredient
-        fields = ['id', 'name', 'display_name', 'is_active']
+        fields = ['id', 'name', 'display_name', 'code', 'nutrient_count',
+                  'ingredient_type', 'description', 'price', 'dm', 'is_active']
 
 
 class IngredientSerializer_POST(serializers.ModelSerializer):

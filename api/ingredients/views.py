@@ -115,7 +115,7 @@ class IngredientNutrientViewSet(CoreModelViewSet):
 
     def get_queryset(self):
         if ('ingredient_pk' in self.kwargs):
-            return self.queryset.filter(breed=self.kwargs['ingredient_pk'])
+            return self.queryset.filter(ingredient=self.kwargs['ingredient_pk'])
         return self.queryset
 
     def get_serializer_class(self):

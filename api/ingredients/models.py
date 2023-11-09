@@ -78,3 +78,10 @@ class Ingredient(CoreModel):
     @property
     def display_name(self):
         return self.name
+
+    @property
+    def nutrient_count(self):
+        return self.nutrients.count()
+
+    def nutrient_count(self):
+        return IngredientNutrient.objects.filter(ingredient=self.id).count()

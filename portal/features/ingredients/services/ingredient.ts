@@ -5,6 +5,7 @@ import {
   Ingredient,
   IngredientNutrient,
   IngredientAnalyses,
+  IngredientHistory,
 } from "@/models";
 import { AxiosResponse } from "axios";
 import clientSSR from "@/services/client_ssr";
@@ -29,7 +30,7 @@ export const ingredientApi = baseApi.injectEndpoints({
         }),
       }),
       getIngredientHistory: build.query<
-        Response<Ingredient>,
+        Response<IngredientHistory[]>,
         { id: number; query: Object }
       >({
         query: ({ id, query }) => ({
@@ -45,7 +46,7 @@ export const ingredientApi = baseApi.injectEndpoints({
         }),
       }),
       createIngredient: build.mutation<
-        Promise<AxiosResponse<Ingredient>>,
+        Promise<Ingredient>,
         Partial<Ingredient>
       >({
         query: (data: Partial<Ingredient>) => ({
@@ -55,7 +56,7 @@ export const ingredientApi = baseApi.injectEndpoints({
         }),
       }),
       updateIngredient: build.mutation<
-        Ingredient,
+        Promise<Ingredient>,
         Pick<Ingredient, "id"> & Partial<Ingredient>
       >({
         query: ({ id, ...patch }) => ({
@@ -76,7 +77,7 @@ export const ingredientApi = baseApi.injectEndpoints({
       // Nutrients
       getNutrientsOfIngredient: build.query<
         Response<IngredientNutrient[]>,
-        { id: number; query: Object }
+        { id: number; query?: Object }
       >({
         query: ({ id, query }) => ({
           url: `${URL}/${id}/${NUTRIENT_URL}`,
@@ -85,7 +86,7 @@ export const ingredientApi = baseApi.injectEndpoints({
         }),
       }),
       createNutrientForIngredient: build.mutation<
-        Promise<AxiosResponse<IngredientNutrient>>,
+        Promise<IngredientNutrient>,
         { id: number; data: Partial<Ingredient> }
       >({
         query: ({ id, data }) => ({
@@ -95,21 +96,21 @@ export const ingredientApi = baseApi.injectEndpoints({
         }),
       }),
       updateNutrietOfIngredient: build.mutation<
-        IngredientNutrient,
-        Pick<IngredientNutrient, "ingredient"> & Partial<Ingredient>
+        Promise<IngredientNutrient>,
+        Partial<IngredientNutrient>
       >({
-        query: ({ ingredient, ...patch }) => ({
-          url: `${URL}/${ingredient}/`,
+        query: ({ ingredient, id, ...patch }) => ({
+          url: `${URL}/${ingredient}/${NUTRIENT_URL}/${id}/`,
           method: "patch",
           data: patch,
         }),
       }),
       deleteNutrientOfIngredient: build.mutation<
-        Promise<AxiosResponse<IngredientNutrient>>,
-        { id: number; nutrient_id: number }
+        any,
+        Pick<IngredientNutrient, "ingredient" | "id">
       >({
-        query: ({ id, nutrient_id }) => ({
-          url: `${URL}/${id}/${NUTRIENT_URL}/${nutrient_id}`,
+        query: ({ ingredient, id }) => ({
+          url: `${URL}/${ingredient}/${NUTRIENT_URL}/${id}`,
           method: "delete",
         }),
       }),

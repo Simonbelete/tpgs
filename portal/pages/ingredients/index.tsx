@@ -3,11 +3,7 @@ import { ListLayout } from "@/layouts";
 import { useBreadcrumbs } from "@/hooks";
 import { Breadcrumbs } from "@/components";
 import { Typography } from "@mui/material";
-import {
-  IngredientList,
-  IngredientListFilter,
-  IngredientImportExport,
-} from "@/features/ingredients";
+import { IngredientList } from "@/features/ingredients";
 import { SeoHead } from "@/seo";
 
 const IngredientPage = () => {
@@ -15,19 +11,12 @@ const IngredientPage = () => {
 
   return (
     <>
-      <SeoHead title="Ingredients"/>
-      <ListLayout
-        breadcrumbs={<Breadcrumbs items={breadcrumbs} />}
-        header={<Typography variant="title">Ingredients</Typography>}
-        actions={<IngredientImportExport />}
-        filter={<IngredientListFilter />}
-      >
+      <SeoHead title="Ingredients" />
+      <ListLayout breadcrumbs={<Breadcrumbs items={breadcrumbs} />}>
         <IngredientList />
       </ListLayout>
     </>
   );
 };
-
-
 
 export default IngredientPage;
