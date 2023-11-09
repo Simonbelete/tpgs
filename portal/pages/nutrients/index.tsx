@@ -3,11 +3,7 @@ import { ListLayout } from "@/layouts";
 import { useBreadcrumbs } from "@/hooks";
 import { Breadcrumbs } from "@/components";
 import { Typography } from "@mui/material";
-import {
-  NutrientList,
-  NutrientListFilter,
-  NutrientImportExport,
-} from "@/features/nutrients";
+import { NutrientList } from "@/features/nutrients";
 import { SeoHead } from "@/seo";
 
 const NutrientPage = () => {
@@ -15,19 +11,12 @@ const NutrientPage = () => {
 
   return (
     <>
-      <SeoHead title="Nutrients"/>
-      <ListLayout
-        breadcrumbs={<Breadcrumbs items={breadcrumbs} />}
-        header={<Typography variant="title">Nutrients</Typography>}
-        actions={<NutrientImportExport />}
-        filter={<NutrientListFilter />}
-      >
+      <SeoHead title="Nutrients" />
+      <ListLayout breadcrumbs={<Breadcrumbs items={breadcrumbs} />}>
         <NutrientList />
       </ListLayout>
     </>
   );
 };
-
-
 
 export default NutrientPage;

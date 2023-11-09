@@ -3,9 +3,7 @@ import { Typography } from "@mui/material";
 import { Breadcrumbs } from "@/components";
 import { useBreadcrumbs } from "@/hooks";
 import { CreateLayout } from "@/layouts";
-import {
-  NutrientForm,
-} from "@/features/nutrients";
+import { NutrientForm } from "@/features/nutrients";
 import { SeoHead } from "@/seo";
 
 const NutrientCreatePage = () => {
@@ -14,10 +12,7 @@ const NutrientCreatePage = () => {
   return (
     <>
       <SeoHead title="Create Nutrient" />
-      <CreateLayout
-        breadcrumbs={<Breadcrumbs items={breadcrumbs} />}
-        header={<Typography variant="title">Create Nutrient</Typography>}
-      >
+      <CreateLayout breadcrumbs={<Breadcrumbs items={breadcrumbs} />}>
         <NutrientForm />
       </CreateLayout>
     </>
