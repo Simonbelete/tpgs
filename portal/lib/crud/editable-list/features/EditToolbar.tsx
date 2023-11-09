@@ -1,7 +1,10 @@
 import React, { useState } from "react";
 import {
   GridRowsProp,
+  GridToolbarColumnsButton,
   GridToolbarContainer,
+  GridToolbarDensitySelector,
+  GridToolbarQuickFilter,
   GridValidRowModel,
 } from "@mui/x-data-grid";
 import {
@@ -12,6 +15,9 @@ import {
   FormControl,
   DialogActions,
   Button,
+  Stack,
+  Typography,
+  IconButton,
 } from "@mui/material";
 import { useDispatch } from "react-redux";
 import { AbstractBaseModel } from "@/models";
@@ -23,6 +29,7 @@ import { enqueueSnackbar } from "notistack";
 import _ from "lodash";
 import randomId from "@/util/randomId";
 import { EditMode } from "@/types";
+import CloseIcon from "@mui/icons-material/Close";
 
 export interface EditToolbarProps<T extends EditMode, T2>
   extends AsyncDropdownProps<T2> {
@@ -30,12 +37,20 @@ export interface EditToolbarProps<T extends EditMode, T2>
   rows: GridRowsProp<T>;
   // T2 key
   mapperKey: string;
+  title?: string;
 }
 
 export default function EditToolbar<
   T extends EditMode & AbstractBaseModel,
   T2 extends AbstractBaseModel
->({ setRows, rows, label, endpoint, mapperKey }: EditToolbarProps<T, T2>) {
+>({
+  setRows,
+  rows,
+  label,
+  endpoint,
+  mapperKey,
+  title,
+}: EditToolbarProps<T, T2>) {
   const [openDialog, setOpenDialog] = useState(false);
   const [selectedValues, setSelectedValues] = useState<T2[]>([]);
 
@@ -87,7 +102,7 @@ export default function EditToolbar<
         }
       }
 
-      setRows((oldRows) => [...oldRows, ...(newRows as T[])]);
+      setRows((oldRows) => [...(newRows as T[]), ...oldRows]);
     }
     setSelectedValues([]);
     handleCloseDialog();
@@ -96,7 +111,16 @@ export default function EditToolbar<
   return (
     <>
       <Dialog disableEscapeKeyDown open={openDialog} maxWidth="md" fullWidth>
-        <DialogTitle>Select Nutrient</DialogTitle>
+        <DialogTitle>
+          <Stack direction={"row"} justifyContent={"space-between"}>
+            <Typography variant="h5" fontWeight={500} color={"text.main"}>
+              {title}
+            </Typography>
+            <IconButton onClick={handleCloseDialog}>
+              <CloseIcon />
+            </IconButton>
+          </Stack>
+        </DialogTitle>
         <DialogContent>
           <Box component="form" sx={{ display: "flex", flexWrap: "wrap" }}>
             <FormControl sx={{ m: 1, minWidth: 200, width: "100%" }}>
@@ -109,25 +133,39 @@ export default function EditToolbar<
             </FormControl>
           </Box>
         </DialogContent>
-        <DialogActions>
-          <Button onClick={handleOpenDialog} color="error">
+        <DialogActions
+          sx={{ display: "felx", justifyContent: "space-between" }}
+        >
+          <Button onClick={handleCloseDialog} color="error" size="small">
             Cancel
           </Button>
-          <Button onClick={handleSelected} variant="outlined">
+          <Button
+            onClick={handleSelected}
+            variant="contained"
+            disableElevation
+            size="small"
+          >
             Add
           </Button>
         </DialogActions>
       </Dialog>
-      <GridToolbarContainer>
-        <Button
-          color="primary"
-          startIcon={<AddIcon />}
-          variant="outlined"
-          onClick={handleOpenDialog}
-          size={"small"}
-        >
-          Add new
-        </Button>
+      <GridToolbarContainer
+        sx={{ display: "flex", justifyContent: "space-between" }}
+      >
+        <Box>
+          <GridToolbarColumnsButton />
+          <GridToolbarDensitySelector />
+          <Button
+            color="primary"
+            startIcon={<AddIcon />}
+            variant="text"
+            onClick={handleOpenDialog}
+            size={"small"}
+          >
+            Add new
+          </Button>
+        </Box>
+        <GridToolbarQuickFilter />
       </GridToolbarContainer>
     </>
   );

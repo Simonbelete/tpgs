@@ -63,6 +63,7 @@ class RequirementNutrientViewSet(CoreModelViewSet):
     serializer_class = serializers.RequirementNutrientSerializer_GET
     filterset_class = filters.RequirementNutrientFilter
     ordering_fields = '__all__'
+    search_fields = ['nutrient__name', 'nutrient__abbreviation', 'value']
 
     def get_queryset(self):
         if ('requirement_pk' in self.kwargs):

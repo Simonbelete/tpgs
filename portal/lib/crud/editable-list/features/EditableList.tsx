@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import {
   GridColDef,
   GridValidRowModel,
   GridActionsCellItem,
+  GridFilterModel,
 } from "@mui/x-data-grid";
 import {
   ApiEndpointMutation,
@@ -24,6 +25,8 @@ import EditableTable, {
 } from "../../components/EditableTable";
 import { LinearProgress } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/DeleteOutlined";
+import buildQuery from "@/util/buildQuery";
+import buildPage from "@/util/buildPage";
 
 export interface EditableListProps<
   T extends AbstractBaseModel & GridValidRowModel
@@ -34,7 +37,7 @@ export interface EditableListProps<
   beforeSubmit?: (values: Partial<T>) => Partial<T>;
   getEndpoint: ApiEndpointQuery<
     QueryDefinition<
-      { id: number; query: Object },
+      { id: number; query?: Object },
       ClientQueyFn,
       any,
       Response<T[]>,
@@ -44,7 +47,7 @@ export interface EditableListProps<
   > &
     QueryHooks<
       QueryDefinition<
-        { id: number; query: Object },
+        { id: number; query?: Object },
         ClientQueyFn,
         any,
         Response<T[]>,
@@ -98,12 +101,25 @@ export default function EditableList<T extends AbstractBaseModel & EditMode>({
   beforeSubmit,
 }: EditableListProps<T>) {
   const [rows, setRows] = useState<T[]>([]);
+  const [paginationModel, setPaginationModel] = useState({
+    page: 0,
+    pageSize: 10,
+  });
 
-  const { data, isLoading, refetch } = getEndpoint.useQuery(getQuery);
+  const [query, setQuery] = useState(getQuery);
+
+  const updateQuery = (q: Object) =>
+    setQuery({ id: getQuery.id, query: { ...getQuery.query, ...q } });
+
+  const { data, isLoading, refetch } = getEndpoint.useQuery(query);
 
   const [createTrigger, createResult] = createEndpoint.useMutation();
   const [updateTrigger, updateResult] = updateEndpoint.useMutation();
   const [deleteTrigger, deleteResult] = deleteEndpoint?.useMutation();
+
+  useEffect(() => {
+    updateQuery(buildPage(paginationModel));
+  }, [paginationModel]);
 
   useEffect(() => {
     if (data?.results) setRows(data?.results);
@@ -155,11 +171,21 @@ export default function EditableList<T extends AbstractBaseModel & EditMode>({
     }
   };
 
+  const onFilterChange = React.useCallback((filterModel: GridFilterModel) => {
+    // Here you save the data you need from the filter model
+    // setQueryOptions({ filterModel: { ...filterModel } });
+
+    if (filterModel.quickFilterValues) {
+      updateQuery({ search: filterModel.quickFilterValues[0] });
+    }
+  }, []);
+
   return (
     <EditableTable
-      hideFooterPagination={true}
+      hideFooterPagination={false}
       sx={{ background: "white", minHeight: "20px" }}
       rows={rows}
+      rowCount={data?.count || 0}
       loading={isLoading}
       // editMode="row"
       rowHeight={40}
@@ -175,6 +201,12 @@ export default function EditableList<T extends AbstractBaseModel & EditMode>({
         toolbar: { setRows, rows },
       }}
       onProcessRowUpdateError={handleOnProcessRowUpdateError}
+      pageSizeOptions={[10, 25, 50, 100]}
+      paginationModel={paginationModel}
+      paginationMode="server"
+      onPaginationModelChange={setPaginationModel}
+      filterMode="server"
+      onFilterModelChange={onFilterChange}
     />
   );
 }
