@@ -5,19 +5,49 @@ from nutrients.models import Nutrient
 from django.db import transaction
 
 
-class IngredientSerializer_SLUG(serializers.ModelSerializer):
-    class Meta:
-        model = models.Ingredient
-        fields = ['id', 'name']
-
+# Ingredient Type
 class IngredientTypeSerializer_GET(serializers.ModelSerializer):
     class Meta:
         model = models.IngredientType
-        fields = '__all__'
+        fields = ['id', 'name', 'display_name', 'is_active']
+
+
+class IngredientTypeSerializer_POST(serializers.ModelSerializer):
+    class Meta:
+        model = models.IngredientType
+        fields = ['id', 'name', 'is_active']
+
 
 class IngredientTypeHistorySerializer(serializers.ModelSerializer):
     class Meta:
         model = models.IngredientType.history.__dict__['model']
+        fields = '__all__'
+
+
+# Ingredient
+
+class IngredientSerializer_SLUG(serializers.ModelSerializer):
+    class Meta:
+        model = models.Ingredient
+        fields = ['id', 'name', 'display_name']
+
+
+class IngredientSerializer_GET(serializers.ModelSerializer):
+    class Meta:
+        model = models.Ingredient
+        fields = ['id', 'name', 'display_name', 'is_active']
+
+
+class IngredientSerializer_POST(serializers.ModelSerializer):
+    class Meta:
+        model = models.Ingredient
+        fields = ['name', 'code', 'description', 'price',
+                  'nutrients', 'dm', 'ingredient_type', 'is_active']
+
+
+class IngredientHistorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Ingredient.history.__dict__['model']
         fields = '__all__'
 
 
@@ -28,7 +58,8 @@ class IngredientNutrientSerializer_GET(serializers.ModelSerializer):
 
     class Meta:
         model = models.IngredientNutrient
-        fields = ['id', 'display_name', 'nutrient', 'ingredient', 'value', 'as_feed_value', 'unit']
+        fields = ['id', 'display_name', 'nutrient',
+                  'ingredient', 'value', 'as_feed_value', 'unit', 'is_active']
 
 
 class IngredientNutrientSerializer_POST(serializers.ModelSerializer):
@@ -37,61 +68,14 @@ class IngredientNutrientSerializer_POST(serializers.ModelSerializer):
         fields = ['id', 'nutrient', 'value']
 
     def create(self, validated_data):
-        ingredient = models.Ingredient.objects.get(
-            pk=self.context["view"].kwargs["ingredient_pk"])
-        validated_data['ingredient'] = ingredient
+        if ('ingredient_pk' in self.context["view"].kwargs):
+            ingredient = models.Ingredient.objects.get(
+                pk=self.context["view"].kwargs["ingredient_pk"])
+            validated_data['ingredient'] = ingredient
         return super().create(validated_data)
 
 
-class IngredientNutrientSerializer_REF(serializers.ModelSerializer):
-    id = serializers.IntegerField()
-
+class IngredientNutrientHistorySerializer(serializers.ModelSerializer):
     class Meta:
-        model = models.IngredientNutrient
-        fields = ['id', 'value']
-
-
-class IngredientNutrientSerializer_PATCH(serializers.ModelSerializer):
-    class Meta:
-        model = models.IngredientNutrient
-        fields = ['value']
-
-    def create(self, validated_data):
-        ingredient = models.Ingredient.objects.get(
-            pk=self.context["view"].kwargs["ingredient_pk"])
-        nutrient = Nutrient.objects.get(
-            pk=self.context["view"].kwargs["id"])
-        validated_data['ingredient'] = ingredient
-        validated_data['nutrient'] = nutrient
-        return super().create(validated_data)
-
-
-# Ingredient
-class IngredientSerializer_GET(serializers.ModelSerializer):
-    class Meta:
-        model = models.Ingredient
-        fields = '__all__'
-
-class IngredientSerializer_POST(serializers.ModelSerializer):
-    nutrients = IngredientNutrientSerializer_REF(many=True, required=False)
-
-    class Meta:
-        model = models.Ingredient
-        fields = ['name', 'code',
-                  'description', 'price', 'nutrients', 'dm', 'ingredient_type']
-
-    @transaction.atomic
-    def create(self, validated_data):
-        nutrients = validated_data.pop('nutrients', [])
-        instance = models.Ingredient.objects.create(**validated_data)
-        for nutrient in nutrients:
-            nutrient_model = Nutrient.objects.get(
-                pk=nutrient['id'])
-            models.IngredientNutrient.objects.create(
-                ingredient=instance, nutrient=nutrient_model, value=nutrient['value'])
-        return instance
-
-class IngredientHistorySerializer(serializers.ModelSerializer):
-    class Meta:
-        model = models.Ingredient.history.__dict__['model']
+        model = models.IngredientNutrient.history.__dict__['model']
         fields = '__all__'

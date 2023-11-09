@@ -17,21 +17,18 @@ from core.views import (
     HistoryViewSet,
     SummaryViewSet,
     CoreModelViewSet,
-    XlsxExport,
-    XlsExport,
-    CsvExport,
-    XlsxImport,
-    XlsImport,
-    CsvImport
+    GenericExportView,
+    GenericImportView
 )
 from core.pagination import AllPagination
-from core.serializers import UploadSerializer
 from . import models
 from . import serializers
 from . import admin
 from . import filters
 
-## Ingredient type 
+# Ingredient type
+
+
 class IngredientTypeViewSet(CoreModelViewSet):
     queryset = models.IngredientType.all.all()
     serializer_class = serializers.IngredientTypeSerializer_GET
@@ -39,43 +36,35 @@ class IngredientTypeViewSet(CoreModelViewSet):
     search_fields = ['name']
     ordering_fields = '__all__'
 
+    def get_serializer_class(self):
+        if self.request.method in ['POST', 'PUT', 'PATCH']:
+            return serializers.IngredientTypeSerializer_POST
+        return serializers.IngredientTypeSerializer_GET
+
+
 class IngredientTypeHistoryViewSet(HistoryViewSet):
     queryset = models.IngredientType.history.all()
     serializer_class = serializers.IngredientTypeHistorySerializer
+
 
 class IngredientTypeSummaryViewSet(SummaryViewSet):
     def get_query(self):
         return models.IngredientType.all.get(pk=self.id_pk)
 
-## Ingredient type export
-class IngredientTypeXlsxExport(XlsxExport):
+
+class IngredientTypeExport(GenericExportView):
     def get_dataset(self):
         return admin.IngredientTypeResource().export()
 
-class IngredientTypeXlsExport(XlsExport):
-    def get_dataset(self):
-        return admin.IngredientTypeResource().export()
 
-class IngredientTypeCsvExport(CsvExport):
-    def get_dataset(self):
-        return admin.IngredientTypeResource().export()
+class IngredientTypeImport(GenericImportView):
+    def get_resource(self):
+        return admin.IngredientTypeResource()
 
-## Ingredient type import
-class IngredientTypeXlsxImport(XlsxImport):
-    def get_resource(self):
-        return admin.IngredientTypeResource
-    
-class IngredientTypeXlsImport(XlsImport):
-    def get_resource(self):
-        return admin.IngredientTypeResource
-        
-class IngredientTypeCsvImport(CsvImport):
-    def get_resource(self):
-        return admin.IngredientTypeResource
-        
 
-## Ingredient
-class IngredientViewSet(viewsets.ModelViewSet):
+# Ingredient
+
+class IngredientViewSet(CoreModelViewSet):
     queryset = models.Ingredient.objects.all()
     serializer_class = serializers.IngredientSerializer_GET
     filterset_class = filters.IngredientFilter
@@ -87,13 +76,26 @@ class IngredientViewSet(viewsets.ModelViewSet):
             return serializers.IngredientSerializer_POST
         return serializers.IngredientSerializer_GET
 
+
 class IngredientHistoryViewSet(HistoryViewSet):
     queryset = models.Ingredient.history.all()
     serializer_class = serializers.IngredientHistorySerializer
 
+
 class IngredientSummaryViewSet(SummaryViewSet):
     def get_query(self):
         return models.Ingredient.all.get(pk=self.id_pk)
+
+
+class IngredientExport(GenericExportView):
+    def get_dataset(self):
+        return admin.IngredientResource().export()
+
+
+class IngredientImport(GenericImportView):
+    def get_resource(self):
+        return admin.IngredientResource()
+
 
 class IngredientAnalysesViewSet(viewsets.ViewSet):
     def get_queryset(self):
@@ -101,7 +103,7 @@ class IngredientAnalysesViewSet(viewsets.ViewSet):
             return models.Ingredient.all.get(pk=self.kwargs['id'])
         except models.Ingredient.DoesNotExist as ex:
             raise NotFound()
-    
+
     def list(self, request, id=None, **kwargs):
         queryset = self.get_queryset()
 
@@ -112,87 +114,42 @@ class IngredientAnalysesViewSet(viewsets.ViewSet):
             'composition_total': queryset.composition_total()
         }, status=200)
 
-## Ingredient Export
-class IngredientXlsxExport(XlsxExport):
-    def get_dataset(self):
-        return admin.IngredientResource().export()
 
-class IngredientXlsExport(XlsExport):
-    def get_dataset(self):
-        return admin.IngredientResource().export()
-
-class IngredientCsvExport(CsvExport):
-    def get_dataset(self):
-        return admin.IngredientResource().export()
-      
-
-## Ingredient Import        
-class IngredientXlsxImport(XlsxImport):
-    def get_resource(self):
-        return admin.IngredientResource()
-
-class IngredientXlsImport(XlsImport):
-    def get_resource(self):
-        return admin.IngredientResource()
-
-class IngredientCsvImport(CsvImport):
-    def get_resource(self):
-        return admin.IngredientResource()
+# Ingredient Nutrients
 
 
-class IngredientNutrientViewSet(viewsets.ModelViewSet):
-    pagination_class = AllPagination
+class IngredientNutrientViewSet(CoreModelViewSet):
+    queryset = models.IngredientNutrient.all.all()
     filterset_class = filters.IngredientNutrientFilter
     ordering_fields = '__all__'
     serializer_class = serializers.IngredientNutrientSerializer_GET
 
     def get_queryset(self):
-        return models.IngredientNutrient.objects.filter(ingredient=self.kwargs['ingredient_pk'])
+        if ('ingredient_pk' in self.kwargs):
+            return self.queryset.filter(breed=self.kwargs['ingredient_pk'])
+        return self.queryset
 
     def get_serializer_class(self):
-        if self.request.method == 'POST':
+        if self.request.method in ['POST', 'PUT', 'PATCH']:
             return serializers.IngredientNutrientSerializer_POST
-        if self.request.method in ['PUT', 'PATCH']:
-            return serializers.IngredientNutrientSerializer_PATCH
-        return serializers.IngredientNutrientSerializer_GET
-
-## Ingredient Nutrients
-class AllIngredientNutrientViewSet(viewsets.ModelViewSet):
-    queryset = models.IngredientNutrient.all.all()
-    serializer_class = serializers.IngredientNutrientSerializer_GET
-    filterset_class = filters.IngredientNutrientFilter
-
-    def get_serializer_class(self):
-        if self.request.method == 'POST':
-            return serializers.IngredientNutrientSerializer_POST
-        if self.request.method in ['PUT', 'PATCH']:
-            return serializers.IngredientNutrientSerializer_PATCH
         return serializers.IngredientNutrientSerializer_GET
 
 
-## Ingredient Export
-class IngredientNutrientXlsxExport(XlsxExport):
+class IngredientNutrientHistoryViewSet(HistoryViewSet):
+    queryset = models.IngredientNutrient.history.all()
+    serializer_class = serializers.IngredientNutrientHistorySerializer
+
+
+class IngredientNutrientSummaryViewSet(SummaryViewSet):
+    def get_query(self):
+        return models.IngredientNutrient.all.get(pk=self.id_pk)
+
+
+class IngredientNutrientExport(GenericExportView):
     def get_dataset(self):
         return admin.IngredientNutrientResource().export()
 
-class IngredientNutrientXlsExport(XlsExport):
-    def get_dataset(self):
-        return admin.IngredientNutrientResource().export()
 
-class IngredientNutrientCsvExport(CsvExport):
-    def get_dataset(self):
-        return admin.IngredientNutrientResource().export()
-      
-
-## Ingredient Nutrient Import        
-class IngredientNutrientXlsxImport(XlsxImport):
-    def get_resource(self):
-        return admin.IngredientNutrientResource()
-
-class IngredientNutrientXlsImport(XlsImport):
-    def get_resource(self):
-        return admin.IngredientNutrientResource()
-
-class IngredientNutrientCsvImport(CsvImport):
+class IngredientNutrientImport(GenericImportView):
     def get_resource(self):
         return admin.IngredientNutrientResource()

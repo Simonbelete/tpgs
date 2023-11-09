@@ -74,3 +74,4 @@ export type { default as HHEPGuidelineHistory } from "./HHEPGuidelineHistory";
 export type { default as HatcheryEggAnalyses } from "./HatcheryEggAnalyses";
 export type { default as RequirementNutrientHistory } from "./RequirementNutrientHistory";
 export type { default as UnitHistory } from "./UnitHistory";
+export type { default as IngredientTypeHistory } from "./IngredientTypeHistory";

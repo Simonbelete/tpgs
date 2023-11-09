@@ -10,17 +10,19 @@ class IngredientType(CoreModel):
     name = models.CharField(max_length=100, unique=True)
     history = HistoricalRecords()
 
+
 class IngredientNutrient(CoreModel):
     ingredient = models.ForeignKey(
         'ingredients.Ingredient', on_delete=models.CASCADE)
     nutrient = models.ForeignKey(
         'nutrients.Nutrient', on_delete=models.CASCADE)
     # Value by Dry Matter
-    value = models.DecimalField(max_digits=7, decimal_places=3,null=True, blank=True, default=0)
+    value = models.DecimalField(
+        max_digits=7, decimal_places=3, null=True, blank=True, default=0)
+    history = HistoricalRecords()
 
     class Meta:
         unique_together = ['ingredient', 'nutrient']
-
 
     @property
     def display_name(self):
@@ -37,7 +39,7 @@ class IngredientNutrient(CoreModel):
     def as_feed_value(self):
         """Dry matter to as feed conversion 
         """
-        return self.value * self.ingredient.dm /100 
+        return self.value * self.ingredient.dm / 100
 
 
 class Ingredient(CoreModel):
@@ -46,7 +48,8 @@ class Ingredient(CoreModel):
     ingredient_type = models.ManyToManyField(
         IngredientType, null=True, blank=True, related_name='ingredients')
     description = models.CharField(max_length=200, null=True, blank=True)
-    price = models.DecimalField(max_digits=10, decimal_places=3, null=True, blank=True, default=0) # kg
+    price = models.DecimalField(
+        max_digits=10, decimal_places=3, null=True, blank=True, default=0)  # kg
     # price = MoneyField(max_digits=14, null=True, blank=True, default=0,
     #                    decimal_places=2, default_currency='ETB')
     # price_unit = models.ForeignKey(
@@ -61,11 +64,9 @@ class Ingredient(CoreModel):
 
     def __str__(self) -> str:
         return self.name
-    
+
     def nutrient_count(self):
         return IngredientNutrient.objects.filter(ingredient=self.id).count()
-    
+
     def composition_total(self):
         return self.nutrients.through.objects.all().aggregate(sum=Sum('value'))['sum'] or 0
-
-
