@@ -13,14 +13,13 @@ eg 9999.999
 4. ```python manage.py create_groups```
 5. ```python manage.py cities_light```
 
-### Deploy
-
-```celery beat -l info```
-```celery worker -l info```
-
 ## Run Worker
 
-```celery worker --beat```
+```celery -A api worker -l INFO```
+
+Start flower web monitor
+```celery -A api  flower --port=5555 -l INFO```
+
 
 ## Creating New Tenant
 

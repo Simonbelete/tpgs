@@ -223,7 +223,7 @@ export const DirectoryFilter = ({
         <DialogActions
           sx={{ display: "felx", justifyContent: "space-between" }}
         >
-          <Button onClick={handleClose2} color="error">
+          <Button onClick={handleClose2} color="error" size="small">
             Cancel
           </Button>
           <Button

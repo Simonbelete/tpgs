@@ -5,6 +5,7 @@ from django.core.mail import EmailMultiAlternatives
 from django.template.loader import get_template, render_to_string
 from django.template import Context
 
+
 @shared_task
 def send_invitation_email(sender, email, token):
     """
@@ -20,9 +21,9 @@ def send_invitation_email(sender, email, token):
             'link': "{url}/verify/{token}".format(url=settings.SITE_URL, token=token)
         }
         email_html_message = render_to_string(
-                'email/account_invitation/account_invitation.html', context)
+            'email/account_invitation/account_invitation.html', context)
         email_plaintext_message = render_to_string(
-                'email/account_invitation/account_invitation.txt', context)
+            'email/account_invitation/account_invitation.txt', context)
         email_multi = EmailMultiAlternatives(
             "You have been invited to join {title}".format(
                 title="TPGS Platforms"),
@@ -34,11 +35,18 @@ def send_invitation_email(sender, email, token):
         notify.send(
             sender=sender,
             recipient=sender,
-            verb="Invitation email to {email} successfully sent".format(email=email), 
+            verb="Invitation email to {email} successfully sent".format(
+                email=email),
             level='info')
     except Exception as ex:
         notify.send(
             sender=sender,
             recipient=sender,
-            verb="Failed to send invitation email to {email}".format(email=email), 
+            verb="Failed to send invitation email to {email}".format(
+                email=email),
             level='error')
+
+
+@shared_task
+def test_task():
+    print('*****')

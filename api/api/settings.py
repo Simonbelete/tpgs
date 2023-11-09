@@ -145,6 +145,9 @@ CELERY_BROKER_URL = env('CELERY_RESULT_BACKEND')
 # this allows you to schedule items in the Django admin.
 CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers.DatabaseScheduler'
 
+# For cache backend
+CELERY_CACHE_BACKEND = 'django-cache'
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',

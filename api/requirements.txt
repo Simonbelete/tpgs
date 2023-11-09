@@ -43,3 +43,4 @@ django-celery-beat
 django-celery-results
 faker
 model_bakery
+flower

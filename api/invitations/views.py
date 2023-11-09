@@ -13,9 +13,10 @@ from rest_framework.exceptions import NotFound
 from . import models
 from . import serializers
 from . import filters
-from .tasks import send_invitation_email
+from .tasks import send_invitation_email, test_task
 from users.models import User
 from users.serializers import UserSerializer_GET
+
 
 class InvitationViewSet(viewsets.ModelViewSet):
     queryset = models.Invitation.objects.all()
@@ -39,6 +40,7 @@ class InvitationViewSet(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         serializer.save(inviter=self.request.user)
 
+
 class VerifyInvitationViewSet(viewsets.ViewSet):
     serializer_class = serializers.VerifyInvitationSerializer_POST
 
@@ -53,7 +55,7 @@ class VerifyInvitationViewSet(viewsets.ViewSet):
                 password = request.data['password']
                 name = request.data['name']
                 invitation = models.Invitation.objects.get(token=token)
-                if(invitation.expire_date < timezone.now().date()):
+                if (invitation.expire_date < timezone.now().date()):
                     return Response({
                         'error': 'token expired'
                     }, status=400)
@@ -73,24 +75,28 @@ class VerifyInvitationViewSet(viewsets.ViewSet):
                 'errors': {
                     'token': ['The given token is not valid']
                 }
-                },status=400)
+            }, status=400)
         except ValidationError as ex:
             return Response({
                 'message': 'Invalid input',
                 'errors': ex,
-            },status=400)
+            }, status=400)
         except Exception as ex:
             return Response({'error': str(ex)}, status=500)
 
+
 class ResendInvitationViewSet(viewsets.ViewSet):
     def create(self, request, id=None):
-        try:
-            invitation = models.Invitation.objects.get(pk=id)
-            send_invitation_email.delay(invitation.inviter.id, invitation.email, invitation.token)
-            return Response({}, status=200)
-        except models.Invitation.DoesNotExist:
-            raise NotFound()
-        except Exception as ex:
-            print('----')
-            print(ex)
-            return Response({}, status=500)
+        test_task.delay()
+        return Response({}, status=201)
+        # try:
+        #     invitation = models.Invitation.objects.get(pk=id)
+        #     send_invitation_email.delay(
+        #         invitation.inviter.id, invitation.email, invitation.token)
+        #     return Response({}, status=200)
+        # except models.Invitation.DoesNotExist:
+        #     raise NotFound()
+        # except Exception as ex:
+        #     print('----')
+        #     print(ex)
+        #     return Response({}, status=500)
