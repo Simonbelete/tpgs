@@ -10,6 +10,10 @@ class IngredientType(CoreModel):
     name = models.CharField(max_length=100, unique=True)
     history = HistoricalRecords()
 
+    @property
+    def display_name(self):
+        return self.name
+
 
 class IngredientNutrient(CoreModel):
     ingredient = models.ForeignKey(
@@ -70,3 +74,7 @@ class Ingredient(CoreModel):
 
     def composition_total(self):
         return self.nutrients.through.objects.all().aggregate(sum=Sum('value'))['sum'] or 0
+
+    @property
+    def display_name(self):
+        return self.name

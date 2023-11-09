@@ -1,25 +1,28 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { ListLayout } from "@/layouts";
 import { useBreadcrumbs } from "@/hooks";
 import { Breadcrumbs } from "@/components";
 import { Typography } from "@mui/material";
 import { IngredientTypeHistoryList } from "@/features/ingredient-types";
-import { useRouter } from "next/router";
 import { NextPageContext } from "next";
 import { SeoHead } from "@/seo";
+import { getServerSidePropsContext } from "@/services/getServerSidePropsContext";
+import { getIngredientTypeByIdSSR } from "@/features/ingredient-types/services";
+import { IngredientType } from "@/models";
 
-const IngredientTypeHistoryPage = ({ id }: { id: number }) => {
+const IngredientTypeHistoryPage = ({ data }: { data: IngredientType }) => {
   const { breadcrumbs } = useBreadcrumbs();
-  const router = useRouter();
 
   return (
     <>
       <SeoHead title="Ingredient Type Histories" />
       <ListLayout
         breadcrumbs={<Breadcrumbs items={breadcrumbs} />}
-        header={<Typography variant="title">Histories</Typography>}
+        header={
+          <Typography variant="title">Ingredient Type History</Typography>
+        }
       >
-        <IngredientTypeHistoryList id={id} />
+        <IngredientTypeHistoryList data={data} />
       </ListLayout>
     </>
   );
@@ -28,9 +31,11 @@ const IngredientTypeHistoryPage = ({ id }: { id: number }) => {
 export async function getServerSideProps(context: NextPageContext) {
   const { id } = context.query;
 
-  return {
-    props: { id },
-  };
+  return getServerSidePropsContext<IngredientType>({
+    context,
+    id: Number(id),
+    getByIdSSR: getIngredientTypeByIdSSR,
+  });
 }
 
 export default IngredientTypeHistoryPage;
