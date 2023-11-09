@@ -2,32 +2,35 @@ import { baseApi } from "@/services/baseApi";
 import {
   AbstractSummary,
   Response,
-  NutrientGroup,
-  NutrientGroupHistory,
+  RequirementNutrient,
+  RequirementNutrientHistory,
 } from "@/models";
 import { AxiosResponse } from "axios";
 import clientSSR from "@/services/client_ssr";
 import client from "@/services/client";
 import { NextPageContext } from "next";
 
-const URL = "/nutrient-groups";
+const URL = "/requirement-nutrients";
 const HISTORY_URL = `histories`;
 const SUMMARY_URL = `summary`;
 const EXPORT_URL = `${URL}/export`;
 const IMPORT_URL = `${URL}/import`;
 
-export const nutrientGroupApi = baseApi.injectEndpoints({
+export const requirementNutrientApi = baseApi.injectEndpoints({
   endpoints: (build) => {
     return {
-      getNutrientGroups: build.query<Response<NutrientGroup[]>, Object>({
+      getRequirementNutrients: build.query<
+        Response<RequirementNutrient[]>,
+        Object
+      >({
         query: (query?: Object) => ({
           url: `${URL}/`,
           method: "get",
           params: query,
         }),
       }),
-      getNutrientGroupHistory: build.query<
-        Response<NutrientGroupHistory[]>,
+      getRequirementNutrientHistory: build.query<
+        Response<RequirementNutrientHistory[]>,
         { id: number; query: Object }
       >({
         query: ({ id, query }) => ({
@@ -36,25 +39,25 @@ export const nutrientGroupApi = baseApi.injectEndpoints({
           params: query,
         }),
       }),
-      getNutrientGroupSummary: build.query<AbstractSummary, number>({
+      getRequirementNutrientSummary: build.query<AbstractSummary, number>({
         query: (id: number) => ({
           url: `${URL}/${id}/${SUMMARY_URL}/`,
           method: "get",
         }),
       }),
-      createNutrientGroup: build.mutation<
-        Promise<NutrientGroup>,
-        Partial<NutrientGroup>
+      createRequirementNutrient: build.mutation<
+        Promise<RequirementNutrient>,
+        Partial<RequirementNutrient>
       >({
-        query: (data: Partial<NutrientGroup>) => ({
+        query: (data: Partial<RequirementNutrient>) => ({
           url: `${URL}/`,
           method: "post",
           data: data,
         }),
       }),
-      updateNutrientGroup: build.mutation<
-        Promise<NutrientGroup>,
-        Pick<NutrientGroup, "id"> & Partial<NutrientGroup>
+      updateRequirementNutrient: build.mutation<
+        Promise<RequirementNutrient>,
+        Pick<RequirementNutrient, "id"> & Partial<RequirementNutrient>
       >({
         query: ({ id, ...patch }) => ({
           url: `${URL}/${id}/`,
@@ -62,7 +65,7 @@ export const nutrientGroupApi = baseApi.injectEndpoints({
           data: patch,
         }),
       }),
-      deleteNutrientGroup: build.mutation<any, number>({
+      deleteRequirementNutrient: build.mutation<any, number>({
         query: (id: number) => ({ url: `${URL}/${id}/`, method: "delete" }),
       }),
     };
@@ -70,30 +73,30 @@ export const nutrientGroupApi = baseApi.injectEndpoints({
   overrideExisting: false,
 });
 
-export const getNutrientGroupByIdSSR = async (
+export const getRequirementNutrientByIdSSR = async (
   context: NextPageContext,
   id: number
-): Promise<AxiosResponse<Response<NutrientGroup>>> =>
+): Promise<AxiosResponse<Response<RequirementNutrient>>> =>
   clientSSR(context).get(`${URL}/${id}`);
-export const exportNutrientGroupsXLSX = async () =>
+export const exportRequirementNutrientsXLSX = async () =>
   client.get(`${EXPORT_URL}/xlsx`);
-export const exportNutrientGroupsXLS = async () =>
+export const exportRequirementNutrientsXLS = async () =>
   client.get(`${EXPORT_URL}/xls`);
-export const exportNutrientGroupsCSV = async () =>
+export const exportRequirementNutrientsCSV = async () =>
   client.get(`${EXPORT_URL}/csv`, { responseType: "blob" });
-export const importNutrientGroupsXLSX = async (data: FormData) =>
+export const importRequirementNutrientsXLSX = async (data: FormData) =>
   client.post(`${IMPORT_URL}/xlsx`, data, {
     headers: {
       "Content-Type": "multipart/form-data",
     },
   });
-export const importNutrientGroupsCSV = async (data: FormData) =>
+export const importRequirementNutrientsCSV = async (data: FormData) =>
   client.post(`${IMPORT_URL}/csv`, data, {
     headers: {
       "Content-Type": "multipart/form-data",
     },
   });
-export const importNutrientGroupsXLS = async (data: FormData) =>
+export const importRequirementNutrientsXLS = async (data: FormData) =>
   client.post(`${IMPORT_URL}/xls`, data, {
     headers: {
       "Content-Type": "multipart/form-data",
@@ -101,11 +104,11 @@ export const importNutrientGroupsXLS = async (data: FormData) =>
   });
 
 export const {
-  useGetNutrientGroupsQuery,
-  useLazyGetNutrientGroupsQuery,
-  useGetNutrientGroupHistoryQuery,
-  useGetNutrientGroupSummaryQuery,
-  useCreateNutrientGroupMutation,
-  useUpdateNutrientGroupMutation,
-  useDeleteNutrientGroupMutation,
-} = nutrientGroupApi;
+  useGetRequirementNutrientsQuery,
+  useLazyGetRequirementNutrientsQuery,
+  useGetRequirementNutrientHistoryQuery,
+  useGetRequirementNutrientSummaryQuery,
+  useCreateRequirementNutrientMutation,
+  useUpdateRequirementNutrientMutation,
+  useDeleteRequirementNutrientMutation,
+} = requirementNutrientApi;

@@ -12,6 +12,10 @@ class NutrientGroup(CoreModel):
     def __str__(self):
         return self.name
 
+    @property
+    def display_name(self):
+        return self.name
+
 
 class Nutrient(CoreModel):
     name = models.CharField(max_length=100)
@@ -24,3 +28,7 @@ class Nutrient(CoreModel):
         Unit, on_delete=models.SET_NULL, null=True, blank=True, related_name='nutrients')
 
     history = HistoricalRecords()
+
+    @property
+    def display_name(self):
+        return self.name

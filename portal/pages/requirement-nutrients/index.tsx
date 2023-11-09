@@ -2,20 +2,20 @@ import React from "react";
 import { ListLayout } from "@/layouts";
 import { useBreadcrumbs } from "@/hooks";
 import { Breadcrumbs } from "@/components";
-import { NutrientGroupList } from "@/features/nutrient-group";
+import { RequirementNutrientList } from "@/features/requirement-nutrients";
 import { SeoHead } from "@/seo";
 
-const NutrientGroupPage = () => {
+const RequirementNutrientsPage = () => {
   const { breadcrumbs } = useBreadcrumbs();
 
   return (
     <>
-      <SeoHead title="Nutrient Group" />
+      <SeoHead title="Requirement Nutrients" />
       <ListLayout breadcrumbs={<Breadcrumbs items={breadcrumbs} />}>
-        <NutrientGroupList />
+        <RequirementNutrientList />
       </ListLayout>
     </>
   );
 };
 
-export default NutrientGroupPage;
+export default RequirementNutrientsPage;

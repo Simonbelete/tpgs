@@ -3,20 +3,20 @@ import { Typography } from "@mui/material";
 import { Breadcrumbs } from "@/components";
 import { useBreadcrumbs } from "@/hooks";
 import { CreateLayout } from "@/layouts";
-import { NutrientGroupForm } from "@/features/nutrient-group";
+import { RequirementNutrientForm } from "@/features/requirement-nutrients";
 import { SeoHead } from "@/seo";
 
-const NutrientGroupCreatePage = () => {
+const PenCreatePage = () => {
   const { breadcrumbs } = useBreadcrumbs();
 
   return (
     <>
-      <SeoHead title="Create Nutrient Group" />
+      <SeoHead title="Create Pen" />
       <CreateLayout breadcrumbs={<Breadcrumbs items={breadcrumbs} />}>
-        <NutrientGroupForm />
+        <RequirementNutrientForm />
       </CreateLayout>
     </>
   );
 };
 
-export default NutrientGroupCreatePage;
+export default PenCreatePage;

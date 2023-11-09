@@ -313,15 +313,36 @@ const SidebarMenu = () => {
             </Typography>
           </MenuItem>
         </SubMenu>
-        <MenuItem
-          component={<Link href="/requirements" />}
+        <SubMenu
+          label={
+            <Typography variant="body1" fontSize={14}>
+              Requirements
+            </Typography>
+          }
           icon={<ChecklistIcon fontSize="small" />}
-          active={RegExp("^/requirements(.*)$").test(router.pathname)}
+          defaultOpen={RegExp("^/requirements(.*)$").test(router.pathname)}
         >
-          <Typography variant="body1" fontSize={14}>
-            Requirements
-          </Typography>
-        </MenuItem>
+          <MenuItem
+            component={<Link href="/requirements" />}
+            icon={<AdjustIcon fontSize="small" />}
+            active={RegExp("^/requirements(.*)$").test(router.pathname)}
+          >
+            <Typography variant="body1" fontSize={14}>
+              Requirements
+            </Typography>
+          </MenuItem>
+          <MenuItem
+            component={<Link href="/requirement-nutrients" />}
+            icon={<AdjustIcon fontSize="small" />}
+            active={RegExp("^/requirement-nutrients(.*)$").test(
+              router.pathname
+            )}
+          >
+            <Typography variant="body1" fontSize={14}>
+              Nutrients
+            </Typography>
+          </MenuItem>
+        </SubMenu>
       </Menu>
       <div
         style={{ padding: "0 24px", marginBottom: "8px", marginTop: "32px" }}

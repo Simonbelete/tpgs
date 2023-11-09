@@ -1,22 +1,26 @@
 import React from "react";
 import { NextPageContext } from "next";
 import { EditLayout } from "@/layouts";
-import { NutrientGroupForm } from "@/features/nutrient-group";
-import { getNutrientGroupByIdSSR } from "@/features/nutrient-group/services";
+import { RequirementNutrientForm } from "@/features/requirement-nutrients";
+import { getRequirementNutrientByIdSSR } from "@/features/requirement-nutrients/services";
 import { Breadcrumbs, Loading } from "@/components";
 import { useBreadcrumbs } from "@/hooks";
-import { NutrientGroup } from "@/models";
+import { RequirementNutrient } from "@/models";
 import { SeoHead } from "@/seo";
 import { getServerSidePropsContext } from "@/services/getServerSidePropsContext";
 
-const NutrientGroupEditPage = ({ data }: { data: NutrientGroup }) => {
+const RequirementNutrientEditPage = ({
+  data,
+}: {
+  data: RequirementNutrient;
+}) => {
   const { breadcrumbs } = useBreadcrumbs();
 
   return (
     <>
       <SeoHead title={`${data.display_name || ""} - Edit`} />
       <EditLayout breadcrumbs={<Breadcrumbs items={breadcrumbs} />}>
-        <NutrientGroupForm data={data} />
+        <RequirementNutrientForm data={data} />
       </EditLayout>
     </>
   );
@@ -25,11 +29,11 @@ const NutrientGroupEditPage = ({ data }: { data: NutrientGroup }) => {
 export async function getServerSideProps(context: NextPageContext) {
   const { id } = context.query;
 
-  return getServerSidePropsContext<NutrientGroup>({
+  return getServerSidePropsContext<RequirementNutrient>({
     context,
     id: Number(id),
-    getByIdSSR: getNutrientGroupByIdSSR,
+    getByIdSSR: getRequirementNutrientByIdSSR,
   });
 }
 
-export default NutrientGroupEditPage;
+export default RequirementNutrientEditPage;
