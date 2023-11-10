@@ -10,6 +10,7 @@ export const GenerationDropdown = ({
   error,
   onChange,
   helperText,
+  disabled,
 }: {
   sex?: string;
   value?: any;
@@ -17,10 +18,12 @@ export const GenerationDropdown = ({
   error?: boolean;
   helperText?: string;
   onChange?: (event: any, newValue: any) => void;
+  disabled?: boolean;
 }) => {
   return (
     <AsyncDropdown<Pick<Chicken, "generation">>
       value={value}
+      disabled={disabled}
       dataKey="name"
       label={label}
       error={error}

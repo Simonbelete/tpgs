@@ -10,12 +10,14 @@ const HouseDropdown = ({
   error,
   onChange,
   helperText,
+  disabled,
 }: {
   value?: any;
   label?: string;
   error?: boolean;
   helperText?: string;
   onChange?: (event: any, newValue: any) => void;
+  disabled?: boolean;
 }) => {
   const [trigger, { isLoading, data }, lastPromiseInfo] =
     useLazyGetHousesQuery();
@@ -31,6 +33,7 @@ const HouseDropdown = ({
       value={value}
       dataKey="name"
       label={label}
+      disabled={disabled}
       error={error}
       placeholder="Select House"
       helperText={helperText}

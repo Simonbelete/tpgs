@@ -11,6 +11,7 @@ const PenDropdown = ({
   onChange,
   helperText,
   dataKey = "name",
+  disabled,
 }: {
   value?: any;
   label?: string;
@@ -18,6 +19,7 @@ const PenDropdown = ({
   helperText?: string;
   dataKey?: string;
   onChange?: (event: any, newValue: any) => void;
+  disabled?: boolean;
 }) => {
   return (
     <AsyncDropdown<Pen>
@@ -25,6 +27,7 @@ const PenDropdown = ({
       dataKey={dataKey}
       label={label}
       error={error}
+      disabled={disabled}
       placeholder="Select House / Pen"
       helperText={helperText}
       endpoint={penApi.endpoints.getPens}

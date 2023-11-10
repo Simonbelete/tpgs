@@ -310,6 +310,7 @@ export const DirectoryFilter = ({
                       fieldState: { error },
                     }) => (
                       <HatcheryDropdown
+                        disabled={selectedFarm == null ? true : false}
                         onChange={(_, data) => onChange(data)}
                         value={value}
                         error={!!error?.message}
@@ -327,6 +328,7 @@ export const DirectoryFilter = ({
                       fieldState: { error },
                     }) => (
                       <GenerationDropdown
+                        disabled={selectedFarm == null ? true : false}
                         onChange={(_, data) => onChange(data)}
                         value={value}
                         error={!!error?.message}
@@ -364,6 +366,7 @@ export const DirectoryFilter = ({
                       fieldState: { error },
                     }) => (
                       <HouseDropdown
+                        disabled={selectedFarm == null ? true : false}
                         onChange={(_, data) => onChange(data)}
                         value={value}
                         error={!!error?.message}
@@ -381,6 +384,7 @@ export const DirectoryFilter = ({
                       fieldState: { error },
                     }) => (
                       <PenDropdown
+                        disabled={selectedFarm == null ? true : false}
                         onChange={(_, data) => onChange(data)}
                         value={value}
                         error={!!error?.message}

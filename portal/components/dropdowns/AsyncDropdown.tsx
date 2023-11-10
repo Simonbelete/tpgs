@@ -144,7 +144,11 @@ export default function AsyncDropdown<T>({
         {createForm}
       </FullScreenModal>
       {label && (
-        <Typography variant="body2" fontWeight={700}>
+        <Typography
+          variant="body2"
+          fontWeight={700}
+          color={disabled ? "text.secondary" : "text.primary"}
+        >
           {label}
         </Typography>
       )}
@@ -192,7 +196,7 @@ export default function AsyncDropdown<T>({
                       <IconButton
                         sx={{ py: 0 }}
                         size="large"
-                        // color="secondary.main"
+                        disabled={disabled}
                         onClick={handleModalOpen}
                       >
                         <AddToQueueIcon />
