@@ -84,11 +84,13 @@ export default function AsyncDropdown<T>({
   };
 
   const handleInputChange = async (event: any, newValue: any) => {
-    const response = await trigger(
-      { search: newValue, ...buildPage(paginationModel), ...(query || {}) },
-      false
-    ).unwrap();
-    setOptions(response?.results || []);
+    if (event && event.type == "change") {
+      const response = await trigger(
+        { search: newValue, ...buildPage(paginationModel), ...(query || {}) },
+        false
+      ).unwrap();
+      setOptions(response?.results || []);
+    }
   };
 
   const [options, setOptions] = React.useState<T[]>([]);
