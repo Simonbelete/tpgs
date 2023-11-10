@@ -28,6 +28,7 @@ const FarmDropdown = ({
       error={error}
       helperText={helperText}
       endpoint={farmApi.endpoints.getFarms}
+      query={{ name__not: "public" }}
       onChange={onChange}
     />
   );

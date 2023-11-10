@@ -9,7 +9,7 @@ class Farm(TenantModel, TenantMixin):
     tenant_name = models.CharField(max_length=100)
     tenant_uuid = models.UUIDField(default=uuid.uuid4, null=False, blank=False)
     # Primary identifier
-    name = models.CharField(max_length=50)
+    name = models.CharField(max_length=50, unique=True)
     phone_number = models.CharField(max_length=20, null=True, blank=True)
     email = models.CharField(max_length=20, null=True, blank=True)
     website = models.CharField(max_length=20, null=True, blank=True)
@@ -32,8 +32,8 @@ class Farm(TenantModel, TenantMixin):
     @property
     def display_name(self):
         return "{name} - {country}, {city}".format(
-            name=self.name, 
-            country=self.country.name if self.country else "-", 
+            name=self.name,
+            country=self.country.name if self.country else "-",
             city=self.city.name if self.city else "-")
 
 
