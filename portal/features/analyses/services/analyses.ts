@@ -31,6 +31,13 @@ export const analyseApi = baseApi.injectEndpoints({
           params: query,
         }),
       }),
+      getGenderDistribution: build.query<Response<any>, Object>({
+        query: (query?: Object) => ({
+          url: `${URL}/gender-distribution/`,
+          method: "get",
+          params: query,
+        }),
+      }),
     };
   },
   overrideExisting: false,
@@ -43,4 +50,6 @@ export const {
   useLazyGetHdepQuery,
   useGetEggMassQuery,
   useLazyGetEggMassQuery,
+  useGetGenderDistributionQuery,
+  useLazyGetGenderDistributionQuery,
 } = analyseApi;

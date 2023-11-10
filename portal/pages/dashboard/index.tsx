@@ -6,14 +6,15 @@ import { ListLayout } from "@/layouts";
 import { useBreadcrumbs } from "@/hooks";
 import { Breadcrumbs } from "@/components";
 import { NotificationCard } from "@/features/notification";
-import { FarmsHeatmapSkeleton } from '@/features/dashboard';
+import { FarmsHeatmapSkeleton } from "@/features/dashboard";
 import { SeoHead } from "@/seo";
+import { GenderPercentageDistribution } from "@/features/analyses";
 
 const FarmsHeatmapComponent = dynamic(
   () => import("../../features/dashboard/farms-heatmap"),
   {
     ssr: false,
-    loading: () => <FarmsHeatmapSkeleton />
+    loading: () => <FarmsHeatmapSkeleton />,
   }
 );
 
@@ -22,29 +23,32 @@ const DashboardPage = () => {
 
   return (
     <>
-    <SeoHead title="Dashboard" />
-    <ListLayout
+      <SeoHead title="Dashboard" />
+      <ListLayout
         breadcrumbs={<Breadcrumbs items={breadcrumbs} />}
         header={<Typography variant="title">Dashboard</Typography>}
       >
-        <Box sx={{px: 2}}>
-         <Grid container spacing={5}>
+        <Box sx={{ px: 2 }}>
+          <Grid container spacing={5}>
             <Grid item spacing={3}>
               <Stats />
             </Grid>
             <Grid container item spacing={3}>
-              <Grid item xs={8} sx={{px: 0}}>
+              <Grid item xs={8} sx={{ px: 0 }}>
                 <FarmsHeatmapComponent />
               </Grid>
-              <Grid item xs={4} sx={{p: 0}}>
+              <Grid item xs={4} sx={{ p: 0 }}>
                 <NotificationCard />
               </Grid>
             </Grid>
             <Grid container item spacing={3}>
+              <Grid item xs={6}>
+                <GenderPercentageDistribution />
+              </Grid>
             </Grid>
-        </Grid>
+          </Grid>
         </Box>
-    </ListLayout>
+      </ListLayout>
     </>
   );
 };

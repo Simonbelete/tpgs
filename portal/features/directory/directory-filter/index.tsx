@@ -480,6 +480,7 @@ export const DirectoryFilter = ({
               </IconButton>
             </Box>
           </Stack>
+          <Divider />
           {showCompactFilters && (
             <Box mt={3}>
               <Stack direction={"column"} spacing={1} divider={<Divider />}>

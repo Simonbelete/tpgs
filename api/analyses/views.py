@@ -783,3 +783,19 @@ class FCRW(viewsets.ViewSet):
                     'fcr': fcr
                 })
             return Response({'results': results})
+
+
+class GenderDistributionViewSet(AnalysesViewSet):
+    @extend_schema(
+        parameters=ANALYSES_PARAMETERS
+    )
+    def list(self, request, **kwargs):
+        with tenant_context(self.get_farm(self.request.GET.get('farm', 0))):
+            queryset = self.filter_by_directory()
+
+            return Response({'results': {
+                'total_count': queryset.count(),
+                'total_male_count': queryset.filter(sex="M").count(),
+                'total_female_count': queryset.filter(sex="F").count(),
+                'total_other_count': queryset.filter(Q(sex__isnull=True) | Q(sex__exact="")).count()
+            }})

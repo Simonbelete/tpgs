@@ -14,6 +14,8 @@ router = routers.DefaultRouter()
 router.register(r'analyses/egg-production', views.EggProduction,
                 basename='api_analyses_egg_production')
 
+router.register(r'analyses/gender-distribution', views.GenderDistributionViewSet,
+                basename='api_analyses_gender-distribution')
 
 count_router = routers.DefaultRouter()
 count_router.register(r'analyses/count', views.CountViewSet,
@@ -59,6 +61,7 @@ pedigree_router.register(
 wbft_router = routers.DefaultRouter()
 wbft_router.register(
     r'analyses/(?P<farm_id>.+)/(?P<flock_id>.+)/(?P<house_id>.+)/wbft', views.WBFT, basename="api_wbft")
+
 
 urlpatterns = [
     path('', include(router.urls)),
