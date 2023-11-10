@@ -49,7 +49,7 @@ export default function AsyncDropdown<T>({
 }: AsyncDropdownProps<T>) {
   const [open, setOpen] = React.useState(false);
 
-  const [trigger, { data, isLoading }] = endpoint.useLazyQuery();
+  const [trigger, { data, isLoading, isFetching }] = endpoint.useLazyQuery();
 
   // Modal
   const [modalOpen, setModalOpen] = React.useState(false);
@@ -151,7 +151,7 @@ export default function AsyncDropdown<T>({
         defaultValue={value}
         getOptionLabel={(option) => option[dataKey] ?? ""}
         options={options}
-        loading={isLoading}
+        loading={isFetching}
         isOptionEqualToValue={(option, val) => option[dataKey] === val[dataKey]}
         onInputChange={handleInputChange}
         placeholder={placeholder}
@@ -171,7 +171,7 @@ export default function AsyncDropdown<T>({
               ...params.InputProps,
               endAdornment: (
                 <React.Fragment>
-                  {isLoading ? (
+                  {isFetching ? (
                     <CircularProgress color="inherit" size={20} />
                   ) : null}
                   {params.InputProps.endAdornment}

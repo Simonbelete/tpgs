@@ -187,7 +187,7 @@ export default function AsyncDropdown<T>({
               ...params.InputProps,
               endAdornment: (
                 <React.Fragment>
-                  {isLoading ? (
+                  {isFetching ? (
                     <CircularProgress color="inherit" size={20} />
                   ) : null}
                   {params.InputProps.endAdornment}
