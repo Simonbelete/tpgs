@@ -76,14 +76,16 @@ export const DirectoryFilter = ({
   default_start_week = 0,
   default_end_week = 20,
   compact,
+  initBatchFilter = [],
 }: {
-  onBatchFilterApply: (data: Directory) => void;
+  onBatchFilterApply: (data: Directory, filters?: Inputs[]) => void;
   onBatchFilterRemove: (data: number) => void;
   onIndividualFilterApply: (data: IndividualFilterProps) => void;
   onIndividualFilterRemove: (index: number) => void;
   default_start_week?: number;
   default_end_week?: number;
   compact?: boolean;
+  initBatchFilter?: Partial<Directory>[];
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isOpen2, setIsOpen2] = useState(false);
@@ -93,7 +95,7 @@ export const DirectoryFilter = ({
   const handleClose = () => setIsOpen(false);
   const handleClose2 = () => setIsOpen2(false);
 
-  const [batchFilters, setBatchFilters] = useState<Inputs[]>([]);
+  const [batchFilters, setBatchFilters] = useState<Inputs[]>(initBatchFilter);
   const [individualFilters, setIndividualFilters] = useState<
     IndividualFilterProps[]
   >([]);
@@ -289,7 +291,6 @@ export const DirectoryFilter = ({
                       <FarmDropdown
                         onChange={(_, data) => {
                           onChange(data);
-                          console.log(data);
                           setSelectedFarm(data);
                         }}
                         value={value}

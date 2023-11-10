@@ -21,6 +21,7 @@ export const GenderPercentageDistribution = ({
 }) => {
   const selector = useSelector((state: RootState) => state.tenant);
   const [data, setData] = useState<any[]>([]);
+  const [initData, setInitData] = useState<any>();
 
   const [trigger] = useLazyGetGenderDistributionQuery();
 
@@ -66,7 +67,8 @@ export const GenderPercentageDistribution = ({
   };
 
   const handleOnBatchFilterApplay = async (directory: Directory) => {
-    setData([...data, buildGraph(directory)]);
+    const result = await buildGraph(directory);
+    setData([...data, result]);
   };
 
   useEffect(() => {
@@ -99,6 +101,7 @@ export const GenderPercentageDistribution = ({
           default_end_week={41}
           onIndividualFilterApply={handleOnIndividualFilterApply}
           onIndividualFilterRemove={handleOnIndividualFilterRemove}
+          initBatchFilter={[{ farm: selector }]}
         />
       </Box>
       <Box mt={1}>
