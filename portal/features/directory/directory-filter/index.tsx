@@ -15,10 +15,11 @@ import {
   DialogContent,
   FormControl,
   DialogActions,
+  Badge,
 } from "@mui/material";
 import { LabeledInput } from "@/components/inputs";
 import Image from "next/image";
-import { Chicken, Directory, Farm } from "@/models";
+import { Chicken, Directory, Farm, DirectoryFilterData } from "@/models";
 import AddIcon from "@mui/icons-material/Add";
 import CloseIcon from "@mui/icons-material/Close";
 import { FarmDropdown } from "@/features/farms";
@@ -36,6 +37,7 @@ import {
   instance as axiosInstance,
 } from "@/services/client";
 import { useDispatch } from "react-redux";
+import FilterAltIcon from "@mui/icons-material/FilterAlt";
 
 export interface IndividualFilterProps {
   chicken: Chicken;
@@ -67,12 +69,6 @@ const schema2 = yup.object({
   chicken: yup.object().required("Select chicken"),
 });
 
-export interface DirectoryFilterData {
-  directories: Directory[];
-  start_week: number;
-  end_week: number;
-}
-
 export const DirectoryFilter = ({
   onBatchFilterApply,
   onBatchFilterRemove,
@@ -80,6 +76,7 @@ export const DirectoryFilter = ({
   onIndividualFilterRemove,
   default_start_week = 0,
   default_end_week = 20,
+  compact,
 }: {
   onBatchFilterApply: (data: Directory) => void;
   onBatchFilterRemove: (data: number) => void;
@@ -87,12 +84,14 @@ export const DirectoryFilter = ({
   onIndividualFilterRemove: (index: number) => void;
   default_start_week?: number;
   default_end_week?: number;
+  compact?: boolean;
 }) => {
   const dispatch = useDispatch();
   const [isOpen, setIsOpen] = useState(false);
   const [isOpen2, setIsOpen2] = useState(false);
   const [selectedFarm, setSelectedFarm] = useState<Farm | null>(null);
   const [newTenantInterceptor, setNewTenantInterceptor] = useState<any>();
+  const [showCompactFilters, setShowCompactFilters] = useState(false);
 
   const handleClose = () => setIsOpen(false);
   const handleClose2 = () => setIsOpen2(false);
@@ -102,14 +101,15 @@ export const DirectoryFilter = ({
     IndividualFilterProps[]
   >([]);
 
-  const { handleSubmit, control, setError, clearErrors } = useForm<Inputs>({
-    defaultValues: {
-      start_week: default_start_week,
-      end_week: default_end_week,
-    },
-    // @ts-ignore
-    resolver: yupResolver(schema),
-  });
+  const { handleSubmit, control, setError, clearErrors, reset } =
+    useForm<Inputs>({
+      defaultValues: {
+        start_week: default_start_week,
+        end_week: default_end_week,
+      },
+      // @ts-ignore
+      resolver: yupResolver(schema),
+    });
 
   const {
     handleSubmit: handleSubmit2,
@@ -151,10 +151,12 @@ export const DirectoryFilter = ({
   useEffect(() => {
     return () => {
       axiosInstance.interceptors.request.use(defaultTenantInterceptor);
+      reset();
     };
   }, []);
 
   useEffect(() => {
+    console.log(selectedFarm);
     if (selectedFarm != null) {
       clearErrors("farm");
       axiosInstance.interceptors.request.eject(tenantInterceptor);
@@ -455,176 +457,365 @@ export const DirectoryFilter = ({
           </Button>
         </DialogActions>
       </Dialog>
-      <Card
-        title="Filters"
-        actions={
-          <>
-            <Button
-              variant="contained"
-              startIcon={<AddIcon fontSize="small" />}
-              size="small"
-              onClick={() => setIsOpen(true)}
-              disableElevation
-            >
-              Flock Filter
-            </Button>
-            <Button
-              variant="outlined"
-              startIcon={<AddIcon fontSize="small" />}
-              size="small"
-              onClick={() => setIsOpen2(true)}
-              disableElevation
-            >
-              Individual
-            </Button>
-          </>
-        }
-      >
-        <Box mt={3}>
-          <Stack direction={"column"} spacing={1} divider={<Divider />}>
-            {batchFilters.map((e, i) => (
-              <Stack key={i} direction={"row"} justifyContent={"space-between"}>
-                <Stack
-                  direction={"row"}
-                  divider={
-                    <Box
-                      sx={{
-                        display: "flex",
-                        alignItems: "center",
-                        mt: "13px !important",
-                      }}
-                    >
-                      <Image
-                        alt="slash_arrow"
-                        src="/slash_forward_icon_134959.png"
-                        height={18}
-                        width={15}
-                      />
-                    </Box>
-                  }
-                  spacing={0.5}
+      {true ? (
+        <Box>
+          <Stack direction={"row"} justifyContent={"space-between"}>
+            <Typography variant="body1" fontWeight={600} color="text.primary">
+              Ttitle
+            </Typography>
+            <Box>
+              <IconButton
+                size="small"
+                onClick={() => setShowCompactFilters(!showCompactFilters)}
+                color={showCompactFilters ? "primary" : "secondary"}
+              >
+                <Badge
+                  badgeContent={batchFilters.length + individualFilters.length}
                 >
-                  <Stack direction={"column"}>
-                    <Typography
-                      variant="caption"
-                      fontSize={"0.67rem"}
-                      color="text.secondary"
-                    >
-                      Farm
-                    </Typography>
-                    <Typography variant="caption" color="text.primary">
-                      {e.farm ? (e.farm as any).name || 0 : "all"}
-                    </Typography>
-                  </Stack>
-                  <Stack direction={"column"}>
-                    <Typography
-                      variant="caption"
-                      fontSize={"0.67rem"}
-                      color="text.secondary"
-                    >
-                      Breed
-                    </Typography>
-                    <Typography variant="caption" color="text.primary">
-                      {e.breed ? (e.breed as any).name || 0 : "all"}
-                    </Typography>
-                  </Stack>
-                  <Stack direction={"column"}>
-                    <Typography
-                      variant="caption"
-                      fontSize={"0.67rem"}
-                      color="text.secondary"
-                    >
-                      Generation
-                    </Typography>
-                    <Typography variant="caption" color="text.primary">
-                      {e.generation ? e.generation || 0 : "all"}
-                    </Typography>
-                  </Stack>
-                  <Stack direction={"column"}>
-                    <Typography
-                      variant="caption"
-                      fontSize={"0.67rem"}
-                      color="text.secondary"
-                    >
-                      Hatchery
-                    </Typography>
-                    <Typography variant="caption" color="text.primary">
-                      {e.hatchery ? (e.hatchery as any).name || 0 : "all"}
-                    </Typography>
-                  </Stack>
-                  <Stack direction={"column"}>
-                    <Typography
-                      variant="caption"
-                      fontSize={"0.67rem"}
-                      color="text.secondary"
-                    >
-                      House
-                    </Typography>
-                    <Typography variant="caption" color="text.primary">
-                      {e.house ? (e.house as any).name || 0 : "all"}
-                    </Typography>
-                  </Stack>
-                  <Stack direction={"column"}>
-                    <Typography
-                      variant="caption"
-                      fontSize={"0.67rem"}
-                      color="text.secondary"
-                    >
-                      Pen
-                    </Typography>
-                    <Typography variant="caption" color="text.primary">
-                      {e.pen ? (e.pen as any).name || 0 : "all"}
-                    </Typography>
-                  </Stack>
-                  <Stack direction={"column"}>
-                    <Typography
-                      variant="caption"
-                      fontSize={"0.67rem"}
-                      color="text.secondary"
-                    >
-                      Sex
-                    </Typography>
-                    <Typography variant="caption" color="text.primary">
-                      {e.sex ? e.sex.name || 0 : "all"}
-                    </Typography>
-                  </Stack>
-                </Stack>
-                <Box>
-                  <Typography variant="caption" fontWeight={600}>
-                    ({e.start_week}, {e.end_week})
-                  </Typography>
-                </Box>
-                <Box>
-                  <IconButton onClick={() => handleBatchFilterRemove(i)}>
-                    <CloseIcon />
-                  </IconButton>
-                </Box>
-              </Stack>
-            ))}
+                  <FilterAltIcon fontSize="small" />
+                </Badge>
+              </IconButton>
+              <IconButton size="small" onClick={() => setIsOpen(true)}>
+                <AddIcon fontSize="small" />
+              </IconButton>
+            </Box>
           </Stack>
-
-          <Box mt={3}>
-            {individualFilters.map((e, i) => (
-              <Stack key={i} direction={"row"} justifyContent={"space-between"}>
-                <Typography variant="caption" color="text.primary">
-                  {e.chicken ? (e.chicken as any).display_name || 0 : "-"}
-                </Typography>
-                <Box>
-                  <Typography variant="caption" fontWeight={600}>
-                    ({e.start_week}, {e.end_week})
-                  </Typography>
-                </Box>
-                <Box>
-                  <IconButton onClick={() => handleIndividualFilterRemove(i)}>
-                    <CloseIcon />
-                  </IconButton>
-                </Box>
+          {showCompactFilters && (
+            <Box mt={3}>
+              <Stack direction={"column"} spacing={1} divider={<Divider />}>
+                {batchFilters.map((e, i) => (
+                  <Stack
+                    key={i}
+                    direction={"row"}
+                    justifyContent={"space-between"}
+                  >
+                    <Stack
+                      direction={"row"}
+                      divider={
+                        <Box
+                          sx={{
+                            display: "flex",
+                            alignItems: "center",
+                            mt: "13px !important",
+                          }}
+                        >
+                          <Image
+                            alt="slash_arrow"
+                            src="/slash_forward_icon_134959.png"
+                            height={18}
+                            width={15}
+                          />
+                        </Box>
+                      }
+                      spacing={0.5}
+                    >
+                      <Stack direction={"column"}>
+                        <Typography
+                          variant="caption"
+                          fontSize={"0.67rem"}
+                          color="text.secondary"
+                        >
+                          Farm
+                        </Typography>
+                        <Typography variant="caption" color="text.primary">
+                          {e.farm ? (e.farm as any).name || 0 : "all"}
+                        </Typography>
+                      </Stack>
+                      <Stack direction={"column"}>
+                        <Typography
+                          variant="caption"
+                          fontSize={"0.67rem"}
+                          color="text.secondary"
+                        >
+                          Breed
+                        </Typography>
+                        <Typography variant="caption" color="text.primary">
+                          {e.breed ? (e.breed as any).name || 0 : "all"}
+                        </Typography>
+                      </Stack>
+                      <Stack direction={"column"}>
+                        <Typography
+                          variant="caption"
+                          fontSize={"0.67rem"}
+                          color="text.secondary"
+                        >
+                          Generation
+                        </Typography>
+                        <Typography variant="caption" color="text.primary">
+                          {e.generation ? e.generation || 0 : "all"}
+                        </Typography>
+                      </Stack>
+                      <Stack direction={"column"}>
+                        <Typography
+                          variant="caption"
+                          fontSize={"0.67rem"}
+                          color="text.secondary"
+                        >
+                          Hatchery
+                        </Typography>
+                        <Typography variant="caption" color="text.primary">
+                          {e.hatchery ? (e.hatchery as any).name || 0 : "all"}
+                        </Typography>
+                      </Stack>
+                      <Stack direction={"column"}>
+                        <Typography
+                          variant="caption"
+                          fontSize={"0.67rem"}
+                          color="text.secondary"
+                        >
+                          House
+                        </Typography>
+                        <Typography variant="caption" color="text.primary">
+                          {e.house ? (e.house as any).name || 0 : "all"}
+                        </Typography>
+                      </Stack>
+                      <Stack direction={"column"}>
+                        <Typography
+                          variant="caption"
+                          fontSize={"0.67rem"}
+                          color="text.secondary"
+                        >
+                          Pen
+                        </Typography>
+                        <Typography variant="caption" color="text.primary">
+                          {e.pen ? (e.pen as any).name || 0 : "all"}
+                        </Typography>
+                      </Stack>
+                      <Stack direction={"column"}>
+                        <Typography
+                          variant="caption"
+                          fontSize={"0.67rem"}
+                          color="text.secondary"
+                        >
+                          Sex
+                        </Typography>
+                        <Typography variant="caption" color="text.primary">
+                          {e.sex ? e.sex.name || 0 : "all"}
+                        </Typography>
+                      </Stack>
+                    </Stack>
+                    <Box>
+                      <Typography variant="caption" fontWeight={600}>
+                        ({e.start_week}, {e.end_week})
+                      </Typography>
+                    </Box>
+                    <Box>
+                      <IconButton onClick={() => handleBatchFilterRemove(i)}>
+                        <CloseIcon />
+                      </IconButton>
+                    </Box>
+                  </Stack>
+                ))}
               </Stack>
-            ))}
-          </Box>
+
+              <Box mt={3}>
+                {individualFilters.map((e, i) => (
+                  <Stack
+                    key={i}
+                    direction={"row"}
+                    justifyContent={"space-between"}
+                  >
+                    <Typography variant="caption" color="text.primary">
+                      {e.chicken ? (e.chicken as any).display_name || 0 : "-"}
+                    </Typography>
+                    <Box>
+                      <Typography variant="caption" fontWeight={600}>
+                        ({e.start_week}, {e.end_week})
+                      </Typography>
+                    </Box>
+                    <Box>
+                      <IconButton
+                        onClick={() => handleIndividualFilterRemove(i)}
+                      >
+                        <CloseIcon />
+                      </IconButton>
+                    </Box>
+                  </Stack>
+                ))}
+              </Box>
+            </Box>
+          )}
         </Box>
-        <Box mt={5}></Box>
-      </Card>
+      ) : (
+        <Card
+          title="Filters"
+          actions={
+            <>
+              <Button
+                variant="contained"
+                startIcon={<AddIcon fontSize="small" />}
+                size="small"
+                onClick={() => setIsOpen(true)}
+                disableElevation
+              >
+                Flock Filter
+              </Button>
+              <Button
+                variant="outlined"
+                startIcon={<AddIcon fontSize="small" />}
+                size="small"
+                onClick={() => setIsOpen2(true)}
+                disableElevation
+              >
+                Individual
+              </Button>
+            </>
+          }
+        >
+          <Box mt={3}>
+            <Stack direction={"column"} spacing={1} divider={<Divider />}>
+              {batchFilters.map((e, i) => (
+                <Stack
+                  key={i}
+                  direction={"row"}
+                  justifyContent={"space-between"}
+                >
+                  <Stack
+                    direction={"row"}
+                    divider={
+                      <Box
+                        sx={{
+                          display: "flex",
+                          alignItems: "center",
+                          mt: "13px !important",
+                        }}
+                      >
+                        <Image
+                          alt="slash_arrow"
+                          src="/slash_forward_icon_134959.png"
+                          height={18}
+                          width={15}
+                        />
+                      </Box>
+                    }
+                    spacing={0.5}
+                  >
+                    <Stack direction={"column"}>
+                      <Typography
+                        variant="caption"
+                        fontSize={"0.67rem"}
+                        color="text.secondary"
+                      >
+                        Farm
+                      </Typography>
+                      <Typography variant="caption" color="text.primary">
+                        {e.farm ? (e.farm as any).name || 0 : "all"}
+                      </Typography>
+                    </Stack>
+                    <Stack direction={"column"}>
+                      <Typography
+                        variant="caption"
+                        fontSize={"0.67rem"}
+                        color="text.secondary"
+                      >
+                        Breed
+                      </Typography>
+                      <Typography variant="caption" color="text.primary">
+                        {e.breed ? (e.breed as any).name || 0 : "all"}
+                      </Typography>
+                    </Stack>
+                    <Stack direction={"column"}>
+                      <Typography
+                        variant="caption"
+                        fontSize={"0.67rem"}
+                        color="text.secondary"
+                      >
+                        Generation
+                      </Typography>
+                      <Typography variant="caption" color="text.primary">
+                        {e.generation ? e.generation || 0 : "all"}
+                      </Typography>
+                    </Stack>
+                    <Stack direction={"column"}>
+                      <Typography
+                        variant="caption"
+                        fontSize={"0.67rem"}
+                        color="text.secondary"
+                      >
+                        Hatchery
+                      </Typography>
+                      <Typography variant="caption" color="text.primary">
+                        {e.hatchery ? (e.hatchery as any).name || 0 : "all"}
+                      </Typography>
+                    </Stack>
+                    <Stack direction={"column"}>
+                      <Typography
+                        variant="caption"
+                        fontSize={"0.67rem"}
+                        color="text.secondary"
+                      >
+                        House
+                      </Typography>
+                      <Typography variant="caption" color="text.primary">
+                        {e.house ? (e.house as any).name || 0 : "all"}
+                      </Typography>
+                    </Stack>
+                    <Stack direction={"column"}>
+                      <Typography
+                        variant="caption"
+                        fontSize={"0.67rem"}
+                        color="text.secondary"
+                      >
+                        Pen
+                      </Typography>
+                      <Typography variant="caption" color="text.primary">
+                        {e.pen ? (e.pen as any).name || 0 : "all"}
+                      </Typography>
+                    </Stack>
+                    <Stack direction={"column"}>
+                      <Typography
+                        variant="caption"
+                        fontSize={"0.67rem"}
+                        color="text.secondary"
+                      >
+                        Sex
+                      </Typography>
+                      <Typography variant="caption" color="text.primary">
+                        {e.sex ? e.sex.name || 0 : "all"}
+                      </Typography>
+                    </Stack>
+                  </Stack>
+                  <Box>
+                    <Typography variant="caption" fontWeight={600}>
+                      ({e.start_week}, {e.end_week})
+                    </Typography>
+                  </Box>
+                  <Box>
+                    <IconButton onClick={() => handleBatchFilterRemove(i)}>
+                      <CloseIcon />
+                    </IconButton>
+                  </Box>
+                </Stack>
+              ))}
+            </Stack>
+
+            <Box mt={3}>
+              {individualFilters.map((e, i) => (
+                <Stack
+                  key={i}
+                  direction={"row"}
+                  justifyContent={"space-between"}
+                >
+                  <Typography variant="caption" color="text.primary">
+                    {e.chicken ? (e.chicken as any).display_name || 0 : "-"}
+                  </Typography>
+                  <Box>
+                    <Typography variant="caption" fontWeight={600}>
+                      ({e.start_week}, {e.end_week})
+                    </Typography>
+                  </Box>
+                  <Box>
+                    <IconButton onClick={() => handleIndividualFilterRemove(i)}>
+                      <CloseIcon />
+                    </IconButton>
+                  </Box>
+                </Stack>
+              ))}
+            </Box>
+          </Box>
+          <Box mt={5}></Box>
+        </Card>
+      )}
     </>
   );
 };

@@ -1,15 +1,11 @@
 import React, { useState } from "react";
-import {
-  DirectoryFilter,
-  DirectoryFilterData,
-  IndividualFilterProps,
-} from "@/features/directory";
+import { DirectoryFilter, IndividualFilterProps } from "@/features/directory";
 import { useLazyGetEggMassQuery } from "../services";
 import dynamic from "next/dynamic";
 import { BarChartSkeleton } from "@/components";
 import { Box } from "@mui/material";
 import directoryToLabel from "@/util/directoryToLabel";
-import { Directory } from "@/models";
+import { Directory, DirectoryFilterData } from "@/models";
 
 const Plot = dynamic(() => import("react-plotly.js"), {
   ssr: false,
