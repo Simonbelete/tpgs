@@ -79,7 +79,7 @@ const FarmSelect = () => {
             >
               <FormControlLabel
                 sx={{ p: 0 }}
-                value={e.name}
+                value={e}
                 control={<Radio size="small" />}
                 label={e.display_name}
               />

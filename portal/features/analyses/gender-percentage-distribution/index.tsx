@@ -2,14 +2,14 @@ import React, { useEffect, useState } from "react";
 import { DirectoryFilter, IndividualFilterProps } from "@/features/directory";
 import { useLazyGetGenderDistributionQuery } from "../services";
 import dynamic from "next/dynamic";
-import { BarChartSkeleton, StatisticsCard } from "@/components";
+import { PieChartSkeleton, StatisticsCard } from "@/components";
 import { Box } from "@mui/material";
 import directoryToLabel from "@/util/directoryToLabel";
 import { Directory, DirectoryFilterData } from "@/models";
 
 const Plot = dynamic(() => import("react-plotly.js"), {
   ssr: false,
-  loading: () => <BarChartSkeleton />,
+  loading: () => <PieChartSkeleton />,
 });
 
 export const GenderPercentageDistribution = ({
@@ -23,7 +23,7 @@ export const GenderPercentageDistribution = ({
 
   const handleOnBatchFilterApplay = async (directory: Directory) => {
     const query = {
-      farm: (directory.farm as any).id || null,
+      farm: directory.farm ? (directory.farm as any).id || null : null,
       hatchery: directory.hatchery
         ? (directory.hatchery as any).id || null
         : null,
@@ -64,10 +64,6 @@ export const GenderPercentageDistribution = ({
     }
   };
 
-  useEffect(() => {
-    console.log(data);
-  }, [data]);
-
   const handleonBatchFilterRemove = (index: number) => {
     const newData = data.filter((e, i) => i != index);
     setData(newData);
@@ -90,6 +86,7 @@ export const GenderPercentageDistribution = ({
           default_end_week={41}
           onIndividualFilterApply={handleOnIndividualFilterApply}
           onIndividualFilterRemove={handleOnIndividualFilterRemove}
+          defaultBatchFilters={[{ name: "test" }]}
         />
       </Box>
       <Box mt={1}>

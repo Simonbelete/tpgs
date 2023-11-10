@@ -18,7 +18,7 @@ import { Farm } from "@/models";
 import farm_service from "../services/farm_service";
 import WindowIcon from "@mui/icons-material/Window";
 import HouseIcon from "@mui/icons-material/House";
-import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import Link from "next/link";
 import { useSelector, useDispatch } from "react-redux";
 import { useRouter } from "next/router";
@@ -65,7 +65,7 @@ const FarmsMenu = () => {
         startIcon={<HouseIcon />}
         endIcon={<ArrowDropDownIcon />}
         color="secondary"
-        sx={{padding: 0, mr: 1}}
+        sx={{ padding: 0, mr: 1 }}
       >
         <Typography variant="caption" color="text.primary">
           {tenant.name}
@@ -100,7 +100,7 @@ const FarmsMenu = () => {
                     <MenuItem
                       key={key}
                       onClick={() => {
-                        dispatch(setTenant(e.name));
+                        dispatch(setTenant(e));
                         router.reload();
                       }}
                     >

@@ -43,7 +43,7 @@ const DashboardPage = () => {
             </Grid>
             <Grid container item spacing={3}>
               <Grid item xs={6}>
-                <GenderPercentageDistribution />
+                <GenderPercentageDistribution compact={true} />
               </Grid>
             </Grid>
           </Grid>
