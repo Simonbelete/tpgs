@@ -11,6 +11,7 @@ const HatcheryDropdown = ({
   onChange,
   helperText,
   dataKey = "name",
+  disabled,
 }: {
   value?: any;
   label?: string;
@@ -18,6 +19,7 @@ const HatcheryDropdown = ({
   helperText?: string;
   dataKey?: string;
   onChange?: (event: any, newValue: any) => void;
+  disabled?: boolean;
 }) => {
   return (
     <AsyncDropdown<Hatchery>
@@ -31,6 +33,7 @@ const HatcheryDropdown = ({
       onChange={onChange}
       createForm={<HatcheryForm />}
       createFormTitle="Create Hatchery"
+      disabled={disabled}
     />
   );
 };

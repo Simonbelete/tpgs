@@ -36,9 +36,6 @@ import {
   instance as axiosInstance,
 } from "@/services/client";
 import { useDispatch } from "react-redux";
-import { baseApi } from "@/services/baseApi";
-import { hatcheryApi } from "@/features/hatchery/services";
-import { store } from "@/store";
 
 export interface IndividualFilterProps {
   chicken: Chicken;
@@ -105,7 +102,7 @@ export const DirectoryFilter = ({
     IndividualFilterProps[]
   >([]);
 
-  const { handleSubmit, control, setError } = useForm<Inputs>({
+  const { handleSubmit, control, setError, clearErrors } = useForm<Inputs>({
     defaultValues: {
       start_week: default_start_week,
       end_week: default_end_week,
@@ -159,8 +156,11 @@ export const DirectoryFilter = ({
 
   useEffect(() => {
     if (selectedFarm != null) {
+      clearErrors("farm");
       axiosInstance.interceptors.request.eject(tenantInterceptor);
       axiosInstance.defaults.headers["x-Request-Id"] = selectedFarm.name;
+    } else {
+      setError("farm", { message: "Select a valid farm" });
     }
   }, [selectedFarm]);
 

@@ -31,6 +31,7 @@ export interface AsyncDropdownProps<T> {
     EndpointDefinitions
   > &
     QueryHooks<QueryDefinition<Query, ClientQueyFn, any, Response<T[]>, any>>;
+  disabled?: boolean;
 }
 
 export default function AsyncDropdown<T>({
@@ -47,6 +48,7 @@ export default function AsyncDropdown<T>({
   onChange,
   endpoint,
   placeholder,
+  disabled = false,
   ...props
 }: AsyncDropdownProps<T>) {
   const [open, setOpen] = React.useState(false);
@@ -166,6 +168,7 @@ export default function AsyncDropdown<T>({
         ListboxProps={{
           onScroll: handleScroll,
         }}
+        disabled={disabled}
         renderInput={(params) => (
           <TextField
             {...params}
