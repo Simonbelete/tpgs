@@ -33,7 +33,9 @@ export const defaultTenantInterceptor = async (
 ) => {
   const session = await getSession();
   if (session) {
-    config.headers["x-Request-Id"] = cookies.get("REQUEST_ID") ?? "public";
+    config.headers["x-Request-Id"] = cookies.get("REQUEST_ID")
+      ? cookies.get("REQUEST_ID")["name"]
+      : "public";
   }
   return config;
 };

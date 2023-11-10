@@ -1,5 +1,4 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { DirectoryDialog, DirectoryDropdown } from "@/features/directory";
 import { Card } from "@/components";
 import {
   Box,
@@ -77,7 +76,6 @@ export const DirectoryFilter = ({
   default_start_week = 0,
   default_end_week = 20,
   compact,
-  defaultBatchFilters,
 }: {
   onBatchFilterApply: (data: Directory) => void;
   onBatchFilterRemove: (data: number) => void;
@@ -86,13 +84,10 @@ export const DirectoryFilter = ({
   default_start_week?: number;
   default_end_week?: number;
   compact?: boolean;
-  defaultBatchFilters?: Partial<Directory>[];
 }) => {
-  const dispatch = useDispatch();
   const [isOpen, setIsOpen] = useState(false);
   const [isOpen2, setIsOpen2] = useState(false);
   const [selectedFarm, setSelectedFarm] = useState<Farm | null>(null);
-  const [newTenantInterceptor, setNewTenantInterceptor] = useState<any>();
   const [showCompactFilters, setShowCompactFilters] = useState(false);
 
   const handleClose = () => setIsOpen(false);
@@ -151,12 +146,6 @@ export const DirectoryFilter = ({
   };
 
   useEffect(() => {
-    if (defaultBatchFilters && defaultBatchFilters?.length != 0) {
-      setBatchFilters(defaultBatchFilters);
-      // TODO: Handle array of filters
-      onBatchFilterApply(defaultBatchFilters[0] as any);
-    }
-
     return () => {
       axiosInstance.interceptors.request.use(defaultTenantInterceptor);
       reset();

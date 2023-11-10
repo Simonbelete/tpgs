@@ -6,6 +6,8 @@ import { PieChartSkeleton, StatisticsCard } from "@/components";
 import { Box } from "@mui/material";
 import directoryToLabel from "@/util/directoryToLabel";
 import { Directory, DirectoryFilterData } from "@/models";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store";
 
 const Plot = dynamic(() => import("react-plotly.js"), {
   ssr: false,
@@ -17,11 +19,12 @@ export const GenderPercentageDistribution = ({
 }: {
   compact?: boolean;
 }) => {
+  const selector = useSelector((state: RootState) => state.tenant);
   const [data, setData] = useState<any[]>([]);
 
   const [trigger] = useLazyGetGenderDistributionQuery();
 
-  const handleOnBatchFilterApplay = async (directory: Directory) => {
+  const buildGraph = async (directory: Directory) => {
     const query = {
       farm: directory.farm ? (directory.farm as any).id || null : null,
       hatchery: directory.hatchery
@@ -35,6 +38,7 @@ export const GenderPercentageDistribution = ({
       end_week: directory.end_week,
       sex: directory.sex ? directory.sex.value : null,
     };
+
     const response = await trigger(query, false).unwrap();
 
     if (response.results) {
@@ -46,23 +50,32 @@ export const GenderPercentageDistribution = ({
       const other_percentage =
         (response.results["total_other_count"] / total_count) * 100 || 0;
 
-      setData([
-        ...data,
-        {
-          values: [male_percentage, female_percentage, other_percentage],
-          labels: ["Male", "Femal", "Unknown"],
-          type: "pie",
-          name: directoryToLabel(directory),
-          domain: {
-            row: Math.floor(data.length / 2),
-            column: data.length % 2 == 0 ? 0 : 1,
-          },
-          hoverinfo: "label+percent+name",
-          textinfo: "none",
+      return {
+        values: [male_percentage, female_percentage, other_percentage],
+        labels: ["Male", "Femal", "Unknown"],
+        type: "pie",
+        name: directoryToLabel(directory),
+        domain: {
+          row: Math.floor(data.length / 2),
+          column: data.length % 2 == 0 ? 0 : 1,
         },
-      ]);
+        hoverinfo: "label+percent+name",
+        textinfo: "none",
+      };
     }
   };
+
+  const handleOnBatchFilterApplay = async (directory: Directory) => {
+    setData([...data, buildGraph(directory)]);
+  };
+
+  useEffect(() => {
+    // Load Current Farm init data
+    // @ts-ignore
+    buildGraph({ farm: selector }).then((result) => {
+      setData([result]);
+    });
+  }, []);
 
   const handleonBatchFilterRemove = (index: number) => {
     const newData = data.filter((e, i) => i != index);
@@ -86,7 +99,6 @@ export const GenderPercentageDistribution = ({
           default_end_week={41}
           onIndividualFilterApply={handleOnIndividualFilterApply}
           onIndividualFilterRemove={handleOnIndividualFilterRemove}
-          defaultBatchFilters={[{ name: "test" }]}
         />
       </Box>
       <Box mt={1}>
