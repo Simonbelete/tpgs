@@ -2,17 +2,10 @@ import { configureStore } from "@reduxjs/toolkit";
 import { setupListeners } from "@reduxjs/toolkit/query";
 import { tenantReducer } from "@/features/farms";
 import { formulaReducer } from "@/features/formula";
-import { ingredientFormReducer } from "@/features/ingredients";
 import { onBoardingReducer } from "@/features/onboarding";
 import { SettingReducer } from "@/features/settings";
 import { invitationFilterReducer } from "@/features/invitations";
-import { directoryBuilderReducer } from "@/features/directory";
-import { countryListReducer } from "@/features/countries";
-import { cityListReducer } from "@/features/cities";
-import { regionListReducer } from "@/features/regions";
-import { chickenListReducer } from "@/features/chickens";
 import { filterReducer } from "./slices";
-import { requirementFormReducer } from "@/features/requirements";
 
 import { baseApi } from "@/services/baseApi";
 import { houseApi } from "@/features/houses/services";
@@ -34,6 +27,7 @@ import { notificationApi } from "@/features/notification/services";
 import { requirementApi } from "@/features/requirements/services";
 import { ingredientNutrientApi } from "@/features/ingredient-nutrients/services";
 import { ingredientApi } from "@/features/ingredients/services";
+import { hatcheryApi } from "@/features/hatchery/services";
 
 import { rtkQueryErrorLogger } from "./middlewares/rtkQueryErrorLogger";
 import { urlQueryBuilder } from "./middlewares/urlQueryBuilder";
@@ -42,17 +36,10 @@ export const store = configureStore({
   reducer: {
     tenant: tenantReducer,
     filter: filterReducer,
-    ingredientForm: ingredientFormReducer,
     onBoarding: onBoardingReducer,
     setting: SettingReducer,
     invitationFilter: invitationFilterReducer,
-    directoryBuilder: directoryBuilderReducer,
-    countryList: countryListReducer,
-    cityList: cityListReducer,
-    regionList: regionListReducer,
-    chickenList: chickenListReducer,
     formula: formulaReducer,
-    requirementForm: requirementFormReducer,
 
     // // Apis
     [houseApi.reducerPath]: houseApi.reducer,
@@ -74,6 +61,7 @@ export const store = configureStore({
     [requirementApi.reducerPath]: requirementApi.reducer,
     [ingredientNutrientApi.reducerPath]: ingredientNutrientApi.reducer,
     [ingredientApi.reducerPath]: ingredientApi.reducer,
+    [hatcheryApi.reducerPath]: hatcheryApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(

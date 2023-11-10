@@ -21,6 +21,7 @@ export const hatcheryApi = baseApi.injectEndpoints({
           method: "get",
           params: query,
         }),
+        providesTags: ["TENANT_AWARE_LIST"],
       }),
       getHatcheryHistory: build.query<
         Response<Hatchery>,

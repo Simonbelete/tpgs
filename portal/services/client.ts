@@ -1,5 +1,9 @@
 import { Response } from "@/models";
-import axios, { AxiosResponse, AxiosError } from "axios";
+import axios, {
+  AxiosResponse,
+  AxiosError,
+  InternalAxiosRequestConfig,
+} from "axios";
 import { getSession } from "next-auth/react";
 import NProgress from "nprogress";
 import Cookies from "universal-cookie";
@@ -10,7 +14,7 @@ const cookies = new Cookies();
 const calculatePercentage = (loaded: number, total: number) =>
   Math.floor(loaded * 1.0) / total;
 
-const instance = axios.create({
+export const instance = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL + "/api",
   timeout: 5000,
 });
@@ -19,10 +23,24 @@ instance.interceptors.request.use(async (config) => {
   const session = await getSession();
   if (session) {
     config.headers.Authorization = `Bearer ${session.accessToken}`;
-    config.headers["x-Request-Id"] = cookies.get("REQUEST_ID") ?? "public";
+    // config.headers["x-Request-Id"] = cookies.get("REQUEST_ID") ?? "public";
   }
   return config;
 });
+
+export const defaultTenantInterceptor = async (
+  config: InternalAxiosRequestConfig<any>
+) => {
+  const session = await getSession();
+  if (session) {
+    config.headers["x-Request-Id"] = cookies.get("REQUEST_ID") ?? "public";
+  }
+  return config;
+};
+
+export const tenantInterceptor = instance.interceptors.request.use(
+  defaultTenantInterceptor
+);
 
 if (typeof window !== "undefined") {
   instance.interceptors.request.use(
@@ -68,13 +86,14 @@ if (typeof window !== "undefined") {
 
 export const clientBaseQuery =
   ({ baseUrl }: { baseUrl: string } = { baseUrl: "/api" }): ClientQueyFn =>
-  async ({ url, method, data, params }) => {
+  async ({ url, method, data, params, headers }) => {
     try {
       const result = await instance({
         url: baseUrl + url,
         method,
         data,
         params,
+        headers: headers,
       });
       return {
         data: {

@@ -51,7 +51,8 @@ export default function AsyncDropdown<T>({
 }: AsyncDropdownProps<T>) {
   const [open, setOpen] = React.useState(false);
 
-  const [trigger, { data, isLoading }] = endpoint.useLazyQuery();
+  const [trigger, { data, isLoading, isFetching, status }] =
+    endpoint.useLazyQuery();
 
   // Modal
   const [modalOpen, setModalOpen] = React.useState(false);
@@ -65,12 +66,17 @@ export default function AsyncDropdown<T>({
 
   const handleOnOpen = async () => {
     setOpen(true);
-    if (options.length == 0) {
+    try {
       const response = await trigger(
-        { ...buildPage(paginationModel), ...(query || {}) },
+        {
+          ...buildPage(paginationModel),
+          ...(query || {}),
+        },
         false
       ).unwrap();
       setOptions(response?.results || []);
+    } catch (ex) {
+      setOptions([]);
     }
   };
   const handleOnClose = () => {
@@ -109,7 +115,6 @@ export default function AsyncDropdown<T>({
   };
 
   const handleScroll = (event: any) => {
-    console.log("----------------");
     if (
       paginationModel.page >=
       Math.floor((data?.count || 0) / paginationModel.pageSize)
@@ -152,7 +157,7 @@ export default function AsyncDropdown<T>({
         defaultValue={value}
         getOptionLabel={(option) => option[dataKey] ?? ""}
         options={options}
-        loading={isLoading}
+        loading={isFetching}
         isOptionEqualToValue={(option, val) => option[dataKey] === val[dataKey]}
         onInputChange={handleInputChange}
         placeholder={placeholder}

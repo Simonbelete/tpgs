@@ -8,6 +8,7 @@ export interface ClientQueyFn
       method: AxiosRequestConfig["method"];
       data?: AxiosRequestConfig["data"];
       params?: AxiosRequestConfig["params"];
+      headers?: AxiosRequestConfig["headers"];
     },
     unknown,
     unknown

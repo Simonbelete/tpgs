@@ -18,7 +18,7 @@ import {
 } from "@mui/material";
 import { LabeledInput } from "@/components/inputs";
 import Image from "next/image";
-import { Chicken, Directory } from "@/models";
+import { Chicken, Directory, Farm } from "@/models";
 import AddIcon from "@mui/icons-material/Add";
 import CloseIcon from "@mui/icons-material/Close";
 import { FarmDropdown } from "@/features/farms";
@@ -30,6 +30,15 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import { Dropdown } from "@/components/dropdowns";
 import { HouseDropdown } from "@/features/houses";
+import {
+  defaultTenantInterceptor,
+  tenantInterceptor,
+  instance as axiosInstance,
+} from "@/services/client";
+import { useDispatch } from "react-redux";
+import { baseApi } from "@/services/baseApi";
+import { hatcheryApi } from "@/features/hatchery/services";
+import { store } from "@/store";
 
 export interface IndividualFilterProps {
   chicken: Chicken;
@@ -82,8 +91,11 @@ export const DirectoryFilter = ({
   default_start_week?: number;
   default_end_week?: number;
 }) => {
+  const dispatch = useDispatch();
   const [isOpen, setIsOpen] = useState(false);
   const [isOpen2, setIsOpen2] = useState(false);
+  const [selectedFarm, setSelectedFarm] = useState<Farm | null>(null);
+  const [newTenantInterceptor, setNewTenantInterceptor] = useState<any>();
 
   const handleClose = () => setIsOpen(false);
   const handleClose2 = () => setIsOpen2(false);
@@ -138,6 +150,19 @@ export const DirectoryFilter = ({
     setIndividualFilters(newFilters);
     onIndividualFilterRemove(index + batchFilters.length);
   };
+
+  useEffect(() => {
+    return () => {
+      axiosInstance.interceptors.request.use(defaultTenantInterceptor);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (selectedFarm != null) {
+      axiosInstance.interceptors.request.eject(tenantInterceptor);
+      axiosInstance.defaults.headers["x-Request-Id"] = selectedFarm.name;
+    }
+  }, [selectedFarm]);
 
   return (
     <>
@@ -252,7 +277,7 @@ export const DirectoryFilter = ({
           <form onSubmit={handleSubmit(onSubmit)}>
             <Box component="form" sx={{ display: "flex", flexWrap: "wrap" }}>
               <Typography variant="caption" mb={2}>
-                *Leave empty field will consider all values
+                *Leaving field empty will consider all values
               </Typography>
               <Grid container spacing={2}>
                 <Grid item xs={12} md={6}>
@@ -264,7 +289,11 @@ export const DirectoryFilter = ({
                       fieldState: { error },
                     }) => (
                       <FarmDropdown
-                        onChange={(_, data) => onChange(data)}
+                        onChange={(_, data) => {
+                          onChange(data);
+                          console.log(data);
+                          setSelectedFarm(data);
+                        }}
                         value={value}
                         error={!!error?.message}
                         helperText={error?.message}
