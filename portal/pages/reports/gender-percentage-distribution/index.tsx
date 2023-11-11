@@ -2,7 +2,7 @@ import React from "react";
 import { useBreadcrumbs } from "@/hooks";
 import { Breadcrumbs } from "@/components";
 import { SeoHead } from "@/seo";
-import { EggProductive } from "@/features/analyses";
+import { GenderPercentageDistribution } from "@/features/analyses";
 import { Typography } from "@mui/material";
 import { ReportingLayout } from "@/layouts";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
@@ -12,16 +12,16 @@ const EggProductivePage = () => {
 
   return (
     <>
-      <SeoHead title="Chickens Egg Production Productivity" />
+      <SeoHead title="Chicken Sex Percentage Distribution" />
       <ReportingLayout
         breadcrumbs={<Breadcrumbs items={breadcrumbs} />}
         header={
           <Typography variant="title">
-            Chickens Egg Production Productivity
+            Chickens Sex Percentage Distribution
           </Typography>
         }
       >
-        <EggProductive />
+        <GenderPercentageDistribution />
       </ReportingLayout>
     </>
   );

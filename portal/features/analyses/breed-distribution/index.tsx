@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { DirectoryFilter, IndividualFilterProps } from "@/features/directory";
-import { useLazyGetGenderDistributionQuery } from "../services";
+import { useLazyGetBreedDistributionQuery } from "../services";
 import dynamic from "next/dynamic";
 import { PieChartSkeleton, StatisticsCard } from "@/components";
 import { Box } from "@mui/material";
@@ -14,16 +14,11 @@ const Plot = dynamic(() => import("react-plotly.js"), {
   loading: () => <PieChartSkeleton />,
 });
 
-export const GenderPercentageDistribution = ({
-  compact,
-}: {
-  compact?: boolean;
-}) => {
+export const BreedDistribution = ({ compact }: { compact?: boolean }) => {
   const selector = useSelector((state: RootState) => state.tenant);
   const [data, setData] = useState<any[]>([]);
-  const [initData, setInitData] = useState<any>();
 
-  const [trigger] = useLazyGetGenderDistributionQuery();
+  const [trigger] = useLazyGetBreedDistributionQuery();
 
   const buildGraph = async (directory: Directory) => {
     const query = {
@@ -42,26 +37,22 @@ export const GenderPercentageDistribution = ({
 
     const response = await trigger(query, false).unwrap();
 
-    if (response.results) {
-      const total_count = response.results["total_count"];
-      const male_percentage =
-        (response.results["total_male_count"] / total_count) * 100 || 0;
-      const female_percentage =
-        (response.results["total_female_count"] / total_count) * 100 || 0;
-      const other_percentage =
-        (response.results["total_other_count"] / total_count) * 100 || 0;
+    const labels = [];
+    const values = [];
 
+    for (let val in response.results) {
+      labels.push(response.results[val]["name"]);
+      values.push(response.results[val]["percentage"]);
+    }
+
+    if (response.results) {
       return {
-        values: [male_percentage, female_percentage, other_percentage],
-        labels: ["Male", "Femal", "Unknown"],
+        values: values,
+        labels: labels,
         type: "pie",
-        name: directoryToLabel(directory),
-        domain: {
-          row: Math.floor(data.length / 2),
-          column: data.length % 2 == 0 ? 0 : 1,
-        },
         hoverinfo: "label+percent+name",
         textinfo: "none",
+        name: directoryToLabel(directory),
       };
     }
   };
@@ -75,7 +66,17 @@ export const GenderPercentageDistribution = ({
     // Load Current Farm init data
     // @ts-ignore
     buildGraph({ farm: selector }).then((result) => {
-      setData([result]);
+      console.log(result);
+      setData([
+        {
+          values: [10, 20, 30],
+          labels: ["x", "y", "z"],
+          type: "pie",
+          hoverinfo: "label+percent+name",
+          textinfo: "none",
+          name: "d",
+        },
+      ]);
     });
   }, []);
 
@@ -96,7 +97,7 @@ export const GenderPercentageDistribution = ({
         <StatisticsCard>
           <Box sx={{ px: 2 }}>
             <DirectoryFilter
-              title={"Sex Percentage Distribution"}
+              title={"Breeds"}
               compact={compact}
               onBatchFilterApply={handleOnBatchFilterApplay}
               onBatchFilterRemove={handleonBatchFilterRemove}
@@ -110,7 +111,7 @@ export const GenderPercentageDistribution = ({
           <Box mt={1}>
             <Plot
               layout={{
-                title: "Sex Percentage Distribution",
+                title: "Breeds",
                 height: 500,
                 grid: {
                   rows:
@@ -128,7 +129,7 @@ export const GenderPercentageDistribution = ({
         <Box>
           <Box>
             <DirectoryFilter
-              title={"Sex Percentage Distribution"}
+              title={"Breeds"}
               compact={compact}
               onBatchFilterApply={handleOnBatchFilterApplay}
               onBatchFilterRemove={handleonBatchFilterRemove}
@@ -142,7 +143,7 @@ export const GenderPercentageDistribution = ({
           <Box mt={10}>
             <Plot
               layout={{
-                title: "Sex Percentage Distribution",
+                title: "Breeds",
                 height: 500,
                 grid: {
                   rows:

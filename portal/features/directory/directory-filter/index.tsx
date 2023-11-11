@@ -77,6 +77,7 @@ export const DirectoryFilter = ({
   default_end_week = 20,
   compact,
   initBatchFilter = [],
+  title,
 }: {
   onBatchFilterApply: (data: Directory, filters?: Inputs[]) => void;
   onBatchFilterRemove: (data: number) => void;
@@ -86,6 +87,7 @@ export const DirectoryFilter = ({
   default_end_week?: number;
   compact?: boolean;
   initBatchFilter?: Partial<Directory>[];
+  title?: string;
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isOpen2, setIsOpen2] = useState(false);
@@ -458,7 +460,7 @@ export const DirectoryFilter = ({
         <Box>
           <Stack direction={"row"} justifyContent={"space-between"}>
             <Typography variant="body1" fontWeight={600} color="text.primary">
-              Ttitle
+              {title}
             </Typography>
             <Box>
               <IconButton

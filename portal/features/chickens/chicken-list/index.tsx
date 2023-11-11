@@ -20,14 +20,30 @@ import {
   importChickensXLSX,
 } from "../services";
 import { Chicken } from "@/models";
-import { houseApi } from "@/features/houses/services";
 import { Typography } from "@mui/material";
 import Link from "next/link";
 import dayjs from "dayjs";
+import { breedApi } from "@/features/breeds/services";
 
 export const ChickenList = () => {
   const columns: GridColDef[] = [
     { field: "tag", headerName: "Tag", flex: 1 },
+    {
+      field: "breed",
+      headerName: "Breed",
+      flex: 1,
+      minWidth: 150,
+      renderCell: (params: GridRenderCellParams<any>) => {
+        if (params.row.breed == null) return <></>;
+        return (
+          <Typography color={"link.primary"} variant="body2">
+            <Link href={`/breeds/${params.row.breed.id}`}>
+              {params.row.breed.display_name}
+            </Link>
+          </Typography>
+        );
+      },
+    },
     {
       field: "pen",
       headerName: "Pen",
@@ -80,15 +96,13 @@ export const ChickenList = () => {
       actions={[EditAction, HistoryAction, PermanentlyDeleteAction]}
       getEndpoint={chickenApi.endpoints.getChickens}
       deleteEndpoint={chickenApi.endpoints.deleteChicken}
-      filters={
-        {
-          // house: {
-          //   label: "House",
-          //   dataDisplayKey: "name",
-          //   endpoint: houseApi.endpoints.getHouses,
-          // },
-        }
-      }
+      filters={{
+        breed: {
+          label: "Breed",
+          endpoint: breedApi.endpoints.getBreeds,
+          dataDisplayKey: "name",
+        },
+      }}
       menus={
         <>
           <CreateButton />

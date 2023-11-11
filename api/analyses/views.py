@@ -2,9 +2,9 @@ from django.shortcuts import render
 from rest_framework import viewsets, status
 import django_filters
 from rest_framework.response import Response
-from django.db.models import Count, Sum, Avg, F, Q
+from django.db.models import Count, Sum, Avg, F, Q, ExpressionWrapper, DecimalField, IntegerField, DurationField
 from django_tenants.utils import tenant_context
-from drf_spectacular.utils import extend_schema, OpenApiParameter, OpenApiExample
+from drf_spectacular.utils import extend_schema, OpenApiParameter
 from django.db import connection
 from datetime import timedelta, date
 from rest_framework.exceptions import NotFound
@@ -18,6 +18,7 @@ from feeds.models import Feed
 from weights.models import Weight
 from chickens.models import Chicken
 from users.models import User
+from breeds.models import Breed
 from .calculate_analyses import calculate_hdep, calculate_hhep, calculate_egg_mass
 
 
@@ -798,4 +799,59 @@ class GenderDistributionViewSet(AnalysesViewSet):
                 'total_male_count': queryset.filter(sex="M").count(),
                 'total_female_count': queryset.filter(sex="F").count(),
                 'total_other_count': queryset.filter(Q(sex__isnull=True) | Q(sex__exact="")).count()
+            }})
+
+
+# TODO: set pagination
+class BreedDistributionViewSet(AnalysesViewSet):
+    @extend_schema(
+        parameters=ANALYSES_PARAMETERS
+    )
+    def list(self, request, **kwargs):
+        with tenant_context(self.get_farm(self.request.GET.get('farm', 0))):
+            queryset = self.filter_by_directory()
+            total_chicken_count = queryset.count()
+
+            breed_queryset = Breed.objects.all()
+
+            results = []
+            for breed in breed_queryset.iterator():
+                total_count = queryset.filter(breed=breed).count()
+                percentage = total_count / total_chicken_count * \
+                    100 if total_chicken_count != 0 else 0
+                results.append({'id': breed.id, 'name': breed.name, 'total_chicken_count': total_chicken_count,
+                               'total_count': total_count, 'percentage': percentage})
+
+            return Response({'results': results})
+
+
+class ChickenAgeGroupViewSet(AnalysesViewSet):
+    @extend_schema(
+        parameters=ANALYSES_PARAMETERS
+    )
+    def list(self, request, **kwargs):
+        with tenant_context(self.get_farm(self.request.GET.get('farm', 0))):
+            queryset = self.filter_by_directory()
+
+            unknown_chickens = queryset.filter(Q(hatch_date=None))
+
+            duration = ExpressionWrapper(
+                date.today() - F('hatch_date'), output_field=DurationField())
+            queryset = queryset.filter(~Q(hatch_date=None)).annotate(
+                duration=duration)
+
+            return Response({'results': {
+                'labels': ['0-16 weeks', '16-20 weeks', '12 months', '12-18 months', '2+ years', 'Unknown'],
+                'data': [
+                    queryset.filter(duration__gte=timedelta(days=0),
+                                    duration__lte=timedelta(days=112)).count(),
+                    queryset.filter(duration__gte=timedelta(days=113),
+                                    duration__lte=timedelta(days=140)).count(),
+                    queryset.filter(duration__gte=timedelta(days=365),
+                                    duration__lte=timedelta(days=395)).count(),
+                    queryset.filter(duration__gte=timedelta(days=365),
+                                    duration__lte=timedelta(days=547)).count(),
+                    queryset.filter(duration__gte=timedelta(days=730)).count(),
+                    unknown_chickens.count()
+                ]
             }})

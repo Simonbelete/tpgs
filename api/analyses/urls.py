@@ -17,6 +17,12 @@ router.register(r'analyses/egg-production', views.EggProduction,
 router.register(r'analyses/gender-distribution', views.GenderDistributionViewSet,
                 basename='api_analyses_gender-distribution')
 
+router.register(r'analyses/breed-distribution', views.BreedDistributionViewSet,
+                basename='api_analyses_breed-distribution')
+
+router.register(r'analyses/chicken-age-group', views.ChickenAgeGroupViewSet,
+                basename='api_analyses_age_group')
+
 count_router = routers.DefaultRouter()
 count_router.register(r'analyses/count', views.CountViewSet,
                       basename='api_count')

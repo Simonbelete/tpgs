@@ -3,3 +3,5 @@ export * from "./hdep";
 export * from "./hhep";
 export * from "./egg-mass";
 export * from "./gender-percentage-distribution";
+export * from "./breed-distribution";
+export * from "./chicken-age-group";

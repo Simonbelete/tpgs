@@ -1,9 +1,5 @@
 import { baseApi } from "@/services/baseApi";
-import { AbstractSummary, Response, Egg, EggHistory } from "@/models";
-import { AxiosResponse } from "axios";
-import clientSSR from "@/services/client_ssr";
-import client from "@/services/client";
-import { NextPageContext } from "next";
+import { Response } from "@/models";
 
 const URL = "/analyses";
 
@@ -38,6 +34,20 @@ export const analyseApi = baseApi.injectEndpoints({
           params: query,
         }),
       }),
+      getBreedDistribution: build.query<Response<any>, Object>({
+        query: (query?: Object) => ({
+          url: `${URL}/breed-distribution/`,
+          method: "get",
+          params: query,
+        }),
+      }),
+      getChickenAgeGroupDistribution: build.query<Response<any>, Object>({
+        query: (query?: Object) => ({
+          url: `${URL}/chicken-age-group/`,
+          method: "get",
+          params: query,
+        }),
+      }),
     };
   },
   overrideExisting: false,
@@ -52,4 +62,8 @@ export const {
   useLazyGetEggMassQuery,
   useGetGenderDistributionQuery,
   useLazyGetGenderDistributionQuery,
+  useGetBreedDistributionQuery,
+  useLazyGetBreedDistributionQuery,
+  useGetChickenAgeGroupDistributionQuery,
+  useLazyGetChickenAgeGroupDistributionQuery,
 } = analyseApi;

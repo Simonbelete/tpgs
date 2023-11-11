@@ -40,6 +40,11 @@ const ReportsPage = () => {
         "The use of egg mass rather than egg numbers will lead to better comparisons of flocks or strains of birds.",
       link: "/reports/egg-mass",
     },
+    {
+      title: "Chicken Sex Percentage Distribution",
+      description: "",
+      link: "/reports/gender-percentage-distribution",
+    },
   ];
 
   return (
@@ -71,7 +76,11 @@ const ReportsPage = () => {
                 }}
               >
                 <Stack>
-                  <Typography variant="h5" fontWeight={600}>
+                  <Typography
+                    variant="h5"
+                    fontWeight={600}
+                    color={"link.primary"}
+                  >
                     {e.title}
                   </Typography>
                 </Stack>

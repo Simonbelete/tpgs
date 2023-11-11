@@ -1,30 +1,30 @@
+from django.db.models import Q
+from weights.models import *
+from feeds.models import *
+from eggs.models import *
+from django_tenants.utils import get_tenant_model, get_tenant_domain_model
+from random import shuffle, randint
+from itertools import islice, cycle
+from model_bakery import baker
+from model_bakery.recipe import Recipe, seq, foreign_key
+from nutrients.models import *
+from units.models import *
+from requirements.models import *
+from ingredients.models import *
+from faker import Faker
+from reduction_reason.models import *
+from pen.models import *
+from breeds.models import *
+from hatchery.models import *
+import random
+from chickens.models import *
+from django_tenants.utils import schema_context
 import os
 import django
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "api.settings")
 django.setup()
 
-from django_tenants.utils import schema_context
-from chickens.models import *
-import random
-from hatchery.models import *
-from breeds.models import *
-from pen.models import *
-from reduction_reason.models import *
-from faker import Faker
-from ingredients.models import *
-from requirements.models import *
-from units.models import *
-from nutrients.models import *
-from model_bakery.recipe import Recipe, seq, foreign_key
-from model_bakery import baker
-from itertools import islice, cycle
-from random import shuffle, randint
-from django_tenants.utils import get_tenant_model, get_tenant_domain_model
-from eggs.models import *
-from feeds.models import *
-from weights.models import *
-from django.db.models import Q
 
 fake = Faker()
 
@@ -32,22 +32,28 @@ fake = Faker()
 range100 = list(range(100))
 tenants = get_tenant_model().objects.all()
 
+
 def randomize(data):
     def get_random_data():
         return random.choice(data)
     return get_random_data
 
+
 def random_date():
     return fake.date()
+
 
 def random_body_weight():
     return round(random.uniform(200, 4000), 3)
 
+
 def random_feed_weight():
     return round(random.uniform(100, 2000), 3)
 
+
 def random_egg_weight():
     return round(random.uniform(100, 2000), 3)
+
 
 def safe_execute(function, default, *args):
     try:
@@ -181,6 +187,7 @@ for tenant in ['test']:
             lambda: baker.make(
                 Chicken,
                 tag=seq('{t} Tag-'.format(t=tenant[0])),
+                breed=randomize(breeds),
                 sex=randomize(['M', 'F']),
                 hatch_date=random_date,
                 hatchery=randomize(hatchery),
@@ -208,6 +215,7 @@ for tenant in ['test']:
                 Chicken,
                 tag=seq('{t} TagD-'.format(t=tenant[0])),
                 sex=randomize(['M', 'F']),
+                breed=randomize(breeds),
                 hatch_date=random_date,
                 hatchery=randomize(hatchery),
                 pen=randomize(pen),
@@ -260,20 +268,19 @@ for tenant in ['test']:
             )
 
         batch_feeds = safe_execute(
-                lambda: baker.make(
-                    Feed,
-                    hatchery=randomize(hatchery),
-                    pen=randomize(pen),
-                    week=cycle(list(range(0, 150))),
-                    weight=random_body_weight,
-                    _quantity=200,
-                    _bulk_create=True
-                ),
-                Feed.objects.all()
-            )
+            lambda: baker.make(
+                Feed,
+                hatchery=randomize(hatchery),
+                pen=randomize(pen),
+                week=cycle(list(range(0, 150))),
+                weight=random_body_weight,
+                _quantity=200,
+                _bulk_create=True
+            ),
+            Feed.objects.all()
+        )
 
         print('=> Egg Done!')
-
 
     print('=> {tenant} Done!'.format(tenant=tenant))
 

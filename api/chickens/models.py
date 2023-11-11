@@ -1,5 +1,7 @@
+import math
 from django.db import models
 from simple_history.models import HistoricalRecords
+from datetime import date
 
 from core.models import CoreModel
 from pen.models import Pen
@@ -45,6 +47,18 @@ class Chicken(CoreModel):
             tag=self.tag,
             sex=self.sex
         )
+
+    @property
+    def age_in_days(self):
+        if self.hatch_date == None:
+            return 0
+        return (date.today() - self.hatch_date).days
+
+    @property
+    def age_in_weeks(self):
+        if self.hatch_date == None:
+            return 0
+        return math.floor(self.age_in_days/7)
 
     def offspring(self):
         if self.sex == 'M':

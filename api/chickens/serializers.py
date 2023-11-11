@@ -6,6 +6,7 @@ from users.serializers import UserSerializer_GET
 from hatchery.serializers import HatcherySerializer_SLUG
 from pen.serializers import PenSerializer_SLUG
 from reduction_reason.models import ReductionReason
+from breeds.serializers import BreedSerializer_SLUG
 
 
 class ChickenSerializer_SLUG(serializers.ModelSerializer):
@@ -19,10 +20,11 @@ class ChickenSerializer_GET(serializers.ModelSerializer):
     dam = ChickenSerializer_SLUG()
     hatchery = HatcherySerializer_SLUG()
     pen = PenSerializer_SLUG()
+    breed = BreedSerializer_SLUG()
 
     class Meta:
         model = models.Chicken
-        fields = ['id', 'display_name', 'tag', 'sex', 'sire', 'dam', 'hatchery', 'pen',
+        fields = ['id', 'display_name', 'tag', 'breed', 'sex', 'sire', 'dam', 'hatchery', 'pen',
                   'reduction_date', 'reduction_reason']
 
 
