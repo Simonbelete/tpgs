@@ -66,17 +66,7 @@ export const BreedDistribution = ({ compact }: { compact?: boolean }) => {
     // Load Current Farm init data
     // @ts-ignore
     buildGraph({ farm: selector }).then((result) => {
-      console.log(result);
-      setData([
-        {
-          values: [10, 20, 30],
-          labels: ["x", "y", "z"],
-          type: "pie",
-          hoverinfo: "label+percent+name",
-          textinfo: "none",
-          name: "d",
-        },
-      ]);
+      setData([result]);
     });
   }, []);
 

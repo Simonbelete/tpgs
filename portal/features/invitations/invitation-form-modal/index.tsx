@@ -15,11 +15,10 @@ import { useCRUD } from "@/hooks";
 
 type Inputs = Partial<Invitation>;
 
-const schema = yup
-  .object({
-    email: yup.string().required(),
-    farms: yup.array().of(yup.object()).required(),
-  });
+const schema = yup.object({
+  email: yup.string().required(),
+  farms: yup.array().of(yup.object()).required(),
+});
 
 const InvitationFormModal = ({
   open,
@@ -31,49 +30,24 @@ const InvitationFormModal = ({
   const router = useRouter();
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
-  const {
-    handleSubmit,
-    control,
-    setError
-  } = useForm<Inputs>({
+  const { handleSubmit, control, setError } = useForm<Inputs>({
     // @ts-ignore
     resolver: yupResolver(schema),
   });
 
-  const [createInvitation, createResult ] = useCreateInvitationMutation();
+  const [createInvitation, createResult] = useCreateInvitationMutation();
 
   const useCRUDHook = useCRUD({
-    results: [
-      createResult,
-    ],
-    setError: setError
-  })
+    results: [createResult],
+    setError: setError,
+  });
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     data.farms = data.farms?.map((e: any) => {
-      if(e !== undefined) 
-        return e.id
+      if (e !== undefined) return e.id;
     });
-    console.log('abc')
     await createInvitation(data);
-
-    // try {
-    //   const response = await invitation_service.create(data);
-    //   if (response.status == 201) {
-    //     enqueueSnackbar("Successfully send invitation", { variant: "success" });
-    //     router.push("/invitations");
-    //   } else {
-    //     enqueueSnackbar(
-    //       "Failed to send invitation, please check you inputs and try again",
-    //       { variant: "error" }
-    //     );
-    //   }
-    // } catch (ex) {
-    //   enqueueSnackbar(
-    //     "Failed to send invitation, please check your network and try again!",
-    //     { variant: "error" }
-    //   );
-    // }
+    onClose();
   };
 
   return (
