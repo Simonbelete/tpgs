@@ -8,21 +8,24 @@ from . import models
 from . import serializers
 from . import filters
 
+
 class PermissionViewSet(viewsets.ModelViewSet):
     queryset = Permission.objects.all()
     serializer_class = serializers.PermissionSerializer_GET
 
 
-class GroupViewSet(viewsets.ModelViewSet):
+class GroupViewSet(mixins.RetrieveModelMixin,
+                   mixins.ListModelMixin,
+                   viewsets.GenericViewSet):
     queryset = Group.objects.all()
     serializer_class = serializers.GroupSerializer_GET
 
 
 class UserViewSet(mixins.CreateModelMixin,
-                   mixins.RetrieveModelMixin,
-                   mixins.UpdateModelMixin,
-                   mixins.ListModelMixin,
-                   viewsets.GenericViewSet):
+                  mixins.RetrieveModelMixin,
+                  mixins.UpdateModelMixin,
+                  mixins.ListModelMixin,
+                  viewsets.GenericViewSet):
     queryset = models.User.all.all()
     serializer_class = serializers.UserSerializer_GET
     filterset_class = filters.UserFilter
@@ -33,9 +36,10 @@ class UserViewSet(mixins.CreateModelMixin,
         superuser_mode = self.request.headers.get('X-Superuser-Mode', 'false')
         superuser_mode = eval(superuser_mode.capitalize())
         if (superuser_mode and self.request.user.is_superuser):
-            return super().get_queryset() #.filter(~Q(pk=self.request.user.id))
+            return super().get_queryset()  # .filter(~Q(pk=self.request.user.id))
         # TODO:
-        return super().get_queryset() #.filter(farms__name__in=[self.request.tenant]) #.filter(~Q(pk=self.request.user.id))
+        # .filter(farms__name__in=[self.request.tenant]) #.filter(~Q(pk=self.request.user.id))
+        return super().get_queryset()
 
     def get_serializer_class(self):
         if self.request.method in ['POST', 'PATCH']:

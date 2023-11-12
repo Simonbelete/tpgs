@@ -6,7 +6,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('farms', '0002_historicalfarm'),
+        ('farms', '0001_initial'),
         ('invitations', '0003_invitation_farms'),
     ]
 

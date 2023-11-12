@@ -1,11 +1,12 @@
 import uuid
 from django.db import models
-from django_multitenant.models import TenantModel
+# from django_multitenant.models import TenantModel
 from django_tenants.models import TenantMixin, DomainMixin
 from simple_history.models import HistoricalRecords
 
 
-class Farm(TenantModel, TenantMixin):
+# class Farm(TenantModel, TenantMixin):
+class Farm(TenantMixin):
     tenant_name = models.CharField(max_length=100)
     tenant_uuid = models.UUIDField(default=uuid.uuid4, null=False, blank=False)
     # Primary identifier

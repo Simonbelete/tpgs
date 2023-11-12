@@ -79,3 +79,4 @@ export type { default as RequirementHistory } from "./RequirementHistory";
 export type { default as IngredientHistory } from "./IngredientHistory";
 export type { default as IngredientNutrientHistory } from "./IngredientNutrientHistory";
 export type { default as DirectoryFilterData } from "./DirectoryFilterData";
+export type { default as Group } from "./Group";

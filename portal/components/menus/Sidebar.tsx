@@ -177,6 +177,15 @@ const SidebarMenu = () => {
                 Invitations
               </Typography>
             </MenuItem>
+            <MenuItem
+              component={<Link href="/groups" />}
+              icon={<AdjustIcon fontSize="small" />}
+              {...menuProps("groups")}
+            >
+              <Typography variant="body1" fontSize={14}>
+                Groups
+              </Typography>
+            </MenuItem>
           </SubMenu>
         )}
 

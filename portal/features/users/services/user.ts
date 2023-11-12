@@ -35,14 +35,17 @@ export const userApi = baseApi.injectEndpoints({
           method: "get",
         }),
       }),
-      createUser: build.mutation<Promise<AxiosResponse<User>>, Partial<User>>({
+      createUser: build.mutation<Promise<User>, Partial<User>>({
         query: (data: Partial<User>) => ({
           url: `${URL}/`,
           method: "post",
           data: data,
         }),
       }),
-      updateUser: build.mutation<User, Pick<User, "id"> & Partial<User>>({
+      updateUser: build.mutation<
+        Promise<User>,
+        Pick<User, "id"> & Partial<User>
+      >({
         query: ({ id, ...patch }) => ({
           url: `${URL}/${id}/`,
           method: "patch",

@@ -44,3 +44,4 @@ django-celery-results
 faker
 model_bakery
 flower
+django-rest-passwordreset
