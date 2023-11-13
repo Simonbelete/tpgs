@@ -1,4 +1,6 @@
-export default interface Farm {
+import AbstractBaseModel from "./AbstractBaseModel";
+
+export default interface Farm extends AbstractBaseModel {
   id: number;
   name: string;
   display_name: string;

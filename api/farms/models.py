@@ -32,10 +32,11 @@ class Farm(TenantMixin):
 
     @property
     def display_name(self):
-        return "{name} - {country}, {city}".format(
-            name=self.name,
-            country=self.country.name if self.country else "-",
-            city=self.city.name if self.city else "-")
+        return self.tenant_name
+        # return "{name} - {country}, {city}".format(
+        #     name=self.name,
+        #     country=self.country.name if self.country else "-",
+        #     city=self.city.name if self.city else "-")
 
 
 class Domain(DomainMixin):

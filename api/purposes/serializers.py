@@ -12,7 +12,7 @@ class PurposeSerializer_GET(serializers.ModelSerializer):
 class PurposeSerializer_POST(serializers.ModelSerializer):
     class Meta:
         model = models.Purpose
-        fields = ['name']
+        fields = ['id', 'name']
 
 
 class PurposeHistorySerializer(serializers.ModelSerializer):

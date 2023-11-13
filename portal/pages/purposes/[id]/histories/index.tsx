@@ -1,25 +1,26 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { ListLayout } from "@/layouts";
 import { useBreadcrumbs } from "@/hooks";
 import { Breadcrumbs } from "@/components";
 import { Typography } from "@mui/material";
 import { PurposeHistoryList } from "@/features/purposes";
-import { useRouter } from "next/router";
 import { NextPageContext } from "next";
 import { SeoHead } from "@/seo";
+import { getServerSidePropsContext } from "@/services/getServerSidePropsContext";
+import { getPurposeByIdSSR } from "@/features/purposes/services";
+import { Purpose } from "@/models";
 
-const PurposeHistoryPage = ({ id }: { id: number }) => {
+const PurposeHistoryPage = ({ data }: { data: Purpose }) => {
   const { breadcrumbs } = useBreadcrumbs();
-  const router = useRouter();
 
   return (
     <>
       <SeoHead title="Purpose Histories" />
       <ListLayout
         breadcrumbs={<Breadcrumbs items={breadcrumbs} />}
-        header={<Typography variant="title">Histories</Typography>}
+        header={<Typography variant="title">Purpose History</Typography>}
       >
-        <PurposeHistoryList id={id} />
+        <PurposeHistoryList data={data} />
       </ListLayout>
     </>
   );
@@ -28,9 +29,11 @@ const PurposeHistoryPage = ({ id }: { id: number }) => {
 export async function getServerSideProps(context: NextPageContext) {
   const { id } = context.query;
 
-  return {
-    props: { id },
-  };
+  return getServerSidePropsContext<Purpose>({
+    context,
+    id: Number(id),
+    getByIdSSR: getPurposeByIdSSR,
+  });
 }
 
 export default PurposeHistoryPage;

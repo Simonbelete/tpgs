@@ -19,21 +19,8 @@ urlpatterns = [
     path('', include(router.urls)),
     path('', include(summary_router.urls)),
 
-    path('purposes/export/', include([
-          path('xlsx', views.PurposeXlsxExport.as_view(),
-             name="purposes_export_xlsx"),
-          path('xls', views.PurposeXlsExport.as_view(),
-             name="purposes_export_xls"),
-          path('csv', views.PurposeCsvExport.as_view(),
-              name="purposes_export_csv"),
-     ])),
-
-     path('purposes/import/', include([
-          path('xlsx', views.PurposeXlsxImport.as_view(),
-              name="purposes_import_xlsx"),
-          path('xls', views.PurposeXlsImport.as_view(),
-              name="purposes_import_xls"),
-          path('csv', views.PurposeCsvImport.as_view(),
-              name="purposes_import_csv")
-     ]))
+    path('purposes/export/<str:export_type>/',
+         views.BreedExport.as_view(), name="api_purpose_export"),
+    path('purposes/import/<str:import_type>/',
+         views.BreedImport.as_view(), name="api_purpose_import"),
 ]

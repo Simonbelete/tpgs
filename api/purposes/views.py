@@ -11,12 +11,18 @@ from import_export import resources
 from rest_framework.parsers import MultiPartParser
 from tablib import Dataset
 
-from core.views import HistoryViewSet, SummaryViewSet, CoreModelViewSet
-from core.serializers import UploadSerializer
+from core.views import (
+    HistoryViewSet,
+    SummaryViewSet,
+    CoreModelViewSet,
+    GenericExportView,
+    GenericImportView
+)
 from . import models
 from . import serializers
 from . import admin
 from . import filters
+
 
 class PurposeViewSet(CoreModelViewSet):
     queryset = models.Purpose.all.all()
@@ -38,87 +44,17 @@ class PurposeHistoryViewSet(HistoryViewSet):
     queryset = models.Purpose.history.all()
     serializer_class = serializers.PurposeHistorySerializer
 
+
 class PurposeSummaryViewSet(SummaryViewSet):
     def get_query(self):
         return models.Purpose.all.get(pk=self.id_pk)
 
 
-# Xlsx
-
-class PurposeXlsxExport(APIView):
-    def get(self, request):
-        dataset = admin.PurposeResource().export()
-        response = HttpResponse(
-            dataset.xlsx, content_type='application/ms-excel')
-        response['Content-Disposition'] = 'attachment; filename="flocks_%s.xlsx"' % (
-            date.today().strftime(settings.DATETIME_FORMAT))
-        return response
+class BreedExport(GenericExportView):
+    def get_dataset(self):
+        return admin.PurposeResource().export()
 
 
-class PurposeXlsxImport(APIView):
-    serializer_class = UploadSerializer
-    parser_classes = [MultiPartParser]
-
-    def post(self, request):
-        file = request.FILES.get('file')
-        df = pd.read_excel(file, header=0)
-        dataset = Dataset().load(df)
-        resource = resources.modelresource_factory(model=models.Purpose)()
-        result = resource.import_data(dataset, dry_run=True, raise_errors=True)
-        if not result.has_errors():
-            return JsonResponse({'message': 'Imported Successfully'}, status=200)
-        return JsonResponse({'errors': ['Import Failed']}, status=400)
-
-# Xls
-
-
-class PurposeXlsExport(APIView):
-    def get(self, request):
-        dataset = admin.PurposeResource().export()
-        response = HttpResponse(
-            dataset.xls, content_type='application/ms-excel')
-        response['Content-Disposition'] = 'attachment; filename="flocks_%s.xls"' % (
-            date.today().strftime(settings.DATETIME_FORMAT))
-        return response
-
-
-class PurposeXlsImport(APIView):
-    serializer_class = UploadSerializer
-    parser_classes = [MultiPartParser]
-
-    def post(self, request):
-        file = request.FILES.get('file')
-        df = pd.read_excel(file, header=0)
-        dataset = Dataset().load(df)
-        resource = resources.modelresource_factory(model=models.Purpose)()
-        result = resource.import_data(dataset, dry_run=True, raise_errors=True)
-        if not result.has_errors():
-            return JsonResponse({'message': 'Imported Successfully'}, status=200)
-        return JsonResponse({'errors': ['Import Failed']}, status=400)
-
-# Csv
-
-
-class PurposeCsvExport(APIView):
-    def get(self, request):
-        dataset = admin.PurposeResource().export()
-        response = HttpResponse(
-            dataset.csv, content_type='application/ms-excel')
-        response['Content-Disposition'] = 'attachment; filename="flocks_%s.csv"' % (
-            date.today().strftime(settings.DATETIME_FORMAT))
-        return response
-
-
-class PurposeCsvImport(APIView):
-    serializer_class = UploadSerializer
-    parser_classes = [MultiPartParser]
-
-    def post(self, request):
-        file = request.FILES.get('file')
-        df = pd.read_csv(file, header=0)
-        dataset = Dataset().load(df)
-        resource = resources.modelresource_factory(model=models.Purpose)()
-        result = resource.import_data(dataset, dry_run=True, raise_errors=True)
-        if not result.has_errors():
-            return JsonResponse({'message': 'Imported Successfully'}, status=200)
-        return JsonResponse({'errors': ['Import Failed']}, status=400)
+class BreedImport(GenericImportView):
+    def get_resource(self):
+        return admin.PurposeResource()

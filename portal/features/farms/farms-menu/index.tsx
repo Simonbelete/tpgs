@@ -107,7 +107,7 @@ const FarmsMenu = () => {
                       <ListItemIcon>
                         <HouseIcon />
                       </ListItemIcon>
-                      <ListItemText>{e.name}</ListItemText>
+                      <ListItemText>{e.display_name}</ListItemText>
                     </MenuItem>
                   ))}
                   <Divider />
