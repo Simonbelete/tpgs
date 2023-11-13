@@ -23,7 +23,9 @@ const instance = (context: NextPageContext) => {
 
     if (session) {
       config.headers.Authorization = `Bearer ${session.accessToken}`;
-      config.headers["x-Request-Id"] = cookies.get("REQUEST_ID") ?? "public";
+      config.headers["x-Request-Id"] = cookies.get("REQUEST_ID")
+        ? cookies.get("REQUEST_ID")["name"]
+        : "public";
     }
     return config;
   });
