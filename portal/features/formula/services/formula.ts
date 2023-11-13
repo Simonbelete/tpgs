@@ -138,7 +138,7 @@ export const formulaApi = baseApi.injectEndpoints({
       // Requirements
       getRequirementsOfFormula: build.query<
         Response<FormulaRequirement[]>,
-        { id: number; query: Object }
+        { id: number; query?: Object }
       >({
         query: ({ id, query }) => ({
           url: `${URL}/${id}/${REQUIREMENT_URL}`,
@@ -167,7 +167,7 @@ export const formulaApi = baseApi.injectEndpoints({
         }),
       }),
       deleteRequirementOfFormula: build.mutation<
-        Promise<FormulaRequirement>,
+        any,
         Pick<FormulaRequirement, "formula" | "id">
       >({
         query: ({ formula, id }) => ({

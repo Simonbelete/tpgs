@@ -25,7 +25,7 @@ import { RootState } from "@/store";
 import { LabeledInput } from "@/components/inputs";
 import { Dropdown } from "@/components/dropdowns";
 import { PurposeDropdown } from "@/features/purposes";
-import FormulaRequirements from "./FormulaRequirements";
+import { FormulaRequirementForm } from "./FormulaRequirements";
 import { FormulaIngredientForm } from "./FormulaIngredients";
 import errorToForm from "@/util/errorToForm";
 import { useRouter } from "next/router";
@@ -724,7 +724,7 @@ const FormulaForm = ({
             </Paper>
           )}
           {tabIndex == 1 && <FormulaIngredientForm data={formula} />}
-          {tabIndex == 2 && <FormulaRequirements id={formula?.id} />}
+          {tabIndex == 2 && <FormulaRequirementForm data={formula} />}
         </Box>
       </form>
       <Box>
