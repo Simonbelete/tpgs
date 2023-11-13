@@ -31,7 +31,7 @@ const FormulaRequirementToolbar = ({
       setRows={setRows}
       rows={rows}
       endpoint={nutrientApi.endpoints.getNutrients}
-      mapperKey="ingredient"
+      mapperKey="nutrient"
     />
   );
 };

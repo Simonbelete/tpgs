@@ -8,6 +8,7 @@ from drf_spectacular.utils import extend_schema, OpenApiParameter
 from django.db import connection
 from datetime import timedelta, date
 from rest_framework.exceptions import NotFound
+import numpy as np
 
 from . import models
 from . import serializers
@@ -855,3 +856,38 @@ class ChickenAgeGroupViewSet(AnalysesViewSet):
                     unknown_chickens.count()
                 ]
             }})
+
+
+class GrowthPreformanceViewSet(AnalysesViewSet):
+    @extend_schema(
+        parameters=ANALYSES_PARAMETERS
+    )
+    def list(self, request, **kwargs):
+        start_week = int(self.request.GET.get('start_week', 0))
+        end_week = int(self.request.GET.get('end_week', 20))
+
+        with tenant_context(self.get_farm(self.request.GET.get('farm', 0))):
+            queryset = self.filter_by_directory()
+            queryset_ids = list(zip(*queryset.values_list('id')))
+            queryset_ids = queryset_ids if len(
+                queryset_ids) == 0 else queryset_ids[0]
+
+            results = []
+            for week in range(start_week, end_week + 1):
+                weights = Weight.objects.filter(
+                    week=week, chicken__in=queryset_ids)
+                weights = list(zip(*weights.values_list('weight')))
+                weights = queryset_ids if len(
+                    weights) == 0 else weights[0]
+
+                avg = np.average(weights)
+                std = np.std(weights)
+
+                results.append({
+                    'week': week,
+                    'average': "{:.3f}".format(avg),
+                    'std': "{:.3f}".format(std),
+                    'error': "{:.3f}".format(std)
+                })
+
+            return Response({'results': results})
