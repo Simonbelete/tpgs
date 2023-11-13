@@ -6,7 +6,7 @@ import {
   GridRenderCellParams,
 } from "@mui/x-data-grid";
 import { DataTable } from "@/components/tables";
-import { User } from "@/models";
+import { Farm, Group, User } from "@/models";
 import { useGetUsersQuery, useDeleteUserMutation } from "../services";
 import buildQuery from "@/util/buildQuery";
 import buildPage from "@/util/buildPage";
@@ -22,11 +22,12 @@ const columns: GridColDef[] = [
     flex: 1,
     minWidth: 150,
     renderCell: (params: GridRenderCellParams<any>) => {
+      if (!Array.isArray(params.row.farms)) return <></>;
       return (
         <Stack direction="row" spacing={1}>
           {params.row.farms &&
-            params.row.farms.map((e: string, key: any) => (
-              <Chip key={key} label={e} size="small" />
+            params.row.farms.map((e: Farm, key: any) => (
+              <Chip key={key} label={e.name} size="small" />
             ))}
         </Stack>
       );
@@ -38,11 +39,12 @@ const columns: GridColDef[] = [
     flex: 1,
     minWidth: 150,
     renderCell: (params: GridRenderCellParams<any>) => {
+      if (!Array.isArray(params.row.groups)) return <></>;
       return (
         <Stack direction="row" spacing={1}>
           {params.row.groups &&
-            params.row.groups.map((e: string, key: any) => (
-              <Chip key={key} label={e} size="small" />
+            params.row.groups.map((e: Group, key: any) => (
+              <Chip key={key} label={e.name} size="small" />
             ))}
         </Stack>
       );

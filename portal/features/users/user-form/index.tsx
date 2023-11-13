@@ -4,10 +4,12 @@ import { Farm, House, User } from "@/models";
 import { CancelIcon, CreateNewIcon, FormLayout, HistoryIcon } from "@/lib/crud";
 import { userApi } from "../services";
 import { farmApi } from "@/features/farms/services";
+import { groupApi } from "@/features/groups/services";
 
 const schema = yup.object({
   name: yup.string().required(),
-  house: yup.object().required(),
+  farms: yup.array().of(yup.object()).required(),
+  groups: yup.array().of(yup.object()).required(),
 });
 
 export const UserForm = ({
@@ -33,9 +35,16 @@ export const UserForm = ({
           const cleaned_data: Partial<User> = {
             id: values.id,
             name: values.name,
-            farms: values.farms?.map((e) => {
-              return (e as any).id;
-            }),
+            farms: Array.isArray(values.farms)
+              ? values.farms?.map((e) => {
+                  return (e as any).id;
+                })
+              : [],
+            groups: Array.isArray(values.groups)
+              ? values.groups?.map((e) => {
+                  return (e as any).id;
+                })
+              : [],
           };
 
           return cleaned_data;
@@ -43,9 +52,17 @@ export const UserForm = ({
         fields={{
           name: { label: "Name", placeholder: "Name", xs: 12, md: 12 },
           farms: {
-            label: "House",
-            placeholder: "House",
+            label: "Farm",
+            placeholder: "Farm",
             endpoint: farmApi.endpoints.getFarms,
+            multiple: true,
+            xs: 12,
+            md: 12,
+          },
+          groups: {
+            label: "Groups",
+            placeholder: "Groups",
+            endpoint: groupApi.endpoints.getGroups,
             xs: 12,
             md: 12,
           },

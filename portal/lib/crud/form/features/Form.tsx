@@ -52,6 +52,7 @@ export type Field<T> = {
   form?: ReactNode;
   type?: "string" | "number" | "date" | "datetime";
   dataKey?: string;
+  multiple?: boolean;
 };
 
 export interface FormProps<T> {
@@ -166,6 +167,7 @@ export default function Form<
                       value={value}
                       error={!!error?.message}
                       helperText={error?.message}
+                      multiple={options.multiple}
                     />
                   )}
                 />

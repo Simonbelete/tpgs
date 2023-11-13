@@ -2,6 +2,7 @@ from rest_framework import serializers
 from django.contrib.auth.models import Group, Permission
 
 from . import models
+from farms.serializers import FarmSerializer_SLUG
 
 
 class PermissionSerializer_GET(serializers.ModelSerializer):
@@ -17,16 +18,18 @@ class GroupSerializer_GET(serializers.ModelSerializer):
 
 
 class UserSerializer_GET(serializers.ModelSerializer):
-    farms = serializers.SlugRelatedField(
-        many=True,
-        read_only=True,
-        slug_field='name'
-    )
-    groups = serializers.SlugRelatedField(
-        many=True,
-        read_only=True,
-        slug_field='name'
-    )
+    # farms = serializers.SlugRelatedField(
+    #     many=True,
+    #     read_only=True,
+    #     slug_field='name'
+    # )
+    farms = FarmSerializer_SLUG(many=True)
+    groups = GroupSerializer_GET(many=True)
+    # groups = serializers.SlugRelatedField(
+    #     many=True,
+    #     read_only=True,
+    #     slug_field='name'
+    # )
 
     class Meta:
         model = models.User
@@ -37,7 +40,7 @@ class UserSerializer_GET(serializers.ModelSerializer):
 class UserSerializer_POST(serializers.ModelSerializer):
     class Meta:
         model = models.User
-        fields = ['name']
+        fields = ['name', 'farms', 'groups']
 
 
 class UserSerializer_SLUG(serializers.ModelSerializer):
