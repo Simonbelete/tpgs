@@ -30,6 +30,7 @@ export interface AsyncDropdownProps<T> {
     EndpointDefinitions
   > &
     QueryHooks<QueryDefinition<Query, ClientQueyFn, any, Response<T[]>, any>>;
+  disabled?: boolean;
 }
 
 export default function AsyncDropdown<T>({
@@ -45,6 +46,7 @@ export default function AsyncDropdown<T>({
   onChange,
   endpoint,
   placeholder,
+  disabled = false,
   ...props
 }: AsyncDropdownProps<T>) {
   const [open, setOpen] = React.useState(false);
@@ -134,7 +136,11 @@ export default function AsyncDropdown<T>({
         {createForm}
       </FullScreenModal>
       {label && (
-        <Typography variant="body2" fontWeight={700}>
+        <Typography
+          variant="body2"
+          fontWeight={700}
+          color={disabled ? "text.secondary" : "text.primary"}
+        >
           {label}
         </Typography>
       )}
@@ -158,6 +164,7 @@ export default function AsyncDropdown<T>({
         ListboxProps={{
           onScroll: handleScroll,
         }}
+        disabled={disabled}
         renderInput={(params) => (
           <TextField
             {...params}
@@ -181,6 +188,7 @@ export default function AsyncDropdown<T>({
                         sx={{ py: 0 }}
                         size="large"
                         // color="secondary.main"
+                        disabled={disabled}
                         onClick={handleModalOpen}
                       >
                         <AddToQueueIcon />

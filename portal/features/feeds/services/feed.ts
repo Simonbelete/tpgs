@@ -18,7 +18,7 @@ export const feedApi = baseApi.injectEndpoints({
         query: (query?: Object) => ({
           url: `${URL}/`,
           method: "get",
-          params: { flock__isnull: true, ...query },
+          params: { chicken__isnull: false, ...query },
         }),
       }),
       getBatchFeeds: build.query<Response<Feed[]>, Object>({
@@ -26,6 +26,16 @@ export const feedApi = baseApi.injectEndpoints({
           url: `${URL}/`,
           method: "get",
           params: { chicken__isnull: true, ...query },
+        }),
+      }),
+      getBatchChildrenFeeds: build.query<
+        Response<Feed[]>,
+        { id: number; query?: Object }
+      >({
+        query: ({ id, query }) => ({
+          url: `${URL}/`,
+          method: "get",
+          params: { parent: id, ...query },
         }),
       }),
       getFeedHistory: build.query<

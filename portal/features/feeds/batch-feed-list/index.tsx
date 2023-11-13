@@ -20,7 +20,7 @@ import {
   importFeedsXLSX,
 } from "../services";
 import { Feed } from "@/models";
-import { Typography } from "@mui/material";
+import { Chip, Typography } from "@mui/material";
 import Link from "next/link";
 import { chickenApi } from "@/features/chickens/services";
 
@@ -41,12 +41,34 @@ export const BatchFeedList = () => {
         );
       },
     },
+    {
+      field: "pen",
+      headerName: "House / Pen",
+      flex: 1,
+      renderCell: (params: GridRenderCellParams<any>) => {
+        if (params.row.hatchery == null) return <></>;
+        return (
+          <Typography color={"link.primary"} variant="body2">
+            <Link href={`/pens/${params.row.pen.id}`}>
+              {params.row.pen.display_name}
+            </Link>
+          </Typography>
+        );
+      },
+    },
     { field: "week", headerName: "Week", flex: 1, minWidth: 150 },
     {
-      field: "weight",
-      headerName: "Feed intake weight (g)",
+      field: "total_chickens",
+      headerName: "Feed distribution",
       flex: 1,
       minWidth: 150,
+      renderCell: (params: GridRenderCellParams<any>) => {
+        return (
+          <Chip
+            label={`${params.row.children_feed_count}/${params.row.total_chickens}`}
+          />
+        );
+      },
     },
   ];
   return (

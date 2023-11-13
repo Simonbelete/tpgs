@@ -53,6 +53,7 @@ export type Field<T> = {
   type?: "string" | "number" | "date" | "datetime";
   dataKey?: string;
   multiple?: boolean;
+  disabled?: boolean;
 };
 
 export interface FormProps<T> {
@@ -168,6 +169,7 @@ export default function Form<
                       error={!!error?.message}
                       helperText={error?.message}
                       multiple={options.multiple}
+                      disabled={options.disabled}
                     />
                   )}
                 />
@@ -225,6 +227,7 @@ export default function Form<
                       value={value ?? ""}
                       label={options.label}
                       placeholder={options.placeholder}
+                      disabled={options.disabled}
                       InputProps={{
                         endAdornment: (
                           <InputAdornment position="start">

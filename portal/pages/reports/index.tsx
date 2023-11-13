@@ -45,6 +45,11 @@ const ReportsPage = () => {
       description: "",
       link: "/reports/gender-percentage-distribution",
     },
+    {
+      title: "Growth Performance",
+      description: "",
+      link: "/reports/growth-performance",
+    },
   ];
 
   return (

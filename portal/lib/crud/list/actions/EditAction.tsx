@@ -11,7 +11,7 @@ const EditAction: React.FC<GridRenderCellParams> = ({ id }) => {
   const router = useRouter();
   return (
     <Link href={`${router.pathname}/${id}/edit`} id="data-table-edit">
-      <Tooltip title="Dashboard">
+      <Tooltip title="Edit">
         <IconButton aria-label="edit">
           <DriveFileRenameOutlineIcon fontSize="small" />
         </IconButton>

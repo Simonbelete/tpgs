@@ -25,6 +25,7 @@ export const FeedForm = ({
   data?: Feed;
   shallowRoute?: boolean;
 }) => {
+  console.log(data);
   return (
     <>
       <FormLayout<Feed>
@@ -54,6 +55,7 @@ export const FeedForm = ({
             placeholder: "Chicken",
             endpoint: chickenApi.endpoints.getChickens,
             form: <ChickenForm />,
+            dataKey: "display_name",
             xs: 12,
             md: 12,
           },

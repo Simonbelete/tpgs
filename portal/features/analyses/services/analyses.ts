@@ -48,6 +48,13 @@ export const analyseApi = baseApi.injectEndpoints({
           params: query,
         }),
       }),
+      getGrowthPreformance: build.query<Response<any>, Object>({
+        query: (query?: Object) => ({
+          url: `${URL}/growth-performance/`,
+          method: "get",
+          params: query,
+        }),
+      }),
     };
   },
   overrideExisting: false,
@@ -66,4 +73,6 @@ export const {
   useLazyGetBreedDistributionQuery,
   useGetChickenAgeGroupDistributionQuery,
   useLazyGetChickenAgeGroupDistributionQuery,
+  useGetGrowthPreformanceQuery,
+  useLazyGetGrowthPreformanceQuery,
 } = analyseApi;

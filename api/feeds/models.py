@@ -14,6 +14,8 @@ class Feed(CoreModel):
         Hatchery, on_delete=models.CASCADE, null=True, blank=True, related_name='feeds')
     pen = models.ForeignKey(
         Pen, on_delete=models.CASCADE, null=True, blank=True, related_name='feeds')
+    parent = models.ForeignKey(
+        'self', models.CASCADE, blank=True, null=True, related_name='children')
     chicken = models.ForeignKey(
         Chicken, on_delete=models.CASCADE, null=True, blank=True, related_name='feeds')
     formula = models.ForeignKey(
@@ -52,3 +54,11 @@ class Feed(CoreModel):
             return self.weight / total_no_chickens if total_no_chickens != 0 else 0
         else:
             return 0
+
+    @property
+    def total_chickens(self):
+        return Chicken.objects.filter(pen=self.pen, hatchery=self.hatchery).count()
+
+    @property
+    def children_feed_count(self):
+        return self.children.count()

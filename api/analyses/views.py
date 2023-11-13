@@ -858,7 +858,7 @@ class ChickenAgeGroupViewSet(AnalysesViewSet):
             }})
 
 
-class GrowthPreformanceViewSet(AnalysesViewSet):
+class GrowthPerformanceViewSet(AnalysesViewSet):
     @extend_schema(
         parameters=ANALYSES_PARAMETERS
     )

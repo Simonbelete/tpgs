@@ -12,4 +12,5 @@ class FeedFilter(CoreFilterSet):
 
     class Meta:
         model = models.Feed
-        fields = ['chicken', 'hatchery', 'hatchery__isnull', 'chicken__isnull']
+        fields = ['chicken', 'parent', 'hatchery',
+                  'hatchery__isnull', 'chicken__isnull']
