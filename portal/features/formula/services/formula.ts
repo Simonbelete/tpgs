@@ -96,9 +96,9 @@ export const formulaApi = baseApi.injectEndpoints({
         }),
       }),
       // Ingredients
-      getFormulaIngredients: build.query<
+      getIngredientsOfFormula: build.query<
         Response<FormulaIngredient[]>,
-        { id: number; query: Object }
+        { id: number; query?: Object }
       >({
         query: ({ id, query }) => ({
           url: `${URL}/${id}/${INGREDIENT_URL}`,
@@ -106,8 +106,8 @@ export const formulaApi = baseApi.injectEndpoints({
           params: query,
         }),
       }),
-      createFormulaIngredient: build.mutation<
-        Promise<AxiosResponse<FormulaIngredient>>,
+      createIngredientForFormula: build.mutation<
+        Promise<FormulaIngredient>,
         { id: number; data: Partial<FormulaIngredient> }
       >({
         query: ({ id, data }) => ({
@@ -116,9 +116,9 @@ export const formulaApi = baseApi.injectEndpoints({
           data: data,
         }),
       }),
-      updateFormulaIngredient: build.mutation<
-        FormulaIngredient,
-        Pick<FormulaIngredient, "ingredient"> & Partial<FormulaIngredient>
+      updateIngredientOfFormula: build.mutation<
+        Promise<FormulaIngredient>,
+        Partial<FormulaIngredient>
       >({
         query: ({ ingredient, ...patch }) => ({
           url: `${URL}/${ingredient}/`,
@@ -126,17 +126,17 @@ export const formulaApi = baseApi.injectEndpoints({
           data: patch,
         }),
       }),
-      deleteFormulaIngredient: build.mutation<
-        Promise<AxiosResponse<FormulaIngredient>>,
-        { id: number; ingredient_id: number }
+      deleteIngredientOfFormula: build.mutation<
+        any,
+        Pick<FormulaIngredient, "ingredient" | "id">
       >({
-        query: ({ id, ingredient_id }) => ({
-          url: `${URL}/${id}/${INGREDIENT_URL}/${ingredient_id}/`,
+        query: ({ ingredient, id }) => ({
+          url: `${URL}/${ingredient}/${INGREDIENT_URL}/${id}/`,
           method: "delete",
         }),
       }),
       // Requirements
-      getFormulaRequirements: build.query<
+      getRequirementsOfFormula: build.query<
         Response<FormulaRequirement>,
         { id: number; query: Object }
       >({
@@ -146,7 +146,7 @@ export const formulaApi = baseApi.injectEndpoints({
           params: query,
         }),
       }),
-      createFormulaRequirement: build.mutation<
+      createRequirementForFormula: build.mutation<
         Promise<AxiosResponse<FormulaRequirement>>,
         { id: number; data: Partial<FormulaIngredient> }
       >({
@@ -156,7 +156,7 @@ export const formulaApi = baseApi.injectEndpoints({
           data: data,
         }),
       }),
-      updateFormulaRequirement: build.mutation<
+      updateRequirementOfFormula: build.mutation<
         FormulaRequirement,
         Pick<FormulaRequirement, "formula"> & Partial<FormulaIngredient>
       >({
@@ -166,7 +166,7 @@ export const formulaApi = baseApi.injectEndpoints({
           data: patch,
         }),
       }),
-      deleteFormulaRequirement: build.mutation<
+      deleteRequirementOfFormula: build.mutation<
         Promise<AxiosResponse<FormulaRequirement>>,
         { id: number; requirement_id: number }
       >({
@@ -176,7 +176,7 @@ export const formulaApi = baseApi.injectEndpoints({
         }),
       }),
       // Rations
-      getFormulaRations: build.query<Response<Formula[]>, number>({
+      getRationsOfFormula: build.query<Response<Formula[]>, number>({
         query: (id) => ({ url: `${URL}/${id}/rations`, method: "get" }),
       }),
       // Nutrients
@@ -231,22 +231,22 @@ export const {
   useGetFormulaMatrixQuery,
 
   // Ingredients
-  useGetFormulaIngredientsQuery,
-  useLazyGetFormulaIngredientsQuery,
-  useCreateFormulaIngredientMutation,
-  useUpdateFormulaIngredientMutation,
-  useDeleteFormulaIngredientMutation,
+  useGetIngredientsOfFormulaQuery,
+  useLazyGetIngredientsOfFormulaQuery,
+  useCreateIngredientForFormulaMutation,
+  useUpdateIngredientOfFormulaMutation,
+  useDeleteIngredientOfFormulaMutation,
 
   // Requirements
-  useGetFormulaRequirementsQuery,
-  useLazyGetFormulaRequirementsQuery,
-  useCreateFormulaRequirementMutation,
-  useUpdateFormulaRequirementMutation,
-  useDeleteFormulaRequirementMutation,
+  useGetRequirementsOfFormulaQuery,
+  useLazyGetRequirementsOfFormulaQuery,
+  useCreateRequirementForFormulaMutation,
+  useUpdateRequirementOfFormulaMutation,
+  useDeleteRequirementOfFormulaMutation,
 
   // Rations
-  useGetFormulaRationsQuery,
-  useLazyGetFormulaRationsQuery,
+  useGetRationsOfFormulaQuery,
+  useLazyGetRationsOfFormulaQuery,
 
   // Nutrients
   useGetFormulaNutrientsQuery,

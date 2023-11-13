@@ -17,13 +17,7 @@ import {
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import {
-  Formula,
-  FormulaIngredient,
-  FormulaRation,
-  Ingredient,
-  Nutrient,
-} from "@/models";
+import { Formula } from "@/models";
 import { useSnackbar } from "notistack";
 import { useSelector, useDispatch } from "react-redux";
 import { clearAll, setIngredients, setRequirements } from "./slice";
@@ -32,7 +26,7 @@ import { LabeledInput } from "@/components/inputs";
 import { Dropdown } from "@/components/dropdowns";
 import { PurposeDropdown } from "@/features/purposes";
 import FormulaRequirements from "./FormulaRequirements";
-import FormulaIngredients from "./FormulaIngredients";
+import { FormulaIngredientForm } from "./FormulaIngredients";
 import errorToForm from "@/util/errorToForm";
 import { useRouter } from "next/router";
 import SaveIcon from "@mui/icons-material/Save";
@@ -43,8 +37,8 @@ import {
   useLazyFormulateQuery,
   useCreateFormulaMutation,
   useUpdateFormulaMutation,
-  useLazyGetFormulaIngredientsQuery,
-  useLazyGetFormulaRequirementsQuery,
+  useLazyGetIngredientsOfFormulaQuery,
+  useLazyGetRequirementsOfFormulaQuery,
 } from "../services";
 import { useCRUD } from "@/hooks";
 
@@ -185,8 +179,8 @@ const FormulaForm = ({
     total_dm: 0,
   });
 
-  const [formulaIngredientTrigger] = useLazyGetFormulaIngredientsQuery();
-  const [formulaRequirementTrigger] = useLazyGetFormulaRequirementsQuery();
+  const [formulaIngredientTrigger] = useLazyGetIngredientsOfFormulaQuery();
+  const [formulaRequirementTrigger] = useLazyGetRequirementsOfFormulaQuery();
 
   useEffect(() => {
     if (formula !== undefined) {
@@ -729,7 +723,7 @@ const FormulaForm = ({
               </Grid>
             </Paper>
           )}
-          {tabIndex == 1 && <FormulaIngredients id={formula?.id} />}
+          {tabIndex == 1 && <FormulaIngredientForm data={formula} />}
           {tabIndex == 2 && <FormulaRequirements id={formula?.id} />}
         </Box>
       </form>

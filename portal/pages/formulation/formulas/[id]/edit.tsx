@@ -84,8 +84,6 @@ export async function getServerSideProps(context: NextPageContext) {
   try {
     const res = await getFormulaByIdSSR(context, Number(id));
 
-    console.log(res);
-
     if (res.status != 200)
       return {
         redirect: {
@@ -98,7 +96,6 @@ export async function getServerSideProps(context: NextPageContext) {
 
     return { props: { data } };
   } catch (ex) {
-    console.log(ex);
     return {
       redirect: {
         permanent: false,

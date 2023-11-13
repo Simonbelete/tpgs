@@ -1,8 +1,8 @@
 import Formula from "./Formula";
 import Ingredient from "./Ingredients";
+import AbstractBaseModel from "./AbstractBaseModel";
 
-export default interface FormulaIngredient {
-  id: number;
+export default interface FormulaIngredient extends AbstractBaseModel {
   formula: number | Formula;
   ingredient: number | Ingredient;
   price?: number;
