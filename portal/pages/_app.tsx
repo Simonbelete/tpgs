@@ -16,7 +16,7 @@ import dynamic from "next/dynamic";
 import { Loading, SnackbarCloseButton } from "@/components";
 import { Provider } from "react-redux";
 import { store } from "@/store";
-import OnBoardingProvider from "@/providers/OnBoarding";
+// import OnBoardingProvider from "@/providers/OnBoarding";
 import siteMetadata from "@/data/siteMetadata";
 import { Inter } from "next/font/google";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";

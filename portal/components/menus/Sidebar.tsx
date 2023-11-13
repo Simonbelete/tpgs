@@ -158,11 +158,15 @@ const SidebarMenu = () => {
               </Typography>
             }
             icon={<PeopleIcon fontSize="small" />}
+            defaultOpen={RegExp("^/(users|invitations|groups)(.*)$").test(
+              router.pathname
+            )}
           >
             <MenuItem
               component={<Link href="/users" />}
               icon={<AdjustIcon fontSize="small" />}
               {...menuProps("users")}
+              active={RegExp("/users(.*)$").test(router.pathname)}
             >
               <Typography variant="body1" fontSize={14}>
                 Users
@@ -172,6 +176,7 @@ const SidebarMenu = () => {
               component={<Link href="/invitations" />}
               {...menuProps("invitations")}
               icon={<AdjustIcon fontSize="small" />}
+              active={RegExp("/invitations(.*)$").test(router.pathname)}
             >
               <Typography variant="body1" fontSize={14}>
                 Invitations
@@ -181,6 +186,7 @@ const SidebarMenu = () => {
               component={<Link href="/groups" />}
               icon={<AdjustIcon fontSize="small" />}
               {...menuProps("groups")}
+              active={RegExp("/groups(.*)$").test(router.pathname)}
             >
               <Typography variant="body1" fontSize={14}>
                 Groups

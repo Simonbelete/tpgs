@@ -3,7 +3,7 @@ const nextConfig = {
   reactStrictMode: false,
   webpack: (config, context) => {
     config.watchOptions = {
-      poll: 500,
+      poll: 1000,
       aggregateTimeout: 300,
     };
     return config;
