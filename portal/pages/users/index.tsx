@@ -16,43 +16,9 @@ const UsersPage = () => {
   return (
     <>
       <SeoHead title="Users" />
-      <ListLayout
-        breadcrumbs={<Breadcrumbs items={breadcrumbs} />}
-        header={<Typography variant="title">Users</Typography>}
-        actions={<Actions />}
-      >
+      <ListLayout breadcrumbs={<Breadcrumbs items={breadcrumbs} />}>
         <UserList />
       </ListLayout>
-    </>
-  );
-};
-
-const Actions = (): ReactElement => {
-  const [openModal, setOpenModal] = useState(false);
-
-  const handleOpenModal = () => setOpenModal(true);
-  const handleCloseModal = () => setOpenModal(false);
-
-  return (
-    <>
-      <SeoHead title="Invitations" />
-      <InvitationFormModal open={openModal} onClose={handleCloseModal} />
-      <Stack
-        spacing={2}
-        direction={"row"}
-        justifyContent="flex-start"
-        alignItems="center"
-      >
-        <Button
-          id="invite-user-button"
-          variant="contained"
-          size="small"
-          startIcon={<SendIcon />}
-          onClick={handleOpenModal}
-        >
-          Send Invitation
-        </Button>
-      </Stack>
     </>
   );
 };

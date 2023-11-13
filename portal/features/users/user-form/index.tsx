@@ -63,6 +63,7 @@ export const UserForm = ({
             label: "Groups",
             placeholder: "Groups",
             endpoint: groupApi.endpoints.getGroups,
+            multiple: true,
             xs: 12,
             md: 12,
           },
