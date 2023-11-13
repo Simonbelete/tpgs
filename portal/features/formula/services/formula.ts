@@ -120,8 +120,8 @@ export const formulaApi = baseApi.injectEndpoints({
         Promise<FormulaIngredient>,
         Partial<FormulaIngredient>
       >({
-        query: ({ ingredient, ...patch }) => ({
-          url: `${URL}/${ingredient}/`,
+        query: ({ formula, id, ...patch }) => ({
+          url: `${URL}/${formula}/${INGREDIENT_URL}/${id}`,
           method: "patch",
           data: patch,
         }),
@@ -137,7 +137,7 @@ export const formulaApi = baseApi.injectEndpoints({
       }),
       // Requirements
       getRequirementsOfFormula: build.query<
-        Response<FormulaRequirement>,
+        Response<FormulaRequirement[]>,
         { id: number; query: Object }
       >({
         query: ({ id, query }) => ({
@@ -147,7 +147,7 @@ export const formulaApi = baseApi.injectEndpoints({
         }),
       }),
       createRequirementForFormula: build.mutation<
-        Promise<AxiosResponse<FormulaRequirement>>,
+        Promise<FormulaRequirement>,
         { id: number; data: Partial<FormulaIngredient> }
       >({
         query: ({ id, data }) => ({
@@ -157,21 +157,21 @@ export const formulaApi = baseApi.injectEndpoints({
         }),
       }),
       updateRequirementOfFormula: build.mutation<
-        FormulaRequirement,
-        Pick<FormulaRequirement, "formula"> & Partial<FormulaIngredient>
+        Promise<FormulaRequirement>,
+        Partial<FormulaIngredient>
       >({
-        query: ({ formula, ...patch }) => ({
-          url: `${URL}/${formula}/${REQUIREMENT_URL}`,
+        query: ({ formula, id, ...patch }) => ({
+          url: `${URL}/${formula}/${REQUIREMENT_URL}/${id}`,
           method: "patch",
           data: patch,
         }),
       }),
       deleteRequirementOfFormula: build.mutation<
-        Promise<AxiosResponse<FormulaRequirement>>,
-        { id: number; requirement_id: number }
+        Promise<FormulaRequirement>,
+        Pick<FormulaRequirement, "formula" | "id">
       >({
-        query: ({ id, requirement_id }) => ({
-          url: `${URL}/${id}/${REQUIREMENT_URL}/${requirement_id}/`,
+        query: ({ formula, id }) => ({
+          url: `${URL}/${formula}/${REQUIREMENT_URL}/${id}/`,
           method: "delete",
         }),
       }),
