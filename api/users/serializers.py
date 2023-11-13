@@ -40,7 +40,7 @@ class UserSerializer_GET(serializers.ModelSerializer):
 class UserSerializer_POST(serializers.ModelSerializer):
     class Meta:
         model = models.User
-        fields = ['name', 'farms', 'groups']
+        fields = ['name', 'farms', 'groups', 'is_active']
 
 
 class UserSerializer_SLUG(serializers.ModelSerializer):
