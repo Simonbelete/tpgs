@@ -13,6 +13,15 @@ eg 9999.999
 4. ```python manage.py create_groups```
 5. ```python manage.py cities_light```
 
+
+## Testing
+
+- Migrate shared schema i.e ```public``` by running ```python manage.py migrate_schemas```
+- Create a test database with ```python manage.py create_schema```
+- Seed group with permission ```python manage.py create_groups```. make sure group pk starts from 1 
+- Run test ```python manager.py test```
+
+
 ## Run Worker
 
 ```celery -A api worker -l INFO```
