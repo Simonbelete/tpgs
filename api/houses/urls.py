@@ -7,7 +7,7 @@ router = routers.DefaultRouter()
 router.register(r'houses', views.HouseViewSet,
                 basename='api_house'),
 router.register(r'houses/(?P<id>.+)/histories',
-                views.HouseHistoryViewSet, basename='api_house_histories'),
+                views.HouseHistoryViewSet, basename='api_house_history'),
 
 summary_router = NestedDefaultRouter(
     router, r'houses', lookup='id')
@@ -18,21 +18,8 @@ urlpatterns = [
     path('', include(router.urls)),
     path('', include(summary_router.urls)),
 
-    path('houses/export/', include([
-        path('xlsx', views.HouseXlsxExport.as_view(),
-             name="houses_export_xlsx"),
-        path('xls', views.HouseXlsExport.as_view(),
-             name="houses_export_xls"),
-         path('csv', views.HouseCsvExport.as_view(),
-              name="houses_export_csv"),
-         ])),
-
-    path('houses/import/', include([
-         path('xlsx', views.HouseXlsxImport.as_view(),
-              name="houses_import_xlsx"),
-         path('xls', views.HouseXlsImport.as_view(),
-              name="houses_import_xls"),
-         path('csv', views.HouseCsvImport.as_view(),
-              name="houses_import_csv")
-         ]))
+    path('houses/export/<str:export_type>/',
+         views.HouseExport.as_view(), name="api_house_export"),
+    path('houses/import/<str:import_type>/',
+         views.HouseImport.as_view(), name="api_house_import"),
 ]

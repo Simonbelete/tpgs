@@ -4,14 +4,9 @@ from core.views import (
     HistoryViewSet,
     SummaryViewSet,
     CoreModelViewSet,
-    XlsxExport,
-    XlsExport,
-    CsvExport,
-    XlsxImport,
-    XlsImport,
-    CsvImport
+    GenericExportView,
+    GenericImportView
 )
-from core.serializers import UploadSerializer
 from . import models
 from . import serializers
 from . import admin
@@ -41,36 +36,12 @@ class HouseSummaryViewSet(SummaryViewSet):
     def get_query(self):
         return models.House.all.get(pk=self.id_pk)
 
-# House Export
 
-
-class HouseXlsxExport(XlsxExport):
+class HouseExport(GenericExportView):
     def get_dataset(self):
         return admin.HouseResource().export()
 
 
-class HouseXlsExport(XlsExport):
-    def get_dataset(self):
-        return admin.HouseResource().export()
-
-
-class HouseCsvExport(CsvExport):
-    def get_dataset(self):
-        return admin.HouseResource().export()
-
-# House Import
-
-
-class HouseXlsxImport(XlsxImport):
-    def get_resource(self):
-        return admin.HouseResource()
-
-
-class HouseXlsImport(XlsImport):
-    def get_resource(self):
-        return admin.HouseResource()
-
-
-class HouseCsvImport(CsvImport):
+class HouseImport(GenericImportView):
     def get_resource(self):
         return admin.HouseResource()
