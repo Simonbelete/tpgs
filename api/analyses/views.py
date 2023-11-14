@@ -21,6 +21,7 @@ from chickens.models import Chicken
 from users.models import User
 from breeds.models import Breed
 from .calculate_analyses import calculate_hdep, calculate_hhep, calculate_egg_mass
+from eggs.serializers import EggSerializer_GET
 
 
 class AnalysesViewSet(viewsets.ViewSet):
@@ -944,6 +945,58 @@ class FeedByWeightViewSet(AnalysesViewSet):
                         'week': week,
                         'feed_average': "{:.3f}".format(feed_queryset),
                         'weight_average': "{:.3f}".format(weight_queryset)
+                    })
+
+                return Response({'results': results})
+
+
+class EggsViewSet(AnalysesViewSet):
+    """Egg Weight by week 
+    """
+    @extend_schema(
+        parameters=ANALYSES_PARAMETERS
+    )
+    def list(self, request, **kwargs):
+        start_week = int(self.request.GET.get('start_week', 0))
+        end_week = int(self.request.GET.get('end_week', 20))
+
+        if (request.GET.get('chicken', None)):
+            queryset = Chicken.all.filter(
+                pk=self.request.GET.get('chicken', 0))
+
+            queryset_ids = list(zip(*queryset.values_list('id')))
+            queryset_ids = queryset_ids if len(
+                queryset_ids) == 0 else queryset_ids[0]
+
+            for week in range(start_week, end_week + 1):
+                # Convert total egg weight to individual egg weight
+                egg_queryset = Egg.objects.filter(
+                    chicken__in=queryset_ids, week=week).annotate(single_egg_weiht=F('weight') / F('eggs')).aggregate(avg_eggs=Avg('eggs'), avg_egg_weight=Avg('weight'))
+
+                results.append({
+                    'week': week,
+                    'eggs_average': "{:.3f}".format(egg_queryset['avg_eggs'] or 0),
+                    'avg_egg_weight': "{:.3f}".format(egg_queryset['avg_egg_weight'] or 0)
+                })
+
+            return Response({'results': results})
+        else:
+            with tenant_context(self.get_farm(self.request.GET.get('farm', 0))):
+                queryset = self.filter_by_directory()
+
+                queryset_ids = list(zip(*queryset.values_list('id')))
+                queryset_ids = queryset_ids if len(
+                    queryset_ids) == 0 else queryset_ids[0]
+
+                results = []
+                for week in range(start_week, end_week + 1):
+                    egg_queryset = Egg.objects.filter(
+                        chicken__in=queryset_ids, week=week).annotate(single_egg_weiht=F('weight') / F('eggs')).aggregate(avg_eggs=Avg('eggs'), avg_egg_weight=Avg('weight'))
+
+                    results.append({
+                        'week': week,
+                        'eggs_average': "{:.3f}".format(egg_queryset['avg_eggs'] or 0),
+                        'avg_egg_weight': "{:.3f}".format(egg_queryset['avg_egg_weight'] or 0)
                     })
 
                 return Response({'results': results})

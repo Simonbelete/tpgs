@@ -41,6 +41,11 @@ const ReportsPage = () => {
       link: "/reports/egg-mass",
     },
     {
+      title: "Average Egg Weight",
+      description: "",
+      link: "/reports/avg-egg-weight",
+    },
+    {
       title: "Chicken Sex Percentage Distribution",
       description: "",
       link: "/reports/gender-percentage-distribution",

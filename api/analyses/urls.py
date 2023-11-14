@@ -29,6 +29,9 @@ router.register(r'analyses/growth-performance', views.GrowthPerformanceViewSet,
 router.register(r'analyses/feed-by-weight', views.FeedByWeightViewSet,
                 basename='api_analyses_feed_by_weight')
 
+router.register(r'analyses/eggs', views.EggsViewSet,
+                basename='api_analyses_eggs')
+
 count_router = routers.DefaultRouter()
 count_router.register(r'analyses/count', views.CountViewSet,
                       basename='api_count')
