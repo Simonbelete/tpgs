@@ -55,6 +55,13 @@ export const analyseApi = baseApi.injectEndpoints({
           params: query,
         }),
       }),
+      getFeedByWeight: build.query<Response<any>, Object>({
+        query: (query?: Object) => ({
+          url: `${URL}/feed-by-weight/`,
+          method: "get",
+          params: query,
+        }),
+      }),
     };
   },
   overrideExisting: false,
@@ -75,4 +82,6 @@ export const {
   useLazyGetChickenAgeGroupDistributionQuery,
   useGetGrowthPreformanceQuery,
   useLazyGetGrowthPreformanceQuery,
+  useGetFeedByWeightQuery,
+  useLazyGetFeedByWeightQuery,
 } = analyseApi;

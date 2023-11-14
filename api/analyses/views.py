@@ -891,3 +891,39 @@ class GrowthPerformanceViewSet(AnalysesViewSet):
                 })
 
             return Response({'results': results})
+
+
+class FeedByWeightViewSet(AnalysesViewSet):
+    @extend_schema(
+        parameters=ANALYSES_PARAMETERS
+    )
+    def list(self, request, **kwargs):
+        start_week = int(self.request.GET.get('start_week', 0))
+        end_week = int(self.request.GET.get('end_week', 20))
+
+        with tenant_context(self.get_farm(self.request.GET.get('farm', 0))):
+            if (request.GET.get('chicken', None)):
+                queryset = Chicken.all.filter(
+                    pk=self.request.GET.get('chicken', 0))
+            else:
+                queryset = self.filter_by_directory()
+
+            queryset_ids = list(zip(*queryset.values_list('id')))
+            queryset_ids = queryset_ids if len(
+                queryset_ids) == 0 else queryset_ids[0]
+
+            results = []
+            for week in range(start_week, end_week + 1):
+                feed_queryset = Feed.objects.filter(
+                    chicken__in=queryset_ids, week=week, parent__isnull=True).aggregate(weight_avg=Avg('weight'))['weight_avg'] or 0
+
+                weight_queryset = Weight.objects.filter(
+                    chicken__in=queryset_ids, week=week).aggregate(weight_avg=Avg('weight'))['weight_avg'] or 0
+
+                results.append({
+                    'week': week,
+                    'feed_average': "{:.3f}".format(feed_queryset),
+                    'weight_average': "{:.3f}".format(weight_queryset)
+                })
+
+            return Response({'results': results})

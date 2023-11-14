@@ -6,3 +6,4 @@ export * from "./gender-percentage-distribution";
 export * from "./breed-distribution";
 export * from "./chicken-age-group";
 export * from "./growth-preformance";
+export * from "./feed-by-weight";

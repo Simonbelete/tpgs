@@ -50,6 +50,11 @@ const ReportsPage = () => {
       description: "",
       link: "/reports/growth-performance",
     },
+    {
+      title: "Feed consumption by body weight",
+      description: "",
+      link: "/reports/feed-by-weight",
+    },
   ];
 
   return (

@@ -26,6 +26,9 @@ router.register(r'analyses/chicken-age-group', views.ChickenAgeGroupViewSet,
 router.register(r'analyses/growth-performance', views.GrowthPerformanceViewSet,
                 basename='api_analyses_growth_performance')
 
+router.register(r'analyses/feed-by-weight', views.FeedByWeightViewSet,
+                basename='api_analyses_feed_by_weight')
+
 count_router = routers.DefaultRouter()
 count_router.register(r'analyses/count', views.CountViewSet,
                       basename='api_count')
