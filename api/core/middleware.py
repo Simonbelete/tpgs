@@ -42,7 +42,7 @@ class FarmMiddleware(TenantMainMiddleware):
         try:
             tenant = tenant_model.objects.get(schema_name=requested_farm)
         except tenant_model.DoesNotExist:
-            return HttpResponse(JsonResponse({'error': 'No Farm found under that name'}), status=404)
+            return HttpResponse(JsonResponse({'error': 'No Farm found under that name'}), status=430)
 
         # Check If User have access to the requested farm
         try:

@@ -5,7 +5,7 @@ from . import views
 
 router = routers.DefaultRouter()
 router.register(r'houses', views.HouseViewSet,
-                basename='api_houses'),
+                basename='api_house'),
 router.register(r'houses/(?P<id>.+)/histories',
                 views.HouseHistoryViewSet, basename='api_house_histories'),
 

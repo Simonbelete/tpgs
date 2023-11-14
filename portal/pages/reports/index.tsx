@@ -41,6 +41,11 @@ const ReportsPage = () => {
       link: "/reports/egg-mass",
     },
     {
+      title: "Egg Grading",
+      description: "",
+      link: "/reports/egg-grading",
+    },
+    {
       title: "Average Egg Weight",
       description: "",
       link: "/reports/avg-egg-weight",

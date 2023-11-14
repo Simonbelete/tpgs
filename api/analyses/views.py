@@ -968,6 +968,7 @@ class EggsViewSet(AnalysesViewSet):
             queryset_ids = queryset_ids if len(
                 queryset_ids) == 0 else queryset_ids[0]
 
+            results = []
             for week in range(start_week, end_week + 1):
                 # Convert total egg weight to individual egg weight
                 egg_queryset = Egg.objects.filter(
@@ -997,6 +998,102 @@ class EggsViewSet(AnalysesViewSet):
                         'week': week,
                         'eggs_average': "{:.3f}".format(egg_queryset['avg_eggs'] or 0),
                         'avg_egg_weight': "{:.3f}".format(egg_queryset['avg_egg_weight'] or 0)
+                    })
+
+                return Response({'results': results})
+
+
+class EggGradingViewSet(AnalysesViewSet):
+    @extend_schema(
+        parameters=ANALYSES_PARAMETERS
+    )
+    def list(self, request, **kwargs):
+        start_week = int(self.request.GET.get('start_week', 0))
+        end_week = int(self.request.GET.get('end_week', 20))
+
+        if (request.GET.get('chicken', None)):
+            queryset = Chicken.all.filter(
+                pk=self.request.GET.get('chicken', 0))
+
+            queryset_ids = list(zip(*queryset.values_list('id')))
+            queryset_ids = queryset_ids if len(
+                queryset_ids) == 0 else queryset_ids[0]
+
+            results = []
+            for week in range(start_week, end_week + 1):
+                # Convert total egg weight to individual egg weight
+                egg_queryset = Egg.objects.filter(
+                    chicken__in=queryset_ids, week=week).annotate(single_egg_weight=F('weight') / F('eggs'))
+
+                total_eggs = egg_queryset.aggregate(eggs_count=Sum('eggs'))[
+                    'eggs_count'] or 0
+                total_eggs = total_eggs if total_eggs != 0 else 1
+
+                sm_grading = egg_queryset.filter(single_egg_weight__lt=53).aggregate(
+                    total_eggs=Sum('eggs'))['total_eggs'] or 0
+                m_grading = egg_queryset.filter(single_egg_weight__gt=52, single_egg_weight__lt=63).aggregate(
+                    total_eggs=Sum('eggs'))['total_eggs'] or 0
+                lg_grading = egg_queryset.filter(single_egg_weight__gt=62, single_egg_weight__lt=73).aggregate(
+                    total_eggs=Sum('eggs'))['total_eggs'] or 0
+                xl_grading = egg_queryset.filter(single_egg_weight__gt=72).aggregate(
+                    total_eggs=Sum('eggs'))['total_eggs'] or 0
+
+                results.append({
+                    'week': week,
+                    'total_sm_count': sm_grading,
+                    'sm_grading': "{:.3f}".format(sm_grading/total_eggs * 100),
+
+                    'total_m_grading': m_grading,
+                    'm_grading': "{:.3f}".format(m_grading/total_eggs * 100),
+
+                    'total_lg_grading': lg_grading,
+                    'lg_grading': "{:.3f}".format(lg_grading/total_eggs * 100),
+
+                    'total_xl_grading': xl_grading,
+                    'xl_grading': "{:.3f}".format(xl_grading/total_eggs * 100),
+                })
+
+            return Response({'results': results})
+        else:
+            with tenant_context(self.get_farm(self.request.GET.get('farm', 0))):
+                queryset = self.filter_by_directory()
+
+                queryset_ids = list(zip(*queryset.values_list('id')))
+                queryset_ids = queryset_ids if len(
+                    queryset_ids) == 0 else queryset_ids[0]
+
+                results = []
+                for week in range(start_week, end_week + 1):
+                    # Convert total egg weight to individual egg weight
+                    egg_queryset = Egg.objects.filter(
+                        chicken__in=queryset_ids, week=week).annotate(single_egg_weight=F('weight') / F('eggs'))
+
+                    total_eggs = egg_queryset.aggregate(eggs_count=Sum('eggs'))[
+                        'eggs_count'] or 0
+                    total_eggs = total_eggs if total_eggs != 0 else 1
+
+                    sm_grading = egg_queryset.filter(single_egg_weight__lt=53).aggregate(
+                        total_eggs=Sum('eggs'))['total_eggs'] or 0
+                    m_grading = egg_queryset.filter(single_egg_weight__gt=52, single_egg_weight__lt=63).aggregate(
+                        total_eggs=Sum('eggs'))['total_eggs'] or 0
+                    lg_grading = egg_queryset.filter(single_egg_weight__gt=62, single_egg_weight__lt=73).aggregate(
+                        total_eggs=Sum('eggs'))['total_eggs'] or 0
+                    xl_grading = egg_queryset.filter(single_egg_weight__gt=72).aggregate(
+                        total_eggs=Sum('eggs'))['total_eggs'] or 0
+
+                    results.append({
+                        'week': week,
+                        'total_sm_count': sm_grading,
+                        'sm_grading': "{:.3f}".format(sm_grading/total_eggs * 100),
+
+                        'total_m_grading': m_grading,
+                        'm_grading': "{:.3f}".format(m_grading/total_eggs * 100),
+
+                        'total_lg_grading': lg_grading,
+                        'lg_grading': "{:.3f}".format(lg_grading/total_eggs * 100),
+
+                        'total_xl_grading': xl_grading,
+                        'xl_grading': "{:.3f}".format(xl_grading/total_eggs * 100),
                     })
 
                 return Response({'results': results})

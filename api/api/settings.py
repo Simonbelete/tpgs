@@ -195,6 +195,9 @@ DATABASES = {
         "PASSWORD": env('POSTGRESQL_PASSWORD'),
         "HOST": env('POSTGRESQL_HOST'),
         "PORT": env('POSTGRESQL_PORT'),
+        "TEST": {
+            "MIRROR": "default",
+        },
     },
     # 'default': {
     #     'ENGINE': 'django.db.backends.postgresql',

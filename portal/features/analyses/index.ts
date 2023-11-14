@@ -8,3 +8,4 @@ export * from "./chicken-age-group";
 export * from "./growth-preformance";
 export * from "./feed-by-weight";
 export * from "./egg-weight-analyses";
+export * from "./egg-grading";
