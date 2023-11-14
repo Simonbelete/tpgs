@@ -7,5 +7,4 @@ fake = Faker()
 
 house = Recipe(
     models.House,
-    name=fake.name()
 )

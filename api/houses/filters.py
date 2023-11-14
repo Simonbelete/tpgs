@@ -6,4 +6,4 @@ from . import models
 class HouseFilter(filters.FilterSet):
     class Meta:
         model = models.House
-        fields = ['is_active']
+        fields = ['name', 'is_active']

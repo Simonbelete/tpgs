@@ -2,17 +2,54 @@
 from model_bakery import baker
 from rest_framework.test import APITestCase
 from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework import status
 
 
 class CoreAPITests(APITestCase):
     def setUp(self):
-        self.tenant = "test"
+        self.TENANT = "test"
 
-        # Farm Admin
-        self.farm_admin = baker.make_recipe('users.farm_admin')
-        refresh = RefreshToken.for_user(self.farm_admin)
+        # Superuser
+        self.GROUP_SUPERUSER = baker.make_recipe('users.superuser')
+        refresh = RefreshToken.for_user(self.GROUP_SUPERUSER)
 
-        self.farm_admin_token = str(refresh.access_token)
+        self.GROUP_SUPERUSER_TOKEN = str(refresh.access_token)
 
-        self.farm_admin_headers = {'x-Request-Id': self.tenant,
-                                   'Authorization': "{type} {token}".format(type="Bearer", token=self.farm_admin_token)}
+        self.GROUP_SUPERUSER_HEADER = {'x-Request-Id': self.TENANT,
+                                       'Authorization': "{type} {token}".format(type="Bearer", token=self.GROUP_SUPERUSER_TOKEN)}
+
+        # Farm admin
+        self.GROUP_FARM_ADMIN = baker.make_recipe('users.farm_admin')
+        refresh = RefreshToken.for_user(self.GROUP_FARM_ADMIN)
+
+        self.GROUP_FARM_ADMIN_TOKEN = str(refresh.access_token)
+
+        self.GROUP_FARM_ADMIN_HEADER = {'x-Request-Id': self.TENANT,
+                                        'Authorization': "{type} {token}".format(type="Bearer", token=self.GROUP_FARM_ADMIN_TOKEN)}
+
+        # Farmer
+        self.GROUP_FARMER = baker.make_recipe('users.farmer')
+        refresh = RefreshToken.for_user(self.GROUP_FARMER)
+
+        self.GROUP_FARMER_TOKEN = str(refresh.access_token)
+
+        self.GROUP_FARMER_HEADER = {'x-Request-Id': self.TENANT,
+                                    'Authorization': "{type} {token}".format(type="Bearer", token=self.GROUP_FARMER_TOKEN)}
+
+        self.USER_TYPE_HEADERS = [
+            {
+                'msg': 'Testing For Superadmin',
+                'header': self.GROUP_SUPERUSER_HEADER,
+                'delete_status': status.HTTP_204_NO_CONTENT
+            },
+            {
+                'msg': 'Testing For Farm admin',
+                'header': self.GROUP_FARM_ADMIN_HEADER,
+                'delete_status': status.HTTP_204_NO_CONTENT
+            },
+            {
+                'msg': 'Testing For farmer',
+                'header': self.GROUP_FARMER_HEADER,
+                'delete_status': status.HTTP_403_FORBIDDEN
+            }
+        ]

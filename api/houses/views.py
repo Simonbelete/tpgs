@@ -1,13 +1,4 @@
-from django.shortcuts import render
-from rest_framework import viewsets, status
-from rest_framework.views import APIView
-from django.http import HttpResponse, JsonResponse
-from datetime import date
-from django.conf import settings
-from rest_framework.parsers import MultiPartParser
-from tablib import Dataset
-from import_export import resources
-import pandas as pd
+from rest_framework.permissions import DjangoModelPermissions
 
 from core.views import (
     HistoryViewSet,
@@ -29,10 +20,16 @@ from . import filters
 
 class HouseViewSet(CoreModelViewSet):
     queryset = models.House.all.all()
+    permission_classes = [DjangoModelPermissions]
     serializer_class = serializers.HouseSerializer_GET
     filterset_class = filters.HouseFilter
     search_fields = ['name']
     ordering_fields = '__all__'
+
+    def get_serializer_class(self):
+        if self.request.method == 'GET':
+            return serializers.HouseSerializer_GET
+        return serializers.HouseSerializer_POST
 
 
 class HouseHistoryViewSet(HistoryViewSet):
@@ -44,27 +41,35 @@ class HouseSummaryViewSet(SummaryViewSet):
     def get_query(self):
         return models.House.all.get(pk=self.id_pk)
 
-## House Export
+# House Export
+
+
 class HouseXlsxExport(XlsxExport):
     def get_dataset(self):
         return admin.HouseResource().export()
+
 
 class HouseXlsExport(XlsExport):
     def get_dataset(self):
         return admin.HouseResource().export()
 
+
 class HouseCsvExport(CsvExport):
     def get_dataset(self):
         return admin.HouseResource().export()
 
-## House Import
+# House Import
+
+
 class HouseXlsxImport(XlsxImport):
     def get_resource(self):
         return admin.HouseResource()
 
+
 class HouseXlsImport(XlsImport):
     def get_resource(self):
         return admin.HouseResource()
+
 
 class HouseCsvImport(CsvImport):
     def get_resource(self):
