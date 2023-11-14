@@ -67,13 +67,8 @@ export const FeedByWeightAnalyses = () => {
     }
   };
 
-  console.log(data);
-
   const handleonBatchFilterRemove = (index: number) => {
-    console.log(index);
     let newData = data.filter((e, i) => i != index * 2);
-    // console.log(newData);
-    // console.log(index);
     newData = newData.filter((e, i) => i != index * 2);
     setData(newData);
   };
@@ -91,24 +86,32 @@ export const FeedByWeightAnalyses = () => {
       x: [],
       y: [],
       mode: "lines+markers",
-      name: indvData.chicken.display_name,
+      name: indvData.chicken.display_name + " (Body weight)",
+    };
+
+    const chartData2: GraphProps = {
+      x: [],
+      y: [],
+      mode: "lines+markers",
+      name: indvData.chicken.display_name + " (Feed intake)",
+      yaxis: "y2",
     };
 
     if (response.results) {
       for (let val in response.results) {
         chartData.x.push(Number(response.results[val]["week"]) || 0);
-        chartData.y.push(Number(response.results[val]["egg_mass"]) || 0);
-      }
+        chartData.y.push(Number(response.results[val]["weight_average"]) || 0);
 
-      setData([...data, chartData]);
+        chartData2.x.push(Number(response.results[val]["week"]) || 0);
+        chartData2.y.push(Number(response.results[val]["feed_average"]) || 0);
+      }
+      setData([...data, chartData, chartData2]);
     }
   };
 
   const handleOnIndividualFilterRemove = (index: number) => {
-    let newData = data.filter((e, i) => i != index);
-    console.log(newData);
-    console.log(index);
-    newData = newData.filter((e, i) => i != index);
+    let newData = data.filter((e, i) => i != index * 2);
+    newData = newData.filter((e, i) => i != index * 2);
     setData(newData);
   };
 
