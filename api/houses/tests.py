@@ -1,28 +1,29 @@
 
+import json
 from model_bakery import baker
 from django.urls import reverse
 from rest_framework import status
-from rest_framework.test import APITestCase
 
+from core.tests import CoreAPITests
 from .models import House
-from users.models import User
 
 
-class HouseAPITests(APITestCase):
+class HouseAPITests(CoreAPITests):
     def setUp(self):
-        self.tenant = "test"
-        self.headers.update({'x-Request-Id': self.tenant})
         self.house = baker.prepare_recipe('houses.house')
+        return super().setUp()
 
     def test_create_house(self):
         url = reverse('api_house-list')
-        print('-------------')
-        print(url)
-        print(self.tenant)
         data = {
-            'name': self.house.name
+            'name': self.house.name,
+            'is_active': self.house.is_active
         }
         response = self.client.post(
-            url, data, format='json', headers={'x-Request-Id': self.tenant})
-        print(response.request)
+            url, data, format='json', headers=self.farm_admin_headers)
+
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+
+        self.assertEqual(data['name'], json.loads(response.content)['name'])
+        self.assertEqual(data['is_active'], json.loads(
+            response.content)['is_active'])
