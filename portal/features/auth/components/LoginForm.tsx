@@ -38,15 +38,15 @@ const LoginForm = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    console.log(router.query)
-  }, [router])
+    console.log(router.query);
+  }, [router]);
 
   const { handleSubmit, watch, control } = useForm<Inputs>({
     // @ts-ignore
     resolver: yupResolver(schema),
-    defaultValues:{
-      email: router.query.email as string || ""
-    }
+    defaultValues: {
+      email: (router.query.email as string) || "",
+    },
   });
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
@@ -111,6 +111,7 @@ const LoginForm = () => {
                     label={"Email Address"}
                     placeholder={"Email Address"}
                     type="email"
+                    name="email"
                   />
                 )}
               />
@@ -134,12 +135,13 @@ const LoginForm = () => {
                     label={"Password"}
                     placeholder={"Password"}
                     type="password"
+                    name="password"
                   />
                 )}
               />
             </Grid>
             <Grid xs={12} sx={{ textAlign: "right", mt: 1 }}>
-              <Link href="forgot-password">
+              <Link href="forgot-password" id="forgot-password">
                 <Typography variant="caption">Forgot Password?</Typography>
               </Link>
             </Grid>
@@ -151,6 +153,7 @@ const LoginForm = () => {
                 variant="contained"
                 loadingPosition="start"
                 sx={{ color: "white" }}
+                id="login"
               >
                 SIGN IN
               </LoadingButton>

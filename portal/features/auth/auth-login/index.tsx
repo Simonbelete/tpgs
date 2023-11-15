@@ -1,8 +1,7 @@
-import { signIn } from "next-auth/react";
 import Layout from "../components/Layout";
 import LoginForm from "../components/LoginForm";
-import { Button, Divider, Box, Stack } from "@mui/material";
-import Link from "next/link";
+import { Divider, Stack } from "@mui/material";
+import SignUpButton from "../components/SignUpButton";
 
 const AuthLogin = () => {
   return (
@@ -11,9 +10,7 @@ const AuthLogin = () => {
         <LoginForm />
         <Stack sx={{ my: 3 }} gap={1}>
           <Divider></Divider>
-          <Link href="/sing-up">
-            <Button fullWidth>Sign up</Button>
-          </Link>
+          <SignUpButton />
         </Stack>
       </Stack>
     </Layout>

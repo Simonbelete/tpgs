@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "cypress:open": "cypress open"
   },
   "dependencies": {
     "@emotion/react": "^11.11.0",
@@ -68,6 +69,7 @@
     "@types/lodash": "^4.14.195",
     "@types/nprogress": "^0.2.0",
     "@types/react-beautiful-dnd": "^13.1.4",
-    "@types/react-plotly.js": "^2.6.0"
+    "@types/react-plotly.js": "^2.6.0",
+    "cypress": "^13.5.0"
   }
 }
