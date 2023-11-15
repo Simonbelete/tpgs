@@ -70,44 +70,6 @@ class FormulaRationSerializer_REF(serializers.ModelSerializer):
         fields = ['nutrient', 'value']
 
 
-# Formula -> Ingredient
-class FormulaIngredientSerializer_GET(serializers.ModelSerializer):
-    ingredient = IngredientSerializer_GET()
-
-    class Meta:
-        model = models.FormulaIngredient
-        fields = ['id', 'formula', 'ingredient', 'ratio_min',
-                  'ratio_max', 'price', 'ration', 'ration_weight', 'ration_price']
-
-
-class IngredientSerializer_DEPTH_2(serializers.ModelSerializer):
-
-    class Meta:
-        model = Ingredient
-        fields = ['id', 'name', 'nutrient']
-
-
-class FormulaIngredientSerializer_GET_DEPTH_2(serializers.ModelSerializer):
-    ingredient = IngredientSerializer_GET()
-
-    class Meta:
-        model = models.FormulaIngredient
-        fields = ['id', 'formula', 'ingredient', 'ratio_min',
-                  'ratio_max', 'price', 'ration', 'ration_weight', 'ration_price']
-
-
-class FormulaIngredientSerializer_POST(serializers.ModelSerializer):
-    class Meta:
-        model = models.FormulaIngredient
-        fields = ['id', 'ingredient', 'ratio_min', 'ratio_max', 'ration']
-
-    def create(self, validated_data):
-        formula = models.Formula.objects.get(
-            pk=self.context["view"].kwargs["formula_pk"])
-        validated_data['formula'] = formula
-        return super().create(validated_data)
-
-
 class FormulaIngredientSerializer_REF(serializers.ModelSerializer):
     # Ingredient Id
     # id = serializers.IntegerField()

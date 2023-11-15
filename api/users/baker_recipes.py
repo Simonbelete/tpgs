@@ -28,3 +28,10 @@ farmer = Recipe(
     is_superuser=False,
     groups=[Group.objects.get(pk=2)]
 )
+
+user = Recipe(
+    models.User,
+    name=fake.unique.name(),
+    email=fake.unique.email(),
+    is_superuser=True,
+)

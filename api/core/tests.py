@@ -53,3 +53,10 @@ class CoreAPITests(APITestCase):
                 'delete_status': status.HTTP_403_FORBIDDEN
             }
         ]
+
+    def create_new_user(self):
+        user = baker.make_recipe('users.user')
+        refresh = RefreshToken.for_user(user)
+
+        return {'x-Request-Id': self.TENANT,
+                'Authorization': "{type} {token}".format(type="Bearer", token=str(refresh.access_token))}

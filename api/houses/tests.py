@@ -90,3 +90,31 @@ class HouseAPITests(CoreAPITests):
 
             self.assertEqual(response.status_code,
                              user_type['delete_status'], msg=user_type['msg'])
+
+    def test_house_summary(self):
+        model = self.make_recipe()
+        data = {
+            'id': model.id,
+            'display_name': model.display_name,
+            'name': model.name,
+            'is_active': model.is_active,
+        }
+        url = reverse('api_house_summary-list', args=[model.id])
+        response = self.client.get(
+            url, format="json", headers=self.GROUP_FARM_ADMIN_HEADER)
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_get_house_history(self):
+        model = self.make_recipe()
+        data = {
+            'id': model.id,
+            'display_name': model.display_name,
+            'name': model.name,
+            'is_active': model.is_active,
+        }
+        url = reverse('api_house_history-list', args=[model.id])
+        response = self.client.get(
+            url, format="json", headers=self.GROUP_FARM_ADMIN_HEADER)
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
