@@ -22,9 +22,9 @@ nutrient_summary_router.register(r'summary', views.NutrientSummaryViewSet,
 
 # Nutrient Group
 router.register(r'nutrient-groups', views.NutrientGroupViewSet,
-                basename='api_nutrients_groups'),
+                basename='api_nutrient_group'),
 router.register(r'nutrient-groups/(?P<id>.+)/histories',
-                views.NutrientGroupHistoryViewSet, basename='api_nutrients_groups_histories'),
+                views.NutrientGroupHistoryViewSet, basename='api_nutrient_group_histories'),
 
 group_summary_router = NestedDefaultRouter(
     router, r'nutrient-groups', lookup='id')

@@ -31,7 +31,7 @@ class NutrientSerializer_GET(serializers.ModelSerializer):
     class Meta:
         model = models.Nutrient
         fields = ['id', 'name', 'display_name', 'code', 'abbreviation',
-                  'description', 'nutrient_group', 'unit']
+                  'description', 'nutrient_group', 'unit', 'is_active']
 
 
 class NutrientSerializer_SLUG(serializers.ModelSerializer):

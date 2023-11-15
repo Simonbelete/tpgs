@@ -47,6 +47,7 @@ class NutrientGroupImport(GenericImportView):
 # Nutrient
 class NutrientViewSet(CoreModelViewSet):
     queryset = models.Nutrient.all.all()
+    permission_classes = [DjangoModelPermissions]
     serializer_class = serializers.NutrientSerializer_GET
     filterset_class = filters.NutrientFilter
     search_fields = ['code', 'name', 'abbreviation']
