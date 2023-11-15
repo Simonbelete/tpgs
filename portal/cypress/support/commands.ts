@@ -42,6 +42,6 @@ Cypress.Commands.add("login", (email, password) => {
     cy.get("[name=email]").type(email);
     cy.get("[name=password]").type(password);
     cy.get("#login").click();
-    cy.url().should("contain", "/dashbaord");
+    cy.url().should("contain", "/dashboard");
   });
 });

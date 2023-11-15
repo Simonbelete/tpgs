@@ -9,7 +9,7 @@ router = routers.DefaultRouter()
 
 # Nutrient
 router.register(r'nutrients', views.NutrientViewSet,
-                basename='api_nutrients'),
+                basename='api_nutrient'),
 
 router.register(r'nutrients/(?P<id>.+)/histories',
                 views.NutrientHistoryViewSet, basename='api_nutrients_histories'),
