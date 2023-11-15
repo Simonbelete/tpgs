@@ -1,5 +1,10 @@
 import { baseApi } from "@/services/baseApi";
-import { AbstractSummary, Response, ReductionReason } from "@/models";
+import {
+  AbstractSummary,
+  Response,
+  ReductionReason,
+  ReductionReasonHistory,
+} from "@/models";
 import { AxiosResponse } from "axios";
 import clientSSR from "@/services/client_ssr";
 import client from "@/services/client";
@@ -22,7 +27,7 @@ export const reductionReasonApi = baseApi.injectEndpoints({
         }),
       }),
       getReductionReasonHistory: build.query<
-        Response<ReductionReason>,
+        Response<ReductionReasonHistory[]>,
         { id: number; query: Object }
       >({
         query: ({ id, query }) => ({
@@ -48,7 +53,7 @@ export const reductionReasonApi = baseApi.injectEndpoints({
         }),
       }),
       updateReductionReason: build.mutation<
-        Promise<AxiosResponse<ReductionReason>>,
+        Promise<ReductionReason>,
         Pick<ReductionReason, "id"> & Partial<ReductionReason>
       >({
         query: ({ id, ...patch }) => ({

@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { AsyncDropdown } from "@/components/dropdowns";
-import { useLazyGetIngredientTypesQuery } from "../services";
+import { ingredientTypeApi, useLazyGetIngredientTypesQuery } from "../services";
 import { IngredientType } from "@/models";
 
 const IngredientTypeDropdown = ({
@@ -18,31 +18,17 @@ const IngredientTypeDropdown = ({
   onChange?: (event: any, newValue: any) => void;
   multiple?: boolean;
 }) => {
-  const [trigger, { isLoading, data }, lastPromiseInfo] =
-    useLazyGetIngredientTypesQuery();
-
-  const handleOnOpen = () => {
-    trigger({}, true);
-  };
-
-  const handleOnClose = () => {};
-
   return (
     <AsyncDropdown<IngredientType>
       multiple={multiple}
       value={value}
       dataKey="name"
       label={label}
+      placeholder="Select Ingredient Type"
       error={error}
       helperText={helperText}
-      options={data?.results ?? []}
-      isLoading={isLoading}
-      onOpen={handleOnOpen}
-      onClose={handleOnClose}
       onChange={onChange}
-      onInputChange={(event: any, newInputValue: any) => {
-        trigger({ search: newInputValue }, false);
-      }}
+      endpoint={ingredientTypeApi.endpoints.getIngredientTypes}
     />
   );
 };

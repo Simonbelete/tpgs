@@ -1,25 +1,26 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { ListLayout } from "@/layouts";
 import { useBreadcrumbs } from "@/hooks";
 import { Breadcrumbs } from "@/components";
 import { Typography } from "@mui/material";
-import { RequirementHistoryList } from "@/features/requirements";
-import { useRouter } from "next/router";
+import { IncubationHistoryList } from "@/features/incubation";
 import { NextPageContext } from "next";
 import { SeoHead } from "@/seo";
+import { getServerSidePropsContext } from "@/services/getServerSidePropsContext";
+import { getIncubationByIdSSR } from "@/features/incubation/services";
+import { Incubation } from "@/models";
 
-const RequirementHistoryPage = ({ id }: { id: number }) => {
+const IncubationHistoryPage = ({ data }: { data: Incubation }) => {
   const { breadcrumbs } = useBreadcrumbs();
-  const router = useRouter();
 
   return (
     <>
-      <SeoHead title="Requirement Histories" />
+      <SeoHead title="Incubation Histories" />
       <ListLayout
         breadcrumbs={<Breadcrumbs items={breadcrumbs} />}
-        header={<Typography variant="title">Histories</Typography>}
+        header={<Typography variant="title">Incubation History</Typography>}
       >
-        <RequirementHistoryList id={id} />
+        <IncubationHistoryList data={data} />
       </ListLayout>
     </>
   );
@@ -28,9 +29,11 @@ const RequirementHistoryPage = ({ id }: { id: number }) => {
 export async function getServerSideProps(context: NextPageContext) {
   const { id } = context.query;
 
-  return {
-    props: { id },
-  };
+  return getServerSidePropsContext<Incubation>({
+    context,
+    id: Number(id),
+    getByIdSSR: getIncubationByIdSSR,
+  });
 }
 
-export default RequirementHistoryPage;
+export default IncubationHistoryPage;

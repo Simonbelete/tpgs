@@ -1,8 +1,7 @@
 import React, { useEffect } from "react";
 import { AsyncDropdown } from "@/components/dropdowns";
-import { useLazyGetBreedsQuery } from "../services";
+import { breedApi } from "../services";
 import { Breed } from "@/models";
-import { BreedForm } from "../breed-form";
 
 const BreedDropdown = ({
   value,
@@ -17,15 +16,6 @@ const BreedDropdown = ({
   helperText?: string;
   onChange?: (event: any, newValue: any) => void;
 }) => {
-  const [trigger, { isLoading, data }, lastPromiseInfo] =
-    useLazyGetBreedsQuery();
-
-  const handleOnOpen = () => {
-    trigger({}, true);
-  };
-
-  const handleOnClose = () => {};
-
   return (
     <AsyncDropdown<Breed>
       value={value}
@@ -33,16 +23,8 @@ const BreedDropdown = ({
       label={label}
       error={error}
       helperText={helperText}
-      options={data?.results ?? []}
-      isLoading={isLoading}
-      onOpen={handleOnOpen}
-      onClose={handleOnClose}
       onChange={onChange}
-      createForm={<BreedForm redirect={false} />}
-      createFormTitle="Create Breed"
-      onInputChange={(event: any, newInputValue: any) => {
-        trigger({ search: newInputValue }, false);
-      }}
+      endpoint={breedApi.endpoints.getBreeds}
     />
   );
 };

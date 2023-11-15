@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { AsyncDropdown } from "@/components/dropdowns";
-import { useLazyGetNutrientsQuery } from "../services";
+import { nutrientApi, useLazyGetNutrientsQuery } from "../services";
 import { Nutrient } from "@/models";
 import { NutrientForm } from "../nutrient-form";
 
@@ -17,32 +17,18 @@ const NutrientDropdown = ({
   helperText?: string;
   onChange?: (event: any, newValue: any) => void;
 }) => {
-  const [trigger, { isLoading, data }, lastPromiseInfo] =
-    useLazyGetNutrientsQuery();
-
-  const handleOnOpen = () => {
-    trigger({}, true);
-  };
-
-  const handleOnClose = () => {};
-
   return (
     <AsyncDropdown<Nutrient>
       value={value}
       dataKey="name"
+      placeholder="Select Nutrient"
       label={label}
       error={error}
       helperText={helperText}
-      options={data?.results ?? []}
-      isLoading={isLoading}
-      onOpen={handleOnOpen}
-      onClose={handleOnClose}
       onChange={onChange}
-      createForm={<NutrientForm />}
+      createForm={<NutrientForm shallowRoute={false} />}
       createFormTitle="Create Nutrient"
-      onInputChange={(event: any, newInputValue: any) => {
-        trigger({ search: newInputValue }, false);
-      }}
+      endpoint={nutrientApi.endpoints.getNutrients}
     />
   );
 };

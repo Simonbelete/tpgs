@@ -1,6 +1,9 @@
 import React, { useEffect } from "react";
 import { AsyncDropdown } from "@/components/dropdowns";
-import { useLazyGetReductionReasonsQuery } from "../services";
+import {
+  reductionReasonApi,
+  useLazyGetReductionReasonsQuery,
+} from "../services";
 import { ReductionReason } from "@/models";
 import { ReductionReasonForm } from "../reduction-reason-form";
 
@@ -33,18 +36,13 @@ const ReductionReasonDropdown = ({
       value={value}
       dataKey={dataKey}
       label={label}
+      placeholder="Select Cull Reason"
       error={error}
       helperText={helperText}
-      options={data?.results ?? []}
-      isLoading={isLoading}
-      onOpen={handleOnOpen}
-      onClose={handleOnClose}
       onChange={onChange}
       createForm={<ReductionReasonForm />}
-      createFormTitle="Create ReductionReason"
-      onInputChange={(event: any, newInputValue: any) => {
-        trigger({ search: newInputValue }, false);
-      }}
+      createFormTitle="Create Reduction Reason"
+      endpoint={reductionReasonApi.endpoints.getReductionReasons}
     />
   );
 };

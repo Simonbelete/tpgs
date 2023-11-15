@@ -1,7 +1,7 @@
 import React from "react";
 import { NextPageContext } from "next";
 import { EditLayout } from "@/layouts";
-import { BatchFeedForms } from "@/features/feeds";
+import { BatchFeedForm } from "@/features/feeds";
 import { getFeedByIdSSR } from "@/features/feeds/services";
 import { Breadcrumbs, Loading } from "@/components";
 import { useBreadcrumbs } from "@/hooks";

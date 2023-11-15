@@ -1,12 +1,12 @@
 import React from "react";
 import { GridColDef, GridRenderCellParams } from "@mui/x-data-grid";
 import { HistoryList } from "@/lib/crud";
-import { chickenApi } from "../services";
-import { Chicken, ChickenHistory } from "@/models";
+import { incubationApi } from "../services";
+import { Incubation, IncubationHistory } from "@/models";
 import { IconButton, Tooltip, Typography, Button } from "@mui/material";
 import Link from "next/link";
 
-export const ChickenHistoryList = ({ data }: { data: Chicken }) => {
+export const IncubationHistoryList = ({ data }: { data: Incubation }) => {
   const columns: GridColDef[] = [
     { field: "name", headerName: "Name" },
     {
@@ -33,10 +33,10 @@ export const ChickenHistoryList = ({ data }: { data: Chicken }) => {
     },
   ];
   return (
-    <HistoryList<ChickenHistory>
+    <HistoryList<IncubationHistory>
       columns={columns}
       getHistoryQuery={{ id: data.id, query: {} }}
-      getHistoryEndpoint={chickenApi.endpoints.getChickenHistory}
+      getHistoryEndpoint={incubationApi.endpoints.getIncubationHistory}
     />
   );
 };

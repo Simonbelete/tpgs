@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Grid } from "@mui/material";
 import dynamic from "next/dynamic";
 import { Skeleton } from "@mui/material";
-import { useGetRequirementNutrientsQuery } from "../services";
+import { useGetNutrientsOfRequirementQuery } from "../services";
 import { Nutrient } from "@/models";
 import { StatisticsCard } from "@/components";
 
@@ -27,7 +27,7 @@ const RequirementComposition = ({ id }: { id: number }) => {
 
   const [chartData2, setChartData2] = useState<any>([]);
 
-  const { data, isLoading, status } = useGetRequirementNutrientsQuery({
+  const { data, isLoading, status } = useGetNutrientsOfRequirementQuery({
     id,
     query: { nutrient_group_not: "Energy" },
   });

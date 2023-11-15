@@ -8,6 +8,7 @@ const nextConfig = {
     };
     return config;
   },
+  exclude: ["cypress"],
 };
 
 module.exports = nextConfig;

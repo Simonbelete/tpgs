@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { AsyncDropdown } from "@/components/dropdowns";
-import { useLazyGetRequirementsQuery } from "../services";
+import { requirementApi } from "../services";
 import { Requirement } from "@/models";
 import { RequirementForm } from "../requirement-form";
 
@@ -17,33 +17,19 @@ const RequirementDropdown = ({
   onChange?: (event: any, newValue: any) => void;
   multiple?: boolean;
 }) => {
-  const [trigger, { isLoading, data }, lastPromiseInfo] =
-    useLazyGetRequirementsQuery();
-
-  const handleOnOpen = () => {
-    trigger({}, true);
-  };
-
-  const handleOnClose = () => {};
-
   return (
     <AsyncDropdown<Requirement>
       multiple={multiple}
       value={value}
       dataKey="name"
       label={"Requirement"}
+      placeholder="Select Requirement"
       error={error}
       helperText={helperText}
-      options={data?.results ?? []}
-      isLoading={isLoading}
-      onOpen={handleOnOpen}
-      onClose={handleOnClose}
       onChange={onChange}
-      createForm={<RequirementForm />}
+      createForm={<RequirementForm shallowRoute={false} />}
       createFormTitle="Create Requirement"
-      onInputChange={(event: any, newInputValue: any) => {
-        trigger({ search: newInputValue }, false);
-      }}
+      endpoint={requirementApi.endpoints.getRequirements}
     />
   );
 };

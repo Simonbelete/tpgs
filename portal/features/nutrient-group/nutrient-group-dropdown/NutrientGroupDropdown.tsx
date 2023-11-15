@@ -1,7 +1,8 @@
 import React, { useEffect } from "react";
 import { AsyncDropdown } from "@/components/dropdowns";
-import { useLazyGetNutrientGroupsQuery } from "../services";
+import { nutrientGroupApi, useLazyGetNutrientGroupsQuery } from "../services";
 import { NutrientGroup } from "@/models";
+import { NutrientGroupForm } from "../nutrient-group-form";
 
 const NutrientGroupDropdown = ({
   value,
@@ -16,30 +17,18 @@ const NutrientGroupDropdown = ({
   helperText?: string;
   onChange?: (event: any, newValue: any) => void;
 }) => {
-  const [trigger, { isLoading, data }, lastPromiseInfo] =
-    useLazyGetNutrientGroupsQuery();
-
-  const handleOnOpen = () => {
-    trigger({}, true);
-  };
-
-  const handleOnClose = () => {};
-
   return (
     <AsyncDropdown<NutrientGroup>
       value={value}
       dataKey="name"
+      placeholder="Select Nutrient Group"
       label={label}
       error={error}
       helperText={helperText}
-      options={data?.results ?? []}
-      isLoading={isLoading}
-      onOpen={handleOnOpen}
-      onClose={handleOnClose}
       onChange={onChange}
-      onInputChange={(event: any, newInputValue: any) => {
-        trigger({ search: newInputValue }, false);
-      }}
+      createForm={<NutrientGroupForm shallowRoute={false} />}
+      createFormTitle="Create Nutrient Group"
+      endpoint={nutrientGroupApi.endpoints.getNutrientGroups}
     />
   );
 };

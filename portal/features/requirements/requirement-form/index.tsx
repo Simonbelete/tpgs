@@ -63,7 +63,13 @@ const RequirementNutrientToolbar = ({
   );
 };
 
-export const RequirementForm = ({ data }: { data?: Requirement }) => {
+export const RequirementForm = ({
+  data,
+  shallowRoute = false,
+}: {
+  data?: Requirement;
+  shallowRoute?: boolean;
+}) => {
   const [formData, setFormData] = useState<Requirement | undefined>(data);
   const [tab, setTab] = useState(0);
 
@@ -169,6 +175,7 @@ export const RequirementForm = ({ data }: { data?: Requirement }) => {
               <Form
                 data={formData}
                 schema={schema}
+                shallowRoute={shallowRoute}
                 createEndpoint={requirementApi.endpoints.createRequirement}
                 updateEndpoint={requirementApi.endpoints.updateRequirement}
                 fields={{

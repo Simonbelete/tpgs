@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { AsyncDropdown } from "@/components/dropdowns";
-import { useLazyGetUnitsQuery } from "../services";
+import { unitApi, useLazyGetUnitsQuery } from "../services";
 import { Unit } from "@/models";
 import { UnitForm } from "../unit-form";
 
@@ -17,32 +17,18 @@ const UnitDropdown = ({
   helperText?: string;
   onChange?: (event: any, newValue: any) => void;
 }) => {
-  const [trigger, { isLoading, data }, lastPromiseInfo] =
-    useLazyGetUnitsQuery();
-
-  const handleOnOpen = () => {
-    trigger({}, true);
-  };
-
-  const handleOnClose = () => {};
-
   return (
     <AsyncDropdown<Unit>
       value={value}
       dataKey="name"
       label={label}
+      placeholder="Select Unit"
       error={error}
       helperText={helperText}
-      options={data?.results ?? []}
-      isLoading={isLoading}
-      onOpen={handleOnOpen}
-      onClose={handleOnClose}
       onChange={onChange}
       createFormTitle="Create Unit"
-      createForm={<UnitForm />}
-      onInputChange={(event: any, newInputValue: any) => {
-        trigger({ search: newInputValue }, false);
-      }}
+      createForm={<UnitForm shallowRoute={false} />}
+      endpoint={unitApi.endpoints.getUnits}
     />
   );
 };

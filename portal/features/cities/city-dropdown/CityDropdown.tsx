@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { AsyncDropdown } from "@/components/dropdowns";
-import { useLazyGetCitiesQuery } from "../services";
+import { cityApi } from "../services";
 import { City } from "@/models";
 
 const CityDropdown = ({
@@ -16,15 +16,6 @@ const CityDropdown = ({
   helperText?: string;
   onChange?: (event: any, newValue: any) => void;
 }) => {
-  const [trigger, { isLoading, data }, lastPromiseInfo] =
-    useLazyGetCitiesQuery();
-
-  const handleOnOpen = () => {
-    trigger({}, true);
-  };
-
-  const handleOnClose = () => {};
-
   return (
     <AsyncDropdown<City>
       value={value}
@@ -32,14 +23,9 @@ const CityDropdown = ({
       label={label}
       error={error}
       helperText={helperText}
-      options={data?.results ?? []}
-      isLoading={isLoading}
-      onOpen={handleOnOpen}
-      onClose={handleOnClose}
+      placeholder="City"
       onChange={onChange}
-      onInputChange={(event: any, newInputValue: any) => {
-        trigger({ search: newInputValue }, false);
-      }}
+      endpoint={cityApi.endpoints.getCities}
     />
   );
 };

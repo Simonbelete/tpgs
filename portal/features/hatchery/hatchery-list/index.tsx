@@ -58,7 +58,7 @@ export const HatcheryList = () => {
       filters={{}}
       menus={
         <>
-          <CreateButton baseUrl="/hatchery" />
+          <CreateButton />
           <ExportButton
             exportCsv={exportHatcheryCSV}
             exportXls={exportHatcheryXLS}

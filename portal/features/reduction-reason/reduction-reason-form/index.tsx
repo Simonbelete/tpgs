@@ -10,19 +10,19 @@ const schema = yup.object({
 
 export const ReductionReasonForm = ({
   data,
-  redirect = true,
+  shallowRoute = true,
 }: {
   data?: ReductionReason;
-  redirect?: boolean;
+  shallowRoute?: boolean;
 }) => {
   return (
     <>
       <FormLayout<ReductionReason>
         id={data?.id || 0}
         data={data}
-        baseUrl="/reduction-reasons"
         title="Create Reduction Reason"
         schema={schema}
+        shallowRoute={shallowRoute}
         createEndpoint={reductionReasonApi.endpoints.createReductionReason}
         updateEndpoint={reductionReasonApi.endpoints.updateReductionReason}
         deleteEndpoint={reductionReasonApi.endpoints.deleteReductionReason}

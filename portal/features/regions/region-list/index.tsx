@@ -1,20 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { GridColDef } from "@mui/x-data-grid";
-import {
-  ListLayout,
-  CreateButton,
-  ExportButton,
-  ImportButton,
-} from "@/lib/crud";
-import {
-  regionApi,
-  exportRegionsCSV,
-  exportRegionsXLS,
-  exportRegionsXLSX,
-  importRegionsCSV,
-  importRegionsXLS,
-  importRegionsXLSX,
-} from "../services";
+import { ListLayout } from "@/lib/crud";
+import { regionApi } from "../services";
 import { Region } from "@/models";
 
 export const RegionList = () => {
@@ -24,7 +11,6 @@ export const RegionList = () => {
   ];
   return (
     <ListLayout<Region>
-      baseUrl="/regions"
       title="Region"
       columns={columns}
       actions={[]}

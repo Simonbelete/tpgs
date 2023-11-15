@@ -13,7 +13,6 @@ export const CityList = () => {
   ];
   return (
     <ListLayout<City>
-      baseUrl="/cities"
       title="City"
       columns={columns}
       actions={[]}

@@ -63,7 +63,7 @@ export const hatcheryApi = baseApi.injectEndpoints({
       // Eggs
       getEggsOfHatchery: build.query<
         Response<HatcheryEgg[]>,
-        { id: number; query: Object }
+        { id: number; query?: Object }
       >({
         query: ({ id, query }) => ({
           url: `${URL}/${id}/${EGGS_URL}`,
@@ -92,7 +92,7 @@ export const hatcheryApi = baseApi.injectEndpoints({
         }),
       }),
       deleteEggOfHatchery: build.mutation<
-        Promise<AxiosResponse<HatcheryEgg>>,
+        any,
         Pick<HatcheryEgg, "hatchery" | "id">
       >({
         query: ({ hatchery, id }) => ({

@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { AsyncDropdown } from "@/components/dropdowns";
-import { useLazyGetIngredientsQuery } from "../services";
+import { ingredientApi, useLazyGetIngredientsQuery } from "../services";
 import { Ingredient } from "@/models";
 import { IngredientForm } from "../ingredient-form";
 
@@ -17,15 +17,6 @@ const FlockDropdown = ({
   onChange?: (event: any, newValue: any) => void;
   multiple?: boolean;
 }) => {
-  const [trigger, { isLoading, data }, lastPromiseInfo] =
-    useLazyGetIngredientsQuery();
-
-  const handleOnOpen = () => {
-    trigger({}, true);
-  };
-
-  const handleOnClose = () => {};
-
   return (
     <AsyncDropdown<Ingredient>
       multiple={multiple}
@@ -34,16 +25,10 @@ const FlockDropdown = ({
       label={"Ingredient"}
       error={error}
       helperText={helperText}
-      options={data?.results ?? []}
-      isLoading={isLoading}
-      onOpen={handleOnOpen}
-      onClose={handleOnClose}
       onChange={onChange}
-      createForm={<IngredientForm />}
+      createForm={<IngredientForm shallowRoute={false} />}
       createFormTitle="Create Ingredient"
-      onInputChange={(event: any, newInputValue: any) => {
-        trigger({ search: newInputValue }, false);
-      }}
+      endpoint={ingredientApi.endpoints.getIngredients}
     />
   );
 };

@@ -12,7 +12,6 @@ export const CountryList = () => {
   ];
   return (
     <ListLayout<Country>
-      baseUrl="/countries"
       title="Country"
       columns={columns}
       actions={[]}

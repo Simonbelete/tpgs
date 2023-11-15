@@ -11,7 +11,6 @@ export const CurrencyList = () => {
   ];
   return (
     <ListLayout<Currency>
-      baseUrl="/currencies"
       title="Currency"
       columns={columns}
       actions={[]}

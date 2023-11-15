@@ -41,6 +41,7 @@ export interface EditableHatcheryEgg extends HatcheryEgg, EditMode {}
 const HatcheryNutrientToolbar = ({
   setRows,
   rows,
+  refetch,
 }: {
   setRows: (
     newRows: (
@@ -48,6 +49,7 @@ const HatcheryNutrientToolbar = ({
     ) => GridRowsProp<EditableHatcheryEgg>
   ) => void;
   rows: GridRowsProp<EditableHatcheryEgg>;
+  refetch: () => void;
 }) => {
   return (
     <EditToolbar<EditableHatcheryEgg, Egg>
@@ -55,6 +57,7 @@ const HatcheryNutrientToolbar = ({
       rows={rows}
       endpoint={eggApi.endpoints.getEggs}
       mapperKey="egg"
+      refetch={refetch}
     />
   );
 };

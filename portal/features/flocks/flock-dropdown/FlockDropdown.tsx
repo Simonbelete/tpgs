@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { AsyncDropdown } from "@/components/dropdowns";
-import { useLazyGetFlocksQuery } from "../services";
+import { flockApi, useLazyGetFlocksQuery } from "../services";
 import { Flock } from "@/models";
 import { FlockForm } from "../flock-form";
 
@@ -31,16 +31,9 @@ const FlockDropdown = ({
       label={"Flock"}
       error={error}
       helperText={helperText}
-      options={data?.results ?? []}
-      isLoading={isLoading}
-      onOpen={handleOnOpen}
-      onClose={handleOnClose}
       onChange={onChange}
-      createForm={<FlockForm />}
-      createFormTitle="Create Flock"
-      onInputChange={(event: any, newInputValue: any) => {
-        trigger({ search: newInputValue }, false);
-      }}
+      placeholder="Select Flock"
+      endpoint={flockApi.endpoints.getFlocks}
     />
   );
 };

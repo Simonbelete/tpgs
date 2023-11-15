@@ -4,6 +4,7 @@ import {
   Response,
   Incubation,
   IncubationAnalyses,
+  IncubationHistory,
 } from "@/models";
 import { AxiosResponse } from "axios";
 import clientSSR from "@/services/client_ssr";
@@ -27,7 +28,7 @@ export const incubationApi = baseApi.injectEndpoints({
         }),
       }),
       getIncubationHistory: build.query<
-        Response<Incubation>,
+        Response<IncubationHistory[]>,
         { id: number; query: Object }
       >({
         query: ({ id, query }) => ({

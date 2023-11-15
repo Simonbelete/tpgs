@@ -86,7 +86,7 @@ export const IncubationList = () => {
       filters={{}}
       menus={
         <>
-          <CreateButton baseUrl="/incubation" />
+          <CreateButton />
           <ExportButton
             exportCsv={exportIncubationsCSV}
             exportXls={exportIncubationsXLS}

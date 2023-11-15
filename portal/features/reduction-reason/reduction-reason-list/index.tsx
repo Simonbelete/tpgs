@@ -35,7 +35,7 @@ export const ReductionReasonList = () => {
       filters={{}}
       menus={
         <>
-          <CreateButton baseUrl="/reduction-reasons" />
+          <CreateButton />
           <ExportButton
             exportCsv={exportReductionReasonsCSV}
             exportXls={exportReductionReasonsXLS}

@@ -1,5 +1,5 @@
 import { baseApi } from "@/services/baseApi";
-import { AbstractSummary, Response, Chicken } from "@/models";
+import { AbstractSummary, Response, Chicken, ChickenHistory } from "@/models";
 import { AxiosResponse } from "axios";
 import clientSSR from "@/services/client_ssr";
 import client from "@/services/client";
@@ -32,7 +32,7 @@ export const chickenApi = baseApi.injectEndpoints({
         }),
       }),
       getChickenHistory: build.query<
-        Response<Chicken>,
+        Response<ChickenHistory[]>,
         { id: number; query: Object }
       >({
         query: ({ id, query }) => ({

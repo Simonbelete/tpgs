@@ -3,12 +3,15 @@ import { ListLayout } from "@/layouts";
 import { useBreadcrumbs } from "@/hooks";
 import { Breadcrumbs } from "@/components";
 import { Typography } from "@mui/material";
-import { BreedHistoryList } from "@/features/breeds";
+import { ChickenHistoryList } from "@/features/chickens";
 import { useRouter } from "next/router";
 import { NextPageContext } from "next";
 import { SeoHead } from "@/seo";
+import { getChickenByIdSSR } from "@/features/chickens/services";
+import { Chicken } from "@/models";
+import { getServerSidePropsContext } from "@/services/getServerSidePropsContext";
 
-const ChickenHistoryPage = ({ id }: { id: number }) => {
+const ChickenHistoryPage = ({ data }: { data: Chicken }) => {
   const { breadcrumbs } = useBreadcrumbs();
   const router = useRouter();
 
@@ -19,7 +22,7 @@ const ChickenHistoryPage = ({ id }: { id: number }) => {
         breadcrumbs={<Breadcrumbs items={breadcrumbs} />}
         header={<Typography variant="title">Histories</Typography>}
       >
-        <BreedHistoryList id={id} />
+        <ChickenHistoryList data={data} />
       </ListLayout>
     </>
   );
@@ -28,9 +31,11 @@ const ChickenHistoryPage = ({ id }: { id: number }) => {
 export async function getServerSideProps(context: NextPageContext) {
   const { id } = context.query;
 
-  return {
-    props: { id },
-  };
+  return getServerSidePropsContext<Chicken>({
+    context,
+    id: Number(id),
+    getByIdSSR: getChickenByIdSSR,
+  });
 }
 
 export default ChickenHistoryPage;

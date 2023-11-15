@@ -19,5 +19,5 @@
     }
   },
   "include": ["types/**/*.ts", "next-env.d.ts", "**/*.ts", "**/*.tsx", "features/candling/services/candling.ts.a"],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules", "cypress"]
 }

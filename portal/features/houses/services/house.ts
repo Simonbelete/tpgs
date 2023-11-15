@@ -1,5 +1,5 @@
 import { baseApi } from "@/services/baseApi";
-import { AbstractSummary, Response, House } from "@/models";
+import { AbstractSummary, Response, House, HouseHistory } from "@/models";
 import { AxiosResponse } from "axios";
 import clientSSR from "@/services/client_ssr";
 import client from "@/services/client";
@@ -22,7 +22,7 @@ export const houseApi = baseApi.injectEndpoints({
         }),
       }),
       getHouseHistory: build.query<
-        Response<House>,
+        Response<HouseHistory[]>,
         { id: number; query: Object }
       >({
         query: ({ id, query }) => ({
