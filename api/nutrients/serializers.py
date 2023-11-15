@@ -7,13 +7,13 @@ from users.serializers import UserSerializer_GET
 class NutrientGroupSerializer_GET(serializers.ModelSerializer):
     class Meta:
         model = models.NutrientGroup
-        fields = ['id', 'name', 'display_name']
+        fields = ['id', 'name', 'display_name', 'is_active']
 
 
 class NutrientGroupSerializer_POST(serializers.ModelSerializer):
     class Meta:
         model = models.NutrientGroup
-        fields = ['id', 'name']
+        fields = ['id', 'name', 'is_active']
 
 
 class NutrientGroupHistorySerializer(serializers.ModelSerializer):
@@ -48,7 +48,7 @@ class NutrientSerializer_POST(serializers.ModelSerializer):
     class Meta:
         model = models.Nutrient
         fields = ['id', 'name', 'code', 'abbreviation',
-                  'description', 'nutrient_group', 'unit']
+                  'description', 'nutrient_group', 'unit', 'is_active']
 
 
 class NutrientHistorySerializer(serializers.ModelSerializer):
