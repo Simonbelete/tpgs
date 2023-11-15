@@ -4,6 +4,8 @@ from rest_framework.test import APITestCase
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework import status
 
+from users.models import User
+
 
 class CoreAPITests(APITestCase):
     def setUp(self):
@@ -55,8 +57,11 @@ class CoreAPITests(APITestCase):
         ]
 
     def create_new_user(self):
-        user = baker.make_recipe('users.user')
+        # user = baker.make_recipe('users.user')
+        u = baker.prepare_recipe('users.user')
+        user = User.objects.create_user(
+            name=u.name, email=u.email, password="DvCGR56LF9vYFHC")
         refresh = RefreshToken.for_user(user)
 
-        return {'x-Request-Id': self.TENANT,
-                'Authorization': "{type} {token}".format(type="Bearer", token=str(refresh.access_token))}
+        return user, {'x-Request-Id': self.TENANT,
+                      'Authorization': "{type} {token}".format(type="Bearer", token=str(refresh.access_token))}

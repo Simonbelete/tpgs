@@ -42,6 +42,7 @@ class ChangePasswordViewSet(viewsets.GenericViewSet):
 
     def create(self, request):
         serializer = request.data
+
         self.clean_old_password(serializer['old_password'])
         self.clean_new_password(
             serializer['new_password'], serializer['confirm_password'])
@@ -49,7 +50,7 @@ class ChangePasswordViewSet(viewsets.GenericViewSet):
             self.request.user.set_password(serializer['new_password'])
             return Response({}, status=200)
         except Exception as ex:
-            return Response({}, status=500)
+            return Response({'errors': [str(ex)]}, status=500)
 
 
 class DeactivateAccountViewSet(viewsets.GenericViewSet):
