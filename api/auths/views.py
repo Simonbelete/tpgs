@@ -7,6 +7,7 @@ from rest_framework import viewsets
 
 from . import serializers
 
+
 class ChangePasswordViewSet(viewsets.GenericViewSet):
     serializer_class = serializers.ChangePasswordSerializer
 
@@ -30,19 +31,27 @@ class ChangePasswordViewSet(viewsets.GenericViewSet):
                     "confirm_password": ["The two password fields didn’t match."]
                 }
             )
-        password_validation.validate_password(password2, self.request.user)
-        return password2
-    
+        try:
+            password_validation.validate_password(password2, self.request.user)
+            return password2
+        except Exception as ex:
+            raise ValidationError({
+                'new_password': ex,
+                'confirm_password': ex,
+            })
+
     def create(self, request):
         serializer = request.data
         self.clean_old_password(serializer['old_password'])
-        self.clean_new_password(serializer['new_password'], serializer['confirm_password'])
+        self.clean_new_password(
+            serializer['new_password'], serializer['confirm_password'])
         try:
             self.request.user.set_password(serializer['new_password'])
             return Response({}, status=200)
         except Exception as ex:
             return Response({}, status=500)
-        
+
+
 class DeactivateAccountViewSet(viewsets.GenericViewSet):
     def create(self, request):
         try:
