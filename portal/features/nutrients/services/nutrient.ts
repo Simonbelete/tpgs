@@ -21,6 +21,16 @@ export const nutrientApi = baseApi.injectEndpoints({
           params: query,
         }),
       }),
+      getAllNutrients: build.query<
+        Response<Pick<Nutrient, "id" | "display_name" | "abbreviation">[]>,
+        Object
+      >({
+        query: (query?: Object) => ({
+          url: `${URL}/all/`,
+          method: "get",
+          params: query,
+        }),
+      }),
       getNutrientHistory: build.query<
         Response<NutrientHistory[]>,
         { id: number; query: Object }
@@ -98,4 +108,7 @@ export const {
   useCreateNutrientMutation,
   useUpdateNutrientMutation,
   useDeleteNutrientMutation,
+
+  useGetAllNutrientsQuery,
+  useLazyGetAllNutrientsQuery,
 } = nutrientApi;

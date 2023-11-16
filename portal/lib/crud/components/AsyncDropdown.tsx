@@ -31,6 +31,7 @@ export interface AsyncDropdownProps<T> {
   > &
     QueryHooks<QueryDefinition<Query, ClientQueyFn, any, Response<T[]>, any>>;
   disabled?: boolean;
+  name?: string;
 }
 
 export default function AsyncDropdown<T>({
@@ -47,6 +48,7 @@ export default function AsyncDropdown<T>({
   endpoint,
   placeholder,
   disabled = false,
+  name,
   ...props
 }: AsyncDropdownProps<T>) {
   const [open, setOpen] = React.useState(false);
@@ -168,6 +170,7 @@ export default function AsyncDropdown<T>({
         renderInput={(params) => (
           <TextField
             {...params}
+            name={name}
             error={error}
             helperText={helperText}
             fullWidth

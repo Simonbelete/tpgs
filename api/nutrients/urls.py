@@ -7,6 +7,9 @@ from . import views
 
 router = routers.DefaultRouter()
 
+router.register(r'nutrients/all', views.AllNutrientViewSet,
+                basename='api_all_nutrient'),
+
 # Nutrient
 router.register(r'nutrients', views.NutrientViewSet,
                 basename='api_nutrient'),

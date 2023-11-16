@@ -219,6 +219,7 @@ export default function Form<
                     fieldState: { error },
                   }) => (
                     <LabeledInput
+                      name={key}
                       error={!!error?.message}
                       helperText={error?.message}
                       onChange={onChange}
@@ -256,6 +257,7 @@ export default function Form<
               size="small"
               startIcon={<SaveIcon />}
               onClick={() => handleSubmit(onSubmit)()}
+              data-testid="data-submit"
             >
               {data ? "Update" : "Create"}
             </Button>
@@ -267,6 +269,7 @@ export default function Form<
               size="small"
               startIcon={<CloseIcon />}
               onClick={() => router.push(getPreviousUrl(router.pathname))}
+              data-testid="data-cancel"
             >
               Cancel
             </Button>

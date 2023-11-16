@@ -77,25 +77,25 @@ export default function App({
 
   return (
     <Provider store={store}>
-      <SessionProvider session={session}>
-        <ThemeProvider theme={lightTheme}>
-          <LocalizationProvider dateAdapter={AdapterDayjs}>
-            {/* <OnBoardingProvider> */}
-            <SnackbarProvider
-              anchorOrigin={{
-                vertical: "top",
-                horizontal: "center",
-              }}
-              action={(key) => <SnackbarCloseButton key={key} />}
-            >
-              <main className={`${inter.className}`}>
-                {getLayout(<Component {...pageProps} />)}
-              </main>
-            </SnackbarProvider>
-            {/* </OnBoardingProvider> */}
-          </LocalizationProvider>
-        </ThemeProvider>
-      </SessionProvider>
+      {/* <SessionProvider session={session}> */}
+      <ThemeProvider theme={lightTheme}>
+        <LocalizationProvider dateAdapter={AdapterDayjs}>
+          {/* <OnBoardingProvider> */}
+          <SnackbarProvider
+            anchorOrigin={{
+              vertical: "top",
+              horizontal: "center",
+            }}
+            action={(key) => <SnackbarCloseButton key={key} />}
+          >
+            <main className={`${inter.className}`}>
+              {getLayout(<Component {...pageProps} />)}
+            </main>
+          </SnackbarProvider>
+          {/* </OnBoardingProvider> */}
+        </LocalizationProvider>
+      </ThemeProvider>
+      {/* </SessionProvider> */}
     </Provider>
   );
 }

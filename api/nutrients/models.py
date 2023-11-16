@@ -26,9 +26,14 @@ class Nutrient(CoreModel):
         NutrientGroup, on_delete=models.SET_NULL, null=True, blank=True, related_name='nutrients')
     unit = models.ForeignKey(
         Unit, on_delete=models.SET_NULL, null=True, blank=True, related_name='nutrients')
+    order = models.IntegerField(default=10, null=True, blank=True)
 
     history = HistoricalRecords()
 
     @property
     def display_name(self):
-        return self.name
+        print(self.unit.name)
+        if (self.unit):
+            return "{abbreviation} ({unit})".format(abbreviation=self.abbreviation, unit=self.unit.name)
+        else:
+            return self.abbreviation

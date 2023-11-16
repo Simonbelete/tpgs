@@ -61,7 +61,7 @@ breed_feed_guide_router = NestedDefaultRouter(
 breed_feed_guide_router.register(r'guidelines/eggs', views.BreedFeedGuidelineViewSet,
                                  basename='api_breed_feed_guide')
 
-# Breed HDEP Guideline
+# Breed HDEP Guidelines
 router.register(r'breed-guideline/hdep', views.BreedHDEPGuidelineViewSet,
                 basename='api_breed_hdep_guideline')
 

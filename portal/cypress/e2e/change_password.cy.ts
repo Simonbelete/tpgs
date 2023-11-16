@@ -1,7 +1,7 @@
 describe("Change self password", () => {
   beforeEach(() => {
     cy.visit("/settings");
-    cy.url().should("contain", "/settings");
+    cy.url().should("contain", "/ss");
   });
 
   it("Select change password tab", () => {

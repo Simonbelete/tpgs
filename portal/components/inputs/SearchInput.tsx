@@ -5,7 +5,7 @@ import InputBase, { InputBaseProps } from "@mui/material/InputBase";
 import InputLabel from "@mui/material/InputLabel";
 import FormControl from "@mui/material/FormControl";
 import { OutlinedInputProps } from "@mui/material/OutlinedInput";
-import SearchIcon from '@mui/icons-material/Search';
+import SearchIcon from "@mui/icons-material/Search";
 
 const BootstrapInput = styled(InputBase)(({ theme }) => ({
   "label + &": {
@@ -33,7 +33,7 @@ const BootstrapInput = styled(InputBase)(({ theme }) => ({
       borderColor: alpha(theme.palette.secondary.dark, 0.3),
     },
   },
-  "& .MuiInputAdornment-positionStart" : {
+  "& .MuiInputAdornment-positionStart": {
     borderRadius: 4,
     position: "relative",
     // backgroundColor: theme.palette.mode === "light" ? "#F3F6F9" : "#1A2027",
@@ -45,9 +45,9 @@ const BootstrapInput = styled(InputBase)(({ theme }) => ({
     padding: "5px 2px",
     fontFamily: ["Inter", "sans-serif"].join(","),
     margin: 0,
-    height: 'auto',
-    maxHeight: 'auto'
-  }
+    height: "auto",
+    maxHeight: "auto",
+  },
 }));
 
 const SearchInput = ({
@@ -62,7 +62,6 @@ const SearchInput = ({
       <BootstrapInput
         {...props}
         defaultValue=""
-        id="bootstrap-input"
         placeholder={label}
         endAdornment={<InputAdornment position="end">{prefix}</InputAdornment>}
         // startAdornment={<InputAdornment position="start"><SearchIcon fontSize="small" /></InputAdornment>}

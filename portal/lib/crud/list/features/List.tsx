@@ -140,6 +140,7 @@ export default function List<T>({
         onYes={deletePermanently}
       />
       <StripedDataGrid
+        data-testid="data-table"
         sx={{ background: "white", height: "100%" }}
         rows={(data?.results || []) as GridValidRowModel[]}
         rowCount={data?.count || 0}

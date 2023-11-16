@@ -57,3 +57,9 @@ class NutrientHistorySerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Nutrient.history.__dict__['model']
         fields = '__all__'
+
+
+class AllNutrientSerializer_GET(serializers.ModelSerializer):
+    class Meta:
+        model = models.Nutrient
+        fields = ['id', 'abbreviation', 'display_name']

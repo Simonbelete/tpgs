@@ -14,7 +14,7 @@ const PermanentlyDeleteAction: React.FC<
   // TODO: use passed basePath
   const router = useRouter();
   return (
-    <Tooltip title="Delete" id="data-table-delete">
+    <Tooltip title="Delete" data-testid="data-table-delete">
       <IconButton
         aria-label="delete"
         onClick={() => onClick && onClick(id as any)}

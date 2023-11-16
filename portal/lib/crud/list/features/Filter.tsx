@@ -67,7 +67,7 @@ export default function Filter<T>({ filters }: FilterProps<T>) {
       elevation={0}
       variant="outlined"
       square
-      id="invitation-filter"
+      className="pts-list-filter"
     >
       <Grid container alignItems={"center"}>
         <Grid item xs={12} md={4}>
@@ -76,13 +76,14 @@ export default function Filter<T>({ filters }: FilterProps<T>) {
           </Typography>
         </Grid>
         <Grid item xs={12} md />
-        <Grid item xs={12} md={4}>
+        <Grid item xs={12} md={6}>
           <Stack
             direction={{ xs: "column", md: "row" }}
             justifyContent={{ xs: "start", md: "end" }}
             spacing={2}
           >
             <SearchInput
+              data-testid="data-search"
               label="Search..."
               onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
                 dispatch(filterSlice.actions.setSearch(event.target.value))

@@ -9,7 +9,10 @@ const HistoryAction: React.FC<GridRenderCellParams> = ({ id }) => {
   // TODO: use passed basePath
   const router = useRouter();
   return (
-    <Link href={`${router.pathname}/${id}/histories`} id="data-table-edit">
+    <Link
+      href={`${router.pathname}/${id}/histories`}
+      className="pts-list-history"
+    >
       <Tooltip title="Dashboard">
         <IconButton aria-label="edit">
           <HistoryIcon fontSize="small" />

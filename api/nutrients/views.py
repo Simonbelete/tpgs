@@ -1,4 +1,5 @@
 from rest_framework.permissions import DjangoModelPermissions
+from rest_framework import viewsets
 
 from core.views import (
     HistoryViewSet,
@@ -7,6 +8,7 @@ from core.views import (
     GenericExportView,
     GenericImportView
 )
+from core.pagination import AllPagination
 from . import models
 from . import serializers
 from . import admin
@@ -82,3 +84,11 @@ class NutrientExport(GenericExportView):
 class NutrientImport(GenericImportView):
     def get_resource(self):
         return admin.NutrientResource()
+
+
+# Get compacted all values
+
+class AllNutrientViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = models.Nutrient.objects.all().order_by('-order')
+    pagination_class = AllPagination
+    serializer_class = serializers.AllNutrientSerializer_GET

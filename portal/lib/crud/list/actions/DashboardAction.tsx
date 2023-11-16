@@ -9,7 +9,10 @@ const DashboardAction: React.FC<GridRenderCellParams> = ({ id }) => {
   // TODO: use passed basePath
   const router = useRouter();
   return (
-    <Link href={`${router.pathname}/${id}/dashboard`} id="data-table-edit">
+    <Link
+      href={`${router.pathname}/${id}/dashboard`}
+      data-testid="data-table-dashboard"
+    >
       <Tooltip title="Dashboard">
         <IconButton aria-label="edit">
           <AnalyticsOutlinedIcon fontSize="small" />
