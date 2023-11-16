@@ -293,45 +293,6 @@ const Formulation = ({ saveRef }: { saveRef: React.Ref<unknown> }) => {
         data: Number(d ?? 0),
       };
     }
-
-    // if (col == columns.length - 1) {
-    //   return {
-    //     kind: GridCellKind.Custom,
-    //     copyData: "4",
-    //     allowOverlay: false,
-    //     data: {
-    //       kind: "button-cell",
-    //       backgroundColor: ["transparent", "#6572ffee"],
-    //       color: ["accentColor", "accentFg"],
-    //       borderColor: "#6572ffa0",
-    //       borderRadius: 9,
-
-    //       title: "Delete",
-    //       onClick: () => deleteRow(row),
-    //     },
-    //   };
-    // } else if (col == 1) {
-    //   return {
-    //     kind: GridCellKind.Number,
-    //     allowOverlay: true,
-    //     displayData: String(d ?? 0),
-    //     data: Number(d ?? 0),
-    //   };
-    // } else {
-    //   d =
-    //     dataRow.nutrients?.find((e) => e.abbreviation == dataKey)?.value || "";
-    //   return {
-    //     kind: GridCellKind.Number,
-    //     allowOverlay: false,
-    //     readonly: true,
-    //     displayData: String(d ?? 0),
-    //     data: Number(d ?? 0),
-    //     style: "faded",
-    //     themeOverride: {
-    //       bgCell: "#EFEFF1",
-    //     },
-    //   };
-    // }
   };
 
   const getRationContent = (cell: Item): any => {
@@ -339,14 +300,19 @@ const Formulation = ({ saveRef }: { saveRef: React.Ref<unknown> }) => {
     const dataRow = rows[row];
     const dataCol = columns[col];
 
-    let d = _.get(dataRow, dataCol.path);
-
-    d = dataCol.property.kind == GridCellKind.Number ? Number(d ?? 0) : d;
+    let d =
+      col == 0 ? _.get(ration, "display_name") : _.get(ration, dataCol.path);
 
     return {
       ...dataCol.property,
-      displayData: d,
-      data: d,
+      displayData: String(d ?? 0),
+      data: String(d ?? 0),
+      readonly: true,
+      allowOverlay: false,
+      style: "faded",
+      themeOverride: {
+        bgCell: "#EFEFF1",
+      },
     };
   };
 
@@ -355,15 +321,28 @@ const Formulation = ({ saveRef }: { saveRef: React.Ref<unknown> }) => {
     const dataRow = rows[row];
     const dataCol = columns[col];
 
-    let d = _.get(dataRow, dataCol.path);
+    let d =
+      col == 0
+        ? _.get(requirement, "display_name")
+        : _.get(requirement, dataCol.path);
 
-    d = dataCol.property.kind == GridCellKind.Number ? Number(d ?? 0) : d;
-
-    return {
-      ...dataCol.property,
-      displayData: d,
-      data: d,
-    };
+    if (col == 0) {
+      return {
+        ...dataCol.property,
+        displayData: String(d ?? 0),
+        data: String(d ?? 0),
+      };
+    } else {
+      return {
+        ...dataCol.property,
+        allowOverlay: true,
+        readonly: true,
+        displayData: String(d ?? 0),
+        data: String(d ?? 0),
+        style: null,
+        themeOverride: null,
+      };
+    }
   };
 
   const getContent = (cell: Item): GridCell | ButtonCellType => {
@@ -371,8 +350,8 @@ const Formulation = ({ saveRef }: { saveRef: React.Ref<unknown> }) => {
 
     let d: number | string = "";
 
-    const RATION_INDEX = rows.length + 1;
-    const REQUIREMENT_INDEX = rows.length + 2;
+    const RATION_INDEX = rows.length;
+    const REQUIREMENT_INDEX = rows.length + 1;
 
     if (row < rows.length) return getIngredientContent(cell);
     else if (row == RATION_INDEX) return getRationContent(cell);
@@ -389,76 +368,6 @@ const Formulation = ({ saveRef }: { saveRef: React.Ref<unknown> }) => {
           bgCell: "#EFEFF1",
         },
       };
-
-    // if (row)
-    //   if (col < startColumns.length) {
-    //     if (dataRow.ingredient != null) {
-    //       d = (dataRow.ingredient as any)[dataKey];
-    //     }
-    //   } else {
-    //     // Render nutrient value
-    //     if (Array.isArray(dataRow.nutrients)) {
-    //       d =
-    //         dataRow.nutrients?.find((e) => e.abbreviation == dataKey)?.value ??
-    //         "";
-    //     }
-    //   }
-
-    // const ROW_RATION_INDEX = rows.length - 2;
-    // const ROW_REQUIREMENT_INDEX = rows.length - 1;
-
-    // if (col == 0) {
-    //   return {
-    //     kind: GridCellKind.Text,
-    //     readonly: true,
-    //     allowOverlay: false,
-    //     displayData: String(d ?? ""),
-    //     data: String(d ?? ""),
-    //     style: "faded",
-    //     themeOverride: {
-    //       bgCell: "#EFEFF1",
-    //     },
-    //   };
-    // }
-    // if (col == columns.length - 1 && row < rows.length - 2) {
-    //   return {
-    //     kind: GridCellKind.Custom,
-    //     copyData: "4",
-    //     allowOverlay: false,
-    //     data: {
-    //       kind: "button-cell",
-    //       backgroundColor: ["transparent", "#6572ffee"],
-    //       color: ["accentColor", "accentFg"],
-    //       borderColor: "#6572ffa0",
-    //       borderRadius: 9,
-
-    //       title: "Delete",
-    //       onClick: () => deleteRow(row),
-    //     },
-    //   };
-    // } else if (
-    //   (ROW_REQUIREMENT_INDEX == row || col == 1) &&
-    //   row != ROW_RATION_INDEX
-    // ) {
-    //   return {
-    //     kind: GridCellKind.Number,
-    //     allowOverlay: true,
-    //     displayData: String(d ?? 0),
-    //     data: Number(d ?? 0),
-    //   };
-    // } else {
-    //   return {
-    //     kind: GridCellKind.Number,
-    //     allowOverlay: false,
-    //     readonly: true,
-    //     displayData: String(d ?? 0),
-    //     data: Number(d ?? 0),
-    //     style: "faded",
-    //     themeOverride: {
-    //       bgCell: "#EFEFF1",
-    //     },
-    //   };
-    // }
   };
 
   const onRowAppended = React.useCallback(() => {}, []);
@@ -483,11 +392,6 @@ const Formulation = ({ saveRef }: { saveRef: React.Ref<unknown> }) => {
             property: {
               kind: GridCellKind.Number,
               allowOverlay: false,
-              readonly: true,
-              style: "faded",
-              themeOverride: {
-                bgCell: "#EFEFF1",
-              },
             },
           } as Column)
       );
@@ -512,7 +416,7 @@ const Formulation = ({ saveRef }: { saveRef: React.Ref<unknown> }) => {
           width="100%"
           experimental={{ strict: true }}
           columns={columns}
-          rows={rows.length}
+          rows={rows.length + 2}
           isDraggable={true}
           freezeColumns={1}
           rowMarkers="number"
