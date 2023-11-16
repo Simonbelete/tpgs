@@ -39,13 +39,12 @@ type ColumnProperty = ({} & Partial<GridCell>) | Partial<ButtonCellType>;
 type Column = {
   property: ColumnProperty;
   path: string; // lodashb _.get({}, path) key
-  searchPath?: string; // for searching inside path
-  path2?: string; // value after path -> searchPath -> path2
 } & GridColumn;
 
 interface Row {
   rowId: string | number;
-  nutrients?: { id?: number; abbreviation: string; value: number }[];
+  // eg. {'CP': 20}, key = column.id
+  nutrients?: { [key: string]: number };
 }
 
 type Inputs = Partial<Formula>;
@@ -81,7 +80,7 @@ const Formulation = ({ saveRef }: { saveRef: React.Ref<unknown> }) => {
     },
     {
       id: "price",
-      title: "Price (Kg)",
+      title: "Price /1 Kg",
       path: "price",
       property: {
         kind: GridCellKind.Number,
@@ -112,7 +111,7 @@ const Formulation = ({ saveRef }: { saveRef: React.Ref<unknown> }) => {
     {
       id: "ration_price",
       title: "Ration Price (kg)",
-      path: "ration_weight",
+      path: "ration_price",
       property: {
         kind: GridCellKind.Number,
         allowOverlay: false,
@@ -193,7 +192,9 @@ const Formulation = ({ saveRef }: { saveRef: React.Ref<unknown> }) => {
   const rationRow: Partial<FormulaRation[]> = [];
 
   const [columns, setColumns] = useState<Column[]>([]);
-  const [rows, setRows] = useState<Array<Row & Partial<FormulaIngredient>>>([
+  const [rows, setRows] = useState<
+    Array<Partial<Omit<FormulaIngredient, "nutrients">> & Row>
+  >([
     {
       id: 1,
       rowId: 1,
@@ -202,12 +203,9 @@ const Formulation = ({ saveRef }: { saveRef: React.Ref<unknown> }) => {
         id: 1,
         name: "Ing 1",
       },
-      nutrients: [
-        {
-          abbreviation: "N1",
-          value: 88,
-        },
-      ],
+      nutrients: {
+        N1: 88,
+      },
     },
   ]);
 
@@ -221,37 +219,59 @@ const Formulation = ({ saveRef }: { saveRef: React.Ref<unknown> }) => {
   >({
     rowId: "requirement",
     display_name: "Requirement",
+    nutrients: {},
   });
 
   const onCellEdited = React.useCallback(
     (cell: Item, newValue: EditableGridCell) => {
       const [col, row] = cell;
-
-      //   if (rows[row] == undefined) {
-      //     return;
-      //   }
-
-      //   // @ts-ignore
-      //   rows[row][columns[col].id] = newValue.data;
-
-      //   const ROW_RATION_INDEX = rows.length - 2;
-      //   const ROW_REQUIREMENT_INDEX = rows.length - 1;
-
-      // const cols = [
-      //   { id: "name", title: "Name" },
-      //   { id: "CP", title: "Crud Protine" },
-      // ]
-
-      // const rows = [
-      //   { id: 'ing_id', name: "ing 1", ration: '20%' nutreints: [
-      //     {
-      //       'abbreviation': 'CP',
-      //       'value': 0
-      //     }
-      //   ]}
-      // ]
+      const dataCol = columns[col];
+      const dataRow = rows[row];
 
       // calc = rows[i].nutreints.map(e => e.value * rows[i].ration)
+
+      const RATION_INDEX = rows.length;
+      const REQUIREMENT_INDEX = rows.length + 1;
+
+      if (row < rows.length) {
+        _.set(rows[row], dataCol.path, newValue.data);
+      } else if (row == RATION_INDEX) {
+        // TODO: should not be editable
+        _.set(ration, dataCol.path, newValue.data);
+      } else if (row == REQUIREMENT_INDEX) {
+        _.set(requirement, dataCol.path, newValue.data);
+      }
+
+      let updatedRation = { rowId: "ration", display_name: "Ration" };
+
+      const calcColumna = columns.slice(
+        startColumns.length,
+        -endColumns.length
+      );
+
+      rows.forEach((r) => {
+        // Calculate feed
+        columns.slice(1, -endColumns.length).forEach((c) => {
+          const cell = _.get(r, c.path, 0);
+          const cellTotal = _.get(updatedRation, c.path, 0);
+
+          const ration = _.get(r, "ration", 0);
+          const weight = 100;
+
+          if (c.id == "ration") _.set(updatedRation, c.path, cell + cellTotal);
+          else if (c.id == "price")
+            _.set(updatedRation, c.path, cell + cellTotal);
+          else if (c.id == "ration_weight")
+            _.set(updatedRation, c.path, weight * cell + cellTotal);
+          else if (c.id == "ration_price")
+            _.set(updatedRation, c.path, (weight * ration) / 100 + cellTotal);
+          else if (c.id == "dm")
+            _.set(updatedRation, c.path, (ration * cell) / 100 + cellTotal);
+          else _.set(updatedRation, c.path, (ration * cell) / 100 + cellTotal);
+        });
+      });
+
+      setRation(updatedRation);
     },
     [columns]
   );
@@ -262,16 +282,6 @@ const Formulation = ({ saveRef }: { saveRef: React.Ref<unknown> }) => {
     const dataCol = columns[col];
 
     let d = _.get(dataRow, dataCol.path);
-
-    if (dataCol.path2 != null) {
-      d = _.find(
-        _.get(dataRow, dataCol.path),
-        (el) => _.get(el, dataCol?.searchPath || "") == dataCol.id
-      );
-      d = _.get(d, dataCol.path2 || "");
-    } else {
-      d = _.get(dataRow, dataCol.path);
-    }
 
     if (dataCol.property.kind == GridCellKind.Custom) {
       return {
@@ -326,19 +336,25 @@ const Formulation = ({ saveRef }: { saveRef: React.Ref<unknown> }) => {
         ? _.get(requirement, "display_name")
         : _.get(requirement, dataCol.path);
 
+    // TODO:
+    d =
+      dataCol.property.kind == GridCellKind.Number
+        ? Number(d ?? 0)
+        : String(d ?? "");
+
     if (col == 0) {
       return {
         ...dataCol.property,
-        displayData: String(d ?? 0),
-        data: String(d ?? 0),
+        displayData: String(d ?? ""),
+        data: String(d ?? ""),
       };
     } else {
       return {
         ...dataCol.property,
         allowOverlay: true,
-        readonly: true,
-        displayData: String(d ?? 0),
-        data: String(d ?? 0),
+        readonly: false,
+        displayData: String(d ?? ""),
+        data: String(d ?? ""),
         style: null,
         themeOverride: null,
       };
@@ -386,7 +402,7 @@ const Formulation = ({ saveRef }: { saveRef: React.Ref<unknown> }) => {
           ({
             id: e.abbreviation,
             title: e.display_name,
-            path: "nutrients",
+            path: `nutrients.${e.abbreviation}`,
             searchPath: "abbreviation",
             path2: "value",
             property: {
