@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from . import models
-from nutrients.serializers import NutrientSerializer_POST, NutrientSerializer_GET, NutrientSerializer_SLUG
+from nutrients.serializers import AllNutrientSerializer_GET, NutrientSerializer_SLUG
 from nutrients.models import Nutrient
 from django.db import transaction
 
@@ -88,3 +88,11 @@ class IngredientNutrientHistorySerializer(serializers.ModelSerializer):
     class Meta:
         model = models.IngredientNutrient.history.__dict__['model']
         fields = '__all__'
+
+
+class AllIngredientNutrientSerializer_GET(serializers.ModelSerializer):
+    nutrient = AllNutrientSerializer_GET()
+
+    class Meta:
+        model = models.IngredientNutrient
+        fields = ['id', 'value', 'nutrient']

@@ -106,7 +106,6 @@ class IngredientAnalysesViewSet(viewsets.ViewSet):
 
 # Ingredient Nutrients
 
-
 class IngredientNutrientViewSet(CoreModelViewSet):
     queryset = models.IngredientNutrient.all.all()
     filterset_class = filters.IngredientNutrientFilter
@@ -122,6 +121,18 @@ class IngredientNutrientViewSet(CoreModelViewSet):
         if self.request.method in ['POST', 'PUT', 'PATCH']:
             return serializers.IngredientNutrientSerializer_POST
         return serializers.IngredientNutrientSerializer_GET
+
+
+class AllIngredientNutrientViewSet(viewsets.ReadOnlyModelViewSet):
+    """ Get all active nutrients of ingredient"""
+    queryset = models.IngredientNutrient.objects.all().order_by('-nutrient__order')
+    pagination_class = AllPagination
+    serializer_class = serializers.AllIngredientNutrientSerializer_GET
+
+    def get_queryset(self):
+        if ('ingredient_pk' in self.kwargs):
+            return self.queryset.filter(ingredient=self.kwargs['ingredient_pk'])
+        return self.queryset
 
 
 class IngredientNutrientHistoryViewSet(HistoryViewSet):

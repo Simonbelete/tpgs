@@ -85,6 +85,16 @@ export const ingredientApi = baseApi.injectEndpoints({
           params: query,
         }),
       }),
+      getAllNutrientsOfIngredient: build.query<
+        Response<IngredientNutrient[]>,
+        { id: number; query?: Object }
+      >({
+        query: ({ id, query }) => ({
+          url: `${URL}/${id}/${NUTRIENT_URL}/all`,
+          method: "get",
+          params: query,
+        }),
+      }),
       createNutrientForIngredient: build.mutation<
         Promise<IngredientNutrient>,
         { id: number; data: Partial<Ingredient> }

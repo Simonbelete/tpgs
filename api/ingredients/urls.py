@@ -18,19 +18,14 @@ summary_router = NestedDefaultRouter(
 summary_router.register(r'summary', views.IngredientSummaryViewSet,
                         basename='api_ingredients_summary')
 
-ingredient_nutrients_router = NestedDefaultRouter(
-    router, r'ingredients', lookup='ingredient')
-ingredient_nutrients_router.register(r'nutrients', views.IngredientNutrientViewSet,
-                                     basename='api_ingredient_nutrients')
-
 router.register(r'ingredients/(?P<id>.+)/analyses', views.IngredientAnalysesViewSet,
                 basename='api_ingredient_analyses')
 
 # Ingredient Types
 router.register(r'ingredient-types', views.IngredientTypeViewSet,
                 basename='api_ingredient_types'),
-router.register(r'ingredients/(?P<ingredient_pk>.+)/nutrients',
-                views.IngredientNutrientViewSet, basename='api_ingredient_nutrients')
+# router.register(r'ingredients/(?P<ingredient_pk>.+)/nutrients',
+#                 views.IngredientNutrientViewSet, basename='api_ingredient_nutrients')
 
 summary_ing_type_router = NestedDefaultRouter(
     router, r'ingredient-types', lookup='id')
@@ -38,6 +33,16 @@ summary_ing_type_router.register(r'summary', views.IngredientTypeSummaryViewSet,
                                  basename='api_ingredient_types_summary')
 
 # Ingredient Nutrients
+all_ingredient_nutrients_router = NestedDefaultRouter(
+    router, r'ingredients', lookup='ingredient')
+all_ingredient_nutrients_router.register(r'nutrients/all', views.AllIngredientNutrientViewSet,
+                                         basename='api_all_ingredient_nutrient')
+
+ingredient_nutrients_router = NestedDefaultRouter(
+    router, r'ingredients', lookup='ingredient')
+ingredient_nutrients_router.register(r'nutrients', views.IngredientNutrientViewSet,
+                                     basename='api_ingredient_nutrients')
+
 router.register(r'ingredient-nutrients', views.IngredientNutrientViewSet,
                 basename='api_ingredient_nutrients')
 
@@ -49,9 +54,9 @@ ing_nutr_summary_router = NestedDefaultRouter(
 ing_nutr_summary_router.register(r'summary', views.IngredientNutrientSummaryViewSet,
                                  basename='api_ingredients_nutreints_summary')
 
-
 urlpatterns = [
     path('', include(router.urls)),
+    path('', include(all_ingredient_nutrients_router.urls)),
     path('', include(ingredient_nutrients_router.urls)),
     path('', include(summary_router.urls)),
     path('', include(summary_ing_type_router.urls)),
