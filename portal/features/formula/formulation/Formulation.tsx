@@ -328,8 +328,9 @@ const Formulation = ({ saveRef }: { saveRef: React.Ref<unknown> }) => {
           const cell = _.get(r, c.path, 0);
           const cellTotal = _.get(updatedRation, c.path, 0);
 
+          const price = _.get(r, "price", 0);
           const ration = _.get(r, "ration", 0);
-          const weight = 100;
+          const weight: number = getValues("weight") || 0;
 
           if (c.id == "ration") _.set(updatedRation, c.path, cell + cellTotal);
           else if (c.id == "price")
@@ -337,7 +338,11 @@ const Formulation = ({ saveRef }: { saveRef: React.Ref<unknown> }) => {
           else if (c.id == "ration_weight")
             _.set(updatedRation, c.path, weight * cell + cellTotal);
           else if (c.id == "ration_price")
-            _.set(updatedRation, c.path, (weight * ration) / 100 + cellTotal);
+            _.set(
+              updatedRation,
+              c.path,
+              ((weight * ration) / 100) * price + cellTotal
+            );
           else if (c.id == "dm")
             _.set(updatedRation, c.path, (ration * cell) / 100 + cellTotal);
           else _.set(updatedRation, c.path, (ration * cell) / 100 + cellTotal);
