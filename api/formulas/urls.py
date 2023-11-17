@@ -31,6 +31,11 @@ formula_req_router = NestedDefaultRouter(
 formula_req_router.register(r'requirements', views.FormulaRequirementViewSet,
                             basename='api_formulas_requirements')
 
+all_formula_req_router = NestedDefaultRouter(
+    router, r'formulas', lookup='formula')
+all_formula_req_router.register(r'requirements/all', views.AllFormulaRequirementViewSet,
+                                basename='api_all_formulas_requirements')
+
 # Formula Rations
 router.register(r'formula-rations', views.FormulaRationViewSet,
                 basename='api_ration')
@@ -47,6 +52,11 @@ formula_ration_router = NestedDefaultRouter(
     router, r'formulas', lookup='formula')
 formula_ration_router.register(r'rations', views.FormulaRationViewSet,
                                basename='api_formulas_rations')
+
+all_formula_ration_router = NestedDefaultRouter(
+    router, r'formulas', lookup='formula')
+all_formula_ration_router.register(r'rations/all', views.AllFormulaRationViewSet,
+                                   basename='api_formulas_rations')
 
 
 # Formula Ingredients
@@ -90,6 +100,7 @@ ingredient_nutrient_router.register(r'nutrients', views.FormulaIngredientNutrien
 
 urlpatterns = [
     path('', include(router.urls)),
+    path('', include(all_formula_req_router.urls)),
     path('', include(req_summary_router.urls)),
     path('', include(formula_req_router.urls)),
     path('', include(ing_summary_router.urls)),
@@ -97,6 +108,7 @@ urlpatterns = [
     path('', include(formula_ingredient_router.urls)),
     path('', include(formulate_router.urls)),
     path('', include(ingredient_nutrient_router.urls)),
+    path('', include(all_formula_ration_router.urls)),
     path('', include(formula_ration_router.urls)),
     path('', include(formulate_print.urls)),
 ]

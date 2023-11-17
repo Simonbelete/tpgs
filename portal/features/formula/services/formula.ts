@@ -6,6 +6,7 @@ import {
   FormulaIngredient,
   FormulaRequirement,
   FormulaNutrient,
+  FormulaRation,
 } from "@/models";
 import { AxiosResponse } from "axios";
 import clientSSR from "@/services/client_ssr";
@@ -107,7 +108,7 @@ export const formulaApi = baseApi.injectEndpoints({
         }),
       }),
       getAllIngredientsOfFormula: build.query<
-        Response<FormulaIngredient[]>,
+        Response<Partial<FormulaIngredient>[]>,
         { id: number; query?: Object }
       >({
         query: ({ id, query }) => ({
@@ -156,6 +157,16 @@ export const formulaApi = baseApi.injectEndpoints({
           params: query,
         }),
       }),
+      getAllRequirementsOfFormula: build.query<
+        Response<Partial<FormulaRequirement>[]>,
+        { id: number; query?: Object }
+      >({
+        query: ({ id, query }) => ({
+          url: `${URL}/${id}/${REQUIREMENT_URL}/all`,
+          method: "get",
+          params: query,
+        }),
+      }),
       createRequirementForFormula: build.mutation<
         Promise<FormulaRequirement>,
         { id: number; data: Partial<FormulaIngredient> }
@@ -186,8 +197,25 @@ export const formulaApi = baseApi.injectEndpoints({
         }),
       }),
       // Rations
-      getRationsOfFormula: build.query<Response<Formula[]>, number>({
-        query: (id) => ({ url: `${URL}/${id}/rations`, method: "get" }),
+      getRationsOfFormula: build.query<
+        Response<FormulaRation[]>,
+        { id: number; query?: Object }
+      >({
+        query: ({ id, query }) => ({
+          url: `${URL}/${id}/rations`,
+          method: "get",
+          params: query,
+        }),
+      }),
+      getAllRationsOfFormula: build.query<
+        Response<Partial<FormulaRation>[]>,
+        { id: number; query?: Object }
+      >({
+        query: ({ id, query }) => ({
+          url: `${URL}/${id}/rations/all`,
+          method: "get",
+          params: query,
+        }),
       }),
       // Nutrients
       getFormulaNutrients: build.query<Response<FormulaNutrient[]>, number>({
@@ -255,10 +283,12 @@ export const {
   useCreateRequirementForFormulaMutation,
   useUpdateRequirementOfFormulaMutation,
   useDeleteRequirementOfFormulaMutation,
+  useLazyGetAllRequirementsOfFormulaQuery,
 
   // Rations
   useGetRationsOfFormulaQuery,
   useLazyGetRationsOfFormulaQuery,
+  useLazyGetAllRationsOfFormulaQuery,
 
   // Nutrients
   useGetFormulaNutrientsQuery,

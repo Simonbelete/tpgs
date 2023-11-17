@@ -55,7 +55,11 @@ import { LabeledInput } from "@/components/inputs";
 import { PurposeDropdown } from "@/features/purposes";
 import { CountryDropdown } from "@/features/countries";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useLazyGetAllIngredientsOfFormulaQuery } from "../services";
+import {
+  useLazyGetAllIngredientsOfFormulaQuery,
+  useLazyGetAllRationsOfFormulaQuery,
+  useLazyGetAllRequirementsOfFormulaQuery,
+} from "../services";
 import { useCRUD } from "@/hooks";
 import CloseIcon from "@mui/icons-material/Close";
 import { useRouter } from "next/router";
@@ -129,6 +133,9 @@ const Formulation = ({ data }: { data?: Formula }) => {
   const [getAllNutrientsOfRequirement, getNutrientsOfRequirement] =
     useLazyGetAllNutrientsOfRequirementQuery();
   const [getAllIngredientOfFormula] = useLazyGetAllIngredientsOfFormulaQuery();
+  const [getAllRequirementsOfFormula] =
+    useLazyGetAllRequirementsOfFormulaQuery();
+  const [getAllRationsOfFormula] = useLazyGetAllRationsOfFormulaQuery();
 
   const [isLoading, setIsLoading] = useState(false);
   const [isIngredientOpen, setIsIngredientOpen] = useState(false);
@@ -534,6 +541,8 @@ const Formulation = ({ data }: { data?: Formula }) => {
     loadNutrientsToTable();
     if (data != null) {
       getFormulaIngredients();
+      getFormulaRequirements();
+      getFormulaRations();
     }
   }, []);
 
@@ -548,6 +557,71 @@ const Formulation = ({ data }: { data?: Formula }) => {
       ) as Ingredient[];
       addSelectedIngredients(ingredients);
     }
+  };
+
+  const getFormulaRequirements = async () => {
+    if (data == null) return;
+
+    const response = await getAllRequirementsOfFormula({
+      id: data.id,
+    }).unwrap();
+
+    const newRow: Row & Partial<FormulaRequirement> = {
+      id: data.id,
+      rowId: "requirement",
+      display_name: "Requirement",
+      ration: data.desired_ratio,
+      price: 0,
+      ration_price: data.budget,
+      ration_weight: data.weight,
+      dm: data.desired_dm,
+      nutrients: {},
+    };
+
+    for (let i = 0; i < response.results.length; i += 1) {
+      const abbreviation: string = (response.results[i].nutrient as Nutrient)
+        .abbreviation;
+      const ing_nutrient_value = _.get(
+        response.results[i],
+        "nutrient.value",
+        0
+      );
+      _.set(newRow, `nutrients.${abbreviation}`, ing_nutrient_value);
+    }
+
+    setRequirement(newRow);
+  };
+
+  const getFormulaRations = async () => {
+    if (data == null) return;
+
+    const response = await getAllRationsOfFormula({ id: data.id }).unwrap();
+
+    const newRow: Row & Partial<FormulaRation> = {
+      id: data.id,
+      rowId: "ration",
+      display_name: "Ration",
+      ration: data.ration_ratio,
+      // TODO:
+      price: 0,
+      ration_price: data.ration_price,
+      ration_weight: data.ration_weight,
+      dm: data.ration_dm,
+      nutrients: {},
+    };
+
+    for (let i = 0; i < response.results.length; i += 1) {
+      const abbreviation: string = (response.results[i].nutrient as Nutrient)
+        .abbreviation;
+      const ing_nutrient_value = _.get(
+        response.results[i],
+        "nutrient.value",
+        0
+      );
+      _.set(newRow, `nutrients.${abbreviation}`, ing_nutrient_value);
+    }
+
+    setRation(newRow);
   };
 
   const loadNutrientsToTable = async () => {

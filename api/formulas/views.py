@@ -57,6 +57,17 @@ class FormulaRequirementViewSet(CoreModelViewSet):
         return serializers.FormulaRequirementSerializer_GET
 
 
+class AllFormulaRequirementViewSet(CoreModelViewSet):
+    queryset = models.FormulaRequirement.all.all().order_by('-nutrient__order')
+    pagination_class = AllPagination
+    serializer_class = serializers.AllFormulaRequirementSerializer_GET
+
+    def get_queryset(self):
+        if ('formula_pk' in self.kwargs):
+            return self.queryset.filter(formula=self.kwargs['formula_pk'])
+        return self.querysetT
+
+
 class FormulaRequirementExport(GenericExportView):
     def get_dataset(self):
         return admin.FormulaRequirementResource().export()
@@ -92,6 +103,17 @@ class FormulaRationViewSet(CoreModelViewSet):
         if self.request.method in ['POST', 'PUT', 'PATCH']:
             return serializers.FormulaRationSerializer_POST
         return serializers.FormulaRationSerializer_GET
+
+
+class AllFormulaRationViewSet(CoreModelViewSet):
+    queryset = models.FormulaRation.objects.all().order_by('-nutrient__order')
+    pagination_class = AllPagination
+    serializer_class = serializers.AllFormulaRationSerializer_GET
+
+    def get_queryset(self):
+        if ('formula_pk' in self.kwargs):
+            return self.queryset.filter(formula=self.kwargs['formula_pk'])
+        return self.queryset
 
 
 class FormulaRationExport(GenericExportView):
@@ -132,7 +154,7 @@ class FormulaIngredientViewSet(CoreModelViewSet):
 
 
 class AllFormulaIngredientViewSet(CoreModelViewSet):
-    queryset = models.FormulaIngredient.all.all()
+    queryset = models.FormulaIngredient.objects.all()
     pagination_class = AllPagination
     serializer_class = serializers.AllFormulaIngredientSerializer_GET
 

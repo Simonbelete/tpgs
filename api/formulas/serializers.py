@@ -5,30 +5,8 @@ from . import models
 from nutrients.models import Nutrient
 from ingredients.models import Ingredient
 from ingredients.serializers import IngredientSerializer_GET
-from nutrients.serializers import NutrientSerializer_POST, NutrientSerializer_GET, NutrientSerializer_SLUG
+from nutrients.serializers import AllNutrientSerializer_GET, NutrientSerializer_SLUG
 from purposes.serializers import PurposeSerializer_GET
-
-# Formula -> Requirements
-
-
-class FormulaRequirementSerializer_GET(serializers.ModelSerializer):
-    nutrient = NutrientSerializer_SLUG()
-
-    class Meta:
-        model = models.FormulaRequirement
-        fields = '__all__'
-
-
-class FormulaRequirementSerializer_POST(serializers.ModelSerializer):
-    class Meta:
-        model = models.FormulaRequirement
-        fields = ['id', 'nutrient', 'value']
-
-    def create(self, validated_data):
-        formula = models.Formula.objects.get(
-            pk=self.context["view"].kwargs["formula_pk"])
-        validated_data['formula'] = formula
-        return super().create(validated_data)
 
 
 class FormulaRequirementSerializer_REF(serializers.ModelSerializer):
@@ -199,6 +177,14 @@ class FormulaRequirementSerializer_GET(serializers.ModelSerializer):
         fields = '__all__'
 
 
+class AllFormulaRequirementSerializer_GET(serializers.ModelSerializer):
+    nutrient = NutrientSerializer_SLUG()
+
+    class Meta:
+        model = models.FormulaRequirement
+        fields = ['id', 'nutrient', 'value']
+
+
 class FormulaRequirementSerializer_POST(serializers.ModelSerializer):
     class Meta:
         model = models.FormulaRequirement
@@ -225,6 +211,14 @@ class FormulaRationSerializer_GET(serializers.ModelSerializer):
     class Meta:
         model = models.FormulaRation
         fields = ['id', 'formula', 'nutrient', 'value']
+
+
+class AllFormulaRationSerializer_GET(serializers.ModelSerializer):
+    nutrient = AllNutrientSerializer_GET()
+
+    class Meta:
+        model = models.FormulaRation
+        fields = ['id', 'nutrient', 'value']
 
 
 class FormulaRationSerializer_POST(serializers.ModelSerializer):
