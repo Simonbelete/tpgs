@@ -62,13 +62,21 @@ import { useRouter } from "next/router";
 import { enqueueSnackbar } from "notistack";
 import dynamic from "next/dynamic";
 import { RequirementSelectDialog } from "@/features/requirements";
-import { useLazyGetNutrientsOfRequirementQuery } from "@/features/requirements/services";
+import { useLazyGetAllNutrientsOfRequirementQuery } from "@/features/requirements/services";
 import AddIcon from "@mui/icons-material/Add";
 import PlaylistAddIcon from "@mui/icons-material/PlaylistAdd";
 import AutorenewIcon from "@mui/icons-material/Autorenew";
 import SaveIcon from "@mui/icons-material/Save";
 import SaveAsIcon from "@mui/icons-material/SaveAs";
 import DeleteSweepIcon from "@mui/icons-material/DeleteSweep";
+
+const AchivementChartComponent = dynamic(
+  () => import("../components/achivement-chart"),
+  {
+    ssr: false,
+    loading: () => <></>,
+  }
+);
 
 type ColumnProperty = ({} & Partial<GridCell>) | Partial<ButtonCellType>;
 
@@ -79,6 +87,11 @@ type Column = {
 
 interface Row {
   rowId: string | number;
+  ration?: number;
+  price?: number;
+  ration_weight?: number;
+  ration_price?: number;
+  dm?: number;
   // eg. {'CP': 20}, key = column.id
   nutrients?: { [key: string]: number };
 }
@@ -113,12 +126,16 @@ const Formulation = ({ saveRef }: { saveRef: React.Ref<unknown> }) => {
   const [getAllNutrients, { data: nutreints }] = useLazyGetAllNutrientsQuery();
   const [getAllNutrientsOfIngredient] =
     useLazyGetAllNutrientsOfIngredientQuery();
-  const [getRequirementNutrients, getNutrientsOfRequirement] =
-    useLazyGetNutrientsOfRequirementQuery();
+  const [getAllNutrientsOfRequirement, getNutrientsOfRequirement] =
+    useLazyGetAllNutrientsOfRequirementQuery();
 
   const [isLoading, setIsLoading] = useState(false);
   const [isIngredientOpen, setIsIngredientOpen] = useState(false);
   const [isRequirementOpen, setIsRequirementOpen] = useState(false);
+  const [achivementData, setAchivementData] = useState<{ x: any; y: any }>({
+    x: [],
+    y: [],
+  });
 
   const startColumns: Column[] = [
     {
@@ -191,7 +208,7 @@ const Formulation = ({ saveRef }: { saveRef: React.Ref<unknown> }) => {
     {
       id: "dm",
       title: "DM (%)",
-      path: "ingredient.dm",
+      path: "dm",
       property: {
         kind: GridCellKind.Number,
         allowOverlay: false,
@@ -254,8 +271,6 @@ const Formulation = ({ saveRef }: { saveRef: React.Ref<unknown> }) => {
       },
     },
   ];
-
-  const rationRow: Partial<FormulaRation[]> = [];
 
   const [columns, setColumns] = useState<Column[]>([]);
   const [rows, setRows] = useState<
@@ -368,6 +383,32 @@ const Formulation = ({ saveRef }: { saveRef: React.Ref<unknown> }) => {
     },
     [rows, ration, requirement, columns]
   );
+
+  useEffect(() => {
+    const chart: any = {
+      x: [],
+      y: [],
+    };
+
+    ["ration", "price", "dm"].map((e) => {
+      chart.x.push(e);
+      const req: number = _.get(requirement, `${e}`, 1);
+      const rat: number = _.get(ration, `${e}`, 0);
+      chart.y.push(roundTo3DecimalPlace(Number((rat / req) * 100)));
+    });
+
+    console.log(chart);
+
+    // Achivement chart
+    Object.keys(ration?.nutrients || {}).map((key, i) => {
+      chart.x.push(key);
+      const req: number = _.get(requirement, `nutrients.${key}`, 1);
+      const rat: number = _.get(ration.nutrients, `${key}`, 0);
+      chart.y.push(roundTo3DecimalPlace(Number((rat / req) * 100)));
+    });
+
+    setAchivementData(chart);
+  }, [requirement, ration]);
 
   const getIngredientContent = (cell: Item): any => {
     const [col, row] = cell;
@@ -498,8 +539,6 @@ const Formulation = ({ saveRef }: { saveRef: React.Ref<unknown> }) => {
             id: e.abbreviation,
             title: e.display_name,
             path: `nutrients.${e.abbreviation}`,
-            searchPath: "abbreviation",
-            path2: "value",
             property: {
               kind: GridCellKind.Number,
               allowOverlay: false,
@@ -519,7 +558,7 @@ const Formulation = ({ saveRef }: { saveRef: React.Ref<unknown> }) => {
     // setRows(rows.map((e, i) => i != index));
   };
 
-  const handleSelected = async (ingredients?: Ingredient[]) => {
+  const addSelectedIngredients = async (ingredients?: Ingredient[]) => {
     if (ingredients?.length == 0) {
       setIsIngredientOpen(false);
       return;
@@ -545,6 +584,7 @@ const Formulation = ({ saveRef }: { saveRef: React.Ref<unknown> }) => {
           },
           ration: 0,
           price: ingredients[i].price,
+          dm: ingredients[i].dm,
           nutrients: {},
         };
 
@@ -578,32 +618,31 @@ const Formulation = ({ saveRef }: { saveRef: React.Ref<unknown> }) => {
 
     try {
       setIsRequirementOpen(false);
-      // const response = await getNutrientsOfRequirement(
-      //   { id: value.id, query: { limit: 100 } },
-      //   false
-      // ).unwrap();
+      const response = await getAllNutrientsOfRequirement(
+        { id: value.id, query: {} },
+        false
+      ).unwrap();
 
-      // const ROW_REQUIREMENT_INDEX = rows.current.length - 1;
+      const newRow: Row & Partial<FormulaRequirement> = {
+        id: value.id,
+        rowId: "requirement",
+        display_name: value.display_name,
+        ration: value.desired_ratio,
+        price: 0,
+        ration_price: value.budget,
+        ration_weight: value.weight,
+        dm: value.desired_dm,
+        nutrients: {},
+      };
 
-      // const reqRow: any = {
-      //   id: rows.current[ROW_REQUIREMENT_INDEX].id,
-      //   name: rows.current[ROW_REQUIREMENT_INDEX].name,
-      //   ration_weight: rows.current[ROW_REQUIREMENT_INDEX].budget,
-      //   desired_ratio: rows.current[ROW_REQUIREMENT_INDEX].desired_ratio,
-      //   desired_dm: rows.current[ROW_REQUIREMENT_INDEX].desired_dm,
-      // };
+      for (let i = 0; i < response.results.length; i += 1) {
+        const abbreviation: string = (response.results[i].nutrient as Nutrient)
+          .abbreviation;
+        const ing_nutrient_value = _.get(response.results[i], "value", 0);
+        _.set(newRow, `nutrients.${abbreviation}`, ing_nutrient_value);
+      }
 
-      // for (let i = 0; i < response.results.length; i += 1) {
-      //   let abbvr: string = (response.results[i].nutrient as Nutrient)
-      //     .abbreviation;
-      //   console.log(i);
-      //   console.log(abbvr);
-      //   reqRow[abbvr] = response.results[i].value;
-      // }
-
-      // console.log(reqRow);
-
-      // rows.current[ROW_REQUIREMENT_INDEX] = reqRow;
+      setRequirement(newRow);
     } finally {
     }
   };
@@ -617,7 +656,7 @@ const Formulation = ({ saveRef }: { saveRef: React.Ref<unknown> }) => {
       <IngredientSelectDialog
         multiple
         open={isIngredientOpen}
-        onSelected={handleSelected}
+        onSelected={addSelectedIngredients}
         onClose={() => setIsIngredientOpen(false)}
       />
       <RequirementSelectDialog
@@ -925,6 +964,9 @@ const Formulation = ({ saveRef }: { saveRef: React.Ref<unknown> }) => {
           }}
         />
       </Sizer>
+      <Box sx={{ my: 5 }}>
+        <AchivementChartComponent data={achivementData} />
+      </Box>
     </>
   );
 };

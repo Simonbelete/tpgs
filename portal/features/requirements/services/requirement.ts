@@ -86,6 +86,16 @@ export const requirementApi = baseApi.injectEndpoints({
           params: query,
         }),
       }),
+      getAllNutrientsOfRequirement: build.query<
+        Response<RequirementNutrient[]>,
+        { id: number; query?: Object }
+      >({
+        query: ({ id, query }) => ({
+          url: `${URL}/${id}/${NUTRIENT_URL}/all/`,
+          method: "get",
+          params: query,
+        }),
+      }),
       createNutrientForRequirement: build.mutation<
         Promise<RequirementNutrient>,
         { id: number; data: Partial<RequirementNutrient> }
@@ -166,4 +176,6 @@ export const {
   useCreateNutrientForRequirementMutation,
   useUpdateNutrientOfRequirementMutation,
   useDeleteNutrientOfRequirementMutation,
+  useGetAllNutrientsOfRequirementQuery,
+  useLazyGetAllNutrientsOfRequirementQuery,
 } = requirementApi;
