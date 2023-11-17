@@ -45,7 +45,6 @@ import {
 import _ from "lodash";
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import * as yup from "yup";
-import { useLazyGetNutrientsQuery } from "@/features/nutrients/services";
 import { useLazyGetAllNutrientsOfIngredientQuery } from "@/features/ingredients/services";
 import { Loading } from "@/components";
 import { IngredientSelectDialog } from "@/features/ingredients";
@@ -55,15 +54,7 @@ import { LabeledInput } from "@/components/inputs";
 import { PurposeDropdown } from "@/features/purposes";
 import { CountryDropdown } from "@/features/countries";
 import { yupResolver } from "@hookform/resolvers/yup";
-import {
-  useLazyGetAllIngredientsOfFormulaQuery,
-  useLazyGetAllRationsOfFormulaQuery,
-  useLazyGetAllRequirementsOfFormulaQuery,
-} from "../services";
 import { useCRUD } from "@/hooks";
-import CloseIcon from "@mui/icons-material/Close";
-import { useRouter } from "next/router";
-import { enqueueSnackbar } from "notistack";
 import dynamic from "next/dynamic";
 import { RequirementSelectDialog } from "@/features/requirements";
 import { useLazyGetAllNutrientsOfRequirementQuery } from "@/features/requirements/services";
@@ -71,9 +62,16 @@ import AddIcon from "@mui/icons-material/Add";
 import PlaylistAddIcon from "@mui/icons-material/PlaylistAdd";
 import AutorenewIcon from "@mui/icons-material/Autorenew";
 import SaveIcon from "@mui/icons-material/Save";
-import SaveAsIcon from "@mui/icons-material/SaveAs";
 import DeleteSweepIcon from "@mui/icons-material/DeleteSweep";
-import { formulaApi } from "../services";
+import {
+  useLazyGetAllIngredientsOfFormulaQuery,
+  useLazyGetAllRationsOfFormulaQuery,
+  useLazyGetAllRequirementsOfFormulaQuery,
+  useUpdateIngredientOfFormulaMutation,
+  useCreateIngredientForFormulaMutation,
+  useCreateRequirementForFormulaMutation,
+  useUpdateRequirementOfFormulaMutation,
+} from "../services";
 
 const AchivementChartComponent = dynamic(
   () => import("../components/achivement-chart"),
@@ -132,6 +130,14 @@ const Formulation = () => {
     useLazyGetAllNutrientsOfIngredientQuery();
   const [getAllNutrientsOfRequirement, getNutrientsOfRequirement] =
     useLazyGetAllNutrientsOfRequirementQuery();
+
+  // Ingredients
+  const [createIngredient] = useCreateIngredientForFormulaMutation();
+  const [updateIngredient] = useUpdateIngredientOfFormulaMutation();
+
+  // Requirement
+  const [createRequirement] = useCreateRequirementForFormulaMutation();
+  const [updateRequirement] = useUpdateRequirementOfFormulaMutation();
 
   const [isLoading, setIsLoading] = useState(false);
   const [isIngredientOpen, setIsIngredientOpen] = useState(false);
@@ -401,8 +407,6 @@ const Formulation = () => {
       chart.y.push(roundTo3DecimalPlace(Number((rat / req) * 100)));
     });
 
-    console.log(chart);
-
     // Achivement chart
     Object.keys(ration?.nutrients || {}).map((key, i) => {
       chart.x.push(key);
@@ -528,8 +532,6 @@ const Formulation = () => {
     setIsIngredientOpen(true);
   }, []);
 
-  const onCellActivated = React.useCallback((cell: Item) => {}, []);
-
   useEffect(() => {
     // TODO: clean all data
     setRows([]);
@@ -565,10 +567,11 @@ const Formulation = () => {
   };
 
   const addSelectedIngredients = async (ingredients?: Ingredient[]) => {
-    if (ingredients?.length == 0) {
+    if (ingredients?.length == 0 || ingredients == null) {
       setIsIngredientOpen(false);
       return;
     }
+
     try {
       setIsIngredientOpen(false);
       setIsLoading(true);
@@ -578,39 +581,42 @@ const Formulation = () => {
         Partial<Omit<FormulaIngredient, "nutrients">> & Row
       > = [];
 
-      for (let i = 0; i < ingredients?.length; i += 1) {
-        // Check if ingredient already exits
-
-        const newRow: Partial<Omit<FormulaIngredient, "nutrients">> & Row = {
-          id: 0,
-          rowId: ingredients[i].id,
-          ingredient: {
-            id: ingredients[i].id,
-            name: ingredients[i].name,
-            dm: ingredients[i].dm,
-          },
-          ration: _.get(ingredients[i], "ration", 0),
-          ration_price: _.get(ingredients[i], "ration_price", 0),
-          ration_weight: _.get(ingredients[i], "ration_weight", 0),
-          price: ingredients[i].price,
-          dm: ingredients[i].dm,
-          nutrients: {},
-        };
-
-        const response = await getAllNutrientsOfIngredient({
-          id: ingredients[i].id,
+      const requests = _.map(ingredients, (e) => {
+        return getAllNutrientsOfIngredient({
+          id: e.id,
           query: {},
         }).unwrap();
-        for (let i = 0; i < response.results.length; i += 1) {
-          const abbreviation: string = (
-            response.results[i].nutrient as Nutrient
-          ).abbreviation;
-          const ing_nutrient_value = _.get(response.results[i], "value", 0);
-          _.set(newRow, `nutrients.${abbreviation}`, ing_nutrient_value);
-        }
+      });
 
-        newRows.push(newRow);
-      }
+      const responses = await Promise.all(requests);
+
+      _.forEach(responses, (e, i) => {
+        const ing = _.get(ingredients, i, {});
+
+        const nutrients = {};
+
+        _.forEach(e.results, (n) => {
+          const abbreviation: string = (n.nutrient as Nutrient).abbreviation;
+          const val = _.get(n, "value", 0);
+          _.set(nutrients, abbreviation, val);
+        });
+
+        newRows.push({
+          id: 0,
+          rowId: _.get(ing, "id", ""),
+          ingredient: {
+            id: _.get(ing, "id", 0),
+            name: _.get(ing, "name", ""),
+            dm: _.get(ing, "dm", 0),
+          },
+          ration: _.get(ing, "ration", 0),
+          ration_price: _.get(ing, "ration_price", 0),
+          ration_weight: _.get(ing, "ration_weight", 0),
+          price: _.get(ing, "price", 0),
+          dm: _.get(ing, "dm", 0),
+          nutrients: nutrients,
+        });
+      });
 
       setRows([...newRows, ...rows]);
     } finally {
@@ -659,8 +665,6 @@ const Formulation = () => {
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     const formula: Partial<Formula> = data;
 
-    console.log("abbbbb");
-
     for (let i = 0; i < rows.length; i += 1) {
       let body: Partial<FormulaIngredient> = {
         id: rows[i].id,
@@ -668,7 +672,11 @@ const Formulation = () => {
         ingredient: _.get(rows[i], "ingredient.id", 0),
         ration: rows[i].ration,
       };
-      formulaApi.endpoints.updateIngredientOfFormula.initiate(body);
+
+      // const response = await createIngredient({
+      //   ...body,
+      //   id: rows[i].id,
+      // }).unwrap();
     }
   };
 
@@ -967,7 +975,6 @@ const Formulation = () => {
           onCellEdited={onCellEdited}
           getCellContent={getContent}
           onRowAppended={onRowAppended}
-          onCellActivated={onCellActivated}
           trailingRowOptions={{
             // How to get the trailing row to look right
             sticky: true,
