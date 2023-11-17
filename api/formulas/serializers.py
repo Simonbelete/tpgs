@@ -273,3 +273,12 @@ class FormulaIngredientHistorySerializer(serializers.ModelSerializer):
     class Meta:
         model = models.FormulaIngredient.history.__dict__['model']
         fields = '__all__'
+
+
+class AllFormulaIngredientSerializer_GET(serializers.ModelSerializer):
+    ingredient = IngredientSerializer_GET()
+
+    class Meta:
+        model = models.FormulaIngredient
+        fields = ['id', 'ingredient', 'ratio_min', 'price',
+                  'ration', 'ration_weight', 'ration_price']

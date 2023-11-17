@@ -106,6 +106,16 @@ export const formulaApi = baseApi.injectEndpoints({
           params: query,
         }),
       }),
+      getAllIngredientsOfFormula: build.query<
+        Response<FormulaIngredient[]>,
+        { id: number; query?: Object }
+      >({
+        query: ({ id, query }) => ({
+          url: `${URL}/${id}/${INGREDIENT_URL}/all`,
+          method: "get",
+          params: query,
+        }),
+      }),
       createIngredientForFormula: build.mutation<
         Promise<FormulaIngredient>,
         { id: number; data: Partial<FormulaIngredient> }
@@ -236,6 +246,8 @@ export const {
   useCreateIngredientForFormulaMutation,
   useUpdateIngredientOfFormulaMutation,
   useDeleteIngredientOfFormulaMutation,
+  useGetAllIngredientsOfFormulaQuery,
+  useLazyGetAllIngredientsOfFormulaQuery,
 
   // Requirements
   useGetRequirementsOfFormulaQuery,

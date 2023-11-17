@@ -21,6 +21,7 @@ from core.views import (
     GenericExportView,
     GenericImportView
 )
+from core.pagination import AllPagination
 from . import models
 from . import serializers
 from . import admin
@@ -130,6 +131,17 @@ class FormulaIngredientViewSet(CoreModelViewSet):
         return serializers.FormulaIngredientSerializer_GET
 
 
+class AllFormulaIngredientViewSet(CoreModelViewSet):
+    queryset = models.FormulaIngredient.all.all()
+    pagination_class = AllPagination
+    serializer_class = serializers.AllFormulaIngredientSerializer_GET
+
+    def get_queryset(self):
+        if ('formula_pk' in self.kwargs):
+            return self.queryset.filter(formula=self.kwargs['formula_pk'])
+        return self.queryset
+
+
 class FormulaIngredientExport(GenericExportView):
     def get_dataset(self):
         return admin.FormulaIngredientResource().export()
@@ -151,7 +163,6 @@ class FormulaIngredientSummaryViewSet(SummaryViewSet):
 
 
 # Formulate Calculation
-
 
 class FormulateViewSet(viewsets.ViewSet):
     """

@@ -55,7 +55,7 @@ import { LabeledInput } from "@/components/inputs";
 import { PurposeDropdown } from "@/features/purposes";
 import { CountryDropdown } from "@/features/countries";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useCreateFormulaMutation } from "../services";
+import { useLazyGetAllIngredientsOfFormulaQuery } from "../services";
 import { useCRUD } from "@/hooks";
 import CloseIcon from "@mui/icons-material/Close";
 import { useRouter } from "next/router";
@@ -120,7 +120,7 @@ const schema = yup
     return currentValue;
   });
 
-const Formulation = ({ saveRef }: { saveRef: React.Ref<unknown> }) => {
+const Formulation = ({ data }: { data?: Formula }) => {
   const { customRenderers } = useExtraCells();
 
   const [getAllNutrients, { data: nutreints }] = useLazyGetAllNutrientsQuery();
@@ -128,6 +128,7 @@ const Formulation = ({ saveRef }: { saveRef: React.Ref<unknown> }) => {
     useLazyGetAllNutrientsOfIngredientQuery();
   const [getAllNutrientsOfRequirement, getNutrientsOfRequirement] =
     useLazyGetAllNutrientsOfRequirementQuery();
+  const [getAllIngredientOfFormula] = useLazyGetAllIngredientsOfFormulaQuery();
 
   const [isLoading, setIsLoading] = useState(false);
   const [isIngredientOpen, setIsIngredientOpen] = useState(false);
@@ -296,6 +297,7 @@ const Formulation = ({ saveRef }: { saveRef: React.Ref<unknown> }) => {
     resolver: yupResolver(schema),
     defaultValues: {
       weight: 100,
+      ...data,
     },
   });
 
@@ -527,8 +529,26 @@ const Formulation = ({ saveRef }: { saveRef: React.Ref<unknown> }) => {
   const onCellActivated = React.useCallback((cell: Item) => {}, []);
 
   useEffect(() => {
+    // TODO: clean all data
+    setRows([]);
     loadNutrientsToTable();
+    if (data != null) {
+      getFormulaIngredients();
+    }
   }, []);
+
+  const getFormulaIngredients = async () => {
+    if (data == null) return;
+
+    const response = await getAllIngredientOfFormula({ id: data.id }).unwrap();
+    if (response.results) {
+      const ingredients: Ingredient[] = _.map(
+        response.results,
+        "ingredient"
+      ) as Ingredient[];
+      addSelectedIngredients(ingredients);
+    }
+  };
 
   const loadNutrientsToTable = async () => {
     const response = await getAllNutrients({}).unwrap();
@@ -582,7 +602,9 @@ const Formulation = ({ saveRef }: { saveRef: React.Ref<unknown> }) => {
             name: ingredients[i].name,
             dm: ingredients[i].dm,
           },
-          ration: 0,
+          ration: _.get(ingredients[i], "ration", 0),
+          ration_price: _.get(ingredients[i], "ration_price", 0),
+          ration_weight: _.get(ingredients[i], "ration_weight", 0),
           price: ingredients[i].price,
           dm: ingredients[i].dm,
           nutrients: {},

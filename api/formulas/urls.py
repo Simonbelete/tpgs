@@ -67,6 +67,11 @@ formula_ingredient_router = NestedDefaultRouter(
 formula_ingredient_router.register(r'ingredients', views.FormulaIngredientViewSet,
                                    basename='api_formulas_ingredients')
 
+all_formula_ingredient_router = NestedDefaultRouter(
+    router, r'formulas', lookup='formula')
+all_formula_ingredient_router.register(r'ingredients/all', views.AllFormulaIngredientViewSet,
+                                       basename='api_all_formulas_ingredients')
+
 #
 formulate_router = NestedDefaultRouter(
     router, r'formulas', lookup='formula')
@@ -88,6 +93,7 @@ urlpatterns = [
     path('', include(req_summary_router.urls)),
     path('', include(formula_req_router.urls)),
     path('', include(ing_summary_router.urls)),
+    path('', include(all_formula_ingredient_router.urls)),
     path('', include(formula_ingredient_router.urls)),
     path('', include(formulate_router.urls)),
     path('', include(ingredient_nutrient_router.urls)),

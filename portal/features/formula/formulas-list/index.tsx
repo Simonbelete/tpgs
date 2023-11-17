@@ -20,9 +20,27 @@ import {
   importFormulasXLSX,
 } from "../services";
 import { Formula } from "@/models";
-import { Typography } from "@mui/material";
+import { IconButton, Typography, Tooltip } from "@mui/material";
 import Link from "next/link";
+import TocIcon from "@mui/icons-material/Toc";
+import TableViewIcon from "@mui/icons-material/TableView";
+import { useRouter } from "next/router";
 
+const MatrixAction: React.FC<GridRenderCellParams> = ({ id }) => {
+  const router = useRouter();
+  return (
+    <Link
+      href={`${router.pathname}/${id}/matrix`}
+      data-testid="data-table-dashboard"
+    >
+      <Tooltip title="Matrix">
+        <IconButton aria-label="edit">
+          <TableViewIcon fontSize="small" />
+        </IconButton>
+      </Tooltip>
+    </Link>
+  );
+};
 export const FormulaList = () => {
   const columns: GridColDef[] = [
     { field: "name", headerName: "Name", flex: 1 },
@@ -73,6 +91,7 @@ export const FormulaList = () => {
       actions={[
         DashboardAction,
         EditAction,
+        MatrixAction,
         HistoryAction,
         PermanentlyDeleteAction,
       ]}
