@@ -13,30 +13,8 @@ const FormulationExperimentalPage = () => {
     <ActionLayout
       breadcrumbs={<Breadcrumbs items={breadcrumbs} />}
       header={<Typography variant="title">Formulate</Typography>}
-      actions={
-        <>
-          <Stack
-            spacing={2}
-            direction={"row"}
-            justifyContent="flex-start"
-            alignItems="center"
-          >
-            <Button
-              variant="contained"
-              size="small"
-              onClick={() => {
-                console.log("ddd");
-                if (saveRef.current != undefined)
-                  (saveRef.current as any).save();
-              }}
-            >
-              Save
-            </Button>
-          </Stack>
-        </>
-      }
     >
-      <Formulation saveRef={saveRef} />
+      <Formulation />
     </ActionLayout>
   );
 };

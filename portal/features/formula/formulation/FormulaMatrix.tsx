@@ -59,6 +59,10 @@ import {
   useLazyGetAllIngredientsOfFormulaQuery,
   useLazyGetAllRationsOfFormulaQuery,
   useLazyGetAllRequirementsOfFormulaQuery,
+  useUpdateIngredientOfFormulaMutation,
+  useCreateIngredientForFormulaMutation,
+  useCreateRequirementForFormulaMutation,
+  useUpdateRequirementOfFormulaMutation,
 } from "../services";
 import { useCRUD } from "@/hooks";
 import CloseIcon from "@mui/icons-material/Close";
@@ -124,7 +128,7 @@ const schema = yup.object({
 //   return currentValue;
 // });
 
-const Formulation = () => {
+const FormulaMatrix = ({ data }: { data?: Formula }) => {
   const { customRenderers } = useExtraCells();
 
   const [getAllNutrients, { data: nutreints }] = useLazyGetAllNutrientsQuery();
@@ -132,6 +136,18 @@ const Formulation = () => {
     useLazyGetAllNutrientsOfIngredientQuery();
   const [getAllNutrientsOfRequirement, getNutrientsOfRequirement] =
     useLazyGetAllNutrientsOfRequirementQuery();
+  const [getAllIngredientOfFormula] = useLazyGetAllIngredientsOfFormulaQuery();
+  const [getAllRequirementsOfFormula] =
+    useLazyGetAllRequirementsOfFormulaQuery();
+  const [getAllRationsOfFormula] = useLazyGetAllRationsOfFormulaQuery();
+
+  // Ingredients
+  const [createIngredient] = useCreateIngredientForFormulaMutation();
+  const [updateIngredient] = useUpdateIngredientOfFormulaMutation();
+
+  // Requirement
+  const [createRequirement] = useCreateRequirementForFormulaMutation();
+  const [updateRequirement] = useUpdateRequirementOfFormulaMutation();
 
   const [isLoading, setIsLoading] = useState(false);
   const [isIngredientOpen, setIsIngredientOpen] = useState(false);
@@ -300,6 +316,7 @@ const Formulation = () => {
     resolver: yupResolver(schema),
     defaultValues: {
       weight: 100,
+      ...data,
     },
   });
 
@@ -534,7 +551,125 @@ const Formulation = () => {
     // TODO: clean all data
     setRows([]);
     loadNutrientsToTable();
+    if (data != null) {
+      getFormulaIngredients();
+      getFormulaRequirements();
+      getFormulaRations();
+    }
   }, []);
+
+  const getFormulaIngredients = async () => {
+    if (data == null) return;
+
+    try {
+      const response = await getAllIngredientOfFormula({
+        id: data.id,
+      }).unwrap();
+
+      // for (let i = 0; i < response.results?.length; i += 1) {
+      //   const formulaIngredient = response.results[i];
+
+      //   const ingredient: Ingredient = _.get(
+      //     formulaIngredient,
+      //     "ingredient"
+      //   ) as Ingredient;
+
+      //   const newRows: Array<
+      //     Partial<Omit<FormulaIngredient, "nutrients">> & Row
+      //   > = [];
+
+      //   // Check if ingredient already exits
+
+      //   const newRow: Partial<Omit<FormulaIngredient, "nutrients">> & Row = {
+      //     id: formulaIngredient.id,
+      //     rowId: formulaIngredient.id,
+      //     ...formulaIngredient,
+      //     nutrients: {},
+      //   };
+
+      //   const response2 = await getAllNutrientsOfIngredient({
+      //     id: formulaIngredient.ingredient.id || 0,
+      //     query: {},
+      //   }).unwrap();
+      //   for (let i = 0; i < response2.results.length; i += 1) {
+      //     const abbreviation: string = (
+      //       response2.results[i].nutrient as Nutrient
+      //     ).abbreviation;
+      //     const ing_nutrient_value = _.get(response2.results[i], "value", 0);
+      //     _.set(newRow, `nutrients.${abbreviation}`, ing_nutrient_value);
+      //   }
+
+      //   newRows.push(newRow);
+      // }
+
+      // setRows([...newRows, ...rows]);
+    } catch {}
+  };
+
+  const getFormulaRequirements = async () => {
+    if (data == null) return;
+
+    const response = await getAllRequirementsOfFormula({
+      id: data.id,
+    }).unwrap();
+
+    const newRow: Row & Partial<FormulaRequirement> = {
+      id: data.id,
+      rowId: "requirement",
+      display_name: "Requirement",
+      ration: data.desired_ratio,
+      price: 0,
+      ration_price: data.budget,
+      ration_weight: data.weight,
+      dm: data.desired_dm,
+      nutrients: {},
+    };
+
+    for (let i = 0; i < response.results.length; i += 1) {
+      const abbreviation: string = (response.results[i].nutrient as Nutrient)
+        .abbreviation;
+      const ing_nutrient_value = _.get(
+        response.results[i],
+        "nutrient.value",
+        0
+      );
+      _.set(newRow, `nutrients.${abbreviation}`, ing_nutrient_value);
+    }
+
+    setRequirement(newRow);
+  };
+
+  const getFormulaRations = async () => {
+    if (data == null) return;
+
+    const response = await getAllRationsOfFormula({ id: data.id }).unwrap();
+
+    const newRow: Row & Partial<FormulaRation> = {
+      id: data.id,
+      rowId: "ration",
+      display_name: "Ration",
+      ration: data.ration_ratio,
+      // TODO:
+      price: 0,
+      ration_price: data.ration_price,
+      ration_weight: data.ration_weight,
+      dm: data.ration_dm,
+      nutrients: {},
+    };
+
+    for (let i = 0; i < response.results.length; i += 1) {
+      const abbreviation: string = (response.results[i].nutrient as Nutrient)
+        .abbreviation;
+      const ing_nutrient_value = _.get(
+        response.results[i],
+        "nutrient.value",
+        0
+      );
+      _.set(newRow, `nutrients.${abbreviation}`, ing_nutrient_value);
+    }
+
+    setRation(newRow);
+  };
 
   const loadNutrientsToTable = async () => {
     const response = await getAllNutrients({}).unwrap();
@@ -947,6 +1082,15 @@ const Formulation = () => {
         <Button
           color="secondary"
           size="small"
+          startIcon={<SaveAsIcon fontSize="small" />}
+          sx={{ textTransform: "none" }}
+          onClick={loadNutrientsToTable}
+        >
+          Save As
+        </Button>
+        <Button
+          color="secondary"
+          size="small"
           startIcon={<DeleteSweepIcon fontSize="small" />}
           sx={{ textTransform: "none" }}
           onClick={loadNutrientsToTable}
@@ -983,4 +1127,4 @@ const Formulation = () => {
   );
 };
 
-export default Formulation;
+export default FormulaMatrix;

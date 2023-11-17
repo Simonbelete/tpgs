@@ -3,7 +3,7 @@ import { Typography, Stack, Button } from "@mui/material";
 import { Breadcrumbs } from "@/components";
 import { useBreadcrumbs } from "@/hooks";
 import { ActionLayout } from "@/layouts";
-import { Formulation } from "@/features/formula";
+import { FormulaMatrix } from "@/features/formula";
 import { Formula } from "@/models";
 import { getServerSidePropsContext } from "@/services/getServerSidePropsContext";
 import { getFormulaByIdSSR } from "@/features/formula/services";
@@ -20,7 +20,7 @@ const FormulationExperimentalPage = ({ data }: { data: Formula }) => {
         <Typography variant="title">{data.name || "Formulate"}</Typography>
       }
     >
-      <Formulation data={data} />
+      <FormulaMatrix data={data} />
     </ActionLayout>
   );
 };
