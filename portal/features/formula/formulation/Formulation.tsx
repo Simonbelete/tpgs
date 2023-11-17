@@ -23,16 +23,52 @@ import {
   FormulaRation,
   FormulaRequirement,
   Nutrient,
+  Ingredient,
+  Requirement,
 } from "@/models";
 import { useLazyGetAllNutrientsQuery } from "@/features/nutrients/services";
-import { Button, Box, Stack } from "@mui/material";
+import {
+  Button,
+  Box,
+  Stack,
+  AccordionSummary,
+  Accordion,
+  Typography,
+  Grid,
+  AccordionDetails,
+  InputAdornment,
+} from "@mui/material";
 import {
   useExtraCells,
   ButtonCellType,
 } from "@glideapps/glide-data-grid-cells";
-import { Highlight } from "@glideapps/glide-data-grid/dist/ts/data-grid/data-grid-render";
 import _ from "lodash";
-import { data } from "cypress/types/jquery";
+import { useForm, SubmitHandler, Controller } from "react-hook-form";
+import * as yup from "yup";
+import { useLazyGetNutrientsQuery } from "@/features/nutrients/services";
+import { useLazyGetNutrientsOfIngredientQuery } from "@/features/ingredients/services";
+import { Loading } from "@/components";
+import { IngredientSelectDialog } from "@/features/ingredients";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import { Dropdown } from "@/components/dropdowns";
+import { LabeledInput } from "@/components/inputs";
+import { PurposeDropdown } from "@/features/purposes";
+import { CountryDropdown } from "@/features/countries";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { useCreateFormulaMutation } from "../services";
+import { useCRUD } from "@/hooks";
+import CloseIcon from "@mui/icons-material/Close";
+import { useRouter } from "next/router";
+import { enqueueSnackbar } from "notistack";
+import dynamic from "next/dynamic";
+import { RequirementSelectDialog } from "@/features/requirements";
+import { useLazyGetNutrientsOfRequirementQuery } from "@/features/requirements/services";
+import AddIcon from "@mui/icons-material/Add";
+import PlaylistAddIcon from "@mui/icons-material/PlaylistAdd";
+import AutorenewIcon from "@mui/icons-material/Autorenew";
+import SaveIcon from "@mui/icons-material/Save";
+import SaveAsIcon from "@mui/icons-material/SaveAs";
+import DeleteSweepIcon from "@mui/icons-material/DeleteSweep";
 
 type ColumnProperty = ({} & Partial<GridCell>) | Partial<ButtonCellType>;
 
@@ -49,10 +85,39 @@ interface Row {
 
 type Inputs = Partial<Formula>;
 
+const schema = yup
+  .object({
+    name: yup.string().required(),
+    purpose: yup.string().nullable(),
+    weight: yup.number().required(),
+    country: yup.string().nullable(),
+    sex: yup.string().nullable(),
+    age_from_week: yup.number().nullable(),
+    age_to_week: yup.number().nullable(),
+    formula_basis: yup.string().nullable(),
+    note: yup.string().nullable(),
+  })
+  .transform((currentValue: any) => {
+    if (currentValue.purpose != null)
+      currentValue.purpose = currentValue.purpose.id;
+    if (currentValue.country != null)
+      currentValue.country = currentValue.country.id;
+    if (currentValue.formula_basis != null)
+      currentValue.formula_basis = currentValue.formula_basis.value;
+    return currentValue;
+  });
+
 const Formulation = ({ saveRef }: { saveRef: React.Ref<unknown> }) => {
   const { customRenderers } = useExtraCells();
 
   const [getAllNutrients, { data: nutreints }] = useLazyGetAllNutrientsQuery();
+  const [getNutrientsOfIngredient] = useLazyGetNutrientsOfIngredientQuery();
+  const [getRequirementNutrients, getNutrientsOfRequirement] =
+    useLazyGetNutrientsOfRequirementQuery();
+
+  const [isLoading, setIsLoading] = useState(false);
+  const [isIngredientOpen, setIsIngredientOpen] = useState(false);
+  const [isRequirementOpen, setIsRequirementOpen] = useState(false);
 
   const startColumns: Column[] = [
     {
@@ -222,6 +287,20 @@ const Formulation = ({ saveRef }: { saveRef: React.Ref<unknown> }) => {
     nutrients: {},
   });
 
+  // Form
+  const { handleSubmit, control, setError, getValues } = useForm<Inputs>({
+    // @ts-ignore
+    resolver: yupResolver(schema),
+    defaultValues: {
+      weight: 100,
+    },
+  });
+
+  const useCRUDHook = useCRUD({
+    results: [],
+    setError: setError,
+  });
+
   const onCellEdited = React.useCallback(
     (cell: Item, newValue: EditableGridCell) => {
       const [col, row] = cell;
@@ -386,7 +465,9 @@ const Formulation = ({ saveRef }: { saveRef: React.Ref<unknown> }) => {
       };
   };
 
-  const onRowAppended = React.useCallback(() => {}, []);
+  const onRowAppended = React.useCallback(() => {
+    setIsIngredientOpen(true);
+  }, []);
 
   const onCellActivated = React.useCallback((cell: Item) => {}, []);
 
@@ -408,6 +489,11 @@ const Formulation = ({ saveRef }: { saveRef: React.Ref<unknown> }) => {
             property: {
               kind: GridCellKind.Number,
               allowOverlay: false,
+              readonly: true,
+              style: "faded",
+              themeOverride: {
+                bgCell: "#EFEFF1",
+              },
             },
           } as Column)
       );
@@ -419,11 +505,379 @@ const Formulation = ({ saveRef }: { saveRef: React.Ref<unknown> }) => {
     // setRows(rows.map((e, i) => i != index));
   };
 
+  const handleSelected = async (values?: Ingredient[]) => {
+    if (values?.length == 0) {
+      setIsIngredientOpen(false);
+      return;
+    }
+    try {
+      setIsIngredientOpen(false);
+      setIsLoading(true);
+      values = values ?? [];
+      for (let i = 0; i < values?.length; i += 1) {
+        // @ts-ignore
+        if (rows.current.some((e: any) => e["ingredient_id"] == values[i].id)) {
+          enqueueSnackbar(`Ingredient "${values[i].name}" is already exists`, {
+            variant: "warning",
+          });
+          continue;
+        }
+        const newRow: any = {
+          id: values[i].name,
+          name: values[i].name,
+          value: 0,
+          price: values[i].price,
+          dm: values[i].dm,
+          ingredient_id: values[i].id,
+        };
+        const response = await getNutrientsOfIngredient({
+          id: values[i].id,
+          query: {},
+        }).unwrap();
+        for (let i = 0; i < response.results.length; i += 1) {
+          let abbvr: string = (response.results[i].nutrient as Nutrient)
+            .abbreviation;
+          newRow[abbvr] = response.results[i].value;
+        }
+        setRows([newRow, ...rows]);
+      }
+    } finally {
+      setIsIngredientOpen(false);
+      setIsLoading(false);
+    }
+  };
+
+  const handleRequirementSelected = async (value?: Requirement) => {
+    if (value == null) {
+      setIsRequirementOpen(false);
+      return;
+    }
+
+    try {
+      setIsRequirementOpen(false);
+      // const response = await getNutrientsOfRequirement(
+      //   { id: value.id, query: { limit: 100 } },
+      //   false
+      // ).unwrap();
+
+      // const ROW_REQUIREMENT_INDEX = rows.current.length - 1;
+
+      // const reqRow: any = {
+      //   id: rows.current[ROW_REQUIREMENT_INDEX].id,
+      //   name: rows.current[ROW_REQUIREMENT_INDEX].name,
+      //   ration_weight: rows.current[ROW_REQUIREMENT_INDEX].budget,
+      //   desired_ratio: rows.current[ROW_REQUIREMENT_INDEX].desired_ratio,
+      //   desired_dm: rows.current[ROW_REQUIREMENT_INDEX].desired_dm,
+      // };
+
+      // for (let i = 0; i < response.results.length; i += 1) {
+      //   let abbvr: string = (response.results[i].nutrient as Nutrient)
+      //     .abbreviation;
+      //   console.log(i);
+      //   console.log(abbvr);
+      //   reqRow[abbvr] = response.results[i].value;
+      // }
+
+      // console.log(reqRow);
+
+      // rows.current[ROW_REQUIREMENT_INDEX] = reqRow;
+    } finally {
+    }
+  };
+
+  const onSubmit: SubmitHandler<Inputs> = async (data) => {
+    const formula: Partial<Formula> = data;
+  };
+
   return (
-    <Box>
-      <Stack direction={"row"}>
-        <Button size="small" onClick={loadNutrientsToTable}>
+    <>
+      <IngredientSelectDialog
+        multiple
+        open={isIngredientOpen}
+        onSelected={handleSelected}
+        onClose={() => setIsIngredientOpen(false)}
+      />
+      <RequirementSelectDialog
+        open={isRequirementOpen}
+        onSelected={handleRequirementSelected}
+        onClose={() => setIsRequirementOpen(false)}
+      />
+      <Box sx={{ my: 5, border: "1px solid #98AAC4" }}>
+        <Accordion elevation={0} defaultExpanded={false}>
+          <AccordionSummary
+            expandIcon={<ExpandMoreIcon />}
+            aria-controls="panel1a-content"
+            id="panel1a-header"
+          >
+            <Typography fontWeight={600}>Formula Detail</Typography>
+          </AccordionSummary>
+          <AccordionDetails>
+            <form onSubmit={handleSubmit(onSubmit)}>
+              <Grid container spacing={4}>
+                {/* Name */}
+                <Grid item xs={12} md={6}>
+                  <Controller
+                    name={"name"}
+                    control={control}
+                    render={({
+                      field: { onChange, value },
+                      fieldState: { invalid, isTouched, isDirty, error },
+                    }) => (
+                      <LabeledInput
+                        error={!!error?.message}
+                        helperText={error?.message}
+                        onChange={onChange}
+                        fullWidth
+                        size="small"
+                        value={value}
+                        label={"Name"}
+                        placeholder={"Name"}
+                      />
+                    )}
+                  />
+                </Grid>
+                {/* Purpose */}
+                <Grid item xs={12} md={6}>
+                  <Controller
+                    name={"purpose"}
+                    control={control}
+                    render={({
+                      field: { onChange, value },
+                      fieldState: { invalid, isTouched, isDirty, error },
+                    }) => (
+                      <PurposeDropdown
+                        onChange={(_, data) => onChange(data)}
+                        value={value}
+                        error={!!error?.message}
+                        helperText={error?.message}
+                      />
+                    )}
+                  />
+                </Grid>
+                {/* Sex */}
+                <Grid item xs={12} md={6}>
+                  <Controller
+                    name={"sex"}
+                    control={control}
+                    render={({
+                      field: { onChange, value },
+                      fieldState: { invalid, isTouched, isDirty, error },
+                    }) => (
+                      <Dropdown
+                        options={[
+                          { value: "M", name: "Male" },
+                          { value: "F", name: "Female" },
+                        ]}
+                        key="name"
+                        onChange={(_, data) => onChange(data)}
+                        value={value}
+                        label="Sex"
+                        error={!!error?.message}
+                        helperText={error?.message}
+                      />
+                    )}
+                  />
+                </Grid>
+                {/* Formula Basis */}
+                <Grid item xs={12} md={6}>
+                  <Controller
+                    name={"formula_basis"}
+                    control={control}
+                    render={({
+                      field: { onChange, value },
+                      fieldState: { invalid, isTouched, isDirty, error },
+                    }) => (
+                      <Dropdown
+                        options={[
+                          { value: "AF", name: "As-Fed Basis" },
+                          { value: "DM", name: "DM Basis" },
+                        ]}
+                        key="name"
+                        onChange={(_, data) => onChange(data)}
+                        value={value}
+                        label="Feed Basis"
+                        error={!!error?.message}
+                        helperText={error?.message}
+                      />
+                    )}
+                  />
+                </Grid>
+                {/* Weight */}
+                <Grid item xs={12} md={6}>
+                  <Controller
+                    name={"weight"}
+                    control={control}
+                    render={({
+                      field: { onChange, value },
+                      fieldState: { error },
+                    }) => (
+                      <LabeledInput
+                        error={!!error?.message}
+                        helperText={error?.message}
+                        onChange={(event: any) => {
+                          console.log(event.target.value);
+                          setColumns([...columns]);
+                          // TODO:  Update header title of price per kg
+                          onChange(event);
+                        }}
+                        fullWidth
+                        size="small"
+                        value={value ?? 0}
+                        label={"Weight [Kg]"}
+                        placeholder={"Weight per Kg"}
+                        type="number"
+                        InputProps={{
+                          endAdornment: (
+                            <InputAdornment position="start">Kg</InputAdornment>
+                          ),
+                        }}
+                      />
+                    )}
+                  />
+                </Grid>
+                {/* Country */}
+                <Grid item xs={12} md={6}>
+                  <Controller
+                    name={"country"}
+                    control={control}
+                    render={({
+                      field: { onChange, value },
+                      fieldState: { invalid, isTouched, isDirty, error },
+                    }) => (
+                      <CountryDropdown
+                        onChange={(_, data) => onChange(data)}
+                        value={value}
+                        error={!!error?.message}
+                        helperText={error?.message}
+                      />
+                    )}
+                  />
+                </Grid>
+                <Grid item xs={12} md={6}>
+                  <Controller
+                    name={"age_from_week"}
+                    control={control}
+                    render={({
+                      field: { onChange, value },
+                      fieldState: { invalid, isTouched, isDirty, error },
+                    }) => (
+                      <LabeledInput
+                        error={!!error?.message}
+                        helperText={error?.message}
+                        onChange={onChange}
+                        fullWidth
+                        size="small"
+                        value={value}
+                        label={"Age From"}
+                        placeholder={"Age From"}
+                        type="number"
+                      />
+                    )}
+                  />
+                </Grid>
+                <Grid item xs={12} md={6}>
+                  <Controller
+                    name={"age_to_week"}
+                    control={control}
+                    render={({
+                      field: { onChange, value },
+                      fieldState: { invalid, isTouched, isDirty, error },
+                    }) => (
+                      <LabeledInput
+                        error={!!error?.message}
+                        helperText={error?.message}
+                        onChange={onChange}
+                        fullWidth
+                        size="small"
+                        value={value}
+                        label={"Age To"}
+                        placeholder={"Age To"}
+                        type="number"
+                      />
+                    )}
+                  />
+                </Grid>
+                {/* Name */}
+                <Grid item xs={12} md={6}>
+                  <Controller
+                    name={"note"}
+                    control={control}
+                    render={({
+                      field: { onChange, value },
+                      fieldState: { invalid, isTouched, isDirty, error },
+                    }) => (
+                      <LabeledInput
+                        error={!!error?.message}
+                        helperText={error?.message}
+                        onChange={onChange}
+                        fullWidth
+                        size="small"
+                        value={value}
+                        label={"Remark"}
+                        placeholder={"Remark"}
+                      />
+                    )}
+                  />
+                </Grid>
+              </Grid>
+            </form>
+          </AccordionDetails>
+        </Accordion>
+      </Box>
+      <Stack direction={"row"} sx={{ my: 5 }} gap={1}>
+        <Button
+          onClick={onRowAppended}
+          color="secondary"
+          size="small"
+          startIcon={<AddIcon fontSize="small" />}
+          sx={{ textTransform: "none" }}
+        >
+          Add Ingredients
+        </Button>
+        <Button
+          color="secondary"
+          size="small"
+          startIcon={<PlaylistAddIcon fontSize="small" />}
+          sx={{ textTransform: "none" }}
+          onClick={() => setIsRequirementOpen(true)}
+        >
+          Load Requirement
+        </Button>
+        <Button
+          color="secondary"
+          size="small"
+          startIcon={<AutorenewIcon fontSize="small" />}
+          sx={{ textTransform: "none" }}
+          onClick={loadNutrientsToTable}
+        >
           Reload Nutrients
+        </Button>
+        <Button
+          color="secondary"
+          size="small"
+          startIcon={<SaveIcon fontSize="small" />}
+          sx={{ textTransform: "none" }}
+          onClick={loadNutrientsToTable}
+        >
+          Save
+        </Button>
+        <Button
+          color="secondary"
+          size="small"
+          startIcon={<SaveAsIcon fontSize="small" />}
+          sx={{ textTransform: "none" }}
+          onClick={loadNutrientsToTable}
+        >
+          Save As
+        </Button>
+        <Button
+          color="secondary"
+          size="small"
+          startIcon={<DeleteSweepIcon fontSize="small" />}
+          sx={{ textTransform: "none" }}
+          onClick={loadNutrientsToTable}
+        >
+          Remove all
         </Button>
       </Stack>
       <Sizer>
@@ -448,7 +902,7 @@ const Formulation = ({ saveRef }: { saveRef: React.Ref<unknown> }) => {
           }}
         />
       </Sizer>
-    </Box>
+    </>
   );
 };
 
