@@ -46,7 +46,7 @@ import _ from "lodash";
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import * as yup from "yup";
 import { useLazyGetNutrientsQuery } from "@/features/nutrients/services";
-import { useLazyGetNutrientsOfIngredientQuery } from "@/features/ingredients/services";
+import { useLazyGetAllNutrientsOfIngredientQuery } from "@/features/ingredients/services";
 import { Loading } from "@/components";
 import { IngredientSelectDialog } from "@/features/ingredients";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
@@ -111,7 +111,8 @@ const Formulation = ({ saveRef }: { saveRef: React.Ref<unknown> }) => {
   const { customRenderers } = useExtraCells();
 
   const [getAllNutrients, { data: nutreints }] = useLazyGetAllNutrientsQuery();
-  const [getNutrientsOfIngredient] = useLazyGetNutrientsOfIngredientQuery();
+  const [getAllNutrientsOfIngredient] =
+    useLazyGetAllNutrientsOfIngredientQuery();
   const [getRequirementNutrients, getNutrientsOfRequirement] =
     useLazyGetNutrientsOfRequirementQuery();
 
@@ -190,7 +191,7 @@ const Formulation = ({ saveRef }: { saveRef: React.Ref<unknown> }) => {
     {
       id: "dm",
       title: "DM (%)",
-      path: "dm",
+      path: "ingredient.dm",
       property: {
         kind: GridCellKind.Number,
         allowOverlay: false,
@@ -505,42 +506,59 @@ const Formulation = ({ saveRef }: { saveRef: React.Ref<unknown> }) => {
     // setRows(rows.map((e, i) => i != index));
   };
 
-  const handleSelected = async (values?: Ingredient[]) => {
-    if (values?.length == 0) {
+  const handleSelected = async (ingredients?: Ingredient[]) => {
+    if (ingredients?.length == 0) {
       setIsIngredientOpen(false);
       return;
     }
     try {
       setIsIngredientOpen(false);
       setIsLoading(true);
-      values = values ?? [];
-      for (let i = 0; i < values?.length; i += 1) {
+      ingredients = ingredients ?? [];
+
+      const newRows: Array<
+        Partial<Omit<FormulaIngredient, "nutrients">> & Row
+      > = [];
+
+      for (let i = 0; i < ingredients?.length; i += 1) {
         // @ts-ignore
-        if (rows.current.some((e: any) => e["ingredient_id"] == values[i].id)) {
-          enqueueSnackbar(`Ingredient "${values[i].name}" is already exists`, {
-            variant: "warning",
-          });
-          continue;
-        }
-        const newRow: any = {
-          id: values[i].name,
-          name: values[i].name,
-          value: 0,
-          price: values[i].price,
-          dm: values[i].dm,
-          ingredient_id: values[i].id,
+        // if (rows.current.some((e: any) => e["ingredient_id"] == values[i].id)) {
+        //   enqueueSnackbar(`Ingredient "${values[i].name}" is already exists`, {
+        //     variant: "warning",
+        //   });
+        //   continue;
+        // }
+
+        // Check if ingredient already exits
+
+        const newRow: Partial<Omit<FormulaIngredient, "nutrients">> & Row = {
+          id: ingredients[i].id,
+          rowId: ingredients[i].id,
+          ingredient: {
+            name: ingredients[i].name,
+            dm: ingredients[i].dm,
+          },
+          ration: 0,
+          price: ingredients[i].price,
+          nutrients: {},
         };
-        const response = await getNutrientsOfIngredient({
-          id: values[i].id,
+
+        const response = await getAllNutrientsOfIngredient({
+          id: ingredients[i].id,
           query: {},
         }).unwrap();
         for (let i = 0; i < response.results.length; i += 1) {
-          let abbvr: string = (response.results[i].nutrient as Nutrient)
-            .abbreviation;
-          newRow[abbvr] = response.results[i].value;
+          const abbreviation: string = (
+            response.results[i].nutrient as Nutrient
+          ).abbreviation;
+          const ing_nutrient_value = _.get(response.results[i], "value", 0);
+          _.set(newRow, `nutrients.${abbreviation}`, ing_nutrient_value);
         }
-        setRows([newRow, ...rows]);
+
+        newRows.push(newRow);
       }
+
+      setRows([...newRows, ...rows]);
     } finally {
       setIsIngredientOpen(false);
       setIsLoading(false);

@@ -90,7 +90,7 @@ export const ingredientApi = baseApi.injectEndpoints({
         { id: number; query?: Object }
       >({
         query: ({ id, query }) => ({
-          url: `${URL}/${id}/${NUTRIENT_URL}/all`,
+          url: `${URL}/${id}/${NUTRIENT_URL}/all/`,
           method: "get",
           params: query,
         }),
@@ -174,4 +174,6 @@ export const {
   useCreateNutrientForIngredientMutation,
   useUpdateNutrietOfIngredientMutation,
   useDeleteNutrientOfIngredientMutation,
+  useGetAllNutrientsOfIngredientQuery,
+  useLazyGetAllNutrientsOfIngredientQuery,
 } = ingredientApi;
