@@ -30,6 +30,11 @@ req_summary_router = NestedDefaultRouter(
 req_summary_router.register(r'summary', views.RequirementNutrientSummaryViewSet,
                             basename='api_requirement_nutrient_summary')
 
+all_nutrient_router = NestedDefaultRouter(
+    router, r'requirements', lookup='requirement')
+all_nutrient_router.register(r'nutrients/all', views.AllRequirementNutrientViewSet,
+                             basename='api_all_requirement_nutrients')
+
 nutrient_router = NestedDefaultRouter(
     router, r'requirements', lookup='requirement')
 nutrient_router.register(r'nutrients', views.RequirementNutrientViewSet,
@@ -38,6 +43,7 @@ nutrient_router.register(r'nutrients', views.RequirementNutrientViewSet,
 urlpatterns = [
     path('', include(router.urls)),
     path('', include(summary_router.urls)),
+    path('', include(all_nutrient_router.urls)),
     path('', include(nutrient_router.urls)),
     path('', include(req_summary_router.urls)),
 

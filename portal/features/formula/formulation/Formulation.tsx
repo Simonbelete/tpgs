@@ -260,20 +260,7 @@ const Formulation = ({ saveRef }: { saveRef: React.Ref<unknown> }) => {
   const [columns, setColumns] = useState<Column[]>([]);
   const [rows, setRows] = useState<
     Array<Partial<Omit<FormulaIngredient, "nutrients">> & Row>
-  >([
-    // {
-    //   id: 1,
-    //   rowId: 1,
-    //   display_name: "Ingredient 1",
-    //   ingredient: {
-    //     id: 1,
-    //     name: "Ing 1",
-    //   },
-    //   nutrients: {
-    //     N1: 88,
-    //   },
-    // },
-  ]);
+  >([]);
 
   const [ration, setRation] = useState<Row & Partial<FormulaRation>>({
     rowId: "ration",
@@ -296,6 +283,10 @@ const Formulation = ({ saveRef }: { saveRef: React.Ref<unknown> }) => {
       weight: 100,
     },
   });
+
+  const roundTo3DecimalPlace = (value: number): number => {
+    return Number(value.toFixed(3));
+  };
 
   const useCRUDHook = useCRUD({
     results: [],
@@ -325,27 +316,51 @@ const Formulation = ({ saveRef }: { saveRef: React.Ref<unknown> }) => {
       rows.forEach((r) => {
         // Calculate feed
         columns.slice(1, -endColumns.length).forEach((c) => {
-          const cell = _.get(r, c.path, 0);
-          const cellTotal = _.get(updatedRation, c.path, 0);
+          const cell = Number(_.get(r, c.path, 0));
+          const cellTotal = Number(_.get(updatedRation, c.path, 0));
 
-          const price = _.get(r, "price", 0);
-          const ration = _.get(r, "ration", 0);
-          const weight: number = getValues("weight") || 0;
+          const price = Number(_.get(r, "price", 0));
+          const ration = Number(_.get(r, "ration", 0));
+          const weight: number = Number(getValues("weight") || 0);
 
-          if (c.id == "ration") _.set(updatedRation, c.path, cell + cellTotal);
+          if (c.id == "ration")
+            _.set(
+              updatedRation,
+              c.path,
+              roundTo3DecimalPlace(cell + cellTotal)
+            );
           else if (c.id == "price")
-            _.set(updatedRation, c.path, cell + cellTotal);
+            _.set(
+              updatedRation,
+              c.path,
+              roundTo3DecimalPlace(cell + cellTotal)
+            );
           else if (c.id == "ration_weight")
-            _.set(updatedRation, c.path, weight * cell + cellTotal);
+            _.set(
+              updatedRation,
+              c.path,
+              roundTo3DecimalPlace(weight * cell + cellTotal)
+            );
           else if (c.id == "ration_price")
             _.set(
               updatedRation,
               c.path,
-              ((weight * ration) / 100) * price + cellTotal
+              roundTo3DecimalPlace(
+                ((weight * ration) / 100) * price + cellTotal
+              )
             );
           else if (c.id == "dm")
-            _.set(updatedRation, c.path, (ration * cell) / 100 + cellTotal);
-          else _.set(updatedRation, c.path, (ration * cell) / 100 + cellTotal);
+            _.set(
+              updatedRation,
+              c.path,
+              roundTo3DecimalPlace((ration * cell) / 100 + cellTotal)
+            );
+          else
+            _.set(
+              updatedRation,
+              c.path,
+              roundTo3DecimalPlace((ration * cell) / 100 + cellTotal)
+            );
         });
       });
 
@@ -519,14 +534,6 @@ const Formulation = ({ saveRef }: { saveRef: React.Ref<unknown> }) => {
       > = [];
 
       for (let i = 0; i < ingredients?.length; i += 1) {
-        // @ts-ignore
-        // if (rows.current.some((e: any) => e["ingredient_id"] == values[i].id)) {
-        //   enqueueSnackbar(`Ingredient "${values[i].name}" is already exists`, {
-        //     variant: "warning",
-        //   });
-        //   continue;
-        // }
-
         // Check if ingredient already exits
 
         const newRow: Partial<Omit<FormulaIngredient, "nutrients">> & Row = {

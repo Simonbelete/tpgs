@@ -18,6 +18,7 @@ from core.views import (
     GenericExportView,
     GenericImportView
 )
+from core.pagination import AllPagination
 from . import models
 from . import serializers
 from . import admin
@@ -75,6 +76,18 @@ class RequirementNutrientViewSet(CoreModelViewSet):
         if self.request.method in ['POST', 'PUT', 'PATCH']:
             return serializers.RequirementNutrientSerializer_POST
         return serializers.RequirementNutrientSerializer_GET
+
+
+class AllRequirementNutrientViewSet(viewsets.ReadOnlyModelViewSet):
+    """ Get all active nutrients of ingredient"""
+    queryset = models.RequirementNutrient.objects.all().order_by('-nutrient__order')
+    pagination_class = AllPagination
+    serializer_class = serializers.AllIngredientNutrientSerializer_GET
+
+    def get_queryset(self):
+        if ('ingredient_pk' in self.kwargs):
+            return self.queryset.filter(ingredient=self.kwargs['ingredient_pk'])
+        return self.queryset
 
 
 class RequirementNutrientHistoryViewSet(HistoryViewSet):
