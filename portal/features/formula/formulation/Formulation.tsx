@@ -261,18 +261,18 @@ const Formulation = ({ saveRef }: { saveRef: React.Ref<unknown> }) => {
   const [rows, setRows] = useState<
     Array<Partial<Omit<FormulaIngredient, "nutrients">> & Row>
   >([
-    {
-      id: 1,
-      rowId: 1,
-      display_name: "Ingredient 1",
-      ingredient: {
-        id: 1,
-        name: "Ing 1",
-      },
-      nutrients: {
-        N1: 88,
-      },
-    },
+    // {
+    //   id: 1,
+    //   rowId: 1,
+    //   display_name: "Ingredient 1",
+    //   ingredient: {
+    //     id: 1,
+    //     name: "Ing 1",
+    //   },
+    //   nutrients: {
+    //     N1: 88,
+    //   },
+    // },
   ]);
 
   const [ration, setRation] = useState<Row & Partial<FormulaRation>>({
@@ -308,8 +308,6 @@ const Formulation = ({ saveRef }: { saveRef: React.Ref<unknown> }) => {
       const dataCol = columns[col];
       const dataRow = rows[row];
 
-      // calc = rows[i].nutreints.map(e => e.value * rows[i].ration)
-
       const RATION_INDEX = rows.length;
       const REQUIREMENT_INDEX = rows.length + 1;
 
@@ -323,11 +321,6 @@ const Formulation = ({ saveRef }: { saveRef: React.Ref<unknown> }) => {
       }
 
       let updatedRation = { rowId: "ration", display_name: "Ration" };
-
-      const calcColumna = columns.slice(
-        startColumns.length,
-        -endColumns.length
-      );
 
       rows.forEach((r) => {
         // Calculate feed
@@ -353,7 +346,7 @@ const Formulation = ({ saveRef }: { saveRef: React.Ref<unknown> }) => {
 
       setRation(updatedRation);
     },
-    [columns]
+    [rows, ration, requirement, columns]
   );
 
   const getIngredientContent = (cell: Item): any => {
