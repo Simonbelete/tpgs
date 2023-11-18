@@ -28,7 +28,7 @@ import { LinearProgress, Box } from "@mui/material";
 import buildPage from "@/util/buildPage";
 import buildSorting from "@/util/buildSorting";
 
-export interface ListWithTollbarProps<
+export interface TollbarListProps<
   T extends AbstractBaseModel & GridValidRowModel
 > {
   getQuery: { id: number; query?: Object };
@@ -63,15 +63,13 @@ export interface ListWithTollbarProps<
  *
  * T.id is current row id
  */
-export default function ListWithTollbar<
-  T extends AbstractBaseModel & EditMode
->({
+export default function TollbarList<T extends AbstractBaseModel & EditMode>({
   getQuery,
   toolbar,
   columns,
   getEndpoint,
   actions,
-}: ListWithTollbarProps<T>) {
+}: TollbarListProps<T>) {
   const [rows, setRows] = useState<T[]>([]);
   const [paginationModel, setPaginationModel] = useState({
     page: 0,

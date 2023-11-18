@@ -95,7 +95,7 @@ class FormulaSerializer_POST(serializers.ModelSerializer):
 
     class Meta:
         model = models.Formula
-        fields = ['name', 'weight', 'requirements', 'budget', 'desired_ratio', 'desired_dm', 'ingredients',
+        fields = ['id', 'name', 'weight', 'requirements', 'budget', 'desired_ratio', 'desired_dm', 'ingredients',
                   'rations', 'ration_price', 'ration_ratio', 'ration_dm',  'age_from_week', 'age_to_week']
 
     @transaction.atomic

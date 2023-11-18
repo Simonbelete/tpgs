@@ -154,7 +154,7 @@ export const HatcheryForm = ({ data }: { data?: Hatchery }) => {
           <Tab label="Detail" {...a11yProps(0)} />
           {formData && (
             <Tab
-              label="Nutrients"
+              label="Hatchery"
               iconPosition="end"
               icon={<Chip label={0} size="small" />}
               {...a11yProps(1)}

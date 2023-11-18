@@ -10,7 +10,7 @@ import {
   GridRenderCellParams,
 } from "@mui/x-data-grid";
 import { Feed } from "@/models";
-import { ListWithTollbar } from "@/lib/crud";
+import { ToolbarList } from "@/lib/crud";
 import { Box, Typography, Button, Tooltip, IconButton } from "@mui/material";
 import Link from "next/link";
 import { feedApi } from "../services";
@@ -90,7 +90,7 @@ export const ChickenFeed = ({ data }: { data: Feed }) => {
   ];
 
   return (
-    <ListWithTollbar<Feed>
+    <ToolbarList<Feed>
       getQuery={{ id: data?.id, query: {} }}
       actions={[EditAction]}
       columns={columns}

@@ -157,7 +157,7 @@ const Formulation = () => {
     {
       id: "name",
       title: "Name",
-      path: "ingredient.name",
+      path: "display_name",
       property: {
         kind: GridCellKind.Text,
         allowOverlay: false,
@@ -607,7 +607,7 @@ const Formulation = () => {
 
         newRows.push({
           rowId: _.get(ing, "id", ""),
-          display_name: _.get(ing, "name", ""),
+          display_name: _.get(ing, "display_name", ""),
           ration: _.get(ing, "ration", 0),
           ration_price: _.get(ing, "ration_price", 0),
           ration_weight: _.get(ing, "ration_weight", 0),
