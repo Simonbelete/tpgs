@@ -64,9 +64,7 @@ import AutorenewIcon from "@mui/icons-material/Autorenew";
 import SaveIcon from "@mui/icons-material/Save";
 import DeleteSweepIcon from "@mui/icons-material/DeleteSweep";
 import {
-  useLazyGetAllIngredientsOfFormulaQuery,
-  useLazyGetAllRationsOfFormulaQuery,
-  useLazyGetAllRequirementsOfFormulaQuery,
+  useCreateFormulaMutation,
   useUpdateIngredientOfFormulaMutation,
   useCreateIngredientForFormulaMutation,
   useCreateRequirementForFormulaMutation,
@@ -90,13 +88,19 @@ type Column = {
 
 interface Row {
   rowId: string | number;
+  display_name: string;
   ration?: number;
   price?: number;
   ration_weight?: number;
   ration_price?: number;
   dm?: number;
   // eg. {'CP': 20}, key = column.id
-  nutrients?: { [key: string]: number };
+  nutrients?: {
+    [key: string]: {
+      id: number; // Nutrient id
+      value: number;
+    };
+  };
 }
 
 type Inputs = Partial<Formula>;
@@ -130,6 +134,8 @@ const Formulation = () => {
     useLazyGetAllNutrientsOfIngredientQuery();
   const [getAllNutrientsOfRequirement, getNutrientsOfRequirement] =
     useLazyGetAllNutrientsOfRequirementQuery();
+
+  const [createFormula] = useCreateFormulaMutation();
 
   // Ingredients
   const [createIngredient] = useCreateIngredientForFormulaMutation();
@@ -283,18 +289,14 @@ const Formulation = () => {
   ];
 
   const [columns, setColumns] = useState<Column[]>([]);
-  const [rows, setRows] = useState<
-    Array<Partial<Omit<FormulaIngredient, "nutrients">> & Row>
-  >([]);
+  const [rows, setRows] = useState<Row[]>([]);
 
-  const [ration, setRation] = useState<Row & Partial<FormulaRation>>({
+  const [ration, setRation] = useState<Row>({
     rowId: "ration",
     display_name: "Ration",
   });
 
-  const [requirement, setRequirement] = useState<
-    Row & Partial<FormulaRequirement>
-  >({
+  const [requirement, setRequirement] = useState<Row>({
     rowId: "requirement",
     display_name: "Requirement",
     nutrients: {},
@@ -410,8 +412,8 @@ const Formulation = () => {
     // Achivement chart
     Object.keys(ration?.nutrients || {}).map((key, i) => {
       chart.x.push(key);
-      const req: number = _.get(requirement, `nutrients.${key}`, 1);
-      const rat: number = _.get(ration.nutrients, `${key}`, 0);
+      const req: number = _.get(requirement, `nutrients.${key}.value`, 1);
+      const rat: number = _.get(ration, `nutrients.${key}.value`, 0);
       chart.y.push(roundTo3DecimalPlace(Number((rat / req) * 100)));
     });
 
@@ -546,7 +548,7 @@ const Formulation = () => {
           ({
             id: e.abbreviation,
             title: e.display_name,
-            path: `nutrients.${e.abbreviation}`,
+            path: `nutrients.${e.abbreviation}.value`,
             property: {
               kind: GridCellKind.Number,
               allowOverlay: false,
@@ -577,9 +579,7 @@ const Formulation = () => {
       setIsLoading(true);
       ingredients = ingredients ?? [];
 
-      const newRows: Array<
-        Partial<Omit<FormulaIngredient, "nutrients">> & Row
-      > = [];
+      const newRows: Row[] = [];
 
       const requests = _.map(ingredients, (e) => {
         return getAllNutrientsOfIngredient({
@@ -596,19 +596,18 @@ const Formulation = () => {
         const nutrients = {};
 
         _.forEach(e.results, (n) => {
-          const abbreviation: string = (n.nutrient as Nutrient).abbreviation;
+          const nutrient = n.nutrient as Nutrient;
+          const abbreviation: string = nutrient.abbreviation;
           const val = _.get(n, "value", 0);
-          _.set(nutrients, abbreviation, val);
+          _.set(nutrients, abbreviation, {
+            id: nutrient.id,
+            value: val,
+          });
         });
 
         newRows.push({
-          id: 0,
           rowId: _.get(ing, "id", ""),
-          ingredient: {
-            id: _.get(ing, "id", 0),
-            name: _.get(ing, "name", ""),
-            dm: _.get(ing, "dm", 0),
-          },
+          display_name: _.get(ing, "name", ""),
           ration: _.get(ing, "ration", 0),
           ration_price: _.get(ing, "ration_price", 0),
           ration_weight: _.get(ing, "ration_weight", 0),
@@ -653,8 +652,8 @@ const Formulation = () => {
       for (let i = 0; i < response.results.length; i += 1) {
         const abbreviation: string = (response.results[i].nutrient as Nutrient)
           .abbreviation;
-        const ing_nutrient_value = _.get(response.results[i], "value", 0);
-        _.set(newRow, `nutrients.${abbreviation}`, ing_nutrient_value);
+        const value = _.get(response.results[i], "value", 0);
+        _.set(newRow, `nutrients.${abbreviation}.value`, value);
       }
 
       setRequirement(newRow);
@@ -663,20 +662,39 @@ const Formulation = () => {
   };
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
-    const formula: Partial<Formula> = data;
+    const response = await createFormula(data).unwrap();
+    const formula = response.data;
 
-    for (let i = 0; i < rows.length; i += 1) {
-      let body: Partial<FormulaIngredient> = {
-        id: rows[i].id,
-        formula: data.id,
-        ingredient: _.get(rows[i], "ingredient.id", 0),
-        ration: rows[i].ration,
-      };
+    if (response.status == 201) {
+      const requests: Promise<any>[] = [];
 
-      // const response = await createIngredient({
-      //   ...body,
-      //   id: rows[i].id,
-      // }).unwrap();
+      _.forEach(rows, (e, i) => {
+        const body: Partial<FormulaIngredient> = {
+          // id: rows[i].id,
+          formula: data.id,
+          ingredient: _.get(rows[i], "ingredient.id", 0),
+          ration: rows[i].ration,
+        };
+        requests.push(createIngredient({ id: formula.id, data: body }));
+      });
+
+      _.forEach(requirement.nutrients, (value, key) => {
+        const body: Partial<FormulaRequirement> = {
+          nutrient: _.get(value, "id"),
+          value: _.get(value, "value"),
+        };
+        requests.push(createRequirement({ id: formula.id, data: body }));
+      });
+
+      _.forEach(ration.nutrients, (value, key) => {
+        const body: Partial<FormulaRequirement> = {
+          nutrient: _.get(value, "id"),
+          value: _.get(value, "value"),
+        };
+        requests.push(createRequirement({ id: formula.id, data: body }));
+      });
+
+      const allResponses = await Promise.all(requests);
     }
   };
 
