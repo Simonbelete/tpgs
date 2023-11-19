@@ -2,7 +2,7 @@ import React from "react";
 import { ListLayout } from "@/layouts";
 import { useBreadcrumbs } from "@/hooks";
 import { Breadcrumbs } from "@/components";
-import { CandlingList } from "@/features/candling";
+import { CandlingList } from "@/features/hatchery-egg";
 import { SeoHead } from "@/seo";
 
 const CandlingPage = () => {

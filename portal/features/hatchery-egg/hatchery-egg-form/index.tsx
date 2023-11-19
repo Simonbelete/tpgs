@@ -2,14 +2,22 @@ import React, { useEffect } from "react";
 import * as yup from "yup";
 import { Hatchery, HatcheryEgg } from "@/models";
 import { FormLayout } from "@/lib/crud";
-import { candlingApi } from "../services";
+import { hatcheryEggApi } from "../services";
 import { hatcheryApi } from "@/features/hatchery/services";
 import dayjs from "dayjs";
 import { eggApi } from "@/features/eggs/services";
 
 const schema = yup.object({
   name: yup.string().required(),
-  house: yup.object().required(),
+  hatchery: yup.object().required(),
+  egg: yup.object().required(),
+  no_eggs: yup.number().min(1).required(),
+  canndle_date: yup.string().nullable(),
+  candled_eggs: yup.number().min(0).nullable(),
+  infertile_egg: yup.number().min(0).nullable(),
+  no_of_hatched: yup.number().min(0).nullable(),
+  no_dead: yup.number().min(0).nullable(),
+  no_culled: yup.number().min(0).nullable(),
 });
 
 export const HatcheryEggForm = ({
@@ -27,10 +35,10 @@ export const HatcheryEggForm = ({
         data={data}
         schema={schema}
         shallowRoute={shallowRoute}
-        createEndpoint={candlingApi.endpoints.createHatcheryEgg}
-        updateEndpoint={candlingApi.endpoints.updateHatcheryEgg}
-        deleteEndpoint={candlingApi.endpoints.deleteHatcheryEgg}
-        summaryEndpoint={candlingApi.endpoints.getHatcheryEggSummary}
+        createEndpoint={hatcheryEggApi.endpoints.createHatcheryEgg}
+        updateEndpoint={hatcheryEggApi.endpoints.updateHatcheryEgg}
+        deleteEndpoint={hatcheryEggApi.endpoints.deleteHatcheryEgg}
+        summaryEndpoint={hatcheryEggApi.endpoints.getHatcheryEggSummary}
         beforeSubmit={(values: Partial<HatcheryEgg>) => {
           const cleaned_data: Partial<HatcheryEgg> = {
             id: values.id,
@@ -58,6 +66,7 @@ export const HatcheryEggForm = ({
             label: "Egg",
             placeholder: "Egg",
             endpoint: eggApi.endpoints.getEggs,
+            dataKey: "display_name",
           },
           no_eggs: {
             label: "No Eggs",

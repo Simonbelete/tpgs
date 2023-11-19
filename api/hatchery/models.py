@@ -2,7 +2,6 @@ from django.db import models
 from simple_history.models import HistoricalRecords
 
 from core.models import CoreModel
-from eggs.models import Egg
 from breeds.models import Breed
 
 
@@ -25,7 +24,7 @@ class HatcheryEgg(CoreModel):
     hatchery = models.ForeignKey(
         Hatchery, on_delete=models.CASCADE, related_name='hatchery_eggs')
     egg = models.ForeignKey(
-        Egg, on_delete=models.CASCADE, related_name='hatchery_eggs')
+        'eggs.Egg', on_delete=models.CASCADE, related_name='hatchery_eggs')
     # Number of eggs to hatchery from the given week i.e No of egg set
     no_eggs = models.IntegerField()
     # Candling

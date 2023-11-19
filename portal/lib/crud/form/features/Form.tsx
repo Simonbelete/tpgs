@@ -34,6 +34,7 @@ import { DatePicker } from "@mui/x-date-pickers";
 import AsyncDropdown from "../../components/AsyncDropdown";
 import getPreviousUrl from "@/util/getPreviousUrl";
 import dayjs from "dayjs";
+import { Dropdown } from "@/components/dropdowns";
 
 export type Field<T> = {
   prefix?: string | ReactNode;
@@ -54,6 +55,7 @@ export type Field<T> = {
   dataKey?: string;
   multiple?: boolean;
   disabled?: boolean;
+  options?: Object;
 };
 
 export interface FormProps<T> {
@@ -170,6 +172,30 @@ export default function Form<
                       helperText={error?.message}
                       multiple={options.multiple}
                       disabled={options.disabled}
+                    />
+                  )}
+                />
+              </Grid>
+            );
+          } else if (options.options) {
+            return (
+              <Grid key={i} item xs={options.xs || 12} md={options.md || 6}>
+                <Controller
+                  // @ts-ignore
+                  name={key}
+                  control={control}
+                  render={({
+                    field: { onChange, value },
+                    fieldState: { error },
+                  }) => (
+                    <Dropdown
+                      options={options.options}
+                      dataKey={options.datakey}
+                      onChange={(_, data) => onChange(data)}
+                      value={value}
+                      label={options.label}
+                      error={!!error?.message}
+                      helperText={error?.message}
                     />
                   )}
                 />

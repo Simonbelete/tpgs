@@ -1,10 +1,12 @@
 from django.db import models
+from django.db.models import Sum
 from simple_history.models import HistoricalRecords
 from django.core.exceptions import ValidationError
 from rest_framework import serializers
 
 from core.models import CoreModel
 from chickens.models import Chicken
+from hatchery.models import HatcheryEgg
 
 
 class Egg(CoreModel):
@@ -13,27 +15,15 @@ class Egg(CoreModel):
     week = models.IntegerField(default=0)
     eggs = models.IntegerField(null=True, blank=True)
     weight = models.FloatField(null=True, blank=True)  # in g
-    # weight_unit = models.ForeignKey(
-    #     Unit, on_delete=models.SET_NULL, null=True, blank=True, related_name='eggs')
     history = HistoricalRecords()
 
     class Meta:
         unique_together = ['chicken', 'week']
 
-    # def save(self,  *args, **kwargs) -> None:
-    #     self.clean()
-    #     return super().save(*args, **kwargs)
+    @property
+    def display_name(self):
+        return "{chicken} ({week})".format(chicken=self.chicken.display_name, week=self.week)
 
-    # def clean(self) -> None:
-    #     if (self.flock != None or self.chicken != None):
-    #         raise serializers.ValidationError({
-    #             'flock': ['Can not have value if chicken is set'],
-    #             'chicken': ['Can not have value if flock is set']
-    #         })
-    #     if (self.chicken):
-    #         if Egg.objects.filter(flock=self.chicken.flock, week=self.week).count() > 0:
-    #             raise serializers.ValidationError({
-    #                 'week': ['Already exists']
-    #             })
-
-        # return super().clean()
+    @property
+    def available_eggs(self):
+        return self.eggs - HatcheryEgg.objects.filter(egg=self.id).aggregate(egg_set_sum=Sum('no_eggs'))

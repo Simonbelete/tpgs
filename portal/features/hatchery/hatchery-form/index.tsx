@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import * as yup from "yup";
 import { GridColDef, GridRowsProp } from "@mui/x-data-grid";
 import { HatcheryEgg, Hatchery, Egg } from "@/models";
@@ -19,6 +19,8 @@ import { EditMode } from "@/types";
 import { eggApi } from "@/features/eggs/services";
 import { breedApi } from "@/features/breeds/services";
 import { BreedForm } from "@/features/breeds";
+// import HatcheryEggEditableList from "./HatcheryEggEditableList";
+// import IncubationEditableList from "./IncubationEditableList";
 
 const schema = yup.object({
   name: yup.string().required(),
@@ -73,54 +75,19 @@ export const HatcheryForm = ({ data }: { data?: Hatchery }) => {
     return values;
   };
 
-  const cleanHatcheryEgg = (
-    values: Partial<HatcheryEgg>
-  ): Partial<HatcheryEgg> => {
-    return {
-      id: data?.id, // Only for post data
-      hatchery: data?.id,
-      egg: (values.egg as Egg).id || undefined,
-    };
-  };
+  // const cleanHatcheryEgg = (
+  //   values: Partial<HatcheryEgg>
+  // ): Partial<HatcheryEgg> => {
+  //   return {
+  //     id: data?.id, // Only for post data
+  //     hatchery: data?.id,
+  //     egg: (values.egg as Egg).id || undefined,
+  //   };
+  // };
 
   const handleCreated = (value: Hatchery) => {
     setFormData(value);
   };
-
-  const columns: GridColDef[] = [
-    {
-      field: "name",
-      headerName: "Name",
-      flex: 1,
-      minWidth: 100,
-      valueGetter: (params) =>
-        params.row.nutrient ? params.row.nutrient.name : "",
-    },
-    {
-      field: "abbreviation",
-      headerName: "Abbreviation",
-      flex: 1,
-      minWidth: 150,
-      valueGetter: (params) =>
-        params.row.nutrient ? params.row.nutrient.abbreviation : "",
-    },
-    {
-      field: "value",
-      headerName: "Value [%]",
-      flex: 1,
-      minWidth: 150,
-      editable: true,
-      type: "number",
-    },
-    {
-      field: "unit",
-      headerName: "Unit",
-      flex: 1,
-      minWidth: 150,
-      valueGetter: (params) =>
-        params.row.nutrient ? params.row.nutrient.unit.name : "",
-    },
-  ];
 
   return (
     <>
@@ -155,6 +122,14 @@ export const HatcheryForm = ({ data }: { data?: Hatchery }) => {
           {formData && (
             <Tab
               label="Hatchery"
+              iconPosition="end"
+              icon={<Chip label={0} size="small" />}
+              {...a11yProps(1)}
+            />
+          )}
+          {formData && (
+            <Tab
+              label="Incubation"
               iconPosition="end"
               icon={<Chip label={0} size="small" />}
               {...a11yProps(1)}
@@ -204,18 +179,8 @@ export const HatcheryForm = ({ data }: { data?: Hatchery }) => {
               />
             </Card>
           )}
-          {formData && tab == 1 && (
-            <EditableList<HatcheryEgg>
-              getQuery={{ id: formData?.id, query: {} }}
-              toolbar={HatcheryNutrientToolbar}
-              columns={columns}
-              beforeSubmit={cleanHatcheryEgg}
-              getEndpoint={hatcheryApi.endpoints.getEggsOfHatchery}
-              createEndpoint={hatcheryApi.endpoints.createEggForHatchery}
-              updateEndpoint={hatcheryApi.endpoints.updateEggOfHatchery}
-              deleteEndpoint={hatcheryApi.endpoints.deleteEggOfHatchery}
-            />
-          )}
+          {/* {formData && tab == 1 && <HatcheryEggEditableList data={formData} />} */}
+          {/* {formData && tab == 2 && <IncubationEditableList data={formData} />} */}
         </Box>
       </TabFormLayout>
     </>

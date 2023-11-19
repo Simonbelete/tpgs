@@ -1,19 +1,20 @@
 import AbstractBaseModel from "./AbstractBaseModel";
-import Flock from "./Flock";
 import House from "./House";
 import Breed from "./Breed";
+import Hatchery from "./Hatchery";
+import Pen from "./Pen";
 
 export default interface Chicken extends AbstractBaseModel {
   name: string;
   tag: string;
-  sex: string;
-  sire: number | Chicken;
-  dam: number | Chicken;
-  flock: number | Flock;
-  house: number | House;
+  sex: null | string;
+  sire: null | number | Chicken;
+  dam: null | number | Chicken;
+  hatchery: null | number | Hatchery;
+  house: null | number | House;
   breed: number | Breed;
-  pen: string;
-  reduction_date: string;
-  reduction_reason: string;
-  generation: number;
+  pen: null | number | Pen;
+  reduction_date: null | string;
+  reduction_reason: null | string;
+  generation: null | number;
 }

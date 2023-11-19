@@ -35,6 +35,12 @@ router.register(r'analyses/eggs', views.EggsViewSet,
 router.register(r'analyses/egg-grading', views.EggGradingViewSet,
                 basename='api_analyses_egg_grading')
 
+router.register(r'analyses/weights', views.WeightGraphViewSet,
+                basename='api_analyses_weight')
+
+router.register(r'analyses/feeds', views.FeedGraphViewSet,
+                basename='api_analyses_feeds')
+
 count_router = routers.DefaultRouter()
 count_router.register(r'analyses/count', views.CountViewSet,
                       basename='api_count')

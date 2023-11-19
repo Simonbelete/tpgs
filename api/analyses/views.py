@@ -22,6 +22,8 @@ from users.models import User
 from breeds.models import Breed
 from .calculate_analyses import calculate_hdep, calculate_hhep, calculate_egg_mass
 from eggs.serializers import EggSerializer_GET
+from weights.serializers import WeightSerializer_GET
+from feeds.serializers import FeedSerializer_GET
 
 
 class AnalysesViewSet(viewsets.ViewSet):
@@ -1094,6 +1096,76 @@ class EggGradingViewSet(AnalysesViewSet):
 
                         'total_xl_grading': xl_grading,
                         'xl_grading': "{:.3f}".format(xl_grading/total_eggs * 100),
+                    })
+
+                return Response({'results': results})
+
+
+class WeightGraphViewSet(AnalysesViewSet):
+    @extend_schema(
+        parameters=ANALYSES_PARAMETERS
+    )
+    def list(self, request, **kwargs):
+        start_week = int(self.request.GET.get('start_week', 0))
+        end_week = int(self.request.GET.get('end_week', 20))
+
+        if (request.GET.get('chicken', None)):
+            queryset = Chicken.all.filter(
+                pk=self.request.GET.get('chicken', 0))
+
+            queryset_ids = list(zip(*queryset.values_list('id')))
+            queryset_ids = queryset_ids if len(
+                queryset_ids) == 0 else queryset_ids[0]
+            weights = Weight.objects.filter(chicken__in=queryset_ids)
+            serializer = WeightSerializer_GET(weights)
+            return Response({'results': serializer.data})
+        else:
+            with tenant_context(self.get_farm(self.request.GET.get('farm', 0))):
+                queryset = self.filter_by_directory()
+
+                results = []
+                for week in range(start_week, end_week + 1):
+                    weight_avg = Weight.objects.filter(
+                        chicken__in=queryset_ids, week=week).aggregate(weight_avg=Avg('weight'))['weight_avg'] or 0
+
+                    results.append({
+                        'week': week,
+                        'weight': "{:.3f}".format(weight_avg)
+                    })
+
+                return Response({'results': results})
+
+
+class FeedGraphViewSet(AnalysesViewSet):
+    @extend_schema(
+        parameters=ANALYSES_PARAMETERS
+    )
+    def list(self, request, **kwargs):
+        start_week = int(self.request.GET.get('start_week', 0))
+        end_week = int(self.request.GET.get('end_week', 20))
+
+        if (request.GET.get('chicken', None)):
+            queryset = Chicken.all.filter(
+                pk=self.request.GET.get('chicken', 0))
+
+            queryset_ids = list(zip(*queryset.values_list('id')))
+            queryset_ids = queryset_ids if len(
+                queryset_ids) == 0 else queryset_ids[0]
+            weights = Feed.objects.filter(chicken__in=queryset_ids)
+            serializer = FeedSerializer_GET(weights)
+            return Response({'results': serializer.data})
+        else:
+            with tenant_context(self.get_farm(self.request.GET.get('farm', 0))):
+                queryset = self.filter_by_directory()
+
+                results = []
+                for week in range(start_week, end_week + 1):
+                    weight_avg = Feed.objects.filter(chicken__in=queryset_ids, week=week, parent__isnull=True).aggregate(
+                        weight_avg=Avg('weight'))['weight_avg'] or 0
+
+                    results.append({
+                        'week': week,
+                        'weight': "{:.3f}".format(weight_avg)
                     })
 
                 return Response({'results': results})

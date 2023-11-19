@@ -11,7 +11,7 @@ import {
   ImportButton,
 } from "@/lib/crud";
 import {
-  candlingApi,
+  hatcheryEggApi,
   exportHatcheryEggsCSV,
   exportHatcheryEggsXLS,
   exportHatcheryEggsXLSX,
@@ -81,8 +81,8 @@ export const CandlingList = () => {
         HistoryAction,
         PermanentlyDeleteAction,
       ]}
-      getEndpoint={candlingApi.endpoints.getHatcheryEggs}
-      deleteEndpoint={candlingApi.endpoints.deleteHatcheryEgg}
+      getEndpoint={hatcheryEggApi.endpoints.getHatcheryEggs}
+      deleteEndpoint={hatcheryEggApi.endpoints.deleteHatcheryEgg}
       filters={{}}
       menus={
         <>

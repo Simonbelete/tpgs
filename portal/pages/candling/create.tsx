@@ -1,8 +1,8 @@
 import React from "react";
 import { NextPageContext } from "next";
 import { EditLayout } from "@/layouts";
-import { HatcheryEggForm } from "@/features/candling";
-import { getHatcheryEggByIdSSR } from "@/features/candling/services";
+import { HatcheryEggForm } from "@/features/hatchery-egg";
+import { getHatcheryEggByIdSSR } from "@/features/hatchery-egg/services";
 import { Breadcrumbs, Loading } from "@/components";
 import { useBreadcrumbs } from "@/hooks";
 import { HatcheryEgg } from "@/models";

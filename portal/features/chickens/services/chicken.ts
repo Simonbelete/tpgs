@@ -21,6 +21,20 @@ export const chickenApi = baseApi.injectEndpoints({
           params: query,
         }),
       }),
+      getMaleChickens: build.query<Response<Chicken[]>, Object>({
+        query: (query?: Object) => ({
+          url: `${URL}/`,
+          method: "get",
+          params: { ...query, sex: "M" },
+        }),
+      }),
+      getFeMaleChickens: build.query<Response<Chicken[]>, Object>({
+        query: (query?: Object) => ({
+          url: `${URL}/`,
+          method: "get",
+          params: { ...query, sex: "F" },
+        }),
+      }),
       getGenerations: build.query<
         Response<Pick<Chicken, "generation">[]>,
         Object
@@ -77,10 +91,7 @@ export const chickenApi = baseApi.injectEndpoints({
           params: query,
         }),
       }),
-      createChicken: build.mutation<
-        Promise<AxiosResponse<Chicken>>,
-        Partial<Chicken>
-      >({
+      createChicken: build.mutation<Promise<Chicken>, Partial<Chicken>>({
         query: (data: Partial<Chicken>) => ({
           url: `${URL}/`,
           method: "post",
@@ -88,7 +99,7 @@ export const chickenApi = baseApi.injectEndpoints({
         }),
       }),
       updateChicken: build.mutation<
-        Chicken,
+        Promise<Chicken>,
         Pick<Chicken, "id"> & Partial<Chicken>
       >({
         query: ({ id, ...patch }) => ({

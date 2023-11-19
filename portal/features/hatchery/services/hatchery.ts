@@ -1,5 +1,11 @@
 import { baseApi } from "@/services/baseApi";
-import { AbstractSummary, Response, Hatchery, HatcheryEgg } from "@/models";
+import {
+  AbstractSummary,
+  Response,
+  Hatchery,
+  HatcheryEgg,
+  Incubation,
+} from "@/models";
 import { AxiosResponse } from "axios";
 import clientSSR from "@/services/client_ssr";
 import client from "@/services/client";
@@ -7,6 +13,7 @@ import { NextPageContext } from "next";
 
 const URL = "/hatchery";
 const EGGS_URL = "eggs";
+const INCUBATION_URL = "incubations";
 const HISTORY_URL = `histories`;
 const SUMMARY_URL = `summary`;
 const EXPORT_URL = `${URL}/export`;
@@ -85,8 +92,8 @@ export const hatcheryApi = baseApi.injectEndpoints({
         Promise<HatcheryEgg>,
         Partial<HatcheryEgg>
       >({
-        query: ({ hatchery, ...patch }) => ({
-          url: `${URL}/${hatchery}/`,
+        query: ({ hatchery, id, ...patch }) => ({
+          url: `${URL}/${hatchery}/${EGGS_URL}/${id}`,
           method: "patch",
           data: patch,
         }),
@@ -96,7 +103,48 @@ export const hatcheryApi = baseApi.injectEndpoints({
         Pick<HatcheryEgg, "hatchery" | "id">
       >({
         query: ({ hatchery, id }) => ({
-          url: `${URL}/${id}/${EGGS_URL}/${hatchery}`,
+          url: `${URL}/${hatchery}/${EGGS_URL}/${id}`,
+          method: "delete",
+        }),
+      }),
+
+      // Incubation
+      getIncubationOfHatchery: build.query<
+        Response<Incubation[]>,
+        { id: number; query?: Object }
+      >({
+        query: ({ id, query }) => ({
+          url: `${URL}/${id}/${INCUBATION_URL}`,
+          method: "get",
+          params: query,
+        }),
+      }),
+      createIncubationForHatchery: build.mutation<
+        Promise<Incubation>,
+        { id: number; data: Partial<HatcheryEgg> }
+      >({
+        query: ({ id, data }) => ({
+          url: `${URL}/${id}/${INCUBATION_URL}/`,
+          method: "post",
+          data: data,
+        }),
+      }),
+      updateIncubationOfHatchery: build.mutation<
+        Promise<Incubation>,
+        Partial<Incubation>
+      >({
+        query: ({ hatchery, id, ...patch }) => ({
+          url: `${URL}/${hatchery}/${INCUBATION_URL}/${id}`,
+          method: "patch",
+          data: patch,
+        }),
+      }),
+      deleteIncubationOfHatchery: build.mutation<
+        any,
+        Pick<HatcheryEgg, "hatchery" | "id">
+      >({
+        query: ({ hatchery, id }) => ({
+          url: `${URL}/${hatchery}/${EGGS_URL}/${id}`,
           method: "delete",
         }),
       }),
@@ -148,4 +196,6 @@ export const {
   useCreateEggForHatcheryMutation,
   useUpdateEggOfHatcheryMutation,
   useDeleteEggOfHatcheryMutation,
+
+  // Incubation
 } = hatcheryApi;

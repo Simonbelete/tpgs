@@ -10,13 +10,13 @@ import clientSSR from "@/services/client_ssr";
 import client from "@/services/client";
 import { NextPageContext } from "next";
 
-const URL = "/candlings";
+const URL = "/hatchery-eggs";
 const HISTORY_URL = `histories`;
 const SUMMARY_URL = `summary`;
 const EXPORT_URL = `${URL}/export`;
 const IMPORT_URL = `${URL}/import`;
 
-export const candlingApi = baseApi.injectEndpoints({
+export const hatcheryEggApi = baseApi.injectEndpoints({
   endpoints: (build) => {
     return {
       getHatcheryEggs: build.query<Response<HatcheryEgg[]>, Object>({
@@ -115,4 +115,4 @@ export const {
   useUpdateHatcheryEggMutation,
   useDeleteHatcheryEggMutation,
   useGetHatcheryEggAnalysesQuery,
-} = candlingApi;
+} = hatcheryEggApi;

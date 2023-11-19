@@ -9,7 +9,8 @@ class EggSerializer_GET(serializers.ModelSerializer):
 
     class Meta:
         model = models.Egg
-        fields = '__all__'
+        fields = ['id', 'display_name', 'chicken',
+                  'week', 'eggs', 'available_eggs']
 
 
 class EggSerializer_POST(serializers.ModelSerializer):
