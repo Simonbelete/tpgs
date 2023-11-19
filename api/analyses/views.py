@@ -1116,12 +1116,25 @@ class WeightGraphViewSet(AnalysesViewSet):
             queryset_ids = list(zip(*queryset.values_list('id')))
             queryset_ids = queryset_ids if len(
                 queryset_ids) == 0 else queryset_ids[0]
-            weights = Weight.objects.filter(chicken__in=queryset_ids)
-            serializer = WeightSerializer_GET(weights)
-            return Response({'results': serializer.data})
+
+            results = []
+            for week in range(start_week, end_week + 1):
+                weight_avg = Weight.objects.filter(
+                    chicken__in=queryset_ids, week=week).aggregate(weight_avg=Avg('weight'))['weight_avg'] or 0
+
+                results.append({
+                    'week': week,
+                    'weight': "{:.3f}".format(weight_avg)
+                })
+
+            return Response({'results': results})
         else:
             with tenant_context(self.get_farm(self.request.GET.get('farm', 0))):
                 queryset = self.filter_by_directory()
+
+                queryset_ids = list(zip(*queryset.values_list('id')))
+                queryset_ids = queryset_ids if len(
+                    queryset_ids) == 0 else queryset_ids[0]
 
                 results = []
                 for week in range(start_week, end_week + 1):
@@ -1151,12 +1164,25 @@ class FeedGraphViewSet(AnalysesViewSet):
             queryset_ids = list(zip(*queryset.values_list('id')))
             queryset_ids = queryset_ids if len(
                 queryset_ids) == 0 else queryset_ids[0]
-            weights = Feed.objects.filter(chicken__in=queryset_ids)
-            serializer = FeedSerializer_GET(weights)
-            return Response({'results': serializer.data})
+
+            results = []
+            for week in range(start_week, end_week + 1):
+                weight_avg = Feed.objects.filter(
+                    chicken__in=queryset_ids, week=week).aggregate(weight_avg=Avg('weight'))['weight_avg'] or 0
+
+                results.append({
+                    'week': week,
+                    'weight': "{:.3f}".format(weight_avg)
+                })
+
+            return Response({'results': results})
         else:
             with tenant_context(self.get_farm(self.request.GET.get('farm', 0))):
                 queryset = self.filter_by_directory()
+
+                queryset_ids = list(zip(*queryset.values_list('id')))
+                queryset_ids = queryset_ids if len(
+                    queryset_ids) == 0 else queryset_ids[0]
 
                 results = []
                 for week in range(start_week, end_week + 1):

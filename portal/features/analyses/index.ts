@@ -9,3 +9,5 @@ export * from "./growth-preformance";
 export * from "./feed-by-weight";
 export * from "./egg-weight-analyses";
 export * from "./egg-grading";
+export * from "./weight-graph";
+export * from "./feed-graph";

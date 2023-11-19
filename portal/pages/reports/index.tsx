@@ -65,6 +65,16 @@ const ReportsPage = () => {
       description: "",
       link: "/reports/feed-by-weight",
     },
+    {
+      title: "Body weight graph",
+      description: "",
+      link: "/reports/weight-graph",
+    },
+    {
+      title: "Feed intake graph",
+      description: "",
+      link: "/reports/feed-graph",
+    },
   ];
 
   return (
