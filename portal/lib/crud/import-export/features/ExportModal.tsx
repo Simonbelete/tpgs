@@ -23,8 +23,11 @@ import { QueryHooks } from "@reduxjs/toolkit/dist/query/react/buildHooks";
 import { ClientQueyFn, Query } from "@/types";
 import { Response } from "@/models";
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
 import AsyncDropdown from "../../components/AsyncDropdown";
+import { AxiosResponse } from "axios";
+import client from "@/services/client";
+import fileDownload from "@/util/fileDownload";
+import { useSnackbar } from "notistack";
 
 type ExportField = {
   endpoint: ApiEndpointQuery<
@@ -49,9 +52,15 @@ export interface ExportModalProps {
   };
 }
 
-export const ExportModal = ({ url, fields }: ExportModalProps) => {
+export const ExportModal = ({
+  url,
+  fields,
+  beforeSubmit,
+}: ExportModalProps) => {
   const [open, setOpen] = useState(true);
   const [exportType, setExportType] = React.useState("csv");
+
+  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
   const handleClose = () => setOpen(false);
 
@@ -65,6 +74,22 @@ export const ExportModal = ({ url, fields }: ExportModalProps) => {
   const handleExport = () => {};
 
   const { handleSubmit, control, setError } = useForm({});
+
+  const onSubmit: SubmitHandler<any> = async (values) => {
+    const query = beforeSubmit == null ? values : beforeSubmit(values);
+
+    try {
+      const response: Partial<AxiosResponse> = await client.get(
+        `${url}/${exportType}`
+      );
+      fileDownload(response.data as any, `${url}_.${exportType}`);
+    } catch (ex) {
+      enqueueSnackbar(
+        "Failed to Export, please check you network and try again",
+        { variant: "error" }
+      );
+    }
+  };
 
   return (
     <>
