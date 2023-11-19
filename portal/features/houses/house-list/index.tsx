@@ -8,6 +8,7 @@ import {
   CreateButton,
   ExportButton,
   ImportButton,
+  ExportModal,
 } from "@/lib/crud";
 import {
   houseApi,
@@ -35,11 +36,21 @@ export const HouseList = () => {
       menus={
         <>
           <CreateButton />
-          <ExportButton
+          <ExportModal
+            url="/houses"
+            fields={{
+              house: {
+                endpoint: houseApi.endpoints.getHouses,
+                label: "House",
+                md: 12,
+              },
+            }}
+          />
+          {/* <ExportButton
             exportCsv={exportHousesCSV}
             exportXls={exportHousesXLS}
             exportXlsx={exportHousesXLSX}
-          />
+          /> */}
           <ImportButton
             importCsv={importHousesCSV}
             importXls={importHousesXLS}
