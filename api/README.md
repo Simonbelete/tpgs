@@ -79,3 +79,6 @@ Farm / Flock / House / Pen
 - 
 
 
+## Deploy
+
+gunicorn myproject.wsgi
