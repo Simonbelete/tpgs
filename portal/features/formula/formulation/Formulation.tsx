@@ -91,9 +91,11 @@ type Column = {
 } & GridColumn;
 
 interface Row {
+  id?: number;
   rowId: string | number;
   display_name: string;
   ration?: number;
+  ratio?: number;
   price?: number;
   ration_weight?: number;
   ration_price?: number;
@@ -139,18 +141,7 @@ const Formulation = () => {
   const [getAllNutrientsOfRequirement, getNutrientsOfRequirement] =
     useLazyGetAllNutrientsOfRequirementQuery();
 
-  const [createFormula] = useCreateFormulaMutation();
-
-  // Ingredients
-  const [createIngredient] = useCreateIngredientForFormulaMutation();
-  const [updateIngredient] = useUpdateIngredientOfFormulaMutation();
-
-  // Requirement
-  const [createRequirement] = useCreateRequirementForFormulaMutation();
-  const [updateRequirement] = useUpdateRequirementOfFormulaMutation();
-
-  // Rations
-  const [createRation] = useCreateRationForFormulaMutation();
+  const [createFormula, createFormulaResult] = useCreateFormulaMutation();
 
   const [isLoading, setIsLoading] = useState(false);
   const [isIngredientOpen, setIsIngredientOpen] = useState(false);
@@ -176,9 +167,9 @@ const Formulation = () => {
       },
     },
     {
-      id: "ration",
+      id: "ratio",
       title: "%",
-      path: "ration",
+      path: "ratio",
       property: {
         kind: GridCellKind.Number,
         allowOverlay: true,
@@ -299,8 +290,8 @@ const Formulation = () => {
   const [rows, setRows] = useState<Row[]>([]);
 
   const [ration, setRation] = useState<Row>({
-    rowId: "ration",
-    display_name: "Ration",
+    rowId: "ratio",
+    display_name: "Ratio",
   });
 
   const [requirement, setRequirement] = useState<Row>({
@@ -323,7 +314,7 @@ const Formulation = () => {
   };
 
   const useCRUDHook = useCRUD({
-    results: [],
+    results: [createFormulaResult],
     setError: setError,
   });
 
@@ -354,10 +345,10 @@ const Formulation = () => {
           const cellTotal = Number(_.get(updatedRation, c.path, 0));
 
           const price = Number(_.get(r, "price", 0));
-          const ration = Number(_.get(r, "ration", 0));
+          const ratio = Number(_.get(r, "ratio", 0));
           const weight: number = Number(getValues("weight") || 0);
 
-          if (c.id == "ration")
+          if (c.id == "ratio")
             _.set(
               updatedRation,
               c.path,
@@ -379,23 +370,21 @@ const Formulation = () => {
             _.set(
               updatedRation,
               c.path,
-              roundTo3DecimalPlace(
-                ((weight * ration) / 100) * price + cellTotal
-              )
+              roundTo3DecimalPlace(((weight * ratio) / 100) * price + cellTotal)
             );
           else if (c.id == "dm")
             _.set(
               updatedRation,
               c.path,
-              roundTo3DecimalPlace((ration * cell) / 100 + cellTotal)
+              roundTo3DecimalPlace((ratio * cell) / 100 + cellTotal)
             );
           else
             _.set(
               updatedRation,
               c.path,
-              roundTo3DecimalPlace((ration * cell) / 100 + cellTotal)
+              roundTo3DecimalPlace((ratio * cell) / 100 + cellTotal)
             );
-          _.set(updatedRation, c.pathId, c.colId);
+          _.set(updatedRation, c?.pathId || "", c.colId);
         });
       });
 
@@ -410,7 +399,7 @@ const Formulation = () => {
       y: [],
     };
 
-    ["ration", "price", "dm"].map((e) => {
+    ["ratio", "price", "dm"].map((e) => {
       chart.x.push(e);
       const req: number = _.get(requirement, `${e}`, 1);
       const rat: number = _.get(ration, `${e}`, 0);
@@ -616,6 +605,7 @@ const Formulation = () => {
         });
 
         newRows.push({
+          id: _.get(ing, "id", 0),
           rowId: _.get(ing, "id", ""),
           display_name: _.get(ing, "display_name", ""),
           ration: _.get(ing, "ration", 0),
@@ -660,10 +650,11 @@ const Formulation = () => {
       };
 
       for (let i = 0; i < response.results.length; i += 1) {
-        const abbreviation: string = (response.results[i].nutrient as Nutrient)
-          .abbreviation;
+        const nutrient = response.results[i].nutrient as Nutrient;
+        const abbreviation: string = nutrient.abbreviation;
         const value = _.get(response.results[i], "value", 0);
         _.set(newRow, `nutrients.${abbreviation}.value`, value);
+        _.set(newRow, `nutrients.${abbreviation}.id`, nutrient.id);
       }
 
       setRequirement(newRow);
@@ -675,48 +666,106 @@ const Formulation = () => {
     // console.log(requirement);
     // console.log(ration);
     // return;
-    const response = await createFormula(data).unwrap();
-    const formula = response;
+    const formula: Partial<Formula> = data;
 
-    if (response) {
-      const requests: Promise<any>[] = [];
+    const ingredients: Partial<FormulaIngredient>[] = [];
+    const rations: Partial<FormulaRation>[] = [];
+    const requirements: Partial<FormulaRequirement>[] = [];
 
-      _.forEach(rows, (e, i) => {
-        const body: Partial<FormulaIngredient> = {
-          // id: rows[i].id,
-          formula: data.id,
-          ingredient: _.get(rows[i], "ingredient.id", 0),
-          ration: rows[i].ration,
-        };
-        requests.push(createIngredient({ id: formula.id, data: body }));
+    _.forEach(rows, (e, i) => {
+      ingredients.push({
+        ingredient: _.get(e, "id", 0),
+        ration: e.ratio, // TODO: naming
       });
+    });
 
-      _.forEach(requirement.nutrients, (value, key) => {
-        if (_.get(value, "value") == 0 || !isNaN(_.get(value, "value"))) {
-          const body: Partial<FormulaRequirement> = {
-            nutrient: _.get(value, "id"),
-            value: _.get(value, "value"),
-          };
-          requests.push(createRequirement({ id: formula.id, data: body }));
-        }
-      });
-
-      _.forEach(ration.nutrients, (value, key) => {
-        if (_.get(value, "value") == 0 || !isNaN(_.get(value, "value"))) {
-          const body: Partial<FormulaRequirement> = {
-            nutrient: _.get(value, "id"),
-            value: _.get(value, "value"),
-          };
-          requests.push(createRation({ id: formula.id, data: body }));
-        }
-      });
-
-      const allResponses = await Promise.all(requests)
-        .then()
-        .catch(() => {
-          enqueueSnackbar("Error saving", { variant: "error" });
+    _.forEach(ration.nutrients, (value, key) => {
+      if (!(_.get(value, "value", 0) == 0)) {
+        rations.push({
+          nutrient: _.get(value, "id"),
+          value: _.get(value, "value"),
         });
-    }
+      }
+    });
+
+    _.forEach(requirement.nutrients, (value, key) => {
+      if (!(_.get(value, "value") == 0)) {
+        requirements.push({
+          nutrient: _.get(value, "id"),
+          value: _.get(value, "value"),
+        });
+      }
+    });
+
+    formula.ingredients = ingredients as any;
+
+    formula.rations = rations as any;
+    formula.unit_price = ration.ration_price;
+    formula.ration_price = ration.ration_price;
+    formula.ration_ratio = ration.ratio;
+    formula.ration_weight = ration.ration_weight;
+    formula.ration_dm = ration.dm;
+
+    formula.requirements = requirements as any;
+    formula.budget = requirement.price;
+    formula.desired_ratio = requirement.ratio;
+    formula.desired_dm = requirement.dm;
+
+    console.log(formula);
+
+    const response = await createFormula(formula as any);
+
+    //   _.forEach(requirement.nutrients, (value, key) => {
+    //     if (_.get(value, "value") == 0 || !isNaN(_.get(value, "value"))) {
+    //       const body: Partial<FormulaRequirement> = {
+    //         nutrient: _.get(value, "id"),
+    //         value: _.get(value, "value"),
+    //       };
+    //       requests.push(createRequirement({ id: formula.id, data: body }));
+    //     }
+    //   });
+
+    // const response = await createFormula(data).unwrap();
+
+    // if (response) {
+    //   const requests: Promise<any>[] = [];
+
+    //   _.forEach(rows, (e, i) => {
+    //     const body: Partial<FormulaIngredient> = {
+    //       // id: rows[i].id,
+    //       formula: data.id,
+    //       ingredient: _.get(rows[i], "ingredient.id", 0),
+    //       ration: rows[i].ration,
+    //     };
+    //     requests.push(createIngredient({ id: formula.id, data: body }));
+    //   });
+
+    //   _.forEach(requirement.nutrients, (value, key) => {
+    //     if (_.get(value, "value") == 0 || !isNaN(_.get(value, "value"))) {
+    //       const body: Partial<FormulaRequirement> = {
+    //         nutrient: _.get(value, "id"),
+    //         value: _.get(value, "value"),
+    //       };
+    //       requests.push(createRequirement({ id: formula.id, data: body }));
+    //     }
+    //   });
+
+    //   _.forEach(ration.nutrients, (value, key) => {
+    //     if (_.get(value, "value") == 0 || !isNaN(_.get(value, "value"))) {
+    //       const body: Partial<FormulaRequirement> = {
+    //         nutrient: _.get(value, "id"),
+    //         value: _.get(value, "value"),
+    //       };
+    //       requests.push(createRation({ id: formula.id, data: body }));
+    //     }
+    //   });
+
+    //   const allResponses = await Promise.all(requests)
+    //     .then()
+    //     .catch(() => {
+    //       enqueueSnackbar("Error saving", { variant: "error" });
+    //     });
+    // }
   };
 
   return (

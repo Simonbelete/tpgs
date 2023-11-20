@@ -16,6 +16,7 @@ export default interface Formula {
   age_from_week: number;
   age_to_week: number;
   formula_basis: string;
+  unit_price: null | number;
   note: string;
   requirements: number[] | FormulaRequirement[];
   budget: number;

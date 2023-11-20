@@ -18,6 +18,6 @@ urlpatterns = [
 
     path('eggs/export/<str:export_type>/',
          views.EggExport.as_view(), name="api_egg_export"),
-    #     path('eggs/import/<str:import_type>/',
-    #          views.EggImport.as_view(), name="api_egg_import"),
+    path('eggs/import/<str:import_type>/',
+         views.EggImport.as_view(), name="api_egg_import"),
 ]

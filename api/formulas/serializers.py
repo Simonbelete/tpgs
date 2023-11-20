@@ -253,14 +253,14 @@ class FormulaIngredientSerializer_GET(serializers.ModelSerializer):
 class FormulaIngredientSerializer_POST(serializers.ModelSerializer):
     class Meta:
         model = models.FormulaIngredient
-        fields = ['id', 'ingredient', 'ratio_min', 'ratio_max', 'ration']
+        fields = ['id', 'ingredient', 'ration']
 
-        def create(self, validated_data):
-            if ('formula_pk' in self.context["view"].kwargs):
-                formula = models.Formula.objects.get(
-                    pk=self.context["view"].kwargs["formula_pk"])
-                validated_data['formula'] = formula
-            return super().create(validated_data)
+    def create(self, validated_data):
+        if ('formula_pk' in self.context["view"].kwargs):
+            formula = models.Formula.objects.get(
+                pk=self.context["view"].kwargs["formula_pk"])
+            validated_data['formula'] = formula
+        return super().create(validated_data)
 
 
 class FormulaIngredientHistorySerializer(serializers.ModelSerializer):

@@ -129,7 +129,7 @@ export const formulaApi = baseApi.injectEndpoints({
         Partial<FormulaIngredient>
       >({
         query: ({ formula, id, ...patch }) => ({
-          url: `${URL}/${formula}/${INGREDIENT_URL}/${id}`,
+          url: `${URL}/${formula}/${INGREDIENT_URL}/${id}/`,
           method: "patch",
           data: patch,
         }),
@@ -179,7 +179,7 @@ export const formulaApi = baseApi.injectEndpoints({
         Partial<FormulaIngredient>
       >({
         query: ({ formula, id, ...patch }) => ({
-          url: `${URL}/${formula}/${REQUIREMENT_URL}/${id}`,
+          url: `${URL}/${formula}/${REQUIREMENT_URL}/${id}/`,
           method: "patch",
           data: patch,
         }),

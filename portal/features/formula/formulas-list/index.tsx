@@ -82,7 +82,10 @@ export const FormulaList = () => {
       },
     },
     { field: "sex", headerName: "Sex", flex: 1 },
-    { field: "ration_price", headerName: "Ration Price", flex: 1 },
+    { field: "ration_price", headerName: "Batch Price", flex: 1 },
+    { field: "unit_price", headerName: "Unit Price", flex: 1 },
+    { field: "ingredient_count", headerName: "Ingredients", flex: 1 },
+    { field: "requirement_count", headerName: "Requirements", flex: 1 },
   ];
   return (
     <ListLayout<Formula>
