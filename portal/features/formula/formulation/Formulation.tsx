@@ -69,7 +69,9 @@ import {
   useCreateIngredientForFormulaMutation,
   useCreateRequirementForFormulaMutation,
   useUpdateRequirementOfFormulaMutation,
+  useCreateRationForFormulaMutation,
 } from "../services";
+import { enqueueSnackbar } from "notistack";
 
 const AchivementChartComponent = dynamic(
   () => import("../components/achivement-chart"),
@@ -84,6 +86,8 @@ type ColumnProperty = ({} & Partial<GridCell>) | Partial<ButtonCellType>;
 type Column = {
   property: ColumnProperty;
   path: string; // lodashb _.get({}, path) key
+  colId?: number; // id from api
+  pathId?: string; // id for row
 } & GridColumn;
 
 interface Row {
@@ -144,6 +148,9 @@ const Formulation = () => {
   // Requirement
   const [createRequirement] = useCreateRequirementForFormulaMutation();
   const [updateRequirement] = useUpdateRequirementOfFormulaMutation();
+
+  // Rations
+  const [createRation] = useCreateRationForFormulaMutation();
 
   const [isLoading, setIsLoading] = useState(false);
   const [isIngredientOpen, setIsIngredientOpen] = useState(false);
@@ -388,6 +395,7 @@ const Formulation = () => {
               c.path,
               roundTo3DecimalPlace((ration * cell) / 100 + cellTotal)
             );
+          _.set(updatedRation, c.pathId, c.colId);
         });
       });
 
@@ -547,8 +555,10 @@ const Formulation = () => {
         (e) =>
           ({
             id: e.abbreviation,
+            colId: e.id,
             title: e.display_name,
             path: `nutrients.${e.abbreviation}.value`,
+            pathId: `nutrients.${e.abbreviation}.id`,
             property: {
               kind: GridCellKind.Number,
               allowOverlay: false,
@@ -662,10 +672,13 @@ const Formulation = () => {
   };
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
+    // console.log(requirement);
+    // console.log(ration);
+    // return;
     const response = await createFormula(data).unwrap();
-    const formula = response.data;
+    const formula = response;
 
-    if (response.status == 201) {
+    if (response) {
       const requests: Promise<any>[] = [];
 
       _.forEach(rows, (e, i) => {
@@ -679,22 +692,30 @@ const Formulation = () => {
       });
 
       _.forEach(requirement.nutrients, (value, key) => {
-        const body: Partial<FormulaRequirement> = {
-          nutrient: _.get(value, "id"),
-          value: _.get(value, "value"),
-        };
-        requests.push(createRequirement({ id: formula.id, data: body }));
+        if (_.get(value, "value") == 0 || !isNaN(_.get(value, "value"))) {
+          const body: Partial<FormulaRequirement> = {
+            nutrient: _.get(value, "id"),
+            value: _.get(value, "value"),
+          };
+          requests.push(createRequirement({ id: formula.id, data: body }));
+        }
       });
 
       _.forEach(ration.nutrients, (value, key) => {
-        const body: Partial<FormulaRequirement> = {
-          nutrient: _.get(value, "id"),
-          value: _.get(value, "value"),
-        };
-        requests.push(createRequirement({ id: formula.id, data: body }));
+        if (_.get(value, "value") == 0 || !isNaN(_.get(value, "value"))) {
+          const body: Partial<FormulaRequirement> = {
+            nutrient: _.get(value, "id"),
+            value: _.get(value, "value"),
+          };
+          requests.push(createRation({ id: formula.id, data: body }));
+        }
       });
 
-      const allResponses = await Promise.all(requests);
+      const allResponses = await Promise.all(requests)
+        .then()
+        .catch(() => {
+          enqueueSnackbar("Error saving", { variant: "error" });
+        });
     }
   };
 

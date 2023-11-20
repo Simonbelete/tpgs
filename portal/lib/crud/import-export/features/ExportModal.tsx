@@ -80,8 +80,10 @@ export const ExportModal = ({
       const response: Partial<AxiosResponse> = await client.get(
         `${url}/export/${exportType}`
       );
+      console.log(response);
       fileDownload(response.data as any, `${url}_.${exportType}`);
     } catch (ex) {
+      console.log(ex);
       enqueueSnackbar(
         "Failed to Export, please check you network and try again",
         { variant: "error" }

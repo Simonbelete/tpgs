@@ -62,10 +62,7 @@ export const formulaApi = baseApi.injectEndpoints({
           method: "get",
         }),
       }),
-      createFormula: build.mutation<
-        Promise<AxiosResponse<Formula>>,
-        Partial<Formula>
-      >({
+      createFormula: build.mutation<Promise<Formula>, Partial<Formula>>({
         query: (data: Partial<Formula>) => ({
           url: `${URL}/`,
           method: "post",
@@ -207,6 +204,16 @@ export const formulaApi = baseApi.injectEndpoints({
           params: query,
         }),
       }),
+      createRationForFormula: build.mutation<
+        Promise<FormulaRation>,
+        { id: number; data: Partial<FormulaRation> }
+      >({
+        query: ({ id, data }) => ({
+          url: `${URL}/${id}/rations/`,
+          method: "post",
+          data: data,
+        }),
+      }),
       getAllRationsOfFormula: build.query<
         Response<Partial<FormulaRation>[]>,
         { id: number; query?: Object }
@@ -289,6 +296,7 @@ export const {
   useGetRationsOfFormulaQuery,
   useLazyGetRationsOfFormulaQuery,
   useLazyGetAllRationsOfFormulaQuery,
+  useCreateRationForFormulaMutation,
 
   // Nutrients
   useGetFormulaNutrientsQuery,
