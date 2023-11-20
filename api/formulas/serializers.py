@@ -190,12 +190,12 @@ class FormulaRequirementSerializer_POST(serializers.ModelSerializer):
         model = models.FormulaRequirement
         fields = ['id', 'nutrient', 'value']
 
-        def create(self, validated_data):
-            if ('formula_pk' in self.context["view"].kwargs):
-                formula = models.Formula.objects.get(
-                    pk=self.context["view"].kwargs["formula_pk"])
-                validated_data['formula'] = formula
-            return super().create(validated_data)
+    def create(self, validated_data):
+        if ('formula_pk' in self.context["view"].kwargs):
+            formula = models.Formula.objects.get(
+                pk=self.context["view"].kwargs["formula_pk"])
+            validated_data['formula'] = formula
+        return super().create(validated_data)
 
 
 class FormulaRequirementHistorySerializer(serializers.ModelSerializer):

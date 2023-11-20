@@ -70,7 +70,7 @@ export const formulaApi = baseApi.injectEndpoints({
         }),
       }),
       updateFormula: build.mutation<
-        Formula,
+        Promise<Formula>,
         Pick<Formula, "id"> & Partial<Formula>
       >({
         query: ({ id, ...patch }) => ({

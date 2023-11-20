@@ -1,3 +1,4 @@
+import AbstractBaseModel from "./AbstractBaseModel";
 import Country from "./Country";
 import FormulaIngredient from "./FormulaIngredient";
 import FormulaRation from "./FormulaRation";
@@ -5,17 +6,16 @@ import FormulaRequirement from "./FormulaRequirement";
 import Purpose from "./Purpose";
 import Unit from "./Unit";
 
-export default interface Formula {
-  id: number;
+export default interface Formula extends AbstractBaseModel {
   name: string;
-  purpose: number | Purpose;
-  sex: string;
+  purpose: null | number | Purpose;
+  sex: null | string;
   weight: number;
   weight_unit: number | Unit;
-  country: number | Country;
+  country: null | number | Country;
   age_from_week: number;
   age_to_week: number;
-  formula_basis: string;
+  formula_basis: null | string;
   unit_price: null | number;
   note: string;
   requirements: number[] | FormulaRequirement[];
