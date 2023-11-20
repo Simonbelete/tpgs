@@ -2,8 +2,9 @@ import io
 import pandas as pd
 import django_filters
 from django.shortcuts import render
-from rest_framework import viewsets, status
+from rest_framework import viewsets, status,  mixins
 from rest_framework.views import APIView
+from rest_framework import generics
 from django.http import HttpResponse, JsonResponse
 from datetime import date
 from django.conf import settings
@@ -12,12 +13,19 @@ from rest_framework.parsers import MultiPartParser
 from tablib import Dataset
 
 
-from core.views import HistoryViewSet, SummaryViewSet, CoreModelViewSet
-from core.serializers import UploadSerializer
+from core.views import (
+    HistoryViewSet,
+    SummaryViewSet,
+    CoreModelViewSet,
+    GenericExportView,
+    GenericImportView
+)
 from . import models
 from . import serializers
 from . import admin
 from . import filters
+from users.models import User
+
 
 class EggViewSet(CoreModelViewSet):
     queryset = models.Egg.objects.all()
@@ -31,91 +39,26 @@ class EggViewSet(CoreModelViewSet):
             return serializers.EggSerializer_POST
         return serializers.EggSerializer_GET
 
+
 class EggHistoryViewSet(HistoryViewSet):
     queryset = models.Egg.history.all()
     serializer_class = serializers.EggHistorySerializer
+
 
 class EggSummaryViewSet(SummaryViewSet):
     def get_query(self):
         return models.Egg.all.get(pk=self.id_pk)
 
 
-# Xlsx
+class EggExport(GenericExportView):
+    queryset = models.Egg.all.all()
+    filterset_class = filters.EggResourceFilter
 
-class EggXlsxExport(APIView):
-    def get(self, request):
-        dataset = admin.EggResource().export()
-        response = HttpResponse(
-            dataset.xlsx, content_type='application/ms-excel')
-        response['Content-Disposition'] = 'attachment; filename="eggs_%s.xlsx"' % (
-            date.today().strftime(settings.DATETIME_FORMAT))
-        return response
+    def get_dataset(self):
+        qs = self.filterset_class(self.request.GET, queryset=self.queryset)
+        return admin.EggResource().export(qs)
 
 
-class EggXlsxImport(APIView):
-    serializer_class = UploadSerializer
-    parser_classes = [MultiPartParser]
-
-    def post(self, request):
-        file = request.FILES.get('file')
-        df = pd.read_excel(file, header=0)
-        dataset = Dataset().load(df)
-        resource = resources.modelresource_factory(model=models.Egg)()
-        result = resource.import_data(dataset, dry_run=True, raise_errors=True)
-        if not result.has_errors():
-            return JsonResponse({'message': 'Imported Successfully'}, status=200)
-        return JsonResponse({'errors': ['Import Failed']}, status=400)
-
-# Xls
-
-
-class EggXlsExport(APIView):
-    def get(self, request):
-        dataset = admin.EggResource().export()
-        response = HttpResponse(
-            dataset.xls, content_type='application/ms-excel')
-        response['Content-Disposition'] = 'attachment; filename="eggs_%s.xls"' % (
-            date.today().strftime(settings.DATETIME_FORMAT))
-        return response
-
-
-class EggXlsImport(APIView):
-    serializer_class = UploadSerializer
-    parser_classes = [MultiPartParser]
-
-    def post(self, request):
-        file = request.FILES.get('file')
-        df = pd.read_excel(file, header=0)
-        dataset = Dataset().load(df)
-        resource = resources.modelresource_factory(model=models.Egg)()
-        result = resource.import_data(dataset, dry_run=True, raise_errors=True)
-        if not result.has_errors():
-            return JsonResponse({'message': 'Imported Successfully'}, status=200)
-        return JsonResponse({'errors': ['Import Failed']}, status=400)
-
-# Csv
-
-
-class EggCsvExport(APIView):
-    def get(self, request):
-        dataset = admin.EggResource().export()
-        response = HttpResponse(
-            dataset.csv, content_type='application/ms-excel')
-        response['Content-Disposition'] = 'attachment; filename="eggs_%s.csv"' % (
-            date.today().strftime(settings.DATETIME_FORMAT))
-        return response
-
-
-class EggCsvImport(APIView):
-    serializer_class = UploadSerializer
-    parser_classes = [MultiPartParser]
-
-    def post(self, request):
-        file = request.FILES.get('file')
-        df = pd.read_csv(file, header=0)
-        dataset = Dataset().load(df)
-        resource = resources.modelresource_factory(model=models.Egg)()
-        result = resource.import_data(dataset, dry_run=True, raise_errors=True)
-        if not result.has_errors():
-            return JsonResponse({'message': 'Imported Successfully'}, status=200)
-        return JsonResponse({'errors': ['Import Failed']}, status=400)
+class EggImport(GenericImportView):
+    def get_resource(self):
+        return admin.EggResource()

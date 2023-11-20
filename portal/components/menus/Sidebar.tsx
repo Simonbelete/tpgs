@@ -217,11 +217,11 @@ const SidebarMenu = () => {
               Units
             </Typography>
           </MenuItem>
-          <MenuItem component={<Link href="/unit-converters" />}>
+          {/* <MenuItem component={<Link href="/unit-converters" />}>
             <Typography variant="body1" fontSize={14}>
               Units Convertor
             </Typography>
-          </MenuItem>
+          </MenuItem> */}
         </SubMenu>
         <MenuItem
           component={<Link href="/purposes" />}

@@ -70,7 +70,13 @@ const Import = ({ importCsv, importXlsx, importXls }: ImportProps) => {
         onClose={() => setResponseHtml({ open: false, html: "" })}
         html={responseHtml.html}
       />
-      <Button startIcon={<FileUploadIcon />} size="small" component="label">
+      <Button
+        startIcon={<FileUploadIcon />}
+        size="small"
+        color="secondary"
+        sx={{ textTransform: "none" }}
+        component="label"
+      >
         Import
         <input
           type="file"

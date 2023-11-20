@@ -9,6 +9,7 @@ import {
   CreateButton,
   ExportButton,
   ImportButton,
+  ExportModal,
 } from "@/lib/crud";
 import {
   weightApi,
@@ -23,6 +24,7 @@ import { Weight } from "@/models";
 import { chickenApi } from "@/features/chickens/services";
 import { Typography } from "@mui/material";
 import Link from "next/link";
+import _ from "lodash";
 
 export const WeightList = () => {
   const columns: GridColDef[] = [
@@ -44,6 +46,13 @@ export const WeightList = () => {
     { field: "week", headerName: "Week", flex: 1, minWidth: 150 },
     { field: "weight", headerName: "Weight (g)", flex: 1, minWidth: 150 },
   ];
+
+  const beforeExportSubmit = (values: any) => {
+    return {
+      chicken: _.get(values, "chicken.id", null),
+    };
+  };
+
   return (
     <ListLayout<Weight>
       title="Weight"
@@ -61,10 +70,17 @@ export const WeightList = () => {
       menus={
         <>
           <CreateButton />
-          <ExportButton
-            exportCsv={exportWeightsCSV}
-            exportXls={exportWeightsXLS}
-            exportXlsx={exportWeightsXLSX}
+          <ExportModal
+            url="/weights"
+            fields={{
+              chicken: {
+                endpoint: chickenApi.endpoints.getChickens,
+                label: "Chicken",
+                dataKey: "display_name",
+                md: 12,
+              },
+            }}
+            beforeSubmit={beforeExportSubmit}
           />
           <ImportButton
             importCsv={importWeightsCSV}

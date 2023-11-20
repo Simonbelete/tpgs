@@ -57,10 +57,10 @@ export const ExportModal = ({
   fields,
   beforeSubmit,
 }: ExportModalProps) => {
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
   const [exportType, setExportType] = React.useState("csv");
 
-  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+  const { enqueueSnackbar } = useSnackbar();
 
   const handleClose = () => setOpen(false);
 
@@ -71,16 +71,14 @@ export const ExportModal = ({
     setExportType(newAlignment);
   };
 
-  const handleExport = () => {};
-
   const { handleSubmit, control, setError } = useForm({});
 
   const onSubmit: SubmitHandler<any> = async (values) => {
     const query = beforeSubmit == null ? values : beforeSubmit(values);
-
+    setOpen(false);
     try {
       const response: Partial<AxiosResponse> = await client.get(
-        `${url}/${exportType}`
+        `${url}/export/${exportType}`
       );
       fileDownload(response.data as any, `${url}_.${exportType}`);
     } catch (ex) {
@@ -98,6 +96,7 @@ export const ExportModal = ({
         size="small"
         color="secondary"
         sx={{ textTransform: "none" }}
+        onClick={() => setOpen(true)}
       >
         Export
       </Button>
@@ -115,7 +114,7 @@ export const ExportModal = ({
         </DialogTitle>
         <DialogContent>
           <Box component="form" sx={{ display: "flex", flexWrap: "wrap" }}>
-            <Grid container spacing={4}>
+            <Grid container spacing={2}>
               {fields &&
                 Object.keys(fields).map((key, i) => {
                   // @ts-ignore
@@ -177,7 +176,7 @@ export const ExportModal = ({
             Cancel
           </Button>
           <Button
-            onClick={handleExport}
+            onClick={handleSubmit(onSubmit)}
             variant="contained"
             disableElevation
             size="small"

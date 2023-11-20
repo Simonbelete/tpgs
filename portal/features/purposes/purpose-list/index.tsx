@@ -9,6 +9,7 @@ import {
   CreateButton,
   ExportButton,
   ImportButton,
+  ExportModal,
 } from "@/lib/crud";
 import {
   purposeApi,
@@ -27,6 +28,9 @@ export const PurposeList = () => {
   const columns: GridColDef[] = [
     { field: "name", headerName: "Name", flex: 1 },
   ];
+
+  const beforeExportSubmit = (values: any) => values;
+
   return (
     <ListLayout<Purpose>
       title="Purpose"
@@ -38,10 +42,10 @@ export const PurposeList = () => {
       menus={
         <>
           <CreateButton />
-          <ExportButton
-            exportCsv={exportPurposesCSV}
-            exportXls={exportPurposesXLS}
-            exportXlsx={exportPurposesXLSX}
+          <ExportModal
+            url="/purposes"
+            fields={{}}
+            beforeSubmit={beforeExportSubmit}
           />
           <ImportButton
             importCsv={importPurposesCSV}

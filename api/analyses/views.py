@@ -24,6 +24,9 @@ from .calculate_analyses import calculate_hdep, calculate_hhep, calculate_egg_ma
 from eggs.serializers import EggSerializer_GET
 from weights.serializers import WeightSerializer_GET
 from feeds.serializers import FeedSerializer_GET
+from chickens.models import Chicken
+from hatchery.models import Hatchery
+from breeds.models import Breed
 
 
 class AnalysesViewSet(viewsets.ViewSet):
@@ -112,10 +115,15 @@ class DirectoryListRefresh(viewsets.ViewSet):
 class CountViewSet(viewsets.ViewSet):
     def list(self, request, **kwargs):
         return Response({
-            'user_count': User.objects.filter(farms__name__in=[self.request.tenant]).count(),
-            'total_users': User.objects.count(),
-            'farm_count': self.request.user.farms.all().count(),
-            'total_farms': Farm.objects.count(),
+            'results': {
+                'user_count': User.objects.filter(farms__name__in=[self.request.tenant]).count(),
+                'total_users': User.objects.count(),
+                'farm_count': self.request.user.farms.all().count(),
+                'total_farms': Farm.objects.count(),
+                'chicken_count': Chicken.objects.all().count(),
+                'hatchery_count': Hatchery.objects.all().count(),
+                'breed_count': Breed.objects.all().count()
+            }
         })
 
 
@@ -320,8 +328,6 @@ class FarmHeatMap(viewsets.ViewSet):
         farms = Farm.objects.all().execlude(name='public')
         cities = farms.values('city').annotate(
             total=Count('city')).order_by('total')
-        print('------')
-        print(cities)
         return Response({'geojson': []})
 
 

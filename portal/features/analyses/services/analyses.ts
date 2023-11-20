@@ -90,6 +90,13 @@ export const analyseApi = baseApi.injectEndpoints({
           params: query,
         }),
       }),
+      getCountAnalyse: build.query<Response<any>, Object>({
+        query: (query?: Object) => ({
+          url: `${URL}/count/`,
+          method: "get",
+          params: query,
+        }),
+      }),
     };
   },
   overrideExisting: false,
@@ -118,4 +125,5 @@ export const {
   useLazyGetEggGradingAnalyseQuery,
   useLazyGetFeedAnalyseQuery,
   useLazyGetWeightAnalyseQuery,
+  useGetCountAnalyseQuery,
 } = analyseApi;

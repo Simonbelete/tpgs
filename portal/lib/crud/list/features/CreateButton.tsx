@@ -10,7 +10,12 @@ const CreateButton = ({}: CreateButtonProps) => {
   const router = useRouter();
   return (
     <Link href={`${router.pathname}/create`}>
-      <Button variant="contained" size={"small"} startIcon={<AddIcon />}>
+      <Button
+        variant="contained"
+        size={"small"}
+        disableElevation
+        startIcon={<AddIcon />}
+      >
         Create
       </Button>
     </Link>
