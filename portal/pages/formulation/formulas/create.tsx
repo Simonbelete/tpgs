@@ -19,7 +19,8 @@ const FormulaCreatePage = () => {
     <ActionLayout
       breadcrumbs={<Breadcrumbs items={breadcrumbs} />}
       header={<Typography variant="title">Create New Formula</Typography>}
-      actions={ <>
+      actions={
+        <>
           <Stack
             spacing={2}
             direction={"row"}
@@ -27,11 +28,16 @@ const FormulaCreatePage = () => {
             alignItems="center"
           >
             <Box>
-              <Button variant="contained" startIcon={<SaveIcon />} size="small" onClick={() => {
+              <Button
+                variant="contained"
+                startIcon={<SaveIcon />}
+                size="small"
+                onClick={() => {
                   console.log("ddd");
                   if (actionRef.current != undefined)
                     (actionRef.current as any).formulate();
-                }}>
+                }}
+              >
                 Formulate
               </Button>
             </Box>
@@ -63,7 +69,7 @@ const FormulaCreatePage = () => {
         </>
       }
     >
-      <FormulaForm actionRef={actionRef}/>
+      <FormulaForm />
     </ActionLayout>
   );
 };

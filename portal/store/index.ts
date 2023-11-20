@@ -1,7 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { setupListeners } from "@reduxjs/toolkit/query";
 import { tenantReducer } from "@/features/farms";
-import { formulaReducer } from "@/features/formula";
 import { onBoardingReducer } from "@/features/onboarding";
 import { SettingReducer } from "@/features/settings";
 import { invitationFilterReducer } from "@/features/invitations";
@@ -39,7 +38,6 @@ export const store = configureStore({
     onBoarding: onBoardingReducer,
     setting: SettingReducer,
     invitationFilter: invitationFilterReducer,
-    formula: formulaReducer,
 
     // // Apis
     [houseApi.reducerPath]: houseApi.reducer,

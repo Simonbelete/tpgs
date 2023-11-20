@@ -71,8 +71,7 @@ const ChickenReductionSelectDialog = ({ chicken }: { chicken: Chicken }) => {
   return (
     <>
       <Stack direction={"row"} justifyContent="space-between">
-        {(updateResult.data?.reduction_date || chicken.reduction_date) !=
-        null ? (
+        {(updateResult.reduction_date || chicken.reduction_date) != null ? (
           <>
             <Typography component="span" gutterBottom={true}>
               <Typography variant="body2" fontWeight={600}>
