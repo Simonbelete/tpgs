@@ -113,24 +113,15 @@ type Inputs = Partial<Formula>;
 
 const schema = yup.object({
   name: yup.string().required(),
-  // purpose: yup.string().nullable(),
+  purpose: yup.string().nullable(),
   weight: yup.number().required(),
-  // country: yup.string().nullable(),
-  // sex: yup.string().nullable(),
-  // age_from_week: yup.number().nullable(),
-  // age_to_week: yup.number().nullable(),
-  // formula_basis: yup.string().nullable(),
-  // note: yup.string().nullable(),
+  country: yup.string().nullable(),
+  sex: yup.string().nullable(),
+  age_from_week: yup.number().nullable(),
+  age_to_week: yup.number().nullable(),
+  formula_basis: yup.string().nullable(),
+  note: yup.string().nullable(),
 });
-// .transform((currentValue: any) => {
-//   if (currentValue.purpose != null)
-//     currentValue.purpose = currentValue.purpose.id;
-//   if (currentValue.country != null)
-//     currentValue.country = currentValue.country.id;
-//   if (currentValue.formula_basis != null)
-//     currentValue.formula_basis = currentValue.formula_basis.value;
-//   return currentValue;
-// });
 
 const Formulation = () => {
   const { customRenderers } = useExtraCells();

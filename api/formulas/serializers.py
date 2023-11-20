@@ -105,15 +105,15 @@ class FormulaSerializer_POST(serializers.ModelSerializer):
         ingredients = validated_data.pop('formulaingredient', [])
         instance = models.Formula.objects.create(**validated_data)
         for requirement in requirements:
-            models.FormulaRequirement.objects.create(
-                formula=instance, **requirement)
+            models.FormulaRequirement.objects.update_or_create(
+                formula=instance, nutrient=requirement.nutrient, defaults={'formula': instance, **requirement})
         for ration in rations:
-            models.FormulaRation.objects.create(
-                formula=instance, **ration)
+            models.FormulaRation.objects.update_or_create(
+                formula=instance, nutrient=ration.nutrient, defaults={'formula': instance, **ration})
         for ingredient in ingredients:
             inp = ingredient.pop('ingredient')
-            models.FormulaIngredient.objects.create(
-                formula=instance, ingredient=inp, **ingredient)
+            models.FormulaIngredient.objects.update_or_create(
+                formula=instance, ingredient=inp, defaults={'formula': instance, 'ingredient': inp, **ingredient})
         return instance
 
 # Formula Requirements

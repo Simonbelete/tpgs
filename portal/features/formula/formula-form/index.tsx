@@ -36,6 +36,7 @@ import Link from "next/link";
 import FunctionsIcon from "@mui/icons-material/Functions";
 import PictureAsPdfIcon from "@mui/icons-material/PictureAsPdf";
 import fileDownload from "@/util/fileDownload";
+import TableViewIcon from "@mui/icons-material/TableView";
 
 const schema = yup.object({
   name: yup.string().required(),
@@ -106,19 +107,34 @@ export const FormulaForm = ({
         summaryEndpoint={formulaApi.endpoints.getFormulaSummary}
         menus={
           <>
-            <Tooltip
-              title="Formulate"
-              onClick={() => formulaTrigger(_.get(data, "id", 0))}
-            >
-              <IconButton color="secondary">
-                <FunctionsIcon />
-              </IconButton>
-            </Tooltip>
-            <Tooltip title="Print Formula" onClick={handlePrintPdfFormula}>
-              <IconButton color="secondary">
-                <PictureAsPdfIcon />
-              </IconButton>
-            </Tooltip>
+            {formData && (
+              <>
+                <Tooltip
+                  title="Formulate"
+                  onClick={() => formulaTrigger(_.get(data, "id", 0))}
+                >
+                  <IconButton color="secondary">
+                    <FunctionsIcon />
+                  </IconButton>
+                </Tooltip>
+                <Tooltip title="Print Formula" onClick={handlePrintPdfFormula}>
+                  <IconButton color="secondary">
+                    <PictureAsPdfIcon />
+                  </IconButton>
+                </Tooltip>
+                <Link
+                  href={`/formulation/formulas/${formData?.id}/matrix`}
+                  data-testid="data-table-dashboard"
+                >
+                  <Tooltip title="Matrix">
+                    <IconButton>
+                      <TableViewIcon color="secondary" />
+                    </IconButton>
+                  </Tooltip>
+                </Link>
+              </>
+            )}
+
             <CreateNewIcon />
             <HistoryIcon />
             <CancelIcon />
@@ -170,8 +186,6 @@ export const FormulaForm = ({
                 shallowRoute={shallowRoute}
                 createEndpoint={formulaApi.endpoints.createFormula}
                 updateEndpoint={formulaApi.endpoints.updateFormula}
-                // deleteEndpoint={formulaApi.endpoints.deleteFormula}
-                // summaryEndpoint={formulaApi.endpoints.getFormulaSummary}
                 beforeSubmit={(values: Partial<Formula>) => {
                   const cleaned_data: Partial<Formula> = {
                     id: values.id,
@@ -271,13 +285,6 @@ export const FormulaForm = ({
                     md: 12,
                   },
                 }}
-                menus={
-                  <>
-                    <CreateNewIcon />
-                    <HistoryIcon />
-                    <CancelIcon />
-                  </>
-                }
               />
             </Card>
           )}
