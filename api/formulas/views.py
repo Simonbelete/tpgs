@@ -8,7 +8,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from django.db import transaction
 from reportlab.lib import colors
-from reportlab.lib.pagesizes import letter, landscape, A4
+from reportlab.lib.pagesizes import letter, landscape, A4, A1, A2
 from reportlab.platypus import SimpleDocTemplate, Table, TableStyle
 from django.http import FileResponse
 from rest_framework.exceptions import NotFound
@@ -219,7 +219,7 @@ class FormulaPrintPdf(viewsets.ViewSet):
 
         buffer = io.BytesIO()
         doc = SimpleDocTemplate(buffer, rightMargin=72, leftMargin=72,
-                                topMargin=72, bottomMargin=72, pagesize=(landscape(A4)))
+                                topMargin=72, bottomMargin=72, pagesize=A2)  # pagesize=(landscape(A2)))
 
         ingredient_ids = formula.ingredients.values_list('id')
         ingredient_ids = list(zip(*ingredient_ids))[0]
@@ -229,9 +229,10 @@ class FormulaPrintPdf(viewsets.ViewSet):
             list(zip(*ingredient_nutrient.values_list('nutrient__abbreviation').distinct())))
         abbvers = np.sort(abbvers)
 
-        columns = np.array(['Name', '%', 'Weight[Kg]', 'Price[Kg]', 'DM[%]'])
+        columns = np.array(['Name', '%', 'Unit Price (kg)',
+                           'Weight (Kg)', 'Batch Price (kg)', 'DM (%)'])
         columns = np.append(columns, abbvers)
-        columns = np.append(columns, ['Min[%]', 'Max[%]'])
+        columns = np.append(columns, ['Min (%)', 'Max (%)'])
 
         data = pd.DataFrame([], columns=columns)
 
@@ -242,11 +243,12 @@ class FormulaPrintPdf(viewsets.ViewSet):
             data.loc[-1] = {
                 'Name': formula_ingredient.ingredient.name,
                 '%': formula_ingredient.ration,
-                'Weight[Kg]': formula_ingredient.ration_weight,
-                'Price[Kg]': formula_ingredient.ration_price,
-                'DM[%]': formula_ingredient.ingredient.dm,
-                'Min[%]': formula_ingredient.ratio_max,
-                'Max[%]': formula_ingredient.ratio_max,
+                'Unit Price (kg)': formula_ingredient.ingredient.price,
+                'Weight (Kg)': formula_ingredient.ration_weight,
+                'Batch Price (Kg)': formula_ingredient.ration_price,
+                'DM (%)': formula_ingredient.ingredient.dm,
+                'Min (%)': formula_ingredient.ratio_max,
+                'Max (%)': formula_ingredient.ratio_max,
                 **ingredient_nutrients_dict
             }
             data = data.reset_index(drop=True)
@@ -256,11 +258,12 @@ class FormulaPrintPdf(viewsets.ViewSet):
         data.loc[-1] = {
             'Name': 'Ration',
             '%': formula.ration_ratio,
-            'Weight[Kg]': formula.ration_weight,
-            'Price[Kg]': formula.ration_price,
-            'DM[%]': formula.ration_dm,
-            'Min[%]': '-',
-            'Max[%]': '-',
+            'Unit Price (kg)': formula.unit_price,
+            'Weight (Kg)': formula.ration_weight,
+            'Batch Price (Kg)': formula.ration_price,
+            'DM (%)': formula.ration_dm,
+            'Min (%)': '-',
+            'Max (%)': '-',
             **ration_nutrients_dict
         }
 
@@ -269,11 +272,12 @@ class FormulaPrintPdf(viewsets.ViewSet):
         data.loc[-2] = {
             'Name': 'Requirement',
             '%': formula.desired_ratio,
-            'Weight[Kg]': formula.ration_weight,
-            'Price[Kg]': formula.budget,
-            'DM[%]': formula.desired_dm,
-            'Min[%]': '-',
-            'Max[%]': '-',
+            'Unit Price (kg)': '-',
+            'Weight (Kg)': formula.ration_weight,
+            'Batch Price (Kg)': formula.budget,
+            'DM (%)': formula.desired_dm,
+            'Min (%)': '-',
+            'Max (%)': '-',
             **requirement_nutrients_dict
         }
 

@@ -12,6 +12,7 @@ class Formulate:
         self.formula = formula
         self.rations = {}
         self.ration_dm = 0
+        self.unit_price = 0
         self.ration_price = 0
         self.ration_ratio = 0
         self.ration_weight = 0
@@ -26,16 +27,16 @@ class Formulate:
             formula=self.formula.id)
         self.rations = dict.fromkeys(headers, 0)
         for fing in formula_ingredients.iterator():
-            ing_nutr = IngredientNutrient.objects.filter(ingredient=fing.ingredient)
+            ing_nutr = IngredientNutrient.objects.filter(
+                ingredient=fing.ingredient)
             for n in ing_nutr.iterator():
                 self.rations[n.nutrient.abbreviation] += fing.ration * \
                     n.value / 100
-                print('**')
-                print(fing.ration)
-                print(n.value)
             ing_contri_per_kg = self.formula.weight * fing.ration / 100
             self.ration_dm += (fing.ingredient.dm or 0) * fing.ration / 100
-            self.ration_price += (fing.ingredient.price or 0) * ing_contri_per_kg
+            self.unit_price += fing.ingredient.price
+            self.ration_price += (fing.ingredient.price or 0) * \
+                ing_contri_per_kg
             self.ration_ratio += fing.ration
             self.ration_weight += ing_contri_per_kg
         return {'rations': self.rations, 'ration_dm': self.ration_dm, 'ration_price': self.ration_price, 'ration_ratio': self.ration_ratio}
@@ -45,6 +46,7 @@ class Formulate:
             nutrient = Nutrient.objects.get(abbreviation=key)
             models.FormulaRation.objects.update_or_create(
                 formula=self.formula, nutrient=nutrient, defaults={'value': self.rations[key]})
+        self.formula.unit_price = self.unit_price
         self.formula.ration_price = self.ration_price
         self.formula.ration_ratio = self.ration_ratio
         self.formula.ration_dm = self.ration_dm

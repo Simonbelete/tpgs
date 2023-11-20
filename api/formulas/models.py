@@ -86,6 +86,7 @@ class FormulaIngredient(CoreModel):
 
     @property
     def ration_price(self):
+        """unit price * ration weight """
         return round(self.ration_weight * self.ingredient.price, 3)
 
     # def get_nutrients_ration(self):
@@ -140,6 +141,7 @@ class Formula(CoreModel):
         max_digits=10, decimal_places=2, null=True, blank=True, default=0)
     ration_ratio = models.DecimalField(
         validators=PERCENTAGE_VALIDATOR, max_digits=15, decimal_places=3, default=0)
+    # weight * ration
     ration_weight = models.DecimalField(
         max_digits=7, decimal_places=3, null=True, blank=True, default=0)
     ration_dm = models.DecimalField(
