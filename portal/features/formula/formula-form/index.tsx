@@ -9,16 +9,33 @@ import {
   TabFormLayout,
   Form,
 } from "@/lib/crud";
-import { formulaApi } from "../services";
+import {
+  formulaApi,
+  useLazyFormulateQuery,
+  printFormulaPdf,
+} from "../services";
 import { hatcheryApi } from "@/features/hatchery/services";
 import { penApi } from "@/features/pen/services";
 import _ from "lodash";
 import { Card } from "@/components";
-import { Tabs, Tab, Box, tabsClasses, Chip, Button } from "@mui/material";
+import {
+  Tabs,
+  Tab,
+  Box,
+  tabsClasses,
+  Chip,
+  Tooltip,
+  IconButton,
+} from "@mui/material";
 import { purposeApi } from "@/features/purposes/services";
 import { countryApi } from "@/features/countries/services";
 import { FormulaIngredientForm } from "./FormulaIngredients";
 import { FormulaRequirementForm } from "./FormulaRequirements";
+import AchivementCard from "./AchivementCard";
+import Link from "next/link";
+import FunctionsIcon from "@mui/icons-material/Functions";
+import PictureAsPdfIcon from "@mui/icons-material/PictureAsPdf";
+import fileDownload from "@/util/fileDownload";
 
 const schema = yup.object({
   name: yup.string().required(),
@@ -61,6 +78,23 @@ export const FormulaForm = ({
   const handleTabChange = (event: React.SyntheticEvent, newValue: number) =>
     setTab(newValue);
 
+  const [formulaTrigger, { data: formulaData, status }] =
+    useLazyFormulateQuery();
+
+  useEffect(() => {
+    if (status == "fulfilled") {
+      setFormData(formulaData);
+    }
+  }, [formulaData]);
+
+  const handlePrintPdfFormula = async () => {
+    if (data != null) {
+      const response = await printFormulaPdf(data.id);
+      console.log(response);
+      fileDownload(response.data, `${data.display_name}.pdf`);
+    }
+  };
+
   return (
     <>
       <TabFormLayout<Formula>
@@ -72,12 +106,28 @@ export const FormulaForm = ({
         summaryEndpoint={formulaApi.endpoints.getFormulaSummary}
         menus={
           <>
+            <Tooltip
+              title="Formulate"
+              onClick={() => formulaTrigger(_.get(data, "id", 0))}
+            >
+              <IconButton color="secondary">
+                <FunctionsIcon />
+              </IconButton>
+            </Tooltip>
+            <Tooltip title="Print Formula" onClick={handlePrintPdfFormula}>
+              <IconButton color="secondary">
+                <PictureAsPdfIcon />
+              </IconButton>
+            </Tooltip>
             <CreateNewIcon />
             <HistoryIcon />
             <CancelIcon />
           </>
         }
       >
+        <Box sx={{ mb: 5 }}>
+          {formData && <AchivementCard data={formData} />}
+        </Box>
         <Tabs
           scrollButtons
           value={tab}
@@ -115,15 +165,13 @@ export const FormulaForm = ({
           {tab == 0 && (
             <Card title="Requirement Detail">
               <Form<Formula>
-                title="Formula Form"
-                id={data?.id || 0}
                 data={data}
                 schema={schema}
                 shallowRoute={shallowRoute}
                 createEndpoint={formulaApi.endpoints.createFormula}
                 updateEndpoint={formulaApi.endpoints.updateFormula}
-                deleteEndpoint={formulaApi.endpoints.deleteFormula}
-                summaryEndpoint={formulaApi.endpoints.getFormulaSummary}
+                // deleteEndpoint={formulaApi.endpoints.deleteFormula}
+                // summaryEndpoint={formulaApi.endpoints.getFormulaSummary}
                 beforeSubmit={(values: Partial<Formula>) => {
                   const cleaned_data: Partial<Formula> = {
                     id: values.id,
@@ -210,7 +258,7 @@ export const FormulaForm = ({
                     xs: 12,
                     md: 6,
                   },
-                  age_from_to: {
+                  age_to_week: {
                     label: "Age To (week)",
                     placeholder: "Age To (week)",
                     xs: 12,

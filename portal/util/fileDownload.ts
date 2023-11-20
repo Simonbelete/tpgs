@@ -1,9 +1,9 @@
 import moment from "moment";
 import insertStringAtIndex from "./insertStringAtIndex";
 
-export default (data: Blob | MediaSource, filename: string) => {
+export default (data: BlobPart, filename: string) => {
   // create file link in browser's memory
-  const href = URL.createObjectURL(data);
+  const href = window.URL.createObjectURL(new Blob([data]));
 
   const fullFilename = insertStringAtIndex(
     filename,

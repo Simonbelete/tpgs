@@ -24,7 +24,7 @@ const IMPORT_URL = `${URL}/import`;
 export const formulaApi = baseApi.injectEndpoints({
   endpoints: (build) => {
     return {
-      formulate: build.query<Response<Formula>, number>({
+      formulate: build.query<Formula, number>({
         query: (id) => ({ url: `${URL}/${id}/formulate/`, method: "post" }),
       }),
       getFormulas: build.query<Response<Formula[]>, Object>({
@@ -260,6 +260,9 @@ export const importFormulasXLS = async (data: FormData) =>
       "Content-Type": "multipart/form-data",
     },
   });
+
+export const printFormulaPdf = async (id: number) =>
+  client.post(`${URL}/${id}/print/pdf/`);
 
 export const {
   useFormulateQuery,

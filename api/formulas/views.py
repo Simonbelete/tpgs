@@ -187,9 +187,6 @@ class FormulaIngredientSummaryViewSet(SummaryViewSet):
 # Formulate Calculation
 
 class FormulateViewSet(viewsets.ViewSet):
-    """
-    """
-
     def get_queryset(self):
         try:
             return models.Formula.all.get(pk=self.kwargs['formula_pk'])
@@ -201,8 +198,8 @@ class FormulateViewSet(viewsets.ViewSet):
         f = Formulate(formula)
         f.compute()
         f.save()
-        data = serializers.FormulateSerializer_POST(self.get_queryset())
-        return Response({'results': data.data})
+        data = serializers.FormulaSerializer_GET(self.get_queryset())
+        return Response(data.data)
 
 # Print Pdf
 
