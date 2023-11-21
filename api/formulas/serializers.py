@@ -39,10 +39,6 @@ class FormulaRequirementSerializer_PATCH(serializers.ModelSerializer):
 
 
 class FormulaRationSerializer_REF(serializers.ModelSerializer):
-    # nutrient = serializers.PrimaryKeyRelatedField(read_only=True)
-    # Nutrient Id
-    # id = serializers.IntegerField()
-
     class Meta:
         model = models.FormulaRation
         fields = ['nutrient', 'value']
@@ -101,24 +97,25 @@ class FormulaSerializer_POST(serializers.ModelSerializer):
     @transaction.atomic
     def create(self, validated_data):
         requirements = validated_data.pop('formularequirement', [])
-        rations = validated_data.pop('formularation', [])
+        rations = validated_data.pop('rations', [])
         ingredients = validated_data.pop('formulaingredient', [])
         instance = models.Formula.objects.create(**validated_data)
+
         for requirement in requirements:
             models.FormulaRequirement.objects.update_or_create(
                 formula=instance, nutrient=requirement.nutrient, defaults={'formula': instance, **requirement})
         for ration in rations:
+            nut = ingredient.pop('nutrient')
             models.FormulaRation.objects.update_or_create(
-                formula=instance, nutrient=ration.nutrient, defaults={'formula': instance, **ration})
+                formula=instance, nutrient=nut, defaults={'formula': instance, **ration})
         for ingredient in ingredients:
             inp = ingredient.pop('ingredient')
             models.FormulaIngredient.objects.update_or_create(
                 formula=instance, ingredient=inp, defaults={'formula': instance, 'ingredient': inp, **ingredient})
         return instance
 
+
 # Formula Requirements
-
-
 class FormulaRequirementSerializer_GET(serializers.ModelSerializer):
     nutrient = NutrientSerializer_SLUG()
 
