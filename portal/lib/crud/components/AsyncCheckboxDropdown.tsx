@@ -14,6 +14,7 @@ import {
 } from "@mui/material";
 import { styled, alpha } from "@mui/material/styles";
 import { SearchInputIcon } from "@/components/inputs";
+import buildPage from "@/util/buildPage";
 
 const WIDTH = 150;
 
@@ -67,25 +68,82 @@ export default function CheckboxDropdown<T>({
 
   const [trigger, { data, isLoading }] = endpoint.useLazyQuery();
 
-  const handleOpen = () => {
+  const [paginationModel, setPaginationModel] = useState({
+    page: 0,
+    pageSize: 15,
+  });
+
+  const handleOpen = async () => {
     setOpen(true);
     if (menus !== undefined) return;
 
-    if (data === undefined) {
-      const queryBuild = query ? { ...query, query: {} } : {};
-      trigger(queryBuild);
+    if (options.length == 0) {
+      const response = await trigger(
+        buildPage(paginationModel),
+        false
+      ).unwrap();
+      setOptions(response?.results || []);
     }
   };
   const handleClose = () => setOpen(false);
 
-  const handleSearchInput = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleSearchInput = async (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
     setSearchInput(event.target.value);
     if (menus !== undefined) return;
 
-    const queryBuild = query
-      ? { ...query, query: { searc: event.target.value } }
-      : { search: event.target.value };
-    trigger(queryBuild);
+    if (event && event.type == "change") {
+      const response = await trigger(
+        {
+          search: event.target.value,
+          ...buildPage(paginationModel),
+          offset: 0,
+        },
+        false
+      ).unwrap();
+      setOptions(response?.results || []);
+    }
+  };
+
+  const [options, setOptions] = useState<T[]>([]);
+  const [position, setPosition] = useState(0);
+  const [listboxNode, setListboxNode] = useState<any>("");
+
+  useEffect(() => {
+    if (listboxNode !== "") {
+      listboxNode.scrollTop = position;
+    }
+  }, [position, listboxNode]);
+
+  const loadMoreResults = async () => {
+    const nextPage = paginationModel.page + 1;
+    setPaginationModel({ ...paginationModel, page: nextPage });
+
+    const response = await trigger(
+      {
+        search: searchInput,
+        ...buildPage({ ...paginationModel, page: nextPage }),
+      },
+      false
+    ).unwrap();
+    setOptions([...options, ...(response?.results || [])]);
+  };
+
+  const handleScroll = (event: any) => {
+    if (
+      paginationModel.page >=
+      Math.floor((data?.count || 0) / paginationModel.pageSize)
+    )
+      return;
+
+    setListboxNode(event.currentTarget);
+    const x = listboxNode.scrollTop + listboxNode.clientHeight;
+
+    if (listboxNode.scrollHeight - x <= 1) {
+      setPosition(x);
+      loadMoreResults();
+    }
   };
 
   return (
@@ -118,10 +176,19 @@ export default function CheckboxDropdown<T>({
                 paddingBottom: 10,
               },
             },
+            PaperProps: {
+              style: {
+                maxHeight: "400px",
+              },
+              onScroll: handleScroll,
+            },
           }}
-          // onAnimationEndCapture={() => inputRef.current.focus()}
         >
-          <li aria-selected="false" role="option">
+          <li
+            aria-selected="false"
+            role="option"
+            onKeyDown={(e) => e.stopPropagation()}
+          >
             <Box
               display="flex"
               aria-label="None"
@@ -131,9 +198,9 @@ export default function CheckboxDropdown<T>({
               }}
               justifyContent="center"
               alignItems="center"
-              sx={{ width: WIDTH }}
+              sx={{ width: "100%" }}
             >
-              <Box sx={{ py: 1, px: 1 }}>
+              <Box sx={{ py: 1, px: 1, width: "100%" }}>
                 <SearchInputIcon
                   label="Search..."
                   value={searchInput}
@@ -144,10 +211,15 @@ export default function CheckboxDropdown<T>({
           </li>
           {isLoading && <LinearProgress />}
 
-          {data &&
-            data.results.map((e: any, key: any) => (
+          {options &&
+            options.map((e: any, key: any) => (
               // @ts-ignore
-              <MenuItem key={key} value={e} sx={{ paddingLeft: "6px" }}>
+              <MenuItem
+                key={key}
+                value={e}
+                sx={{ paddingLeft: "6px" }}
+                onKeyDown={(e) => e.stopPropagation()}
+              >
                 <Checkbox
                   checked={
                     Array.isArray(selected) &&
@@ -156,7 +228,11 @@ export default function CheckboxDropdown<T>({
                     )
                   }
                   size="small"
-                  sx={{ paddingTop: 0, paddingBottom: 0, paddingRight: "15px" }}
+                  sx={{
+                    paddingTop: 0,
+                    paddingBottom: 0,
+                    paddingRight: "15px",
+                  }}
                 />
                 <ListItemText
                   disableTypography

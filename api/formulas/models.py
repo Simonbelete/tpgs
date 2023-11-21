@@ -54,10 +54,6 @@ class FormulaIngredient(CoreModel):
     formula = models.ForeignKey('formulas.Formula', on_delete=models.CASCADE)
     ingredient = models.ForeignKey(
         'ingredients.Ingredient', on_delete=models.CASCADE)
-    ratio_min = models.DecimalField(
-        validators=PERCENTAGE_VALIDATOR, max_digits=6, decimal_places=3, default=0, null=True, blank=True)
-    ratio_max = models.DecimalField(
-        validators=PERCENTAGE_VALIDATOR, max_digits=6, decimal_places=3, default=0, null=True, blank=True)
     ration = models.DecimalField(
         validators=PERCENTAGE_VALIDATOR, max_digits=6, decimal_places=3, default=0, null=True, blank=True)
     history = HistoricalRecords()
@@ -67,14 +63,6 @@ class FormulaIngredient(CoreModel):
 
     def save(self,  *args, **kwargs) -> None:
         return super().save(*args, **kwargs)
-
-    def clean(self) -> None:
-        if (self.ratio_min > self.ration_max):
-            raise ValidationError(
-                'Ratio minium can not be greater than maximum')
-        if (self.ration >= self.ration_min and self.ration <= self.ration_max):
-            raise ValidationError('Ration must be between min and max')
-        return super().clean()
 
     @property
     def price(self):
@@ -88,9 +76,6 @@ class FormulaIngredient(CoreModel):
     def ration_price(self):
         """unit price * ration weight """
         return round(self.ration_weight * self.ingredient.price, 3)
-
-    # def get_nutrients_ration(self):
-    #     return self.ingredient.
 
 
 class Formula(CoreModel):

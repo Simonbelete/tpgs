@@ -42,8 +42,12 @@ class IngredientTypeSummaryViewSet(SummaryViewSet):
 
 
 class IngredientTypeExport(GenericExportView):
+    queryset = models.IngredientType.objects.all()
+    filterset_class = filters.IngredientTypeFilter
+
     def get_dataset(self):
-        return admin.IngredientTypeResource().export()
+        qs = self.filterset_class(self.request.GET, queryset=self.queryset)
+        return admin.IngredientTypeResource().export(qs.qs)
 
 
 class IngredientTypeImport(GenericImportView):
@@ -54,7 +58,7 @@ class IngredientTypeImport(GenericImportView):
 # Ingredient
 
 class IngredientViewSet(CoreModelViewSet):
-    queryset = models.Ingredient.objects.all()
+    queryset = models.Ingredient.all.all()
     serializer_class = serializers.IngredientSerializer_GET
     filterset_class = filters.IngredientFilter
     search_fields = ['name', 'code']
@@ -77,8 +81,12 @@ class IngredientSummaryViewSet(SummaryViewSet):
 
 
 class IngredientExport(GenericExportView):
+    queryset = models.Ingredient.all.all()
+    filterset_class = filters.IngredientFilter
+
     def get_dataset(self):
-        return admin.IngredientResource().export()
+        qs = self.filterset_class(self.request.GET, queryset=self.queryset)
+        return admin.IngredientResource().export(qs.qs)
 
 
 class IngredientImport(GenericImportView):
@@ -146,8 +154,12 @@ class IngredientNutrientSummaryViewSet(SummaryViewSet):
 
 
 class IngredientNutrientExport(GenericExportView):
+    queryset = models.IngredientNutrient.all.all()
+    filterset_class = filters.IngredientNutrientFilter
+
     def get_dataset(self):
-        return admin.IngredientNutrientResource().export()
+        qs = self.filterset_class(self.request.GET, queryset=self.queryset)
+        return admin.IngredientNutrientResource().export(qs.qs)
 
 
 class IngredientNutrientImport(GenericImportView):

@@ -38,19 +38,19 @@ const Import = ({ url }: ImportProps) => {
       try {
         let response: Partial<AxiosResponse> = {};
         if (file.name.includes(".xlsx"))
-          response = await client.post(`${url}/import/xlsx`, formData, {
+          response = await client.post(`${url}/import/xlsx/`, formData, {
             headers: {
               "Content-Type": "multipart/form-data",
             },
           });
         if (file.name.includes(".xls"))
-          response = await client.post(`${url}/import/xls`, formData, {
+          response = await client.post(`${url}/import/xls/`, formData, {
             headers: {
               "Content-Type": "multipart/form-data",
             },
           });
         if (file.name.includes(".csv"))
-          response = await client.post(`${url}/import/csv`, formData, {
+          response = await client.post(`${url}/import/csv/`, formData, {
             headers: {
               "Content-Type": "multipart/form-data",
             },
@@ -94,6 +94,7 @@ const Import = ({ url }: ImportProps) => {
         Import
         <input
           type="file"
+          value={""}
           onChange={handleFileUpload}
           accept=".csv,.xlsx,.xls"
           hidden

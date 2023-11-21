@@ -68,7 +68,7 @@ id,name,dm,ingredient_type
  ,molasses (beet),73.2,Miscellaneous  
  ,molasses (cane),73.3,Miscellaneous  
  ,sugar,99.9,Miscellaneous  
- ,soybean hulls,88.2,,Miscellaneous  
+ ,soybean hulls,88.2,Miscellaneous  
  ,dicalciumphosphate,99,Minerals
  ,monocalciumphosphate,99,Minerals
  ,limestone/shells,99,Minerals

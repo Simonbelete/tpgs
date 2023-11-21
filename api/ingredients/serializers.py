@@ -9,7 +9,7 @@ from django.db import transaction
 class IngredientTypeSerializer_GET(serializers.ModelSerializer):
     class Meta:
         model = models.IngredientType
-        fields = ['id', 'name', 'display_name', 'is_active']
+        fields = ['id', 'name', 'display_name', 'is_active', 'created_at']
 
 
 class IngredientTypeSerializer_SLUG(serializers.ModelSerializer):
@@ -44,13 +44,13 @@ class IngredientSerializer_GET(serializers.ModelSerializer):
     class Meta:
         model = models.Ingredient
         fields = ['id', 'name', 'display_name', 'code', 'nutrient_count',
-                  'ingredient_type', 'description', 'price', 'dm', 'is_active']
+                  'ingredient_type', 'description', 'price', 'dm', 'min', 'max', 'is_active', 'created_at']
 
 
 class IngredientSerializer_POST(serializers.ModelSerializer):
     class Meta:
         model = models.Ingredient
-        fields = ['name', 'code', 'description', 'price',
+        fields = ['id', 'name', 'code', 'description', 'price', 'min', 'max',
                   'nutrients', 'dm', 'ingredient_type', 'is_active']
 
 
@@ -68,7 +68,7 @@ class IngredientNutrientSerializer_GET(serializers.ModelSerializer):
     class Meta:
         model = models.IngredientNutrient
         fields = ['id', 'display_name', 'nutrient',
-                  'ingredient', 'value', 'as_feed_value', 'unit', 'is_active']
+                  'ingredient', 'value', 'as_feed_value', 'unit', 'is_active', 'created_at']
 
 
 class IngredientNutrientSerializer_POST(serializers.ModelSerializer):

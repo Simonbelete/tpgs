@@ -56,7 +56,7 @@ class EggExport(GenericExportView):
 
     def get_dataset(self):
         qs = self.filterset_class(self.request.GET, queryset=self.queryset)
-        return admin.EggResource().export(qs)
+        return admin.EggResource().export(qs.qs)
 
 
 class EggImport(GenericImportView):

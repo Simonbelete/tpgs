@@ -77,7 +77,7 @@ export default function List<T>({
     buildQuery({
       ...buildPage(paginationModel),
       ...selector.filters,
-      ...{ is_active: selector.is_active },
+      ...{ is_active: selector.is_active, search: selector.search },
       ...sortingQuery,
     })
   );

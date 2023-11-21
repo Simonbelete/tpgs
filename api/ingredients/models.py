@@ -54,15 +54,15 @@ class Ingredient(CoreModel):
     description = models.CharField(max_length=200, null=True, blank=True)
     price = models.DecimalField(
         max_digits=10, decimal_places=3, null=True, blank=True, default=0)  # kg
-    # price = MoneyField(max_digits=14, null=True, blank=True, default=0,
-    #                    decimal_places=2, default_currency='ETB')
-    # price_unit = models.ForeignKey(
-    #     Unit, default=3, on_delete=models.SET_NULL, null=True, blank=True, related_name='ingredients')
     nutrients = models.ManyToManyField(
         'nutrients.Nutrient', null=True, blank=True, through=IngredientNutrient)
     # dry material
     dm = models.PositiveIntegerField(
         validators=PERCENTAGE_VALIDATOR, default=0)
+    min = models.DecimalField(
+        validators=PERCENTAGE_VALIDATOR, max_digits=6, decimal_places=3, default=0, null=True, blank=True)
+    max = models.DecimalField(
+        validators=PERCENTAGE_VALIDATOR, max_digits=6, decimal_places=3, default=0, null=True, blank=True)
 
     history = HistoricalRecords()
 
