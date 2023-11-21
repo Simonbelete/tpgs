@@ -14,3 +14,13 @@ class FeedFilter(CoreFilterSet):
         model = models.Feed
         fields = ['chicken', 'parent', 'hatchery',
                   'hatchery__isnull', 'chicken__isnull']
+
+
+class FeedResourceFilter(CoreFilterSet):
+    parent__isnull = filters.BooleanFilter(
+        field_name='parent', lookup_expr='isnull')
+
+    class Meta:
+        model = models.Feed
+        fields = ['chicken', 'chicken__hatchery',
+                  'chicken__pen', 'chicken__pen__house']

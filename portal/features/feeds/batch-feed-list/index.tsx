@@ -2,19 +2,15 @@ import React from "react";
 import { GridColDef, GridRenderCellParams } from "@mui/x-data-grid";
 import {
   ListLayout,
-  DashboardAction,
   PermanentlyDeleteAction,
   EditAction,
   HistoryAction,
   CreateButton,
-  ExportButton,
+  ExportModal,
   ImportButton,
 } from "@/lib/crud";
 import {
   feedApi,
-  exportFeedsCSV,
-  exportFeedsXLS,
-  exportFeedsXLSX,
   importFeedsCSV,
   importFeedsXLS,
   importFeedsXLSX,
@@ -23,6 +19,10 @@ import { Feed } from "@/models";
 import { Chip, Typography } from "@mui/material";
 import Link from "next/link";
 import { chickenApi } from "@/features/chickens/services";
+import { hatcheryApi } from "@/features/hatchery/services";
+import { penApi } from "@/features/pen/services";
+import { houseApi } from "@/features/houses/services";
+import _ from "lodash";
 
 export const BatchFeedList = () => {
   const columns: GridColDef[] = [
@@ -71,6 +71,17 @@ export const BatchFeedList = () => {
       },
     },
   ];
+
+  const beforeExportSubmit = (values: any) => {
+    return {
+      parent__isnull: false,
+      chicken: _.get(values, "chicken.id", null),
+      chicken__hatchery: _.get(values, "hatchery.id", null),
+      chicken__pen: _.get(values, "pen.id", null),
+      chicken__pen__house: _.get(values, "house.id", null),
+    };
+  };
+
   return (
     <ListLayout<Feed>
       title="Batch Feed Intake"
@@ -88,10 +99,35 @@ export const BatchFeedList = () => {
       menus={
         <>
           <CreateButton />
-          <ExportButton
-            exportCsv={exportFeedsCSV}
-            exportXls={exportFeedsXLS}
-            exportXlsx={exportFeedsXLSX}
+          <ExportModal
+            url="/feeds"
+            fields={{
+              chicken: {
+                endpoint: chickenApi.endpoints.getChickens,
+                label: "Chicken",
+                md: 12,
+                dataKey: "display_name",
+              },
+              hatchery: {
+                endpoint: hatcheryApi.endpoints.getHatchery,
+                label: "hatchery",
+                md: 12,
+                dataKey: "display_name",
+              },
+              house: {
+                endpoint: houseApi.endpoints.getHouses,
+                label: "House",
+                md: 12,
+                dataKey: "display_name",
+              },
+              pen: {
+                endpoint: penApi.endpoints.getPens,
+                label: "Pen",
+                md: 12,
+                dataKey: "display_name",
+              },
+            }}
+            beforeSubmit={beforeExportSubmit}
           />
           <ImportButton
             importCsv={importFeedsCSV}

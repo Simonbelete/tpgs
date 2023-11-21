@@ -16,7 +16,7 @@ const calculatePercentage = (loaded: number, total: number) =>
 
 export const instance = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL + "/api",
-  timeout: 5000,
+  timeout: 10000,
 });
 
 instance.interceptors.request.use(async (config) => {

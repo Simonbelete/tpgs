@@ -17,21 +17,8 @@ summary_router.register(r'summary', views.FeedSummaryViewSet,
 urlpatterns = [
     path('', include(router.urls)),
 
-    path('feeds/export/', include([
-          path('xlsx', views.FeedXlsxExport.as_view(),
-              name="feeds_export_xlsx"),
-          path('xls', views.FeedXlsExport.as_view(),
-               name="feeds_export_xls"),
-          path('csv', views.FeedCsvExport.as_view(),
-               name="feeds_export_csv"),
-     ])),
-
-     path('feeds/import/', include([
-          path('xlsx', views.FeedXlsxImport.as_view(),
-              name="feeds_import_xlsx"),
-          path('xls', views.FeedXlsImport.as_view(),
-               name="feeds_import_xls"),
-          path('csv', views.FeedCsvImport.as_view(),
-               name="feeds_import_csv")
-     ]))
+    path('feeds/export/<str:export_type>/',
+         views.FeedExport.as_view(), name="api_feed_export"),
+    path('feeds/import/<str:import_type>/',
+         views.FeedImport.as_view(), name="api_feed_import"),
 ]
