@@ -32,6 +32,7 @@ import buildQuery from "@/util/buildQuery";
 import buildPage from "@/util/buildPage";
 import Toolbar from "./Toolbar";
 import buildSorting from "@/util/buildSorting";
+import { filterSlice } from "@/store/slices";
 
 export interface ListProps<T> {
   columns: GridColDef[];
@@ -137,6 +138,11 @@ export default function List<T>({
     },
     []
   );
+
+  useEffect(() => {
+    console.log("AAAAAAAAA");
+    dispatch(filterSlice.actions.reset());
+  }, []);
 
   return (
     <>

@@ -1,13 +1,13 @@
 id,ingredient,nutrient,value
- ,maize,ME,3340,
- ,maize,CP,8.7,
- ,maize,Lys,0.22
- ,maize,m+c,0.35,
- ,maize,Met,0.2,
- ,maize,EE,3.6,
- ,maize,CF,2.1,
- ,maize,Ca,0.04,
- ,maize,P,0.3,
+ ,maize,ME,3340
+ ,maize,CP,8.7
+ ,maize,Lys,0.2
+ ,maize,m+c,0.35
+ ,maize,Met,0.2
+ ,maize,EE,3.6
+ ,maize,CF,2.1
+ ,maize,Ca,0.04
+ ,maize,P,0.3
 
 
  ,sorghum,ME,3260

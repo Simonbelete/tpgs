@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Paper,
   Stack,
@@ -187,7 +187,11 @@ export default function Filter<T>({ filters }: FilterProps<T>) {
                 {Object.keys(selector.filters).map((key, i) => {
                   if (Array.isArray(selector.filters[key])) {
                     // @ts-ignore
-                    const dataDisplayKey = (filters[key] as any).dataDisplayKey;
+                    const dataDisplayKey = _.get(
+                      filters,
+                      `${key}.dataDisplayKey`,
+                      ""
+                    );
 
                     return (selector.filters[key] || []).map(
                       (e: any, j: any) => (
