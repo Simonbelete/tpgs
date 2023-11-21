@@ -23,6 +23,7 @@ import { QueryDefinition } from "@reduxjs/toolkit/dist/query";
 import { EndpointDefinitions } from "@reduxjs/toolkit/dist/query/endpointDefinitions";
 import { QueryHooks } from "@reduxjs/toolkit/dist/query/react/buildHooks";
 import { ClientQueyFn, Query } from "@/types";
+import _ from "lodash";
 
 export type FilterField<T> = {
   endpoint?: ApiEndpointQuery<
@@ -148,6 +149,12 @@ export default function Filter<T>({ filters }: FilterProps<T>) {
                         query={{}}
                         label={options.label}
                         onChange={(event: SelectChangeEvent) => {
+                          const val = { id: event.target.value };
+                          _.set(
+                            val,
+                            options.dataDisplayKey,
+                            event.target.value[options.dataDisplayKey]
+                          );
                           dispatch(
                             filterSlice.actions.pushFilter({
                               key: key,
@@ -157,7 +164,7 @@ export default function Filter<T>({ filters }: FilterProps<T>) {
                         }}
                         selected={selector.filters[key] || []}
                         dataValueKey="id"
-                        dataLableKey="name"
+                        dataLableKey={options.dataDisplayKey}
                         endpoint={options.endpoint}
                       />
                     );

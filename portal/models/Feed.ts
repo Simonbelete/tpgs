@@ -11,7 +11,7 @@ export default interface Feed extends AbstractBaseModel {
   chicken: number | Chicken;
   week: number;
   weight: number;
-  formula: number | Formula;
+  formula: null | number | Formula;
   total_chickens?: number;
   children_feed_count?: number;
 }

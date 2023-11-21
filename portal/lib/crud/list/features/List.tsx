@@ -74,8 +74,14 @@ export default function List<T>({
   const [deleteConfirmation, setDeleteConfirmation] = useState<boolean>(false);
 
   const { data, isLoading, isFetching, refetch } = getEndpoint.useQuery(
-    buildQuery({ ...buildPage(paginationModel), ...selector, ...sortingQuery })
+    buildQuery({
+      ...buildPage(paginationModel),
+      ...selector.filters,
+      ...{ is_active: selector.is_active },
+      ...sortingQuery,
+    })
   );
+
   const [deleteTrigger, deleteResult] =
     deleteEndpoint != null
       ? deleteEndpoint.useMutation()

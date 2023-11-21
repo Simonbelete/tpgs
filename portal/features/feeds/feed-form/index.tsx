@@ -6,6 +6,7 @@ import { feedApi } from "../services";
 import { chickenApi } from "@/features/chickens/services";
 import { ChickenForm } from "@/features/chickens";
 import { formulaApi } from "@/features/formula/services";
+import _ from "lodash";
 
 const schema = yup.object({
   chicken: yup.object().nullable(),
@@ -25,7 +26,6 @@ export const FeedForm = ({
   data?: Feed;
   shallowRoute?: boolean;
 }) => {
-  console.log(data);
   return (
     <>
       <FormLayout<Feed>
@@ -44,7 +44,7 @@ export const FeedForm = ({
             week: values.week,
             weight: values.weight,
             chicken: (values.chicken as Chicken).id || 0,
-            formula: (values.formula as any)?.id || 0,
+            formula: _.get(values, "formula", null),
           };
 
           return cleaned_data;

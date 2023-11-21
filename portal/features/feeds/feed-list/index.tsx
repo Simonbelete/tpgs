@@ -69,7 +69,7 @@ export const FeedList = () => {
       filters={{
         chicken: {
           label: "Chicken",
-          dataDisplayKey: "name",
+          dataDisplayKey: "display_name",
           endpoint: chickenApi.endpoints.getChickens,
         },
       }}
