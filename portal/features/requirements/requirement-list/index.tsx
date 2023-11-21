@@ -7,18 +7,11 @@ import {
   EditAction,
   HistoryAction,
   CreateButton,
-  ExportButton,
+  ExportModal,
   ImportButton,
+  ExportModal,
 } from "@/lib/crud";
-import {
-  requirementApi,
-  exportRequirementsCSV,
-  exportRequirementsXLS,
-  exportRequirementsXLSX,
-  importRequirementsCSV,
-  importRequirementsXLS,
-  importRequirementsXLSX,
-} from "../services";
+import { requirementApi, URL } from "../services";
 import { Requirement } from "@/models";
 import dayjs from "dayjs";
 
@@ -35,19 +28,10 @@ export const RequirementList = () => {
       minWidth: 150,
     },
     { field: "nutrient_count", headerName: "Total nutrients" },
-    // {
-    //   field: "created_at",
-    //   headerName: "Create at",
-    //   flex: 1,
-    //   minWidth: 150,
-    //   valueGetter: (params) =>
-    //     params.row.created_at
-    //       ? dayjs(params.row.created_at).format(
-    //           process.env.NEXT_PUBLIC_DATE_FORMAT
-    //         )
-    //       : "",
-    // },
   ];
+
+  const beforeExportSubmit = (values: any) => values;
+
   return (
     <ListLayout<Requirement>
       title="Requirements"
@@ -64,16 +48,12 @@ export const RequirementList = () => {
       menus={
         <>
           <CreateButton />
-          <ExportButton
-            exportCsv={exportRequirementsCSV}
-            exportXls={exportRequirementsXLS}
-            exportXlsx={exportRequirementsXLSX}
+          <ExportModal
+            url={URL}
+            fields={{}}
+            beforeSubmit={(values) => values}
           />
-          <ImportButton
-            importCsv={importRequirementsCSV}
-            importXls={importRequirementsXLS}
-            importXlsx={importRequirementsXLSX}
-          />
+          <ImportButton url={URL} />
         </>
       }
     />

@@ -5,7 +5,7 @@ import clientSSR from "@/services/client_ssr";
 import client from "@/services/client";
 import { NextPageContext } from "next";
 
-const URL = "/pen";
+export const URL = "/pen";
 const HISTORY_URL = `histories`;
 const SUMMARY_URL = `summary`;
 const EXPORT_URL = `${URL}/export`;
@@ -75,7 +75,7 @@ export const importPensXLSX = async (data: FormData) =>
     },
   });
 export const importPensCSV = async (data: FormData) =>
-  client.post(`${IMPORT_URL}/csv`, data, {
+  client.post(`${IMPORT_URL}/csv/`, data, {
     headers: {
       "Content-Type": "multipart/form-data",
     },

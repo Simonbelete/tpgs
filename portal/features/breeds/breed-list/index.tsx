@@ -6,18 +6,10 @@ import {
   EditAction,
   HistoryAction,
   CreateButton,
-  ExportButton,
+  ExportModal,
   ImportButton,
 } from "@/lib/crud";
-import {
-  breedApi,
-  exportBreedsCSV,
-  exportBreedsXLS,
-  exportBreedsXLSX,
-  importBreedsCSV,
-  importBreedsXLS,
-  importBreedsXLSX,
-} from "../services";
+import { breedApi, URL } from "../services";
 import { Breed } from "@/models";
 import dayjs from "dayjs";
 
@@ -48,16 +40,12 @@ export const BreedList = () => {
       menus={
         <>
           <CreateButton />
-          <ExportButton
-            exportCsv={exportBreedsCSV}
-            exportXls={exportBreedsXLS}
-            exportXlsx={exportBreedsXLSX}
+          <ExportModal
+            url={URL}
+            fields={{}}
+            beforeSubmit={(values) => values}
           />
-          <ImportButton
-            importCsv={importBreedsCSV}
-            importXls={importBreedsXLS}
-            importXlsx={importBreedsXLSX}
-          />
+          <ImportButton url={URL} />
         </>
       }
     />

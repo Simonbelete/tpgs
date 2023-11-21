@@ -7,18 +7,10 @@ import {
   EditAction,
   HistoryAction,
   CreateButton,
-  ExportButton,
+  ExportModal,
   ImportButton,
 } from "@/lib/crud";
-import {
-  unitApi,
-  exportUnitsCSV,
-  exportUnitsXLS,
-  exportUnitsXLSX,
-  importUnitsCSV,
-  importUnitsXLS,
-  importUnitsXLSX,
-} from "../services";
+import { unitApi, URL } from "../services";
 import { Unit } from "@/models";
 import { houseApi } from "@/features/houses/services";
 import { Typography } from "@mui/material";
@@ -39,16 +31,12 @@ export const UnitList = () => {
       menus={
         <>
           <CreateButton />
-          <ExportButton
-            exportCsv={exportUnitsCSV}
-            exportXls={exportUnitsXLS}
-            exportXlsx={exportUnitsXLSX}
+          <ExportModal
+            url={URL}
+            fields={{}}
+            beforeSubmit={(values) => values}
           />
-          <ImportButton
-            importCsv={importUnitsCSV}
-            importXls={importUnitsXLS}
-            importXlsx={importUnitsXLSX}
-          />
+          <ImportButton url={URL} />
         </>
       }
     />

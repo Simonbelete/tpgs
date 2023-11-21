@@ -7,7 +7,7 @@ import {
 } from "@/models";
 import { AxiosResponse } from "axios";
 
-const URL = "inbox/notifications";
+export const URL = "inbox/notifications";
 
 export const notificationApi = baseApi.injectEndpoints({
   endpoints: (build) => {

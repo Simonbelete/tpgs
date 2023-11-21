@@ -7,18 +7,10 @@ import {
   EditAction,
   HistoryAction,
   CreateButton,
-  ExportButton,
+  ExportModal,
   ImportButton,
 } from "@/lib/crud";
-import {
-  hatcheryApi,
-  exportHatcheryCSV,
-  exportHatcheryXLS,
-  exportHatcheryXLSX,
-  importHatcheryCSV,
-  importHatcheryXLS,
-  importHatcheryXLSX,
-} from "../services";
+import { hatcheryApi, URL } from "../services";
 import { Hatchery } from "@/models";
 import dayjs from "dayjs";
 import { Typography } from "@mui/material";
@@ -59,16 +51,12 @@ export const HatcheryList = () => {
       menus={
         <>
           <CreateButton />
-          <ExportButton
-            exportCsv={exportHatcheryCSV}
-            exportXls={exportHatcheryXLS}
-            exportXlsx={exportHatcheryXLSX}
+          <ExportModal
+            url={URL}
+            fields={{}}
+            beforeSubmit={(values) => values}
           />
-          <ImportButton
-            importCsv={importHatcheryCSV}
-            importXls={importHatcheryXLS}
-            importXlsx={importHatcheryXLSX}
-          />
+          <ImportButton url={URL} />
         </>
       }
     />

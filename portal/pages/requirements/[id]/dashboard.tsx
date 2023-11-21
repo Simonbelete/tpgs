@@ -4,19 +4,19 @@ import { Tooltip, IconButton, Typography, Stack, Grid } from "@mui/material";
 import { StatDashboardLayout } from "@/layouts";
 import { Breadcrumbs, Loading } from "@/components";
 import { useBreadcrumbs } from "@/hooks";
-import { Formula } from "@/models";
+import { Requirement } from "@/models";
 import { useRouter } from "next/router";
 import {
   RequirementStat,
   RequirementComposition,
 } from "@/features/requirements";
-import { getFormulaByIdSSR } from "@/features/formula/services";
+import { getRequirementByIdSSR } from "@/features/requirements/services";
 import EditNoteIcon from "@mui/icons-material/EditNote";
+import { getServerSidePropsContext } from "@/services/getServerSidePropsContext";
 
-const RequirementDashboardEditPage = ({ data }: { data: Formula }) => {
+const RequirementDashboardEditPage = ({ data }: { data: Requirement }) => {
   const { breadcrumbs } = useBreadcrumbs();
   const router = useRouter();
-  const actionRef = useRef();
 
   return (
     <StatDashboardLayout
@@ -58,28 +58,11 @@ const Actions = () => {
 export async function getServerSideProps(context: NextPageContext) {
   const { id } = context.query;
 
-  try {
-    const res = await getFormulaByIdSSR(context, Number(id));
-
-    if (res.status != 200)
-      return {
-        redirect: {
-          permanent: false,
-          destination: `/${res.status}?id=${id}&from=/formulation/formulas&next=/formulation/formulas`,
-        },
-      };
-
-    const data = res.data;
-
-    return { props: { data } };
-  } catch (ex) {
-    return {
-      redirect: {
-        permanent: false,
-        destination: `/404?id=${id}&from=/formulation/formulas&next=/formulation/formulas&error=unknown`,
-      },
-    };
-  }
+  return getServerSidePropsContext<Requirement>({
+    context,
+    id: Number(id),
+    getByIdSSR: getRequirementByIdSSR,
+  });
 }
 
 export default RequirementDashboardEditPage;

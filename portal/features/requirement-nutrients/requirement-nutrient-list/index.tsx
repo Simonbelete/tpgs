@@ -7,18 +7,10 @@ import {
   EditAction,
   HistoryAction,
   CreateButton,
-  ExportButton,
+  ExportModal,
   ImportButton,
 } from "@/lib/crud";
-import {
-  requirementNutrientApi,
-  exportRequirementNutrientsCSV,
-  exportRequirementNutrientsXLS,
-  exportRequirementNutrientsXLSX,
-  importRequirementNutrientsCSV,
-  importRequirementNutrientsXLS,
-  importRequirementNutrientsXLSX,
-} from "../services";
+import { requirementNutrientApi, URL } from "../services";
 import { RequirementNutrient } from "@/models";
 import { Typography } from "@mui/material";
 import Link from "next/link";
@@ -73,16 +65,12 @@ export const RequirementNutrientList = () => {
       menus={
         <>
           <CreateButton />
-          <ExportButton
-            exportCsv={exportRequirementNutrientsCSV}
-            exportXls={exportRequirementNutrientsXLS}
-            exportXlsx={exportRequirementNutrientsXLSX}
+          <ExportModal
+            url={URL}
+            fields={{}}
+            beforeSubmit={(values) => values}
           />
-          <ImportButton
-            importCsv={importRequirementNutrientsCSV}
-            importXls={importRequirementNutrientsXLS}
-            importXlsx={importRequirementNutrientsXLSX}
-          />
+          <ImportButton url={URL} />
         </>
       }
     />

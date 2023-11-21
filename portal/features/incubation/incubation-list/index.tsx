@@ -7,18 +7,10 @@ import {
   EditAction,
   HistoryAction,
   CreateButton,
-  ExportButton,
+  ExportModal,
   ImportButton,
 } from "@/lib/crud";
-import {
-  incubationApi,
-  exportIncubationsCSV,
-  exportIncubationsXLS,
-  exportIncubationsXLSX,
-  importIncubationsCSV,
-  importIncubationsXLS,
-  importIncubationsXLSX,
-} from "../services";
+import { incubationApi, URL } from "../services";
 import { Incubation } from "@/models";
 import dayjs from "dayjs";
 import { Typography } from "@mui/material";
@@ -87,16 +79,12 @@ export const IncubationList = () => {
       menus={
         <>
           <CreateButton />
-          <ExportButton
-            exportCsv={exportIncubationsCSV}
-            exportXls={exportIncubationsXLS}
-            exportXlsx={exportIncubationsXLSX}
+          <ExportModal
+            url={URL}
+            fields={{}}
+            beforeSubmit={(values) => values}
           />
-          <ImportButton
-            importCsv={importIncubationsCSV}
-            importXls={importIncubationsXLS}
-            importXlsx={importIncubationsXLSX}
-          />
+          <ImportButton url={URL} />
         </>
       }
     />

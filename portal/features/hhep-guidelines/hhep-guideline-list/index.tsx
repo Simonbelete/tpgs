@@ -6,18 +6,10 @@ import {
   EditAction,
   HistoryAction,
   CreateButton,
-  ExportButton,
+  ExportModal,
   ImportButton,
 } from "@/lib/crud";
-import {
-  hHEPGuidelineApi,
-  exportHHEPGuidelinesCSV,
-  exportHHEPGuidelinesXLS,
-  exportHHEPGuidelinesXLSX,
-  importHHEPGuidelinesCSV,
-  importHHEPGuidelinesXLS,
-  importHHEPGuidelinesXLSX,
-} from "../services";
+import { hHEPGuidelineApi, URL } from "../services";
 import { HHEPGuideline } from "@/models";
 import { breedApi } from "@/features/breeds/services";
 import { Typography } from "@mui/material";
@@ -63,16 +55,12 @@ export const HHEPGuidelineList = () => {
       menus={
         <>
           <CreateButton />
-          <ExportButton
-            exportCsv={exportHHEPGuidelinesCSV}
-            exportXls={exportHHEPGuidelinesXLS}
-            exportXlsx={exportHHEPGuidelinesXLSX}
+          <ExportModal
+            url={URL}
+            fields={{}}
+            beforeSubmit={(values) => values}
           />
-          <ImportButton
-            importCsv={importHHEPGuidelinesCSV}
-            importXls={importHHEPGuidelinesXLS}
-            importXlsx={importHHEPGuidelinesXLSX}
-          />
+          <ImportButton url={URL} />
         </>
       }
     />

@@ -1,7 +1,7 @@
 import { baseApi } from "@/services/baseApi";
 import { Response, Currency } from "@/models";
 
-const URL = "/currencies";
+export const URL = "/currencies";
 
 export const currencyApi = baseApi.injectEndpoints({
   endpoints: (build) => {

@@ -9,12 +9,7 @@ import {
   ExportModal,
   ImportButton,
 } from "@/lib/crud";
-import {
-  feedApi,
-  importFeedsCSV,
-  importFeedsXLS,
-  importFeedsXLSX,
-} from "../services";
+import { feedApi, URL } from "../services";
 import { Feed } from "@/models";
 import { Chip, Typography } from "@mui/material";
 import Link from "next/link";
@@ -100,7 +95,7 @@ export const BatchFeedList = () => {
         <>
           <CreateButton />
           <ExportModal
-            url="/feeds"
+            url={URL}
             fields={{
               chicken: {
                 endpoint: chickenApi.endpoints.getChickens,
@@ -129,11 +124,8 @@ export const BatchFeedList = () => {
             }}
             beforeSubmit={beforeExportSubmit}
           />
-          <ImportButton
-            importCsv={importFeedsCSV}
-            importXls={importFeedsXLS}
-            importXlsx={importFeedsXLSX}
-          />
+
+          <ImportButton url={URL} />
         </>
       }
     />

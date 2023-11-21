@@ -25,5 +25,15 @@ class Egg(CoreModel):
         return "{chicken} ({week})".format(chicken=self.chicken.display_name, week=self.week)
 
     @property
+    def hatchery_eggs(self):
+        hatchery_eggs = HatcheryEgg.objects.filter(egg=self).aggregate(
+            egg_set_sum=Sum('no_eggs'))['egg_set_sum'] or 0
+        hatchery_eggs = hatchery_eggs if hatchery_eggs else 0
+        return hatchery_eggs
+
+    @property
     def available_eggs(self):
-        return self.eggs - HatcheryEgg.objects.filter(egg=self.id).aggregate(egg_set_sum=Sum('no_eggs'))
+        hatchery_eggs = HatcheryEgg.objects.filter(egg=self).aggregate(
+            egg_set_sum=Sum('no_eggs'))['egg_set_sum'] or 0
+        hatchery_eggs = hatchery_eggs if hatchery_eggs else 0
+        return self.eggs - hatchery_eggs

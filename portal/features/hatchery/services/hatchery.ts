@@ -11,7 +11,7 @@ import clientSSR from "@/services/client_ssr";
 import client from "@/services/client";
 import { NextPageContext } from "next";
 
-const URL = "/hatchery";
+export const URL = "/hatchery";
 const EGGS_URL = "eggs";
 const INCUBATION_URL = "incubations";
 const HISTORY_URL = `histories`;
@@ -169,7 +169,7 @@ export const importHatcheryXLSX = async (data: FormData) =>
     },
   });
 export const importHatcheryCSV = async (data: FormData) =>
-  client.post(`${IMPORT_URL}/csv`, data, {
+  client.post(`${IMPORT_URL}/csv/`, data, {
     headers: {
       "Content-Type": "multipart/form-data",
     },

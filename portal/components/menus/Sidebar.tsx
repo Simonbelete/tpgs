@@ -287,7 +287,8 @@ const SidebarMenu = () => {
             active={RegExp("/ingredient-nutrients(.*)$").test(router.pathname)}
           >
             <Typography variant="body1" fontSize={14}>
-              Nutrients
+              Ingredient
+              <br /> Composition
             </Typography>
           </MenuItem>
           <MenuItem
@@ -296,7 +297,7 @@ const SidebarMenu = () => {
             active={RegExp("/ingredient-types(.*)$").test(router.pathname)}
           >
             <Typography variant="body1" fontSize={14}>
-              Ingredient Type
+              Ingredient Group
             </Typography>
           </MenuItem>
         </SubMenu>
@@ -354,7 +355,7 @@ const SidebarMenu = () => {
             )}
           >
             <Typography variant="body1" fontSize={14}>
-              Nutrients
+              Requirement <br /> Composition
             </Typography>
           </MenuItem>
         </SubMenu>

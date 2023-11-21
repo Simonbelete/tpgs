@@ -1,0 +1,77 @@
+id,name,dm,ingredient_type
+ ,maize,86.9,Cereals & seeds
+ ,sorghum,87.4,Cereals & seeds
+ ,millet,87.3,Cereals & seeds
+ ,barley,12.7,Cereals & seeds
+ ,wheat,86.1,Cereals & seeds
+ ,beans(Phaseolus) toasted,86.5,Cereals & seeds
+ ,beans(horse),86.4,Cereals & seeds
+ ,peas,86.9,Cereals & seeds
+ ,lentils,86.9,Cereals & seeds
+ ,soybeans toasted,88.5,Cereals & seeds
+ ,lupin seeds,89.6,Cereals & seeds
+ ,linseed,90.7,Cereals & seeds
+ ,rapeseed,92.8,Cereals & seeds
+ ,sunflower seed (decort),93.4,Cereals & seeds
+ ,sunflower seed (undecort),92.2,Cereals & seeds
+ ,cassava (63% starch),86.4,Dried tubes
+ ,cassava (72% starch),87.5,Dried tubes
+ ,sweet potato,87.5,Dried tubes
+ ,maize distillers,90.8,Cereal by-products
+ ,maize gluten 57% c.p.,90,Cereal by-products
+ ,maize gluten feed,88.2,Cereal by-products
+ ,maize germ meal,87.1,Cereal by-products
+ ,maize germ expellers,90,Cereal by-products
+ ,maize bran (37% starch),89,Cereal by-products
+ ,maize bran (50% starch),87.5,Cereal by-products
+ ,wheat middlings,86,Cereal by-products
+ ,wheat bran,86.6,Cereal by-products
+ ,rice bran 15-30% fibre,89.8,Cereal by-products
+ ,rice bran 9-15% fibre,89.2,Cereal by-products
+ ,rice bran 1-9% fibre,89.9,Cereal by-products
+ ,soybeanmeal 44/7,86.6,Oilmeals
+ ,soybeanmeal 45/46,88,Oilmeals
+ ,soybeanmeal 49/3,87,Oilmeals
+ ,sesame meal (solv. extr.),89.5,Oilmeals
+ ,sesame-expeller/cake,93.3,Oilmeals
+ ,groundnutmeal (solv. extr.),90,Oilmeals
+ ,groundnut-expeller/cake,91.9,Oilmeals
+ ,cottonseedmeal (solv. extr.),89.9,Oilmeals
+ ,cottonseed-expeller/cake,92,Oilmeals
+ ,coconutmeal (solv.extr.),90.1,Oilmeals
+ ,coconut-expeller/cake,92.8,Oilmeals
+ ,linseedmeal (solv extr.),90.1,Oilmeals
+ ,linseed-expeller/cake,89.2,Oilmeals
+ ,palmkernelmeal (solv. extr.),87.9,Oilmeals
+ ,palmkernel-expeller/cake,92.5,Oilmeals
+ ,rapeseedmeal (solv. extr.),87.9,Oilmeals
+ ,rapeseed-expeller/cake,88.9,Oilmeals
+ ,sunflowerseedmeal (solv. extr.),88.3,Oilmeals
+ ,sunflowerseed-expeller/cake,90.5,Oilmeals
+ ,bonemeal,90.5,Animal proteins
+ ,bloodmeal,90.6,Animal proteins
+ ,meatmeal (50/14/26),94,Animal proteins
+ ,meatmeal (58/13/20),94.8,Animal proteins
+ ,skimmilkpowder,95.2,Animal proteins
+ ,feathermeal (hydrolized),91.7,Animal proteins
+ ,fishmeal (70% c.p.),92,Animal proteins
+ ,fishmeal (South American),91.7,Animal proteins
+ ,wheypowder (delact. 20% c.p.),97.5,Animal proteins
+ ,wheypowder (sweet),95.6,Animal proteins
+ ,soybeanoil,99.5,Fats
+ ,animal fat (destructor-),99.5,Fats
+ ,citruspulp,90.1,Miscellaneous  
+ ,yeast (beer),93.7,Miscellaneous  
+ ,grassmeal (less than 16% c.p.),91.5,Miscellaneous  
+ ,grassmeal (more than 20% c.p.),91.4,Miscellaneous  
+ ,alfalfa meal (sundried),89.6,Miscellaneous  
+ ,molasses (beet),73.2,Miscellaneous  
+ ,molasses (cane),73.3,Miscellaneous  
+ ,sugar,99.9,Miscellaneous  
+ ,soybean hulls,88.2,,Miscellaneous  
+ ,dicalciumphosphate,99,Minerals
+ ,monocalciumphosphate,99,Minerals
+ ,limestone/shells,99,Minerals
+ ,salt (NaCl),95,Minerals
+ ,L-lysine HCl,98.5,Synthetic amino-acids
+ ,DL-metionine,99.7,Synthetic amino-acids

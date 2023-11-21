@@ -40,8 +40,8 @@ export const NutrientForm = ({
           const cleaned_data: Partial<Nutrient> = {
             id: values.id,
             name: values.name,
-            code: values.code,
             abbreviation: values.abbreviation,
+            order: values.order,
             nutrient_group: (values.nutrient_group as NutrientGroup).id || 0,
             unit: (values.unit as Unit).id || 0,
           };
@@ -50,9 +50,13 @@ export const NutrientForm = ({
         }}
         fields={{
           name: { label: "Name", placeholder: "Name", xs: 12, md: 6 },
-          code: { label: "Code", placeholder: "Code", xs: 12, md: 6 },
-          abbreviation: { label: "Code", placeholder: "Code", xs: 12, md: 6 },
-          description: { label: "Code", placeholder: "Code", xs: 12, md: 6 },
+          // code: { label: "Code", placeholder: "Code", xs: 12, md: 6 },
+          abbreviation: {
+            label: "Abbreviation",
+            placeholder: "Abbreviation",
+            xs: 12,
+            md: 6,
+          },
           nutrient_group: {
             label: "Nutrient Group",
             placeholder: "Nutrient Group",
@@ -68,6 +72,19 @@ export const NutrientForm = ({
             form: <UnitForm shallowRoute={false} />,
             xs: 12,
             md: 6,
+          },
+          description: {
+            label: "Description",
+            placeholder: "Description",
+            xs: 12,
+            md: 6,
+          },
+          order: {
+            label: "Order",
+            placeholder: "Order",
+            xs: 12,
+            md: 6,
+            type: "number",
           },
         }}
         menus={

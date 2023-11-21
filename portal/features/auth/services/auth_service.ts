@@ -2,7 +2,7 @@ import { AxiosResponse } from "axios";
 import { Response, ResetPassword, ResetPasswordConfirm } from "@/models";
 import client from "@/services/client";
 
-const URL = "/auth";
+export const URL = "/auth";
 const RESET_PASSWORD_URL = `${URL}/reset-password`;
 const RESET_PASSWORD_CONFIRM_URL = `${URL}/reset-password`;
 

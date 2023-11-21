@@ -19,6 +19,7 @@ import { nutrientApi } from "@/features/nutrients/services";
 import { EditMode } from "@/types";
 import { ingredientTypeApi } from "@/features/ingredient-types/services";
 import { IngredientTypeForm } from "@/features/ingredient-types";
+import _ from "lodash";
 
 const schema = yup.object({
   name: yup.string().required(),
@@ -78,7 +79,12 @@ export const IngredientForm = ({
     setTab(newValue);
 
   const cleanData = (values: Partial<Ingredient>): Partial<Ingredient> => {
-    return values;
+    return {
+      name: values.name,
+      ingredient_type: _.get(values, "ingredient_type.id", null),
+      dm: values.dm,
+      description: values.description,
+    };
   };
 
   const cleanIngredientNutrient = (
@@ -163,7 +169,7 @@ export const IngredientForm = ({
           <Tab label="Detail" {...a11yProps(0)} />
           {formData && (
             <Tab
-              label="Nutrients"
+              label="Composition"
               iconPosition="end"
               icon={<Chip label={formData?.nutrient_count || 0} size="small" />}
               {...a11yProps(1)}
@@ -194,8 +200,8 @@ export const IngredientForm = ({
                     form: <IngredientTypeForm shallowRoute={false} />,
                   },
                   price: {
-                    label: "Price (/kg)",
-                    placeholder: "Price (/kg)",
+                    label: "Unit Price (kg)",
+                    placeholder: "Unit Price (kg)",
                     xs: 12,
                     md: 6,
                     postfix: "kg",

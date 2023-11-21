@@ -2,7 +2,7 @@ import { AxiosResponse } from "axios";
 import { Response, NutrientGroup } from "@/models";
 import client from "@/services/client";
 
-const URL = "/nutrient-groups/";
+export const URL = "/nutrient-groups/";
 
 export default {
   get: async (): Promise<AxiosResponse<Response<NutrientGroup[]>>> =>

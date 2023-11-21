@@ -7,18 +7,10 @@ import {
   EditAction,
   HistoryAction,
   CreateButton,
-  ExportButton,
+  ExportModal,
   ImportButton,
 } from "@/lib/crud";
-import {
-  reductionReasonApi,
-  exportReductionReasonsCSV,
-  exportReductionReasonsXLS,
-  exportReductionReasonsXLSX,
-  importReductionReasonsCSV,
-  importReductionReasonsXLS,
-  importReductionReasonsXLSX,
-} from "../services";
+import { reductionReasonApi, URL } from "../services";
 import { ReductionReason } from "@/models";
 
 export const ReductionReasonList = () => {
@@ -36,16 +28,12 @@ export const ReductionReasonList = () => {
       menus={
         <>
           <CreateButton />
-          <ExportButton
-            exportCsv={exportReductionReasonsCSV}
-            exportXls={exportReductionReasonsXLS}
-            exportXlsx={exportReductionReasonsXLSX}
+          <ExportModal
+            url={URL}
+            fields={{}}
+            beforeSubmit={(values) => values}
           />
-          <ImportButton
-            importCsv={importReductionReasonsCSV}
-            importXls={importReductionReasonsXLS}
-            importXlsx={importReductionReasonsXLSX}
-          />
+          <ImportButton url={URL} />
         </>
       }
     />

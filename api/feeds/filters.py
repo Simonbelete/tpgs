@@ -16,11 +16,7 @@ class FeedFilter(CoreFilterSet):
             'chicken': ['in', 'exact'],
             'parent': ['exact'],
             'hatchery': ['exact'],
-            # 'hatchery__isnull': ['exact'],
-            # 'chicken__isnull': ['exact']
         }
-        # fields = ['chicken', 'parent', 'hatchery',
-        #           'hatchery__isnull', 'chicken__isnull']
 
 
 class FeedResourceFilter(CoreFilterSet):

@@ -7,18 +7,10 @@ import {
   EditAction,
   HistoryAction,
   CreateButton,
-  ExportButton,
+  ExportModal,
   ImportButton,
 } from "@/lib/crud";
-import {
-  chickenApi,
-  exportChickensCSV,
-  exportChickensXLS,
-  exportChickensXLSX,
-  importChickensCSV,
-  importChickensXLS,
-  importChickensXLSX,
-} from "../services";
+import { chickenApi, URL } from "../services";
 import { Chicken } from "@/models";
 import { Typography } from "@mui/material";
 import Link from "next/link";
@@ -106,16 +98,12 @@ export const ChickenList = () => {
       menus={
         <>
           <CreateButton />
-          <ExportButton
-            exportCsv={exportChickensCSV}
-            exportXls={exportChickensXLS}
-            exportXlsx={exportChickensXLSX}
+          <ExportModal
+            url={URL}
+            fields={{}}
+            beforeSubmit={(values) => values}
           />
-          <ImportButton
-            importCsv={importChickensCSV}
-            importXls={importChickensXLS}
-            importXlsx={importChickensXLSX}
-          />
+          <ImportButton url={URL} />
         </>
       }
     />

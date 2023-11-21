@@ -2,7 +2,7 @@ import { AxiosResponse } from "axios";
 import { Response, Contact } from "@/models";
 import client from "@/services/client";
 
-const URL = "/contact";
+export const URL = "/contact";
 
 export default {
   get: async (query?: Object): Promise<AxiosResponse<Response<Contact[]>>> =>

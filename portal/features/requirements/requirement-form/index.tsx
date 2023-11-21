@@ -114,7 +114,7 @@ export const RequirementForm = ({
     },
     {
       field: "value",
-      headerName: "Value [%]",
+      headerName: "Value",
       minWidth: 100,
       filterable: false,
       editable: true,
@@ -126,7 +126,7 @@ export const RequirementForm = ({
       flex: 1,
       filterable: false,
       valueGetter: (params) =>
-        params.row.nutrient ? params.row.nutrient.unit.name : "",
+        params.row.nutrient ? params.row.nutrient.unit : "",
     },
   ];
 
@@ -162,7 +162,7 @@ export const RequirementForm = ({
           <Tab label="Detail" {...a11yProps(0)} />
           {formData && (
             <Tab
-              label="Nutrients"
+              label="Composition"
               iconPosition="end"
               icon={<Chip label={formData?.nutrient_count || 0} size="small" />}
               {...a11yProps(1)}

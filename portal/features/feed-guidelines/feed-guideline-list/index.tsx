@@ -6,18 +6,10 @@ import {
   EditAction,
   HistoryAction,
   CreateButton,
-  ExportButton,
+  ExportModal,
   ImportButton,
 } from "@/lib/crud";
-import {
-  feedGuidelineApi,
-  exportFeedGuidelinesCSV,
-  exportFeedGuidelinesXLS,
-  exportFeedGuidelinesXLSX,
-  importFeedGuidelinesCSV,
-  importFeedGuidelinesXLS,
-  importFeedGuidelinesXLSX,
-} from "../services";
+import { feedGuidelineApi, URL } from "../services";
 import { FeedGuideline } from "@/models";
 import { breedApi } from "@/features/breeds/services";
 import { Typography } from "@mui/material";
@@ -63,16 +55,12 @@ export const FeedGuidelineList = () => {
       menus={
         <>
           <CreateButton />
-          <ExportButton
-            exportCsv={exportFeedGuidelinesCSV}
-            exportXls={exportFeedGuidelinesXLS}
-            exportXlsx={exportFeedGuidelinesXLSX}
+          <ExportModal
+            url={URL}
+            fields={{}}
+            beforeSubmit={(values) => values}
           />
-          <ImportButton
-            importCsv={importFeedGuidelinesCSV}
-            importXls={importFeedGuidelinesXLS}
-            importXlsx={importFeedGuidelinesXLSX}
-          />
+          <ImportButton url={URL} />
         </>
       }
     />

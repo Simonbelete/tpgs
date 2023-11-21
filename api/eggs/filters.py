@@ -10,11 +10,14 @@ class EggFilter(CoreFilterSet):
 
     class Meta:
         model = models.Egg
-        fields = ['chicken', 'chicken__isnull']
+        fields = {
+            'chicken': ['in', 'exact'],
+        }
 
 
 class EggResourceFilter(CoreFilterSet):
     class Meta:
         model = models.Egg
-        fields = ['chicken', 'chicken__hatchery',
-                  'chicken__pen', 'chicken__pen__house']
+        fields = {
+            'chicken': ['in', 'exact'],
+        }

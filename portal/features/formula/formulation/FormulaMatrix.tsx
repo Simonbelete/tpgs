@@ -176,7 +176,7 @@ const Formulation = ({ data }: { data?: Formula }) => {
     },
     {
       id: "price",
-      title: "Price /1 Kg",
+      title: "Unit Price",
       path: "price",
       property: {
         kind: GridCellKind.Number,

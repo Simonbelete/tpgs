@@ -7,18 +7,10 @@ import {
   EditAction,
   HistoryAction,
   CreateButton,
-  ExportButton,
   ImportButton,
+  ExportModal,
 } from "@/lib/crud";
-import {
-  ingredientTypeApi,
-  exportIngredientTypesCSV,
-  exportIngredientTypesXLS,
-  exportIngredientTypesXLSX,
-  importIngredientTypesCSV,
-  importIngredientTypesXLS,
-  importIngredientTypesXLSX,
-} from "../services";
+import { ingredientTypeApi, URL } from "../services";
 import { IngredientType } from "@/models";
 import { Typography } from "@mui/material";
 import Link from "next/link";
@@ -38,16 +30,12 @@ export const IngredientTypeList = () => {
       menus={
         <>
           <CreateButton />
-          <ExportButton
-            exportCsv={exportIngredientTypesCSV}
-            exportXls={exportIngredientTypesXLS}
-            exportXlsx={exportIngredientTypesXLSX}
+          <ExportModal
+            url={URL}
+            fields={{}}
+            beforeSubmit={(values) => values}
           />
-          <ImportButton
-            importCsv={importIngredientTypesCSV}
-            importXls={importIngredientTypesXLS}
-            importXlsx={importIngredientTypesXLSX}
-          />
+          <ImportButton url={URL} />
         </>
       }
     />

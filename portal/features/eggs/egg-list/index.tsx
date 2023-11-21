@@ -7,19 +7,10 @@ import {
   EditAction,
   HistoryAction,
   CreateButton,
-  ExportButton,
   ImportButton,
   ExportModal,
 } from "@/lib/crud";
-import {
-  eggApi,
-  exportEggsCSV,
-  exportEggsXLS,
-  exportEggsXLSX,
-  importEggsCSV,
-  importEggsXLS,
-  importEggsXLSX,
-} from "../services";
+import { eggApi, URL } from "../services";
 import { Egg } from "@/models";
 import { houseApi } from "@/features/houses/services";
 import { Typography } from "@mui/material";
@@ -49,6 +40,12 @@ export const EggList = () => {
     { field: "week", headerName: "Week", flex: 1, minWidth: 150 },
     { field: "weight", headerName: "Egg Weight (g)", flex: 1, minWidth: 150 },
     { field: "eggs", headerName: "Total eggs", flex: 1, minWidth: 150 },
+    {
+      field: "hatchery_eggs",
+      headerName: "Hatchery eggs",
+      flex: 1,
+      minWidth: 150,
+    },
   ];
 
   const beforeExportSubmit = (values: any) => {
@@ -70,7 +67,7 @@ export const EggList = () => {
       filters={{
         chicken: {
           label: "Chicken",
-          dataDisplayKey: "name",
+          dataDisplayKey: "display_name",
           endpoint: chickenApi.endpoints.getChickens,
         },
       }}
@@ -78,7 +75,7 @@ export const EggList = () => {
         <>
           <CreateButton />
           <ExportModal
-            url="/eggs"
+            url={URL}
             fields={{
               chicken: {
                 endpoint: chickenApi.endpoints.getChickens,
@@ -86,32 +83,10 @@ export const EggList = () => {
                 md: 12,
                 dataKey: "display_name",
               },
-              hatchery: {
-                endpoint: hatcheryApi.endpoints.getHatchery,
-                label: "hatchery",
-                md: 12,
-                dataKey: "display_name",
-              },
-              house: {
-                endpoint: houseApi.endpoints.getHouses,
-                label: "House",
-                md: 12,
-                dataKey: "display_name",
-              },
-              pen: {
-                endpoint: penApi.endpoints.getPens,
-                label: "Pen",
-                md: 12,
-                dataKey: "display_name",
-              },
             }}
             beforeSubmit={beforeExportSubmit}
           />
-          <ImportButton
-            importCsv={importEggsCSV}
-            importXls={importEggsXLS}
-            importXlsx={importEggsXLSX}
-          />
+          <ImportButton url={URL} />
         </>
       }
     />

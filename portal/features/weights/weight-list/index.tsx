@@ -7,19 +7,10 @@ import {
   EditAction,
   HistoryAction,
   CreateButton,
-  ExportButton,
   ImportButton,
   ExportModal,
 } from "@/lib/crud";
-import {
-  weightApi,
-  exportWeightsCSV,
-  exportWeightsXLS,
-  exportWeightsXLSX,
-  importWeightsCSV,
-  importWeightsXLS,
-  importWeightsXLSX,
-} from "../services";
+import { weightApi, URL } from "../services";
 import { Weight } from "@/models";
 import { chickenApi } from "@/features/chickens/services";
 import { Typography } from "@mui/material";
@@ -82,11 +73,7 @@ export const WeightList = () => {
             }}
             beforeSubmit={beforeExportSubmit}
           />
-          <ImportButton
-            importCsv={importWeightsCSV}
-            importXls={importWeightsXLS}
-            importXlsx={importWeightsXLSX}
-          />
+          <ImportButton url={URL} />
         </>
       }
     />

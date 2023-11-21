@@ -199,9 +199,9 @@ class GenericImportView(APIView):
         if (import_type == 'xlsx'):
             return self.import_xlsx(request)
         elif (import_type == 'xls'):
-            return self.import_xls()
+            return self.import_xls(request)
         elif (import_type == 'csv'):
-            return self.import_csv()
+            return self.import_csv(request)
         else:
             return Response({'error': ['import type']})
 

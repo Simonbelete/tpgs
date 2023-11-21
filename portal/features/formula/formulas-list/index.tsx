@@ -7,18 +7,10 @@ import {
   EditAction,
   HistoryAction,
   CreateButton,
-  ExportButton,
+  ExportModal,
   ImportButton,
 } from "@/lib/crud";
-import {
-  formulaApi,
-  exportFormulasCSV,
-  exportFormulasXLS,
-  exportFormulasXLSX,
-  importFormulasCSV,
-  importFormulasXLS,
-  importFormulasXLSX,
-} from "../services";
+import { formulaApi, URL } from "../services";
 import { Formula } from "@/models";
 import { IconButton, Typography, Tooltip } from "@mui/material";
 import Link from "next/link";
@@ -112,16 +104,12 @@ export const FormulaList = () => {
       menus={
         <>
           <CreateButton />
-          <ExportButton
-            exportCsv={exportFormulasCSV}
-            exportXls={exportFormulasXLS}
-            exportXlsx={exportFormulasXLSX}
+          <ExportModal
+            url={URL}
+            fields={{}}
+            beforeSubmit={(values) => values}
           />
-          <ImportButton
-            importCsv={importFormulasCSV}
-            importXls={importFormulasXLS}
-            importXlsx={importFormulasXLSX}
-          />
+          <ImportButton url={URL} />
         </>
       }
     />

@@ -13,7 +13,7 @@ import client from "@/services/client";
 import { NextPageContext } from "next";
 import { Query, CreateFormData } from "@/types";
 
-const URL = "/requirements";
+export const URL = "/requirements";
 const HISTORY_URL = `histories`;
 const NUTRIENT_URL = "nutrients";
 const SUMMARY_URL = `summary`;
@@ -148,7 +148,7 @@ export const importRequirementsXLSX = async (data: FormData) =>
     },
   });
 export const importRequirementsCSV = async (data: FormData) =>
-  client.post(`${IMPORT_URL}/csv`, data, {
+  client.post(`${IMPORT_URL}/csv/`, data, {
     headers: {
       "Content-Type": "multipart/form-data",
     },

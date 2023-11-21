@@ -7,19 +7,10 @@ import {
   EditAction,
   HistoryAction,
   CreateButton,
-  ExportButton,
   ImportButton,
   ExportModal,
 } from "@/lib/crud";
-import {
-  purposeApi,
-  exportPurposesCSV,
-  exportPurposesXLS,
-  exportPurposesXLSX,
-  importPurposesCSV,
-  importPurposesXLS,
-  importPurposesXLSX,
-} from "../services";
+import { purposeApi, URL } from "../services";
 import { Purpose } from "@/models";
 import { Typography } from "@mui/material";
 import Link from "next/link";
@@ -43,15 +34,11 @@ export const PurposeList = () => {
         <>
           <CreateButton />
           <ExportModal
-            url="/purposes"
+            url={URL}
             fields={{}}
-            beforeSubmit={beforeExportSubmit}
+            beforeSubmit={(values) => values}
           />
-          <ImportButton
-            importCsv={importPurposesCSV}
-            importXls={importPurposesXLS}
-            importXlsx={importPurposesXLSX}
-          />
+          <ImportButton url={URL} />
         </>
       }
     />

@@ -2,7 +2,7 @@ import { baseApi } from "@/services/baseApi";
 import { AbstractSummary, Response, ChangePassword } from "@/models";
 import { AxiosResponse } from "axios";
 
-const URL = "/auth";
+export const URL = "/auth";
 
 export const authApi = baseApi.injectEndpoints({
   endpoints: (build) => {

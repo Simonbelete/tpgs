@@ -3,7 +3,7 @@ import { AbstractSummary, Response, Directory } from "@/models";
 import client from "@/services/client";
 import { AxiosResponse } from "axios";
 
-const URL = "/directories";
+export const URL = "/directories";
 const REFRESH_URL = `${URL}/refresh`;
 
 export const directoryApi = baseApi.injectEndpoints({

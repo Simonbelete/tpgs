@@ -13,7 +13,7 @@ import clientSSR from "@/services/client_ssr";
 import client from "@/services/client";
 import { NextPageContext } from "next";
 
-const URL = "/formulas";
+export const URL = "/formulas";
 const INGREDIENT_URL = "ingredients";
 const REQUIREMENT_URL = "requirements";
 const HISTORY_URL = `histories`;
@@ -249,7 +249,7 @@ export const importFormulasXLSX = async (data: FormData) =>
     },
   });
 export const importFormulasCSV = async (data: FormData) =>
-  client.post(`${IMPORT_URL}/csv`, data, {
+  client.post(`${IMPORT_URL}/csv/`, data, {
     headers: {
       "Content-Type": "multipart/form-data",
     },

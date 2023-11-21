@@ -5,7 +5,7 @@ import clientSSR from "@/services/client_ssr";
 import client from "@/services/client";
 import { NextPageContext } from "next";
 
-const URL = "/farms";
+export const URL = "/farms";
 
 export const farmApi = baseApi.injectEndpoints({
   endpoints: (build) => {

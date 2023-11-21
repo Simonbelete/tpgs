@@ -6,18 +6,10 @@ import {
   EditAction,
   HistoryAction,
   CreateButton,
-  ExportButton,
+  ExportModal,
   ImportButton,
 } from "@/lib/crud";
-import {
-  weightGuidelineApi,
-  exportWeightGuidelinesCSV,
-  exportWeightGuidelinesXLS,
-  exportWeightGuidelinesXLSX,
-  importWeightGuidelinesCSV,
-  importWeightGuidelinesXLS,
-  importWeightGuidelinesXLSX,
-} from "../services";
+import { weightGuidelineApi, URL } from "../services";
 import { WeightGuideline } from "@/models";
 import { breedApi } from "@/features/breeds/services";
 import { Typography } from "@mui/material";
@@ -63,16 +55,12 @@ export const WeightGuidelineList = () => {
       menus={
         <>
           <CreateButton />
-          <ExportButton
-            exportCsv={exportWeightGuidelinesCSV}
-            exportXls={exportWeightGuidelinesXLS}
-            exportXlsx={exportWeightGuidelinesXLSX}
+          <ExportModal
+            url={URL}
+            fields={{}}
+            beforeSubmit={(values) => values}
           />
-          <ImportButton
-            importCsv={importWeightGuidelinesCSV}
-            importXls={importWeightGuidelinesXLS}
-            importXlsx={importWeightGuidelinesXLSX}
-          />
+          <ImportButton url={URL} />
         </>
       }
     />

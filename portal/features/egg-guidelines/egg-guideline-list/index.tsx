@@ -6,18 +6,10 @@ import {
   EditAction,
   HistoryAction,
   CreateButton,
-  ExportButton,
+  ExportModal,
   ImportButton,
 } from "@/lib/crud";
-import {
-  eggGuidelineApi,
-  exportEggGuidelinesCSV,
-  exportEggGuidelinesXLS,
-  exportEggGuidelinesXLSX,
-  importEggGuidelinesCSV,
-  importEggGuidelinesXLS,
-  importEggGuidelinesXLSX,
-} from "../services";
+import { eggGuidelineApi, URL } from "../services";
 import { EggGuideline } from "@/models";
 import { breedApi } from "@/features/breeds/services";
 import { Typography } from "@mui/material";
@@ -64,16 +56,12 @@ export const EggGuidelineList = () => {
       menus={
         <>
           <CreateButton />
-          <ExportButton
-            exportCsv={exportEggGuidelinesCSV}
-            exportXls={exportEggGuidelinesXLS}
-            exportXlsx={exportEggGuidelinesXLSX}
+          <ExportModal
+            url={URL}
+            fields={{}}
+            beforeSubmit={(values) => values}
           />
-          <ImportButton
-            importCsv={importEggGuidelinesCSV}
-            importXls={importEggGuidelinesXLS}
-            importXlsx={importEggGuidelinesXLSX}
-          />
+          <ImportButton url={URL} />
         </>
       }
     />

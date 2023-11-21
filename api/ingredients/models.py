@@ -49,8 +49,8 @@ class IngredientNutrient(CoreModel):
 class Ingredient(CoreModel):
     name = models.CharField(max_length=100, unique=True)
     code = models.CharField(max_length=100, null=True, blank=True)
-    ingredient_type = models.ManyToManyField(
-        IngredientType, null=True, blank=True, related_name='ingredients')
+    ingredient_type = models.ForeignKey(
+        IngredientType, null=True, blank=True, on_delete=models.SET_NULL, related_name='ingredients')
     description = models.CharField(max_length=200, null=True, blank=True)
     price = models.DecimalField(
         max_digits=10, decimal_places=3, null=True, blank=True, default=0)  # kg

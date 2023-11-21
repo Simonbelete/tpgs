@@ -2,7 +2,7 @@ import { AxiosResponse } from "axios";
 import { Response, UnitConverter } from "@/models";
 import client from "@/services/client";
 
-const URL = "/unit-converters";
+export const URL = "/unit-converters";
 
 export default {
   get: async (): Promise<AxiosResponse<Response<UnitConverter[]>>> =>

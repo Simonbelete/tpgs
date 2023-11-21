@@ -7,18 +7,10 @@ import {
   EditAction,
   HistoryAction,
   CreateButton,
-  ExportButton,
+  ExportModal,
   ImportButton,
 } from "@/lib/crud";
-import {
-  penApi,
-  exportPensCSV,
-  exportPensXLS,
-  exportPensXLSX,
-  importPensCSV,
-  importPensXLS,
-  importPensXLSX,
-} from "../services";
+import { penApi, URL } from "../services";
 import { Pen } from "@/models";
 import { houseApi } from "@/features/houses/services";
 import { Typography } from "@mui/material";
@@ -63,16 +55,12 @@ export const PenList = () => {
       menus={
         <>
           <CreateButton />
-          <ExportButton
-            exportCsv={exportPensCSV}
-            exportXls={exportPensXLS}
-            exportXlsx={exportPensXLSX}
+          <ExportModal
+            url={URL}
+            fields={{}}
+            beforeSubmit={(values) => values}
           />
-          <ImportButton
-            importCsv={importPensCSV}
-            importXls={importPensXLS}
-            importXlsx={importPensXLSX}
-          />
+          <ImportButton url={URL} />
         </>
       }
     />

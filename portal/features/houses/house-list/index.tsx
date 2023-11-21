@@ -6,19 +6,10 @@ import {
   EditAction,
   HistoryAction,
   CreateButton,
-  ExportButton,
   ImportButton,
   ExportModal,
 } from "@/lib/crud";
-import {
-  houseApi,
-  exportHousesCSV,
-  exportHousesXLS,
-  exportHousesXLSX,
-  importHousesCSV,
-  importHousesXLS,
-  importHousesXLSX,
-} from "../services";
+import { houseApi, URL } from "../services";
 import { House } from "@/models";
 
 export const HouseList = () => {
@@ -37,7 +28,7 @@ export const HouseList = () => {
         <>
           <CreateButton />
           <ExportModal
-            url="/houses"
+            url={URL}
             fields={{
               house: {
                 endpoint: houseApi.endpoints.getHouses,
@@ -46,16 +37,7 @@ export const HouseList = () => {
               },
             }}
           />
-          {/* <ExportButton
-            exportCsv={exportHousesCSV}
-            exportXls={exportHousesXLS}
-            exportXlsx={exportHousesXLSX}
-          /> */}
-          <ImportButton
-            importCsv={importHousesCSV}
-            importXls={importHousesXLS}
-            importXlsx={importHousesXLSX}
-          />
+          <ImportButton url={URL} />
         </>
       }
     />

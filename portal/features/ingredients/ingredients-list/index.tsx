@@ -7,22 +7,13 @@ import {
   EditAction,
   HistoryAction,
   CreateButton,
-  ExportButton,
   ImportButton,
+  ExportModal,
 } from "@/lib/crud";
-import {
-  ingredientApi,
-  exportIngredientsCSV,
-  exportIngredientsXLS,
-  exportIngredientsXLSX,
-  importIngredientsCSV,
-  importIngredientsXLS,
-  importIngredientsXLSX,
-} from "../services";
+import { ingredientApi, URL } from "../services";
 import { Ingredient } from "@/models";
 import { Typography } from "@mui/material";
 import Link from "next/link";
-import dayjs from "dayjs";
 
 export const IngredientList = () => {
   const columns: GridColDef[] = [
@@ -45,18 +36,6 @@ export const IngredientList = () => {
         );
       },
     },
-    // {
-    //   field: "created_at",
-    //   headerName: "Create at",
-    //   flex: 1,
-    //   minWidth: 150,
-    //   valueGetter: (params) =>
-    //     params.row.created_at
-    //       ? dayjs(params.row.created_at).format(
-    //           process.env.NEXT_PUBLIC_DATE_FORMAT
-    //         )
-    //       : "",
-    // },
   ];
   return (
     <ListLayout<Ingredient>
@@ -74,16 +53,12 @@ export const IngredientList = () => {
       menus={
         <>
           <CreateButton />
-          <ExportButton
-            exportCsv={exportIngredientsCSV}
-            exportXls={exportIngredientsXLS}
-            exportXlsx={exportIngredientsXLSX}
+          <ExportModal
+            url={URL}
+            fields={{}}
+            beforeSubmit={(values) => values}
           />
-          <ImportButton
-            importCsv={importIngredientsCSV}
-            importXls={importIngredientsXLS}
-            importXlsx={importIngredientsXLSX}
-          />
+          <ImportButton url={URL} />
         </>
       }
     />

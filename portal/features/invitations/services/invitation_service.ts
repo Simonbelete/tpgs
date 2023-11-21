@@ -2,8 +2,8 @@ import { AxiosResponse } from "axios";
 import { Response, Invitation, VerifyInvitation } from "@/models";
 import client from "@/services/client";
 
-const URL = "/invitations";
-const VERIFY_URL = 'verify-invitation';
+export const URL = "/invitations";
+const VERIFY_URL = "verify-invitation";
 
 export default {
   get: async (query?: Object): Promise<AxiosResponse<Response<Invitation[]>>> =>

@@ -2,7 +2,7 @@ import { AxiosResponse } from "axios";
 import { Response, User } from "@/models";
 import client from "@/services/client";
 
-const URL = "/users";
+export const URL = "/users";
 
 export default {
   get: async (): Promise<AxiosResponse<Response<User[]>>> =>

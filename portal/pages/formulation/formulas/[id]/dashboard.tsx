@@ -20,6 +20,7 @@ import {
 } from "@/features/formula";
 import { getFormulaByIdSSR } from "@/features/formula/services";
 import EditNoteIcon from "@mui/icons-material/EditNote";
+import { getServerSidePropsContext } from "@/services/getServerSidePropsContext";
 
 const FormulaDashboardEditPage = ({ data }: { data: Formula }) => {
   const { breadcrumbs } = useBreadcrumbs();
@@ -65,32 +66,14 @@ const Actions = () => {
     </Stack>
   );
 };
-
 export async function getServerSideProps(context: NextPageContext) {
   const { id } = context.query;
 
-  try {
-    const res = await getFormulaByIdSSR(context, Number(id));
-
-    if (res.status != 200)
-      return {
-        redirect: {
-          permanent: false,
-          destination: `/${res.status}?id=${id}&from=/formulation/formulas&next=/formulation/formulas`,
-        },
-      };
-
-    const data = res.data;
-
-    return { props: { data } };
-  } catch (ex) {
-    return {
-      redirect: {
-        permanent: false,
-        destination: `/404?id=${id}&from=/formulation/formulas&next=/formulation/formulas&error=unknown`,
-      },
-    };
-  }
+  return getServerSidePropsContext<Formula>({
+    context,
+    id: Number(id),
+    getByIdSSR: getFormulaByIdSSR,
+  });
 }
 
 export default FormulaDashboardEditPage;

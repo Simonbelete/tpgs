@@ -4,14 +4,13 @@ import { Button } from "@mui/material";
 import { AxiosResponse } from "axios";
 import { useSnackbar } from "notistack";
 import { HtmlModal } from "@/components";
+import client from "@/services/client";
 
 export interface ImportProps {
-  importCsv: (data: FormData) => Promise<AxiosResponse>;
-  importXlsx: (data: FormData) => Promise<AxiosResponse>;
-  importXls: (data: FormData) => Promise<AxiosResponse>;
+  url: string;
 }
 
-const Import = ({ importCsv, importXlsx, importXls }: ImportProps) => {
+const Import = ({ url }: ImportProps) => {
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   const [responseHtml, setResponseHtml] = useState({
     open: false,
@@ -38,9 +37,24 @@ const Import = ({ importCsv, importXlsx, importXls }: ImportProps) => {
 
       try {
         let response: Partial<AxiosResponse> = {};
-        if (file.name.includes(".xlsx")) response = await importXlsx(formData);
-        if (file.name.includes(".xls")) response = await importXls(formData);
-        if (file.name.includes(".csv")) response = await importCsv(formData);
+        if (file.name.includes(".xlsx"))
+          response = await client.post(`${url}/import/xlsx`, formData, {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          });
+        if (file.name.includes(".xls"))
+          response = await client.post(`${url}/import/xls`, formData, {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          });
+        if (file.name.includes(".csv"))
+          response = await client.post(`${url}/import/csv`, formData, {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          });
         if (response.status == 200) {
           setResponseHtml({
             open: true,

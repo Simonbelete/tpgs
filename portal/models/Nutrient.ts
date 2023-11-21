@@ -11,4 +11,5 @@ export default interface Nutrient extends AbstractBaseModel {
   unit: number | Unit;
   qty?: number;
   percentage?: number;
+  order?: null | number;
 }

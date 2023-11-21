@@ -7,18 +7,10 @@ import {
   EditAction,
   HistoryAction,
   CreateButton,
-  ExportButton,
+  ExportModal,
   ImportButton,
 } from "@/lib/crud";
-import {
-  hatcheryEggApi,
-  exportHatcheryEggsCSV,
-  exportHatcheryEggsXLS,
-  exportHatcheryEggsXLSX,
-  importHatcheryEggsCSV,
-  importHatcheryEggsXLS,
-  importHatcheryEggsXLSX,
-} from "../services";
+import { hatcheryEggApi, URL } from "../services";
 import { HatcheryEgg } from "@/models";
 import dayjs from "dayjs";
 import { Typography } from "@mui/material";
@@ -87,16 +79,12 @@ export const CandlingList = () => {
       menus={
         <>
           <CreateButton />
-          <ExportButton
-            exportCsv={exportHatcheryEggsCSV}
-            exportXls={exportHatcheryEggsXLS}
-            exportXlsx={exportHatcheryEggsXLSX}
+          <ExportModal
+            url={URL}
+            fields={{}}
+            beforeSubmit={(values) => values}
           />
-          <ImportButton
-            importCsv={importHatcheryEggsCSV}
-            importXls={importHatcheryEggsXLS}
-            importXlsx={importHatcheryEggsXLSX}
-          />
+          <ImportButton url={URL} />
         </>
       }
     />

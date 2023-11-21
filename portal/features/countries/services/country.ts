@@ -1,7 +1,7 @@
 import { baseApi } from "@/services/baseApi";
 import { Response, Country } from "@/models";
 
-const URL = "/countries";
+export const URL = "/countries";
 
 export const countryApi = baseApi.injectEndpoints({
   endpoints: (build) => {
