@@ -11,6 +11,9 @@ export interface FilterState {
 
 const initialState: FilterState = {
   search: "",
+  /**
+   * {state: false, chicken: []}
+   */
   filters: {},
   is_active: true,
 };
