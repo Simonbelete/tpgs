@@ -82,7 +82,7 @@ export default function AsyncDropdown<T>({
   const handleInputChange = async (event: any, newValue: any) => {
     if (event && event.type == "change") {
       const response = await trigger(
-        { search: newValue, ...buildPage(paginationModel) },
+        { search: newValue, ...buildPage(paginationModel), offset: 0 },
         false
       ).unwrap();
       setOptions(response?.results || []);

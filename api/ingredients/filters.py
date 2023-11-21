@@ -32,5 +32,6 @@ class IngredientNutrientFilter(CoreFilterSet):
     class Meta:
         model = models.IngredientNutrient
         fields = {
-            'ingredient': ['in', 'exact']
+            'ingredient': ['in', 'exact'],
+            'nutrient': ['in', 'exact']
         }
