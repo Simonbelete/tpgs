@@ -16,16 +16,13 @@ import MenuOpenIcon from "@mui/icons-material/MenuOpen";
 import Image from "next/image";
 import ILRILogo from "../logos/ILRILogo";
 import { FarmsMenu } from "@/features/farms";
-import { NotificationPopover } from '@/features/notification';
+import { NotificationPopover } from "@/features/notification";
 import { AccountMenu } from "../menus";
+import MenuIcon from "@mui/icons-material/Menu";
 
 const PrimaryNavbar = () => {
   const { collapseSidebar, toggleSidebar } = useProSidebar();
   const router = useRouter();
-
-  const handleLogout = () => {
-    router.push("/api/logout");
-  };
 
   return (
     <AppBar
@@ -40,13 +37,26 @@ const PrimaryNavbar = () => {
           edge="start"
           color="inherit"
           aria-label="menu"
-          sx={{ mr: 2 }}
+          sx={{ mr: 2, display: { xs: "none", md: "flex" } }}
           onClick={() => {
-            // collapseSidebar();
-            toggleSidebar();
+            collapseSidebar();
+            // toggleSidebar();
           }}
         >
           <MenuOpenIcon />
+        </IconButton>
+
+        <IconButton
+          size="large"
+          edge="start"
+          color="inherit"
+          aria-label="menu"
+          sx={{ mr: 2, display: { xs: "flex", md: "none" } }}
+          onClick={() => {
+            toggleSidebar();
+          }}
+        >
+          <MenuIcon />
         </IconButton>
         <div>
           <ILRILogo />
