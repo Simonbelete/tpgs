@@ -58,7 +58,7 @@ class RequirementNutrientSerializer_GET(serializers.ModelSerializer):
 class RequirementNutrientSerializer_POST(serializers.ModelSerializer):
     class Meta:
         model = models.RequirementNutrient
-        fields = ['id', 'nutrient', 'value']
+        fields = ['id', 'requirement', 'nutrient', 'value']
 
     def create(self, validated_data):
         if ('requirement_pk' in self.context["view"].kwargs):

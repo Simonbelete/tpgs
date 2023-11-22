@@ -132,8 +132,7 @@ export const IngredientForm = ({
       headerName: "Unit",
       flex: 1,
       minWidth: 150,
-      valueGetter: (params) =>
-        params.row.nutrient ? params.row.nutrient.unit : "",
+      valueGetter: (params) => _.get(params.row.nutrient, "unit.name", ""),
     },
   ];
 

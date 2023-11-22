@@ -32,7 +32,6 @@ class Nutrient(CoreModel):
 
     @property
     def display_name(self):
-        print(self.unit.name)
         if (self.unit):
             return "{abbreviation} ({unit})".format(abbreviation=self.abbreviation, unit=self.unit.name)
         else:

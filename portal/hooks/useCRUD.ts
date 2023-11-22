@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { TypedUseQueryHookResult } from "@reduxjs/toolkit/query/react";
 import errorToForm from "@/util/errorToForm";
 import { useSnackbar } from "notistack";
+import errorToHtml from "@/util/errorToHtml";
 
 const useCRUD = ({ results, setError }: { results: any[]; setError?: any }) => {
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
@@ -29,7 +30,10 @@ const useCRUD = ({ results, setError }: { results: any[]; setError?: any }) => {
       }
 
       if (isError) {
-        if (statusCode == 400) errorToForm(data, setError);
+        if (statusCode == 400) {
+          errorToForm(data, setError);
+          enqueueSnackbar(errorToHtml(data), { variant: "error" });
+        }
       } else if (isSuccess) {
         if (statusCode == 201)
           enqueueSnackbar("Created", { variant: "success" });

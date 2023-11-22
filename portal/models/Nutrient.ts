@@ -7,8 +7,8 @@ export default interface Nutrient extends AbstractBaseModel {
   code: string;
   abbreviation: string;
   description: string;
-  nutrient_group: NutrientGroup | number;
-  unit: number | Unit;
+  nutrient_group?: null | NutrientGroup | number;
+  unit?: null | number | Unit;
   qty?: number;
   percentage?: number;
   order?: null | number;

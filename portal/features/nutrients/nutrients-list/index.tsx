@@ -14,6 +14,7 @@ import { nutrientApi, URL } from "../services";
 import { Nutrient } from "@/models";
 import { Typography } from "@mui/material";
 import Link from "next/link";
+import dayjs from "dayjs";
 
 export const NutrientList = () => {
   const columns: GridColDef[] = [
@@ -60,7 +61,19 @@ export const NutrientList = () => {
         );
       },
     },
-    { field: "code", headerName: "Code", flex: 1, minWidth: 100 },
+    { field: "order", headerName: "Order", flex: 1, minWidth: 100 },
+    {
+      field: "created_at",
+      headerName: "Create at",
+      flex: 1,
+      minWidth: 150,
+      valueGetter: (params) =>
+        params.row.created_at
+          ? dayjs(params.row.created_at).format(
+              process.env.NEXT_PUBLIC_DATE_FORMAT
+            )
+          : "",
+    },
   ];
   return (
     <ListLayout<Nutrient>

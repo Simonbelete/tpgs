@@ -8,8 +8,9 @@ import { nutrientApi } from "@/features/nutrients/services";
 import { NutrientForm } from "@/features/nutrients";
 
 const schema = yup.object({
-  name: yup.string().required(),
-  house: yup.object().required(),
+  requirement: yup.object().required(),
+  nutrient: yup.object().required(),
+  value: yup.number().min(0).required(),
 });
 
 export const RequirementNutrientForm = ({

@@ -24,10 +24,11 @@ class NutrientResource(resources.ModelResource):
 
     class Meta:
         model = models.Nutrient
-        skip_unchanged = True
-        report_skipped = True
+        # skip_unchanged = True
+        # report_skipped = True
         import_id_fields = ['id']
-        fields=['id', 'name', 'abbreviation', 'unit', 'code', 'nutrient_group', 'description']
+        fields = ['id', 'name', 'abbreviation', 'unit',
+                  'code', 'nutrient_group', 'description', 'order']
 
 
 admin.site.register(models.Nutrient, SimpleHistoryAdmin)

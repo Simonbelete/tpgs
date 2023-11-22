@@ -1,6 +1,6 @@
-id,name,abbreviation,unit
- ,Metabolizable Energy,ME,kcal/kg
- ,Crude protein,CP,%
+id,name,abbreviation,unit,nutrient_group
+ ,Metabolizable Energy,ME,kcal/kg,Energy
+ ,Crude protein,CP,%,
  ,Lysine,Lys,%
  ,m+c,m+c,%
  ,Methionine,Met,%

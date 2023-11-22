@@ -17,6 +17,7 @@ import { Card } from "@/components";
 import { requirementApi } from "../services";
 import { nutrientApi } from "@/features/nutrients/services";
 import { EditMode } from "@/types";
+import _ from "lodash";
 
 const schema = yup.object({
   name: yup.string().required(),
@@ -125,8 +126,7 @@ export const RequirementForm = ({
       headerName: "Unit",
       flex: 1,
       filterable: false,
-      valueGetter: (params) =>
-        params.row.nutrient ? params.row.nutrient.unit : "",
+      valueGetter: (params) => _.get(params.row.nutrient, "unit.name", ""),
     },
   ];
 

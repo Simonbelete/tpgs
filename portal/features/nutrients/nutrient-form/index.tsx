@@ -7,6 +7,7 @@ import { nutrientGroupApi } from "@/features/nutrient-group/services";
 import { NutrientGroupForm } from "@/features/nutrient-group";
 import { unitApi } from "@/features/units/services";
 import { UnitForm } from "@/features/units";
+import _ from "lodash";
 
 const schema = yup.object({
   name: yup.string().required(),
@@ -42,8 +43,8 @@ export const NutrientForm = ({
             name: values.name,
             abbreviation: values.abbreviation,
             order: values.order,
-            nutrient_group: (values.nutrient_group as NutrientGroup).id || 0,
-            unit: (values.unit as Unit).id || 0,
+            nutrient_group: _.get(values.nutrient_group, "id", null),
+            unit: _.get(values.unit, "id", null),
           };
 
           return cleaned_data;
