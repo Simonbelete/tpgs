@@ -326,8 +326,10 @@ const Formulation = ({ data }: { data?: Formula }) => {
       const RATION_INDEX = rows.length;
       const REQUIREMENT_INDEX = rows.length + 1;
 
-      if (row < rows.length) {
-        _.set(rows[row], dataCol.path, newValue.data);
+      const rowCopy = [...rows];
+
+      if (row < rowCopy.length) {
+        _.set(rowCopy[row], dataCol.path, newValue.data);
       } else if (row == RATION_INDEX) {
         // TODO: should not be editable
         _.set(ration, dataCol.path, newValue.data);
@@ -337,7 +339,7 @@ const Formulation = ({ data }: { data?: Formula }) => {
 
       let updatedRation = { rowId: "ration", display_name: "Ration" };
 
-      rows.forEach((r) => {
+      rowCopy.forEach((r) => {
         // Calculate feed
         columns.slice(1, -endColumns.length).forEach((c) => {
           const cell = Number(_.get(r, c.path, 0));
@@ -388,6 +390,7 @@ const Formulation = ({ data }: { data?: Formula }) => {
       });
 
       setRation(updatedRation);
+      setRows(rowCopy);
     },
     [rows, ration, requirement, columns]
   );
@@ -578,13 +581,14 @@ const Formulation = ({ data }: { data?: Formula }) => {
         });
 
         newRows.push({
-          id: _.get(ing, "id", 0),
-          rowId: _.get(ing, "id", ""),
+          id: _.get(ing, "ingredient.id", 0),
+          rowId: _.get(ing, "ingredient.id", ""),
           display_name: _.get(ing, "ingredient.display_name", ""),
           ration: _.get(ing, "ration", 0),
           price: _.get(ing, "price", 0),
           dm: _.get(ing, "dm", 0),
           nutrients: nutrients,
+          ratio: _.get(ing, "ration", 0),
           // formula ingredient fields
           ration_price: _.get(ing, "ration_price", 0),
           ration_weight: _.get(ing, "ration_weight", 0),

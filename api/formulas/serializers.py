@@ -51,7 +51,7 @@ class FormulaIngredientSerializer_REF(serializers.ModelSerializer):
 
     class Meta:
         model = models.FormulaIngredient
-        fields = ['ingredient', 'ratio_min', 'ratio_max', 'ration']
+        fields = ['ingredient', 'ration']
 
 
 class FormulaIngredientSerializer_PATCH(serializers.ModelSerializer):
@@ -109,10 +109,32 @@ class FormulaSerializer_POST(serializers.ModelSerializer):
             models.FormulaRation.objects.update_or_create(
                 formula=instance, nutrient=nut, defaults={'formula': instance, **ration})
         for ingredient in ingredients:
+            print(ingredient)
             inp = ingredient.pop('ingredient')
             models.FormulaIngredient.objects.update_or_create(
                 formula=instance, ingredient=inp, defaults={'formula': instance, 'ingredient': inp, **ingredient})
         return instance
+
+    @transaction.atomic
+    def update(self, instance, validated_data):
+        requirements = validated_data.pop('formularequirement', [])
+        rations = validated_data.pop('rations', [])
+        ingredients = validated_data.pop('formulaingredient', [])
+
+        for requirement in requirements:
+            models.FormulaRequirement.objects.update_or_create(
+                formula=instance, nutrient=requirement.nutrient, defaults={'formula': instance, **requirement})
+        for ration in rations:
+            nut = ingredient.pop('nutrient')
+            models.FormulaRation.objects.update_or_create(
+                formula=instance, nutrient=nut, defaults={'formula': instance, **ration})
+        for ingredient in ingredients:
+            print('**************')
+            print(ingredient)
+            inp = ingredient.pop('ingredient')
+            models.FormulaIngredient.objects.update_or_create(
+                formula=instance, ingredient=inp, defaults={'formula': instance, 'ingredient': inp, **ingredient})
+        return super().update(instance, validated_data)
 
 
 # Formula Requirements
@@ -193,8 +215,8 @@ class FormulaIngredientSerializer_GET(serializers.ModelSerializer):
 
     class Meta:
         model = models.FormulaIngredient
-        fields = ['id', 'formula', 'ingredient', 'ratio_min',
-                  'ratio_max', 'price', 'ration', 'ration_weight', 'ration_price']
+        fields = ['id', 'formula', 'ingredient',
+                  'price', 'ration', 'ration_weight', 'ration_price']
 
 
 class FormulaIngredientSerializer_POST(serializers.ModelSerializer):
@@ -221,5 +243,5 @@ class AllFormulaIngredientSerializer_GET(serializers.ModelSerializer):
 
     class Meta:
         model = models.FormulaIngredient
-        fields = ['id', 'ingredient', 'ratio_min', 'price',
+        fields = ['id', 'ingredient', 'price',
                   'ration', 'ration_weight', 'ration_price']

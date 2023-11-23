@@ -53,7 +53,7 @@ class Ingredient(CoreModel):
         IngredientType, null=True, blank=True, on_delete=models.SET_NULL, related_name='ingredients')
     description = models.CharField(max_length=200, null=True, blank=True)
     price = models.DecimalField(
-        max_digits=10, decimal_places=3, null=True, blank=True, default=0)  # kg
+        max_digits=10, decimal_places=3, null=True, blank=True, default=0)  # kg, Unit price
     nutrients = models.ManyToManyField(
         'nutrients.Nutrient', null=True, blank=True, through=IngredientNutrient)
     # dry material

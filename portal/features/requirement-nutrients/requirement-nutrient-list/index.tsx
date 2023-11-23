@@ -54,7 +54,7 @@ export const RequirementNutrientList = () => {
   ];
   return (
     <ListLayout<RequirementNutrient>
-      title="Requiremen tNutrient"
+      title="Requirement Composition"
       columns={columns}
       actions={[EditAction, HistoryAction, PermanentlyDeleteAction]}
       getEndpoint={requirementNutrientApi.endpoints.getRequirementNutrients}

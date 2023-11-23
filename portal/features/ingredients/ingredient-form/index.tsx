@@ -23,11 +23,13 @@ import _ from "lodash";
 
 const schema = yup.object({
   name: yup.string().required(),
+  code: yup.string().nullable(),
+  ingredient_type: yup.object().nullable(),
   description: yup.string().nullable(),
-  weight: yup.number().nullable(),
-  desired_dm: yup.string().nullable(),
-  budget: yup.number().nullable(),
-  desired_ratio: yup.number().default(100).required(),
+  price: yup.number().min(0).nullable(),
+  dm: yup.string().nullable(),
+  min: yup.number().nullable(),
+  max: yup.number().nullable(),
 });
 
 function a11yProps(index: number) {
@@ -81,9 +83,13 @@ export const IngredientForm = ({
   const cleanData = (values: Partial<Ingredient>): Partial<Ingredient> => {
     return {
       name: values.name,
+      code: values.code,
       ingredient_type: _.get(values, "ingredient_type.id", null),
-      dm: values.dm,
       description: values.description,
+      price: values.price,
+      dm: values.dm,
+      min: values.min,
+      max: values.max,
     };
   };
 
@@ -215,6 +221,16 @@ export const IngredientForm = ({
                   description: {
                     label: "Description",
                     placeholder: "Description",
+                  },
+                  min: {
+                    label: "Min (%)",
+                    placeholder: "Min (%)",
+                    postfix: "%",
+                  },
+                  max: {
+                    label: "Max (%)",
+                    placeholder: "Max (%)",
+                    postfix: "%",
                   },
                 }}
                 beforeSubmit={cleanData}

@@ -23,7 +23,7 @@ export const RequirementNutrientForm = ({
   return (
     <>
       <FormLayout<RequirementNutrient>
-        title="RequirementNutrient Form"
+        title="Requirement Composition Form"
         id={data?.id || 0}
         data={data}
         schema={schema}

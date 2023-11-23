@@ -63,14 +63,7 @@ import PlaylistAddIcon from "@mui/icons-material/PlaylistAdd";
 import AutorenewIcon from "@mui/icons-material/Autorenew";
 import SaveIcon from "@mui/icons-material/Save";
 import DeleteSweepIcon from "@mui/icons-material/DeleteSweep";
-import {
-  useCreateFormulaMutation,
-  useUpdateIngredientOfFormulaMutation,
-  useCreateIngredientForFormulaMutation,
-  useCreateRequirementForFormulaMutation,
-  useUpdateRequirementOfFormulaMutation,
-  useCreateRationForFormulaMutation,
-} from "../services";
+import { useCreateFormulaMutation } from "../services";
 import { enqueueSnackbar } from "notistack";
 
 const AchivementChartComponent = dynamic(
@@ -107,6 +100,8 @@ interface Row {
       value: number;
     };
   };
+  min?: number;
+  max?: number;
 }
 
 type Inputs = Partial<Formula>;
@@ -168,7 +163,7 @@ const Formulation = () => {
     },
     {
       id: "price",
-      title: "Price /1 Kg",
+      title: "Unit Price",
       path: "price",
       property: {
         kind: GridCellKind.Number,
@@ -198,7 +193,7 @@ const Formulation = () => {
     // // Ingredient price * ingredient weight i.e batch price
     {
       id: "ration_price",
-      title: "Ration Price (kg)",
+      title: "Batch Price (kg)",
       path: "ration_price",
       property: {
         kind: GridCellKind.Number,
@@ -318,8 +313,10 @@ const Formulation = () => {
       const RATION_INDEX = rows.length;
       const REQUIREMENT_INDEX = rows.length + 1;
 
-      if (row < rows.length) {
-        _.set(rows[row], dataCol.path, newValue.data);
+      const rowCopy = [...rows];
+
+      if (row < rowCopy.length) {
+        _.set(rowCopy[row], dataCol.path, newValue.data);
       } else if (row == RATION_INDEX) {
         // TODO: should not be editable
         _.set(ration, dataCol.path, newValue.data);
@@ -329,23 +326,31 @@ const Formulation = () => {
 
       let updatedRation = { rowId: "ration", display_name: "Ration" };
 
-      rows.forEach((r) => {
+      rowCopy.forEach((r, i) => {
+        const price: number = Number(_.get(r, "price", 0));
+        const ratio: number = Number(_.get(r, "ratio", 0));
+        // Total formulation weight default 100 kg
+        const weight: number = Number(getValues("weight") || 0);
+
+        // Set Batch Price
+        _.set(
+          rowCopy[i],
+          "ration_price",
+          roundTo3DecimalPlace(((weight * ratio) / 100) * price)
+        );
+
         // Calculate feed
         columns.slice(1, -endColumns.length).forEach((c) => {
           const cell = Number(_.get(r, c.path, 0));
           const cellTotal = Number(_.get(updatedRation, c.path, 0));
 
-          const price = Number(_.get(r, "price", 0));
-          const ratio = Number(_.get(r, "ratio", 0));
-          const weight: number = Number(getValues("weight") || 0);
-
-          if (c.id == "ratio")
+          if (c.id == "ratio") {
             _.set(
               updatedRation,
               c.path,
               roundTo3DecimalPlace(cell + cellTotal)
             );
-          else if (c.id == "price")
+          } else if (c.id == "price")
             _.set(
               updatedRation,
               c.path,
@@ -380,6 +385,7 @@ const Formulation = () => {
       });
 
       setRation(updatedRation);
+      setRows(rowCopy);
     },
     [rows, ration, requirement, columns]
   );
@@ -604,6 +610,8 @@ const Formulation = () => {
           ration_weight: _.get(ing, "ration_weight", 0),
           price: _.get(ing, "price", 0),
           dm: _.get(ing, "dm", 0),
+          min: _.get(ing, "min", 0),
+          max: _.get(ing, "max", 0),
           nutrients: nutrients,
         });
       });
@@ -654,9 +662,6 @@ const Formulation = () => {
   };
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
-    // console.log(requirement);
-    // console.log(ration);
-    // return;
     const formula: Partial<Formula> = data;
 
     const ingredients: Partial<FormulaIngredient>[] = [];
@@ -702,61 +707,7 @@ const Formulation = () => {
     formula.desired_ratio = requirement.ratio;
     formula.desired_dm = requirement.dm;
 
-    console.log(formula);
-
     const response = await createFormula(formula as any);
-
-    //   _.forEach(requirement.nutrients, (value, key) => {
-    //     if (_.get(value, "value") == 0 || !isNaN(_.get(value, "value"))) {
-    //       const body: Partial<FormulaRequirement> = {
-    //         nutrient: _.get(value, "id"),
-    //         value: _.get(value, "value"),
-    //       };
-    //       requests.push(createRequirement({ id: formula.id, data: body }));
-    //     }
-    //   });
-
-    // const response = await createFormula(data).unwrap();
-
-    // if (response) {
-    //   const requests: Promise<any>[] = [];
-
-    //   _.forEach(rows, (e, i) => {
-    //     const body: Partial<FormulaIngredient> = {
-    //       // id: rows[i].id,
-    //       formula: data.id,
-    //       ingredient: _.get(rows[i], "ingredient.id", 0),
-    //       ration: rows[i].ration,
-    //     };
-    //     requests.push(createIngredient({ id: formula.id, data: body }));
-    //   });
-
-    //   _.forEach(requirement.nutrients, (value, key) => {
-    //     if (_.get(value, "value") == 0 || !isNaN(_.get(value, "value"))) {
-    //       const body: Partial<FormulaRequirement> = {
-    //         nutrient: _.get(value, "id"),
-    //         value: _.get(value, "value"),
-    //       };
-    //       requests.push(createRequirement({ id: formula.id, data: body }));
-    //     }
-    //   });
-
-    //   _.forEach(ration.nutrients, (value, key) => {
-    //     if (_.get(value, "value") == 0 || !isNaN(_.get(value, "value"))) {
-    //       const body: Partial<FormulaRequirement> = {
-    //         nutrient: _.get(value, "id"),
-    //         value: _.get(value, "value"),
-    //       };
-    //       requests.push(createRation({ id: formula.id, data: body }));
-    //     }
-    //   });
-
-    //   const allResponses = await Promise.all(requests)
-    //     .then()
-    //     .catch(() => {
-    //       enqueueSnackbar("Error saving", { variant: "error" });
-    //     });
-    // }
   };
 
   return (

@@ -15,6 +15,8 @@ import { Nutrient } from "@/models";
 import { Typography } from "@mui/material";
 import Link from "next/link";
 import dayjs from "dayjs";
+import { nutrientGroupApi } from "@/features/nutrient-group/services";
+import { unitApi } from "@/features/units/services";
 
 export const NutrientList = () => {
   const columns: GridColDef[] = [
@@ -82,7 +84,18 @@ export const NutrientList = () => {
       actions={[EditAction, HistoryAction, PermanentlyDeleteAction]}
       getEndpoint={nutrientApi.endpoints.getNutrients}
       deleteEndpoint={nutrientApi.endpoints.deleteNutrient}
-      filters={{}}
+      filters={{
+        nutrient_group: {
+          endpoint: nutrientGroupApi.endpoints.getNutrientGroups,
+          label: "Nutrient Group",
+          dataDisplayKey: "display_name",
+        },
+        unit: {
+          endpoint: unitApi.endpoints.getUnits,
+          label: "Unit",
+          dataDisplayKey: "display_name",
+        },
+      }}
       menus={
         <>
           <CreateButton />

@@ -8,7 +8,6 @@ export default interface Ingredient extends AbstractBaseModel {
   ingredient_type?: null | number[] | IngredientType[];
   description?: string;
   price: number;
-  price_unit?: string;
   nutrients: number | IngredientNutrient[];
   dm?: number;
   nutrient_count: number;
