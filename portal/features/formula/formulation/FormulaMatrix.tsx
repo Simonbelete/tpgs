@@ -64,18 +64,13 @@ import AutorenewIcon from "@mui/icons-material/Autorenew";
 import SaveIcon from "@mui/icons-material/Save";
 import DeleteSweepIcon from "@mui/icons-material/DeleteSweep";
 import {
-  useCreateFormulaMutation,
   useUpdateFormulaMutation,
-  useCreateRationForFormulaMutation,
   useLazyGetAllIngredientsOfFormulaQuery,
   useLazyGetAllRequirementsOfFormulaQuery,
-  useUpdateIngredientOfFormulaMutation,
-  useCreateIngredientForFormulaMutation,
-  useCreateRequirementForFormulaMutation,
-  useUpdateRequirementOfFormulaMutation,
   useLazyGetAllRationsOfFormulaQuery,
 } from "../services";
 import { enqueueSnackbar } from "notistack";
+import ClearIcon from "./ClearIcon";
 
 const AchivementChartComponent = dynamic(
   () => import("../components/achivement-chart"),
@@ -111,6 +106,8 @@ interface Row {
       value: number;
     };
   };
+  min?: number;
+  max?: number;
 }
 
 type Inputs = Partial<Formula>;
@@ -334,7 +331,13 @@ const Formulation = ({ data }: { data?: Formula }) => {
         // TODO: should not be editable
         _.set(ration, dataCol.path, newValue.data);
       } else if (row == REQUIREMENT_INDEX) {
-        _.set(requirement, dataCol.path, newValue.data);
+        // if Column is nutrient set the id also
+        if (dataCol.path.includes("nutrients.")) {
+          _.set(requirement, dataCol.path, newValue.data);
+          _.set(requirement, dataCol.pathId || "", dataCol.colId);
+        } else {
+          _.set(requirement, dataCol.path, newValue.data);
+        }
       }
 
       let updatedRation = { rowId: "ration", display_name: "Ration" };
@@ -403,17 +406,21 @@ const Formulation = ({ data }: { data?: Formula }) => {
 
     ["ratio", "price", "dm"].map((e) => {
       chart.x.push(e);
-      const req: number = _.get(requirement, `${e}`, 1);
+      const req: number = _.get(requirement, `${e}`, 0);
       const rat: number = _.get(ration, `${e}`, 0);
-      chart.y.push(roundTo3DecimalPlace(Number((rat / req) * 100)));
+
+      if (req == 0) chart.y.push(0);
+      else chart.y.push(roundTo3DecimalPlace(Number((rat / req) * 100)));
     });
 
     // Achivement chart
     Object.keys(ration?.nutrients || {}).map((key, i) => {
       chart.x.push(key);
-      const req: number = _.get(requirement, `nutrients.${key}.value`, 1);
+      const req: number = _.get(requirement, `nutrients.${key}.value`, 0);
       const rat: number = _.get(ration, `nutrients.${key}.value`, 0);
-      chart.y.push(roundTo3DecimalPlace(Number((rat / req) * 100)));
+
+      if (req == 0) chart.y.push(0);
+      else chart.y.push(roundTo3DecimalPlace(Number((rat / req) * 100)));
     });
 
     setAchivementData(chart);
@@ -474,16 +481,7 @@ const Formulation = ({ data }: { data?: Formula }) => {
     const dataRow = rows[row];
     const dataCol = columns[col];
 
-    let d =
-      col == 0
-        ? _.get(requirement, "display_name")
-        : _.get(requirement, dataCol.path);
-
-    // TODO:
-    d =
-      dataCol.property.kind == GridCellKind.Number
-        ? Number(d ?? 0)
-        : String(d ?? "");
+    let d = _.get(requirement, dataCol.path);
 
     if (col == 0) {
       return {
@@ -496,8 +494,8 @@ const Formulation = ({ data }: { data?: Formula }) => {
         ...dataCol.property,
         allowOverlay: true,
         readonly: false,
-        displayData: String(d ?? ""),
-        data: String(d ?? ""),
+        displayData: String(d ?? 0),
+        data: String(d ?? 0),
         style: null,
         themeOverride: null,
       };
@@ -506,6 +504,7 @@ const Formulation = ({ data }: { data?: Formula }) => {
 
   const getContent = (cell: Item): GridCell | ButtonCellType => {
     const [col, row] = cell;
+    const dataRow = rows[row];
 
     let d: number | string = "";
 
@@ -534,8 +533,6 @@ const Formulation = ({ data }: { data?: Formula }) => {
   }, []);
 
   useEffect(() => {
-    // TODO: clean all data
-    setRows([]);
     loadNutrientsToTable();
     getFormulaRequirements();
     getFormulaRations();
@@ -555,7 +552,7 @@ const Formulation = ({ data }: { data?: Formula }) => {
       const newRows: Row[] = [];
 
       const requests = _.map(formulaIngredients, (e) => {
-        const ing_id = _.get(e, "e.ingredient.id", 0);
+        const ing_id = _.get(e, "ingredient.id", 0);
 
         return getAllNutrientsOfIngredient({
           id: ing_id,
@@ -586,7 +583,9 @@ const Formulation = ({ data }: { data?: Formula }) => {
           display_name: _.get(ing, "ingredient.display_name", ""),
           ration: _.get(ing, "ration", 0),
           price: _.get(ing, "price", 0),
-          dm: _.get(ing, "dm", 0),
+          dm: _.get(ing, "ingredient.dm", 0),
+          min: _.get(ing, "ingredient.min", 0),
+          max: _.get(ing, "ingredient.max", 0),
           nutrients: nutrients,
           ratio: _.get(ing, "ration", 0),
           // formula ingredient fields
@@ -595,7 +594,7 @@ const Formulation = ({ data }: { data?: Formula }) => {
         });
       });
 
-      setRows([...newRows, ...rows]);
+      setRows(newRows);
     } catch (ex) {}
   };
 
@@ -619,14 +618,14 @@ const Formulation = ({ data }: { data?: Formula }) => {
     };
 
     for (let i = 0; i < response.results.length; i += 1) {
+      const nutrient = response.results[i].nutrient as Nutrient;
       const abbreviation: string = (response.results[i].nutrient as Nutrient)
         .abbreviation;
-      const ing_nutrient_value = _.get(
-        response.results[i],
-        "nutrient.value",
-        0
-      );
-      _.set(newRow, `nutrients.${abbreviation}`, ing_nutrient_value);
+      const val = _.get(response.results[i], "value", 0);
+      _.set(newRow, `nutrients.${abbreviation}`, {
+        id: nutrient.id,
+        value: val,
+      });
     }
 
     setRequirement(newRow);
@@ -651,14 +650,14 @@ const Formulation = ({ data }: { data?: Formula }) => {
     };
 
     for (let i = 0; i < response.results.length; i += 1) {
+      const nutrient = response.results[i].nutrient as Nutrient;
       const abbreviation: string = (response.results[i].nutrient as Nutrient)
         .abbreviation;
-      const ing_nutrient_value = _.get(
-        response.results[i],
-        "nutrient.value",
-        0
-      );
-      _.set(newRow, `nutrients.${abbreviation}`, ing_nutrient_value);
+      const val = _.get(response.results[i], "value", 0);
+      _.set(newRow, `nutrients.${abbreviation}`, {
+        id: nutrient.id,
+        value: val,
+      });
     }
 
     setRation(newRow);
@@ -708,13 +707,8 @@ const Formulation = ({ data }: { data?: Formula }) => {
       const newRows: Row[] = [];
 
       const requests = _.map(ingredients, (e) => {
-        const ing_id =
-          _.get(e, "e.ingredient.id", 0) == 0
-            ? _.get(e, "id", 0)
-            : _.get(e, "e.ingredient.id", 0);
-
         return getAllNutrientsOfIngredient({
-          id: ing_id,
+          id: e.id,
           query: {},
         }).unwrap();
       });
@@ -743,6 +737,8 @@ const Formulation = ({ data }: { data?: Formula }) => {
           ration: _.get(ing, "ration", 0),
           price: _.get(ing, "price", 0),
           dm: _.get(ing, "dm", 0),
+          min: _.get(ing, "min", 0),
+          max: _.get(ing, "max", 0),
           nutrients: nutrients,
           // formula ingredient fields
           ration_price: _.get(ing, "ration_price", 0),
@@ -837,13 +833,45 @@ const Formulation = ({ data }: { data?: Formula }) => {
     formula.ration_dm = ration.dm;
 
     formula.requirements = requirements as any;
-    formula.budget = requirement.price;
+    formula.budget = requirement.ration_price;
     formula.desired_ratio = requirement.ratio;
     formula.desired_dm = requirement.dm;
 
-    console.log(formula);
-
     const response = await updateFormula(formula as any);
+  };
+
+  const clearAll = () => {
+    clearRation();
+    clearRequirements();
+    clearIngredients();
+    resetGraph();
+  };
+
+  const clearRation = () => {
+    const rationCopy = { ...ration };
+    _.forEach(rationCopy.nutrients, (value, key) => {
+      _.set(rationCopy.nutrients || {}, `${key}.value`, 0);
+    });
+
+    setRation(rationCopy);
+  };
+
+  const clearRequirements = () => {
+    const requirementCopy = { ...ration };
+    _.forEach(requirementCopy.nutrients, (value, key) => {
+      _.set(requirementCopy.nutrients || {}, `${key}.value`, 0);
+    });
+  };
+
+  const clearIngredients = () => {
+    setRows([]);
+  };
+
+  const resetGraph = () => {
+    setAchivementData({
+      x: [],
+      y: [],
+    });
   };
 
   return (
@@ -1118,15 +1146,13 @@ const Formulation = ({ data }: { data?: Formula }) => {
         >
           Save
         </Button>
-        <Button
-          color="secondary"
-          size="small"
-          startIcon={<DeleteSweepIcon fontSize="small" />}
-          sx={{ textTransform: "none" }}
-          onClick={loadNutrientsToTable}
-        >
-          Remove all
-        </Button>
+        <ClearIcon
+          onClearAll={clearAll}
+          onClearIngredients={clearIngredients}
+          onClearRations={clearRation}
+          onClearRequirements={clearRequirements}
+          resetGraph={resetGraph}
+        />
       </Stack>
       <Sizer>
         <DataEditor

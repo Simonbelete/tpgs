@@ -29,7 +29,9 @@ const RequirementComposition = ({ id }: { id: number }) => {
 
   const { data, isLoading, status } = useGetNutrientsOfRequirementQuery({
     id,
-    query: { nutrient_group_not: "Energy" },
+    // TODO:
+    // query: { nutrient_group_not: "Energy", limit: 100 },
+    query: { limit: 100 },
   });
 
   useEffect(() => {
@@ -45,18 +47,18 @@ const RequirementComposition = ({ id }: { id: number }) => {
     const response = data?.results || [];
 
     for (let i = 0; i < response.length; i += 1) {
-      labels.push((response[i].nutrient as Nutrient).name || "");
+      labels.push((response[i].nutrient as Nutrient).abbreviation || "");
       values.push(response[i].value);
 
       x1.push(
-        `${(response[i].nutrient as Nutrient).name} [${
+        `${(response[i].nutrient as Nutrient).abbreviation} [${
           (response[i].nutrient as Nutrient).unit || ""
         }]` || ""
       );
       y1.push(response[i].value);
 
       x2.push(
-        `${(response[i].nutrient as Nutrient).name} [${
+        `${(response[i].nutrient as Nutrient).abbreviation} [${
           (response[i].nutrient as Nutrient).unit || ""
         }]` || ""
       );
@@ -72,14 +74,14 @@ const RequirementComposition = ({ id }: { id: number }) => {
 
   return (
     <Grid container spacing={3}>
-      <Grid item xs={4}>
-        <StatisticsCard title="Requirement Compostions">
-          <Chart data={chartData} />
-        </StatisticsCard>
-      </Grid>
-      <Grid item xs={8}>
+      <Grid item xs={12}>
         <StatisticsCard title="Requirement Dry matter vs As feed comparation">
           <BarChart data={chartData2} />
+        </StatisticsCard>
+      </Grid>
+      <Grid item xs={12}>
+        <StatisticsCard title="Requirement Compostions">
+          <Chart data={chartData} />
         </StatisticsCard>
       </Grid>
     </Grid>

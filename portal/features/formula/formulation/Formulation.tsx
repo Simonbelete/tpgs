@@ -65,6 +65,7 @@ import SaveIcon from "@mui/icons-material/Save";
 import DeleteSweepIcon from "@mui/icons-material/DeleteSweep";
 import { useCreateFormulaMutation } from "../services";
 import { enqueueSnackbar } from "notistack";
+import ClearIcon from "./ClearIcon";
 
 const AchivementChartComponent = dynamic(
   () => import("../components/achivement-chart"),
@@ -321,7 +322,13 @@ const Formulation = () => {
         // TODO: should not be editable
         _.set(ration, dataCol.path, newValue.data);
       } else if (row == REQUIREMENT_INDEX) {
-        _.set(requirement, dataCol.path, newValue.data);
+        // if Column is nutrient set the id also
+        if (dataCol.path.includes("nutrients.")) {
+          _.set(requirement, dataCol.path, newValue.data);
+          _.set(requirement, dataCol.pathId || "", dataCol.colId);
+        } else {
+          _.set(requirement, dataCol.path, newValue.data);
+        }
       }
 
       let updatedRation = { rowId: "ration", display_name: "Ration" };
@@ -398,17 +405,21 @@ const Formulation = () => {
 
     ["ratio", "price", "dm"].map((e) => {
       chart.x.push(e);
-      const req: number = _.get(requirement, `${e}`, 1);
+      const req: number = _.get(requirement, `${e}`, 0);
       const rat: number = _.get(ration, `${e}`, 0);
-      chart.y.push(roundTo3DecimalPlace(Number((rat / req) * 100)));
+
+      if (req == 0) chart.y.push(0);
+      else chart.y.push(roundTo3DecimalPlace(Number((rat / req) * 100)));
     });
 
     // Achivement chart
     Object.keys(ration?.nutrients || {}).map((key, i) => {
       chart.x.push(key);
-      const req: number = _.get(requirement, `nutrients.${key}.value`, 1);
+      const req: number = _.get(requirement, `nutrients.${key}.value`, 0);
       const rat: number = _.get(ration, `nutrients.${key}.value`, 0);
-      chart.y.push(roundTo3DecimalPlace(Number((rat / req) * 100)));
+
+      if (req == 0) chart.y.push(0);
+      else chart.y.push(roundTo3DecimalPlace(Number((rat / req) * 100)));
     });
 
     setAchivementData(chart);
@@ -469,16 +480,7 @@ const Formulation = () => {
     const dataRow = rows[row];
     const dataCol = columns[col];
 
-    let d =
-      col == 0
-        ? _.get(requirement, "display_name")
-        : _.get(requirement, dataCol.path);
-
-    // TODO:
-    d =
-      dataCol.property.kind == GridCellKind.Number
-        ? Number(d ?? 0)
-        : String(d ?? "");
+    let d = _.get(requirement, dataCol.path);
 
     if (col == 0) {
       return {
@@ -491,8 +493,8 @@ const Formulation = () => {
         ...dataCol.property,
         allowOverlay: true,
         readonly: false,
-        displayData: String(d ?? ""),
-        data: String(d ?? ""),
+        displayData: String(d ?? 0),
+        data: String(d ?? 0),
         style: null,
         themeOverride: null,
       };
@@ -708,6 +710,40 @@ const Formulation = () => {
     formula.desired_dm = requirement.dm;
 
     const response = await createFormula(formula as any);
+  };
+
+  const clearAll = () => {
+    clearRation();
+    clearRequirements();
+    clearIngredients();
+    resetGraph();
+  };
+
+  const clearRation = () => {
+    const rationCopy = { ...ration };
+    _.forEach(rationCopy.nutrients, (value, key) => {
+      _.set(rationCopy.nutrients || {}, `${key}.value`, 0);
+    });
+
+    setRation(rationCopy);
+  };
+
+  const clearRequirements = () => {
+    const requirementCopy = { ...ration };
+    _.forEach(requirementCopy.nutrients, (value, key) => {
+      _.set(requirementCopy.nutrients || {}, `${key}.value`, 0);
+    });
+  };
+
+  const clearIngredients = () => {
+    setRows([]);
+  };
+
+  const resetGraph = () => {
+    setAchivementData({
+      x: [],
+      y: [],
+    });
   };
 
   return (
@@ -982,15 +1018,13 @@ const Formulation = () => {
         >
           Save
         </Button>
-        <Button
-          color="secondary"
-          size="small"
-          startIcon={<DeleteSweepIcon fontSize="small" />}
-          sx={{ textTransform: "none" }}
-          onClick={loadNutrientsToTable}
-        >
-          Remove all
-        </Button>
+        <ClearIcon
+          onClearAll={clearAll}
+          onClearIngredients={clearIngredients}
+          onClearRations={clearRation}
+          onClearRequirements={clearRequirements}
+          resetGraph={resetGraph}
+        />
       </Stack>
       <Sizer>
         <DataEditor

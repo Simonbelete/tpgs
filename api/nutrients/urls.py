@@ -46,7 +46,7 @@ urlpatterns = [
          views.NutrientImport.as_view(), name="api_nutrient_import"),
 
     path('nutrient-groups/export/<str:export_type>/',
-         views.NutrientExport.as_view(), name="api_nutrient_group_export"),
+         views.NutrientGroupExport.as_view(), name="api_nutrient_group_export"),
     path('nutrient-groups/import/<str:import_type>/',
-         views.NutrientImport.as_view(), name="api_nutrient_group_import"),
+         views.NutrientGroupImport.as_view(), name="api_nutrient_group_import"),
 ]

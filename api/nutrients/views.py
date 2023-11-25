@@ -89,6 +89,6 @@ class NutrientImport(GenericImportView):
 # Get compacted all values
 
 class AllNutrientViewSet(viewsets.ReadOnlyModelViewSet):
-    queryset = models.Nutrient.objects.all().order_by('-order')
+    queryset = models.Nutrient.objects.all().order_by('order')
     pagination_class = AllPagination
     serializer_class = serializers.AllNutrientSerializer_GET

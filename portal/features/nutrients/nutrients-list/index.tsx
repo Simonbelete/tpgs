@@ -27,7 +27,7 @@ export const NutrientList = () => {
       flex: 1,
       minWidth: 150,
     },
-    { field: "description", headerName: "Description", flex: 1, minWidth: 150 },
+    // { field: "description", headerName: "Description", flex: 1, minWidth: 150 },
     {
       field: "nutrient_group",
       headerName: "Nutrient Group",

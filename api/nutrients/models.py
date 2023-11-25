@@ -30,6 +30,9 @@ class Nutrient(CoreModel):
 
     history = HistoricalRecords()
 
+    class Meta:
+        ordering = ['order']
+
     @property
     def display_name(self):
         if (self.unit):

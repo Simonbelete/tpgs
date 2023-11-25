@@ -1,10 +1,29 @@
-id,name,abbreviation,unit,nutrient_group
- ,Metabolizable Energy,ME,kcal/kg,Energy
- ,Crude protein,CP,%,
- ,Lysine,Lys,%
- ,m+c,m+c,%
- ,Methionine,Met,%
- ,Ether extract,EE,%
- ,Crude fiber,CF,%
- ,Calcium,Ca,%
- ,Phosphorus,P,%
+id,name,abbreviation,unit,nutrient_group,order
+ ,Metabolizable Energy,ME,kcal/kg,Energy,0
+ ,Crude protein,CP,%,Unknown,1
+ ,Lysine,Lys,%,Unknown,2
+ ,Meth. +cystine,m+c,%,Unknown,3
+ ,Methionine,Met,%,Unknown,4
+ ,Ether extract,EE,%,Unknown,5
+ ,Crude fiber,CF,%,Unknown,6
+ ,Calcium,Ca,%,Amino acids,7
+ ,Phosphorus,P,%,Unknown,8
+ ,Tryptophan,Trp W,%,Unknown,9
+ ,Isoleucine,ile I,%,Unknown,10
+ ,Valine,Valine,%,Amino acids,11
+ ,Arginine,Arginine,%,Amino acids,12
+ ,AP,AP,%,Amino acids,13
+ ,Vitamin A,VA,IU/kg,Vitamin,14
+ ,Vitamin D3,VIT D,IU/kg,Vitamin,15
+ ,Vitamin E,VITE,IU/kg,Vitamin,16
+ ,Menadione Vitamin K3,K3,mg/kg,Unknown,17
+ ,Riboflavin,RF,mg/kg,Unknown,18
+ ,Niacin,NA,mg/kg,Unknown,19
+ ,D Pantothenic Acid,DPA,mg/kg,Unknown,20
+ ,Choline,Chol,mg/kg,Unknown,21
+ ,Folic acid,FA,mg/kg,Unknown,22
+ ,Thiamin,B1,mg/kg,Unknown,23
+ ,Pyridoxine,PN,mg/kg,Unknown,24
+ ,vitamin b12,B12,mg/kg,Unknown,25
+ ,d-Biotin,d-Biotin,mg/kg,Unknown,26
+ ,Threonine,Thr T,%,Unknown,27

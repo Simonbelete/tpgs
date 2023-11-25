@@ -12,7 +12,7 @@ class RequirementSerializer_GET(serializers.ModelSerializer):
         model = models.Requirement
         fields = ['id', 'name', 'display_name',
                   'nutrient_count', 'weight', 'budget',
-                  'desired_ratio', 'desired_dm', ]
+                  'desired_ratio', 'desired_dm', 'is_active', 'created_at']
 
 
 class RequirementSerializer_SLUG(serializers.ModelSerializer):
@@ -52,7 +52,7 @@ class RequirementNutrientSerializer_GET(serializers.ModelSerializer):
     class Meta:
         model = models.RequirementNutrient
         fields = ['id', 'nutrient', 'requirement',
-                  'value', 'as_feed_value', 'unit']
+                  'value', 'as_feed_value', 'unit', 'is_active', 'created_at']
 
 
 class RequirementNutrientSerializer_POST(serializers.ModelSerializer):

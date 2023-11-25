@@ -7,15 +7,23 @@ from import_export import resources, fields, widgets
 from . import models
 from nutrients.models import Nutrient
 
+
 class IngredientTypeResource(resources.ModelResource):
     class Meta:
         model = models.IngredientType
         fields = ['id', 'name']
 
+
 class IngredientResource(resources.ModelResource):
+    ingredient_type = fields.Field(
+        column_name='ingredient_type',
+        attribute='ingredient_type',
+        widget=widgets.ForeignKeyWidget(models.IngredientType, field='name'))
+
     class Meta:
         model = models.Ingredient
-        fields = ['id', 'code', 'name', 'price', 'dm']
+        fields = ['id', 'code', 'name', 'price', 'dm', 'ingredient_type']
+
 
 class IngredientNutrientResource(resources.ModelResource):
     ingredient = fields.Field(
@@ -26,9 +34,11 @@ class IngredientNutrientResource(resources.ModelResource):
         column_name='nutrient',
         attribute='nutrient',
         widget=widgets.ForeignKeyWidget(Nutrient, field='abbreviation'))
+
     class Meta:
         model = models.IngredientNutrient
         fields = ['id', 'ingredient', 'nutrient', 'value']
+
 
 admin.site.register(models.Ingredient)
 admin.site.register(models.IngredientNutrient)

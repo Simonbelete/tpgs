@@ -14,6 +14,7 @@ import { requirementNutrientApi, URL } from "../services";
 import { RequirementNutrient } from "@/models";
 import { Typography } from "@mui/material";
 import Link from "next/link";
+import dayjs from "dayjs";
 
 export const RequirementNutrientList = () => {
   const columns: GridColDef[] = [
@@ -43,14 +44,26 @@ export const RequirementNutrientList = () => {
         if (params.row.nutrient == null) return <></>;
         return (
           <Typography color={"link.primary"} variant="body2">
-            <Link href={`/ingredients/${params.row.nutrient.id}`}>
-              {params.row.nutrient.name}
+            <Link href={`/nutrients/${params.row.nutrient.id}`}>
+              {params.row.nutrient.abbreviation}
             </Link>
           </Typography>
         );
       },
     },
     { field: "value", headerName: "Value", flex: 1 },
+    {
+      field: "created_at",
+      headerName: "Create at",
+      flex: 1,
+      minWidth: 150,
+      valueGetter: (params) =>
+        params.row.created_at
+          ? dayjs(params.row.created_at).format(
+              process.env.NEXT_PUBLIC_DATE_FORMAT
+            )
+          : "",
+    },
   ];
   return (
     <ListLayout<RequirementNutrient>

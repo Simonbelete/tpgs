@@ -51,4 +51,9 @@ urlpatterns = [
          views.RequirementExport.as_view(), name="api_requirement_export"),
     path('requirements/import/<str:import_type>/',
          views.RequirementImport.as_view(), name="api_requirement_import"),
+
+    path('requirement-nutrients/export/<str:export_type>/',
+         views.RequirementNutrientExport.as_view(), name="api_requirement_nutrient_export"),
+    path('requirement-nutrients/import/<str:import_type>/',
+         views.RequirementNutrientImport.as_view(), name="api_requirement_nutrient_import"),
 ]

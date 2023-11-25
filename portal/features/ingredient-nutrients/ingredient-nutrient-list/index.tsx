@@ -44,7 +44,7 @@ export const IngredientNutrientList = () => {
         return (
           <Typography color={"link.primary"} variant="body2">
             <Link href={`/ingredients/${params.row.nutrient.id}`}>
-              {params.row.nutrient.name}
+              {params.row.nutrient.abbreviation}
             </Link>
           </Typography>
         );
