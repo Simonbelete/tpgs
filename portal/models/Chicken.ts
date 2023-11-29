@@ -7,7 +7,7 @@ import Pen from "./Pen";
 export default interface Chicken extends AbstractBaseModel {
   name: string;
   tag: string;
-  sex: null | string;
+  sex?: null | string | Object;
   sire: null | number | Chicken;
   dam: null | number | Chicken;
   hatchery: null | number | Hatchery;

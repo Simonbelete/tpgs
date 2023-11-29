@@ -128,7 +128,12 @@ export const ChickenForm = ({
           {tab == 0 && (
             <Card title="Chicken Form">
               <Form<Chicken>
-                data={data}
+                data={
+                  {
+                    ...formData,
+                    sex: _.find(sexOptions, { value: formData?.sex }),
+                  } as any
+                }
                 schema={schema}
                 shallowRoute={shallowRoute}
                 createEndpoint={chickenApi.endpoints.createChicken}
@@ -187,6 +192,7 @@ export const ChickenForm = ({
                     md: 6,
                   },
                 }}
+                onCreateSuccess={handleCreated}
               />
             </Card>
           )}
