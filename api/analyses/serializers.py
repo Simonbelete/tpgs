@@ -18,4 +18,4 @@ class DirectoryListSerializer_GET(serializers.ModelSerializer):
 class PedigreeSerializer(serializers.ModelSerializer):
     class Meta:
         model = Chicken
-        fields = ['id', 'name', 'tag', 'sex']
+        fields = ['id', 'tag', 'sex', 'parents']

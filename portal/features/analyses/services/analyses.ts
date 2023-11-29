@@ -27,6 +27,13 @@ export const analyseApi = baseApi.injectEndpoints({
           params: query,
         }),
       }),
+      getPedigree: build.query<Response<any[]>, Object>({
+        query: (query?: Object) => ({
+          url: `${URL}/pedigree/`,
+          method: "get",
+          params: query,
+        }),
+      }),
       getGenderDistribution: build.query<Response<any>, Object>({
         query: (query?: Object) => ({
           url: `${URL}/gender-distribution/`,
@@ -126,4 +133,6 @@ export const {
   useLazyGetFeedAnalyseQuery,
   useLazyGetWeightAnalyseQuery,
   useGetCountAnalyseQuery,
+  useGetPedigreeQuery,
+  useLazyGetPedigreeQuery,
 } = analyseApi;

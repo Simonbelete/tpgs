@@ -68,6 +68,15 @@ class Chicken(CoreModel):
         else:
             return []
 
+    @property
+    def parents(self):
+        parents = []
+        if (self.sire):
+            parents.append(self.sire.tag)
+        if (self.dam):
+            parents.append(self.dam.tag)
+        return parents
+
     # def ancestors(self):
     #     '''Returns a list of this person's ancestors (their parents and all of
     #     their parents' ancestors).'''

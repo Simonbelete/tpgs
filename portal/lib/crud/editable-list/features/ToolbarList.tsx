@@ -31,28 +31,14 @@ import buildSorting from "@/util/buildSorting";
 export interface TollbarListProps<
   T extends AbstractBaseModel & GridValidRowModel
 > {
-  getQuery: { id: number; query?: Object };
+  getQuery: { [key: string]: number | Object | string };
   toolbar?: React.FC<any>;
   columns: GridColDef[];
   getEndpoint: ApiEndpointQuery<
-    QueryDefinition<
-      { id: number; query?: Object },
-      ClientQueyFn,
-      any,
-      Response<T[]>,
-      any
-    >,
+    QueryDefinition<Object, ClientQueyFn, any, Response<T[]>, any>,
     EndpointDefinitions
   > &
-    QueryHooks<
-      QueryDefinition<
-        { id: number; query?: Object },
-        ClientQueyFn,
-        any,
-        Response<T[]>,
-        any
-      >
-    >;
+    QueryHooks<QueryDefinition<Object, ClientQueyFn, any, Response<T[]>, any>>;
   actions: React.FC<
     GridRenderCellParams & {
       onClick?: (id: number) => void;
@@ -78,8 +64,7 @@ export default function TollbarList<T extends AbstractBaseModel & EditMode>({
 
   const [query, setQuery] = useState(getQuery);
 
-  const updateQuery = (q: Object) =>
-    setQuery({ id: getQuery.id, query: { ...getQuery.query, ...q } });
+  const updateQuery = (q: Object) => setQuery({ ...getQuery, ...q });
 
   const { data, isLoading, isFetching, refetch } = getEndpoint.useQuery(query);
 

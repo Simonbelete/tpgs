@@ -1,20 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Typography } from "@mui/material";
 import Link from "next/link";
-import {
-  GridColDef,
-  GridToolbarColumnsButton,
-  GridToolbarContainer,
-  GridToolbarDensitySelector,
-  GridToolbarQuickFilter,
-  GridRenderCellParams,
-} from "@mui/x-data-grid";
-import { HatcheryEgg, Hatchery, Chicken } from "@/models";
+import { GridColDef, GridRenderCellParams } from "@mui/x-data-grid";
+import { Chicken } from "@/models";
 import { ToolbarList, EditAction, BasicToolbar } from "@/lib/crud";
-import { Box, Button } from "@mui/material";
-import { EditMode } from "@/types";
-import RefreshIcon from "@mui/icons-material/Refresh";
-import AddIcon from "@mui/icons-material/Add";
 import { chickenApi } from "../services";
 import dayjs from "dayjs";
 

@@ -21,10 +21,13 @@ import { Box, Tabs, Tab, tabsClasses, Chip } from "@mui/material";
 import ChickenReductionSelectDialog from "./ChickenReductionModal";
 import OffspringList from "./OffspringList";
 import SiblingsList from "./SiblingsList";
+import EggList from "./EggList";
+import WeightList from "./WeightList";
+import FeedList from "./FeedList";
 
 const schema = yup.object({
   tag: yup.string().required(),
-  sex: yup.string().nullable(),
+  sex: yup.object().nullable(),
   sire: yup.object().nullable(),
   dam: yup.object().nullable(),
   hatchery: yup.object().nullable(),
@@ -117,6 +120,9 @@ export const ChickenForm = ({
           <Tab label="Detail" {...a11yProps(0)} />
           {formData && <Tab label="Siblings" {...a11yProps(3)} />}
           {formData && <Tab label="Offspring" {...a11yProps(1)} />}
+          {formData && <Tab label="Egg Production" {...a11yProps(1)} />}
+          {formData && <Tab label="Body Weight" {...a11yProps(1)} />}
+          {formData && <Tab label="Feed Intake" {...a11yProps(1)} />}
         </Tabs>
         <Box sx={{ pt: 5 }}>
           {tab == 0 && (
@@ -146,6 +152,7 @@ export const ChickenForm = ({
                     label: "Sex",
                     placeholder: "Sex",
                     options: sexOptions,
+                    dataKey: "value",
                     xs: 12,
                     md: 6,
                   },
@@ -153,6 +160,7 @@ export const ChickenForm = ({
                     label: "Sire",
                     placeholder: "Select Sire",
                     endpoint: chickenApi.endpoints.getMaleChickens,
+                    dataKey: "display_name",
                     xs: 12,
                     md: 6,
                   },
@@ -160,6 +168,7 @@ export const ChickenForm = ({
                     label: "Dam",
                     placeholder: "Select Dam",
                     endpoint: chickenApi.endpoints.getFeMaleChickens,
+                    dataKey: "display_name",
                     xs: 12,
                     md: 6,
                   },
@@ -184,6 +193,9 @@ export const ChickenForm = ({
 
           {formData && tab == 1 && <SiblingsList data={formData} />}
           {formData && tab == 2 && <OffspringList data={formData} />}
+          {formData && tab == 3 && <EggList data={formData} />}
+          {formData && tab == 4 && <WeightList data={formData} />}
+          {formData && tab == 5 && <FeedList data={formData} />}
         </Box>
       </TabFormLayout>
     </>

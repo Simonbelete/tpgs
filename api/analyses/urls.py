@@ -80,7 +80,7 @@ egg_mass_router.register(
 
 pedigree_router = routers.DefaultRouter()
 pedigree_router.register(
-    r'analyses/(?P<farm_id>.+)/(?P<flock_id>.+)/(?P<house_id>.+)/pedigree', views.PedigreeViewset, basename="api_pedigree")
+    r'analyses/pedigree', views.PedigreeViewset, basename="api_pedigree")
 
 wbft_router = routers.DefaultRouter()
 wbft_router.register(

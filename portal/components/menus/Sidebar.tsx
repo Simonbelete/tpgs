@@ -44,6 +44,7 @@ import FactoryIcon from "@mui/icons-material/Factory";
 import ChecklistIcon from "@mui/icons-material/Checklist";
 import AssignmentTurnedInIcon from "@mui/icons-material/AssignmentTurnedIn";
 import AutoGraphIcon from "@mui/icons-material/AutoGraph";
+import AccountTreeIcon from "@mui/icons-material/AccountTree";
 
 function menuProps(key: string) {
   return {
@@ -378,6 +379,14 @@ const SidebarMenu = () => {
         >
           <Typography variant="body1" fontSize={14}>
             Chickens
+          </Typography>
+        </MenuItem>
+        <MenuItem
+          component={<Link href="/pedigree" />}
+          icon={<AccountTreeIcon width="20" height="20" fill="inherit" />}
+        >
+          <Typography variant="body1" fontSize={14}>
+            Pedigree
           </Typography>
         </MenuItem>
         <SubMenu

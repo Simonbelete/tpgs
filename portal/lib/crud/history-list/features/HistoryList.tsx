@@ -48,8 +48,6 @@ export default function HistoryList<T>({
     pageSize: 10,
   });
 
-  console.log(getHistoryQuery);
-
   const { data, isLoading, refetch } = getHistoryEndpoint.useQuery({
     ...getHistoryQuery,
     ...buildQuery({ ...buildPage(paginationModel) }),
