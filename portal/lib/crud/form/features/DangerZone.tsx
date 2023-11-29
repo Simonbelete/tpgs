@@ -36,6 +36,7 @@ export interface DangerZoneProps<T> {
     EndpointDefinitions
   > &
     MutationHooks<MutationDefinition<number, ClientQueyFn, any, T, any>>;
+  children?: React.ReactNode;
 }
 
 export default function DangerZone<T>({
@@ -43,6 +44,7 @@ export default function DangerZone<T>({
   is_active,
   updateEndpoint,
   deleteEndpoint,
+  children,
 }: DangerZoneProps<T>) {
   const router = useRouter();
   const [updateTrigger, updateResult] = updateEndpoint.useMutation();
@@ -72,6 +74,8 @@ export default function DangerZone<T>({
         // @ts-ignore
         updateResult.data == undefined ? is_active : updateResult.data.is_active
       }
-    />
+    >
+      {children}
+    </DangerZoneCard>
   );
 }

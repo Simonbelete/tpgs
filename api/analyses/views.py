@@ -27,6 +27,10 @@ from feeds.serializers import FeedSerializer_GET
 from chickens.models import Chicken
 from hatchery.models import Hatchery
 from breeds.models import Breed
+from formulas.models import Formula
+from ingredients.models import Ingredient
+from nutrients.models import Nutrient
+from requirements.models import Requirement
 
 
 class AnalysesViewSet(viewsets.ViewSet):
@@ -114,17 +118,34 @@ class DirectoryListRefresh(viewsets.ViewSet):
 
 class CountViewSet(viewsets.ViewSet):
     def list(self, request, **kwargs):
-        return Response({
-            'results': {
-                'user_count': User.objects.filter(farms__name__in=[self.request.tenant]).count(),
-                'total_users': User.objects.count(),
-                'farm_count': self.request.user.farms.all().count(),
-                'total_farms': Farm.objects.count(),
-                'chicken_count': Chicken.objects.all().count(),
-                'hatchery_count': Hatchery.objects.all().count(),
-                'breed_count': Breed.objects.all().count()
-            }
-        })
+        if (self.tenant == 'public'):
+            return Response({
+                'results': {
+                    'user_count': User.objects.filter(farms__name__in=[self.request.tenant]).count(),
+                    'total_users': User.objects.count(),
+                    'farm_count': self.request.user.farms.all().count(),
+                    'formula_count': Formula.objects.all().count(),
+                    'ingredient_count': Formula.objects.all().count(),
+                    'nutrient_count': Nutrient.objects.all().count(),
+                    'requirement_count': Requirement.objects.all().count(),
+                }
+            })
+        else:
+            return Response({
+                'results': {
+                    'user_count': User.objects.filter(farms__name__in=[self.request.tenant]).count(),
+                    'total_users': User.objects.count(),
+                    'farm_count': self.request.user.farms.all().count(),
+                    'total_farms': Farm.objects.count(),
+                    'chicken_count': Chicken.objects.all().count(),
+                    'hatchery_count': Hatchery.objects.all().count(),
+                    'breed_count': Breed.objects.all().count(),
+                    'formula_count': Formula.objects.all().count(),
+                    'ingredient_count': Formula.objects.all().count(),
+                    'nutrient_count': Nutrient.objects.all().count(),
+                    'requirement_count': Requirement.objects.all().count(),
+                }
+            })
 
 
 class HDEPViewSet(AnalysesViewSet):

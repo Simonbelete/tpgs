@@ -11,3 +11,4 @@ export * from "./egg-weight-analyses";
 export * from "./egg-grading";
 export * from "./weight-graph";
 export * from "./feed-graph";
+export * from "./ingredient-heatmap";

@@ -68,16 +68,6 @@ class Chicken(CoreModel):
         else:
             return []
 
-    def ancestors(self):
-        '''Returns a list of this person's ancestors (their parents and all of
-        their parents' ancestors).'''
-        if self.sire:
-            yield self.sire
-            yield from self.sire.ancestors()
-        if self.dam:
-            yield self.dam
-            yield from self.dam.ancestors()
-
     # def ancestors(self):
     #     '''Returns a list of this person's ancestors (their parents and all of
     #     their parents' ancestors).'''

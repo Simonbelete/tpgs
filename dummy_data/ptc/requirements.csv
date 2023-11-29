@@ -1,2 +1,13 @@
 id,name,desired_dm,weight
- ,Layer Finisher,90,100
+ ,Chick,90,100
+ ,Grower,90,100
+ ,Complete,90,100
+ ,High energy,90,100
+ ,Low calcium,90,100
+ ,Starter,90,100
+ ,Finisher 1,90,100
+ ,Finisher 2,90,100
+ ,Broiler parent stock,90,100
+ ,Layer parent stock,90,100
+ ,Prebreeder,90,100
+ ,Cocks (> 22),90,100

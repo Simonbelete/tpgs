@@ -1,77 +1,95 @@
 import React, { useEffect, useState } from "react";
-import {
-  GridRowsProp,
-  GridColDef,
-  GridRenderCellParams
-} from "@mui/x-data-grid";
 import { Typography } from "@mui/material";
 import Link from "next/link";
-import { DataTable } from "@/components/tables";
-import { Breed, Chicken } from "@/models";
-import { useSelector } from "react-redux";
-import { RootState } from "@/store";
-import _ from "lodash";
-import dayjs from 'dayjs';
-import { useGetChickenOffspringQuery } from "../services";
-import buildQuery from "@/util/buildQuery";
+import {
+  GridColDef,
+  GridToolbarColumnsButton,
+  GridToolbarContainer,
+  GridToolbarDensitySelector,
+  GridToolbarQuickFilter,
+  GridRenderCellParams,
+} from "@mui/x-data-grid";
+import { HatcheryEgg, Hatchery, Chicken } from "@/models";
+import { ToolbarList, EditAction, BasicToolbar } from "@/lib/crud";
+import { Box, Button } from "@mui/material";
+import { EditMode } from "@/types";
+import RefreshIcon from "@mui/icons-material/Refresh";
+import AddIcon from "@mui/icons-material/Add";
+import { chickenApi } from "../services";
+import dayjs from "dayjs";
 
 const columns: GridColDef[] = [
-  { field: "tag", headerName: "Tag", flex: 1,  },
-  { field: "sex", headerName: "Tag", flex: 1,  },
-  { field: "house", headerName: "House", flex: 1,
+  { field: "tag", headerName: "Tag", flex: 1 },
+  {
+    field: "breed",
+    headerName: "Breed",
+    flex: 1,
+    minWidth: 150,
     renderCell: (params: GridRenderCellParams<any>) => {
-      if (params.row.house == null) return <></>;
+      if (params.row.breed == null) return <></>;
       return (
         <Typography color={"link.primary"} variant="body2">
-          <Link href={`/houses/${params.row.house.id}`}>
-            {params.row.house.name}
+          <Link href={`/breeds/${params.row.breed.id}`}>
+            {params.row.breed.display_name}
           </Link>
         </Typography>
       );
     },
   },
-  { field: "pen", headerName: "Pen", flex: 1,},
-  { field: "flock", headerName: "Flock", flex: 1,
+  {
+    field: "pen",
+    headerName: "Pen",
+    flex: 1,
+    minWidth: 150,
     renderCell: (params: GridRenderCellParams<any>) => {
-      if (params.row.flock == null) return <></>;
+      if (params.row.pen == null) return <></>;
       return (
         <Typography color={"link.primary"} variant="body2">
-          <Link href={`/flocks/${params.row.flock.id}`}>
-            {params.row.flock.name}
+          <Link href={`/pen/${params.row.pen.id}`}>
+            {params.row.pen.display_name}
           </Link>
         </Typography>
       );
     },
   },
-  { field: "reduction_date", 
-    headerName: "Mortality", flex: 1,
+  { field: "sex", headerName: "Tag", flex: 1 },
+  {
+    field: "hatcher",
+    headerName: "Hatcher",
+    flex: 1,
+    minWidth: 150,
+    renderCell: (params: GridRenderCellParams<any>) => {
+      if (params.row.hatchery == null) return <></>;
+      return (
+        <Typography color={"link.primary"} variant="body2">
+          <Link href={`/hatchery/${params.row.hatchery.id}`}>
+            {params.row.hatchery.display_name}
+          </Link>
+        </Typography>
+      );
+    },
+  },
+  {
+    field: "reduction_date",
+    headerName: "Mortality",
+    flex: 1,
     valueGetter: (params) =>
-      params.row.reduction_date ? dayjs(params.row.reduction_date).format(process.env.NEXT_PUBLIC_DATE_FORMAT) : "",
-  }
+      params.row.reduction_date
+        ? dayjs(params.row.reduction_date).format(
+            process.env.NEXT_PUBLIC_DATE_FORMAT
+          )
+        : "",
+  },
 ];
 
-const OffspringList = ({id}: {id: number}) => {
-  const [paginationModel, setPaginationModel] = useState({
-    page: 0,
-    pageSize: 10,
-  });
-
-  const { data, isLoading, refetch } = useGetChickenOffspringQuery({
-    id: id,
-    query: buildQuery({...paginationModel})
-  }); 
-
+const OffspringList = ({ data }: { data: Chicken }) => {
   return (
-    <DataTable
-      rows={(data?.results ?? []) as GridRowsProp<Chicken>}
+    <ToolbarList<Chicken>
+      getQuery={{ id: data?.id, query: {} }}
+      actions={[EditAction]}
+      toolbar={BasicToolbar}
       columns={columns}
-      rowCount={data?.count || 0}
-      loading={isLoading}
-      pageSizeOptions={[5, 10, 25, 50, 100]}
-      paginationModel={paginationModel}
-      paginationMode="server"
-      onPaginationModelChange={setPaginationModel}
-      setting={DataTable.SETTING_COL.edit}
+      getEndpoint={chickenApi.endpoints.getChickenOffspring}
     />
   );
 };

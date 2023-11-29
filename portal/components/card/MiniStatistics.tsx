@@ -24,7 +24,7 @@ export default function Default({
 
   return (
     <Shadow radius={"56px"}>
-      <Grid container spacing={2} sx={{ width: 200, py: 1, pl: 1 }}>
+      <Grid container spacing={1} sx={{ width: 200, height: 90, py: 1, pl: 0 }}>
         <Grid item>
           <ButtonBase sx={{ width: 70, height: "100%" }}>
             <Avatar

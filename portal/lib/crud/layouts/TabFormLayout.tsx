@@ -28,6 +28,7 @@ interface FormLayoutProps<T> extends DangerZoneProps<T>, InfoZoneProps {
   title: string;
   menus?: React.ReactNode;
   children: React.ReactNode;
+  rightMenus?: React.ReactNode;
 }
 
 export default function FormLayout<T extends AbstractBaseModel>({
@@ -38,6 +39,7 @@ export default function FormLayout<T extends AbstractBaseModel>({
   updateEndpoint,
   deleteEndpoint,
   children,
+  rightMenus,
 }: FormLayoutProps<T>) {
   const router = useRouter();
 
@@ -76,7 +78,7 @@ export default function FormLayout<T extends AbstractBaseModel>({
         <Grid item xs={12} lg={0.5} xl={1} />
         <Grid item xs={12} lg={3} xl={2}>
           <Stack spacing={3}>
-            {data && (
+            {data && !rightMenus && (
               <>
                 <InfoZone
                   id={data?.id || 0}
@@ -90,6 +92,7 @@ export default function FormLayout<T extends AbstractBaseModel>({
                 />
               </>
             )}
+            {data && rightMenus && rightMenus}
           </Stack>
         </Grid>
       </Grid>

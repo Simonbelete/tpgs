@@ -861,6 +861,8 @@ const Formulation = ({ data }: { data?: Formula }) => {
     _.forEach(requirementCopy.nutrients, (value, key) => {
       _.set(requirementCopy.nutrients || {}, `${key}.value`, 0);
     });
+
+    setRequirement(requirementCopy);
   };
 
   const clearIngredients = () => {

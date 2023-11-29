@@ -8,7 +8,7 @@ from . import models
 class ChickenResource(resources.ModelResource):
     class Meta:
         model = models.Chicken
-        fields = ['id', 'tag']
+        fields = ['id', 'tag', 'hatch_date', 'sex', 'breed']
 
 
 admin.site.register(models.Chicken, SimpleHistoryAdmin)

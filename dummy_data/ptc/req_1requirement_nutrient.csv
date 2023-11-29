@@ -1,0 +1,123 @@
+id,requirement,nutrient,value
+ ,Chick,ME,2800
+ ,Chick,CP,20
+ ,Chick,EE,6
+ ,Chick,CF,5
+ ,Chick,Lys,1
+ ,Chick,Met,0.45
+ ,Chick,m+c,0.8
+ ,Chick,Ca,1
+ ,Chick,P,0.7
+
+ ,Grower,ME,2800
+ ,Grower,CP,16
+ ,Grower,EE,6
+ ,Grower,CF,6
+ ,Grower,Lys,0.8
+ ,Grower,Met,0.32
+ ,Grower,m+c,0.7
+ ,Grower,Ca,1
+ ,Grower,P,0.6
+
+ ,Complete,ME,2750
+ ,Complete,CP,16.5
+ ,Complete,EE,8
+ ,Complete,CF,8
+ ,Complete,Lys,0.7
+ ,Complete,Met,0.28
+ ,Complete,m+c,0.6
+ ,Complete,Ca,3.7
+ ,Complete,P,0.8
+
+ ,High energy,ME,2850
+ ,High energy,CP,17
+ ,High energy,EE,8
+ ,High energy,CF,7
+ ,High energy,Lys,0.75
+ ,High energy,Met,0.3
+ ,High energy,m+c,0.65
+ ,High energy,Ca,3.7
+ ,High energy,P,0.8
+
+ ,Low calcium,ME,2700
+ ,Low calcium,CP,16
+ ,Low calcium,EE,8
+ ,Low calcium,CF,8
+ ,Low calcium,Lys,0.7
+ ,Low calcium,Met,0.28
+ ,Low calcium,m+c,0.6
+ ,Low calcium,Ca,2.5
+ ,Low calcium,P,0.8
+
+ ,Starter,ME,3000
+ ,Starter,CP,22
+ ,Starter,EE,9
+ ,Starter,CF,5
+ ,Starter,Lys,1.2
+ ,Starter,Met,0.5
+ ,Starter,m+c,0.9
+ ,Starter,Ca,1
+ ,Starter,P,0.8
+
+ ,Finisher 1,ME,3200
+ ,Finisher 1,CP,20
+ ,Finisher 1,EE,10
+ ,Finisher 1,CF,5
+ ,Finisher 1,Lys,1
+ ,Finisher 1,Met,0.45
+ ,Finisher 1,m+c,0.8
+ ,Finisher 1,Ca,1
+ ,Finisher 1,P,0.7
+
+ ,Finisher 2,ME,3100
+ ,Finisher 2,CP,19
+ ,Finisher 2,EE,10
+ ,Finisher 2,CF,5
+ ,Finisher 2,Lys,0.95
+ ,Finisher 2,Met,0.44
+ ,Finisher 2,m+c,0.76
+ ,Finisher 2,Ca,0.9
+ ,Finisher 2,P,0.7
+
+ ,Broiler parent stock,ME,2700
+ ,Broiler parent stock,CP,16
+ ,Broiler parent stock,EE,8
+ ,Broiler parent stock,CF,9
+ ,Broiler parent stock,Lys,0.7
+ ,Broiler parent stock,Met,0.3
+ ,Broiler parent stock,m+c,0.6
+ ,Broiler parent stock,Ca,3.2
+ ,Broiler parent stock,P,0.7
+
+
+ ,Layer parent stock,ME,2700
+ ,Layer parent stock,CP,16
+ ,Layer parent stock,EE,8
+ ,Layer parent stock,CF,8
+ ,Layer parent stock,Lys,0.7
+ ,Layer parent stock,Met,0.28
+ ,Layer parent stock,m+c,0.6
+ ,Layer parent stock,Ca,3.6
+ ,Layer parent stock,P,0.8
+
+ ,Prebreeder,ME,2750
+ ,Prebreeder,CP,16
+ ,Prebreeder,EE,8
+ ,Prebreeder,CF,8
+ ,Prebreeder,Lys,0.7
+ ,Prebreeder,Met,0.3
+ ,Prebreeder,m+c,0.6
+ ,Prebreeder,Ca,1.5
+ ,Prebreeder,P,0.65
+
+
+ ,Cocks (> 22),ME,2750
+ ,Cocks (> 22),CP,11
+ ,Cocks (> 22),EE,8
+ ,Cocks (> 22),CF,8
+ ,Cocks (> 22),Lys,0.48
+ ,Cocks (> 22),Met,0.22
+ ,Cocks (> 22),m+c,0.4
+ ,Cocks (> 22),Ca,0.9
+ ,Cocks (> 22),P,0.65
+

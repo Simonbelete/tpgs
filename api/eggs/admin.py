@@ -9,7 +9,7 @@ from . import models
 class EggResource(resources.ModelResource):
     class Meta:
         model = models.Egg
-        fields = ['id']
+        fields = ['id', 'week', 'eggs', 'weight']
 
 
 admin.site.register(models.Egg, SimpleHistoryAdmin)

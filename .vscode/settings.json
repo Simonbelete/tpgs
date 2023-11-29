@@ -15,6 +15,9 @@
         "**/.git/subtree-cache/**": true,
         "**/node_modules/*/**": true,
         "**/ilri_ges/**": true,
-        "**/history/**": true
+        "**/history/**": true,
+        "**/dummy_data/**": true,
+        "**/feed/**": true,
+        "**/ne/**": true,
     }
 }

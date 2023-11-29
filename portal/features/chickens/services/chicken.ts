@@ -63,7 +63,7 @@ export const chickenApi = baseApi.injectEndpoints({
       }),
       getChickenOffspring: build.query<
         Response<Chicken[]>,
-        { id: number; query: Object }
+        { id: number; query?: Object }
       >({
         query: ({ id, query }) => ({
           url: `${URL}/${id}/offspring/`,
@@ -83,7 +83,7 @@ export const chickenApi = baseApi.injectEndpoints({
       }),
       getChickenSiblings: build.query<
         Response<Chicken[]>,
-        { id: number; query: Object }
+        { id: number; query?: Object }
       >({
         query: ({ id, query }) => ({
           url: `${URL}/${id}/siblings/`,

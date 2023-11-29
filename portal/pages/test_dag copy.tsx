@@ -47,22 +47,18 @@ import { Stage, Container, Sprite, Text, Graphics } from "@pixi/react";
 const data = [
   {
     id: "0",
-    sex: "M",
     parentIds: [],
   },
   {
     id: "1",
-    sex: "F",
     parentIds: [],
   },
   {
     id: "11",
-    sex: "M",
     parentIds: [],
   },
   {
     id: "2",
-    sex: "F",
     parentIds: ["0", "1", "11"],
   },
   {
@@ -75,10 +71,14 @@ const data = [
   },
 ];
 const PedigreeChart = () => {
+  // const builder = d3dag
+  //   .graphConnect()
+  //   .sourceId(({ source }: { source: string }) => source)
+  //   .targetId(({ target }: { target: string }) => target);
   const builder = d3dag.graphStratify();
   const graph = builder(data);
 
-  const nodeRadius = 30;
+  const nodeRadius = 20;
   const nodeSize = [nodeRadius * 4, nodeRadius * 4] as const;
 
   const shape = d3dag.tweakShape(nodeSize, d3dag.shapeEllipse);
@@ -87,6 +87,10 @@ const PedigreeChart = () => {
   // curveBasis
   const layout = d3dag
     .sugiyama()
+    //.layering(d3dag.layeringLongestPath())
+    //.decross(d3dag.decrossOpt())
+    //.coord(d3dag.coordGreedy())
+    //.coord(d3dag.coordQuad())
     .nodeSize(nodeSize)
     .gap([nodeRadius, nodeRadius])
     .tweaks([shape]);
@@ -99,13 +103,22 @@ const PedigreeChart = () => {
   // @ts-ignore
   const links = [...graph.links()];
 
+  // const link = d3.forceLink(data.links);
+  // const links = link.links();
+
   const WIDTH = 400;
   const HEIGHT = 600;
   const RADIUS = 20;
   const DISTANCE = 5;
 
-  const RECT_WIDTH = 50;
-  const RECT_HEIGHT = 50;
+  // const simulation = d3
+  //   .forceSimulation<any>(nodes)
+  //   .force("link", link)
+  //   .force("charge", d3.forceManyBody())
+  //   .force("x", d3.forceX())
+  //   .force("y", d3.forceY())
+  //   .force("collide", d3.forceCollide().radius(RADIUS)) // avoid node overlaps
+  //   .force("center", d3.forceCenter(WIDTH / 2, HEIGHT / 4)); // nodes are attracted by the center of the chart area
 
   return (
     <div>
@@ -118,35 +131,23 @@ const PedigreeChart = () => {
               // g.bezierCurveTo(0, 200, 200, 0, 240, 100);
 
               nodes.forEach((d, i) => {
-                if (d.data.sex == "M") {
-                  g.lineStyle(2, 0xf0000, 0.5);
-                  // Draw rectangle from center
-                  g.drawRect(
-                    d.x - RECT_WIDTH / 2,
-                    d.y - RECT_HEIGHT / 2,
-                    RECT_WIDTH,
-                    RECT_HEIGHT
-                  );
-                  g.endFill();
-                } else if (d.data.sex == "F") {
-                  g.lineStyle(2, 0xf0000, 1);
-                  g.drawCircle(d.x, d.y, 30);
-                  g.endFill();
-                } else {
-                  g.lineStyle(2, 0xc34288, 1);
-                  g.drawCircle(d.x, d.y, 30);
-                  g.endFill();
-                }
-                // g.beginFill(0xff3300);
-                // g.drawCircle(d.x, d.y, 20);
-                // g.endFill();
+                g.beginFill(0xff3300);
+                g.drawCircle(d.x, d.y, 20);
+                g.endFill();
               });
 
               links.forEach((d: any, i) => {
-                g.lineStyle(1, 0xf0000);
+                g.lineStyle(4, 0xd3d3d3);
 
-                g.moveTo(d.source.x, d.source.y + RECT_HEIGHT);
-                g.lineTo(d.target.x, d.target.y - RECT_HEIGHT);
+                g.moveTo(d.source.x, d.source.y);
+                g.lineTo(d.target.x, d.target.y);
+
+                // g.lineTo(d.target.x, d.target.y);
+
+                // (cp1.x, cp1.y, cp2.x, cp2.y, end.x, end.y);
+                // g.bezierCurveTo(100, 0, 150, 0, d.target.x, d.target.y);
+                // g.moveTo(d.source.x, d.source.y);
+                // g.lineTo(d.target.x, d.target.y);
                 g.endFill();
               });
             }}
@@ -155,8 +156,8 @@ const PedigreeChart = () => {
             <Text
               key={i}
               text={d.data.id}
-              x={d.x - RECT_WIDTH / 2}
-              y={d.y + RECT_HEIGHT / 2}
+              x={d.x}
+              y={d.y}
               style={
                 new TextStyle({
                   fill: "blue",
