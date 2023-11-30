@@ -12,9 +12,6 @@ import {
   GridCellKind,
   GridColumn,
   Item,
-  DataEditorProps,
-  CompactSelection,
-  GridSelection,
 } from "@glideapps/glide-data-grid";
 import { Sizer } from "../components";
 import {
@@ -37,6 +34,7 @@ import {
   Grid,
   AccordionDetails,
   InputAdornment,
+  IconButton,
 } from "@mui/material";
 import {
   useExtraCells,
@@ -66,6 +64,7 @@ import DeleteSweepIcon from "@mui/icons-material/DeleteSweep";
 import { useCreateFormulaMutation } from "../services";
 import { enqueueSnackbar } from "notistack";
 import ClearIcon from "./ClearIcon";
+import SearchIcon from "@mui/icons-material/Search";
 
 const AchivementChartComponent = dynamic(
   () => import("../components/achivement-chart"),
@@ -137,6 +136,8 @@ const Formulation = () => {
     x: [],
     y: [],
   });
+  const [showSearch, setShowSearch] = React.useState(false);
+  const onSearchClose = React.useCallback(() => setShowSearch(false), []);
 
   const startColumns: Column[] = [
     {
@@ -748,6 +749,15 @@ const Formulation = () => {
     });
   };
 
+  const onColumnResize = (column: GridColumn, newSize: number) => {
+    const columnCopy = [...columns];
+    const index = _.findIndex(columnCopy, column);
+    if (index > -1) {
+      _.set(columnCopy[index], "width", newSize);
+    }
+    setColumns(columnCopy);
+  };
+
   return (
     <>
       <IngredientSelectDialog
@@ -1020,6 +1030,9 @@ const Formulation = () => {
         >
           Save
         </Button>
+        <IconButton aria-haspopup="true" onClick={() => setShowSearch(true)}>
+          <SearchIcon />
+        </IconButton>
         <ClearIcon
           onClearAll={clearAll}
           onClearIngredients={clearIngredients}
@@ -1036,7 +1049,7 @@ const Formulation = () => {
           columns={columns}
           rows={rows.length + 2}
           isDraggable={true}
-          freezeColumns={1}
+          freezeColumns={2}
           rowMarkers="number"
           onCellEdited={onCellEdited}
           getCellContent={getContent}
@@ -1047,6 +1060,11 @@ const Formulation = () => {
             tint: true,
             hint: "Add Ingredient",
           }}
+          showSearch={showSearch}
+          onSearchClose={onSearchClose}
+          keybindings={{ search: true }}
+          getCellsForSelection={true}
+          onColumnResize={onColumnResize}
         />
       </Sizer>
       <Box sx={{ my: 5 }}>

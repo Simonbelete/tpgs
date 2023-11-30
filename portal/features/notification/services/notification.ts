@@ -6,6 +6,8 @@ import {
   NotificationList,
 } from "@/models";
 import { AxiosResponse } from "axios";
+import { NextPageContext } from "next";
+import clientSSR from "@/services/client_ssr";
 
 export const URL = "inbox/notifications";
 
@@ -39,6 +41,12 @@ export const notificationApi = baseApi.injectEndpoints({
   },
   overrideExisting: false,
 });
+
+export const getNotificationByIdSSR = async (
+  context: NextPageContext,
+  id: number
+): Promise<AxiosResponse<Response<Notification>>> =>
+  clientSSR(context).get(`${URL}/all/${id}`);
 
 export const {
   useGetUnreadCountQuery,

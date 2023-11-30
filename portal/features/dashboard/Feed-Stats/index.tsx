@@ -6,6 +6,9 @@ import { FarmIcon, ChickenIcon, DNAHellxIcon } from "@/components/Icons";
 import { useGetCountAnalyseQuery } from "@/features/analyses/services";
 import _ from "lodash";
 import ScienceIcon from "@mui/icons-material/Science";
+import ChecklistIcon from "@mui/icons-material/Checklist";
+import LocalDiningIcon from "@mui/icons-material/LocalDining";
+import BubbleChartIcon from "@mui/icons-material/BubbleChart";
 
 const FeedStats = () => {
   const { data } = useGetCountAnalyseQuery({});
@@ -18,25 +21,27 @@ const FeedStats = () => {
       flexWrap="wrap"
     >
       <MiniStatistics
-        startContent={<GroupIcon />}
+        startContent={<LocalDiningIcon />}
         name="Ingredients"
         value={_.get(data?.results, "ingredient_count", 0)}
         color="#FFC00C"
       />
       <MiniStatistics
-        startContent={<FarmIcon fill="#fff" width={"30"} height={"30"} />}
+        startContent={<ChecklistIcon fill="#fff" width={"30"} height={"30"} />}
         name="Requirements"
         value={_.get(data?.results, "requirement_count", 0)}
         color="#20A0B7"
       />
       <MiniStatistics
-        startContent={<FarmIcon fill="#fff" width={"30"} height={"30"} />}
+        startContent={<ScienceIcon fill="#fff" width={"30"} height={"30"} />}
         name="Formulas"
         value={_.get(data?.results, "formula_count", 0)}
         color="#2DA547"
       />
       <MiniStatistics
-        startContent={<DNAHellxIcon fill="#fff" width={"30"} height={"30"} />}
+        startContent={
+          <BubbleChartIcon fill="#fff" width={"30"} height={"30"} />
+        }
         name="Nutrients"
         value={_.get(data?.results, "nutrient_count", 0)}
         color="#DB3846"

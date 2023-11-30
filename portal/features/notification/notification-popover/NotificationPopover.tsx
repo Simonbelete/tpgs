@@ -148,7 +148,11 @@ const NotificationPopover = () => {
             {!isLoading &&
               data &&
               data.results.map((e, i) => (
-                <List key={i} sx={{ width: "100%", maxWidth: 360 }}>
+                <List
+                  key={i}
+                  sx={{ width: "100%", maxWidth: 360 }}
+                  onClick={() => router.push(`/notifications/${e.id}`)}
+                >
                   <ListItem disablePadding>
                     <ListItemButton sx={{ p: 0 }}>
                       <ListItemIcon>
