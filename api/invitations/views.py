@@ -87,16 +87,12 @@ class VerifyInvitationViewSet(viewsets.ViewSet):
 
 class ResendInvitationViewSet(viewsets.ViewSet):
     def create(self, request, id=None):
-        test_task.delay()
-        return Response({}, status=201)
-        # try:
-        #     invitation = models.Invitation.objects.get(pk=id)
-        #     send_invitation_email.delay(
-        #         invitation.inviter.id, invitation.email, invitation.token)
-        #     return Response({}, status=200)
-        # except models.Invitation.DoesNotExist:
-        #     raise NotFound()
-        # except Exception as ex:
-        #     print('----')
-        #     print(ex)
-        #     return Response({}, status=500)
+        try:
+            invitation = models.Invitation.objects.get(pk=id)
+            send_invitation_email.delay(
+                invitation.inviter.id, invitation.email, invitation.token)
+            return Response({}, status=200)
+        except models.Invitation.DoesNotExist:
+            raise NotFound()
+        except Exception as ex:
+            return Response({}, status=500)

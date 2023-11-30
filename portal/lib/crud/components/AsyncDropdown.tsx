@@ -14,6 +14,7 @@ import { Response } from "@/models";
 import buildPage from "@/util/buildPage";
 
 export interface AsyncDropdownProps<T> {
+  query?: Object;
   dataKey?: string;
   value?: any;
   label?: string;
@@ -36,6 +37,7 @@ export interface AsyncDropdownProps<T> {
 
 export default function AsyncDropdown<T>({
   dataKey = "name",
+  query,
   value,
   label,
   defaultOptions,
@@ -67,12 +69,17 @@ export default function AsyncDropdown<T>({
 
   const handleOnOpen = async () => {
     setOpen(true);
-    if (options.length == 0) {
+    try {
       const response = await trigger(
-        buildPage(paginationModel),
+        {
+          ...buildPage(paginationModel),
+          ...(query || {}),
+        },
         false
       ).unwrap();
       setOptions(response?.results || []);
+    } catch (ex) {
+      setOptions([]);
     }
   };
   const handleOnClose = () => {
@@ -154,7 +161,16 @@ export default function AsyncDropdown<T>({
         open={open}
         onOpen={handleOnOpen}
         onClose={handleOnClose}
-        onChange={onChange}
+        onChange={(event: any, newValue: any) => {
+          onChange && onChange(event, newValue);
+          // Remove Search Text for multiple
+          if (multiple) {
+            setPaginationModel({
+              page: 0,
+              pageSize: 15,
+            });
+          }
+        }}
         value={value}
         defaultValue={value}
         getOptionLabel={(option) => option[dataKey] ?? ""}

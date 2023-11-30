@@ -10,10 +10,10 @@ from .models import Invitation
 from .thread import SendInvitationEmailThread
 from .tasks import send_invitation_email
 
+
 @receiver(post_save, sender=Invitation)
 def send_invitation(sender, instance, **kwargs):
-    pass
-    # send_invitation_email(instance.inviter, instance.email, instance.token)
+    send_invitation_email(instance.inviter, instance.email, instance.token)
 
     # if(not instance.send_date):
     #     instance.sent_date = datetime.today()
@@ -27,7 +27,5 @@ def send_invitation(sender, instance, **kwargs):
     #     notify.send(
     #         sender=instance,
     #         recipient=instance.inviter,
-    #         verb='User %s accepted your invitation' % instance.email, 
+    #         verb='User %s accepted your invitation' % instance.email,
     #         level='info')
-
-

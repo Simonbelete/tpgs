@@ -1,12 +1,15 @@
 import React, { ReactElement } from "react";
-import { Typography, Grid, Box } from "@mui/material";
+import { Typography, Grid, Box, IconButton } from "@mui/material";
 import { Stats, FeedStats } from "@/features/dashboard";
 import dynamic from "next/dynamic";
 import { ListLayout } from "@/layouts";
 import { useBreadcrumbs } from "@/hooks";
 import { Breadcrumbs } from "@/components";
 import { NotificationCard } from "@/features/notification";
-import { FarmsHeatmapSkeleton } from "@/features/dashboard";
+import {
+  FarmsHeatmapSkeleton,
+  StartFormulatingCard,
+} from "@/features/dashboard";
 import { SeoHead } from "@/seo";
 import {
   GenderPercentageDistribution,
@@ -15,7 +18,6 @@ import {
 } from "@/features/analyses";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "@/store";
-import { IngredientHeatmap } from "@/features/analyses";
 
 const FarmsHeatmapComponent = dynamic(
   () => import("../../features/dashboard/farms-heatmap"),
@@ -43,8 +45,11 @@ const DashboardPage = () => {
                 <Grid item spacing={3}>
                   <FeedStats />
                 </Grid>
-                <Grid item xs={12} sx={{ px: 0 }}>
-                  {/* <IngredientHeatmap /> */}
+                <Grid item xs={6} sx={{ px: 0 }}>
+                  <StartFormulatingCard />
+                </Grid>
+                <Grid item xs={6}>
+                  <NotificationCard />
                 </Grid>
               </>
             ) : (
@@ -52,14 +57,6 @@ const DashboardPage = () => {
                 <Grid item spacing={3}>
                   <Stats />
                 </Grid>
-                {/* <Grid container item spacing={3}>
-                  <Grid item xs={8} sx={{ px: 0 }}>
-                    <FarmsHeatmapComponent />
-                  </Grid>
-                  <Grid item xs={4} sx={{ p: 0 }}>
-                    <NotificationCard />
-                  </Grid>
-                </Grid> */}
                 <Grid container item spacing={3}>
                   <Grid item xs={6}>
                     <BreedDistribution compact={true} />

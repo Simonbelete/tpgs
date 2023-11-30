@@ -5,19 +5,21 @@ from rest_framework import viewsets, mixins
 
 from . import serializers
 
+
 class LiveAllNotificationList(mixins.ListModelMixin, mixins.RetrieveModelMixin, viewsets.GenericViewSet):
     serializer_class = serializers.NotificationSerializer_GET
-    
+
     def get_queryset(self):
         return self.request.user.notifications.all()
+
 
 class LiveUnreadNotificationList(mixins.ListModelMixin, mixins.RetrieveModelMixin, viewsets.GenericViewSet):
     serializer_class = serializers.NotificationSerializer_GET
 
     def get_queryset(self):
         return self.request.user.notifications.unread()
-    
-   
+
+
 class LiveAllNotificationCount(APIView):
     def get(self, request):
         user_is_authenticated = request.user.is_authenticated
@@ -31,6 +33,7 @@ class LiveAllNotificationCount(APIView):
             }
         return Response(data)
 
+
 class LiveUnreadNotificationCount(APIView):
     def get(self, request):
         user_is_authenticated = request.user.is_authenticated
@@ -43,7 +46,8 @@ class LiveUnreadNotificationCount(APIView):
                 'unread_count': request.user.notifications.unread().count(),
             }
         return Response(data)
-    
+
+
 class MarkAllAsRead(APIView):
     def post(self, request):
         try:
@@ -51,3 +55,9 @@ class MarkAllAsRead(APIView):
             return Response({}, status=201)
         except Exception as ex:
             return Response({}, status=500)
+
+
+class MarkAsRead(viewsets.ViewSet):
+
+    def create(self, request, **kwargs):
+        pass

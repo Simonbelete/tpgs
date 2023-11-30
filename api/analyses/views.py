@@ -118,7 +118,7 @@ class DirectoryListRefresh(viewsets.ViewSet):
 
 class CountViewSet(viewsets.ViewSet):
     def list(self, request, **kwargs):
-        if (self.tenant == 'public'):
+        if (self.request.tenant.name == 'public'):
             return Response({
                 'results': {
                     'user_count': User.objects.filter(farms__name__in=[self.request.tenant]).count(),

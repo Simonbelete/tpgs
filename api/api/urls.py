@@ -56,6 +56,11 @@ urlpatterns = [
     #          name='live_all_notification_list'),
     # ])),
 
+    path('mark-as-read/(?P<slug>\d+)/',
+         notificationsView.mark_as_read, name='mark_as_read'),
+    path('mark-as-unread/(?P<slug>\d+)/',
+         notificationsView.mark_as_unread, name='mark_as_unread'),
+
     path('adminactions/', include('adminactions.urls')),
     path('api/', include([
         # path('', include('cities_light.contrib.restframework3')),
@@ -82,7 +87,7 @@ urlpatterns = [
         path('', include('analyses.urls')),
         path('', include('reduction_reason.urls')),
         path('', include('inbox.urls')),
-        path('', include('hatchery.urls')), 
+        path('', include('hatchery.urls')),
         path('', include('requirements.urls')),
         path('', include('city.urls')),
     ])),

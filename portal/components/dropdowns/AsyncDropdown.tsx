@@ -32,6 +32,7 @@ export interface AsyncDropdownProps<T> {
   > &
     QueryHooks<QueryDefinition<Query, ClientQueyFn, any, Response<T[]>, any>>;
   disabled?: boolean;
+  name?: string;
 }
 
 export default function AsyncDropdown<T>({
@@ -49,12 +50,12 @@ export default function AsyncDropdown<T>({
   endpoint,
   placeholder,
   disabled = false,
+  name,
   ...props
 }: AsyncDropdownProps<T>) {
   const [open, setOpen] = React.useState(false);
 
-  const [trigger, { data, isLoading, isFetching, status }] =
-    endpoint.useLazyQuery();
+  const [trigger, { data, isLoading, isFetching }] = endpoint.useLazyQuery();
 
   // Modal
   const [modalOpen, setModalOpen] = React.useState(false);
@@ -88,7 +89,7 @@ export default function AsyncDropdown<T>({
   const handleInputChange = async (event: any, newValue: any) => {
     if (event && event.type == "change") {
       const response = await trigger(
-        { search: newValue, ...buildPage(paginationModel), ...(query || {}) },
+        { search: newValue, ...buildPage(paginationModel), offset: 0 },
         false
       ).unwrap();
       setOptions(response?.results || []);
@@ -112,7 +113,7 @@ export default function AsyncDropdown<T>({
     setPaginationModel({ ...paginationModel, page: nextPage });
 
     const response = await trigger(
-      buildPage({ ...paginationModel, page: nextPage, ...(query || {}) }),
+      buildPage({ ...paginationModel, page: nextPage }),
       false
     ).unwrap();
     setOptions([...options, ...(response?.results || [])]);
@@ -160,7 +161,16 @@ export default function AsyncDropdown<T>({
         open={open}
         onOpen={handleOnOpen}
         onClose={handleOnClose}
-        onChange={onChange}
+        onChange={(event: any, newValue: any) => {
+          onChange && onChange(event, newValue);
+          // Remove Search Text for multiple
+          if (multiple) {
+            setPaginationModel({
+              page: 0,
+              pageSize: 15,
+            });
+          }
+        }}
         value={value}
         defaultValue={value}
         getOptionLabel={(option) => option[dataKey] ?? ""}
@@ -176,11 +186,11 @@ export default function AsyncDropdown<T>({
         renderInput={(params) => (
           <TextField
             {...params}
+            name={name}
             error={error}
             helperText={helperText}
             fullWidth
             // label={value ? "" : label}
-            placeholder={placeholder}
             label={""}
             InputLabelProps={{ shrink: false }}
             InputProps={{
@@ -196,6 +206,7 @@ export default function AsyncDropdown<T>({
                       <IconButton
                         sx={{ py: 0 }}
                         size="large"
+                        // color="secondary.main"
                         disabled={disabled}
                         onClick={handleModalOpen}
                       >
@@ -208,7 +219,7 @@ export default function AsyncDropdown<T>({
             }}
           />
         )}
-        // {...props}
+        {...props}
       />
     </Stack>
   );
