@@ -35,6 +35,7 @@ import {
   AccordionDetails,
   InputAdornment,
   IconButton,
+  Backdrop,
 } from "@mui/material";
 import {
   useExtraCells,
@@ -60,11 +61,14 @@ import AddIcon from "@mui/icons-material/Add";
 import PlaylistAddIcon from "@mui/icons-material/PlaylistAdd";
 import AutorenewIcon from "@mui/icons-material/Autorenew";
 import SaveIcon from "@mui/icons-material/Save";
-import DeleteSweepIcon from "@mui/icons-material/DeleteSweep";
 import { useCreateFormulaMutation } from "../services";
 import { enqueueSnackbar } from "notistack";
 import ClearIcon from "./ClearIcon";
 import SearchIcon from "@mui/icons-material/Search";
+import { Dna } from "react-loader-spinner";
+import { RenderPdfDocument } from "./RenderPdfDocument";
+import { PDFDownloadLink, PDFViewer, Page } from "@react-pdf/renderer";
+import PrintIcon from "@mui/icons-material/Print";
 
 const AchivementChartComponent = dynamic(
   () => import("../components/achivement-chart"),
@@ -74,16 +78,17 @@ const AchivementChartComponent = dynamic(
   }
 );
 
-type ColumnProperty = ({} & Partial<GridCell>) | Partial<ButtonCellType>;
+export type ColumnProperty = ({} & Partial<GridCell>) | Partial<ButtonCellType>;
 
-type Column = {
+export type Column = {
   property: ColumnProperty;
   path: string; // lodashb _.get({}, path) key
   colId?: number; // id from api
   pathId?: string; // id for row
+  width?: number;
 } & GridColumn;
 
-interface Row {
+export interface Row {
   id?: number;
   rowId: string | number;
   display_name: string;
@@ -119,13 +124,17 @@ const schema = yup.object({
 });
 
 const Formulation = () => {
+  const ref = useRef(null);
   const { customRenderers } = useExtraCells();
 
-  const [getAllNutrients, { data: nutreints }] = useLazyGetAllNutrientsQuery();
+  const [getAllNutrients, { isFetching: isFetchingGetAllNutrients }] =
+    useLazyGetAllNutrientsQuery();
   const [getAllNutrientsOfIngredient] =
     useLazyGetAllNutrientsOfIngredientQuery();
-  const [getAllNutrientsOfRequirement, getNutrientsOfRequirement] =
-    useLazyGetAllNutrientsOfRequirementQuery();
+  const [
+    getAllNutrientsOfRequirement,
+    { isFetching: isFetchingGetAllNutrientsOfRequirement },
+  ] = useLazyGetAllNutrientsOfRequirementQuery();
 
   const [createFormula, createFormulaResult] = useCreateFormulaMutation();
 
@@ -580,11 +589,21 @@ const Formulation = () => {
 
       const newRows: Row[] = [];
 
-      const requests = _.map(ingredients, (e) => {
-        return getAllNutrientsOfIngredient({
-          id: e.id,
-          query: {},
-        }).unwrap();
+      const requests: any = [];
+
+      _.forEach(ingredients, (e) => {
+        if (_.findIndex(rows, { rowId: e.id }) == -1) {
+          requests.push(
+            getAllNutrientsOfIngredient({
+              id: e.id,
+              query: {},
+            }).unwrap()
+          );
+        } else {
+          enqueueSnackbar(`Ingredient - ${e.display_name}, already exists`, {
+            variant: "warning",
+          });
+        }
       });
 
       const responses = await Promise.all(requests);
@@ -759,7 +778,41 @@ const Formulation = () => {
   };
 
   return (
-    <>
+    <div style={{ position: "relative" }}>
+      <Backdrop
+        sx={{
+          position: "absolute",
+          backgroundColor: "rgba(255,255,255,0.5)",
+          opacity: "0.9",
+          top: 0,
+          bottom: 0,
+          zIndex: (theme) => theme.zIndex.drawer + 1,
+        }}
+        open={
+          isLoading ||
+          isFetchingGetAllNutrients ||
+          isFetchingGetAllNutrientsOfRequirement
+        }
+        onClick={() => {}}
+      >
+        <Dna
+          visible={true}
+          height="200"
+          width="200"
+          ariaLabel="dna-loading"
+          wrapperStyle={{}}
+          wrapperClass="dna-wrapper"
+        />
+      </Backdrop>
+      <h1>Print Document</h1>
+      {/* <PDFViewer width={"100%"} height={1000}>
+        <RenderPdfDocument
+          columns={columns}
+          rows={rows}
+          ration={ration}
+          requirement={requirement}
+        />
+      </PDFViewer> */}
       <IngredientSelectDialog
         multiple
         open={isIngredientOpen}
@@ -993,7 +1046,7 @@ const Formulation = () => {
           </AccordionDetails>
         </Accordion>
       </Box>
-      <Stack direction={"row"} sx={{ my: 5 }} gap={1}>
+      <Stack direction={"row"} sx={{ my: 5 }} gap={1} alignItems={"center"}>
         <Button
           onClick={onRowAppended}
           color="secondary"
@@ -1021,6 +1074,34 @@ const Formulation = () => {
         >
           Reload Nutrients
         </Button>
+        <PDFDownloadLink
+          document={
+            <RenderPdfDocument
+              columns={columns}
+              rows={rows}
+              ration={ration}
+              requirement={requirement}
+            />
+          }
+          fileName="formulation.pdf"
+        >
+          {({ blob, url, loading, error }) =>
+            loading ? (
+              "Loading document..."
+            ) : (
+              <IconButton
+                aria-haspopup="true"
+                onClick={() => setShowSearch(true)}
+                size="small"
+              >
+                <PrintIcon fontSize="small" />
+              </IconButton>
+            )
+          }
+        </PDFDownloadLink>
+        <IconButton size="small" onClick={() => setShowSearch(true)}>
+          <SearchIcon fontSize="small" />
+        </IconButton>
         <Button
           color="secondary"
           size="small"
@@ -1030,9 +1111,6 @@ const Formulation = () => {
         >
           Save
         </Button>
-        <IconButton aria-haspopup="true" onClick={() => setShowSearch(true)}>
-          <SearchIcon />
-        </IconButton>
         <ClearIcon
           onClearAll={clearAll}
           onClearIngredients={clearIngredients}
@@ -1043,6 +1121,8 @@ const Formulation = () => {
       </Stack>
       <Sizer>
         <DataEditor
+          ref={ref}
+          className="printable-area"
           customRenderers={customRenderers}
           width="100%"
           experimental={{ strict: true }}
@@ -1070,7 +1150,7 @@ const Formulation = () => {
       <Box sx={{ my: 5 }}>
         <AchivementChartComponent data={achivementData} />
       </Box>
-    </>
+    </div>
   );
 };
 

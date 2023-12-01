@@ -37,6 +37,7 @@ import {
   Grid,
   AccordionDetails,
   InputAdornment,
+  IconButton,
 } from "@mui/material";
 import {
   useExtraCells,
@@ -71,6 +72,7 @@ import {
 } from "../services";
 import { enqueueSnackbar } from "notistack";
 import ClearIcon from "./ClearIcon";
+import SearchIcon from "@mui/icons-material/Search";
 
 const AchivementChartComponent = dynamic(
   () => import("../components/achivement-chart"),
@@ -146,6 +148,8 @@ const Formulation = ({ data }: { data?: Formula }) => {
     x: [],
     y: [],
   });
+  const [showSearch, setShowSearch] = React.useState(false);
+  const onSearchClose = React.useCallback(() => setShowSearch(false), []);
 
   const startColumns: Column[] = [
     {
@@ -876,6 +880,15 @@ const Formulation = ({ data }: { data?: Formula }) => {
     });
   };
 
+  const onColumnResize = (column: GridColumn, newSize: number) => {
+    const columnCopy = [...columns];
+    const index = _.findIndex(columnCopy, column);
+    if (index > -1) {
+      _.set(columnCopy[index], "width", newSize);
+    }
+    setColumns(columnCopy);
+  };
+
   return (
     <>
       <IngredientSelectDialog
@@ -1139,6 +1152,9 @@ const Formulation = ({ data }: { data?: Formula }) => {
         >
           Reload Nutrients
         </Button>
+        <IconButton aria-haspopup="true" onClick={() => setShowSearch(true)}>
+          <SearchIcon />
+        </IconButton>
         <Button
           color="secondary"
           size="small"
@@ -1175,6 +1191,11 @@ const Formulation = ({ data }: { data?: Formula }) => {
             tint: true,
             hint: "Add Ingredient",
           }}
+          showSearch={showSearch}
+          onSearchClose={onSearchClose}
+          keybindings={{ search: true }}
+          getCellsForSelection={true}
+          onColumnResize={onColumnResize}
         />
       </Sizer>
       <Box sx={{ my: 5 }}>

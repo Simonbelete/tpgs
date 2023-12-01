@@ -29,8 +29,9 @@ const DashboardLayout = (props: DashboardLayoutProps) => {
               minHeight: "100%",
               height: "auto",
               background: theme.palette.background.default,
-              position: "relative"
+              position: "relative",
             }}
+            id="body"
           >
             {children}
           </div>

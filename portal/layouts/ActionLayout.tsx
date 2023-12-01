@@ -17,7 +17,7 @@ const ActionLayout = ({
   toolbars,
 }: ActionLayoutProps) => {
   return (
-    <div>
+    <>
       <Box mb={2}>{breadcrumbs}</Box>
       <Box sx={{ display: "flex" }} mb={5}>
         {header}
@@ -27,7 +27,7 @@ const ActionLayout = ({
         </Stack>
       </Box>
       <Box sx={{ height: "auto" }}>{children}</Box>
-    </div>
+    </>
   );
 };
 
