@@ -1,12 +1,14 @@
-import React from "react";
-import { Page, Text, View, Document, StyleSheet } from "@react-pdf/renderer";
+import React, { useEffect, useState } from "react";
+import {
+  Page,
+  Text,
+  View,
+  Document,
+  StyleSheet,
+  Image,
+} from "@react-pdf/renderer";
 import type { Column, Row } from "./Formulation";
 import _ from "lodash";
-
-const PAGE_SIZES = ["4A0", "2A0", "A0", "A1", "A2", "A3", "A4"];
-const PAGE_SIZES_WIDTH = [
-  4767.87, 3370.39, 2383.94, 1683.78, 1190.55, 841.89, 595.28,
-];
 
 // Create styles
 const styles = StyleSheet.create({
@@ -119,8 +121,30 @@ export const RenderPdfDocument = ({
                 </TR>
               ))}
           </View>
+
+          <View>
+            <TR>
+              {columns.map((cl, key2) => (
+                <TD key={key2} width={_.get(cl, "width", 100)}>
+                  {_.get(ration, cl.path, "-")}
+                </TD>
+              ))}
+            </TR>
+          </View>
+
+          <View>
+            <TR>
+              {columns.map((cl, key2) => (
+                <TD key={key2} width={_.get(cl, "width", 100)}>
+                  {_.get(requirement, cl.path, "-")}
+                </TD>
+              ))}
+            </TR>
+          </View>
         </View>
       </Page>
     </Document>
   );
 };
+
+export default RenderPdfDocument;

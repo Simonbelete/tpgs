@@ -71,6 +71,7 @@
     "@types/d3": "^7.4.1",
     "@types/lodash": "^4.14.195",
     "@types/nprogress": "^0.2.0",
+    "@types/plotly.js": "^2.12.30",
     "@types/react-beautiful-dnd": "^13.1.4",
     "@types/react-plotly.js": "^2.6.0"
   }

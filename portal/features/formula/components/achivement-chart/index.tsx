@@ -4,6 +4,7 @@ import Plot from "react-plotly.js";
 const FormulationAchivementChart = ({ data }: { data: { x: any; y: any } }) => {
   return (
     <Plot
+      divId="achivement-chart"
       data={[
         {
           x: data.x,

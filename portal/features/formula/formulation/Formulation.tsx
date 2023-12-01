@@ -44,8 +44,11 @@ import {
 import _ from "lodash";
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import * as yup from "yup";
-import { useLazyGetAllNutrientsOfIngredientQuery } from "@/features/ingredients/services";
-import { Loading } from "@/components";
+import {
+  useLazyGetAllNutrientsOfIngredientQuery,
+  useUpdateIngredientMutation,
+} from "@/features/ingredients/services";
+import { Loading, PieChartSkeleton } from "@/components";
 import { IngredientSelectDialog } from "@/features/ingredients";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { Dropdown } from "@/components/dropdowns";
@@ -69,14 +72,12 @@ import { Dna } from "react-loader-spinner";
 import { RenderPdfDocument } from "./RenderPdfDocument";
 import { PDFDownloadLink, PDFViewer, Page } from "@react-pdf/renderer";
 import PrintIcon from "@mui/icons-material/Print";
+import CurrencyExchangeIcon from "@mui/icons-material/CurrencyExchange";
 
-const AchivementChartComponent = dynamic(
-  () => import("../components/achivement-chart"),
-  {
-    ssr: false,
-    loading: () => <></>,
-  }
-);
+const Plot = dynamic(() => import("react-plotly.js"), {
+  ssr: false,
+  loading: () => <PieChartSkeleton />,
+});
 
 export type ColumnProperty = ({} & Partial<GridCell>) | Partial<ButtonCellType>;
 
@@ -94,7 +95,7 @@ export interface Row {
   display_name: string;
   ration?: number;
   ratio?: number;
-  price?: number;
+  unit_price?: number;
   ration_weight?: number;
   ration_price?: number;
   dm?: number;
@@ -114,7 +115,6 @@ type Inputs = Partial<Formula>;
 const schema = yup.object({
   name: yup.string().required(),
   purpose: yup.string().nullable(),
-  weight: yup.number().required(),
   country: yup.string().nullable(),
   sex: yup.string().nullable(),
   age_from_week: yup.number().nullable(),
@@ -135,6 +135,9 @@ const Formulation = () => {
     getAllNutrientsOfRequirement,
     { isFetching: isFetchingGetAllNutrientsOfRequirement },
   ] = useLazyGetAllNutrientsOfRequirementQuery();
+
+  const [updateIngredient, updateIngredientResult] =
+    useUpdateIngredientMutation();
 
   const [createFormula, createFormulaResult] = useCreateFormulaMutation();
 
@@ -173,16 +176,16 @@ const Formulation = () => {
       },
     },
     {
-      id: "price",
+      id: "unit_price",
       title: "Unit Price",
-      path: "price",
+      path: "unit_price",
       property: {
         kind: GridCellKind.Number,
-        allowOverlay: false,
-        readonly: true,
-        style: "faded",
+        allowOverlay: true,
+        readonly: false,
+        // style: "faded",
         themeOverride: {
-          bgCell: "#EFEFF1",
+          bgCell: "#e6e6f0",
         },
       },
     },
@@ -294,6 +297,7 @@ const Formulation = () => {
   const [requirement, setRequirement] = useState<Row>({
     rowId: "requirement",
     display_name: "Requirement",
+    ration_weight: 100,
     nutrients: {},
   });
 
@@ -311,7 +315,7 @@ const Formulation = () => {
   };
 
   const useCRUDHook = useCRUD({
-    results: [createFormulaResult],
+    results: [createFormulaResult, updateIngredientResult],
     setError: setError,
   });
 
@@ -344,16 +348,21 @@ const Formulation = () => {
       let updatedRation = { rowId: "ration", display_name: "Ration" };
 
       rowCopy.forEach((r, i) => {
-        const price: number = Number(_.get(r, "price", 0));
+        const price: number = Number(_.get(r, "unit_price", 0));
         const ratio: number = Number(_.get(r, "ratio", 0));
-        // Total formulation weight default 100 kg
-        const weight: number = Number(getValues("weight") || 0);
+        const weight: number = _.get(requirement, "ration_weight", 0);
 
         // Set Batch Price
         _.set(
           rowCopy[i],
           "ration_price",
           roundTo3DecimalPlace(((weight * ratio) / 100) * price)
+        );
+
+        _.set(
+          rowCopy[i],
+          "ration_weight",
+          roundTo3DecimalPlace((weight * ratio) / 100)
         );
 
         // Calculate feed
@@ -367,7 +376,7 @@ const Formulation = () => {
               c.path,
               roundTo3DecimalPlace(cell + cellTotal)
             );
-          } else if (c.id == "price")
+          } else if (c.id == "unit_price")
             _.set(
               updatedRation,
               c.path,
@@ -377,7 +386,7 @@ const Formulation = () => {
             _.set(
               updatedRation,
               c.path,
-              roundTo3DecimalPlace(weight * cell + cellTotal)
+              roundTo3DecimalPlace(cell + cellTotal)
             );
           else if (c.id == "ration_price")
             _.set(
@@ -413,7 +422,7 @@ const Formulation = () => {
       y: [],
     };
 
-    ["ratio", "price", "dm"].map((e) => {
+    ["ratio", "unit_price", "ration_weight", "ration_price", "dm"].map((e) => {
       chart.x.push(e);
       const req: number = _.get(requirement, `${e}`, 0);
       const rat: number = _.get(ration, `${e}`, 0);
@@ -630,7 +639,7 @@ const Formulation = () => {
           ration: _.get(ing, "ration", 0),
           ration_price: _.get(ing, "ration_price", 0),
           ration_weight: _.get(ing, "ration_weight", 0),
-          price: _.get(ing, "price", 0),
+          unit_price: _.get(ing, "price", 0),
           dm: _.get(ing, "dm", 0),
           min: _.get(ing, "min", 0),
           max: _.get(ing, "max", 0),
@@ -663,7 +672,7 @@ const Formulation = () => {
         rowId: "requirement",
         display_name: value.display_name,
         ration: value.desired_ratio,
-        price: 0,
+        unit_price: 0,
         ration_price: value.budget,
         ration_weight: value.weight,
         dm: value.desired_dm,
@@ -718,16 +727,18 @@ const Formulation = () => {
     formula.ingredients = ingredients as any;
 
     formula.rations = rations as any;
-    formula.unit_price = ration.ration_price;
+    formula.unit_price = ration.unit_price;
     formula.ration_price = ration.ration_price;
     formula.ration_ratio = ration.ratio;
     formula.ration_weight = ration.ration_weight;
     formula.ration_dm = ration.dm;
 
     formula.requirements = requirements as any;
-    formula.budget = requirement.price;
+    formula.budget = requirement.unit_price;
     formula.desired_ratio = requirement.ratio;
     formula.desired_dm = requirement.dm;
+
+    formula.weight = _.get(requirement, "ration_weight", 0);
 
     const response = await createFormula(formula as any);
   };
@@ -741,6 +752,13 @@ const Formulation = () => {
 
   const clearRation = () => {
     const rationCopy = { ...ration };
+
+    rationCopy.ratio = 0;
+    rationCopy.unit_price = 0;
+    rationCopy.ration_weight = 0;
+    rationCopy.ration_price = 0;
+    rationCopy.dm = 0;
+
     _.forEach(rationCopy.nutrients, (value, key) => {
       _.set(rationCopy.nutrients || {}, `${key}.value`, 0);
     });
@@ -750,6 +768,13 @@ const Formulation = () => {
 
   const clearRequirements = () => {
     const requirementCopy = { ...ration };
+
+    requirementCopy.ratio = 0;
+    requirementCopy.unit_price = 0;
+    requirementCopy.ration_weight = 100;
+    requirementCopy.ration_price = 0;
+    requirementCopy.dm = 0;
+
     _.forEach(requirementCopy.nutrients, (value, key) => {
       _.set(requirementCopy.nutrients || {}, `${key}.value`, 0);
     });
@@ -775,6 +800,15 @@ const Formulation = () => {
       _.set(columnCopy[index], "width", newSize);
     }
     setColumns(columnCopy);
+  };
+
+  const updateIngredientPrices = async () => {
+    // TODO: only update chaned ingredients
+    const requests = _.map(rows, (e) =>
+      updateIngredient({ id: Number(e.rowId) || 0, price: e.unit_price })
+    );
+
+    const responses = await Promise.all(requests);
   };
 
   return (
@@ -804,15 +838,6 @@ const Formulation = () => {
           wrapperClass="dna-wrapper"
         />
       </Backdrop>
-      <h1>Print Document</h1>
-      {/* <PDFViewer width={"100%"} height={1000}>
-        <RenderPdfDocument
-          columns={columns}
-          rows={rows}
-          ration={ration}
-          requirement={requirement}
-        />
-      </PDFViewer> */}
       <IngredientSelectDialog
         multiple
         open={isIngredientOpen}
@@ -1089,11 +1114,7 @@ const Formulation = () => {
             loading ? (
               "Loading document..."
             ) : (
-              <IconButton
-                aria-haspopup="true"
-                onClick={() => setShowSearch(true)}
-                size="small"
-              >
+              <IconButton aria-haspopup="true" size="small">
                 <PrintIcon fontSize="small" />
               </IconButton>
             )
@@ -1110,6 +1131,15 @@ const Formulation = () => {
           onClick={() => handleSubmit(onSubmit)()}
         >
           Save
+        </Button>
+        <Button
+          color="secondary"
+          size="small"
+          startIcon={<CurrencyExchangeIcon fontSize="small" />}
+          sx={{ textTransform: "none" }}
+          onClick={updateIngredientPrices}
+        >
+          Update Price
         </Button>
         <ClearIcon
           onClearAll={clearAll}
@@ -1148,7 +1178,22 @@ const Formulation = () => {
         />
       </Sizer>
       <Box sx={{ my: 5 }}>
-        <AchivementChartComponent data={achivementData} />
+        <Plot
+          divId="achivement-chart"
+          data={[
+            {
+              x: achivementData.x,
+              y: achivementData.y,
+              type: "bar",
+            },
+          ]}
+          layout={{
+            title: "Nutrient goal achievement out of 100%",
+            height: 500,
+          }}
+          config={{ responsive: true }}
+          style={{ width: "100%" }}
+        />
       </Box>
     </div>
   );
