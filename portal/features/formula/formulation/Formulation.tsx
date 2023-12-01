@@ -319,6 +319,63 @@ const Formulation = () => {
     setError: setError,
   });
 
+  const computeRation = (rowCopy: Row[]) => {
+    let updatedRation = { rowId: "ration", display_name: "Ration" };
+
+    rowCopy.forEach((r, i) => {
+      const price: number = Number(_.get(r, "unit_price", 0));
+      const ratio: number = Number(_.get(r, "ratio", 0));
+      const weight: number = _.get(requirement, "ration_weight", 0);
+
+      // Set Batch Price
+      _.set(
+        rowCopy[i],
+        "ration_price",
+        roundTo3DecimalPlace(((weight * ratio) / 100) * price)
+      );
+
+      _.set(
+        rowCopy[i],
+        "ration_weight",
+        roundTo3DecimalPlace((weight * ratio) / 100)
+      );
+
+      // Calculate feed
+      columns.slice(1, -endColumns.length).forEach((c) => {
+        const cell = Number(_.get(r, c.path, 0));
+        const cellTotal = Number(_.get(updatedRation, c.path, 0));
+
+        if (c.id == "ratio") {
+          _.set(updatedRation, c.path, roundTo3DecimalPlace(cell + cellTotal));
+        } else if (c.id == "unit_price")
+          _.set(updatedRation, c.path, roundTo3DecimalPlace(cell + cellTotal));
+        else if (c.id == "ration_weight")
+          _.set(updatedRation, c.path, roundTo3DecimalPlace(cell + cellTotal));
+        else if (c.id == "ration_price")
+          _.set(
+            updatedRation,
+            c.path,
+            roundTo3DecimalPlace(((weight * ratio) / 100) * price + cellTotal)
+          );
+        else if (c.id == "dm")
+          _.set(
+            updatedRation,
+            c.path,
+            roundTo3DecimalPlace((ratio * cell) / 100 + cellTotal)
+          );
+        else
+          _.set(
+            updatedRation,
+            c.path,
+            roundTo3DecimalPlace((ratio * cell) / 100 + cellTotal)
+          );
+        _.set(updatedRation, c?.pathId || "", c.colId);
+      });
+    });
+
+    setRation(updatedRation);
+  };
+
   const onCellEdited = React.useCallback(
     (cell: Item, newValue: EditableGridCell) => {
       const [col, row] = cell;
@@ -345,73 +402,8 @@ const Formulation = () => {
         }
       }
 
-      let updatedRation = { rowId: "ration", display_name: "Ration" };
-
-      rowCopy.forEach((r, i) => {
-        const price: number = Number(_.get(r, "unit_price", 0));
-        const ratio: number = Number(_.get(r, "ratio", 0));
-        const weight: number = _.get(requirement, "ration_weight", 0);
-
-        // Set Batch Price
-        _.set(
-          rowCopy[i],
-          "ration_price",
-          roundTo3DecimalPlace(((weight * ratio) / 100) * price)
-        );
-
-        _.set(
-          rowCopy[i],
-          "ration_weight",
-          roundTo3DecimalPlace((weight * ratio) / 100)
-        );
-
-        // Calculate feed
-        columns.slice(1, -endColumns.length).forEach((c) => {
-          const cell = Number(_.get(r, c.path, 0));
-          const cellTotal = Number(_.get(updatedRation, c.path, 0));
-
-          if (c.id == "ratio") {
-            _.set(
-              updatedRation,
-              c.path,
-              roundTo3DecimalPlace(cell + cellTotal)
-            );
-          } else if (c.id == "unit_price")
-            _.set(
-              updatedRation,
-              c.path,
-              roundTo3DecimalPlace(cell + cellTotal)
-            );
-          else if (c.id == "ration_weight")
-            _.set(
-              updatedRation,
-              c.path,
-              roundTo3DecimalPlace(cell + cellTotal)
-            );
-          else if (c.id == "ration_price")
-            _.set(
-              updatedRation,
-              c.path,
-              roundTo3DecimalPlace(((weight * ratio) / 100) * price + cellTotal)
-            );
-          else if (c.id == "dm")
-            _.set(
-              updatedRation,
-              c.path,
-              roundTo3DecimalPlace((ratio * cell) / 100 + cellTotal)
-            );
-          else
-            _.set(
-              updatedRation,
-              c.path,
-              roundTo3DecimalPlace((ratio * cell) / 100 + cellTotal)
-            );
-          _.set(updatedRation, c?.pathId || "", c.colId);
-        });
-      });
-
-      setRation(updatedRation);
       setRows(rowCopy);
+      computeRation(rowCopy);
     },
     [rows, ration, requirement, columns]
   );
@@ -583,6 +575,7 @@ const Formulation = () => {
 
   const deleteRow = (index: number) => {
     setRows(rows.filter((e, i) => i != index));
+    computeRation(rows);
   };
 
   const addSelectedIngredients = async (ingredients?: Ingredient[]) => {
