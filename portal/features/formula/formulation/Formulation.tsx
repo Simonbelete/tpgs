@@ -73,6 +73,9 @@ import { RenderPdfDocument } from "./RenderPdfDocument";
 import { PDFDownloadLink, PDFViewer, Page } from "@react-pdf/renderer";
 import PrintIcon from "@mui/icons-material/Print";
 import CurrencyExchangeIcon from "@mui/icons-material/CurrencyExchange";
+import AutoGraphIcon from "@mui/icons-material/AutoGraph";
+import Analysis from "./Analysis";
+// import solver from "javascript-lp-solver";
 
 const Plot = dynamic(() => import("react-plotly.js"), {
   ssr: false,
@@ -618,7 +621,7 @@ const Formulation = () => {
         _.forEach(e.results, (n) => {
           const nutrient = n.nutrient as Nutrient;
           const abbreviation: string = nutrient.abbreviation;
-          const val = _.get(n, "value", 0);
+          const val = Number(_.get(n, "value", 0));
           _.set(nutrients, abbreviation, {
             id: nutrient.id,
             value: val,
@@ -646,6 +649,10 @@ const Formulation = () => {
       setIsLoading(false);
     }
   };
+
+  useEffect(() => {
+    console.log(rows);
+  }, [rows]);
 
   const handleRequirementSelected = async (value?: Requirement) => {
     if (value == null) {
@@ -802,6 +809,24 @@ const Formulation = () => {
     );
 
     const responses = await Promise.all(requests);
+  };
+
+  const calculateDemo = () => {
+    // const model = {
+    //   optimize: "profit",
+    //   opType: "max",
+    //   constraints: {
+    //     wood: { max: 300 },
+    //     labor: { max: 110 },
+    //     storage: { max: 400 },
+    //   },
+    //   variables: {
+    //     table: { wood: 30, labor: 5, profit: 1200, table: 1, storage: 30 },
+    //     dresser: { wood: 20, labor: 10, profit: 1600, dresser: 1, storage: 50 },
+    //   },
+    //   ints: { table: 1, dresser: 1 },
+    // };
+    // console.log(solver.Solve(model));
   };
 
   return (
@@ -1128,12 +1153,25 @@ const Formulation = () => {
         <Button
           color="secondary"
           size="small"
+          startIcon={<SaveIcon fontSize="small" />}
+          sx={{ textTransform: "none" }}
+          onClick={calculateDemo}
+        >
+          Calcualte
+        </Button>
+        <Button
+          color="secondary"
+          size="small"
           startIcon={<CurrencyExchangeIcon fontSize="small" />}
           sx={{ textTransform: "none" }}
           onClick={updateIngredientPrices}
         >
           Update Price
         </Button>
+        <Analysis
+          rows={rows}
+          columns={columns.slice(startColumns.length, -endColumns.length)}
+        />
         <ClearIcon
           onClearAll={clearAll}
           onClearIngredients={clearIngredients}
