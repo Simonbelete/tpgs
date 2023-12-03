@@ -17,6 +17,7 @@ import {
   FormulaAchivementChart,
   IngredientsChart,
   FormulaStat,
+  FormulaDashboard,
 } from "@/features/formula";
 import { getFormulaByIdSSR } from "@/features/formula/services";
 import EditNoteIcon from "@mui/icons-material/EditNote";
@@ -33,7 +34,8 @@ const FormulaDashboardEditPage = ({ data }: { data: Formula }) => {
       header={<Typography variant="title">{data.name}</Typography>}
       actions={<Actions />}
     >
-      <Grid container gap={5}>
+      <FormulaDashboard data={data} />
+      {/* <Grid container gap={5}>
         <Grid item xs={12}>
           <FormulaStat id={data.id} />
         </Grid>
@@ -43,7 +45,7 @@ const FormulaDashboardEditPage = ({ data }: { data: Formula }) => {
         <Grid xs={12}>
           <FormulaAchivementChart formula={data} />
         </Grid>
-      </Grid>
+      </Grid> */}
     </StatDashboardLayout>
   );
 };

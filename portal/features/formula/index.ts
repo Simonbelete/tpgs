@@ -6,3 +6,4 @@ export * from "./formulation";
 export * from "./formula-achivement-chart";
 export * from "./charts/ingredients-chart";
 export * from "./formula-stat";
+export * from "./formula-analysis";
