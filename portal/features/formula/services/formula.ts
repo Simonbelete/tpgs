@@ -136,10 +136,10 @@ export const formulaApi = baseApi.injectEndpoints({
       }),
       deleteIngredientOfFormula: build.mutation<
         any,
-        Pick<FormulaIngredient, "ingredient" | "id">
+        Pick<FormulaIngredient, "formula" | "id">
       >({
-        query: ({ ingredient, id }) => ({
-          url: `${URL}/${ingredient}/${INGREDIENT_URL}/${id}/`,
+        query: ({ formula, id }) => ({
+          url: `${URL}/${formula}/${INGREDIENT_URL}/${id}/`,
           method: "delete",
         }),
       }),

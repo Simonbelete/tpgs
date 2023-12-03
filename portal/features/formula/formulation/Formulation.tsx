@@ -70,6 +70,7 @@ import {
   useLazyGetAllIngredientsOfFormulaQuery,
   useLazyGetAllRequirementsOfFormulaQuery,
   useLazyGetAllRationsOfFormulaQuery,
+  useDeleteIngredientOfFormulaMutation,
 } from "../services";
 import { enqueueSnackbar } from "notistack";
 import ClearIcon from "./ClearIcon";
@@ -147,6 +148,7 @@ const Formulation = ({ data }: { data?: Formula }) => {
     useLazyGetAllRequirementsOfFormulaQuery();
   const [getAllRationsOfFormula] = useLazyGetAllRationsOfFormulaQuery();
   const [getAllIngredientOfFormula] = useLazyGetAllIngredientsOfFormulaQuery();
+  const [deleteIngredientOfFormula] = useDeleteIngredientOfFormulaMutation();
 
   const [updateIngredient, updateIngredientResult] =
     useUpdateIngredientMutation();
@@ -613,7 +615,7 @@ const Formulation = ({ data }: { data?: Formula }) => {
 
         newRows.push({
           id: _.get(ing, "ingredient.id", 0),
-          rowId: _.get(ing, "ingredient.id", ""),
+          rowId: _.get(ing, "id", ""),
           display_name: _.get(ing, "ingredient.display_name", ""),
           ration: _.get(ing, "ration", 0),
           unit_price: _.get(ing, "price", 0),
@@ -732,8 +734,20 @@ const Formulation = ({ data }: { data?: Formula }) => {
     }
   };
 
-  const deleteRow = (index: number) => {
-    setRows(rows.filter((e, i) => i != index));
+  const deleteRow = async (index: number) => {
+    if (data != null) {
+      try {
+        const response = await deleteIngredientOfFormula({
+          formula: data.id,
+          id: Number(rows[index].rowId) || 0,
+        }).unwrap();
+        if (response.status == 204) {
+          setRows(rows.filter((e, i) => i != index));
+        }
+      } catch (ex) {}
+    } else {
+      setRows(rows.filter((e, i) => i != index));
+    }
     computeRation(rows);
   };
 
