@@ -107,6 +107,8 @@ class Formula(CoreModel):
     ingredients = models.ManyToManyField(
         'ingredients.Ingredient', null=True, blank=True, through=FormulaIngredient)
     # Requirements
+    requirement = models.ForeignKey(
+        'requirements.Requirement', on_delete=models.SET_NULL, null=True, blank=True)
     requirements = models.ManyToManyField(
         'nutrients.Nutrient', null=True, blank=True, through=FormulaRequirement, related_name='formula_requirements')
     budget = models.DecimalField(

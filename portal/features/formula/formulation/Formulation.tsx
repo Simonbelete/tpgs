@@ -291,8 +291,8 @@ const Formulation = () => {
   const [rows, setRows] = useState<Row[]>([]);
 
   const [ration, setRation] = useState<Row>({
-    rowId: "ratio",
-    display_name: "Ratio",
+    rowId: "ration",
+    display_name: "Ration",
   });
 
   const [requirement, setRequirement] = useState<Row>({
@@ -394,13 +394,22 @@ const Formulation = () => {
         // TODO: should not be editable
         _.set(ration, dataCol.path, newValue.data);
       } else if (row == REQUIREMENT_INDEX) {
+        const requirementCopy = { ...requirement };
         // if Column is nutrient set the id also
         if (dataCol.path.includes("nutrients.")) {
-          _.set(requirement, dataCol.path, newValue.data);
-          _.set(requirement, dataCol.pathId || "", dataCol.colId);
+          _.set(requirementCopy, dataCol.path, newValue.data);
+          _.set(requirementCopy, dataCol.pathId || "", dataCol.colId);
         } else {
-          _.set(requirement, dataCol.path, newValue.data);
+          _.set(requirementCopy, dataCol.path, newValue.data);
         }
+
+        // Since requirement is changed set is as new requirement
+        if (col > startColumns.length - 2) {
+          _.set(requirementCopy, "rowId", "requirement");
+          _.set(requirementCopy, "display_name", "Requirement");
+        }
+
+        setRequirement(requirementCopy);
       }
 
       setRows(rowCopy);
@@ -663,7 +672,7 @@ const Formulation = () => {
 
       const newRow: Row & Partial<FormulaRequirement> = {
         id: value.id,
-        rowId: "requirement",
+        rowId: value.id,
         display_name: value.display_name,
         ration: value.desired_ratio,
         unit_price: 0,
@@ -734,8 +743,16 @@ const Formulation = () => {
 
     formula.weight = _.get(requirement, "ration_weight", 0);
 
+    if (typeof requirement.rowId === "number") {
+      formula.requirement = requirement.rowId;
+    }
+
     const response = await createFormula(formula as any);
   };
+
+  useEffect(() => {
+    console.log(requirement);
+  }, [requirement]);
 
   const clearAll = () => {
     clearRation();
@@ -942,39 +959,6 @@ const Formulation = () => {
                         label="Feed Basis"
                         error={!!error?.message}
                         helperText={error?.message}
-                      />
-                    )}
-                  />
-                </Grid>
-                {/* Weight */}
-                <Grid item xs={12} md={6}>
-                  <Controller
-                    name={"weight"}
-                    control={control}
-                    render={({
-                      field: { onChange, value },
-                      fieldState: { error },
-                    }) => (
-                      <LabeledInput
-                        error={!!error?.message}
-                        helperText={error?.message}
-                        onChange={(event: any) => {
-                          console.log(event.target.value);
-                          setColumns([...columns]);
-                          // TODO:  Update header title of price per kg
-                          onChange(event);
-                        }}
-                        fullWidth
-                        size="small"
-                        value={value ?? 0}
-                        label={"Weight [Kg]"}
-                        placeholder={"Weight per Kg"}
-                        type="number"
-                        InputProps={{
-                          endAdornment: (
-                            <InputAdornment position="start">Kg</InputAdornment>
-                          ),
-                        }}
                       />
                     )}
                   />

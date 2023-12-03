@@ -5,6 +5,7 @@ import FormulaRation from "./FormulaRation";
 import FormulaRequirement from "./FormulaRequirement";
 import Purpose from "./Purpose";
 import Unit from "./Unit";
+import Requirement from "./Requirement";
 
 export default interface Formula extends AbstractBaseModel {
   name: string;
@@ -30,4 +31,5 @@ export default interface Formula extends AbstractBaseModel {
   ration_ratio: number;
   ration_weight: number;
   ration_dm: number;
+  requirement?: null | number | Requirement;
 }
