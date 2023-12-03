@@ -647,7 +647,7 @@ const Formulation = ({ data }: { data?: Formula }) => {
     const newRow: Row & Partial<FormulaRequirement> = {
       id: data.id,
       rowId: _.get(data.requirement, "id", "requirement"),
-      display_name: _.get(data.requirement, "display_name", "Requirement"),
+      display_name: _.get(data.requirement, "name", "Requirement"),
       ration: data.desired_ratio,
       unit_price: 0,
       ration_price: data.budget,
@@ -902,10 +902,6 @@ const Formulation = ({ data }: { data?: Formula }) => {
       await createFormula(formula as any);
     }
   };
-
-  useEffect(() => {
-    console.log(requirement);
-  }, [requirement]);
 
   const clearAll = () => {
     clearRation();

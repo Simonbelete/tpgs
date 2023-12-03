@@ -24,6 +24,9 @@ const styles = StyleSheet.create({
     backgroundColor: "#ADCEFF",
   },
   tbody: {},
+  stripe: {
+    backgroundColor: "#E0DFE1",
+  },
   tr: {
     flexDirection: "row",
     borderWidth: 1,
@@ -122,7 +125,7 @@ export const RenderPdfDocument = ({
               ))}
           </View>
 
-          <View>
+          <View style={styles.stripe}>
             <TR>
               {columns.map((cl, key2) => (
                 <TD key={key2} width={_.get(cl, "width", 100)}>

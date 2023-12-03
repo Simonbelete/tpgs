@@ -11,7 +11,8 @@ import { NextPageContext } from "next";
 
 const FormulationExperimentalPage = ({ data }: { data: Formula }) => {
   const { breadcrumbs } = useBreadcrumbs();
-  const saveRef = useRef();
+
+  console.log(data);
 
   return (
     <ActionLayout

@@ -46,11 +46,13 @@ const Analysis = ({ columns, rows }: { columns: Column[]; rows: Row[] }) => {
     const totals = {};
 
     columns.forEach((el) => {
-      const total = _.sumBy(rows, (o) => _.get(o, el.path, 0));
+      const total = _.sumBy(rows, (o) => Number(_.get(o, el.path, 0)));
 
       if (total != null) _.set(totals, `${el.id}`, total);
       else _.set(totals, `${el.id}`, 0);
     });
+
+    console.log(totals);
 
     rows.forEach((r) => {
       const x: number[] = [];
@@ -69,6 +71,8 @@ const Analysis = ({ columns, rows }: { columns: Column[]; rows: Row[] }) => {
         orientation: "h",
       });
     });
+
+    console.log(rows);
 
     setndData(data);
   };

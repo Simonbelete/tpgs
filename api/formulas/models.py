@@ -55,7 +55,7 @@ class FormulaIngredient(CoreModel):
     ingredient = models.ForeignKey(
         'ingredients.Ingredient', on_delete=models.CASCADE)
     ration = models.DecimalField(
-        validators=PERCENTAGE_VALIDATOR, max_digits=6, decimal_places=3, default=0, null=True, blank=True)
+        max_digits=6, decimal_places=3, default=0, null=True, blank=True)
     history = HistoricalRecords()
 
     class Meta:
@@ -114,9 +114,9 @@ class Formula(CoreModel):
     budget = models.DecimalField(
         max_digits=10, decimal_places=2, null=True, blank=True, default=0)  # per kg
     desired_ratio = models.DecimalField(
-        validators=PERCENTAGE_VALIDATOR, max_digits=15, decimal_places=3, default=100, null=True, blank=True)
+        max_digits=15, decimal_places=3, default=100, null=True, blank=True)
     desired_dm = models.DecimalField(
-        validators=PERCENTAGE_VALIDATOR, max_digits=15, decimal_places=3, default=0, null=True, blank=True)
+        max_digits=15, decimal_places=3, default=0, null=True, blank=True)
 
     # Rations - rations are computed based on the given weight
     # Rations shows result of formula for each nutrients
@@ -127,12 +127,12 @@ class Formula(CoreModel):
     ration_price = models.DecimalField(
         max_digits=10, decimal_places=2, null=True, blank=True, default=0)
     ration_ratio = models.DecimalField(
-        validators=PERCENTAGE_VALIDATOR, max_digits=15, decimal_places=3, default=0)
+        max_digits=15, decimal_places=3, default=0)
     # weight * ration
     ration_weight = models.DecimalField(
         max_digits=7, decimal_places=3, null=True, blank=True, default=0)
     ration_dm = models.DecimalField(
-        validators=PERCENTAGE_VALIDATOR, max_digits=15, decimal_places=3, default=0)
+        max_digits=15, decimal_places=3, default=0)
     history = HistoricalRecords()
 
     @property
