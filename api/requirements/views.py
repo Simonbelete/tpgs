@@ -85,8 +85,8 @@ class AllRequirementNutrientViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = serializers.AllIngredientNutrientSerializer_GET
 
     def get_queryset(self):
-        if ('ingredient_pk' in self.kwargs):
-            return self.queryset.filter(ingredient=self.kwargs['ingredient_pk'])
+        if ('requirement_pk' in self.kwargs):
+            return self.queryset.filter(requirement=self.kwargs['requirement_pk'])
         return self.queryset
 
 
