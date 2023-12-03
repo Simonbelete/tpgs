@@ -73,9 +73,7 @@ import { RenderPdfDocument } from "./RenderPdfDocument";
 import { PDFDownloadLink, PDFViewer, Page } from "@react-pdf/renderer";
 import PrintIcon from "@mui/icons-material/Print";
 import CurrencyExchangeIcon from "@mui/icons-material/CurrencyExchange";
-import AutoGraphIcon from "@mui/icons-material/AutoGraph";
 import Analysis from "./Analysis";
-// import solver from "javascript-lp-solver";
 
 const Plot = dynamic(() => import("react-plotly.js"), {
   ssr: false,
@@ -650,10 +648,6 @@ const Formulation = () => {
     }
   };
 
-  useEffect(() => {
-    console.log(rows);
-  }, [rows]);
-
   const handleRequirementSelected = async (value?: Requirement) => {
     if (value == null) {
       setIsRequirementOpen(false);
@@ -767,13 +761,16 @@ const Formulation = () => {
   };
 
   const clearRequirements = () => {
-    const requirementCopy = { ...ration };
-
-    requirementCopy.ratio = 0;
-    requirementCopy.unit_price = 0;
-    requirementCopy.ration_weight = 100;
-    requirementCopy.ration_price = 0;
-    requirementCopy.dm = 0;
+    const requirementCopy = {
+      rowId: "requirement",
+      display_name: "Requirement",
+      ration_weight: 100,
+      nutrients: {},
+      ratio: 0,
+      unit_price: 0,
+      ration_price: 0,
+      dm: 0,
+    };
 
     _.forEach(requirementCopy.nutrients, (value, key) => {
       _.set(requirementCopy.nutrients || {}, `${key}.value`, 0);
@@ -809,24 +806,6 @@ const Formulation = () => {
     );
 
     const responses = await Promise.all(requests);
-  };
-
-  const calculateDemo = () => {
-    // const model = {
-    //   optimize: "profit",
-    //   opType: "max",
-    //   constraints: {
-    //     wood: { max: 300 },
-    //     labor: { max: 110 },
-    //     storage: { max: 400 },
-    //   },
-    //   variables: {
-    //     table: { wood: 30, labor: 5, profit: 1200, table: 1, storage: 30 },
-    //     dresser: { wood: 20, labor: 10, profit: 1600, dresser: 1, storage: 50 },
-    //   },
-    //   ints: { table: 1, dresser: 1 },
-    // };
-    // console.log(solver.Solve(model));
   };
 
   return (
@@ -1149,15 +1128,6 @@ const Formulation = () => {
           onClick={() => handleSubmit(onSubmit)()}
         >
           Save
-        </Button>
-        <Button
-          color="secondary"
-          size="small"
-          startIcon={<SaveIcon fontSize="small" />}
-          sx={{ textTransform: "none" }}
-          onClick={calculateDemo}
-        >
-          Calcualte
         </Button>
         <Button
           color="secondary"

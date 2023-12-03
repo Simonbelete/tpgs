@@ -27,6 +27,9 @@ const Analysis = ({ columns, rows }: { columns: Column[]; rows: Row[] }) => {
   const [pricedOpen, setPricedOpen] = useState(false);
   const [pricedData, setPricedData] = useState<Object[]>([]);
 
+  const [minMaxOpen, setMinMaxOpen] = useState(false);
+  const [minMaxData, setMinMaxData] = useState<Object[]>([]);
+
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
@@ -48,8 +51,6 @@ const Analysis = ({ columns, rows }: { columns: Column[]; rows: Row[] }) => {
       if (total != null) _.set(totals, `${el.id}`, total);
       else _.set(totals, `${el.id}`, 0);
     });
-
-    console.log(totals);
 
     rows.forEach((r) => {
       const x: number[] = [];
@@ -74,7 +75,6 @@ const Analysis = ({ columns, rows }: { columns: Column[]; rows: Row[] }) => {
 
   const handlePricedOpen = () => {
     setPricedOpen(true);
-
     const data: any = {
       type: "pie",
       values: [],
@@ -89,6 +89,32 @@ const Analysis = ({ columns, rows }: { columns: Column[]; rows: Row[] }) => {
     });
 
     setPricedData([data]);
+  };
+
+  const handleMinMaxOpen = () => {
+    setMinMaxOpen(true);
+
+    const data: any = {
+      x: [],
+      y: [],
+      type: "bar",
+      error_y: {
+        type: "data",
+        symmetric: false,
+        array: [],
+        arrayminus: [],
+      },
+    };
+
+    rows.forEach((r) => {
+      data.x.push(r.display_name);
+      data.y.push(r.ratio || 0);
+
+      data.error_y.array.push(r.max);
+      data.error_y.arrayminus.push(r.min);
+    });
+
+    setMinMaxData([data]);
   };
 
   return (
@@ -115,6 +141,19 @@ const Analysis = ({ columns, rows }: { columns: Column[]; rows: Row[] }) => {
               title: "Ingredient price",
               height: 500,
               barmode: "stack",
+            }}
+            config={{ responsive: true }}
+            style={{ width: "100%" }}
+          />
+        </Box>
+      </PlainModal>
+      <PlainModal onClose={() => setMinMaxOpen(false)} open={minMaxOpen}>
+        <Box sx={{ mt: 4 }}>
+          <Plot
+            data={minMaxData}
+            layout={{
+              title: "Ingredient Min and Max",
+              height: 500,
             }}
             config={{ responsive: true }}
             style={{ width: "100%" }}
@@ -160,6 +199,14 @@ const Analysis = ({ columns, rows }: { columns: Column[]; rows: Row[] }) => {
             }}
           >
             Price contribuation
+          </MenuItem>
+          <MenuItem
+            onClick={() => {
+              handleClose();
+              handleMinMaxOpen();
+            }}
+          >
+            Ingredient ration
           </MenuItem>
         </MenuList>
       </Menu>
