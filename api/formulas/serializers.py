@@ -7,6 +7,7 @@ from ingredients.models import Ingredient
 from ingredients.serializers import IngredientSerializer_GET
 from nutrients.serializers import AllNutrientSerializer_GET, NutrientSerializer_SLUG
 from purposes.serializers import PurposeSerializer_GET
+from requirements.serializers import RequirementSerializer_SLUG
 
 
 class FormulaRequirementSerializer_REF(serializers.ModelSerializer):
@@ -72,10 +73,7 @@ class FormulaIngredientSerializer_PATCH(serializers.ModelSerializer):
 # Formula
 class FormulaSerializer_GET(serializers.ModelSerializer):
     purpose = PurposeSerializer_GET()
-    requirement = serializers.SlugRelatedField(
-        read_only=True,
-        slug_field='name'
-    )
+    requirement = RequirementSerializer_SLUG()
 
     class Meta:
         model = models.Formula

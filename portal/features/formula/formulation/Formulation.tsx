@@ -64,7 +64,13 @@ import AddIcon from "@mui/icons-material/Add";
 import PlaylistAddIcon from "@mui/icons-material/PlaylistAdd";
 import AutorenewIcon from "@mui/icons-material/Autorenew";
 import SaveIcon from "@mui/icons-material/Save";
-import { useCreateFormulaMutation } from "../services";
+import {
+  useCreateFormulaMutation,
+  useUpdateFormulaMutation,
+  useLazyGetAllIngredientsOfFormulaQuery,
+  useLazyGetAllRequirementsOfFormulaQuery,
+  useLazyGetAllRationsOfFormulaQuery,
+} from "../services";
 import { enqueueSnackbar } from "notistack";
 import ClearIcon from "./ClearIcon";
 import SearchIcon from "@mui/icons-material/Search";
@@ -124,7 +130,7 @@ const schema = yup.object({
   note: yup.string().nullable(),
 });
 
-const Formulation = () => {
+const Formulation = ({ data }: { data?: Formula }) => {
   const ref = useRef(null);
   const { customRenderers } = useExtraCells();
 
@@ -137,10 +143,16 @@ const Formulation = () => {
     { isFetching: isFetchingGetAllNutrientsOfRequirement },
   ] = useLazyGetAllNutrientsOfRequirementQuery();
 
+  const [getAllRequirementsOfFormula] =
+    useLazyGetAllRequirementsOfFormulaQuery();
+  const [getAllRationsOfFormula] = useLazyGetAllRationsOfFormulaQuery();
+  const [getAllIngredientOfFormula] = useLazyGetAllIngredientsOfFormulaQuery();
+
   const [updateIngredient, updateIngredientResult] =
     useUpdateIngredientMutation();
 
   const [createFormula, createFormulaResult] = useCreateFormulaMutation();
+  const [updateFormula, updateFormulaResult] = useUpdateFormulaMutation();
 
   const [isLoading, setIsLoading] = useState(false);
   const [isIngredientOpen, setIsIngredientOpen] = useState(false);
@@ -303,11 +315,11 @@ const Formulation = () => {
   });
 
   // Form
-  const { handleSubmit, control, setError, getValues } = useForm<Inputs>({
+  const { handleSubmit, control, setError } = useForm<Inputs>({
     // @ts-ignore
     resolver: yupResolver(schema),
     defaultValues: {
-      weight: 100,
+      ...data,
     },
   });
 
@@ -316,7 +328,7 @@ const Formulation = () => {
   };
 
   const useCRUDHook = useCRUD({
-    results: [createFormulaResult, updateIngredientResult],
+    results: [createFormulaResult, updateIngredientResult, updateFormulaResult],
     setError: setError,
   });
 
@@ -552,10 +564,147 @@ const Formulation = () => {
   }, []);
 
   useEffect(() => {
-    // TODO: clean all data
-    setRows([]);
     loadNutrientsToTable();
+    if (data != null) {
+      getFormulaRequirements();
+      getFormulaRations();
+      getFormulaIngredients();
+    }
   }, []);
+
+  const getFormulaIngredients = async () => {
+    if (data == null) return;
+
+    try {
+      setIsLoading(true);
+      const response = await getAllIngredientOfFormula({
+        id: data.id,
+      }).unwrap();
+
+      const formulaIngredients = response.results;
+
+      const newRows: Row[] = [];
+
+      const requests = _.map(formulaIngredients, (e) => {
+        const ing_id = _.get(e, "ingredient.id", 0);
+
+        return getAllNutrientsOfIngredient({
+          id: ing_id,
+          query: {},
+        }).unwrap();
+      });
+
+      const responses = await Promise.all(requests);
+
+      _.forEach(responses, (e, i) => {
+        const ing = _.get(formulaIngredients, i, {});
+
+        const nutrients = {};
+
+        _.forEach(e.results, (n) => {
+          const nutrient = n.nutrient as Nutrient;
+          const abbreviation: string = nutrient.abbreviation;
+          const val = _.get(n, "value", 0);
+          _.set(nutrients, abbreviation, {
+            id: nutrient.id,
+            value: val,
+          });
+        });
+
+        newRows.push({
+          id: _.get(ing, "ingredient.id", 0),
+          rowId: _.get(ing, "ingredient.id", ""),
+          display_name: _.get(ing, "ingredient.display_name", ""),
+          ration: _.get(ing, "ration", 0),
+          unit_price: _.get(ing, "price", 0),
+          dm: _.get(ing, "ingredient.dm", 0),
+          min: _.get(ing, "ingredient.min", 0),
+          max: _.get(ing, "ingredient.max", 0),
+          nutrients: nutrients,
+          ratio: _.get(ing, "ration", 0),
+          // formula ingredient fields
+          ration_price: _.get(ing, "ration_price", 0),
+          ration_weight: _.get(ing, "ration_weight", 0),
+        });
+      });
+
+      setRows(newRows);
+    } catch (ex) {
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const getFormulaRequirements = async () => {
+    if (data == null) return;
+
+    setIsLoading(true);
+
+    const response = await getAllRequirementsOfFormula({
+      id: data.id,
+    }).unwrap();
+
+    const newRow: Row & Partial<FormulaRequirement> = {
+      id: data.id,
+      rowId: _.get(data.requirement, "id", "requirement"),
+      display_name: _.get(data.requirement, "display_name", "Requirement"),
+      ration: data.desired_ratio,
+      unit_price: 0,
+      ration_price: data.budget,
+      ration_weight: data.weight,
+      dm: data.desired_dm,
+      nutrients: {},
+    };
+
+    for (let i = 0; i < response.results.length; i += 1) {
+      const nutrient = response.results[i].nutrient as Nutrient;
+      const abbreviation: string = (response.results[i].nutrient as Nutrient)
+        .abbreviation;
+      const val = _.get(response.results[i], "value", 0);
+      _.set(newRow, `nutrients.${abbreviation}`, {
+        id: nutrient.id,
+        value: val,
+      });
+    }
+
+    setRequirement(newRow);
+
+    setIsLoading(false);
+  };
+
+  const getFormulaRations = async () => {
+    if (data == null) return;
+
+    setIsLoading(true);
+
+    const response = await getAllRationsOfFormula({ id: data.id }).unwrap();
+
+    const newRow: Row & Partial<FormulaRation> = {
+      id: data.id,
+      rowId: "ration",
+      display_name: "Ration",
+      ration: data.ration_ratio,
+      unit_price: 0,
+      ration_price: data.ration_price,
+      ration_weight: data.ration_weight,
+      dm: data.ration_dm,
+      nutrients: {},
+    };
+
+    for (let i = 0; i < response.results.length; i += 1) {
+      const nutrient = response.results[i].nutrient as Nutrient;
+      const abbreviation: string = (response.results[i].nutrient as Nutrient)
+        .abbreviation;
+      const val = _.get(response.results[i], "value", 0);
+      _.set(newRow, `nutrients.${abbreviation}`, {
+        id: nutrient.id,
+        value: val,
+      });
+    }
+
+    setRation(newRow);
+    setIsLoading(false);
+  };
 
   const loadNutrientsToTable = async () => {
     const response = await getAllNutrients({}).unwrap();
@@ -747,7 +896,11 @@ const Formulation = () => {
       formula.requirement = requirement.rowId;
     }
 
-    const response = await createFormula(formula as any);
+    if (data != null) {
+      await updateFormula(formula as any);
+    } else {
+      await createFormula(formula as any);
+    }
   };
 
   useEffect(() => {
