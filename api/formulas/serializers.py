@@ -99,7 +99,7 @@ class FormulaSerializer_POST(serializers.ModelSerializer):
     @transaction.atomic
     def create(self, validated_data):
         requirements = validated_data.pop('formularequirement', [])
-        rations = validated_data.pop('rations', [])
+        rations = validated_data.pop('formularation', [])
         ingredients = validated_data.pop('formulaingredient', [])
         instance = models.Formula.objects.create(**validated_data)
 
@@ -121,7 +121,7 @@ class FormulaSerializer_POST(serializers.ModelSerializer):
     @transaction.atomic
     def update(self, instance, validated_data):
         requirements = validated_data.pop('formularequirement', [])
-        rations = validated_data.pop('rations', [])
+        rations = validated_data.pop('formularation', [])
         ingredients = validated_data.pop('formulaingredient', [])
 
         for requirement in requirements:
