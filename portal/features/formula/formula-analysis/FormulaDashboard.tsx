@@ -111,7 +111,7 @@ export const FormulaDashboard = ({ data }: { data: Formula }) => {
         rowId: _.get(ing, "id", ""),
         display_name: _.get(ing, "ingredient.display_name", ""),
         ration: _.get(ing, "ration", 0),
-        unit_price: _.get(ing, "price", 0),
+        unit_price: _.get(ing, "unit_price", 0),
         dm: _.get(ing, "ingredient.dm", 0),
         min: _.get(ing, "ingredient.min", 0),
         max: _.get(ing, "ingredient.max", 0),

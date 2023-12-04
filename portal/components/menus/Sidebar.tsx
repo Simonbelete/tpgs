@@ -264,34 +264,44 @@ const SidebarMenu = () => {
             </Typography>
           </MenuItem>
         </SubMenu>
+        <MenuItem
+          component={<Link href="/ingredients" />}
+          icon={<LocalDiningIcon fontSize="small" />}
+          active={RegExp("/ingredients(.*)$").test(router.pathname)}
+        >
+          <Typography variant="body1" fontSize={14}>
+            Ingredients
+          </Typography>
+        </MenuItem>
+        <MenuItem
+          component={<Link href="/nutrients" />}
+          icon={<BubbleChartIcon fontSize="small" />}
+          active={RegExp("/nutrient(.*)$").test(router.pathname)}
+        >
+          <Typography variant="body1" fontSize={14}>
+            Nutrients
+          </Typography>
+        </MenuItem>
+        <MenuItem
+          component={<Link href="/requirements" />}
+          icon={<ChecklistIcon fontSize="small" />}
+          active={RegExp("^/requirements(.*)$").test(router.pathname)}
+        >
+          <Typography variant="body1" fontSize={14}>
+            Requirements
+          </Typography>
+        </MenuItem>
         <SubMenu
           label={
             <Typography variant="body1" fontSize={14}>
-              Ingredients
+              Groups
             </Typography>
           }
-          icon={<LocalDiningIcon />}
-          defaultOpen={RegExp("^/ingredient(.*)$").test(router.pathname)}
+          icon={<GroupWorkIcon fontSize="small" />}
+          defaultOpen={RegExp("^/(hatchery|candling|incubation)(.*)$").test(
+            router.pathname
+          )}
         >
-          <MenuItem
-            component={<Link href="/ingredients" />}
-            icon={<AdjustIcon fontSize="small" />}
-            active={RegExp("/ingredients(.*)$").test(router.pathname)}
-          >
-            <Typography variant="body1" fontSize={14}>
-              Ingredients
-            </Typography>
-          </MenuItem>
-          <MenuItem
-            component={<Link href="/ingredient-nutrients" />}
-            icon={<AdjustIcon fontSize="small" />}
-            active={RegExp("/ingredient-nutrients(.*)$").test(router.pathname)}
-          >
-            <Typography variant="body1" fontSize={14}>
-              Ingredient
-              <br /> Composition
-            </Typography>
-          </MenuItem>
           <MenuItem
             component={<Link href="/ingredient-types" />}
             icon={<AdjustIcon fontSize="small" />}
@@ -301,25 +311,6 @@ const SidebarMenu = () => {
               Ingredient Group
             </Typography>
           </MenuItem>
-        </SubMenu>
-        <SubMenu
-          label={
-            <Typography variant="body1" fontSize={14}>
-              Nutrients
-            </Typography>
-          }
-          icon={<BubbleChartIcon />}
-          defaultOpen={RegExp("^/nutrient(.*)$").test(router.pathname)}
-        >
-          <MenuItem
-            component={<Link href="/nutrients" />}
-            icon={<AdjustIcon fontSize="small" />}
-            active={RegExp("/nutrient(.*)$").test(router.pathname)}
-          >
-            <Typography variant="body1" fontSize={14}>
-              Nutrients
-            </Typography>
-          </MenuItem>
           <MenuItem
             component={<Link href="/nutrient-groups" />}
             icon={<AdjustIcon fontSize="small" />}
@@ -327,36 +318,6 @@ const SidebarMenu = () => {
           >
             <Typography variant="body1" fontSize={14}>
               Nutrient Group
-            </Typography>
-          </MenuItem>
-        </SubMenu>
-        <SubMenu
-          label={
-            <Typography variant="body1" fontSize={14}>
-              Requirements
-            </Typography>
-          }
-          icon={<ChecklistIcon fontSize="small" />}
-          defaultOpen={RegExp("^/requirements(.*)$").test(router.pathname)}
-        >
-          <MenuItem
-            component={<Link href="/requirements" />}
-            icon={<AdjustIcon fontSize="small" />}
-            active={RegExp("^/requirements(.*)$").test(router.pathname)}
-          >
-            <Typography variant="body1" fontSize={14}>
-              Requirements
-            </Typography>
-          </MenuItem>
-          <MenuItem
-            component={<Link href="/requirement-nutrients" />}
-            icon={<AdjustIcon fontSize="small" />}
-            active={RegExp("^/requirement-nutrients(.*)$").test(
-              router.pathname
-            )}
-          >
-            <Typography variant="body1" fontSize={14}>
-              Requirement <br /> Composition
             </Typography>
           </MenuItem>
         </SubMenu>
@@ -671,6 +632,27 @@ const SidebarMenu = () => {
           >
             <Typography variant="body1" fontSize={14}>
               Cull reasons
+            </Typography>
+          </MenuItem>
+          <MenuItem
+            component={<Link href="/ingredient-nutrients" />}
+            icon={<AdjustIcon fontSize="small" />}
+            active={RegExp("/ingredient-nutrients(.*)$").test(router.pathname)}
+          >
+            <Typography variant="body1" fontSize={14}>
+              Ingredient
+              <br /> Composition
+            </Typography>
+          </MenuItem>
+          <MenuItem
+            component={<Link href="/requirement-nutrients" />}
+            icon={<AdjustIcon fontSize="small" />}
+            active={RegExp("^/requirement-nutrients(.*)$").test(
+              router.pathname
+            )}
+          >
+            <Typography variant="body1" fontSize={14}>
+              Requirement <br /> Composition
             </Typography>
           </MenuItem>
         </SubMenu>

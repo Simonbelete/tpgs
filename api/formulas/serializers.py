@@ -245,5 +245,5 @@ class AllFormulaIngredientSerializer_GET(serializers.ModelSerializer):
 
     class Meta:
         model = models.FormulaIngredient
-        fields = ['id', 'ingredient', 'price',
+        fields = ['id', 'ingredient', 'unit_price',
                   'ration', 'ration_weight', 'ration_price']
