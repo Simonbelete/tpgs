@@ -337,13 +337,13 @@ const Formulation = ({ data }: { data?: Formula }) => {
     setError: setError,
   });
 
-  const computeRation = (rowCopy: Row[]) => {
+  const computeRation = (rowCopy: Row[], requirementCopy: Row) => {
     let updatedRation = { rowId: "ration", display_name: "Ration" };
 
     rowCopy.forEach((r, i) => {
       const price: number = Number(_.get(r, "unit_price", 0));
       const ratio: number = Number(_.get(r, "ratio", 0));
-      const weight: number = _.get(requirement, "ration_weight", 0);
+      const weight: number = _.get(requirementCopy, "ration_weight", 0);
 
       // Set Batch Price
       _.set(
@@ -397,7 +397,7 @@ const Formulation = ({ data }: { data?: Formula }) => {
       JSON.stringify({
         rows: rowCopy,
         ration: updatedRation,
-        requirement: requirement,
+        requirement: requirementCopy,
       })
     );
   };
@@ -412,6 +412,7 @@ const Formulation = ({ data }: { data?: Formula }) => {
       const REQUIREMENT_INDEX = rows.length + 1;
 
       const rowCopy = [...rows];
+      const requirementCopy = { ...requirement };
 
       if (row < rowCopy.length) {
         _.set(rowCopy[row], dataCol.path, newValue.data);
@@ -419,7 +420,6 @@ const Formulation = ({ data }: { data?: Formula }) => {
         // TODO: should not be editable
         _.set(ration, dataCol.path, newValue.data);
       } else if (row == REQUIREMENT_INDEX) {
-        const requirementCopy = { ...requirement };
         // if Column is nutrient set the id also
         if (dataCol.path.includes("nutrients.")) {
           _.set(requirementCopy, dataCol.path, newValue.data);
@@ -437,7 +437,7 @@ const Formulation = ({ data }: { data?: Formula }) => {
         setRequirement(requirementCopy);
       }
 
-      computeRation(rowCopy);
+      computeRation(rowCopy, requirementCopy);
     },
     [rows, ration, requirement, columns]
   );
@@ -797,7 +797,7 @@ const Formulation = ({ data }: { data?: Formula }) => {
       } catch (ex) {}
     }
 
-    computeRation(rowCopy);
+    computeRation(rowCopy, requirement);
   };
 
   const addSelectedIngredients = async (ingredients?: Ingredient[]) => {
