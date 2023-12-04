@@ -120,6 +120,9 @@ const SidebarMenu = () => {
       fontWeight: open ? 600 : undefined,
     }),
   };
+  const handleSignOut = async () => {
+    await signOut();
+  };
 
   return (
     <Sidebar
@@ -725,9 +728,7 @@ const SidebarMenu = () => {
           </Typography>
         </MenuItem>
         <MenuItem
-          onClick={async () => {
-            await signOut();
-          }}
+          onClick={handleSignOut}
           icon={<LogoutIcon fontSize="small" />}
         >
           <Typography variant="body1" fontSize={14}>
