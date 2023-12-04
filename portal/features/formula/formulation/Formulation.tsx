@@ -858,8 +858,8 @@ const Formulation = ({ data }: { data?: Formula }) => {
     }
   };
 
-  const onSubmit: SubmitHandler<Inputs> = async (data) => {
-    const formula: Partial<Formula> = data;
+  const onSubmit: SubmitHandler<Inputs> = async (formData) => {
+    const formula: Partial<Formula> = formData;
 
     const ingredients: Partial<FormulaIngredient>[] = [];
     const rations: Partial<FormulaRation>[] = [];
@@ -910,10 +910,10 @@ const Formulation = ({ data }: { data?: Formula }) => {
       formula.requirement = requirement.rowId;
     }
 
-    if (data != null) {
-      await updateFormula(formula as any);
-    } else {
+    if (data == null) {
       await createFormula(formula as any);
+    } else {
+      await updateFormula(formula as any);
     }
   };
 
