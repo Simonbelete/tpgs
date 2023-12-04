@@ -4,8 +4,12 @@ import {
   useLazyGetAllNutrientsOfIngredientQuery,
   useUpdateIngredientMutation,
 } from "@/features/ingredients/services";
-import { useLazyGetAllIngredientsOfFormulaQuery } from "../services";
-import { Nutrient } from "@/models";
+import {
+  useLazyGetAllIngredientsOfFormulaQuery,
+  useLazyGetAllRationsOfFormulaQuery,
+  useLazyGetAllRequirementsOfFormulaQuery,
+} from "../services";
+import { Nutrient, FormulaRequirement, FormulaRation } from "@/models";
 import _ from "lodash";
 import { Row, Column } from "../formulation/Formulation";
 import { Grid } from "@mui/material";
@@ -16,20 +20,38 @@ import { IngredientRation } from "./IngredientRation";
 import { IngredientBoundary } from "./IngredientBoundary";
 import AchivementCard from "../formula-form/AchivementCard";
 import { IngredientTable } from "./IngredientTable";
+import { FormulaAchivement } from "./FormulaAchivement";
+import { RationVsRequirement } from "./RationVsRequirement";
 
 export const FormulaDashboard = ({ data }: { data: Formula }) => {
   const [rows, setRows] = useState<Row[]>([]);
   const [columns, setColumns] = useState<Column[]>([]);
+
+  const [ration, setRation] = useState<Row>({
+    rowId: "ration",
+    display_name: "Ration",
+  });
+  const [requirement, setRequirement] = useState<Row>({
+    rowId: "requirement",
+    display_name: "Requirement",
+    ration_weight: 100,
+    nutrients: {},
+  });
 
   const [getAllNutrients, { isFetching: isFetchingGetAllNutrients }] =
     useLazyGetAllNutrientsQuery();
   const [getAllIngredientOfFormula] = useLazyGetAllIngredientsOfFormulaQuery();
   const [getAllNutrientsOfIngredient] =
     useLazyGetAllNutrientsOfIngredientQuery();
+  const [getAllRationsOfFormula] = useLazyGetAllRationsOfFormulaQuery();
+  const [getAllRequirementsOfFormula] =
+    useLazyGetAllRequirementsOfFormulaQuery();
 
   useEffect(() => {
     loadNutrients();
     loadIngredients();
+    loadRations();
+    loadRequirements();
   }, []);
 
   const loadNutrients = async () => {
@@ -104,6 +126,70 @@ export const FormulaDashboard = ({ data }: { data: Formula }) => {
     setRows(newRows);
   };
 
+  const loadRations = async () => {
+    if (data == null) return;
+
+    const response = await getAllRationsOfFormula({ id: data.id }).unwrap();
+
+    const newRow: Row & Partial<FormulaRation> = {
+      id: data.id,
+      rowId: "ration",
+      display_name: "Ration",
+      ration: data.ration_ratio,
+      unit_price: 0,
+      ration_price: data.ration_price,
+      ration_weight: data.ration_weight,
+      dm: data.ration_dm,
+      nutrients: {},
+    };
+
+    for (let i = 0; i < response.results.length; i += 1) {
+      const nutrient = response.results[i].nutrient as Nutrient;
+      const abbreviation: string = (response.results[i].nutrient as Nutrient)
+        .abbreviation;
+      const val = _.get(response.results[i], "value", 0);
+      _.set(newRow, `nutrients.${abbreviation}`, {
+        id: nutrient.id,
+        value: val,
+      });
+    }
+
+    setRation(newRow);
+  };
+
+  const loadRequirements = async () => {
+    if (data == null) return;
+
+    const response = await getAllRequirementsOfFormula({
+      id: data.id,
+    }).unwrap();
+
+    const newRow: Row & Partial<FormulaRequirement> = {
+      id: data.id,
+      rowId: _.get(data.requirement, "id", "requirement"),
+      display_name: _.get(data.requirement, "name", "Requirement"),
+      ration: data.desired_ratio,
+      unit_price: 0,
+      ration_price: data.budget,
+      ration_weight: data.weight,
+      dm: data.desired_dm,
+      nutrients: {},
+    };
+
+    for (let i = 0; i < response.results.length; i += 1) {
+      const nutrient = response.results[i].nutrient as Nutrient;
+      const abbreviation: string = (response.results[i].nutrient as Nutrient)
+        .abbreviation;
+      const val = _.get(response.results[i], "value", 0);
+      _.set(newRow, `nutrients.${abbreviation}`, {
+        id: nutrient.id,
+        value: val,
+      });
+    }
+
+    setRequirement(newRow);
+  };
+
   return (
     <Grid container spacing={3}>
       <Grid item xs={12}>
@@ -120,6 +206,12 @@ export const FormulaDashboard = ({ data }: { data: Formula }) => {
       </Grid>
       <Grid item xs={12}>
         <IngredientBoundary rows={rows} columns={columns} />
+      </Grid>
+      <Grid item xs={12}>
+        <FormulaAchivement ration={ration} requirement={requirement} />
+      </Grid>
+      <Grid item xs={12}>
+        <RationVsRequirement ration={ration} requirement={requirement} />
       </Grid>
       <Grid item xs={12}>
         <IngredientTable rows={rows} />
