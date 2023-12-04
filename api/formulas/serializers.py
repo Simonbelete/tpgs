@@ -94,7 +94,7 @@ class FormulaSerializer_POST(serializers.ModelSerializer):
     class Meta:
         model = models.Formula
         fields = ['id', 'name', 'weight', 'requirements', 'budget', 'desired_ratio', 'desired_dm', 'ingredients', 'requirement',
-                  'rations', 'ration_price', 'ration_ratio', 'ration_dm',  'age_from_week', 'age_to_week']
+                  'rations', 'unit_price', 'ration_price', 'ration_ratio', 'ration_weight', 'ration_dm',  'age_from_week', 'age_to_week']
 
     @transaction.atomic
     def create(self, validated_data):

@@ -111,7 +111,7 @@ class Formula(CoreModel):
         'requirements.Requirement', on_delete=models.SET_NULL, null=True, blank=True)
     requirements = models.ManyToManyField(
         'nutrients.Nutrient', null=True, blank=True, through=FormulaRequirement, related_name='formula_requirements')
-    #
+    # Unit Price (/1kg)
     budget = models.DecimalField(
         max_digits=10, decimal_places=2, null=True, blank=True, default=0)  # per kg
     desired_ratio = models.DecimalField(

@@ -239,8 +239,8 @@ export const FormulaForm = ({
                     postfix: "kg",
                   },
                   budget: {
-                    label: "Requirement Price (kg)",
-                    placeholder: "Requirement Price (kg)",
+                    label: "Requirement Unit Price (kg)",
+                    placeholder: "Requirement Unit Price (kg)",
                     xs: 12,
                     md: 6,
                     postfix: "/ kg",

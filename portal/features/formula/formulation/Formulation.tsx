@@ -362,9 +362,7 @@ const Formulation = ({ data }: { data?: Formula }) => {
 
         if (c.id == "ratio") {
           _.set(updatedRation, c.path, roundTo3DecimalPlace(cell + cellTotal));
-        } else if (c.id == "unit_price")
-          _.set(updatedRation, c.path, roundTo3DecimalPlace(cell + cellTotal));
-        else if (c.id == "ration_weight")
+        } else if (c.id == "ration_weight")
           _.set(updatedRation, c.path, roundTo3DecimalPlace(cell + cellTotal));
         else if (c.id == "ration_price")
           _.set(
@@ -685,8 +683,8 @@ const Formulation = ({ data }: { data?: Formula }) => {
       id: data.id,
       rowId: "ration",
       display_name: "Ration",
-      ration: data.ration_ratio,
-      unit_price: 0,
+      ratio: data.ration_ratio,
+      unit_price: data.unit_price || 0,
       ration_price: data.ration_price,
       ration_weight: data.ration_weight,
       dm: data.ration_dm,
@@ -838,8 +836,8 @@ const Formulation = ({ data }: { data?: Formula }) => {
         rowId: value.id,
         display_name: value.display_name,
         ration: value.desired_ratio,
-        unit_price: 0,
-        ration_price: value.budget,
+        unit_price: value.budget,
+        ration_price: value.budget * value.weight,
         ration_weight: value.weight,
         dm: value.desired_dm,
         nutrients: {},
