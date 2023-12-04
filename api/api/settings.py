@@ -104,7 +104,8 @@ SHARED_APPS = [
     'formulas',
     'inbox',
     'requirements',
-    'city'
+    'city',
+    'drf_standardized_errors'
 ]
 
 TENANT_APPS = [
@@ -262,7 +263,11 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+# DRF_STANDARDIZED_ERRORS = {"ENABLE_IN_DEBUG_FOR_UNHANDLED_EXCEPTIONS": True}
+
+
 REST_FRAMEWORK = {
+    # "EXCEPTION_HANDLER": "drf_standardized_errors.handler.exception_handler",
     # Use Django's standard `django.contrib.auth` permissions,
     # or allow read-only access for unauthenticated users.
     # 'DEFAULT_PERMISSION_CLASSES': [

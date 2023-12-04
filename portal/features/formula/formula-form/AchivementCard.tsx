@@ -35,6 +35,7 @@ import { FormulaRequirementForm } from "./FormulaRequirements";
 
 const AchivementCard = ({ data }: { data: Formula }) => {
   const calculateAchivement = (value: number, total: number) => {
+    if (total == 0) return 0;
     return Number(Number(value / total).toFixed(3));
   };
 
@@ -61,7 +62,41 @@ const AchivementCard = ({ data }: { data: Formula }) => {
       >
         <Stack>
           <Typography variant="caption" color="text.secondary">
-            TOTAL COST
+            UNIT PRICE
+          </Typography>
+          <Stack direction={"row"} spacing={2}>
+            <Tooltip title="Achived Cost">
+              <Typography variant="body2" fontWeight={600} color="secondary">
+                {_.get(data, "unit_price", 0)}
+              </Typography>
+            </Tooltip>
+            {/* <Tooltip title="Achivement">
+              <Chip
+                size="small"
+                variant="outlined"
+                color={computeAchivementGradeLabel(
+                  calculateAchivement(
+                    _.get(data, "ration_price", 0),
+                    _.get(data, "budget", 1)
+                  )
+                )}
+                label={`${calculateAchivement(
+                  _.get(data, "ration_price", 0),
+                  _.get(data, "budget", 1)
+                )} %`}
+              />
+            </Tooltip> */}
+          </Stack>
+          {/* <Tooltip title="Desired Cost">
+            <Typography variant="caption" color="text.secondary">
+              {_.get(data, "budget", 0)}
+            </Typography>
+          </Tooltip> */}
+        </Stack>
+
+        <Stack>
+          <Typography variant="caption" color="text.secondary">
+            BATCH PRICE
           </Typography>
           <Stack direction={"row"} spacing={2}>
             <Tooltip title="Achived Cost">
@@ -95,7 +130,7 @@ const AchivementCard = ({ data }: { data: Formula }) => {
 
         <Stack>
           <Typography variant="caption" color="text.secondary">
-            TOTAL Ratio [%]
+            RATION (%)
           </Typography>
           <Stack direction={"row"} spacing={2}>
             <Tooltip title="Achived Ration">
@@ -163,7 +198,7 @@ const AchivementCard = ({ data }: { data: Formula }) => {
 
         <Stack>
           <Typography variant="caption" color="text.secondary">
-            TOTAL DM [%]
+            DM [%]
           </Typography>
           <Stack direction={"row"} spacing={2}>
             <Tooltip title="Achived DM">

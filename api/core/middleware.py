@@ -9,6 +9,9 @@ from django.urls import set_urlconf
 from django.utils.deprecation import MiddlewareMixin
 from django.http import JsonResponse, HttpResponse, HttpResponseForbidden
 from rest_framework.authentication import TokenAuthentication
+from django.http import HttpResponseServerError
+from psycopg2.errors import UndefinedTable
+from django.db.utils import ProgrammingError
 
 from django_tenants.utils import get_tenant_model, get_tenant_domain_model
 

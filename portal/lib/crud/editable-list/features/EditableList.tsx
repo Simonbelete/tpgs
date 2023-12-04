@@ -127,7 +127,10 @@ export default function EditableList<T extends AbstractBaseModel & EditMode>({
     if (data?.results) setRows(data?.results);
   }, [data]);
 
-  const handleOnProcessRowUpdateError = (error: any) => {};
+  const handleOnProcessRowUpdateError = (error: any) => {
+    console.log("abc");
+    refetch();
+  };
 
   const processRowUpdate = async (updatedRow: any, originalRow: any) => {
     const cleaned_data =
@@ -139,7 +142,6 @@ export default function EditableList<T extends AbstractBaseModel & EditMode>({
 
     const newRow = { ...updatedRow, isNew: false };
 
-    // TODO: check if refetch is needed
     refetch();
 
     return newRow;

@@ -14,6 +14,8 @@ import { useLazyGetAllNutrientsQuery } from "@/features/nutrients/services";
 import { PriceContribution } from "./PriceContribution";
 import { IngredientRation } from "./IngredientRation";
 import { IngredientBoundary } from "./IngredientBoundary";
+import AchivementCard from "../formula-form/AchivementCard";
+import { IngredientTable } from "./IngredientTable";
 
 export const FormulaDashboard = ({ data }: { data: Formula }) => {
   const [rows, setRows] = useState<Row[]>([]);
@@ -105,6 +107,9 @@ export const FormulaDashboard = ({ data }: { data: Formula }) => {
   return (
     <Grid container spacing={3}>
       <Grid item xs={12}>
+        <AchivementCard data={data} />
+      </Grid>
+      <Grid item xs={12}>
         <NutrientDistributions rows={rows} columns={columns} />
       </Grid>
       <Grid item xs={6}>
@@ -115,6 +120,9 @@ export const FormulaDashboard = ({ data }: { data: Formula }) => {
       </Grid>
       <Grid item xs={12}>
         <IngredientBoundary rows={rows} columns={columns} />
+      </Grid>
+      <Grid item xs={12}>
+        <IngredientTable rows={rows} />
       </Grid>
     </Grid>
   );

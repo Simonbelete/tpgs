@@ -77,7 +77,10 @@ export const FormulaRequirementForm = ({ data }: { data?: Formula }) => {
       headerName: "Unit",
       flex: 1,
       minWidth: 150,
-      valueGetter: (params) => params.row.nutrient.unit,
+      valueGetter: (params) =>
+        params.row.nutrient.unit.display_name
+          ? params.row.nutrient.unit.display_name
+          : params.row.nutrient.unit,
     },
   ];
 

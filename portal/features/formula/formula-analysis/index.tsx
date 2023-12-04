@@ -3,3 +3,4 @@ export * from "./NutrientDistribuation";
 export * from "./PriceContribution";
 export * from "./IngredientRation";
 export * from "./IngredientBoundary";
+export * from "./IngredientTable";
