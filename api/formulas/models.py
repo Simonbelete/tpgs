@@ -65,7 +65,11 @@ class FormulaIngredient(CoreModel):
         return super().save(*args, **kwargs)
 
     @property
-    def price(self):
+    def unit_price(self):
+        return self.ingredient.price * self.ration / 100
+
+    @property
+    def ingredient_price(self):
         return self.ingredient.price
 
     @property
@@ -75,7 +79,7 @@ class FormulaIngredient(CoreModel):
     @property
     def ration_price(self):
         """unit price * ration weight """
-        return round(self.ration_weight * self.ingredient.price, 3)
+        return round(self.ration_weight * self.unit_price, 3)
 
 
 class Formula(CoreModel):

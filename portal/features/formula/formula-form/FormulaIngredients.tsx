@@ -58,40 +58,23 @@ export const FormulaIngredientForm = ({ data }: { data?: Formula }) => {
         params.row.ingredient ? params.row.ingredient.name : "",
     },
     {
-      field: "price",
-      headerName: "Price (kg)",
+      field: "unit_price",
+      headerName: "Unit Price (kg)",
       flex: 1,
-      valueGetter: (params) =>
-        params.row.ingredient ? params.row.ingredient.price : "",
+      valueGetter: (params) => params.row.unit_price,
     },
     {
       field: "ration_weight",
       headerName: "Ration Weight (kg)",
       flex: 1,
-      valueGetter: (params) =>
-        params.row.ingredient ? params.row.ingredient.ration_weight : "",
+      valueGetter: (params) => params.row.ration_weight,
     },
     {
       field: "ration_price",
       headerName: "Ration Price (kg)",
       flex: 1,
-      valueGetter: (params) =>
-        params.row.ingredient ? params.row.ingredient.ration_price : "",
+      valueGetter: (params) => params.row.ration_price,
     },
-    // {
-    //   field: "ratio_min",
-    //   headerName: "Min (%)",
-    //   flex: 1,
-    //   minWidth: 150,
-    //   editable: true,
-    // },
-    // {
-    //   field: "ratio_max",
-    //   headerName: "Min (%)",
-    //   flex: 1,
-    //   minWidth: 150,
-    //   editable: true,
-    // },
     {
       field: "ration",
       headerName: "Value (%)",

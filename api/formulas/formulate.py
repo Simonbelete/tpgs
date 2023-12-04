@@ -34,7 +34,7 @@ class Formulate:
                     n.value / 100
             ing_contri_per_kg = self.formula.weight * fing.ration / 100
             self.ration_dm += (fing.ingredient.dm or 0) * fing.ration / 100
-            self.unit_price += fing.ingredient.price
+            self.unit_price += fing.ingredient.price * fing.ration / 100
             self.ration_price += (fing.ingredient.price or 0) * \
                 ing_contri_per_kg
             self.ration_ratio += fing.ration

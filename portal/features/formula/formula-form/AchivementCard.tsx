@@ -1,42 +1,19 @@
 import React, { useEffect, useState } from "react";
-import * as yup from "yup";
 import { Formula } from "@/models";
-import {
-  CancelIcon,
-  CreateNewIcon,
-  FormLayout,
-  HistoryIcon,
-  TabFormLayout,
-  Form,
-} from "@/lib/crud";
-import { formulaApi, useLazyFormulateQuery } from "../services";
-import { hatcheryApi } from "@/features/hatchery/services";
-import { penApi } from "@/features/pen/services";
 import _ from "lodash";
-import { Card } from "@/components";
 import {
-  Tabs,
-  Tab,
-  Box,
-  tabsClasses,
   Chip,
-  Button,
   Paper,
   Stack,
-  Grid,
   Divider,
   Typography,
   Tooltip,
 } from "@mui/material";
-import { purposeApi } from "@/features/purposes/services";
-import { countryApi } from "@/features/countries/services";
-import { FormulaIngredientForm } from "./FormulaIngredients";
-import { FormulaRequirementForm } from "./FormulaRequirements";
 
 const AchivementCard = ({ data }: { data: Formula }) => {
   const calculateAchivement = (value: number, total: number) => {
     if (total == 0) return 0;
-    return Number(Number(value / total).toFixed(3));
+    return Number(Number(value / total).toFixed(3)) * 100;
   };
 
   const computeAchivementGradeLabel = (achived: number) => {
@@ -70,28 +47,28 @@ const AchivementCard = ({ data }: { data: Formula }) => {
                 {_.get(data, "unit_price", 0)}
               </Typography>
             </Tooltip>
-            {/* <Tooltip title="Achivement">
+            <Tooltip title="Achivement">
               <Chip
                 size="small"
                 variant="outlined"
                 color={computeAchivementGradeLabel(
                   calculateAchivement(
-                    _.get(data, "ration_price", 0),
-                    _.get(data, "budget", 1)
+                    _.get(data, "unit_price", 0) || 0,
+                    _.get(data, "budget", 0)
                   )
                 )}
                 label={`${calculateAchivement(
-                  _.get(data, "ration_price", 0),
-                  _.get(data, "budget", 1)
+                  _.get(data, "unit_price", 0) || 0,
+                  _.get(data, "budget", 0)
                 )} %`}
               />
-            </Tooltip> */}
+            </Tooltip>
           </Stack>
-          {/* <Tooltip title="Desired Cost">
+          <Tooltip title="Desired Cost">
             <Typography variant="caption" color="text.secondary">
               {_.get(data, "budget", 0)}
             </Typography>
-          </Tooltip> */}
+          </Tooltip>
         </Stack>
 
         <Stack>
@@ -111,19 +88,19 @@ const AchivementCard = ({ data }: { data: Formula }) => {
                 color={computeAchivementGradeLabel(
                   calculateAchivement(
                     _.get(data, "ration_price", 0),
-                    _.get(data, "budget", 1)
+                    _.get(data, "budget", 0) * _.get(data, "weight", 0)
                   )
                 )}
                 label={`${calculateAchivement(
                   _.get(data, "ration_price", 0),
-                  _.get(data, "budget", 1)
+                  _.get(data, "budget", 0) * _.get(data, "weight", 0)
                 )} %`}
               />
             </Tooltip>
           </Stack>
-          <Tooltip title="Desired Cost">
+          <Tooltip title="Desired Batch Price">
             <Typography variant="caption" color="text.secondary">
-              {_.get(data, "budget", 0)}
+              {_.get(data, "budget", 0) * _.get(data, "weight", 0)}
             </Typography>
           </Tooltip>
         </Stack>
@@ -145,12 +122,12 @@ const AchivementCard = ({ data }: { data: Formula }) => {
                 color={computeAchivementGradeLabel(
                   calculateAchivement(
                     _.get(data, "ration_ratio", 0),
-                    _.get(data, "desired_ratio", 1)
+                    _.get(data, "desired_ratio", 0)
                   )
                 )}
                 label={`${calculateAchivement(
                   _.get(data, "ration_ratio", 0),
-                  _.get(data, "desired_ratio", 1)
+                  _.get(data, "desired_ratio", 0)
                 )} %`}
               />
             </Tooltip>
