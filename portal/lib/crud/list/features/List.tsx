@@ -140,7 +140,6 @@ export default function List<T>({
   );
 
   useEffect(() => {
-    console.log("AAAAAAAAA");
     dispatch(filterSlice.actions.reset());
   }, []);
 

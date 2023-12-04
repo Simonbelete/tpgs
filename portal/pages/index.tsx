@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import { Inter } from "next/font/google";
 import LaunchIcon from "@mui/icons-material/Launch";
 import {
@@ -26,19 +26,16 @@ import { ReactElement } from "react";
 import { PrimaryFooter } from "@/components/footers";
 import { ContactUsForm } from "@/features/contact-us";
 import Head from "next/head";
+import { SeoHead } from "@/seo";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
   const theme = useTheme();
 
-  const [selected, setSelected] = React.useState<Date>();
-
   return (
     <>
-      <Head>
-        <title>ILRI TPGS - Homepage</title>
-      </Head>
+      <SeoHead title="Home" />
       <main>
         <Box sx={{ background: "#f5faf8" }}>
           <Container maxWidth="lg">
@@ -55,7 +52,8 @@ export default function Home() {
                 underline="none"
                 variant="body1"
                 color="black"
-                style={{color: "#495056"}}
+                target="_blank"
+                style={{ color: "#495056" }}
               >
                 ILRI
                 <LaunchIcon sx={{ fontSize: 20, pl: 0.7 }} />
@@ -65,7 +63,7 @@ export default function Home() {
           <AppBar
             position="static"
             elevation={0}
-            sx={{ background: "#f5faf8"}}
+            sx={{ background: "#f5faf8" }}
           >
             <Toolbar>
               <Container>
@@ -90,8 +88,6 @@ export default function Home() {
         <SignUpNowCTA />
         <AppsDescription />
         <ContactUsForm />
-
-        
 
         <footer
           style={{

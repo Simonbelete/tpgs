@@ -19,21 +19,25 @@ import { LabeledInput } from "@/components/inputs";
 import LoadingButton from "@mui/lab/LoadingButton";
 import service from "../services/invitation_service";
 import errorToForm from "@/util/errorToForm";
-import { VerifyInvitation } from "@/models";
+import { Country, VerifyInvitation } from "@/models";
+import { CountryDropdown } from "@/features/countries";
+import _ from "lodash";
 
-type Inputs = VerifyInvitation & { confirm_password?: string | null };
+type Inputs = VerifyInvitation & {
+  confirm_password?: string | null;
+};
 
-const schema = yup
-  .object({
-    password: yup.string().length(6).required(),
-    confirm_password: yup
-      .string()
-      .label("confirm password")
-      .required()
-      .oneOf([yup.ref("password"), ""], "Passwords must match"),
-    name: yup.string().required(),
-  })
-  .required();
+const schema = yup.object({
+  password: yup.string().length(6).required(),
+  confirm_password: yup
+    .string()
+    .label("confirm password")
+    .required()
+    .oneOf([yup.ref("password"), ""], "Passwords must match"),
+  name: yup.string().required(),
+  country: yup.object(),
+  company: yup.string(),
+});
 
 const ResetPassword = () => {
   const router = useRouter();
@@ -54,6 +58,8 @@ const ResetPassword = () => {
         password: data.password,
         token: (router.query.token as string) || "",
         name: data.name,
+        country: _.get(data.country, "id", null),
+        company: data.company,
       });
       if (response.status == 200) {
         setSuccess("Creating account...");
@@ -91,7 +97,7 @@ const ResetPassword = () => {
             </Link>
           </Box>
           <Typography color={"primary.dark"} variant="h6" fontWeight={600}>
-            Join Invitation
+            Join via invitation
           </Typography>
           {error && (
             <Box sx={{ mt: 1, width: 267 }}>
@@ -111,7 +117,7 @@ const ResetPassword = () => {
         {/* <Box height="10vh" mr={4}> */}
         <Box sx={{ width: "100%" }}>
           <form onSubmit={handleSubmit(onSubmit)}>
-            <Grid container spacing={4} direction="column">
+            <Grid container spacing={2} direction="column">
               <Grid item xs={12}>
                 <Controller
                   name={"name"}
@@ -127,8 +133,8 @@ const ResetPassword = () => {
                       fullWidth
                       size="small"
                       value={value}
-                      label={"Full Name"}
-                      placeholder={"Full Name"}
+                      label={"Full name *"}
+                      placeholder={"Full name *"}
                     />
                   )}
                 />
@@ -149,8 +155,8 @@ const ResetPassword = () => {
                       fullWidth
                       size="small"
                       value={value}
-                      label={"Password"}
-                      placeholder={"Password"}
+                      label={"Password *"}
+                      placeholder={"Password *"}
                       type="password"
                     />
                   )}
@@ -172,9 +178,49 @@ const ResetPassword = () => {
                       fullWidth
                       size="small"
                       value={value}
-                      label={"Confirm Password"}
-                      placeholder={"Confirm Password"}
+                      label={"Confirm Password *"}
+                      placeholder={"Confirm Password *"}
                       type="password"
+                    />
+                  )}
+                />
+              </Grid>
+
+              <Grid item xs={12}>
+                <Controller
+                  name={"country"}
+                  control={control}
+                  render={({
+                    field: { onChange, value },
+                    fieldState: { invalid, isTouched, isDirty, error },
+                  }) => (
+                    <CountryDropdown
+                      onChange={(_, data) => onChange(data)}
+                      value={value}
+                      error={!!error?.message}
+                      helperText={error?.message}
+                    />
+                  )}
+                />
+              </Grid>
+
+              <Grid item xs={12}>
+                <Controller
+                  name={"company"}
+                  control={control}
+                  render={({
+                    field: { onChange, value },
+                    fieldState: { invalid, isTouched, isDirty, error },
+                  }) => (
+                    <LabeledInput
+                      error={!!error?.message}
+                      helperText={error?.message}
+                      onChange={onChange}
+                      fullWidth
+                      size="small"
+                      value={value}
+                      label={"Company"}
+                      placeholder={"Company"}
                     />
                   )}
                 />

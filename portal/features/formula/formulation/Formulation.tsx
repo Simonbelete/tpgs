@@ -33,7 +33,6 @@ import {
   Typography,
   Grid,
   AccordionDetails,
-  InputAdornment,
   IconButton,
   Backdrop,
 } from "@mui/material";
@@ -63,7 +62,6 @@ import { useLazyGetAllNutrientsOfRequirementQuery } from "@/features/requirement
 import AddIcon from "@mui/icons-material/Add";
 import PlaylistAddIcon from "@mui/icons-material/PlaylistAdd";
 import AutorenewIcon from "@mui/icons-material/Autorenew";
-import SaveIcon from "@mui/icons-material/Save";
 import {
   useCreateFormulaMutation,
   useUpdateFormulaMutation,
@@ -81,6 +79,11 @@ import { PDFDownloadLink, PDFViewer, Page } from "@react-pdf/renderer";
 import PrintIcon from "@mui/icons-material/Print";
 import CurrencyExchangeIcon from "@mui/icons-material/CurrencyExchange";
 import Analysis from "./Analysis";
+import Router from "next/router";
+import SaveIcon from "./SaveIcon";
+import LoadLocalHistoryIcon from "./LoadLocalHistoryIcon";
+
+export const LOCAL_FORMULA_KEY = "formula";
 
 const Plot = dynamic(() => import("react-plotly.js"), {
   ssr: false,
@@ -317,7 +320,7 @@ const Formulation = ({ data }: { data?: Formula }) => {
   });
 
   // Form
-  const { handleSubmit, control, setError } = useForm<Inputs>({
+  const { handleSubmit, control, setError, setValue } = useForm<Inputs>({
     // @ts-ignore
     resolver: yupResolver(schema),
     defaultValues: {
@@ -386,7 +389,17 @@ const Formulation = ({ data }: { data?: Formula }) => {
       });
     });
 
+    setRows(rowCopy);
     setRation(updatedRation);
+
+    localStorage.setItem(
+      LOCAL_FORMULA_KEY,
+      JSON.stringify({
+        rows: rowCopy,
+        ration: updatedRation,
+        requirement: requirement,
+      })
+    );
   };
 
   const onCellEdited = React.useCallback(
@@ -424,7 +437,6 @@ const Formulation = ({ data }: { data?: Formula }) => {
         setRequirement(requirementCopy);
       }
 
-      setRows(rowCopy);
       computeRation(rowCopy);
     },
     [rows, ration, requirement, columns]
@@ -563,13 +575,52 @@ const Formulation = ({ data }: { data?: Formula }) => {
     setIsIngredientOpen(true);
   }, []);
 
+  const alertUser = (e: any) => {
+    e.preventDefault();
+    e.returnValue = "";
+  };
+
+  const saveTemporarily = async () => {
+    localStorage.setItem(
+      LOCAL_FORMULA_KEY,
+      JSON.stringify({ rows: rows, ration: ration, requirement: requirement })
+    );
+  };
+
+  const loadFromLocalstorage = async () => {
+    const sd = localStorage.getItem(LOCAL_FORMULA_KEY) || "";
+
+    const formula = JSON.parse(sd);
+    setRows(_.get(formula, "rows", []));
+    setRation(
+      _.get(formula, "ration", {
+        rowId: "ration",
+        display_name: "Ration",
+      })
+    );
+    setRequirement(
+      _.get(formula, "requirement", {
+        rowId: "requirement",
+        display_name: "Requirement",
+        ration_weight: 100,
+        nutrients: {},
+      })
+    );
+  };
+
   useEffect(() => {
+    window.addEventListener("beforeunload", alertUser);
+
     loadNutrientsToTable();
     if (data != null) {
       getFormulaRequirements();
       getFormulaRations();
       getFormulaIngredients();
     }
+
+    return () => {
+      window.removeEventListener("beforeunload", alertUser);
+    };
   }, []);
 
   const getFormulaIngredients = async () => {
@@ -733,6 +784,8 @@ const Formulation = ({ data }: { data?: Formula }) => {
   };
 
   const deleteRow = async (index: number) => {
+    let rowCopy = { ...rows };
+
     if (data != null) {
       try {
         const response = await deleteIngredientOfFormula({
@@ -740,13 +793,13 @@ const Formulation = ({ data }: { data?: Formula }) => {
           id: Number(rows[index].rowId) || 0,
         }).unwrap();
         if (response.status == 204) {
-          setRows(rows.filter((e, i) => i != index));
+          rowCopy = rows.filter((e, i) => i != index);
         }
       } catch (ex) {}
     } else {
-      setRows(rows.filter((e, i) => i != index));
+      rowCopy = rows.filter((e, i) => i != index);
     }
-    computeRation(rows);
+    computeRation(rowCopy);
   };
 
   const addSelectedIngredients = async (ingredients?: Ingredient[]) => {
@@ -812,6 +865,15 @@ const Formulation = ({ data }: { data?: Formula }) => {
       });
 
       setRows([...newRows, ...rows]);
+
+      localStorage.setItem(
+        LOCAL_FORMULA_KEY,
+        JSON.stringify({
+          rows: [...newRows, ...rows],
+          ration: ration,
+          requirement: requirement,
+        })
+      );
     } finally {
       setIsIngredientOpen(false);
       setIsLoading(false);
@@ -852,6 +914,15 @@ const Formulation = ({ data }: { data?: Formula }) => {
       }
 
       setRequirement(newRow);
+
+      localStorage.setItem(
+        LOCAL_FORMULA_KEY,
+        JSON.stringify({
+          rows: rows,
+          ration: ration,
+          requirement: newRow,
+        })
+      );
     } finally {
     }
   };
@@ -987,361 +1058,359 @@ const Formulation = ({ data }: { data?: Formula }) => {
   };
 
   return (
-    <div style={{ position: "relative" }}>
-      <Backdrop
-        sx={{
-          position: "absolute",
-          backgroundColor: "rgba(255,255,255,0.5)",
-          opacity: "0.9",
-          top: 0,
-          bottom: 0,
-          zIndex: (theme) => theme.zIndex.drawer + 1,
-        }}
-        open={
-          isLoading ||
-          isFetchingGetAllNutrients ||
-          isFetchingGetAllNutrientsOfRequirement
-        }
-        onClick={() => {}}
-      >
-        <Dna
-          visible={true}
-          height="200"
-          width="200"
-          ariaLabel="dna-loading"
-          wrapperStyle={{}}
-          wrapperClass="dna-wrapper"
+    <>
+      <div style={{ position: "relative" }}>
+        <Backdrop
+          sx={{
+            position: "absolute",
+            backgroundColor: "rgba(255,255,255,0.5)",
+            opacity: "0.9",
+            top: 0,
+            bottom: 0,
+            zIndex: (theme) => theme.zIndex.drawer + 1,
+          }}
+          open={
+            isLoading ||
+            isFetchingGetAllNutrients ||
+            isFetchingGetAllNutrientsOfRequirement
+          }
+          onClick={() => {}}
+        >
+          <Dna
+            visible={true}
+            height="200"
+            width="200"
+            ariaLabel="dna-loading"
+            wrapperStyle={{}}
+            wrapperClass="dna-wrapper"
+          />
+        </Backdrop>
+        <IngredientSelectDialog
+          multiple
+          open={isIngredientOpen}
+          onSelected={addSelectedIngredients}
+          onClose={() => setIsIngredientOpen(false)}
         />
-      </Backdrop>
-      <IngredientSelectDialog
-        multiple
-        open={isIngredientOpen}
-        onSelected={addSelectedIngredients}
-        onClose={() => setIsIngredientOpen(false)}
-      />
-      <RequirementSelectDialog
-        open={isRequirementOpen}
-        onSelected={handleRequirementSelected}
-        onClose={() => setIsRequirementOpen(false)}
-      />
-      <Box sx={{ my: 5, border: "1px solid #98AAC4" }}>
-        <Accordion elevation={0} defaultExpanded={false}>
-          <AccordionSummary
-            expandIcon={<ExpandMoreIcon />}
-            aria-controls="panel1a-content"
-            id="panel1a-header"
+        <RequirementSelectDialog
+          open={isRequirementOpen}
+          onSelected={handleRequirementSelected}
+          onClose={() => setIsRequirementOpen(false)}
+        />
+        <Box sx={{ my: 5, border: "1px solid #98AAC4" }}>
+          <Accordion elevation={0} defaultExpanded={false}>
+            <AccordionSummary
+              expandIcon={<ExpandMoreIcon />}
+              aria-controls="panel1a-content"
+              id="panel1a-header"
+            >
+              <Typography fontWeight={600}>Formula Detail</Typography>
+            </AccordionSummary>
+            <AccordionDetails>
+              <form onSubmit={handleSubmit(onSubmit)}>
+                <Grid container spacing={4}>
+                  {/* Name */}
+                  <Grid item xs={12} md={6}>
+                    <Controller
+                      name={"name"}
+                      control={control}
+                      render={({
+                        field: { onChange, value },
+                        fieldState: { invalid, isTouched, isDirty, error },
+                      }) => (
+                        <LabeledInput
+                          error={!!error?.message}
+                          helperText={error?.message}
+                          onChange={onChange}
+                          fullWidth
+                          size="small"
+                          value={value}
+                          label={"Name"}
+                          placeholder={"Name"}
+                        />
+                      )}
+                    />
+                  </Grid>
+                  {/* Purpose */}
+                  <Grid item xs={12} md={6}>
+                    <Controller
+                      name={"purpose"}
+                      control={control}
+                      render={({
+                        field: { onChange, value },
+                        fieldState: { invalid, isTouched, isDirty, error },
+                      }) => (
+                        <PurposeDropdown
+                          onChange={(_, data) => onChange(data)}
+                          value={value}
+                          error={!!error?.message}
+                          helperText={error?.message}
+                        />
+                      )}
+                    />
+                  </Grid>
+                  {/* Sex */}
+                  <Grid item xs={12} md={6}>
+                    <Controller
+                      name={"sex"}
+                      control={control}
+                      render={({
+                        field: { onChange, value },
+                        fieldState: { invalid, isTouched, isDirty, error },
+                      }) => (
+                        <Dropdown
+                          options={[
+                            { value: "M", name: "Male" },
+                            { value: "F", name: "Female" },
+                          ]}
+                          key="name"
+                          onChange={(_, data) => onChange(data)}
+                          value={value}
+                          label="Sex"
+                          error={!!error?.message}
+                          helperText={error?.message}
+                        />
+                      )}
+                    />
+                  </Grid>
+                  {/* Formula Basis */}
+                  <Grid item xs={12} md={6}>
+                    <Controller
+                      name={"formula_basis"}
+                      control={control}
+                      render={({
+                        field: { onChange, value },
+                        fieldState: { invalid, isTouched, isDirty, error },
+                      }) => (
+                        <Dropdown
+                          options={[
+                            { value: "AF", name: "As-Fed Basis" },
+                            { value: "DM", name: "DM Basis" },
+                          ]}
+                          key="name"
+                          onChange={(_, data) => onChange(data)}
+                          value={value}
+                          label="Feed Basis"
+                          error={!!error?.message}
+                          helperText={error?.message}
+                        />
+                      )}
+                    />
+                  </Grid>
+                  {/* Country */}
+                  <Grid item xs={12} md={6}>
+                    <Controller
+                      name={"country"}
+                      control={control}
+                      render={({
+                        field: { onChange, value },
+                        fieldState: { invalid, isTouched, isDirty, error },
+                      }) => (
+                        <CountryDropdown
+                          onChange={(_, data) => onChange(data)}
+                          value={value}
+                          error={!!error?.message}
+                          helperText={error?.message}
+                        />
+                      )}
+                    />
+                  </Grid>
+                  <Grid item xs={12} md={6}>
+                    <Controller
+                      name={"age_from_week"}
+                      control={control}
+                      render={({
+                        field: { onChange, value },
+                        fieldState: { invalid, isTouched, isDirty, error },
+                      }) => (
+                        <LabeledInput
+                          error={!!error?.message}
+                          helperText={error?.message}
+                          onChange={onChange}
+                          fullWidth
+                          size="small"
+                          value={value}
+                          label={"Age From"}
+                          placeholder={"Age From"}
+                          type="number"
+                        />
+                      )}
+                    />
+                  </Grid>
+                  <Grid item xs={12} md={6}>
+                    <Controller
+                      name={"age_to_week"}
+                      control={control}
+                      render={({
+                        field: { onChange, value },
+                        fieldState: { invalid, isTouched, isDirty, error },
+                      }) => (
+                        <LabeledInput
+                          error={!!error?.message}
+                          helperText={error?.message}
+                          onChange={onChange}
+                          fullWidth
+                          size="small"
+                          value={value}
+                          label={"Age To"}
+                          placeholder={"Age To"}
+                          type="number"
+                        />
+                      )}
+                    />
+                  </Grid>
+                  {/* Name */}
+                  <Grid item xs={12} md={6}>
+                    <Controller
+                      name={"note"}
+                      control={control}
+                      render={({
+                        field: { onChange, value },
+                        fieldState: { invalid, isTouched, isDirty, error },
+                      }) => (
+                        <LabeledInput
+                          error={!!error?.message}
+                          helperText={error?.message}
+                          onChange={onChange}
+                          fullWidth
+                          size="small"
+                          value={value}
+                          label={"Remark"}
+                          placeholder={"Remark"}
+                        />
+                      )}
+                    />
+                  </Grid>
+                </Grid>
+              </form>
+            </AccordionDetails>
+          </Accordion>
+        </Box>
+        <Stack direction={"row"} sx={{ my: 5 }} gap={1} alignItems={"center"}>
+          <Button
+            onClick={onRowAppended}
+            color="secondary"
+            size="small"
+            startIcon={<AddIcon fontSize="small" />}
+            sx={{ textTransform: "none" }}
           >
-            <Typography fontWeight={600}>Formula Detail</Typography>
-          </AccordionSummary>
-          <AccordionDetails>
-            <form onSubmit={handleSubmit(onSubmit)}>
-              <Grid container spacing={4}>
-                {/* Name */}
-                <Grid item xs={12} md={6}>
-                  <Controller
-                    name={"name"}
-                    control={control}
-                    render={({
-                      field: { onChange, value },
-                      fieldState: { invalid, isTouched, isDirty, error },
-                    }) => (
-                      <LabeledInput
-                        error={!!error?.message}
-                        helperText={error?.message}
-                        onChange={onChange}
-                        fullWidth
-                        size="small"
-                        value={value}
-                        label={"Name"}
-                        placeholder={"Name"}
-                      />
-                    )}
-                  />
-                </Grid>
-                {/* Purpose */}
-                <Grid item xs={12} md={6}>
-                  <Controller
-                    name={"purpose"}
-                    control={control}
-                    render={({
-                      field: { onChange, value },
-                      fieldState: { invalid, isTouched, isDirty, error },
-                    }) => (
-                      <PurposeDropdown
-                        onChange={(_, data) => onChange(data)}
-                        value={value}
-                        error={!!error?.message}
-                        helperText={error?.message}
-                      />
-                    )}
-                  />
-                </Grid>
-                {/* Sex */}
-                <Grid item xs={12} md={6}>
-                  <Controller
-                    name={"sex"}
-                    control={control}
-                    render={({
-                      field: { onChange, value },
-                      fieldState: { invalid, isTouched, isDirty, error },
-                    }) => (
-                      <Dropdown
-                        options={[
-                          { value: "M", name: "Male" },
-                          { value: "F", name: "Female" },
-                        ]}
-                        key="name"
-                        onChange={(_, data) => onChange(data)}
-                        value={value}
-                        label="Sex"
-                        error={!!error?.message}
-                        helperText={error?.message}
-                      />
-                    )}
-                  />
-                </Grid>
-                {/* Formula Basis */}
-                <Grid item xs={12} md={6}>
-                  <Controller
-                    name={"formula_basis"}
-                    control={control}
-                    render={({
-                      field: { onChange, value },
-                      fieldState: { invalid, isTouched, isDirty, error },
-                    }) => (
-                      <Dropdown
-                        options={[
-                          { value: "AF", name: "As-Fed Basis" },
-                          { value: "DM", name: "DM Basis" },
-                        ]}
-                        key="name"
-                        onChange={(_, data) => onChange(data)}
-                        value={value}
-                        label="Feed Basis"
-                        error={!!error?.message}
-                        helperText={error?.message}
-                      />
-                    )}
-                  />
-                </Grid>
-                {/* Country */}
-                <Grid item xs={12} md={6}>
-                  <Controller
-                    name={"country"}
-                    control={control}
-                    render={({
-                      field: { onChange, value },
-                      fieldState: { invalid, isTouched, isDirty, error },
-                    }) => (
-                      <CountryDropdown
-                        onChange={(_, data) => onChange(data)}
-                        value={value}
-                        error={!!error?.message}
-                        helperText={error?.message}
-                      />
-                    )}
-                  />
-                </Grid>
-                <Grid item xs={12} md={6}>
-                  <Controller
-                    name={"age_from_week"}
-                    control={control}
-                    render={({
-                      field: { onChange, value },
-                      fieldState: { invalid, isTouched, isDirty, error },
-                    }) => (
-                      <LabeledInput
-                        error={!!error?.message}
-                        helperText={error?.message}
-                        onChange={onChange}
-                        fullWidth
-                        size="small"
-                        value={value}
-                        label={"Age From"}
-                        placeholder={"Age From"}
-                        type="number"
-                      />
-                    )}
-                  />
-                </Grid>
-                <Grid item xs={12} md={6}>
-                  <Controller
-                    name={"age_to_week"}
-                    control={control}
-                    render={({
-                      field: { onChange, value },
-                      fieldState: { invalid, isTouched, isDirty, error },
-                    }) => (
-                      <LabeledInput
-                        error={!!error?.message}
-                        helperText={error?.message}
-                        onChange={onChange}
-                        fullWidth
-                        size="small"
-                        value={value}
-                        label={"Age To"}
-                        placeholder={"Age To"}
-                        type="number"
-                      />
-                    )}
-                  />
-                </Grid>
-                {/* Name */}
-                <Grid item xs={12} md={6}>
-                  <Controller
-                    name={"note"}
-                    control={control}
-                    render={({
-                      field: { onChange, value },
-                      fieldState: { invalid, isTouched, isDirty, error },
-                    }) => (
-                      <LabeledInput
-                        error={!!error?.message}
-                        helperText={error?.message}
-                        onChange={onChange}
-                        fullWidth
-                        size="small"
-                        value={value}
-                        label={"Remark"}
-                        placeholder={"Remark"}
-                      />
-                    )}
-                  />
-                </Grid>
-              </Grid>
-            </form>
-          </AccordionDetails>
-        </Accordion>
-      </Box>
-      <Stack direction={"row"} sx={{ my: 5 }} gap={1} alignItems={"center"}>
-        <Button
-          onClick={onRowAppended}
-          color="secondary"
-          size="small"
-          startIcon={<AddIcon fontSize="small" />}
-          sx={{ textTransform: "none" }}
-        >
-          Add Ingredients
-        </Button>
-        <Button
-          color="secondary"
-          size="small"
-          startIcon={<PlaylistAddIcon fontSize="small" />}
-          sx={{ textTransform: "none" }}
-          onClick={() => setIsRequirementOpen(true)}
-        >
-          Load Requirement
-        </Button>
-        <Button
-          color="secondary"
-          size="small"
-          startIcon={<AutorenewIcon fontSize="small" />}
-          sx={{ textTransform: "none" }}
-          onClick={loadNutrientsToTable}
-        >
-          Reload Nutrients
-        </Button>
-        <PDFDownloadLink
-          document={
-            <RenderPdfDocument
-              columns={columns}
-              rows={rows}
-              ration={ration}
-              requirement={requirement}
-            />
-          }
-          fileName="formulation.pdf"
-        >
-          {({ blob, url, loading, error }) =>
-            loading ? (
-              "Loading document..."
-            ) : (
-              <IconButton aria-haspopup="true" size="small">
-                <PrintIcon fontSize="small" />
-              </IconButton>
-            )
-          }
-        </PDFDownloadLink>
-        <IconButton size="small" onClick={() => setShowSearch(true)}>
-          <SearchIcon fontSize="small" />
-        </IconButton>
-        <Button
-          color="secondary"
-          size="small"
-          startIcon={<SaveIcon fontSize="small" />}
-          sx={{ textTransform: "none" }}
-          onClick={() => handleSubmit(onSubmit)()}
-        >
-          Save
-        </Button>
-        <Button
-          color="secondary"
-          size="small"
-          startIcon={<CurrencyExchangeIcon fontSize="small" />}
-          sx={{ textTransform: "none" }}
-          onClick={updateIngredientPrices}
-        >
-          Update Price
-        </Button>
-        <Analysis
-          rows={rows}
-          columns={columns.slice(startColumns.length, -endColumns.length)}
-        />
-        <ClearIcon
-          onClearAll={clearAll}
-          onClearIngredients={clearIngredients}
-          onClearRations={clearRation}
-          onClearRequirements={clearRequirements}
-          resetGraph={resetGraph}
-        />
-      </Stack>
-      <Sizer>
-        <DataEditor
-          ref={ref}
-          className="printable-area"
-          customRenderers={customRenderers}
-          width="100%"
-          experimental={{ strict: true }}
-          columns={columns}
-          rows={rows.length + 2}
-          isDraggable={true}
-          freezeColumns={2}
-          rowMarkers="number"
-          onCellEdited={onCellEdited}
-          getCellContent={getContent}
-          onRowAppended={onRowAppended}
-          trailingRowOptions={{
-            // How to get the trailing row to look right
-            sticky: true,
-            tint: true,
-            hint: "Add Ingredient",
-          }}
-          showSearch={showSearch}
-          onSearchClose={onSearchClose}
-          keybindings={{ search: true }}
-          getCellsForSelection={true}
-          onColumnResize={onColumnResize}
-        />
-      </Sizer>
-      <Box sx={{ my: 5 }}>
-        <Plot
-          divId="achivement-chart"
-          data={[
-            {
-              x: achivementData.x,
-              y: achivementData.y,
-              type: "bar",
-            },
-          ]}
-          layout={{
-            title: "Nutrient goal achievement out of 100%",
-            height: 500,
-          }}
-          config={{ responsive: true }}
-          style={{ width: "100%" }}
-        />
-      </Box>
-    </div>
+            Add Ingredients
+          </Button>
+          <Button
+            color="secondary"
+            size="small"
+            startIcon={<PlaylistAddIcon fontSize="small" />}
+            sx={{ textTransform: "none" }}
+            onClick={() => setIsRequirementOpen(true)}
+          >
+            Load Requirement
+          </Button>
+          <Button
+            color="secondary"
+            size="small"
+            startIcon={<AutorenewIcon fontSize="small" />}
+            sx={{ textTransform: "none" }}
+            onClick={loadNutrientsToTable}
+          >
+            Reload Nutrients
+          </Button>
+          <PDFDownloadLink
+            document={
+              <RenderPdfDocument
+                columns={columns}
+                rows={rows}
+                ration={ration}
+                requirement={requirement}
+              />
+            }
+            fileName="formulation.pdf"
+          >
+            {({ blob, url, loading, error }) =>
+              loading ? (
+                "Loading document..."
+              ) : (
+                <IconButton aria-haspopup="true" size="small">
+                  <PrintIcon fontSize="small" />
+                </IconButton>
+              )
+            }
+          </PDFDownloadLink>
+          <IconButton size="small" onClick={() => setShowSearch(true)}>
+            <SearchIcon fontSize="small" />
+          </IconButton>
+          <SaveIcon
+            onSave={() => handleSubmit(onSubmit)()}
+            onTempSave={saveTemporarily}
+          />
+          <Button
+            color="secondary"
+            size="small"
+            startIcon={<CurrencyExchangeIcon fontSize="small" />}
+            sx={{ textTransform: "none" }}
+            onClick={updateIngredientPrices}
+          >
+            Update Price
+          </Button>
+          <Analysis
+            rows={rows}
+            columns={columns.slice(startColumns.length, -endColumns.length)}
+          />
+          <ClearIcon
+            onClearAll={clearAll}
+            onClearIngredients={clearIngredients}
+            onClearRations={clearRation}
+            onClearRequirements={clearRequirements}
+            resetGraph={resetGraph}
+          />
+          <LoadLocalHistoryIcon onLoad={loadFromLocalstorage} />
+        </Stack>
+        <Sizer>
+          <DataEditor
+            ref={ref}
+            className="printable-area"
+            customRenderers={customRenderers}
+            width="100%"
+            experimental={{ strict: true }}
+            columns={columns}
+            rows={rows.length + 2}
+            isDraggable={true}
+            freezeColumns={2}
+            rowMarkers="number"
+            onCellEdited={onCellEdited}
+            getCellContent={getContent}
+            onRowAppended={onRowAppended}
+            trailingRowOptions={{
+              // How to get the trailing row to look right
+              sticky: true,
+              tint: true,
+              hint: "Add Ingredient",
+            }}
+            showSearch={showSearch}
+            onSearchClose={onSearchClose}
+            keybindings={{ search: true }}
+            getCellsForSelection={true}
+            onColumnResize={onColumnResize}
+          />
+        </Sizer>
+        <Box sx={{ my: 5 }}>
+          <Plot
+            divId="achivement-chart"
+            data={[
+              {
+                x: achivementData.x,
+                y: achivementData.y,
+                type: "bar",
+              },
+            ]}
+            layout={{
+              title: "Nutrient goal achievement out of 100%",
+              height: 500,
+            }}
+            config={{ responsive: true }}
+            style={{ width: "100%" }}
+          />
+        </Box>
+      </div>
+    </>
   );
 };
 
