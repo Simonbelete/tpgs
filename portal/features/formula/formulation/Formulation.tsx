@@ -667,7 +667,7 @@ const Formulation = ({ data }: { data?: Formula }) => {
           rowId: _.get(ing, "id", ""),
           display_name: _.get(ing, "ingredient.display_name", ""),
           ration: _.get(ing, "ration", 0),
-          unit_price: _.get(ing, "price", 0),
+          unit_price: _.get(ing, "ingredient_price", 0),
           dm: _.get(ing, "ingredient.dm", 0),
           min: _.get(ing, "ingredient.min", 0),
           max: _.get(ing, "ingredient.max", 0),
@@ -700,8 +700,8 @@ const Formulation = ({ data }: { data?: Formula }) => {
       rowId: _.get(data.requirement, "id", "requirement"),
       display_name: _.get(data.requirement, "name", "Requirement"),
       ration: data.desired_ratio,
-      unit_price: 0,
-      ration_price: data.budget,
+      unit_price: data.budget,
+      ration_price: data.budget * data.weight,
       ration_weight: data.weight,
       dm: data.desired_dm,
       nutrients: {},
@@ -784,7 +784,9 @@ const Formulation = ({ data }: { data?: Formula }) => {
   };
 
   const deleteRow = async (index: number) => {
-    let rowCopy = { ...rows };
+    let rowCopy = [...rows];
+
+    rowCopy = rows.filter((e, i) => i != index);
 
     if (data != null) {
       try {
@@ -792,13 +794,9 @@ const Formulation = ({ data }: { data?: Formula }) => {
           formula: data.id,
           id: Number(rows[index].rowId) || 0,
         }).unwrap();
-        if (response.status == 204) {
-          rowCopy = rows.filter((e, i) => i != index);
-        }
       } catch (ex) {}
-    } else {
-      rowCopy = rows.filter((e, i) => i != index);
     }
+
     computeRation(rowCopy);
   };
 
