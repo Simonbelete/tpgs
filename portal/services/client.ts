@@ -31,12 +31,9 @@ instance.interceptors.request.use(async (config) => {
 export const defaultTenantInterceptor = async (
   config: InternalAxiosRequestConfig<any>
 ) => {
-  const session = await getSession();
-  if (session) {
-    config.headers["x-Request-Id"] = cookies.get("REQUEST_ID")
-      ? cookies.get("REQUEST_ID")["name"]
-      : "public";
-  }
+  config.headers["x-Request-Id"] = cookies.get("REQUEST_ID")
+    ? cookies.get("REQUEST_ID")["name"]
+    : "public";
   return config;
 };
 

@@ -193,7 +193,7 @@ export default function EditableList<T extends AbstractBaseModel & EditMode>({
   return (
     <EditableTable
       hideFooterPagination={false}
-      sx={{ background: "white", minHeight: "20px" }}
+      sx={{ background: "white", minHeight: "20px", height: "auto" }}
       rows={rows}
       rowCount={data?.count || 0}
       loading={isFetching}
