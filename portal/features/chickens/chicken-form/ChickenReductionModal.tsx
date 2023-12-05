@@ -20,6 +20,7 @@ import { DatePicker } from "@mui/x-date-pickers";
 import { useCRUD } from "@/hooks";
 import LoadingButton from "@mui/lab/LoadingButton";
 import dayjs from "dayjs";
+import _ from "lodash";
 
 type Inputs = Partial<Chicken>;
 
@@ -71,7 +72,8 @@ const ChickenReductionSelectDialog = ({ chicken }: { chicken: Chicken }) => {
   return (
     <>
       <Stack direction={"row"} justifyContent="space-between">
-        {(updateResult.reduction_date || chicken.reduction_date) != null ? (
+        {(_.get(updateResult.data, "reduction_date", null) ||
+          chicken.reduction_date) != null ? (
           <>
             <Typography component="span" gutterBottom={true}>
               <Typography variant="body2" fontWeight={600}>

@@ -35,10 +35,10 @@ export interface TollbarListProps<
   toolbar?: React.FC<any>;
   columns: GridColDef[];
   getEndpoint: ApiEndpointQuery<
-    QueryDefinition<Object, ClientQueyFn, any, Response<T[]>, any>,
+    QueryDefinition<any, ClientQueyFn, any, Response<T[]>, any>,
     EndpointDefinitions
   > &
-    QueryHooks<QueryDefinition<Object, ClientQueyFn, any, Response<T[]>, any>>;
+    QueryHooks<QueryDefinition<any, ClientQueyFn, any, Response<T[]>, any>>;
   actions: React.FC<
     GridRenderCellParams & {
       onClick?: (id: number) => void;
