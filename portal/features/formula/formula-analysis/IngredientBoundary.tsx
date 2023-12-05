@@ -19,27 +19,42 @@ export const IngredientBoundary = ({
   const [data, setData] = useState<Object[]>([]);
 
   useEffect(() => {
-    const result: any = {
-      x: [],
-      y: [],
-      type: "bar",
-      error_y: {
-        type: "data",
-        symmetric: false,
-        array: [],
-        arrayminus: [],
-      },
-    };
+    // const result: any = {
+    //   x: [],
+    //   y: [],
+    //   type: "bar",
+    //   error_y: {
+    //     type: "data",
+    //     symmetric: false,
+    //     array: [],
+    //     arrayminus: [],
+    //   },
+    // };
+
+    // rows.forEach((r) => {
+    //   result.x.push(r.display_name);
+    //   result.y.push(r.ratio || 0);
+
+    //   result.error_y.array.push(_.get(r, "max", 0) - _.get(r, "ratio", 0));
+    //   result.error_y.arrayminus.push(_.get(r, "min", 0) - _.get(r, "ratio", 0));
+    // });
+
+    // setData([result]);
+
+    const result: Object[] = [];
 
     rows.forEach((r) => {
-      result.x.push(r.display_name);
-      result.y.push(r.ratio || 0);
-
-      result.error_y.array.push(r.max);
-      result.error_y.arrayminus.push(r.min);
+      result.push({
+        y: [_.get(r, "min", 0), _.get(r, "ratio", 0), _.get(r, "max", 0)],
+        boxpoints: false,
+        jitter: 0.3,
+        pointpos: -1.8,
+        type: "box",
+        name: r.display_name,
+      });
     });
 
-    setData([result]);
+    setData(result);
   }, [rows, columns]);
 
   return (

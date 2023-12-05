@@ -78,14 +78,14 @@ const AuthLogin = () => {
             Rest Password
           </Typography>
           {error && (
-            <Box sx={{ mt: 1 }}>
+            <Box sx={{ mt: 1, maxWidth: 250 }}>
               <Alert variant="outlined" severity="error">
                 {error}
               </Alert>
             </Box>
           )}
           {success && (
-            <Box sx={{ mt: 1 }}>
+            <Box sx={{ mt: 1, maxWidth: 250 }}>
               <Alert variant="outlined" severity="success">
                 {success}
               </Alert>
@@ -93,7 +93,7 @@ const AuthLogin = () => {
           )}
         </Box>
         {/* <Box height="10vh" mr={4}> */}
-        <Box sx={{ width: "100%" }}>
+        <Box sx={{ width: "100%", maxWidth: 250 }}>
           <form onSubmit={handleSubmit(onSubmit)}>
             <Grid container spacing={4} direction="column">
               <Grid item xs={12}>

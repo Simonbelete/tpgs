@@ -28,7 +28,9 @@ export const PriceContribution = ({
       automargin: true,
     };
     rows.forEach((r) => {
-      result.values.push(r.unit_price);
+      result.values.push(
+        (_.get(r, "unit_price", 0) * _.get(r, "ratio", 0)) / 100
+      );
       result.labels.push(r.display_name);
     });
 

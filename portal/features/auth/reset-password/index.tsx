@@ -81,14 +81,14 @@ const ResetPassword = () => {
             Rest Password
           </Typography>
           {error && (
-            <Box sx={{ mt: 1 }}>
+            <Box sx={{ mt: 1, maxWidth: 250 }}>
               <Alert variant="outlined" severity="error">
                 {error}
               </Alert>
             </Box>
           )}
           {success && (
-            <Box sx={{ mt: 1 }}>
+            <Box sx={{ mt: 1, maxWidth: 250 }}>
               <Alert variant="outlined" severity="success">
                 {success}
               </Alert>
