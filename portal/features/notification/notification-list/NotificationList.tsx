@@ -6,14 +6,15 @@ import {
 } from "@mui/x-data-grid";
 import { Typography, Chip } from "@mui/material";
 import Link from "next/link";
-import { DataTable } from "@/components/tables";
+import { DataTable, SETTING_COL } from "@/components/tables";
 import { Notification } from "@/models";
 import _ from "lodash";
-import { useGetNotificationsQuery } from "../services";
+import { useGetNotificationsQuery, notificationApi } from "../services";
 import buildQuery from "@/util/buildQuery";
 import buildPage from "@/util/buildPage";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
+import { ListLayout, ViewAction } from "@/lib/crud";
 
 dayjs.extend(relativeTime);
 
@@ -57,15 +58,13 @@ const NotificationList = () => {
   );
 
   return (
-    <DataTable
-      rows={(data?.results ?? []) as GridRowsProp<Notification>}
+    <ListLayout<Notification>
+      title="Notifications"
       columns={columns}
-      rowCount={data?.count || 0}
-      loading={isLoading}
-      pageSizeOptions={[5, 10, 25, 50, 100]}
-      paginationModel={paginationModel}
-      paginationMode="server"
-      onPaginationModelChange={setPaginationModel}
+      actions={[ViewAction]}
+      getEndpoint={notificationApi.endpoints.getNotifications}
+      filters={{}}
+      menus={<></>}
     />
   );
 };

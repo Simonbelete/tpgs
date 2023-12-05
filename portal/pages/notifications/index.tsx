@@ -12,10 +12,7 @@ const PenPage = () => {
   return (
     <>
       <SeoHead title="Pen" />
-      <ListLayout
-        breadcrumbs={<Breadcrumbs items={breadcrumbs} />}
-        header={<Typography variant="title">Notifications</Typography>}
-      >
+      <ListLayout breadcrumbs={<Breadcrumbs items={breadcrumbs} />}>
         <NotificationList />
       </ListLayout>
     </>

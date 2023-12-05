@@ -2,6 +2,8 @@ from django.views.decorators.cache import never_cache
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import viewsets, mixins
+from swapper import load_model
+from django.shortcuts import get_object_or_404
 
 from . import serializers
 
@@ -58,6 +60,13 @@ class MarkAllAsRead(APIView):
 
 
 class MarkAsRead(viewsets.ViewSet):
+    def create(self, request,  id=None):
+        try:
+            Notification = load_model('notifications', 'Notification')
 
-    def create(self, request, **kwargs):
-        pass
+            notification = get_object_or_404(
+                Notification, recipient=request.user, id=id)
+            notification.mark_as_read()
+            return Response({}, status=200)
+        except Exception as ex:
+            return Response({}, status=500)

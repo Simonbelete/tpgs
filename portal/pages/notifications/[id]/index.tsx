@@ -9,12 +9,16 @@ import { getServerSidePropsContext } from "@/services/getServerSidePropsContext"
 import { NextPageContext } from "next";
 import { Notification } from "@/models";
 import dayjs from "dayjs";
+import { useMarkAsReadMutation } from "@/features/notification/services";
 
 const ViewNotificationPage = ({ data }: { data: Notification }) => {
   const { breadcrumbs } = useBreadcrumbs();
 
+  const [markAsRead, result] = useMarkAsReadMutation();
+
   useEffect(() => {
     // Mark as read
+    markAsRead(data.id);
   }, []);
 
   return (
