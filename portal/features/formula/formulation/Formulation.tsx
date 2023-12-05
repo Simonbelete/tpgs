@@ -1283,7 +1283,12 @@ const Formulation = ({ data }: { data?: Formula }) => {
             </AccordionDetails>
           </Accordion>
         </Box>
-        <Stack direction={"row"} sx={{ my: 5 }} gap={1} alignItems={"center"}>
+        <Stack
+          direction={{ xs: "column", md: "row" }}
+          sx={{ my: 5 }}
+          gap={1}
+          alignItems={"center"}
+        >
           <Button
             onClick={onRowAppended}
             color="secondary"
