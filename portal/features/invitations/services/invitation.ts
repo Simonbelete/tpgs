@@ -15,6 +15,12 @@ export const invitationApi = baseApi.injectEndpoints({
           params: query,
         }),
       }),
+      getInvitationDetail: build.query<Response<Invitation[]>, string>({
+        query: (token?: string) => ({
+          url: `invitation-detail/${token}/`,
+          method: "get",
+        }),
+      }),
       createInvitation: build.mutation<
         Promise<AxiosResponse<Invitation>>,
         Partial<Invitation>
@@ -48,4 +54,5 @@ export const {
   useCreateInvitationMutation,
   useDeleteInvitationMutation,
   useResendInvitationEmailMutation,
+  useGetInvitationDetailQuery,
 } = invitationApi;

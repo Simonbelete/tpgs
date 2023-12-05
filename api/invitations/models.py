@@ -24,19 +24,21 @@ class Invitation(models.Model):
 
     def save(self, *args, **kwargs):
         self.clean()
-        self.expire_date = timezone.now().date() + timedelta(days=7)
         return super().save(*args, **kwargs)
 
     def clean(self) -> None:
-        user = User.objects.filter(email=self.email).count()
+        user = User.objects.filter(email=self.email).exclude(
+            email=self.email).count()
+        if (not self):
+            self.expire_date = timezone.now().date() + timedelta(days=7)
+
         if (user != 0):
             raise ValidationError({
                 'email': 'User already exists'
             })
-        return super().clean()
 
     def is_expired(self):
-        if (self.expire_date > datetime.now()):
+        if (timezone.now() > self.expire_date):
             return True
         else:
             return False

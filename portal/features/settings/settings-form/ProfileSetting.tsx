@@ -18,11 +18,15 @@ import { useUpdateUserMutation } from "@/features/users/services";
 import { useCRUD } from "@/hooks";
 import { User } from "@/models";
 import { useSession, signOut } from "next-auth/react";
+import { CountryDropdown } from "@/features/countries";
+import _ from "lodash";
 
 type Inputs = Partial<User>;
 
 const schema = yup.object({
   name: yup.string().required(),
+  country: yup.object(),
+  company: yup.string(),
 });
 
 const ProfileSetting = () => {
@@ -39,7 +43,13 @@ const ProfileSetting = () => {
   });
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
-    await updateUser({ ...data, id: Number(session?.user?.id) || 0 });
+    const body = {
+      id: Number(session?.user?.id) || 0,
+      name: data.name,
+      country: _.get(data, "country.id", null),
+      company: data.company,
+    };
+    await updateUser(body);
   };
 
   const useCRUDHook = useCRUD({
@@ -49,14 +59,14 @@ const ProfileSetting = () => {
 
   return (
     <div role="tabpanel" style={{ width: "100%" }}>
-      <Box>
+      <Box sx={{ px: 5 }}>
         <Box sx={{ mb: 3 }}>
           <Typography fontWeight={600} variant="h6" color="text.primary">
             Profile
           </Typography>
           <Divider />
         </Box>
-        <Grid container rowSpacing={4} columnSpacing={10}>
+        <Grid container rowSpacing={2} columnSpacing={10}>
           <Grid item xs={12}>
             <Controller
               name={"name"}
@@ -74,6 +84,44 @@ const ProfileSetting = () => {
                   value={value}
                   label={"Full name"}
                   placeholder={"Full name"}
+                />
+              )}
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <Controller
+              name={"country"}
+              control={control}
+              render={({
+                field: { onChange, value },
+                fieldState: { invalid, isTouched, isDirty, error },
+              }) => (
+                <CountryDropdown
+                  onChange={(_, data) => onChange(data)}
+                  value={value}
+                  error={!!error?.message}
+                  helperText={error?.message}
+                />
+              )}
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <Controller
+              name={"company"}
+              control={control}
+              render={({
+                field: { onChange, value },
+                fieldState: { invalid, isTouched, isDirty, error },
+              }) => (
+                <LabeledInput
+                  error={!!error?.message}
+                  helperText={error?.message}
+                  onChange={onChange}
+                  fullWidth
+                  size="small"
+                  value={value}
+                  label={"Company"}
+                  placeholder={"Company"}
                 />
               )}
             />

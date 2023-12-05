@@ -37,15 +37,11 @@ const LoginForm = () => {
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
-  useEffect(() => {
-    console.log(router.query);
-  }, [router]);
-
   const { handleSubmit, watch, control } = useForm<Inputs>({
     // @ts-ignore
     resolver: yupResolver(schema),
     defaultValues: {
-      email: (router.query.email as string) || "",
+      email: decodeURIComponent((router.query.email as string) || "") || "",
     },
   });
 
@@ -82,13 +78,20 @@ const LoginForm = () => {
           Login in to your account
         </Typography>
         {error && (
-          <Box sx={{ mt: 1 }}>
+          <Box sx={{ mt: 1, maxWidth: 250 }}>
             <Alert variant="outlined" severity="error">
               {error}
             </Alert>
           </Box>
         )}
       </Box>
+      {router.query.email && (
+        <Box sx={{ mt: 1, mb: 2, maxWidth: 250 }}>
+          <Alert variant="outlined" severity="success">
+            Account created successfully
+          </Alert>
+        </Box>
+      )}
       {/* <Box height="10vh" mr={4}> */}
       <Box sx={{ width: "100%" }}>
         <form onSubmit={handleSubmit(onSubmit)}>

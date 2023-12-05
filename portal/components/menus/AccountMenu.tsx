@@ -15,11 +15,12 @@ import Settings from "@mui/icons-material/Settings";
 import Logout from "@mui/icons-material/Logout";
 import { useSession, signOut } from "next-auth/react";
 import { useRouter } from "next/router";
-import SettingsIcon from '@mui/icons-material/Settings';
+import SettingsIcon from "@mui/icons-material/Settings";
 
 const AccountMenu = () => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
+
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
@@ -32,11 +33,14 @@ const AccountMenu = () => {
 
   const handleSignOut = async () => {
     await signOut();
-  }
+  };
 
   return (
     <>
-      <Box id="account-menu" sx={{ display: "flex", alignItems: "center", textAlign: "center" }}>
+      <Box
+        id="account-menu"
+        sx={{ display: "flex", alignItems: "center", textAlign: "center" }}
+      >
         <Tooltip title="Account settings">
           <IconButton
             onClick={handleClick}
@@ -44,7 +48,6 @@ const AccountMenu = () => {
             aria-controls={open ? "account-menu" : undefined}
             aria-haspopup="true"
             aria-expanded={open ? "true" : undefined}
-            
           >
             <SettingsIcon />
           </IconButton>
@@ -84,15 +87,13 @@ const AccountMenu = () => {
         }}
         transformOrigin={{ horizontal: "right", vertical: "top" }}
         anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
-        
       >
         <MenuItem
-        
           onClick={() => {
             router.push("/settings");
           }}
         >
-          <Avatar sizes="small" /> Profile
+          <Avatar sizes="small" /> {session?.user?.name}
         </MenuItem>
         <Divider />
         {/* <MenuItem onClick={handleClose}>

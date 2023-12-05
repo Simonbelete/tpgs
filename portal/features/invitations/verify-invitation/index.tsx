@@ -18,8 +18,9 @@ import { useRouter } from "next/router";
 import { LabeledInput } from "@/components/inputs";
 import LoadingButton from "@mui/lab/LoadingButton";
 import service from "../services/invitation_service";
+import { useGetInvitationDetailQuery } from "../services";
 import errorToForm from "@/util/errorToForm";
-import { Country, VerifyInvitation } from "@/models";
+import { Invitation, VerifyInvitation } from "@/models";
 import { CountryDropdown } from "@/features/countries";
 import _ from "lodash";
 
@@ -39,11 +40,13 @@ const schema = yup.object({
   company: yup.string(),
 });
 
-const ResetPassword = () => {
+const VerifyInvitation = ({ token }: { token: string }) => {
   const router = useRouter();
   const [error, setErrorMessage] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+
+  const { data } = useGetInvitationDetailQuery(token);
 
   const { handleSubmit, watch, control, setError } = useForm<Inputs>({
     // @ts-ignore
@@ -61,7 +64,8 @@ const ResetPassword = () => {
         country: _.get(data.country, "id", null),
         company: data.company,
       });
-      if (response.status == 200) {
+
+      if (response.status == 201) {
         setSuccess("Creating account...");
         router.push({
           pathname: "/login",
@@ -118,6 +122,16 @@ const ResetPassword = () => {
         <Box sx={{ width: "100%" }}>
           <form onSubmit={handleSubmit(onSubmit)}>
             <Grid container spacing={2} direction="column">
+              <Grid item xs={12}>
+                <LabeledInput
+                  disabled={true}
+                  fullWidth
+                  size="small"
+                  value={_.get(data, "email", "")}
+                  label={"Email *"}
+                  placeholder={"Email *"}
+                />
+              </Grid>
               <Grid item xs={12}>
                 <Controller
                   name={"name"}
@@ -252,4 +266,4 @@ const ResetPassword = () => {
   );
 };
 
-export default ResetPassword;
+export default VerifyInvitation;

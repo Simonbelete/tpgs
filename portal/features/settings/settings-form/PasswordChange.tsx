@@ -56,7 +56,7 @@ const PasswordChange = () => {
 
   return (
     <div role="tabpanel" style={{ width: "100%" }}>
-      <Box>
+      <Box sx={{ px: 5 }}>
         <Box sx={{ mb: 3 }}>
           <Typography fontWeight={600} variant="h6" color="text.primary">
             Account Setting

@@ -43,12 +43,15 @@ class InvitationViewSet(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         serializer.save(inviter=self.request.user)
 
+    def create(self, request, *args, **kwargs):
+        instance = super().create(request, *args, **kwargs)
+        send_invitation_email.delay(
+            self.request.user.id, instance.email, instance.token, instance.expire_date)
+        return instance
+
 
 class VerifyInvitationViewSet(viewsets.ViewSet):
     serializer_class = serializers.VerifyInvitationSerializer_POST
-
-    def get_queryset(self):
-        return models.Invitation.objects.all()
 
     @transaction.atomic
     def create(self, request):
@@ -58,13 +61,14 @@ class VerifyInvitationViewSet(viewsets.ViewSet):
                 password = request.data['password']
                 name = request.data['name']
                 invitation = models.Invitation.objects.get(token=token)
-                if (invitation.expire_date < timezone.now().date()):
+                if (invitation.expire_date < timezone.now()):
                     return Response({
                         'error': 'token expired'
                     }, status=400)
 
                 user = User.objects.create_user(
                     invitation.email, password, name=name)
+
                 for farm in invitation.farms.all().iterator():
                     user.farms.add(farm)
                     user.save()
@@ -85,6 +89,7 @@ class VerifyInvitationViewSet(viewsets.ViewSet):
                 'errors': ex,
             }, status=400)
         except Exception as ex:
+            print(ex)
             return Response({'error': str(ex)}, status=500)
 
 
@@ -107,7 +112,7 @@ class InvitationDetailViewSet(viewsets.ViewSet):
     def list(self, request, token=None):
         try:
             invitation = models.Invitation.objects.get(token=token)
-            if (invitation.is_expired):
+            if (invitation.is_expired()):
                 return Response({'error': 'Expired'}, status=401)
             else:
                 data = self.serializer_class(invitation).data
@@ -115,4 +120,5 @@ class InvitationDetailViewSet(viewsets.ViewSet):
         except models.Invitation.DoesNotExist:
             raise NotFound()
         except Exception as ex:
+            print(ex)
             return Response({}, status=500)
