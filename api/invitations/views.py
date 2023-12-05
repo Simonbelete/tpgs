@@ -13,9 +13,12 @@ from rest_framework.exceptions import NotFound
 from . import models
 from . import serializers
 from . import filters
-from .tasks import send_invitation_email, test_task
+from .tasks import send_invitation_email
 from users.models import User
 from users.serializers import UserSerializer_GET
+
+
+from notifications.signals import notify
 
 
 class InvitationViewSet(viewsets.ModelViewSet):
@@ -90,8 +93,25 @@ class ResendInvitationViewSet(viewsets.ViewSet):
         try:
             invitation = models.Invitation.objects.get(pk=id)
             send_invitation_email.delay(
-                invitation.inviter.id, invitation.email, invitation.token)
+                invitation.inviter.id, invitation.email, invitation.token, invitation.expire_date)
             return Response({}, status=200)
+        except models.Invitation.DoesNotExist:
+            raise NotFound()
+        except Exception as ex:
+            return Response({}, status=500)
+
+
+class InvitationDetailViewSet(viewsets.ViewSet):
+    serializer_class = serializers.InvitationSerializer_GET
+
+    def list(self, request, token=None):
+        try:
+            invitation = models.Invitation.objects.get(token=token)
+            if (invitation.is_expired):
+                return Response({'error': 'Expired'}, status=401)
+            else:
+                data = self.serializer_class(invitation).data
+                return Response(data, status=200)
         except models.Invitation.DoesNotExist:
             raise NotFound()
         except Exception as ex:

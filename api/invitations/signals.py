@@ -13,19 +13,5 @@ from .tasks import send_invitation_email
 
 @receiver(post_save, sender=Invitation)
 def send_invitation(sender, instance, **kwargs):
-    send_invitation_email(instance.inviter, instance.email, instance.token)
-
-    # if(not instance.send_date):
-    #     instance.sent_date = datetime.today()
-    #     context = {
-    #         'to_email': instance.email,
-    #         'link': "{url}/verify/{token}".format(url=settings.SITE_URL, token=instance.token)
-    #     }
-    #     thread = SendInvitationEmailThread(context)
-    #     thread.start()
-    # elif(instance.accepted):
-    #     notify.send(
-    #         sender=instance,
-    #         recipient=instance.inviter,
-    #         verb='User %s accepted your invitation' % instance.email,
-    #         level='info')
+    send_invitation_email(instance.inviter, instance.email,
+                          instance.token, instance.expire_date)

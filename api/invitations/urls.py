@@ -14,9 +14,14 @@ resend_router = routers.DefaultRouter()
 resend_router.register(
     r'invitations/(?P<id>.+)/resend', views.ResendInvitationViewSet, basename="api_resend_invitaiton")
 
+token_router = routers.DefaultRouter()
+token_router.register(
+    r'invitation-detail/(?P<token>.+)', views.InvitationDetailViewSet, basename="api_resend_invitaiton")
+
 
 urlpatterns = [
     path('', include(router.urls)),
     path('', include(verify_router.urls)),
-    path('', include(resend_router.urls))
+    path('', include(resend_router.urls)),
+    path('', include(token_router.urls))
 ]

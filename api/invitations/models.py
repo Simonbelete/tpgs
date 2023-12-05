@@ -3,6 +3,7 @@ from datetime import datetime, timedelta
 from django.db import models
 from django.core.exceptions import ValidationError
 from django.utils import timezone
+from datetime import datetime
 
 from users.models import User
 from farms.models import Farm
@@ -33,3 +34,9 @@ class Invitation(models.Model):
                 'email': 'User already exists'
             })
         return super().clean()
+
+    def is_expired(self):
+        if (self.expire_date > datetime.now()):
+            return True
+        else:
+            return False

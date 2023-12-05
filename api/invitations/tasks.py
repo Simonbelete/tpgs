@@ -3,22 +3,23 @@ from django.conf import settings
 from notifications.signals import notify
 from django.core.mail import EmailMultiAlternatives
 from django.template.loader import get_template, render_to_string
-from django.template import Context
+from users.models import User
 
 
 @shared_task
-def send_invitation_email(sender, email, token):
+def send_invitation_email(sender, email, token, expire_date):
     """
     params:
     ------
-        sender: User instance
+        sender: User id
         email: string
         token: string
     """
     try:
         context = {
             'to_email': email,
-            'link': "{url}/verify/{token}".format(url=settings.SITE_URL, token=token)
+            'link': "{url}/verify/{token}".format(url=settings.SITE_URL, token=token),
+            'expire_date': expire_date
         }
         email_html_message = render_to_string(
             'email/account_invitation/account_invitation.html', context)
@@ -32,21 +33,18 @@ def send_invitation_email(sender, email, token):
             [email])
         email_multi.attach_alternative(email_html_message, "text/html")
         email_multi.send()
+        user = User.objects.get(pk=sender)
         notify.send(
-            sender=sender,
-            recipient=sender,
+            sender=user,
+            recipient=user,
             verb="Invitation email to {email} successfully sent".format(
                 email=email),
             level='info')
     except Exception as ex:
+        user = User.objects.get(pk=sender)
         notify.send(
-            sender=sender,
-            recipient=sender,
+            sender=user,
+            recipient=user,
             verb="Failed to send invitation email to {email}".format(
                 email=email),
             level='error')
-
-
-@shared_task
-def test_task():
-    print('*****')
