@@ -82,7 +82,7 @@ class AllRequirementNutrientViewSet(viewsets.ReadOnlyModelViewSet):
     """ Get all active nutrients of ingredient"""
     queryset = models.RequirementNutrient.objects.all().order_by('-nutrient__order')
     pagination_class = AllPagination
-    serializer_class = serializers.AllIngredientNutrientSerializer_GET
+    serializer_class = serializers.AllRequirementNutrientSerializer_GET
 
     def get_queryset(self):
         if ('requirement_pk' in self.kwargs):
@@ -127,3 +127,54 @@ class RequirementAnalysesViewSet(viewsets.ViewSet):
             'nutrient_count': queryset.nutrient_count(),
             'composition_total': queryset.composition_total()
         }, status=200)
+
+# Requirement Ingredient
+
+
+class RequirementIngredientViewSet(CoreModelViewSet):
+    queryset = models.RequirementIngredient.all.all()
+    serializer_class = serializers.RequirementIngredientSerializer_GET
+    filterset_class = filters.RequirementIngredientFilter
+    ordering_fields = 'all'
+    search_fields = ['ingredient__name']
+
+    def get_queryset(self):
+        if ('requirement_pk' in self.kwargs):
+            return self.queryset.filter(requirement=self.kwargs['requirement_pk'])
+        return self.queryset
+
+    def get_serializer_class(self):
+        if self.request.method in ['POST', 'PUT', 'PATCH']:
+            return serializers.RequirementIngredientSerializer_POST
+        return serializers.RequirementIngredientSerializer_GET
+
+
+class AllRequirementIngredientViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = models.RequirementIngredient.objects.all()
+    pagination_class = AllPagination
+    serializer_class = serializers.AllRequirementIngredientSerializer_GET
+
+    def get_queryset(self):
+        if ('requirement_pk' in self.kwargs):
+            return self.queryset.filter(requirement=self.kwargs['requirement_pk'])
+        return self.queryset
+
+
+class RequirementIngredientHistoryViewSet(HistoryViewSet):
+    queryset = models.RequirementIngredient.history.all()
+    serializer_class = serializers.RequirementIngredientHistorySerializer
+
+
+class RequirementIngredientSummaryViewSet(SummaryViewSet):
+    def get_query(self):
+        return models.RequirementIngredient.all.get(pk=self.id_pk)
+
+
+class RequirementIngredientExport(GenericExportView):
+    def get_dataset(self):
+        return admin.RequirementIngredientResource().export()
+
+
+class RequirementIngredientImport(GenericImportView):
+    def get_resource(self):
+        return admin.RequirementIngredientResource()

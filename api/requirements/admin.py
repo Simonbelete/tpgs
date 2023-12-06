@@ -27,4 +27,19 @@ class RequirementNutrientResource(resources.ModelResource):
         fields = ['id', 'nutrient', 'requirement', 'value']
 
 
+class RequirementIngredientResource(resources.ModelResource):
+    requirement = fields.Field(
+        column_name='requirement',
+        attribute='requirement',
+        widget=widgets.ForeignKeyWidget(models.Requirement, field='name'))
+    ingredient = fields.Field(
+        column_name='ingredient',
+        attribute='ingredient',
+        widget=widgets.ForeignKeyWidget(Nutrient, field='name'))
+
+    class Meta:
+        model = models.RequirementIngredient
+        fields = ['id', 'ingredient', 'requirement', 'min', 'max']
+
+
 admin.site.register(models.Requirement, SimpleHistoryAdmin)

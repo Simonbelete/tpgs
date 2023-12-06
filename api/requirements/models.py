@@ -30,10 +30,29 @@ class RequirementNutrient(CoreModel):
         return self.value * self.requirement.desired_dm / 100
 
 
+class RequirementIngredient(CoreModel):
+    requirement = models.ForeignKey(
+        'requirements.Requirement', on_delete=models.CASCADE)
+    ingredient = models.ForeignKey(
+        'ingredients.Ingredient', on_delete=models.CASCADE)
+    min = models.DecimalField(
+        validators=PERCENTAGE_VALIDATOR, max_digits=6, decimal_places=3, default=0, null=True, blank=True)
+    max = models.DecimalField(
+        validators=PERCENTAGE_VALIDATOR, max_digits=6, decimal_places=3, default=0, null=True, blank=True)
+
+    history = HistoricalRecords()
+
+    class Meta:
+        ordering = ['ingredient']
+        unique_together = ['requirement', 'ingredient']
+
+
 class Requirement(CoreModel):
     name = models.CharField(max_length=100, unique=True)
     nutrients = models.ManyToManyField(
         'nutrients.Nutrient', null=True, blank=True, through=RequirementNutrient, related_name='requirement_nutrients')
+    ingredients = models.ManyToManyField(
+        'ingredients.Ingredient', null=True, blank=True, through=RequirementIngredient, related_name='requirement_ingredients')
     weight = models.DecimalField(
         max_digits=7, decimal_places=3, null=True, blank=True, default=0)  # kg
     # Unit Price

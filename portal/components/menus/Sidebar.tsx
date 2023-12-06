@@ -255,13 +255,24 @@ const SidebarMenu = () => {
             </Typography>
           }
           icon={<ScienceIcon fontSize="small" />}
+          defaultOpen={RegExp(
+            "^/(formulation/experimental|formulation/formulas)(.*)$"
+          ).test(router.pathname)}
         >
-          <MenuItem component={<Link href="/formulation/formulas" />}>
+          <MenuItem
+            component={<Link href="/formulation/formulas" />}
+            active={RegExp("/formulation/formulas(.*)$").test(router.pathname)}
+          >
             <Typography variant="body1" fontSize={14}>
               Formula
             </Typography>
           </MenuItem>
-          <MenuItem component={<Link href="/formulation/experimental" />}>
+          <MenuItem
+            component={<Link href="/formulation/experimental" />}
+            active={RegExp("/formulation/experimental(.*)$").test(
+              router.pathname
+            )}
+          >
             <Typography variant="body1" fontSize={14}>
               Matrix
             </Typography>

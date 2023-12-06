@@ -1284,15 +1284,6 @@ const Formulation = ({ data }: { data?: Formula }) => {
           alignItems={"center"}
         >
           <Button
-            onClick={onRowAppended}
-            color="secondary"
-            size="small"
-            startIcon={<AddIcon fontSize="small" />}
-            sx={{ textTransform: "none" }}
-          >
-            Add Ingredients
-          </Button>
-          <Button
             color="secondary"
             size="small"
             startIcon={<PlaylistAddIcon fontSize="small" />}
@@ -1300,6 +1291,15 @@ const Formulation = ({ data }: { data?: Formula }) => {
             onClick={() => setIsRequirementOpen(true)}
           >
             Load Requirement
+          </Button>
+          <Button
+            onClick={onRowAppended}
+            color="secondary"
+            size="small"
+            startIcon={<AddIcon fontSize="small" />}
+            sx={{ textTransform: "none" }}
+          >
+            Add Ingredients
           </Button>
           <Button
             color="secondary"
