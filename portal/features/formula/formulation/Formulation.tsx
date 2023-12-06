@@ -341,11 +341,6 @@ const Formulation = ({ data }: { data?: Formula }) => {
     let updatedRation: Row = { rowId: "ration", display_name: "Ration" };
 
     const weight: number = _.get(requirementCopy, "ration_weight", 0);
-    const requirement_weight: number = weight;
-    const total_ration_weight = _.sumBy(
-      rowCopy,
-      (o) => ((o.ratio || 0) * requirement_weight) / 100
-    );
 
     rowCopy.forEach((r, i) => {
       // Ingredient price not calculated price
@@ -361,18 +356,6 @@ const Formulation = ({ data }: { data?: Formula }) => {
       );
       _.set(rowCopy[i], "ration_weight", roundTo3DecimalPlace(ration_weight));
 
-      // Calculated from total ration weight instead of the requirement
-      // _.set(
-      //   rowCopy[i],
-      //   "ration_price",
-      //   roundTo3DecimalPlace(((total_ration_weight * ratio) / 100) * price)
-      // );
-      // _.set(
-      //   rowCopy[i],
-      //   "ration_weight",
-      //   roundTo3DecimalPlace((total_ration_weight * ratio) / 100)
-      // );
-
       // Calculate feed, i.e only sets ration row
       columns.slice(1, -endColumns.length).forEach((c) => {
         const cell = Number(_.get(r, c.path, 0));
@@ -382,11 +365,6 @@ const Formulation = ({ data }: { data?: Formula }) => {
           _.set(updatedRation, c.path, roundTo3DecimalPlace(cell + cellTotal));
         } else if (c.id == "ration_weight") {
           _.set(updatedRation, c.path, roundTo3DecimalPlace(cell + cellTotal));
-          // _.set(
-          //   updatedRation,
-          //   c.path,
-          //   roundTo3DecimalPlace(total_ration_weight)
-          // );
         } else if (c.id == "ration_price") {
           _.set(updatedRation, c.path, roundTo3DecimalPlace(cell + cellTotal));
         } else if (c.id == "dm")
@@ -404,16 +382,6 @@ const Formulation = ({ data }: { data?: Formula }) => {
         _.set(updatedRation, c?.pathId || "", c.colId);
       });
     });
-
-    //
-    _.set(
-      updatedRation,
-      "ration_price",
-      roundTo3DecimalPlace(
-        _.get(updatedRation, "unit_price", 0) *
-          _.get(updatedRation, "ration_weight", 0)
-      )
-    );
 
     setRows(rowCopy);
     setRation(updatedRation);
