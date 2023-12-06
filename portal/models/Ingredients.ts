@@ -11,6 +11,4 @@ export default interface Ingredient extends AbstractBaseModel {
   nutrients: number | IngredientNutrient[];
   dm?: number;
   nutrient_count: number;
-  min?: null | number;
-  max?: null | number;
 }

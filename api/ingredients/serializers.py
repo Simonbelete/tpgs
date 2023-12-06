@@ -44,13 +44,13 @@ class IngredientSerializer_GET(serializers.ModelSerializer):
     class Meta:
         model = models.Ingredient
         fields = ['id', 'name', 'display_name', 'code', 'nutrient_count',
-                  'ingredient_type', 'description', 'price', 'dm', 'min', 'max', 'is_active', 'created_at']
+                  'ingredient_type', 'description', 'price', 'dm', 'is_active', 'created_at']
 
 
 class IngredientSerializer_POST(serializers.ModelSerializer):
     class Meta:
         model = models.Ingredient
-        fields = ['id', 'name', 'code', 'description', 'price', 'min', 'max',
+        fields = ['id', 'name', 'code', 'description', 'price',
                   'nutrients', 'dm', 'ingredient_type', 'is_active']
 
 

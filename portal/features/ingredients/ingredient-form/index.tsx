@@ -28,8 +28,6 @@ const schema = yup.object({
   description: yup.string().nullable(),
   price: yup.number().min(0).nullable(),
   dm: yup.string().nullable(),
-  min: yup.number().nullable(),
-  max: yup.number().nullable(),
 });
 
 function a11yProps(index: number) {
@@ -89,8 +87,6 @@ export const IngredientForm = ({
       description: values.description,
       price: values.price,
       dm: values.dm,
-      min: values.min,
-      max: values.max,
     };
   };
 
@@ -222,16 +218,6 @@ export const IngredientForm = ({
                   description: {
                     label: "Description",
                     placeholder: "Description",
-                  },
-                  min: {
-                    label: "Min (%)",
-                    placeholder: "Min (%)",
-                    postfix: "%",
-                  },
-                  max: {
-                    label: "Max (%)",
-                    placeholder: "Max (%)",
-                    postfix: "%",
                   },
                 }}
                 beforeSubmit={cleanData}

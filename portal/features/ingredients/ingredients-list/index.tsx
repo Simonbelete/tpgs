@@ -38,8 +38,6 @@ export const IngredientList = () => {
         );
       },
     },
-    { field: "min", headerName: "Min (%)", flex: 1 },
-    { field: "max", headerName: "Max (%)", flex: 1 },
     {
       field: "created_at",
       headerName: "Create at",

@@ -59,10 +59,6 @@ class Ingredient(CoreModel):
     # dry material
     dm = models.PositiveIntegerField(
         validators=PERCENTAGE_VALIDATOR, default=0)
-    min = models.DecimalField(
-        validators=PERCENTAGE_VALIDATOR, max_digits=6, decimal_places=3, default=0, null=True, blank=True)
-    max = models.DecimalField(
-        validators=PERCENTAGE_VALIDATOR, max_digits=6, decimal_places=3, default=0, null=True, blank=True)
 
     history = HistoricalRecords()
 
