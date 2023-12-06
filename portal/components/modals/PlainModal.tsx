@@ -18,10 +18,12 @@ export default function BasicModal({
   open,
   onClose,
   children,
+  width = "60%",
 }: {
   open: boolean;
   onClose: () => void;
   children?: React.ReactElement;
+  width?: string;
 }) {
   const handleClose = React.useCallback(() => onClose(), [onClose]);
 
@@ -32,7 +34,7 @@ export default function BasicModal({
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
     >
-      <Box sx={style}>
+      <Box sx={{ ...style, width: width }}>
         <Box
           sx={{
             display: "flex",

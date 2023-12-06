@@ -11,6 +11,7 @@ import {
   IngredientRation,
   NutrientDistributions,
   PriceContribution,
+  PricePerNutrient,
 } from "../formula-analysis";
 
 const Plot = dynamic(() => import("react-plotly.js"), {
@@ -30,6 +31,7 @@ const Analysis = ({ columns, rows }: { columns: Column[]; rows: Row[] }) => {
   const [ndOpen, setndOpen] = useState(false);
   const [pricedOpen, setPricedOpen] = useState(false);
   const [ingRationOpen, setIngRationOpen] = useState(false);
+  const [pricePerNutrientOpen, setPricePerNutrientOpen] = useState(false);
 
   const [minMaxOpen, setMinMaxOpen] = useState(false);
 
@@ -74,6 +76,13 @@ const Analysis = ({ columns, rows }: { columns: Column[]; rows: Row[] }) => {
         <Box sx={{ mt: 4 }}>
           <IngredientBoundary rows={rows} columns={columns} />
         </Box>
+      </PlainModal>
+      <PlainModal
+        onClose={() => setPricePerNutrientOpen(false)}
+        open={pricePerNutrientOpen}
+        width="90%"
+      >
+        <PricePerNutrient rows={rows} columns={columns} />
       </PlainModal>
       <IconButton
         aria-label="more"
@@ -130,6 +139,14 @@ const Analysis = ({ columns, rows }: { columns: Column[]; rows: Row[] }) => {
             }}
           >
             Ingredient Boundary
+          </MenuItem>
+          <MenuItem
+            onClick={() => {
+              handleClose();
+              setPricePerNutrientOpen(true);
+            }}
+          >
+            Price per nutrient
           </MenuItem>
         </MenuList>
       </Menu>
