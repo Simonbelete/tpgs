@@ -60,15 +60,15 @@ id,name,dm,ingredient_type
  ,wheypowder (sweet),95.6,Animal proteins
  ,soybeanoil,99.5,Fats
  ,animal fat (destructor-),99.5,Fats
- ,citruspulp,90.1,Miscellaneous  
- ,yeast (beer),93.7,Miscellaneous  
- ,grassmeal (less than 16% c.p.),91.5,Miscellaneous  
- ,grassmeal (more than 20% c.p.),91.4,Miscellaneous  
- ,alfalfa meal (sundried),89.6,Miscellaneous  
- ,molasses (beet),73.2,Miscellaneous  
- ,molasses (cane),73.3,Miscellaneous  
- ,sugar,99.9,Miscellaneous  
- ,soybean hulls,88.2,Miscellaneous  
+ ,citruspulp,90.1,Miscellaneous
+ ,yeast (beer),93.7,Miscellaneous
+ ,grassmeal (less than 16% c.p.),91.5,Miscellaneous
+ ,grassmeal (more than 20% c.p.),91.4,Miscellaneous
+ ,alfalfa meal (sundried),89.6,Miscellaneous
+ ,molasses (beet),73.2,Miscellaneous
+ ,molasses (cane),73.3,Miscellaneous
+ ,sugar,99.9,Miscellaneous
+ ,soybean hulls,88.2,Miscellaneous
  ,dicalciumphosphate,99,Minerals
  ,monocalciumphosphate,99,Minerals
  ,limestone/shells,99,Minerals
