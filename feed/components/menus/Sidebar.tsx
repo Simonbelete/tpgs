@@ -127,7 +127,7 @@ const SidebarMenu = () => {
             icon={<WorkspacesIcon fontSize="small" />}
           >
             <Typography variant="body1" fontSize={14}>
-              Ingredient Type
+              Ingredient Group
             </Typography>
           </MenuItem>
         </SubMenu>

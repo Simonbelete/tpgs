@@ -8,7 +8,7 @@ export default function CancelIconMenu() {
   const router = useRouter();
 
   return (
-    <Tooltip title="Dashboard">
+    <Tooltip title="Cancel">
       <Link href={`${router.pathname.split("/[id]")[0]}/`}>
         <IconButton color="secondary">
           <CancelIcon />

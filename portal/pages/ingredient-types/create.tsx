@@ -11,7 +11,7 @@ const IngredientTypeCreatePage = () => {
 
   return (
     <>
-      <SeoHead title="Create Ingredient Type" />
+      <SeoHead title="Ingredient Group - Create" />
       <CreateLayout breadcrumbs={<Breadcrumbs items={breadcrumbs} />}>
         <IngredientTypeForm />
       </CreateLayout>

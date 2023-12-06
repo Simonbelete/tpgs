@@ -24,7 +24,7 @@ export const IngredientList = () => {
     { field: "price", headerName: "Price (/kg)", flex: 1 },
     {
       field: "ingredient_type",
-      headerName: "Ingredient Type",
+      headerName: "Ingredient Group",
       flex: 1,
       minWidth: 150,
       renderCell: (params: GridRenderCellParams<any>) => {

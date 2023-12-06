@@ -13,7 +13,7 @@ const HistoryAction: React.FC<GridRenderCellParams> = ({ id }) => {
       href={`${router.pathname}/${id}/histories`}
       className="pts-list-history"
     >
-      <Tooltip title="Dashboard">
+      <Tooltip title="History">
         <IconButton aria-label="edit">
           <HistoryIcon fontSize="small" />
         </IconButton>

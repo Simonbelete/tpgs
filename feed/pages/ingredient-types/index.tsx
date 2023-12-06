@@ -13,7 +13,7 @@ const IngredientTypePage = () => {
   return (
     <ListLayout
       breadcrumbs={<Breadcrumbs items={breadcrumbs} />}
-      header={<Typography variant="h3">Ingredient Types</Typography>}
+      header={<Typography variant="h3">Ingredient Groups</Typography>}
       actions={<Actions />}
     >
       <IngredientTypeList />
@@ -26,7 +26,7 @@ const Actions = (): ReactElement => {
     <>
       <Link href="/ingredient-types/create">
         <Button variant="contained" startIcon={<AddIcon />}>
-          Create New Ingredient Type
+          Create New Ingredient Group
         </Button>
       </Link>
     </>

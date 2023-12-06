@@ -5,7 +5,7 @@ import { IngredientType } from "@/models";
 
 const IngredientTypeDropdown = ({
   value,
-  label = "Ingredient Type",
+  label = "Ingredient Group",
   error,
   onChange,
   helperText,
@@ -24,7 +24,7 @@ const IngredientTypeDropdown = ({
       value={value}
       dataKey="name"
       label={label}
-      placeholder="Select Ingredient Type"
+      placeholder="Select Ingredient Group"
       error={error}
       helperText={helperText}
       onChange={onChange}

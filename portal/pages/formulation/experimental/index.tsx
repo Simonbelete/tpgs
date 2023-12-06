@@ -4,18 +4,22 @@ import { Breadcrumbs, Loading } from "@/components";
 import { useBreadcrumbs } from "@/hooks";
 import { ActionLayout } from "@/layouts";
 import { Formulation } from "@/features/formula";
+import { SeoHead } from "@/seo";
 
 const FormulationExperimentalPage = () => {
   const { breadcrumbs } = useBreadcrumbs();
   const saveRef = useRef();
 
   return (
-    <ActionLayout
-      breadcrumbs={<Breadcrumbs items={breadcrumbs} />}
-      header={<Typography variant="title">Formulate</Typography>}
-    >
-      <Formulation />
-    </ActionLayout>
+    <>
+      <SeoHead title="Formulation" />
+      <ActionLayout
+        breadcrumbs={<Breadcrumbs items={breadcrumbs} />}
+        header={<Typography variant="title">Formulate</Typography>}
+      >
+        <Formulation />
+      </ActionLayout>
+    </>
   );
 };
 

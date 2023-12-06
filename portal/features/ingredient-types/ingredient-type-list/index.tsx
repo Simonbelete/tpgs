@@ -34,7 +34,7 @@ export const IngredientTypeList = () => {
   ];
   return (
     <ListLayout<IngredientType>
-      title="IngredientType"
+      title="Ingredient Group"
       columns={columns}
       actions={[EditAction, HistoryAction, PermanentlyDeleteAction]}
       getEndpoint={ingredientTypeApi.endpoints.getIngredientTypes}

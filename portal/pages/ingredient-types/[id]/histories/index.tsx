@@ -15,11 +15,11 @@ const IngredientTypeHistoryPage = ({ data }: { data: IngredientType }) => {
 
   return (
     <>
-      <SeoHead title="Ingredient Type Histories" />
+      <SeoHead title="Ingredient Group Histories" />
       <ListLayout
         breadcrumbs={<Breadcrumbs items={breadcrumbs} />}
         header={
-          <Typography variant="title">Ingredient Type History</Typography>
+          <Typography variant="title">Ingredient Group History</Typography>
         }
       >
         <IngredientTypeHistoryList data={data} />

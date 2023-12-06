@@ -53,19 +53,23 @@ export default function FormLayout<T extends AbstractBaseModel>({
               </IconButton>
             </Link>
             <Typography variant="title">
-              {formData ? `${formData.display_name || ""} - Edit` : title}
+              {formData
+                ? `${formData.display_name || ""} - Edit`
+                : `${title} - Create`}
             </Typography>
           </Box>
         </Grid>
         <Grid item xs={12} md />
         <Grid item xs={12} md={4}>
-          <Stack
-            direction="row"
-            justifyContent={{ xs: "start", md: "end" }}
-            spacing={0}
-          >
-            {menus}
-          </Stack>
+          {formData && (
+            <Stack
+              direction="row"
+              justifyContent={{ xs: "start", md: "end" }}
+              spacing={0}
+            >
+              {menus}
+            </Stack>
+          )}
         </Grid>
       </Grid>
       <Grid container spacing={2}>

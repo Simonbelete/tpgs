@@ -58,6 +58,7 @@ const IngredientNutrientToolbar = ({
 }) => {
   return (
     <EditToolbar<EditableIngredientNutrient, Nutrient>
+      title="Add Nutrient"
       refetch={refetch}
       setRows={setRows}
       rows={rows}
@@ -199,8 +200,8 @@ export const IngredientForm = ({
                     md: 6,
                   },
                   ingredient_type: {
-                    label: "Ingredient Type",
-                    placeholder: "Ingredient Type",
+                    label: "Ingredient Group",
+                    placeholder: "Ingredient Group",
                     endpoint: ingredientTypeApi.endpoints.getIngredientTypes,
                     form: <IngredientTypeForm shallowRoute={false} />,
                   },

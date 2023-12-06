@@ -11,7 +11,7 @@ const IngredientTypePage = () => {
 
   return (
     <>
-      <SeoHead title="Ingredient Types" />
+      <SeoHead title="Ingredient Groups" />
       <ListLayout breadcrumbs={<Breadcrumbs items={breadcrumbs} />}>
         <IngredientTypeList />
       </ListLayout>

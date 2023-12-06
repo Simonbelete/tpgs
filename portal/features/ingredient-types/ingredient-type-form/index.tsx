@@ -18,7 +18,7 @@ export const IngredientTypeForm = ({
   return (
     <>
       <FormLayout<IngredientType>
-        title="IngredientType Form"
+        title="Ingredient Group"
         id={data?.id || 0}
         data={data}
         schema={schema}

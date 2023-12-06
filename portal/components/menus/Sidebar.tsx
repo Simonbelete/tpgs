@@ -147,7 +147,7 @@ const SidebarMenu = () => {
         <MenuItem
           component={<Link href="/dashboard" />}
           icon={<DashboardIcon fontSize="small" />}
-          active={router.pathname.includes("/dashboard")}
+          active={RegExp("^/dashboard(.*)$").test(router.pathname)}
         >
           <Typography variant="body1" fontSize={14}>
             Dashboard
@@ -279,7 +279,7 @@ const SidebarMenu = () => {
         <MenuItem
           component={<Link href="/nutrients" />}
           icon={<BubbleChartIcon fontSize="small" />}
-          active={RegExp("/nutrient(.*)$").test(router.pathname)}
+          active={RegExp("/nutrients(.*)$").test(router.pathname)}
         >
           <Typography variant="body1" fontSize={14}>
             Nutrients
@@ -301,7 +301,7 @@ const SidebarMenu = () => {
             </Typography>
           }
           icon={<GroupWorkIcon fontSize="small" />}
-          defaultOpen={RegExp("^/(hatchery|candling|incubation)(.*)$").test(
+          defaultOpen={RegExp("^/(nutrient-groups|ingredient-types)(.*)$").test(
             router.pathname
           )}
         >

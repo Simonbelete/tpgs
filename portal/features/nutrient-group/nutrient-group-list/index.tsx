@@ -34,7 +34,7 @@ export const NutrientGroupList = () => {
   ];
   return (
     <ListLayout<NutrientGroup>
-      title="NutrientGroup"
+      title="Nutrient Group"
       columns={columns}
       actions={[EditAction, HistoryAction, PermanentlyDeleteAction]}
       getEndpoint={nutrientGroupApi.endpoints.getNutrientGroups}
