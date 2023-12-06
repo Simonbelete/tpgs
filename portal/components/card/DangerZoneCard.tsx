@@ -55,7 +55,7 @@ const DangerZoneCard = ({
         aria-describedby="alert-dialog-description"
       >
         <DialogTitle id="alert-dialog-title">
-          {"Use Google's location service?"}
+          {"Delete permanently?"}
         </DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
