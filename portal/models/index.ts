@@ -82,3 +82,4 @@ export type { default as DirectoryFilterData } from "./DirectoryFilterData";
 export type { default as Group } from "./Group";
 export type { default as IncubationHistory } from "./IncubationHistory";
 export type { default as ReductionReasonHistory } from "./ReductionReasonHistory";
+export type { default as RequirementIngredient } from "./RequirementIngredient";

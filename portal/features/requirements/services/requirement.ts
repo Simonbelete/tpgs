@@ -6,6 +6,7 @@ import {
   RequirementNutrient,
   RequirementAnalyses,
   RequirementHistory,
+  RequirementIngredient,
 } from "@/models";
 import { AxiosResponse } from "axios";
 import clientSSR from "@/services/client_ssr";
@@ -16,6 +17,7 @@ import { Query, CreateFormData } from "@/types";
 export const URL = "/requirements";
 const HISTORY_URL = `histories`;
 const NUTRIENT_URL = "nutrients";
+const INGREDIENT_URL = "ingredients";
 const SUMMARY_URL = `summary`;
 const EXPORT_URL = `${URL}/export`;
 const IMPORT_URL = `${URL}/import`;
@@ -125,6 +127,57 @@ export const requirementApi = baseApi.injectEndpoints({
           method: "delete",
         }),
       }),
+
+      // Ingredient
+      getIngredientsOfRequirement: build.query<
+        Response<RequirementIngredient[]>,
+        { id: number; query?: Object }
+      >({
+        query: ({ id, query }) => ({
+          url: `${URL}/${id}/${INGREDIENT_URL}/`,
+          method: "get",
+          params: query,
+        }),
+      }),
+      getAllIngredientOfRequirement: build.query<
+        Response<RequirementIngredient[]>,
+        { id: number; query?: Object }
+      >({
+        query: ({ id, query }) => ({
+          url: `${URL}/${id}/${INGREDIENT_URL}/all/`,
+          method: "get",
+          params: query,
+        }),
+      }),
+      createIngredientForRequirement: build.mutation<
+        Promise<RequirementIngredient>,
+        { id: number; data: Partial<RequirementIngredient> }
+      >({
+        query: ({ id, data }) => ({
+          url: `${URL}/${id}/${INGREDIENT_URL}/`,
+          method: "post",
+          data: data,
+        }),
+      }),
+      updateIngredientOfRequirement: build.mutation<
+        Promise<RequirementIngredient>,
+        Partial<RequirementIngredient>
+      >({
+        query: ({ requirement, id, ...patch }) => ({
+          url: `${URL}/${requirement}/${INGREDIENT_URL}/${id}/`,
+          method: "patch",
+          data: patch,
+        }),
+      }),
+      deleteIngredientOfRequirement: build.mutation<
+        any,
+        Pick<RequirementIngredient, "requirement" | "id">
+      >({
+        query: ({ requirement, id }) => ({
+          url: `${URL}/${requirement}/${INGREDIENT_URL}/${id}`,
+          method: "delete",
+        }),
+      }),
     };
   },
   overrideExisting: false,
@@ -178,4 +231,13 @@ export const {
   useDeleteNutrientOfRequirementMutation,
   useGetAllNutrientsOfRequirementQuery,
   useLazyGetAllNutrientsOfRequirementQuery,
+
+  // Ingredient
+  useGetIngredientsOfRequirementQuery,
+  useLazyGetIngredientsOfRequirementQuery,
+  useCreateIngredientForRequirementMutation,
+  useUpdateIngredientOfRequirementMutation,
+  useDeleteIngredientOfRequirementMutation,
+  useGetAllIngredientOfRequirementQuery,
+  useLazyGetAllIngredientOfRequirementQuery,
 } = requirementApi;

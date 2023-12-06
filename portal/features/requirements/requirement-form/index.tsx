@@ -18,6 +18,7 @@ import { requirementApi } from "../services";
 import { nutrientApi } from "@/features/nutrients/services";
 import { EditMode } from "@/types";
 import _ from "lodash";
+import RequirementIngredient from "./RequirementIngredient";
 
 const schema = yup.object({
   name: yup.string().required(),
@@ -168,6 +169,16 @@ export const RequirementForm = ({
               {...a11yProps(1)}
             />
           )}
+          {formData && (
+            <Tab
+              label="Ingredient boundary"
+              iconPosition="end"
+              icon={
+                <Chip label={formData?.ingredient_count || 0} size="small" />
+              }
+              {...a11yProps(1)}
+            />
+          )}
         </Tabs>
         <Box sx={{ pt: 5 }}>
           {tab == 0 && (
@@ -234,6 +245,7 @@ export const RequirementForm = ({
               }
             />
           )}
+          {formData && tab == 2 && <RequirementIngredient data={formData} />}
         </Box>
       </TabFormLayout>
     </>

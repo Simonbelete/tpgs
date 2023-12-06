@@ -78,6 +78,10 @@ class Requirement(CoreModel):
     def nutrient_count(self):
         return self.nutrients.count()
 
+    @property
+    def ingredient_count(self):
+        return self.ingredients.count()
+
     def nutrient_count(self):
         return RequirementNutrient.objects.filter(requirement=self.id).count()
 

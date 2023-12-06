@@ -11,7 +11,7 @@ class RequirementSerializer_GET(serializers.ModelSerializer):
     class Meta:
         model = models.Requirement
         fields = ['id', 'name', 'display_name',
-                  'nutrient_count', 'weight', 'budget',
+                  'nutrient_count', 'ingredient_count', 'weight', 'budget',
                   'desired_ratio', 'desired_dm', 'is_active', 'created_at']
 
 
