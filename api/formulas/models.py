@@ -56,6 +56,11 @@ class FormulaIngredient(CoreModel):
         'ingredients.Ingredient', on_delete=models.CASCADE)
     ration = models.DecimalField(
         max_digits=6, decimal_places=3, default=0, null=True, blank=True)
+    min = models.DecimalField(
+        max_digits=6, decimal_places=3, default=0, null=True, blank=True)
+    max = models.DecimalField(
+        max_digits=6, decimal_places=3, default=0, null=True, blank=True)
+
     history = HistoricalRecords()
 
     class Meta:

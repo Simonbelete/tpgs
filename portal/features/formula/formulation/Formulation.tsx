@@ -1,10 +1,4 @@
-import React, {
-  useEffect,
-  useImperativeHandle,
-  useRef,
-  useState,
-  useMemo,
-} from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   DataEditor,
   EditableGridCell,
@@ -48,7 +42,7 @@ import {
   useLazyGetAllNutrientsOfIngredientQuery,
   useUpdateIngredientMutation,
 } from "@/features/ingredients/services";
-import { Loading, PieChartSkeleton } from "@/components";
+import { PieChartSkeleton } from "@/components";
 import { IngredientSelectDialog } from "@/features/ingredients";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { Dropdown } from "@/components/dropdowns";
@@ -79,11 +73,10 @@ import ClearIcon from "./ClearIcon";
 import SearchIcon from "@mui/icons-material/Search";
 import { Dna } from "react-loader-spinner";
 import { RenderPdfDocument } from "./RenderPdfDocument";
-import { PDFDownloadLink, PDFViewer, Page } from "@react-pdf/renderer";
+import { PDFDownloadLink } from "@react-pdf/renderer";
 import PrintIcon from "@mui/icons-material/Print";
 import CurrencyExchangeIcon from "@mui/icons-material/CurrencyExchange";
 import Analysis from "./Analysis";
-import Router from "next/router";
 import SaveIcon from "./SaveIcon";
 import LoadLocalHistoryIcon from "./LoadLocalHistoryIcon";
 
@@ -640,7 +633,10 @@ const Formulation = ({ data }: { data?: Formula }) => {
     requirementCopy: Row;
   }) => {
     _.forEach(requirementCopy.ingredients, (el, key) => {
-      const index = _.findIndex(rowCopy, (o) => o.id == el.ingredient.id);
+      const index = _.findIndex(
+        rowCopy,
+        (o) => o.id == _.get(el.ingredient, "id", 0)
+      );
       if (index > -1) {
         _.set(rowCopy[index], "min", el.min);
         _.set(rowCopy[index], "max", el.max);

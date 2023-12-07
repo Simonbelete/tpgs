@@ -46,13 +46,9 @@ class FormulaRationSerializer_REF(serializers.ModelSerializer):
 
 
 class FormulaIngredientSerializer_REF(serializers.ModelSerializer):
-    # Ingredient Id
-    # id = serializers.IntegerField()
-    # ingredient = serializers.IntegerField()
-
     class Meta:
         model = models.FormulaIngredient
-        fields = ['ingredient', 'ration']
+        fields = ['ingredient', 'ration', 'min', 'max']
 
 
 class FormulaIngredientSerializer_PATCH(serializers.ModelSerializer):
@@ -217,14 +213,14 @@ class FormulaIngredientSerializer_GET(serializers.ModelSerializer):
 
     class Meta:
         model = models.FormulaIngredient
-        fields = ['id', 'formula', 'ingredient', 'ration',
+        fields = ['id', 'formula', 'ingredient', 'ration', 'min', 'max',
                   'unit_price', 'ingredient_price', 'ration_weight', 'ration_price']
 
 
 class FormulaIngredientSerializer_POST(serializers.ModelSerializer):
     class Meta:
         model = models.FormulaIngredient
-        fields = ['id', 'ingredient', 'ration']
+        fields = ['id', 'ingredient', 'ration', 'min', 'max']
 
     def create(self, validated_data):
         if ('formula_pk' in self.context["view"].kwargs):
@@ -245,5 +241,5 @@ class AllFormulaIngredientSerializer_GET(serializers.ModelSerializer):
 
     class Meta:
         model = models.FormulaIngredient
-        fields = ['id', 'ingredient', 'unit_price', 'ingredient_price',
+        fields = ['id', 'ingredient', 'unit_price', 'ingredient_price', 'min', 'max',
                   'ration', 'ration_weight', 'ration_price']
