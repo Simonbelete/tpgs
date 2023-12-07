@@ -83,3 +83,4 @@ export type { default as Group } from "./Group";
 export type { default as IncubationHistory } from "./IncubationHistory";
 export type { default as ReductionReasonHistory } from "./ReductionReasonHistory";
 export type { default as RequirementIngredient } from "./RequirementIngredient";
+export type { default as RequirementIngredientHistory } from "./RequirementIngredientHistory";

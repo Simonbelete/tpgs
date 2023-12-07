@@ -22,6 +22,7 @@ import {
   Nutrient,
   Ingredient,
   Requirement,
+  RequirementIngredient,
 } from "@/models";
 import { useLazyGetAllNutrientsQuery } from "@/features/nutrients/services";
 import {
@@ -58,7 +59,10 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useCRUD } from "@/hooks";
 import dynamic from "next/dynamic";
 import { RequirementSelectDialog } from "@/features/requirements";
-import { useLazyGetAllNutrientsOfRequirementQuery } from "@/features/requirements/services";
+import {
+  useLazyGetAllNutrientsOfRequirementQuery,
+  useLazyGetAllIngredientsOfRequirementQuery,
+} from "@/features/requirements/services";
 import AddIcon from "@mui/icons-material/Add";
 import PlaylistAddIcon from "@mui/icons-material/PlaylistAdd";
 import AutorenewIcon from "@mui/icons-material/Autorenew";
@@ -101,6 +105,10 @@ export type Column = {
 } & GridColumn;
 
 export interface Row {
+  /**
+   * For ingredients, id holds Ingredient id
+   * rowId holds either FormulaIngredient.id(when data is seted) or Ingredient.id(for new formula)
+   */
   id?: number;
   rowId: string | number;
   display_name: string;
@@ -117,6 +125,8 @@ export interface Row {
       value: number;
     };
   };
+  // Stores Min & Max for requirement
+  ingredients?: RequirementIngredient[];
   min?: number;
   max?: number;
 }
@@ -146,6 +156,11 @@ const Formulation = ({ data }: { data?: Formula }) => {
     getAllNutrientsOfRequirement,
     { isFetching: isFetchingGetAllNutrientsOfRequirement },
   ] = useLazyGetAllNutrientsOfRequirementQuery();
+
+  const [
+    getAllIngredientsOfRequirementQuery,
+    { isFetching: isFetchingGetAllIngredientsOfRequirement },
+  ] = useLazyGetAllIngredientsOfRequirementQuery();
 
   const [getAllRequirementsOfFormula] =
     useLazyGetAllRequirementsOfFormulaQuery();
@@ -607,15 +622,47 @@ const Formulation = ({ data }: { data?: Formula }) => {
 
     loadNutrientsToTable();
     if (data != null) {
-      getFormulaRequirements();
       getFormulaRations();
       getFormulaIngredients();
+      getFormulaRequirements();
     }
 
     return () => {
       window.removeEventListener("beforeunload", alertUser);
     };
   }, []);
+
+  const pouplateIngredientsWithMinAndMax = async ({
+    rowCopy,
+    requirementCopy,
+  }: {
+    rowCopy: Row[];
+    requirementCopy: Row;
+  }) => {
+    _.forEach(requirementCopy.ingredients, (el, key) => {
+      const index = _.findIndex(rowCopy, (o) => o.id == el.ingredient.id);
+      if (index > -1) {
+        _.set(rowCopy[index], "min", el.min);
+        _.set(rowCopy[index], "max", el.max);
+      }
+    });
+
+    setRows(rowCopy);
+  };
+
+  const loadMinAndMax = async (requirementCopy: Row) => {
+    const response = await getAllIngredientsOfRequirementQuery({
+      id: Number(requirementCopy.rowId),
+    }).unwrap();
+
+    _.set(requirementCopy, "ingredients", response.results);
+
+    setRequirement(requirementCopy);
+    pouplateIngredientsWithMinAndMax({
+      rowCopy: [...rows],
+      requirementCopy: requirementCopy,
+    });
+  };
 
   const getFormulaIngredients = async () => {
     if (data == null) return;
@@ -712,7 +759,11 @@ const Formulation = ({ data }: { data?: Formula }) => {
       });
     }
 
-    setRequirement(newRow);
+    if (typeof newRow.rowId == "number") {
+      await loadMinAndMax(newRow);
+    } else {
+      setRequirement(newRow);
+    }
 
     setIsLoading(false);
   };
@@ -866,6 +917,11 @@ const Formulation = ({ data }: { data?: Formula }) => {
           requirement: requirement,
         })
       );
+
+      pouplateIngredientsWithMinAndMax({
+        rowCopy: [...newRows, ...rows],
+        requirementCopy: { ...requirement },
+      });
     } finally {
       setIsIngredientOpen(false);
       setIsLoading(false);
@@ -905,8 +961,6 @@ const Formulation = ({ data }: { data?: Formula }) => {
         _.set(newRow, `nutrients.${abbreviation}.id`, nutrient.id);
       }
 
-      setRequirement(newRow);
-
       localStorage.setItem(
         LOCAL_FORMULA_KEY,
         JSON.stringify({
@@ -915,6 +969,12 @@ const Formulation = ({ data }: { data?: Formula }) => {
           requirement: newRow,
         })
       );
+
+      if (typeof newRow.rowId == "number") {
+        await loadMinAndMax(newRow);
+      } else {
+        setRequirement(newRow);
+      }
     } finally {
     }
   };

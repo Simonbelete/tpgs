@@ -669,6 +669,17 @@ const SidebarMenu = () => {
               Requirement <br /> Composition
             </Typography>
           </MenuItem>
+          <MenuItem
+            component={<Link href="/requirement-ingredients" />}
+            icon={<AdjustIcon fontSize="small" />}
+            active={RegExp("^/requirement-ingredients(.*)$").test(
+              router.pathname
+            )}
+          >
+            <Typography variant="body1" fontSize={14}>
+              Requirement <br /> Min & Max
+            </Typography>
+          </MenuItem>
         </SubMenu>
         <MenuItem
           component={<Link href="/currencies" />}

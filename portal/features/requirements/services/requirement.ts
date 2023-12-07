@@ -139,7 +139,7 @@ export const requirementApi = baseApi.injectEndpoints({
           params: query,
         }),
       }),
-      getAllIngredientOfRequirement: build.query<
+      getAllIngredientsOfRequirement: build.query<
         Response<RequirementIngredient[]>,
         { id: number; query?: Object }
       >({
@@ -238,6 +238,6 @@ export const {
   useCreateIngredientForRequirementMutation,
   useUpdateIngredientOfRequirementMutation,
   useDeleteIngredientOfRequirementMutation,
-  useGetAllIngredientOfRequirementQuery,
-  useLazyGetAllIngredientOfRequirementQuery,
+  useGetAllIngredientsOfRequirementQuery,
+  useLazyGetAllIngredientsOfRequirementQuery,
 } = requirementApi;
