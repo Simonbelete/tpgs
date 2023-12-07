@@ -268,12 +268,7 @@ const Formulation = ({ data }: { data?: Formula }) => {
       path: "min",
       property: {
         kind: GridCellKind.Number,
-        allowOverlay: false,
-        readonly: true,
-        style: "faded",
-        themeOverride: {
-          bgCell: "#EFEFF1",
-        },
+        allowOverlay: true,
       },
     },
     {
@@ -282,12 +277,7 @@ const Formulation = ({ data }: { data?: Formula }) => {
       path: "max",
       property: {
         kind: GridCellKind.Number,
-        allowOverlay: false,
-        readonly: true,
-        style: "faded",
-        themeOverride: {
-          bgCell: "#EFEFF1",
-        },
+        allowOverlay: true,
       },
     },
     {
@@ -638,8 +628,10 @@ const Formulation = ({ data }: { data?: Formula }) => {
         (o) => o.id == _.get(el.ingredient, "id", 0)
       );
       if (index > -1) {
-        _.set(rowCopy[index], "min", el.min);
-        _.set(rowCopy[index], "max", el.max);
+        // Set only if the ingredient have no 0 min and max
+        if (rowCopy[index].min == 0) _.set(rowCopy[index], "min", el.min);
+
+        if (rowCopy[index].max == 0) _.set(rowCopy[index], "max", el.max);
       }
     });
 
@@ -986,6 +978,8 @@ const Formulation = ({ data }: { data?: Formula }) => {
       ingredients.push({
         ingredient: _.get(e, "id", 0),
         ration: e.ratio, // TODO: naming
+        min: e.min,
+        max: e.max,
       });
     });
 
