@@ -12,6 +12,9 @@ export default interface FormulaIngredient extends AbstractBaseModel {
   ration_weight: number;
   ration_price: number;
 
+  min?: number;
+  max?: number;
+
   // Custom
   nutrients?: { abbreviation: string; value: number }[];
 }

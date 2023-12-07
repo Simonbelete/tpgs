@@ -199,6 +199,7 @@ const Formulation = ({ data }: { data?: Formula }) => {
       property: {
         kind: GridCellKind.Number,
         allowOverlay: true,
+        readonly: false,
       },
     },
     {
@@ -698,8 +699,8 @@ const Formulation = ({ data }: { data?: Formula }) => {
           ration: _.get(ing, "ration", 0),
           unit_price: _.get(ing, "ingredient_price", 0),
           dm: _.get(ing, "ingredient.dm", 0),
-          min: _.get(ing, "ingredient.min", 0),
-          max: _.get(ing, "ingredient.max", 0),
+          min: _.get(ing, "min", 0),
+          max: _.get(ing, "max", 0),
           nutrients: nutrients,
           ratio: _.get(ing, "ration", 0),
           // formula ingredient fields
@@ -978,8 +979,8 @@ const Formulation = ({ data }: { data?: Formula }) => {
       ingredients.push({
         ingredient: _.get(e, "id", 0),
         ration: e.ratio, // TODO: naming
-        min: e.min,
-        max: e.max,
+        min: _.get(e, "min", 0),
+        max: _.get(e, "max", 0),
       });
     });
 
@@ -1436,6 +1437,35 @@ const Formulation = ({ data }: { data?: Formula }) => {
             keybindings={{ search: true }}
             getCellsForSelection={true}
             onColumnResize={onColumnResize}
+            drawCell={(args) => {
+              const { cell, rect, ctx, col, row } = args;
+
+              const dataRow = rows[row];
+
+              if (cell.kind !== GridCellKind.Number) return false;
+              if (col !== 2) return false;
+              if (row > rows.length - 1) return false;
+
+              const ratio = _.get(dataRow, "ratio", 0);
+              const min = _.get(dataRow, "min", 0);
+              const max = _.get(dataRow, "max", 0);
+
+              const isBetweenMinAndMax = ratio >= min && ratio <= max;
+
+              ctx.save();
+              const { x, y, width, height } = rect;
+              const data = _.get(cell, "displayData", "0");
+
+              ctx.fillStyle = isBetweenMinAndMax ? "#fff" : "#ffe6e6";
+              ctx.fillRect(x + 1, y + 1, width - 1, height - 1);
+
+              ctx.fillStyle = isBetweenMinAndMax ? "#000" : "#e01e1e";
+              // ctx.font = "bold 14px sans-serif";
+              ctx.fillText(data, x + 8 + 0.5, y + height / 2 + 4.5);
+              ctx.restore();
+
+              return true;
+            }}
           />
         </Sizer>
         <Box sx={{ my: 5 }}>
