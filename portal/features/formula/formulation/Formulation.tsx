@@ -441,7 +441,7 @@ const Formulation = ({ data }: { data?: Formula }) => {
       y: [],
     };
 
-    ["ratio", "unit_price", "ration_weight", "ration_price", "dm"].map((e) => {
+    ["ratio", "ration_weight", "dm"].map((e) => {
       chart.x.push(e);
       const req: number = _.get(requirement, `${e}`, 0);
       const rat: number = _.get(ration, `${e}`, 0);
@@ -696,7 +696,6 @@ const Formulation = ({ data }: { data?: Formula }) => {
           id: _.get(ing, "ingredient.id", 0),
           rowId: _.get(ing, "id", ""),
           display_name: _.get(ing, "ingredient.display_name", ""),
-          ration: _.get(ing, "ration", 0),
           unit_price: _.get(ing, "ingredient_price", 0),
           dm: _.get(ing, "ingredient.dm", 0),
           min: _.get(ing, "min", 0),
@@ -729,7 +728,7 @@ const Formulation = ({ data }: { data?: Formula }) => {
       id: data.id,
       rowId: _.get(data.requirement, "id", "requirement"),
       display_name: _.get(data.requirement, "name", "Requirement"),
-      ration: data.desired_ratio,
+      ratio: data.desired_ratio,
       unit_price: data.budget,
       ration_price: data.budget * data.weight,
       ration_weight: data.weight,
@@ -885,18 +884,18 @@ const Formulation = ({ data }: { data?: Formula }) => {
           id: _.get(ing, "id", 0),
           rowId: _.get(ing, "id", ""),
           display_name: _.get(ing, "display_name", ""),
-          ration: _.get(ing, "ration", 0),
-          ration_price: _.get(ing, "ration_price", 0),
-          ration_weight: _.get(ing, "ration_weight", 0),
+          ratio: 0,
+          ration_price: 0,
+          ration_weight: 0,
           unit_price: _.get(ing, "price", 0),
           dm: _.get(ing, "dm", 0),
-          min: _.get(ing, "min", 0),
-          max: _.get(ing, "max", 0),
+          min: 0,
+          max: 0,
           nutrients: nutrients,
         });
       });
 
-      setRows([...newRows, ...rows]);
+      // setRows([...newRows, ...rows]);
 
       localStorage.setItem(
         LOCAL_FORMULA_KEY,
@@ -934,7 +933,7 @@ const Formulation = ({ data }: { data?: Formula }) => {
         id: value.id,
         rowId: value.id,
         display_name: value.display_name,
-        ration: value.desired_ratio,
+        ratio: value.desired_ratio,
         unit_price: value.budget,
         ration_price: value.budget * value.weight,
         ration_weight: value.weight,

@@ -76,6 +76,20 @@ export const FormulaIngredientForm = ({ data }: { data?: Formula }) => {
       valueGetter: (params) => params.row.ration_price,
     },
     {
+      field: "min",
+      headerName: "Min (%)",
+      flex: 1,
+      valueGetter: (params) => params.row.min,
+      editable: true,
+    },
+    {
+      field: "max",
+      headerName: "Max (%)",
+      flex: 1,
+      valueGetter: (params) => params.row.max,
+      editable: true,
+    },
+    {
       field: "ration",
       headerName: "Value (%)",
       flex: 1,
