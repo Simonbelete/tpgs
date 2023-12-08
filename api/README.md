@@ -81,4 +81,4 @@ Farm / Flock / House / Pen
 
 ## Deploy
 
-gunicorn myproject.wsgi
+gunicorn api.wsgi --bind 0.0.0.0:8000

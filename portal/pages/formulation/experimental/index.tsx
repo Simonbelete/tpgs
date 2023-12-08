@@ -15,7 +15,7 @@ const FormulationExperimentalPage = () => {
       <SeoHead title="Formulation" />
       <ActionLayout
         breadcrumbs={<Breadcrumbs items={breadcrumbs} />}
-        header={<Typography variant="title">Formulate</Typography>}
+        header={<Typography variant="title">Ration Formulation</Typography>}
       >
         <Formulation />
       </ActionLayout>
