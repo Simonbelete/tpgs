@@ -141,7 +141,7 @@ Course EN = Course(
           title: "Nutrient requirements ",
           body:
               "refer to the different nutrients the body requires for energy, growth and repair, and protection from disease. They differ according to age, gender, physical activity, height, weight, and health status of the individual. "),
-              
+
       const SubTitleText(
         text:
             "Recommended Dietary Allowances (RDAs) for micronutrient children",
@@ -404,7 +404,7 @@ Course EN = Course(
       const Paragraph(
           title: "",
           body:
-              "There is no specific RDA for carbohydrates, but the AMDRs recommend that carbohydrates contribute 45-65% of daily caloric intake. Emphasis should be on consuming complex carbohydrates (whole grains, fruits, vegetables) rather than simple sugars."),
+              "There is no specific RDA for carbohydrates, but the Acceptable Macronutrient Distribution Ranges (AMDRs) recommend that carbohydrates contribute 45-65% of daily caloric intake. Emphasis should be on consuming complex carbohydrates (whole grains, fruits, vegetables) rather than simple sugars."),
       const Remember(children: [
         'These recommendations can vary based on age, sex, level of physical activity, and overall health. It\'s important to note that individual nutritional needs may differ, and consulting with a healthcare professional or a registered dietitian for personalized advice is recommended.',
         'Please remember that nutritional guidelines may be updated over time, so it\'s good to check with the latest resources or health authorities for the most current information.'
@@ -417,124 +417,73 @@ Course EN = Course(
           title: "",
           body:
               "The Recommended Dietary Allowance (RDA) for micronutrients during pregnancy is important to ensure the health of both the mother and the developing fetus. It\'s important to note that individual nutrient needs may vary, and pregnant women should consult with healthcare professionals for personalized advice. The RDAs provided here are general guidelines for healthy pregnant women:"),
-      const SubTitleText(
-        text: "Folate (Folic Acid)",
-        fontSize: 14,
-      ),
-      const Paragraph(title: "", body: "600 micrograms (mcg) per day"),
+
       const Paragraph(
-          title: "",
+          title: "Folate (Folic Acid)",
           body:
-              "Folate is crucial for the early development of the neural tube, which forms the baby\'s brain and spinal cord."),
-      const SubTitleText(
-        text: "Iron",
-        fontSize: 14,
-      ),
-      const Paragraph(title: "", body: "27 milligrams (mg) per day"),
+              " 600 micrograms (mcg) per day. Folate is crucial for the early development of the neural tube, which forms the baby\'s brain and spinal cord."),
       const Paragraph(
-          title: "",
-          body:
-              "Iron is needed to increase blood production during pregnancy and prevent iron-deficiency anemia."),
-      const SubTitleText(text: "Calcium"),
-      const Paragraph(
-          title: "", body: "1,000 mg per day (for women 19-50 years old)"),
-      const Paragraph(
-          title: "",
-          body:
-              "Calcium is essential for the development of the baby\'s bones and teeth."),
-      const SubTitleText(
-        text: "Vitamin D",
-        fontSize: 14,
-      ),
-      const Paragraph(title: "", body: "600 international units (IU) per day"),
-      const Paragraph(
-          title: "",
-          body:
-              "Vitamin D helps the body absorb calcium and is important for bone health."),
-      const SubTitleText(
-        text: "Iodine",
-        fontSize: 14,
-      ),
-      const Paragraph(title: "", body: "220 mcg per day"),
-      const Paragraph(
-          title: "",
-          body:
-              "Iodine is necessary to develop the baby\'s brain and nervous system."),
-      const SubTitleText(
-        text: "Vitamin A",
-        fontSize: 14,
+        title: "Iron",
+        body:
+            " 27 milligrams (mg) per day. Iron is needed to increase blood production during pregnancy and prevent iron-deficiency anemia.",
       ),
       const Paragraph(
-          title: "",
-          body: "770 mcg RAE (Retinol Activity Equivalents) per day"),
-      const Paragraph(
-          title: "",
+          title: "Calcium",
           body:
-              "Vitamin A is important for vision, immune function, and skin health. However, excessive intake of vitamin A, especially in the form of retinol, can harm the fetus, so it's essential not to exceed the recommended levels."),
-      const SubTitleText(
-        text: "Vitamin C",
-        fontSize: 14,
-      ),
-      const Paragraph(title: "", body: "85 mg per day"),
+              " 1,000 mg per day (for women 19-50 years old) Calcium is essential for the development of the baby\'s bones and teeth."),
       const Paragraph(
-          title: "",
-          body: "Vitamin C is important for the growth and repair of tissues."),
-      const SubTitleText(
-        text: "Vitamin E",
-        fontSize: 14,
-      ),
-      const Paragraph(title: "", body: "15 mg per day"),
-      const Paragraph(
-          title: "",
-          body:
-              "Vitamin E has antioxidant properties and is important for the baby\'s development."),
-      const SubTitleText(
-        text: "Thiamine (Vitamin B1)",
-        fontSize: 14,
-      ),
-      const Paragraph(title: "", body: "1.4 mg per day"),
-      const Paragraph(
-          title: "",
-          body:
-              "Thiamine is important for the baby\'s brain development and overall growth."),
-      const SubTitleText(
-        text: "Riboflavin (Vitamin B2)",
-        fontSize: 14,
-      ),
-      const Paragraph(title: "", body: "1.4 mg per day"),
-      const Paragraph(
-          title: "",
-          body:
-              "Riboflavin is important for developing the baby\'s bones, muscles, and nerves."),
-      const SubTitleText(
-        text: "Niacin (Vitamin B3):",
-        fontSize: 14,
-      ),
-      const Paragraph(title: "", body: "18 mg per day"),
-      const Paragraph(
-          title: "",
-          body:
-              "Niacin is important for the baby\'s development and helps convert food into energy."),
-      const SubTitleText(
-        text: "Vitamin B6:",
-        fontSize: 14,
+        title: "Vitamin D",
+        body:
+            " 600 international units (IU) per day. Vitamin D helps the body absorb calcium and is important for bone health.",
       ),
       const Paragraph(
-          title: "1.9 mg per day",
-          body:
-              "Vitamin B6 is important for the baby\'s brain development and helps the body convert food into energy."),
-      const SubTitleText(text: "Vitamin B12"),
-      const Paragraph(title: "", body: "2.6 mcg per day"),
+        title: "Iodine",
+        body:
+            " 220 mcg per day. Iodine is necessary to develop the baby\'s brain and nervous system.",
+      ),
       const Paragraph(
-          title: "",
-          body:
-              "Vitamin B12 is crucial for the development of the baby\'s nervous system."),
-      const SubTitleText(text: "Zinc"),
-      const Paragraph(title: "", body: "11 mg per day"),
+        title: "Vitamin A",
+        body:
+            " 770 mcg RAE (Retinol Activity Equivalents) per day. Vitamin A is important for vision, immune function, and skin health. However, excessive intake of vitamin A, especially in the form of retinol, can harm the fetus, so it's essential not to exceed the recommended levels.",
+      ),
       const Paragraph(
-          title: "",
+        title: "Vitamin C",
+        body:
+            " 85 mg per day. Vitamin C is important for the growth and repair of tissues.",
+      ),
+      const Paragraph(
+        title: "Vitamin E",
+        body:
+            " 15 mg per day. Vitamin E has antioxidant properties and is important for the baby\'s development.",
+      ),
+      const Paragraph(
+        title: "Thiamine (Vitamin B1)",
+        body:
+            " 1.4 mg per day. Thiamine is important for the baby\'s brain development and overall growth.",
+      ),
+      const Paragraph(
+        title: "Riboflavin (Vitamin B2)",
+        body:
+            " 1.4 mg per day. Riboflavin is important for developing the baby\'s bones, muscles, and nerves.",
+      ),
+      const Paragraph(
+        title: "Niacin (Vitamin B3):",
+        body:
+            " 18 mg per day. Niacin is important for the baby\'s development and helps convert food into energy.",
+      ),
+      const Paragraph(
+        title: "Vitamin B6:",
+        body:
+            " 1.9 mg per day. Vitamin B6 is important for the baby\'s brain development and helps the body convert food into energy.",
+      ),
+      const Paragraph(
+          title: "Vitamin B12",
           body:
-              "Zinc is important for the baby\'s growth and immune system functioning."),
+              " 2.6 mcg per day. Vitamin B12 is crucial for the development of the baby\'s nervous system."),
+      const Paragraph(
+          title: "Zinc ",
+          body:
+              " 11 mg per day. Zinc is important for the baby\'s growth and immune system functioning."),
       const Remember(children: [
         'Pregnant women should obtain these nutrients through a well-balanced diet and, if necessary, supplements as their healthcare provider recommends. It\'s important to avoid excessive intake of certain vitamins and minerals, as this can harm both the mother and the baby. Always consult a healthcare professional for personalized advice based on individual health needs.'
       ]),
