@@ -57,7 +57,7 @@ class Requirement(CoreModel):
         max_digits=7, decimal_places=3, null=True, blank=True, default=0)  # kg
     # Unit Price
     budget = models.DecimalField(
-        max_digits=10, decimal_places=2, null=True, blank=True, default=0)  # per kg
+        max_digits=10, decimal_places=3, null=True, blank=True, default=0)  # per kg
     desired_ratio = models.DecimalField(
         validators=PERCENTAGE_VALIDATOR, max_digits=15, decimal_places=3, default=100)
     desired_dm = models.DecimalField(

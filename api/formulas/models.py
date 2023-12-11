@@ -122,7 +122,7 @@ class Formula(CoreModel):
         'nutrients.Nutrient', null=True, blank=True, through=FormulaRequirement, related_name='formula_requirements')
     # Unit Price (/1kg)
     budget = models.DecimalField(
-        max_digits=10, decimal_places=2, null=True, blank=True, default=0)  # per kg
+        max_digits=10, decimal_places=3, null=True, blank=True, default=0)  # per kg
     desired_ratio = models.DecimalField(
         max_digits=15, decimal_places=3, default=100, null=True, blank=True)
     desired_dm = models.DecimalField(
@@ -133,9 +133,9 @@ class Formula(CoreModel):
     rations = models.ManyToManyField(
         'nutrients.Nutrient', null=True, blank=True, through=FormulaRation, related_name='formula_rations')
     unit_price = models.DecimalField(
-        max_digits=10, decimal_places=2, null=True, blank=True, default=0)  # Price per 1 kg
+        max_digits=10, decimal_places=3, null=True, blank=True, default=0)  # Price per 1 kg
     ration_price = models.DecimalField(
-        max_digits=10, decimal_places=2, null=True, blank=True, default=0)
+        max_digits=10, decimal_places=3, null=True, blank=True, default=0)
     ration_ratio = models.DecimalField(
         max_digits=15, decimal_places=3, default=0)
     # weight * ration
