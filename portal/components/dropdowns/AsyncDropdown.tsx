@@ -69,10 +69,14 @@ export default function AsyncDropdown<T>({
 
   const handleOnOpen = async () => {
     setOpen(true);
+
     try {
       const response = await trigger(
         {
-          ...buildPage(paginationModel),
+          ...buildPage({
+            page: 0,
+            pageSize: 15,
+          }),
           ...(query || {}),
         },
         false

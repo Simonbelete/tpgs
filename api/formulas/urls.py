@@ -14,6 +14,15 @@ router.register(
 router.register(
     r'formulas/(?P<id>.+)/matrix', views.FormulaMatrix, basename="api_formual_matrix")
 
+router.register(r'formulas/(?P<id>.+)/histories',
+                views.FormulaHistoryViewSet, basename='api_formula_histories'),
+
+summary_router = NestedDefaultRouter(
+    router, r'formulas', lookup='id')
+summary_router.register(r'summary', views.FormulaSummaryViewSet,
+                        basename='api_formula_summary')
+
+
 # Formula Requirements
 router.register(r'formula-requirements', views.FormulaRequirementViewSet,
                 basename='api_requirements')
@@ -101,6 +110,7 @@ ingredient_nutrient_router.register(r'nutrients', views.FormulaIngredientNutrien
 urlpatterns = [
     path('', include(router.urls)),
     path('', include(all_formula_req_router.urls)),
+    path('', include(summary_router.urls)),
     path('', include(req_summary_router.urls)),
     path('', include(formula_req_router.urls)),
     path('', include(ing_summary_router.urls)),

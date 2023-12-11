@@ -1,5 +1,6 @@
 from django_filters import rest_framework as filters
 
+
 class CoreFilterSet(filters.FilterSet):
     is_active = filters.BooleanFilter(initial=True)
 
@@ -13,8 +14,8 @@ class CoreFilterSet(filters.FilterSet):
                 # filter param is either missing or empty, use initial as default
                 if not data.get(name) and initial:
                     data[name] = initial
-        
+
         super().__init__(data, *args, **kwargs)
-    
+
     class Meta:
         fields = ['is_active']

@@ -25,20 +25,34 @@ from core.pagination import AllPagination
 from . import models
 from . import serializers
 from . import admin
+from . import filters
 from ingredients.models import IngredientNutrient
 from nutrients.serializers import NutrientSerializer_GET
 from nutrients.models import Nutrient
 from .formulate import Formulate
 
 
-class FormulaViewSet(viewsets.ModelViewSet):
-    queryset = models.Formula.objects.all()
+class FormulaViewSet(CoreModelViewSet):
+    queryset = models.Formula.all.all()
     serializer_class = serializers.FormulaSerializer_GET
+    filterset_class = filters.FormulaFilter
+    search_fields = ['name']
+    ordering_fields = '__all__'
 
     def get_serializer_class(self):
         if self.request.method in ['POST', 'PATCH']:
             return serializers.FormulaSerializer_POST
         return serializers.FormulaSerializer_GET
+
+
+class FormulaHistoryViewSet(HistoryViewSet):
+    queryset = models.Formula.history.all()
+    serializer_class = serializers.FormulaHistorySerializer
+
+
+class FormulaSummaryViewSet(SummaryViewSet):
+    def get_query(self):
+        return models.Formula.all.get(pk=self.id_pk)
 
 
 # Formula Requirement

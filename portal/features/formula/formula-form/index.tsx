@@ -41,7 +41,7 @@ import TableViewIcon from "@mui/icons-material/TableView";
 const schema = yup.object({
   name: yup.string().required(),
   purpose: yup.string().nullable(),
-  weight: yup.number().required(),
+  weight: yup.number().default(100).required(),
   country: yup.string().nullable(),
   sex: yup.string().nullable(),
   age_from_week: yup.number().nullable(),
@@ -49,8 +49,8 @@ const schema = yup.object({
   formula_basis: yup.string().nullable(),
   note: yup.string().nullable(),
   desired_dm: yup.string().nullable(),
-  budget: yup.number().required(),
-  desired_ratio: yup.number().required(),
+  budget: yup.number().default(0).required(),
+  desired_ratio: yup.number().default(100).required(),
 });
 
 const sexOptions = [
@@ -91,9 +91,12 @@ export const FormulaForm = ({
   const handlePrintPdfFormula = async () => {
     if (data != null) {
       const response = await printFormulaPdf(data.id);
-      console.log(response);
       fileDownload(response.data, `${data.display_name}.pdf`);
     }
+  };
+
+  const handleCreated = (value: Formula) => {
+    setFormData(value);
   };
 
   return (
@@ -117,11 +120,11 @@ export const FormulaForm = ({
                     <FunctionsIcon />
                   </IconButton>
                 </Tooltip>
-                <Tooltip title="Print Formula" onClick={handlePrintPdfFormula}>
+                {/* <Tooltip title="Print Formula" onClick={handlePrintPdfFormula}>
                   <IconButton color="secondary">
                     <PictureAsPdfIcon />
                   </IconButton>
-                </Tooltip>
+                </Tooltip> */}
                 <Link
                   href={`/formulation/formulas/${formData?.id}/matrix`}
                   data-testid="data-table-dashboard"
@@ -141,9 +144,11 @@ export const FormulaForm = ({
           </>
         }
       >
-        <Box sx={{ mb: 5 }}>
-          {formData && <AchivementCard data={formData} />}
-        </Box>
+        {formData && (
+          <Box sx={{ mb: 5 }}>
+            <AchivementCard data={formData} />
+          </Box>
+        )}
         <Tabs
           scrollButtons
           value={tab}
@@ -181,9 +186,8 @@ export const FormulaForm = ({
           {tab == 0 && (
             <Card title="Requirement Detail">
               <Form<Formula>
-                data={data}
+                data={formData}
                 schema={schema}
-                shallowRoute={shallowRoute}
                 createEndpoint={formulaApi.endpoints.createFormula}
                 updateEndpoint={formulaApi.endpoints.updateFormula}
                 beforeSubmit={(values: Partial<Formula>) => {
@@ -205,6 +209,7 @@ export const FormulaForm = ({
 
                   return cleaned_data;
                 }}
+                onCreateSuccess={handleCreated}
                 fields={{
                   name: { label: "Name", placeholder: "Name", xs: 12, md: 6 },
                   purpose: {

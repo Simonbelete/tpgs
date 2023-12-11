@@ -14,9 +14,9 @@ import { formulaApi, URL } from "../services";
 import { Formula } from "@/models";
 import { IconButton, Typography, Tooltip } from "@mui/material";
 import Link from "next/link";
-import TocIcon from "@mui/icons-material/Toc";
 import TableViewIcon from "@mui/icons-material/TableView";
 import { useRouter } from "next/router";
+import dayjs from "dayjs";
 
 const MatrixAction: React.FC<GridRenderCellParams> = ({ id }) => {
   const router = useRouter();
@@ -35,12 +35,11 @@ const MatrixAction: React.FC<GridRenderCellParams> = ({ id }) => {
 };
 export const FormulaList = () => {
   const columns: GridColDef[] = [
-    { field: "name", headerName: "Name", flex: 1 },
+    { field: "name", headerName: "Name", minWidth: 150 },
     {
       field: "purpose",
       headerName: "Purpose",
       flex: 1,
-      minWidth: 150,
       valueGetter: (params) =>
         params.row.purpose ? params.row.purpose.name : "",
       renderCell: (params: GridRenderCellParams<any>) => {
@@ -59,7 +58,6 @@ export const FormulaList = () => {
       field: "country",
       headerName: "Country",
       flex: 1,
-      minWidth: 150,
       valueGetter: (params) =>
         params.row.country ? params.row.country.name : "",
       renderCell: (params: GridRenderCellParams<any>) => {
@@ -78,6 +76,18 @@ export const FormulaList = () => {
     { field: "unit_price", headerName: "Unit Price", flex: 1 },
     { field: "ingredient_count", headerName: "Ingredients", flex: 1 },
     { field: "requirement_count", headerName: "Requirements", flex: 1 },
+    {
+      field: "created_at",
+      headerName: "Create at",
+      flex: 1,
+      minWidth: 150,
+      valueGetter: (params) =>
+        params.row.created_at
+          ? dayjs(params.row.created_at).format(
+              process.env.NEXT_PUBLIC_DATE_FORMAT
+            )
+          : "",
+    },
   ];
   return (
     <ListLayout<Formula>

@@ -1165,7 +1165,7 @@ const Formulation = ({ data }: { data?: Formula }) => {
                           onChange={onChange}
                           fullWidth
                           size="small"
-                          value={value}
+                          value={value ?? ""}
                           label={"Name"}
                           placeholder={"Name"}
                         />

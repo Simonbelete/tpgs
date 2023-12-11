@@ -72,7 +72,10 @@ export default function AsyncDropdown<T>({
     try {
       const response = await trigger(
         {
-          ...buildPage(paginationModel),
+          ...buildPage({
+            page: 0,
+            pageSize: 15,
+          }),
           ...(query || {}),
         },
         false

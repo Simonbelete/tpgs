@@ -75,7 +75,7 @@ class FormulaSerializer_GET(serializers.ModelSerializer):
         model = models.Formula
         fields = ['id', 'name', 'display_name', 'purpose', 'weight', 'note', 'budget', 'desired_ratio', 'desired_dm',
                   'ration_price', 'ration_ratio', 'ration_weight', 'ration_dm', 'requirement', 'unit_price',
-                  'requirement_count', 'ingredient_count']
+                  'requirement_count', 'ingredient_count', 'is_active', 'created_at']
 
 
 class FormulaSerializer_POST(serializers.ModelSerializer):
@@ -89,7 +89,7 @@ class FormulaSerializer_POST(serializers.ModelSerializer):
 
     class Meta:
         model = models.Formula
-        fields = ['id', 'name', 'weight', 'requirements', 'budget', 'desired_ratio', 'desired_dm', 'ingredients', 'requirement',
+        fields = ['id', 'name', 'weight', 'requirements', 'budget', 'desired_ratio', 'desired_dm', 'ingredients', 'requirement', 'is_active',
                   'rations', 'unit_price', 'ration_price', 'ration_ratio', 'ration_weight', 'ration_dm',  'age_from_week', 'age_to_week']
 
     @transaction.atomic
@@ -133,6 +133,12 @@ class FormulaSerializer_POST(serializers.ModelSerializer):
             models.FormulaIngredient.objects.update_or_create(
                 formula=instance, ingredient=inp, defaults={'formula': instance, 'ingredient': inp, **ingredient})
         return super().update(instance, validated_data)
+
+
+class FormulaHistorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Formula.history.__dict__['model']
+        fields = '__all__'
 
 
 # Formula Requirements

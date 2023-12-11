@@ -33,7 +33,7 @@ const AchivementCard = ({ data }: { data: Formula }) => {
         divider={
           <Divider
             // @ts-ignore
-            orientation={{ xs: "horizontal", lg: "vertical" }}
+            // orientation={{ xs: "horizontal", lg: "vertical" }}
             flexItem
           />
         }
