@@ -141,11 +141,11 @@ Course EN = Course(
           title: "Nutrient requirements ",
           body:
               "refer to the different nutrients the body requires for energy, growth and repair, and protection from disease. They differ according to age, gender, physical activity, height, weight, and health status of the individual. "),
+              
       const SubTitleText(
         text:
             "Recommended Dietary Allowances (RDAs) for micronutrient children",
       ),
-      CourseVideoPlayer(video: 'assets/videos/food_groups_en.mp4'),
       const Paragraph(
           title: "",
           body:
@@ -671,6 +671,7 @@ Course EN = Course(
         'Breastfeeding mothers must consult with their healthcare providers or a registered dietitian to determine their nutritional needs based on individual factors. Nutrient requirements can vary, and personalized advice can ensure that both the mother and baby receive adequate nutrition during this important period.'
       ]),
 
+      CourseVideoPlayer(video: 'assets/videos/food_groups_en.mp4'),
       InkWell(
         onTap: () {
           openUrl(
