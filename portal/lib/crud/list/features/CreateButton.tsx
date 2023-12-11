@@ -15,6 +15,7 @@ const CreateButton = ({}: CreateButtonProps) => {
         size={"small"}
         disableElevation
         startIcon={<AddIcon />}
+        // sx={{ textTransform: "none" }}
       >
         Create
       </Button>

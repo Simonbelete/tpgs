@@ -274,7 +274,7 @@ const SidebarMenu = () => {
             )}
           >
             <Typography variant="body1" fontSize={14}>
-              Matrix
+              Grid
             </Typography>
           </MenuItem>
         </SubMenu>

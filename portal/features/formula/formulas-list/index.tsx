@@ -12,11 +12,12 @@ import {
 } from "@/lib/crud";
 import { formulaApi, URL } from "../services";
 import { Formula } from "@/models";
-import { IconButton, Typography, Tooltip } from "@mui/material";
+import { IconButton, Typography, Tooltip, Button } from "@mui/material";
 import Link from "next/link";
 import TableViewIcon from "@mui/icons-material/TableView";
 import { useRouter } from "next/router";
 import dayjs from "dayjs";
+import { purposeApi } from "@/features/purposes/services";
 
 const MatrixAction: React.FC<GridRenderCellParams> = ({ id }) => {
   const router = useRouter();
@@ -33,6 +34,17 @@ const MatrixAction: React.FC<GridRenderCellParams> = ({ id }) => {
     </Link>
   );
 };
+
+const CreateByMatrix = () => {
+  return (
+    <Link href={"/formulation/experimental"}>
+      <Button size="small" startIcon={<TableViewIcon fontSize="small" />}>
+        Grid
+      </Button>
+    </Link>
+  );
+};
+
 export const FormulaList = () => {
   const columns: GridColDef[] = [
     { field: "name", headerName: "Name", minWidth: 150 },
@@ -102,18 +114,22 @@ export const FormulaList = () => {
       ]}
       getEndpoint={formulaApi.endpoints.getFormulas}
       deleteEndpoint={formulaApi.endpoints.deleteFormula}
-      filters={
-        {
-          // house: {
-          //   label: "House",
-          //   dataDisplayKey: "name",
-          //   endpoint: houseApi.endpoints.getHouses,
-          // },
-        }
-      }
+      filters={{
+        purpose: {
+          label: "Purpose",
+          dataDisplayKey: "name",
+          endpoint: purposeApi.endpoints.getPurposes,
+        },
+        // house: {
+        //   label: "House",
+        //   dataDisplayKey: "name",
+        //   endpoint: houseApi.endpoints.getHouses,
+        // },
+      }}
       menus={
         <>
           <CreateButton />
+          <CreateByMatrix />
           <ExportModal
             url={URL}
             fields={{}}
