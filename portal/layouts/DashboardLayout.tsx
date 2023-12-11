@@ -6,6 +6,7 @@ import { useTheme } from "@mui/material/styles";
 import { SuperUserBanner } from "../components/banners";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store";
+import { Box } from "@mui/material";
 
 interface DashboardLayoutProps {
   children: ReactElement | ReactElement[];
@@ -23,9 +24,9 @@ const DashboardLayout = (props: DashboardLayoutProps) => {
         <div style={{ overflowY: "scroll", width: "100%" }}>
           {settingState.superUserMode && <SuperUserBanner />}
           <PrimaryNavbar />
-          <div
-            style={{
-              padding: "30px",
+          <Box
+            sx={{
+              p: { xs: "10px", md: "30px" },
               minHeight: "100%",
               height: "auto",
               background: theme.palette.background.default,
@@ -34,7 +35,7 @@ const DashboardLayout = (props: DashboardLayoutProps) => {
             id="body"
           >
             {children}
-          </div>
+          </Box>
         </div>
       </div>
     </ProSidebarProvider>

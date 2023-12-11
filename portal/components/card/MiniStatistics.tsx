@@ -38,7 +38,7 @@ export default function Default({
             </Avatar>
           </ButtonBase>
         </Grid>
-        <Grid item xs={12} sm container>
+        <Grid item xs sm container>
           <Grid item xs container direction="column" spacing={2}>
             <Grid item xs>
               <Typography variant="overline" color="text.secondary">

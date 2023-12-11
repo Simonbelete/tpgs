@@ -42,19 +42,19 @@ const DashboardPage = () => {
           <Grid container spacing={5}>
             {tenant.name == "public" ? (
               <>
-                <Grid item spacing={3}>
+                <Grid item>
                   <FeedStats />
                 </Grid>
-                <Grid item xs={6} sx={{ px: 0 }}>
+                <Grid item xs={12} md={6} sx={{ px: 0 }}>
                   <StartFormulatingCard />
                 </Grid>
-                <Grid item xs={6}>
+                <Grid item xs={12} md={6}>
                   <NotificationCard />
                 </Grid>
               </>
             ) : (
               <>
-                <Grid item spacing={3}>
+                <Grid item>
                   <Stats />
                 </Grid>
                 <Grid container item spacing={3}>
