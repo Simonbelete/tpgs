@@ -16,6 +16,7 @@ class InvitationSerializer_GET(serializers.ModelSerializer):
         model = models.Invitation
         fields = '__all__'
 
+
 class InvitationSerializer_POST(serializers.ModelSerializer):
     class Meta:
         model = models.Invitation

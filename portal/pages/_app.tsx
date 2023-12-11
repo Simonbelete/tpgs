@@ -86,7 +86,7 @@ export default function App({
                 vertical: "top",
                 horizontal: "center",
               }}
-              action={(key) => <SnackbarCloseButton key={key} />}
+              action={(key) => <SnackbarCloseButton dataKey={key} />}
             >
               <main className={`${inter.className}`}>
                 {getLayout(<Component {...pageProps} />)}

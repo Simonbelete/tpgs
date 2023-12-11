@@ -125,7 +125,7 @@ class CountViewSet(viewsets.ViewSet):
                     'total_users': User.objects.count(),
                     'farm_count': self.request.user.farms.all().count(),
                     'formula_count': Formula.objects.all().count(),
-                    'ingredient_count': Formula.objects.all().count(),
+                    'ingredient_count': Ingredient.objects.all().count(),
                     'nutrient_count': Nutrient.objects.all().count(),
                     'requirement_count': Requirement.objects.all().count(),
                 }

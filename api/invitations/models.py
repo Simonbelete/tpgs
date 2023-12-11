@@ -29,7 +29,7 @@ class Invitation(models.Model):
     def clean(self) -> None:
         user = User.objects.filter(email=self.email).exclude(
             email=self.email).count()
-        if (not self):
+        if (not self.id):
             self.expire_date = timezone.now().date() + timedelta(days=7)
 
         if (user != 0):
