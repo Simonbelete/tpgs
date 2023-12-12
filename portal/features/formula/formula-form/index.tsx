@@ -37,9 +37,9 @@ import TableViewIcon from "@mui/icons-material/TableView";
 
 const schema = yup.object({
   name: yup.string().required(),
-  purpose: yup.string().nullable(),
+  purpose: yup.object().nullable(),
   weight: yup.number().default(100).required(),
-  country: yup.string().nullable(),
+  country: yup.object().nullable(),
   sex: yup.object().nullable(),
   age_from_week: yup.number().nullable(),
   age_to_week: yup.number().nullable(),
@@ -189,6 +189,7 @@ export const FormulaForm = ({
           {tab == 0 && (
             <Card title="Requirement Detail">
               <Form<Formula>
+                shallowRoute={shallowRoute}
                 data={{
                   ...formData,
                   // @ts-ignore

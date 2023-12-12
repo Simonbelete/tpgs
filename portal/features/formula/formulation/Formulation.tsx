@@ -128,8 +128,8 @@ type Inputs = Partial<Formula>;
 
 const schema = yup.object({
   name: yup.string().required(),
-  purpose: yup.string().nullable(),
-  country: yup.string().nullable(),
+  purpose: yup.object().nullable(),
+  country: yup.object().nullable(),
   sex: yup.object().nullable(),
   age_from_week: yup.number().nullable(),
   age_to_week: yup.number().nullable(),
@@ -975,6 +975,7 @@ const Formulation = ({ data }: { data?: Formula }) => {
     formula.sex = _.get(formData, "sex.value", null);
     formula.formula_basis = _.get(formData, "formula_basis.value", null);
     formula.purpose = _.get(formData, "purpose.id", null);
+    formula.country = _.get(formData, "country.id", null);
 
     const ingredients: Partial<FormulaIngredient>[] = [];
     const rations: Partial<FormulaRation>[] = [];
