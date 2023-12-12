@@ -1,6 +1,8 @@
 import { baseApi } from "@/services/baseApi";
 import { Response, Invitation } from "@/models";
 import { AxiosResponse } from "axios";
+import { NextPageContext } from "next";
+import clientSSR from "@/services/client_ssr";
 
 export const URL = "/invitations";
 const VERIFY_URL = "verify-invitation";
@@ -15,7 +17,7 @@ export const invitationApi = baseApi.injectEndpoints({
           params: query,
         }),
       }),
-      getInvitationDetail: build.query<Response<Invitation[]>, string>({
+      getInvitationDetail: build.query<Response<Invitation>, string>({
         query: (token?: string) => ({
           url: `invitation-detail/${token}/`,
           method: "get",
@@ -47,6 +49,12 @@ export const invitationApi = baseApi.injectEndpoints({
   },
   overrideExisting: false,
 });
+
+export const getInvitationDetailSSR = async (
+  context: NextPageContext,
+  token: string
+): Promise<AxiosResponse<Response<Invitation>>> =>
+  clientSSR(context).get(`/invitation-detail/${token}`);
 
 export const {
   useGetInvitationsQuery,

@@ -78,6 +78,12 @@ class VerifyInvitationViewSet(viewsets.ViewSet):
                 invitation.accepted = True
                 invitation.save()
                 serializer = UserSerializer_GET(user)
+                notify.send(
+                    sender=user,
+                    recipient=invitation.inviter,
+                    verb="{name} accepted your invitation".format(
+                        name=user.name),
+                    level='error')
                 return Response(serializer.data, status=201)
         except models.Invitation.DoesNotExist:
             return Response({

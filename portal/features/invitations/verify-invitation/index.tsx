@@ -40,13 +40,17 @@ const schema = yup.object({
   company: yup.string(),
 });
 
-const VerifyInvitation = ({ token }: { token: string }) => {
+const VerifyInvitation = ({
+  token,
+  data,
+}: {
+  token: string;
+  data: Invitation;
+}) => {
   const router = useRouter();
   const [error, setErrorMessage] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
-
-  const { data } = useGetInvitationDetailQuery(token);
 
   const { handleSubmit, watch, control, setError } = useForm<Inputs>({
     // @ts-ignore
