@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import {
   Card,
   Divider,
@@ -45,6 +45,10 @@ const DangerZoneCard = ({
     handleClose();
     onDelete();
   }, [onDelete]);
+
+  useEffect(() => {
+    console.log(is_active);
+  }, [is_active]);
 
   return (
     <>

@@ -67,7 +67,7 @@ const RequirementNutrientToolbar = ({
 
 export const RequirementForm = ({
   data,
-  shallowRoute = false,
+  shallowRoute = true,
 }: {
   data?: Requirement;
   shallowRoute?: boolean;
@@ -127,7 +127,8 @@ export const RequirementForm = ({
       headerName: "Unit",
       flex: 1,
       filterable: false,
-      valueGetter: (params) => _.get(params.row.nutrient, "unit.name", ""),
+      valueGetter: (params) =>
+        _.get(params.row.nutrient, "unit.name", params.row.nutrient.unit),
     },
   ];
 
