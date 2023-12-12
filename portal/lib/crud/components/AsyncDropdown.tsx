@@ -69,6 +69,12 @@ export default function AsyncDropdown<T>({
 
   const handleOnOpen = async () => {
     setOpen(true);
+
+    setPaginationModel({
+      page: 0,
+      pageSize: 15,
+    });
+
     try {
       const response = await trigger(
         {
