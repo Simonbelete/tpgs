@@ -122,7 +122,7 @@ const Analysis = ({ columns, rows }: { columns: Column[]; rows: Row[] }) => {
               handlePricedOpen();
             }}
           >
-            Price contribuation
+            Price contribution
           </MenuItem>
           <MenuItem
             onClick={() => {
@@ -132,14 +132,14 @@ const Analysis = ({ columns, rows }: { columns: Column[]; rows: Row[] }) => {
           >
             Ingredient ration
           </MenuItem>
-          <MenuItem
+          {/* <MenuItem
             onClick={() => {
               handleClose();
               handleMinMaxOpen();
             }}
           >
             Ingredient Boundary
-          </MenuItem>
+          </MenuItem> */}
           <MenuItem
             onClick={() => {
               handleClose();

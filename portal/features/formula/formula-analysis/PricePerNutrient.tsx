@@ -28,16 +28,12 @@ export const PricePerNutrient = ({
         <TableHead>
           <TableRow>
             <TableCell sx={{ fontWeight: 600 }}>Ingredient</TableCell>
-            <TableCell align="right" sx={{ fontWeight: 600 }}>
-              %
-            </TableCell>
-            <TableCell align="right" sx={{ fontWeight: 600 }}>
-              Unit Price (kg)
-            </TableCell>
+            <TableCell sx={{ fontWeight: 600 }}>%</TableCell>
+            <TableCell sx={{ fontWeight: 600 }}>Unit Price (kg)</TableCell>
             {columns &&
               columns.map((el, key) => (
                 <TableCell key={key} align="right" sx={{ fontWeight: 600 }}>
-                  {el.title}
+                  Pr/{el.title}
                 </TableCell>
               ))}
           </TableRow>
@@ -60,10 +56,15 @@ export const PricePerNutrient = ({
                 </TableCell>
                 {columns.map((cl, key2) => (
                   <TableCell key={key2} align="right">
-                    {roundTo3DecimalPlace(
+                    {_.get(el, cl.path, 0) == 0
+                      ? 0
+                      : roundTo3DecimalPlace(
+                          _.get(el, "unit_price", 0) / _.get(el, cl.path, 0)
+                        )}
+                    {/* {roundTo3DecimalPlace(
                       ((_.get(el, cl.path, 0) * _.get(el, "ratio", 0)) / 100) *
                         _.get(el, "unit_price", 0)
-                    )}
+                    )} */}
                   </TableCell>
                 ))}
               </TableRow>
