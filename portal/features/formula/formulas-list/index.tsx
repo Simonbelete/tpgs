@@ -52,8 +52,6 @@ export const FormulaList = () => {
       field: "purpose",
       headerName: "Purpose",
       flex: 1,
-      valueGetter: (params) =>
-        params.row.purpose ? params.row.purpose.name : "",
       renderCell: (params: GridRenderCellParams<any>) => {
         if (params.row.purpose == null) return <></>;
         return (
@@ -70,10 +68,8 @@ export const FormulaList = () => {
       field: "country",
       headerName: "Country",
       flex: 1,
-      valueGetter: (params) =>
-        params.row.country ? params.row.country.name : "",
       renderCell: (params: GridRenderCellParams<any>) => {
-        if (params.row.purpose == null) return <></>;
+        if (params.row.country == null) return <></>;
         return (
           <Typography color={"link.primary"} variant="body2">
             <Link href={`/countries/${params.row.country.id}`}>

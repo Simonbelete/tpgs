@@ -45,7 +45,7 @@ class NutrientSerializer_SLUG(serializers.ModelSerializer):
 class NutrientSerializer_POST(serializers.ModelSerializer):
     class Meta:
         model = models.Nutrient
-        fields = ['id', 'name', 'code', 'abbreviation',
+        fields = ['id', 'name', 'code', 'abbreviation', 'order',
                   'description', 'nutrient_group', 'unit', 'is_active']
 
 
