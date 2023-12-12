@@ -1094,7 +1094,7 @@ const Formulation = ({ data }: { data?: Formula }) => {
     // TODO: only update chaned ingredients
     const requests = _.map(rows, (e) =>
       updateIngredient({
-        id: data == null ? Number(e.rowId) || 0 : e.id,
+        id: data == null ? Number(e.rowId) || 0 : e.id || 0,
         price: e.unit_price,
       })
     );
