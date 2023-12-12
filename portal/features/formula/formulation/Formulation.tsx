@@ -1093,7 +1093,10 @@ const Formulation = ({ data }: { data?: Formula }) => {
   const updateIngredientPrices = async () => {
     // TODO: only update chaned ingredients
     const requests = _.map(rows, (e) =>
-      updateIngredient({ id: Number(e.rowId) || 0, price: e.unit_price })
+      updateIngredient({
+        id: data == null ? Number(e.rowId) || 0 : e.id,
+        price: e.unit_price,
+      })
     );
 
     const responses = await Promise.all(requests);
