@@ -12,8 +12,6 @@ import { NextPageContext } from "next";
 const FormulationExperimentalPage = ({ data }: { data: Formula }) => {
   const { breadcrumbs } = useBreadcrumbs();
 
-  console.log(data);
-
   return (
     <ActionLayout
       breadcrumbs={<Breadcrumbs items={breadcrumbs} />}

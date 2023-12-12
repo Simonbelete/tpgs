@@ -143,8 +143,10 @@ const Formulation = ({ data }: { data?: Formula }) => {
 
   const [getAllNutrients, { isFetching: isFetchingGetAllNutrients }] =
     useLazyGetAllNutrientsQuery();
-  const [getAllNutrientsOfIngredient] =
-    useLazyGetAllNutrientsOfIngredientQuery();
+  const [
+    getAllNutrientsOfIngredient,
+    { isFetching: isFetchingGetAllNutrientsOfIngredient },
+  ] = useLazyGetAllNutrientsOfIngredientQuery();
   const [
     getAllNutrientsOfRequirement,
     { isFetching: isFetchingGetAllNutrientsOfRequirement },
@@ -1117,7 +1119,8 @@ const Formulation = ({ data }: { data?: Formula }) => {
           open={
             isLoading ||
             isFetchingGetAllNutrients ||
-            isFetchingGetAllNutrientsOfRequirement
+            isFetchingGetAllNutrientsOfRequirement ||
+            isFetchingGetAllNutrientsOfIngredient
           }
           onClick={() => {}}
         >
@@ -1273,7 +1276,7 @@ const Formulation = ({ data }: { data?: Formula }) => {
                           onChange={onChange}
                           fullWidth
                           size="small"
-                          value={value}
+                          value={value ?? ""}
                           label={"Age From"}
                           placeholder={"Age From"}
                           type="number"
@@ -1295,7 +1298,7 @@ const Formulation = ({ data }: { data?: Formula }) => {
                           onChange={onChange}
                           fullWidth
                           size="small"
-                          value={value}
+                          value={value ?? ""}
                           label={"Age To"}
                           placeholder={"Age To"}
                           type="number"
@@ -1318,7 +1321,7 @@ const Formulation = ({ data }: { data?: Formula }) => {
                           onChange={onChange}
                           fullWidth
                           size="small"
-                          value={value}
+                          value={value ?? ""}
                           label={"Remark"}
                           placeholder={"Remark"}
                         />
