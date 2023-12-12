@@ -65,7 +65,9 @@ export default function DangerZone<T>({
 
   return (
     <DangerZoneCard
-      onViewHistories={() => router.push(`${router.pathname}/histories`)}
+      onViewHistories={() =>
+        router.push(`${router.asPath.split("/edit")[0]}/histories`)
+      }
       onDeactivate={() => handleToggleActive(false)}
       onActivate={() => handleToggleActive(true)}
       onDelete={handleDelete}
