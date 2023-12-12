@@ -137,6 +137,18 @@ const schema = yup.object({
   note: yup.string().nullable(),
 });
 
+const sexOptions = [
+  { value: null, name: "---" },
+  { value: "M", name: "Male" },
+  { value: "F", name: "Female" },
+];
+
+const formulaBasisOptions = [
+  { value: null, name: "---" },
+  { value: "AF", name: "As-Fed Basis" },
+  { value: "DM", name: "DM Basis" },
+];
+
 const Formulation = ({ data }: { data?: Formula }) => {
   const ref = useRef(null);
   const { customRenderers } = useExtraCells();
@@ -326,6 +338,12 @@ const Formulation = ({ data }: { data?: Formula }) => {
     resolver: yupResolver(schema),
     defaultValues: {
       ...data,
+      // @ts-ignore
+      sex: _.find(sexOptions, { value: data?.sex }),
+      // @ts-ignore
+      formula_basis: _.find(formulaBasisOptions, {
+        value: data?.formula_basis,
+      }),
     },
   });
 
@@ -1211,11 +1229,7 @@ const Formulation = ({ data }: { data?: Formula }) => {
                         fieldState: { invalid, isTouched, isDirty, error },
                       }) => (
                         <Dropdown
-                          options={[
-                            { value: null, name: "---" },
-                            { value: "M", name: "Male" },
-                            { value: "F", name: "Female" },
-                          ]}
+                          options={sexOptions}
                           key="name"
                           onChange={(_, data) => onChange(data)}
                           value={value ?? { value: null, name: "---" }}
@@ -1236,11 +1250,7 @@ const Formulation = ({ data }: { data?: Formula }) => {
                         fieldState: { invalid, isTouched, isDirty, error },
                       }) => (
                         <Dropdown
-                          options={[
-                            { value: null, name: "---" },
-                            { value: "AF", name: "As-Fed Basis" },
-                            { value: "DM", name: "DM Basis" },
-                          ]}
+                          options={formulaBasisOptions}
                           key="name"
                           onChange={(_, data) => onChange(data)}
                           value={value ?? { value: null, name: "---" }}
