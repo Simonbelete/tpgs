@@ -4,7 +4,6 @@ import { Formula } from "@/models";
 import {
   CancelIcon,
   CreateNewIcon,
-  FormLayout,
   HistoryIcon,
   TabFormLayout,
   Form,
@@ -14,8 +13,6 @@ import {
   useLazyFormulateQuery,
   printFormulaPdf,
 } from "../services";
-import { hatcheryApi } from "@/features/hatchery/services";
-import { penApi } from "@/features/pen/services";
 import _ from "lodash";
 import { Card } from "@/components";
 import {
@@ -43,10 +40,10 @@ const schema = yup.object({
   purpose: yup.string().nullable(),
   weight: yup.number().default(100).required(),
   country: yup.string().nullable(),
-  sex: yup.string().nullable(),
+  sex: yup.object().nullable(),
   age_from_week: yup.number().nullable(),
   age_to_week: yup.number().nullable(),
-  formula_basis: yup.string().nullable(),
+  formula_basis: yup.object().nullable(),
   note: yup.string().nullable(),
   desired_dm: yup.string().nullable(),
   budget: yup.number().default(0).required(),
@@ -57,6 +54,12 @@ const sexOptions = [
   { value: null, name: "---" },
   { value: "M", name: "Male" },
   { value: "F", name: "Female" },
+];
+
+const formulaBasisOptions = [
+  { value: null, name: "---" },
+  { value: "AF", name: "As-Fed Basis" },
+  { value: "DM", name: "DM Basis" },
 ];
 
 function a11yProps(index: number) {
@@ -186,7 +189,15 @@ export const FormulaForm = ({
           {tab == 0 && (
             <Card title="Requirement Detail">
               <Form<Formula>
-                data={formData}
+                data={{
+                  ...formData,
+                  // @ts-ignore
+                  sex: _.find(sexOptions, { value: formData?.sex }),
+                  // @ts-ignore
+                  formula_basis: _.find(formulaBasisOptions, {
+                    value: formData?.formula_basis,
+                  }),
+                }}
                 schema={schema}
                 createEndpoint={formulaApi.endpoints.createFormula}
                 updateEndpoint={formulaApi.endpoints.updateFormula}
@@ -229,10 +240,7 @@ export const FormulaForm = ({
                   formula_basis: {
                     label: "Formula Basis",
                     placeholder: "Select Formula Basis",
-                    options: [
-                      { value: "AF", name: "As-Fed Basis" },
-                      { value: "DM", name: "DM Basis" },
-                    ],
+                    options: formulaBasisOptions,
                     xs: 12,
                     md: 6,
                   },

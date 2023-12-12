@@ -10,13 +10,13 @@ import Requirement from "./Requirement";
 export default interface Formula extends AbstractBaseModel {
   name: string;
   purpose: null | number | Purpose;
-  sex: null | string;
+  sex?: null | string | Object;
   weight: number;
   weight_unit: number | Unit;
   country: null | number | Country;
   age_from_week: number;
   age_to_week: number;
-  formula_basis: null | string;
+  formula_basis?: null | string | Object;
   unit_price: null | number;
   note: string;
   requirements: number[] | FormulaRequirement[];

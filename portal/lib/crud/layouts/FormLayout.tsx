@@ -34,6 +34,7 @@ export default function FormLayout<T extends AbstractBaseModel>({
   summaryEndpoint,
   fields,
   beforeSubmit,
+  shallowRoute,
 }: FormLayoutProps<T>) {
   const [formData, setFormData] = useState<T | undefined>(data);
   const router = useRouter();
@@ -83,6 +84,7 @@ export default function FormLayout<T extends AbstractBaseModel>({
               fields={fields}
               beforeSubmit={beforeSubmit}
               onCreateSuccess={handleCreated}
+              shallowRoute={shallowRoute}
             />
           </Card>
         </Grid>

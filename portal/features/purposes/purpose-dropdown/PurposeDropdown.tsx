@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { AsyncDropdown } from "@/components/dropdowns";
 import { purposeApi, useLazyGetPurposesQuery } from "../services";
 import { Purpose } from "@/models";
+import { PurposeForm } from "../purpose-form";
 
 const PurposeDropdown = ({
   value,
@@ -25,6 +26,7 @@ const PurposeDropdown = ({
       helperText={helperText}
       onChange={onChange}
       endpoint={purposeApi.endpoints.getPurposes}
+      createForm={<PurposeForm shallowRoute={false} />}
     />
   );
 };

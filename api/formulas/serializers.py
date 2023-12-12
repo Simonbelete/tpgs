@@ -74,7 +74,7 @@ class FormulaSerializer_GET(serializers.ModelSerializer):
     class Meta:
         model = models.Formula
         fields = ['id', 'name', 'display_name', 'purpose', 'weight', 'note', 'budget', 'desired_ratio', 'desired_dm',
-                  'ration_price', 'ration_ratio', 'ration_weight', 'ration_dm', 'requirement', 'unit_price',
+                  'ration_price', 'ration_ratio', 'ration_weight', 'ration_dm', 'requirement', 'unit_price', 'sex', 'formula_basis',
                   'requirement_count', 'ingredient_count', 'is_active', 'created_at']
 
 
@@ -89,7 +89,7 @@ class FormulaSerializer_POST(serializers.ModelSerializer):
 
     class Meta:
         model = models.Formula
-        fields = ['id', 'name', 'weight', 'requirements', 'budget', 'desired_ratio', 'desired_dm', 'ingredients', 'requirement', 'is_active',
+        fields = ['id', 'name', 'weight', 'requirements', 'budget', 'desired_ratio', 'desired_dm', 'ingredients', 'requirement', 'is_active', 'sex', 'formula_basis',
                   'rations', 'unit_price', 'ration_price', 'ration_ratio', 'ration_weight', 'ration_dm',  'age_from_week', 'age_to_week']
 
     @transaction.atomic

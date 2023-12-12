@@ -130,10 +130,10 @@ const schema = yup.object({
   name: yup.string().required(),
   purpose: yup.string().nullable(),
   country: yup.string().nullable(),
-  sex: yup.string().nullable(),
+  sex: yup.object().nullable(),
   age_from_week: yup.number().nullable(),
   age_to_week: yup.number().nullable(),
-  formula_basis: yup.string().nullable(),
+  formula_basis: yup.object().nullable(),
   note: yup.string().nullable(),
 });
 
@@ -972,6 +972,10 @@ const Formulation = ({ data }: { data?: Formula }) => {
   const onSubmit: SubmitHandler<Inputs> = async (formData) => {
     const formula: Partial<Formula> = formData;
 
+    formula.sex = _.get(formData, "sex.value", null);
+    formula.formula_basis = _.get(formData, "formula_basis.value", null);
+    formula.purpose = _.get(formData, "purpose.id", null);
+
     const ingredients: Partial<FormulaIngredient>[] = [];
     const rations: Partial<FormulaRation>[] = [];
     const requirements: Partial<FormulaRequirement>[] = [];
@@ -1207,12 +1211,13 @@ const Formulation = ({ data }: { data?: Formula }) => {
                       }) => (
                         <Dropdown
                           options={[
+                            { value: null, name: "---" },
                             { value: "M", name: "Male" },
                             { value: "F", name: "Female" },
                           ]}
                           key="name"
                           onChange={(_, data) => onChange(data)}
-                          value={value}
+                          value={value ?? { value: null, name: "---" }}
                           label="Sex"
                           error={!!error?.message}
                           helperText={error?.message}
@@ -1231,12 +1236,13 @@ const Formulation = ({ data }: { data?: Formula }) => {
                       }) => (
                         <Dropdown
                           options={[
+                            { value: null, name: "---" },
                             { value: "AF", name: "As-Fed Basis" },
                             { value: "DM", name: "DM Basis" },
                           ]}
                           key="name"
                           onChange={(_, data) => onChange(data)}
-                          value={value}
+                          value={value ?? { value: null, name: "---" }}
                           label="Feed Basis"
                           error={!!error?.message}
                           helperText={error?.message}

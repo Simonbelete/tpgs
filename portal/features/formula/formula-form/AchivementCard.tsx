@@ -13,7 +13,6 @@ import {
 const AchivementCard = ({ data }: { data: Formula }) => {
   const calculateAchivement = (value: number, total: number) => {
     if (total == 0) return 0;
-    console.log(Number(Number(value / total).toFixed(3)) * 100);
     return Number(((value / total) * 100).toFixed(1));
   };
 
