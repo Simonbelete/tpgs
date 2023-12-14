@@ -49,8 +49,8 @@ export interface FilterProps<T> {
 export default function Filter<T>({ filters }: FilterProps<T>) {
   const dispatch = useDispatch();
   const activeMenu = [
-    { name: "Active", value: true },
-    { name: "Deactive", value: false },
+    { name: "Unarchived", value: true },
+    { name: "Archived", value: false },
   ];
 
   const selector = useSelector((state: RootState) => state.filter);
@@ -64,7 +64,7 @@ export default function Filter<T>({ filters }: FilterProps<T>) {
 
   return (
     <Paper
-      sx={{ p: 2 }}
+      sx={{ p: 1 }}
       elevation={0}
       variant="outlined"
       square
@@ -73,7 +73,7 @@ export default function Filter<T>({ filters }: FilterProps<T>) {
       <Grid container alignItems={"center"}>
         <Grid item xs={12} md={4}>
           <Typography variant="body2" fontWeight={700}>
-            ADVANCED SEARCH
+            SEARCH
           </Typography>
         </Grid>
         <Grid item xs={12} md />
@@ -126,7 +126,7 @@ export default function Filter<T>({ filters }: FilterProps<T>) {
         <>
           <Divider sx={{ my: 1 }} />
 
-          <Grid container spacing={2}>
+          <Grid container spacing={1}>
             <Grid item xs={12}>
               <Stack direction={"row"} spacing={2}>
                 <CheckboxDropdown
@@ -134,7 +134,7 @@ export default function Filter<T>({ filters }: FilterProps<T>) {
                   menus={activeMenu}
                   dataValueKey="value"
                   dataLableKey="name"
-                  label={"Active"}
+                  label={"Archived"}
                   selected={[{ value: selector.is_active }]}
                   onChange={handleActiveChange}
                 />
@@ -180,9 +180,9 @@ export default function Filter<T>({ filters }: FilterProps<T>) {
             <Grid item xs={12}>
               <Stack direction={"row"} spacing={2}>
                 <Chip
-                  label={`State: ${selector.is_active}`}
+                  // label={`State: ${selector.is_active}`}
+                  label={selector.is_active ? "Unarchived" : "Archived"}
                   size="small"
-                  onDelete={() => {}}
                 />
                 {Object.keys(selector.filters).map((key, i) => {
                   if (Array.isArray(selector.filters[key])) {

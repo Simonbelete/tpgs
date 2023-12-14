@@ -121,7 +121,7 @@ const DangerZoneCard = ({
               <>
                 <Typography component="span" gutterBottom={true}>
                   <Typography variant="body2" fontWeight={600}>
-                    Deactivate
+                    Archive
                   </Typography>
                   <Typography
                     variant="caption"
@@ -134,13 +134,13 @@ const DangerZoneCard = ({
                 <Box>
                   <LoadingButton
                     loading={isUpdating}
-                    loadingIndicator="Deactivating..."
+                    loadingIndicator="Archiving..."
                     variant="outlined"
                     color="warning"
                     size="small"
                     onClick={onDeactivate}
                   >
-                    Deactivate
+                    Archive
                   </LoadingButton>
                 </Box>
               </>
@@ -148,7 +148,7 @@ const DangerZoneCard = ({
               <>
                 <Typography component="span" gutterBottom={true}>
                   <Typography variant="body2" fontWeight={600}>
-                    Activate
+                    Unarchive
                   </Typography>
                   <Typography
                     variant="caption"
@@ -161,7 +161,7 @@ const DangerZoneCard = ({
                 <Box>
                   <LoadingButton
                     loading={isUpdating}
-                    loadingIndicator="Activating..."
+                    loadingIndicator="Unarchiving..."
                     variant="outlined"
                     color="primary"
                     size="small"
