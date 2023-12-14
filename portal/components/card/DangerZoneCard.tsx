@@ -15,6 +15,7 @@ import {
 } from "@mui/material";
 import ManageHistoryIcon from "@mui/icons-material/ManageHistory";
 import LoadingButton from "@mui/lab/LoadingButton";
+import { useGroup } from "@/hooks";
 
 const DangerZoneCard = ({
   onViewHistories,
@@ -41,14 +42,12 @@ const DangerZoneCard = ({
   const handleOpen = () => setIsOpen(true);
   const handleClose = () => setIsOpen(false);
 
+  const { isSuperUser, isAdmin, isFarmer } = useGroup();
+
   const handleDelete = useCallback(() => {
     handleClose();
     onDelete();
   }, [onDelete]);
-
-  useEffect(() => {
-    console.log(is_active);
-  }, [is_active]);
 
   return (
     <>
@@ -173,33 +172,35 @@ const DangerZoneCard = ({
               </>
             )}
           </Stack>
-          <Stack direction={"row"} justifyContent="space-between">
-            <Typography component="span" gutterBottom={true}>
-              <Typography variant="body2" fontWeight={600}>
-                Delete
+          {(isSuperUser || isAdmin) && (
+            <Stack direction={"row"} justifyContent="space-between">
+              <Typography component="span" gutterBottom={true}>
+                <Typography variant="body2" fontWeight={600}>
+                  Delete
+                </Typography>
+                <Typography
+                  variant="caption"
+                  color="text.light"
+                  sx={{ lineHeight: 0 }}
+                >
+                  Once you delete this record, there is no recovering it.
+                </Typography>
               </Typography>
-              <Typography
-                variant="caption"
-                color="text.light"
-                sx={{ lineHeight: 0 }}
-              >
-                Once you delete this record, there is no recovering it.
-              </Typography>
-            </Typography>
-            <Box>
-              <LoadingButton
-                loading={isDeleting}
-                loadingPosition="start"
-                startIcon={<></>}
-                variant="outlined"
-                color="error"
-                size="small"
-                onClick={handleOpen}
-              >
-                Delete
-              </LoadingButton>
-            </Box>
-          </Stack>
+              <Box>
+                <LoadingButton
+                  loading={isDeleting}
+                  loadingPosition="start"
+                  startIcon={<></>}
+                  variant="outlined"
+                  color="error"
+                  size="small"
+                  onClick={handleOpen}
+                >
+                  Delete
+                </LoadingButton>
+              </Box>
+            </Stack>
+          )}
         </Stack>
       </Card>
     </>
