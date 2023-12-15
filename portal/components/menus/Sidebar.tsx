@@ -453,6 +453,7 @@ const SidebarMenu = () => {
         <MenuItem
           component={<Link href="/breeds" />}
           icon={<DNAHellxIcon width="20" height="20" fill="inherit" />}
+          active={RegExp("^/breeds$").test(router.pathname)}
         >
           <Typography variant="body1" fontSize={14}>
             Breeds

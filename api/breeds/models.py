@@ -8,13 +8,13 @@ from core.validators import WEEK_VALIDATOR, PERCENTAGE_VALIDATOR
 class Breed(CoreModel):
     name = models.CharField(max_length=250, unique=True)
     color = models.CharField(max_length=10, null=True, blank=True)
-    hdep_desirable_avg = models.PositiveIntegerField(
-        validators=PERCENTAGE_VALIDATOR, null=True, blank=True)
-    hhep_desirable_avg = models.PositiveIntegerField(
-        validators=PERCENTAGE_VALIDATOR, null=True, blank=True)
     history = HistoricalRecords()
 
     def __str__(self):
+        return self.name
+
+    @property
+    def display_name(self):
         return self.name
 
 
@@ -27,6 +27,9 @@ class BreedHDEPGuideline(CoreModel):
     hdep = models.DecimalField(
         validators=PERCENTAGE_VALIDATOR, max_digits=6, decimal_places=3, default=0, null=True, blank=True)
     history = HistoricalRecords()
+
+    class Meta:
+        unique_together = ['breed', 'week']
 
     @property
     def display_name(self):
@@ -87,6 +90,7 @@ class BreedEggGuideline(CoreModel):
     breed = models.ForeignKey(
         Breed, on_delete=models.CASCADE)
     week = models.PositiveIntegerField(validators=WEEK_VALIDATOR)
+    # no of eggs
     egg = models.IntegerField(null=True, blank=True)
     # total egg weight
     weight = models.FloatField(null=True, blank=True)  # in g

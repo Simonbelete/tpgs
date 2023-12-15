@@ -12,13 +12,14 @@ class BreedSerializer_SLUG(serializers.ModelSerializer):
 class BreedSerializer_GET(serializers.ModelSerializer):
     class Meta:
         model = models.Breed
-        fields = '__all__'
+        fields = ['id', 'display_name', 'name',
+                  'color', 'is_active', 'created_at']
 
 
 class BreedSerializer_POST(serializers.ModelSerializer):
     class Meta:
         model = models.Breed
-        fields = ['id', 'name', 'color']
+        fields = ['id', 'name', 'color', 'is_active']
 
 
 class BreedHistorySerializer(serializers.ModelSerializer):

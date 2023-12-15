@@ -14,6 +14,7 @@ import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import { useRouter } from "next/router";
 import getPreviousUrl from "@/util/getPreviousUrl";
 import Link from "next/link";
+import { useGroup } from "@/hooks";
 
 interface FormLayoutProps<T>
   extends FormProps<T>,
@@ -75,13 +76,17 @@ export default function FormLayout<T extends AbstractBaseModel>({
       </Grid>
       <Grid container spacing={2}>
         <Grid item xs={12} lg={8.5} xl={9}>
-          {formData && formData.is_active ? (
-            <></>
-          ) : (
+          {formData && (
             <>
-              <Box sx={{ mt: 1, mb: 2, width: "100%" }}>
-                <Alert severity="warning">Archived record!</Alert>
-              </Box>
+              {formData.is_active ? (
+                <></>
+              ) : (
+                <>
+                  <Box sx={{ mt: 1, mb: 2, width: "100%" }}>
+                    <Alert severity="warning">Archived record!</Alert>
+                  </Box>
+                </>
+              )}
             </>
           )}
 

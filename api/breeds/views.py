@@ -1,3 +1,5 @@
+from rest_framework.permissions import DjangoModelPermissions
+
 from core.views import (
     HistoryViewSet,
     SummaryViewSet,
@@ -8,13 +10,18 @@ from core.views import (
 from . import models
 from . import serializers
 from . import admin
+from . import filters
 
 # Breed
 
 
 class BreedViewSet(CoreModelViewSet):
     queryset = models.Breed.objects.all()
+    permission_classes = [DjangoModelPermissions]
     serializer_class = serializers.BreedSerializer_GET
+    filterset_class = filters.BreedFilter
+    search_fields = ['name']
+    ordering_fields = '__all__'
 
     def get_serializer_class(self):
         if self.request.method in ['POST', 'PUT', 'PATCH']:

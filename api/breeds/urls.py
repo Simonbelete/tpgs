@@ -10,6 +10,11 @@ router.register(r'breeds', views.BreedViewSet,
 router.register(r'breeds/(?P<id>.+)/histories',
                 views.BreedHistoryViewSet, basename='api_breeds_histories'),
 
+summary_router = NestedDefaultRouter(
+    router, r'breeds', lookup='id')
+summary_router.register(r'summary', views.BreedSummaryViewSet,
+                        basename='api_breed_summary')
+
 # Breed Weight Guideline
 router.register(r'breed-guideline/weights', views.BreedWeightGuidelineViewSet,
                 basename='api_breed_weight_guideline')
@@ -24,7 +29,7 @@ router.register(r'breed-guideline/weights/(?P<id>.+)/histories',
 
 breed_weight_guide_router = NestedDefaultRouter(
     router, r'breeds', lookup='breed')
-breed_weight_guide_router.register(r'guideline/weights', views.BreedWeightGuidelineViewSet,
+breed_weight_guide_router.register(r'guidelines/weights', views.BreedWeightGuidelineViewSet,
                                    basename='api_breed_weight_guide')
 
 # Breed Egg Guideline
@@ -58,7 +63,7 @@ router.register(r'breed-guideline/feeds/(?P<id>.+)/histories',
 
 breed_feed_guide_router = NestedDefaultRouter(
     router, r'breeds', lookup='breed')
-breed_feed_guide_router.register(r'guidelines/eggs', views.BreedFeedGuidelineViewSet,
+breed_feed_guide_router.register(r'guidelines/feeds', views.BreedFeedGuidelineViewSet,
                                  basename='api_breed_feed_guide')
 
 # Breed HDEP Guidelines
@@ -97,6 +102,7 @@ breed_hhep_guide_router.register(r'guidelines/hhep', views.BreedHHEPGuidelineVie
 
 urlpatterns = [
     path('', include(router.urls)),
+    path('', include(summary_router.urls)),
     path('', include(breed_weight_guide_router.urls)),
     path('', include(weight_summary_router.urls)),
     path('', include(egg_summary_router.urls)),
