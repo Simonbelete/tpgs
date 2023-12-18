@@ -34,13 +34,14 @@ class BreedWeightGuidelineSerializer_GET(serializers.ModelSerializer):
 
     class Meta:
         model = models.BreedWeightGuideline
-        fields = ['id', 'breed', 'week', 'weight', 'display_name']
+        fields = ['id', 'breed', 'week', 'weight',
+                  'display_name', 'is_active', 'created_at']
 
 
 class BreedWeightGuidelineSerializer_POST(serializers.ModelSerializer):
     class Meta:
         model = models.BreedWeightGuideline
-        fields = ['id', 'breed', 'week', 'weight']
+        fields = ['id', 'breed', 'week', 'weight', 'is_active']
 
     def create(self, validated_data):
         if ('breed_pk' in self.context["view"].kwargs):

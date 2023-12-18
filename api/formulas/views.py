@@ -12,7 +12,9 @@ from reportlab.lib.pagesizes import letter, landscape, A4, A1, A2
 from reportlab.platypus import SimpleDocTemplate, Table, TableStyle
 from django.http import FileResponse
 from rest_framework.exceptions import NotFound
+from rest_framework import generics
 from django.db import connection
+from scipy.optimize import linprog
 
 from core.views import (
     HistoryViewSet,
@@ -423,3 +425,56 @@ class FormulaIngredientAnalyses(viewsets.ViewSet):
     def list(self, request, formula_pk=None):
 
         return Response({}, status=200)
+
+
+class SolveViewSet(viewsets.ViewSet):
+    def create(self, request):
+        ingredient_nutrients = IngredientNutrient.all.filter(
+            ingredient__in=request.data['ingredients'])
+        requirements = request.data['requirements']
+
+        df = pd.DataFrame(list(ingredient_nutrients.values(
+            'ingredient', 'nutrient', 'value', 'ingredient__price')))
+        # Type Case
+        df = df.astype({'value': 'float64', 'ingredient__price': 'float64'})
+
+        df_1 = df[['ingredient', 'ingredient__price']].drop_duplicates()
+        df_1.set_index('ingredient', inplace=True)
+
+        df = df.pivot_table(index="ingredient",
+                            columns="nutrient", values="value", fill_value=0)
+        df_1 = df_1.reindex(df.index)
+
+        # TODO: remove it
+        # requirements = [{'nutrient': 15, 'value': 2.5},
+        #                 {'nutrient': 12, 'value': 65}]
+        df_req = pd.DataFrame.from_dict(requirements)
+        df_req = df_req.astype({'value': 'float64'})
+        # Sort By Nutrient
+        df_req.set_index('nutrient', inplace=True)
+        df_req = df_req.reindex(df.columns.values, fill_value=0)
+
+        c = df_1['ingredient__price'].to_numpy()
+        c = np.multiply(c, -1)
+
+        # # Row -> Nutrients, Col -> Ingredient * Nutrient Value
+        A = [df[i].values for i in df.columns]
+        A = np.append(A, np.multiply(A, -1), axis=0)
+
+        b = df_req['value'].values
+        b = np.append(b, np.multiply(b, -1))
+
+        print('*****')
+        print(b)
+        print(A)
+        print(c)
+
+        results = linprog(c=c, A_ub=A, b_ub=b, bounds=[], method='highs-ds')
+
+        # results = linprog(c=c, A_ub=A, b_ub=b, A_eq=A_eq,
+        #                   b_eq=b_eq, bounds=[], method='highs-ds')
+
+        print(f'Objective value: z* = {results.fun}')
+        print(results.x)
+
+        return Response({})

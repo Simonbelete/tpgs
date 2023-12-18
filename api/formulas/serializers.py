@@ -249,3 +249,7 @@ class AllFormulaIngredientSerializer_GET(serializers.ModelSerializer):
         model = models.FormulaIngredient
         fields = ['id', 'ingredient', 'unit_price', 'ingredient_price', 'min', 'max',
                   'ration', 'ration_weight', 'ration_price']
+
+
+class SolveSerializer(serializers.Serializer):
+    ingredients = serializers.PrimaryKeyRelatedField(many=True, read_only=True)

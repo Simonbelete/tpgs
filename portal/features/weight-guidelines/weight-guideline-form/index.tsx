@@ -22,7 +22,7 @@ export const WeightGuidelineForm = ({
   return (
     <>
       <FormLayout<WeightGuideline>
-        title="WeightGuideline Form"
+        title="Body Weight Guideline"
         id={data?.id || 0}
         data={data}
         schema={schema}
@@ -50,10 +50,17 @@ export const WeightGuidelineForm = ({
             xs: 12,
             md: 12,
           },
-          week: { label: "Week", placeholder: "Week", xs: 12, md: 12 },
+          week: {
+            label: "Week",
+            placeholder: "Week",
+            type: "number",
+            xs: 12,
+            md: 12,
+          },
           weight: {
             label: "Weight (g)",
             placeholder: "Weight (g)",
+            type: "number",
             xs: 12,
             md: 12,
             postfix: "g",

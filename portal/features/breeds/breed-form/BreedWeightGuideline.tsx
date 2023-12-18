@@ -1,99 +1,90 @@
 import React, { useState } from "react";
-import * as yup from "yup";
-import { GridColDef, GridRowsProp } from "@mui/x-data-grid";
 import {
-  Requirement,
-  BreedWeightGuideline,
-  RequirementIngredient,
-  Ingredient,
-} from "@/models";
-import { EditableList, EditToolbar } from "@/lib/crud";
-import { breedApi } from "../services";
+  GridColDef,
+  GridToolbarColumnsButton,
+  GridToolbarContainer,
+  GridToolbarDensitySelector,
+  GridToolbarQuickFilter,
+} from "@mui/x-data-grid";
+import { Breed, BreedWeightGuideline } from "@/models";
+import { ToolbarList, EditAction } from "@/lib/crud";
+import { Box, Button } from "@mui/material";
 import { EditMode } from "@/types";
-import _ from "lodash";
-import { ingredientApi } from "@/features/ingredients/services";
+import RefreshIcon from "@mui/icons-material/Refresh";
+import AddIcon from "@mui/icons-material/Add";
+import Link from "next/link";
+import { breedApi } from "../services";
 
 export interface EditableBreedWeightGuideline
   extends BreedWeightGuideline,
     EditMode {}
 
-const RequirementIngredientToolbar = ({
+const BreedWeightGuidelineToolbar = ({
   setRows,
   rows,
   refetch,
 }: {
-  setRows: (
-    newRows: (
-      oldRows: GridRowsProp<EditableBreedWeightGuideline>
-    ) => GridRowsProp<EditableBreedWeightGuideline>
-  ) => void;
-  rows: GridRowsProp<EditableBreedWeightGuideline>;
+  setRows: any;
+  rows: any;
   refetch: () => void;
 }) => {
   return (
-    <EditToolbar<EditableBreedWeightGuideline, Ingredient>
-      refetch={refetch}
-      title="Add Ingredient"
-      setRows={setRows}
-      rows={rows}
-      endpoint={ingredientApi.endpoints.getIngredients}
-      mapperKey="ingredient"
-    />
+    <GridToolbarContainer
+      sx={{ display: "flex", justifyContent: "space-between" }}
+    >
+      <Box>
+        <GridToolbarColumnsButton />
+        <GridToolbarDensitySelector />
+        <Button
+          color="primary"
+          startIcon={<RefreshIcon />}
+          variant="text"
+          onClick={() => refetch()}
+          size={"small"}
+        >
+          Refresh
+        </Button>
+        <Link href="/guidelines/weight/create">
+          <Button
+            color="primary"
+            startIcon={<AddIcon />}
+            variant="text"
+            size={"small"}
+          >
+            Add new
+          </Button>
+        </Link>
+      </Box>
+      <GridToolbarQuickFilter />
+    </GridToolbarContainer>
   );
 };
 
-const RequirementIngredient = ({ data }: { data: Requirement }) => {
+const BreedWeightGuideline = ({ data }: { data: Breed }) => {
   const columns: GridColDef[] = [
     {
-      field: "ingredient__name",
-      headerName: "Name",
+      field: "week",
+      headerName: "Week",
+      filterable: false,
+    },
+    {
+      field: "weight",
+      headerName: "Body Weight",
       flex: 1,
+      minWidth: 50,
       filterable: false,
-      valueGetter: (params) =>
-        params.row.ingredient ? params.row.ingredient.name : "",
-    },
-    {
-      field: "min",
-      headerName: "Min",
-      minWidth: 100,
-      filterable: false,
-      editable: true,
-      type: "number",
-    },
-    {
-      field: "max",
-      headerName: "Max",
-      minWidth: 100,
-      filterable: false,
-      editable: true,
-      type: "number",
     },
   ];
 
-  const cleanData = (
-    values: Partial<RequirementIngredient>
-  ): Partial<RequirementIngredient> => {
-    return {
-      id: data?.id, // Only for post data
-      requirement: data?.id,
-      ingredient: (values.ingredient as Ingredient).id || 0,
-      min: values.min,
-      max: values.max,
-    };
-  };
-
   return (
-    <EditableList<RequirementIngredient>
+    <ToolbarList<BreedWeightGuideline>
       getQuery={{ id: data?.id, query: {} }}
-      toolbar={RequirementIngredientToolbar}
+      actions={[EditAction]}
+      toolbar={BreedWeightGuidelineToolbar}
       columns={columns}
-      beforeSubmit={cleanData}
-      getEndpoint={requirementApi.endpoints.getIngredientsOfRequirement}
-      createEndpoint={requirementApi.endpoints.createIngredientForRequirement}
-      updateEndpoint={requirementApi.endpoints.updateIngredientOfRequirement}
-      deleteEndpoint={requirementApi.endpoints.deleteIngredientOfRequirement}
+      getEndpoint={breedApi.endpoints.getWeightGuidelineOfBreed}
     />
   );
 };
 
-export default RequirementIngredient;
+export default BreedWeightGuideline;

@@ -107,6 +107,11 @@ ingredient_nutrient_router = NestedDefaultRouter(
 ingredient_nutrient_router.register(r'nutrients', views.FormulaIngredientNutrients,
                                     basename='api_formula_ingredient_nutrients')
 
+
+# Example
+router.register(r'solve-formula', views.SolveViewSet,
+                basename='api_solve_formula')
+
 urlpatterns = [
     path('', include(router.urls)),
     path('', include(all_formula_req_router.urls)),

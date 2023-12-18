@@ -228,6 +228,14 @@ export const formulaApi = baseApi.injectEndpoints({
       getFormulaNutrients: build.query<Response<FormulaNutrient[]>, number>({
         query: (id) => ({ url: `${URL}/${id}/nutrients`, method: "get" }),
       }),
+
+      solveFormula: build.mutation<Promise<any>, Partial<any>>({
+        query: (data: Partial<any>) => ({
+          url: `/solve-formula/`,
+          method: "post",
+          data: data,
+        }),
+      }),
     };
   },
   overrideExisting: false,
@@ -304,4 +312,6 @@ export const {
   // Nutrients
   useGetFormulaNutrientsQuery,
   useLazyGetFormulaNutrientsQuery,
+
+  useSolveFormulaMutation,
 } = formulaApi;

@@ -33,7 +33,7 @@ class BreedHDEPGuideline(CoreModel):
 
     @property
     def display_name(self):
-        return "{breed} {week}".format(breed=self.breed.name, week=self.week)
+        return "{breed} W{week}".format(breed=self.breed.name, week=self.week)
 
 
 class BreedHHEPGuideline(CoreModel):
@@ -51,7 +51,7 @@ class BreedHHEPGuideline(CoreModel):
 
     @property
     def display_name(self):
-        return "{breed} {week}".format(breed=self.breed.name, week=self.week)
+        return "{breed} W{week}".format(breed=self.breed.name, week=self.week)
 
 
 class BreedWeightGuideline(CoreModel):
@@ -67,7 +67,7 @@ class BreedWeightGuideline(CoreModel):
 
     @property
     def display_name(self):
-        return "{breed} {week}".format(breed=self.breed.name, week=self.week)
+        return "{breed} W{week}".format(breed=self.breed.name, week=self.week)
 
 
 class BreedFeedGuideline(CoreModel):
@@ -83,7 +83,7 @@ class BreedFeedGuideline(CoreModel):
 
     @property
     def display_name(self):
-        return "{breed} {week}".format(breed=self.breed.name, week=self.week)
+        return "{breed} W{week}".format(breed=self.breed.name, week=self.week)
 
 
 class BreedEggGuideline(CoreModel):
@@ -101,4 +101,4 @@ class BreedEggGuideline(CoreModel):
 
     @property
     def display_name(self):
-        return "{breed} {week}".format(breed=self.breed.name, week=self.week)
+        return "{breed} W{week}".format(breed=self.breed.name, week=self.week)

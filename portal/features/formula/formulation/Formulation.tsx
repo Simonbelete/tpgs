@@ -67,6 +67,7 @@ import {
   useLazyGetAllRequirementsOfFormulaQuery,
   useLazyGetAllRationsOfFormulaQuery,
   useDeleteIngredientOfFormulaMutation,
+  useSolveFormulaMutation,
 } from "../services";
 import { enqueueSnackbar } from "notistack";
 import ClearIcon from "./ClearIcon";
@@ -1125,6 +1126,26 @@ const Formulation = ({ data }: { data?: Formula }) => {
     );
 
     const responses = await Promise.all(requests);
+  };
+
+  const [solveForm] = useSolveFormulaMutation();
+
+  const solveFormulaExample = async () => {
+    const data: any = {
+      requirements: [],
+      ingredients: rows.map((e) => e.id),
+    };
+
+    _.forEach(requirement.nutrients, (value, key) => {
+      if (!(_.get(value, "value") == 0)) {
+        data.requirements.push({
+          nutrient: _.get(value, "id"),
+          value: _.get(value, "value"),
+        });
+      }
+    });
+
+    const response = await solveForm(data);
   };
 
   return (
