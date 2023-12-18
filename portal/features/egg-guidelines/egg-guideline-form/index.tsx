@@ -23,7 +23,7 @@ export const EggGuidelineForm = ({
   return (
     <>
       <FormLayout<EggGuideline>
-        title="EggGuideline Form"
+        title="Egg Production Guideline"
         id={data?.id || 0}
         data={data}
         schema={schema}

@@ -1,3 +1,10 @@
+import os
+import django
+
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "api.settings")
+django.setup()
+
+
 from django.db.models import Q
 from weights.models import *
 from feeds.models import *
@@ -19,12 +26,6 @@ from hatchery.models import *
 import random
 from chickens.models import *
 from django_tenants.utils import schema_context
-import os
-import django
-
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "api.settings")
-django.setup()
-
 
 fake = Faker()
 

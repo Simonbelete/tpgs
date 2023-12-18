@@ -30,7 +30,7 @@ export const HatcheryEggForm = ({
   return (
     <>
       <FormLayout<HatcheryEgg>
-        title={"Candling Form"}
+        title={"Candling"}
         id={data?.id || 0}
         data={data}
         schema={schema}
@@ -66,7 +66,7 @@ export const HatcheryEggForm = ({
             label: "Egg",
             placeholder: "Egg",
             endpoint: eggApi.endpoints.getEggs,
-            dataKey: "display_name",
+            dataKey: "display_available_eggs",
           },
           no_eggs: {
             label: "No Eggs",

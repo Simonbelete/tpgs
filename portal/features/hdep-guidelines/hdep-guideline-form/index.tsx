@@ -22,7 +22,7 @@ export const HDEPGuidelineForm = ({
   return (
     <>
       <FormLayout<HDEPGuideline>
-        title="HDEPGuideline Form"
+        title="HDEP Guideline"
         id={data?.id || 0}
         data={data}
         schema={schema}

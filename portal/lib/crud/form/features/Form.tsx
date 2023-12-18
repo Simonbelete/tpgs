@@ -25,6 +25,8 @@ import {
   Stack,
   Button,
   Typography,
+  Alert,
+  AlertTitle,
 } from "@mui/material";
 import { LabeledInput } from "@/components/inputs";
 import CloseIcon from "@mui/icons-material/Close";
@@ -115,10 +117,17 @@ export default function Form<
   const [createTrigger, createResult] = createEndpoint.useMutation();
   const [updateTrigger, updateResult] = updateEndpoint.useMutation();
 
-  const { handleSubmit, control, setError } = useForm<Inputs>({
+  const {
+    handleSubmit,
+    control,
+    setError,
+    formState: { errors },
+  } = useForm<Inputs>({
     defaultValues: data || ({} as any),
     resolver: yupResolver(schema),
   });
+
+  console.log(errors);
 
   const onSubmit: SubmitHandler<Inputs> = async (values) => {
     const cleaned_data = beforeSubmit == null ? values : beforeSubmit(values);
@@ -143,165 +152,186 @@ export default function Form<
   });
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <Grid container spacing={4}>
-        {Object.keys(fields).map((key, i) => {
-          // @ts-ignore
-          const options = fields[key] as Field;
+    <>
+      {Object.keys(errors).length != 0 ? (
+        <Alert severity="error" sx={{ mb: 3 }}>
+          <AlertTitle>Error</AlertTitle>
+          {Object.keys(errors).map((key, index) => {
+            return (
+              <div key={index}>
+                {/* @ts-ignore */}
+                <strong>
+                  {key.replace("_", " ").charAt(0).toUpperCase() +
+                    key.replace("_", " ").slice(1)}
+                </strong>{" "}
+                — {errors[key].message}
+              </div>
+            );
+          })}
+        </Alert>
+      ) : (
+        <></>
+      )}
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <Grid container spacing={4}>
+          {Object.keys(fields).map((key, i) => {
+            // @ts-ignore
+            const options = fields[key] as Field;
 
-          if (options.endpoint) {
-            return (
-              <Grid key={i} item xs={options.xs || 12} md={options.md || 6}>
-                <Controller
-                  // @ts-ignore
-                  name={key}
-                  control={control}
-                  render={({
-                    field: { onChange, value },
-                    fieldState: { error },
-                  }) => (
-                    <AsyncDropdown
-                      label={options.label}
-                      dataKey={options?.dataKey || "name"}
-                      endpoint={options.endpoint}
-                      createForm={options.form}
-                      placeholder={options.placeholder}
-                      onChange={(_, data) => onChange(data)}
-                      value={value}
-                      error={!!error?.message}
-                      helperText={error?.message}
-                      multiple={options.multiple}
-                      disabled={options.disabled}
-                    />
-                  )}
-                />
-              </Grid>
-            );
-          } else if (options.options) {
-            return (
-              <Grid key={i} item xs={options.xs || 12} md={options.md || 6}>
-                <Controller
-                  // @ts-ignore
-                  name={key}
-                  control={control}
-                  render={({
-                    field: { onChange, value },
-                    fieldState: { error },
-                  }) => (
-                    <Dropdown
-                      options={options.options}
-                      dataKey={options.datakey}
-                      onChange={(_, data) => onChange(data)}
-                      value={value}
-                      label={options.label}
-                      error={!!error?.message}
-                      helperText={error?.message}
-                    />
-                  )}
-                />
-              </Grid>
-            );
-          } else if (options.type == "date") {
-            return (
-              <Grid key={i} item xs={options.xs || 12} md={options.md || 6}>
-                <Controller
-                  // @ts-ignore
-                  name={key}
-                  control={control}
-                  render={({
-                    field: { onChange, value },
-                    fieldState: { error },
-                  }) => (
-                    <Stack gap={1}>
-                      <Typography variant="body2" fontWeight={700}>
-                        {options.label}
-                      </Typography>
-                      <DatePicker
-                        slotProps={{
-                          textField: {
-                            size: "small",
-                            fullWidth: true,
-                            error: !!error?.message,
-                            helperText: error?.message,
-                          },
-                        }}
-                        onChange={onChange}
-                        value={dayjs(value as string)}
+            if (options.endpoint) {
+              return (
+                <Grid key={i} item xs={options.xs || 12} md={options.md || 6}>
+                  <Controller
+                    // @ts-ignore
+                    name={key}
+                    control={control}
+                    render={({
+                      field: { onChange, value },
+                      fieldState: { error },
+                    }) => (
+                      <AsyncDropdown
+                        label={options.label}
+                        dataKey={options?.dataKey || "name"}
+                        endpoint={options.endpoint}
+                        createForm={options.form}
+                        placeholder={options.placeholder}
+                        onChange={(_, data) => onChange(data)}
+                        value={value}
+                        error={!!error?.message}
+                        helperText={error?.message}
+                        multiple={options.multiple}
+                        disabled={options.disabled}
                       />
-                    </Stack>
-                  )}
-                />
-              </Grid>
-            );
-          } else {
-            return (
-              <Grid key={i} item xs={options.xs || 12} md={options.md || 6}>
-                <Controller
-                  // @ts-ignore
-                  name={key}
-                  control={control}
-                  render={({
-                    field: { onChange, value },
-                    fieldState: { error },
-                  }) => (
-                    <LabeledInput
-                      name={key}
-                      error={!!error?.message}
-                      helperText={error?.message}
-                      onChange={onChange}
-                      fullWidth
-                      size="small"
-                      value={value ?? ""}
-                      label={options.label}
-                      placeholder={options.placeholder}
-                      disabled={options.disabled}
-                      InputProps={{
-                        endAdornment: (
-                          <InputAdornment position="start">
-                            {options.postfix}
-                          </InputAdornment>
-                        ),
-                      }}
-                    />
-                  )}
-                />
-              </Grid>
-            );
-          }
-        })}
-      </Grid>
-      <Box sx={{ mt: 5 }}>
-        <Stack
-          spacing={2}
-          direction={"row"}
-          justifyContent="flex-start"
-          alignItems="center"
-        >
-          <Box>
-            <Button
-              variant="contained"
-              size="small"
-              startIcon={<SaveIcon />}
-              onClick={() => handleSubmit(onSubmit)()}
-              data-testid="data-submit"
-            >
-              {data ? "Update" : "Create"}
-            </Button>
-          </Box>
-          <Box>
-            <Button
-              variant="outlined"
-              color="error"
-              size="small"
-              startIcon={<CloseIcon />}
-              onClick={() => router.push(getPreviousUrl(router.pathname))}
-              data-testid="data-cancel"
-            >
-              Cancel
-            </Button>
-          </Box>
-        </Stack>
-      </Box>
-    </form>
+                    )}
+                  />
+                </Grid>
+              );
+            } else if (options.options) {
+              return (
+                <Grid key={i} item xs={options.xs || 12} md={options.md || 6}>
+                  <Controller
+                    // @ts-ignore
+                    name={key}
+                    control={control}
+                    render={({
+                      field: { onChange, value },
+                      fieldState: { error },
+                    }) => (
+                      <Dropdown
+                        options={options.options}
+                        dataKey={options.datakey}
+                        onChange={(_, data) => onChange(data)}
+                        value={value}
+                        label={options.label}
+                        error={!!error?.message}
+                        helperText={error?.message}
+                      />
+                    )}
+                  />
+                </Grid>
+              );
+            } else if (options.type == "date") {
+              return (
+                <Grid key={i} item xs={options.xs || 12} md={options.md || 6}>
+                  <Controller
+                    // @ts-ignore
+                    name={key}
+                    control={control}
+                    render={({
+                      field: { onChange, value },
+                      fieldState: { error },
+                    }) => (
+                      <Stack gap={1}>
+                        <Typography variant="body2" fontWeight={700}>
+                          {options.label}
+                        </Typography>
+                        <DatePicker
+                          slotProps={{
+                            textField: {
+                              size: "small",
+                              fullWidth: true,
+                              error: !!error?.message,
+                              helperText: error?.message,
+                            },
+                          }}
+                          onChange={onChange}
+                          value={dayjs(value as string)}
+                        />
+                      </Stack>
+                    )}
+                  />
+                </Grid>
+              );
+            } else {
+              return (
+                <Grid key={i} item xs={options.xs || 12} md={options.md || 6}>
+                  <Controller
+                    // @ts-ignore
+                    name={key}
+                    control={control}
+                    render={({
+                      field: { onChange, value },
+                      fieldState: { error },
+                    }) => (
+                      <LabeledInput
+                        name={key}
+                        error={!!error?.message}
+                        helperText={error?.message}
+                        onChange={onChange}
+                        fullWidth
+                        size="small"
+                        value={value ?? ""}
+                        label={options.label}
+                        placeholder={options.placeholder}
+                        disabled={options.disabled}
+                        InputProps={{
+                          endAdornment: (
+                            <InputAdornment position="start">
+                              {options.postfix}
+                            </InputAdornment>
+                          ),
+                        }}
+                      />
+                    )}
+                  />
+                </Grid>
+              );
+            }
+          })}
+        </Grid>
+        <Box sx={{ mt: 5 }}>
+          <Stack
+            spacing={2}
+            direction={"row"}
+            justifyContent="flex-start"
+            alignItems="center"
+          >
+            <Box>
+              <Button
+                variant="contained"
+                size="small"
+                startIcon={<SaveIcon />}
+                onClick={() => handleSubmit(onSubmit)()}
+                data-testid="data-submit"
+              >
+                {data ? "Update" : "Create"}
+              </Button>
+            </Box>
+            <Box>
+              <Button
+                variant="outlined"
+                color="error"
+                size="small"
+                startIcon={<CloseIcon />}
+                onClick={() => router.push(getPreviousUrl(router.pathname))}
+                data-testid="data-cancel"
+              >
+                Cancel
+              </Button>
+            </Box>
+          </Stack>
+        </Box>
+      </form>
+    </>
   );
 }

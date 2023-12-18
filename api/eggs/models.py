@@ -22,7 +22,11 @@ class Egg(CoreModel):
 
     @property
     def display_name(self):
-        return "{chicken} ({week})".format(chicken=self.chicken.display_name, week=self.week)
+        return "{chicken} W{week}".format(chicken=self.chicken.display_name, week=self.week)
+
+    @property
+    def display_available_eggs(self):
+        return "{chicken} W{week} (Available Eggs {available_eggs}/{eggs})".format(chicken=self.chicken.tag, week=self.week, available_eggs=self.available_eggs, eggs=self.eggs)
 
     @property
     def hatchery_eggs(self):
