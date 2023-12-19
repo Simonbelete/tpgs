@@ -32,7 +32,7 @@ import { LabeledInput } from "@/components/inputs";
 import CloseIcon from "@mui/icons-material/Close";
 import SaveIcon from "@mui/icons-material/Save";
 import { useRouter } from "next/router";
-import { DatePicker } from "@mui/x-date-pickers";
+import { DatePicker, DateTimePicker } from "@mui/x-date-pickers";
 import AsyncDropdown from "../../components/AsyncDropdown";
 import getPreviousUrl from "@/util/getPreviousUrl";
 import dayjs from "dayjs";
@@ -159,12 +159,12 @@ export default function Form<
           {Object.keys(errors).map((key, index) => {
             return (
               <div key={index}>
-                {/* @ts-ignore */}
                 <strong>
                   {key.replace("_", " ").charAt(0).toUpperCase() +
                     key.replace("_", " ").slice(1)}
                 </strong>{" "}
-                — {errors[key].message}
+                — {/* @ts-ignore */}
+                {errors[key].message}
               </div>
             );
           })}
@@ -246,6 +246,38 @@ export default function Form<
                           {options.label}
                         </Typography>
                         <DatePicker
+                          slotProps={{
+                            textField: {
+                              size: "small",
+                              fullWidth: true,
+                              error: !!error?.message,
+                              helperText: error?.message,
+                            },
+                          }}
+                          onChange={onChange}
+                          value={dayjs(value as string)}
+                        />
+                      </Stack>
+                    )}
+                  />
+                </Grid>
+              );
+            } else if (options.type == "datetime") {
+              return (
+                <Grid key={i} item xs={options.xs || 12} md={options.md || 6}>
+                  <Controller
+                    // @ts-ignore
+                    name={key}
+                    control={control}
+                    render={({
+                      field: { onChange, value },
+                      fieldState: { error },
+                    }) => (
+                      <Stack gap={1}>
+                        <Typography variant="body2" fontWeight={700}>
+                          {options.label}
+                        </Typography>
+                        <DateTimePicker
                           slotProps={{
                             textField: {
                               size: "small",

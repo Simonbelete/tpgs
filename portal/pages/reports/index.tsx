@@ -4,88 +4,223 @@ import { useBreadcrumbs } from "@/hooks";
 import { Breadcrumbs } from "@/components";
 import { RegionList } from "@/features/regions";
 import { SeoHead } from "@/seo";
-import { Grid, Box, Container, Typography, Stack, Button } from "@mui/material";
+import {
+  Grid,
+  Box,
+  Container,
+  Typography,
+  Stack,
+  Button,
+  IconButton,
+  Paper,
+} from "@mui/material";
 import { useRouter } from "next/router";
 
 interface Report {
   title: string;
   description: string;
-  link: string;
+  reports: Array<{
+    title: string;
+    description: string;
+    link: string;
+  }>;
 }
 
 const ReportsPage = () => {
   const { breadcrumbs } = useBreadcrumbs();
   const router = useRouter();
 
-  const reports: Report[] = [
+  const data: Report[] = [
     {
-      title: "Egg productive laying",
-      description:
-        "Shows the actual percentage of productive laying chickens over a period of time",
-      link: "/reports/egg-productive",
-    },
-    {
-      title: "Hen-Day Egg Production (HDEP)",
+      title: "Mortality",
       description: "",
-      link: "/reports/hdep",
+      reports: [
+        {
+          title: "Mortality",
+          description: "",
+          link: "/reports/mortality",
+        },
+        {
+          title: "Livability",
+          description: "",
+          link: "/reports/livability",
+        },
+      ],
     },
     {
-      title: "Hen-Housed Egg Production (HHEP)",
+      title: "Egg productive",
       description: "",
-      link: "/reports/hhep",
-    },
-    {
-      title: "Egg Mass",
-      description:
-        "The use of egg mass rather than egg numbers will lead to better comparisons of flocks or strains of birds.",
-      link: "/reports/egg-mass",
-    },
-    {
-      title: "Egg Grading",
-      description: "",
-      link: "/reports/egg-grading",
-    },
-    {
-      title: "Average Egg Weight",
-      description: "",
-      link: "/reports/avg-egg-weight",
-    },
-    {
-      title: "Chicken Sex Percentage Distribution",
-      description: "",
-      link: "/reports/gender-percentage-distribution",
-    },
-    {
-      title: "Growth Performance",
-      description: "",
-      link: "/reports/growth-performance",
-    },
-    {
-      title: "Feed consumption by body weight",
-      description: "",
-      link: "/reports/feed-by-weight",
-    },
-    {
-      title: "Body weight graph",
-      description: "",
-      link: "/reports/weight-graph",
-    },
-    {
-      title: "Feed intake graph",
-      description: "",
-      link: "/reports/feed-graph",
+      reports: [
+        {
+          title: "Egg productive laying",
+          description:
+            "Shows the actual percentage of productive laying chickens over a period of time",
+          link: "/reports/egg-productive",
+        },
+        {
+          title: "Hen-Day Egg Production (HDEP)",
+          description: "",
+          link: "/reports/hdep",
+        },
+        {
+          title: "Hen-Housed Egg Production (HHEP)",
+          description: "",
+          link: "/reports/hhep",
+        },
+        {
+          title: "Egg Mass",
+          description:
+            "The use of egg mass rather than egg numbers will lead to better comparisons of flocks or strains of birds.",
+          link: "/reports/egg-mass",
+        },
+        {
+          title: "Egg Grading",
+          description: "",
+          link: "/reports/egg-grading",
+        },
+        {
+          title: "Average Egg Weight",
+          description: "",
+          link: "/reports/avg-egg-weight",
+        },
+      ],
     },
   ];
+
+  // const reports: Report[] = [
+  //   {
+  //     title: "Egg productive laying",
+  //     description:
+  //       "Shows the actual percentage of productive laying chickens over a period of time",
+  //     link: "/reports/egg-productive",
+  //   },
+  //   {
+  //     title: "Hen-Day Egg Production (HDEP)",
+  //     description: "",
+  //     link: "/reports/hdep",
+  //   },
+  //   {
+  //     title: "Hen-Housed Egg Production (HHEP)",
+  //     description: "",
+  //     link: "/reports/hhep",
+  //   },
+  //   {
+  //     title: "Egg Mass",
+  //     description:
+  //       "The use of egg mass rather than egg numbers will lead to better comparisons of flocks or strains of birds.",
+  //     link: "/reports/egg-mass",
+  //   },
+  //   {
+  //     title: "Egg Grading",
+  //     description: "",
+  //     link: "/reports/egg-grading",
+  //   },
+  //   {
+  //     title: "Average Egg Weight",
+  //     description: "",
+  //     link: "/reports/avg-egg-weight",
+  //   },
+  //   {
+  //     title: "Chicken Sex Percentage Distribution",
+  //     description: "",
+  //     link: "/reports/gender-percentage-distribution",
+  //   },
+  //   {
+  //     title: "Growth Performance",
+  //     description: "",
+  //     link: "/reports/growth-performance",
+  //   },
+  //   {
+  //     title: "Feed consumption by body weight",
+  //     description: "",
+  //     link: "/reports/feed-by-weight",
+  //   },
+  //   {
+  //     title: "Body weight graph",
+  //     description: "",
+  //     link: "/reports/weight-graph",
+  //   },
+  //   {
+  //     title: "Feed intake graph",
+  //     description: "",
+  //     link: "/reports/feed-graph",
+  //   },
+  // ];
 
   return (
     <>
       <SeoHead title="Reporting" />
-      <ListLayout
-        breadcrumbs={<Breadcrumbs items={breadcrumbs} />}
-        header={<Typography variant="title">Reports</Typography>}
-      >
+      <ListLayout breadcrumbs={<Breadcrumbs items={breadcrumbs} />}>
         <Container maxWidth="lg">
-          <Grid container>
+          <Grid
+            container
+            direction="row"
+            justifyContent="space-between"
+            alignItems="center"
+            item
+            xs={12}
+          >
+            <Typography
+              variant="h3"
+              fontWeight={600}
+              color={"text.primary"}
+              sx={{ mb: 5 }}
+            >
+              Reports
+            </Typography>
+          </Grid>
+          <Grid
+            container
+            columns={{ xs: 1, md: 2 }}
+            columnSpacing={4}
+            spacing={4}
+          >
+            {data?.map((e: any, i) => (
+              <Grid key={i} item xs sx={{ mb: 5 }}>
+                <Typography
+                  sx={{ mb: 2 }}
+                  variant="overline"
+                  color="text.secondary"
+                >
+                  {e.title}
+                </Typography>
+                {e.reports.map((t: any, j: any) => (
+                  <Paper
+                    key={j}
+                    sx={{ px: 1, py: 0, mb: 1 }}
+                    elevation={6}
+                    variant="outlined"
+                  >
+                    <Grid
+                      container
+                      direction="row"
+                      justifyContent="space-between"
+                      alignItems="center"
+                      item
+                      xs={12}
+                      sx={{}}
+                    >
+                      <Typography
+                        variant="body2"
+                        fontWeight={500}
+                        color={"text.primary"}
+                      >
+                        {t.title}
+                      </Typography>
+                      <Button
+                        size="small"
+                        variant="text"
+                        onClick={() => router.push(t.link)}
+                      >
+                        View
+                      </Button>
+                    </Grid>
+                  </Paper>
+                ))}
+              </Grid>
+            ))}
+          </Grid>
+          {/* <Grid container>
             {reports.map((e, i) => (
               <Grid
                 key={i}
@@ -130,7 +265,7 @@ const ReportsPage = () => {
                 </Box>
               </Grid>
             ))}
-          </Grid>
+          </Grid> */}
         </Container>
       </ListLayout>
     </>

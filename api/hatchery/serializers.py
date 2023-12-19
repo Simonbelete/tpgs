@@ -2,6 +2,14 @@ from rest_framework import serializers
 
 from . import models
 from breeds.serializers import BreedSerializer_SLUG
+from eggs.models import Egg
+
+
+class EggSerializer_SLUG(serializers.ModelSerializer):
+    class Meta:
+        model = Egg
+        fields = ['id', 'display_name', 'display_available_eggs']
+
 
 # Hatchery
 
@@ -18,8 +26,8 @@ class HatcherySerializer_GET(serializers.ModelSerializer):
 
     class Meta:
         model = models.Hatchery
-        fields = ['id', 'name', 'display_name',
-                  'incubation_moved_date', 'hatch_date', 'breed', 'note']
+        fields = ['id', 'name', 'display_name', 'hatchery_egg_count', 'incubation_count',
+                  'incubation_moved_date', 'hatch_date', 'breed', 'note', 'is_active', 'created_at']
 
 
 class HatcherySerializer_POST(serializers.ModelSerializer):
@@ -38,15 +46,19 @@ class HatcheryHistorySerializer(serializers.ModelSerializer):
 
 
 class HatcheryEggSerializer_GET(serializers.ModelSerializer):
+    hatchery = HatcherySerializer_SLUG()
+    egg = EggSerializer_SLUG()
+
     class Meta:
         model = models.HatcheryEgg
-        fields = '__all__'
+        fields = ['id', 'display_name', 'hatchery', 'egg', 'no_eggs', 'canndle_date', 'candled_eggs',
+                  'infertile_egg', 'no_of_hatched', 'no_dead', 'no_culled', 'is_active', 'created_at']
 
 
 class HatcheryEggSerializer_POST(serializers.ModelSerializer):
     class Meta:
         model = models.HatcheryEgg
-        fields = ['egg', 'no_eggs', 'canndle_date', 'candled_eggs',
+        fields = ['hatchery', 'egg', 'no_eggs', 'canndle_date', 'candled_eggs', 'is_active',
                   'infertile_egg', 'no_of_hatched', 'no_dead', 'no_culled']
 
     def create(self, validated_data):
@@ -65,9 +77,11 @@ class HatcheryEggHistorySerializer(serializers.ModelSerializer):
 
 # Incubations
 class IncubationSerializer_GET(serializers.ModelSerializer):
+    hatchery = HatcherySerializer_SLUG()
+
     class Meta:
         model = models.Incubation
-        fields = ['hatchery', 'date_time', 'temperature_celsius',
+        fields = ['id', 'display_name', 'hatchery', 'date_time', 'temperature_celsius',
                   'humidity_fahrenheit', 'humidity_percent', 'remark']
 
 

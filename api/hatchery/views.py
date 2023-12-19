@@ -102,8 +102,8 @@ class IncubationViewSet(CoreModelViewSet):
 
     def get_serializer_class(self):
         if self.request.method in ['POST', 'PUT', 'PATCH']:
-            return serializers.HatcheryEggSerializer_POST
-        return serializers.HatcheryEggSerializer_GET
+            return serializers.IncubationSerializer_POST
+        return serializers.IncubationSerializer_GET
 
 
 class IncubationExport(GenericExportView):

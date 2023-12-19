@@ -18,6 +18,14 @@ class Hatchery(CoreModel):
     def display_name(self):
         return self.name
 
+    @property
+    def hatchery_egg_count(self):
+        return HatcheryEgg.objects.filter(hatchery=self.id).count()
+
+    @property
+    def incubation_count(self):
+        return Incubation.objects.filter(hatchery=self.id).count()
+
 
 class HatcheryEgg(CoreModel):
     """ Single Chicken's egg """
@@ -37,6 +45,10 @@ class HatcheryEgg(CoreModel):
     no_culled = models.IntegerField(null=True, blank=True)
     history = HistoricalRecords()
 
+    @property
+    def display_name(self):
+        return "{hatchery} {egg}".format(hatchery=self.hatchery.name, egg=self.egg.display_name)
+
 
 class Incubation(CoreModel):
     hatchery = models.ForeignKey(
@@ -50,3 +62,7 @@ class Incubation(CoreModel):
         max_digits=6, decimal_places=3, default=0)
     remark = models.TextField(null=True, blank=True)
     history = HistoricalRecords()
+
+    @property
+    def display_name(self):
+        return "{hatchery} {date}".format(hatchery=self.hatchery.name, date=self.date_time)

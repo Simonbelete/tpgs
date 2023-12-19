@@ -6,9 +6,9 @@ import { hatcheryEggApi } from "../services";
 import { hatcheryApi } from "@/features/hatchery/services";
 import dayjs from "dayjs";
 import { eggApi } from "@/features/eggs/services";
+import _ from "lodash";
 
 const schema = yup.object({
-  name: yup.string().required(),
   hatchery: yup.object().required(),
   egg: yup.object().required(),
   no_eggs: yup.number().min(1).required(),
@@ -46,6 +46,7 @@ export const HatcheryEggForm = ({
               process.env.NEXT_PUBLIC_API_DATE_FORMAT
             ),
             hatchery: (values.hatchery as Hatchery).id || 0,
+            egg: _.get(values.egg, "id", 0),
             no_eggs: values.no_eggs,
             candled_eggs: values.candled_eggs,
             infertile_egg: values.infertile_egg,

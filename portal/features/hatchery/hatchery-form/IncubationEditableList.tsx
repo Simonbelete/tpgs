@@ -1,108 +1,110 @@
 import React, { useState } from "react";
-import {
-  GridColDef,
-  GridToolbarColumnsButton,
-  GridToolbarContainer,
-  GridToolbarDensitySelector,
-  GridToolbarQuickFilter,
-} from "@mui/x-data-grid";
-import { HatcheryEgg, Hatchery } from "@/models";
-import { ToolbarList, EditAction } from "@/lib/crud";
-import { Box, Button } from "@mui/material";
+import { GridColDef, GridRowsProp } from "@mui/x-data-grid";
+import { Nutrient, Incubation, Hatchery } from "@/models";
+import { EditableList, EditToolbar, ToolbarList } from "@/lib/crud";
+import { nutrientApi } from "@/features/nutrients/services";
 import { EditMode } from "@/types";
-import RefreshIcon from "@mui/icons-material/Refresh";
-import AddIcon from "@mui/icons-material/Add";
-import Link from "next/link";
 import { hatcheryApi } from "../services";
 
-export interface EditableHatcheryEgg extends HatcheryEgg, EditMode {}
+export interface EditableIncubation extends Incubation, EditMode {}
 
-const HatcheryEggToolbar = ({
+const IncubationToolbar = ({
   setRows,
   rows,
   refetch,
 }: {
-  setRows: any;
-  rows: any;
+  setRows: (
+    newRows: (
+      oldRows: GridRowsProp<EditableIncubation>
+    ) => GridRowsProp<EditableIncubation>
+  ) => void;
+  rows: GridRowsProp<EditableIncubation>;
   refetch: () => void;
 }) => {
   return (
-    <GridToolbarContainer
-      sx={{ display: "flex", justifyContent: "space-between" }}
-    >
-      <Box>
-        <GridToolbarColumnsButton />
-        <GridToolbarDensitySelector />
-        <Button
-          color="primary"
-          startIcon={<RefreshIcon />}
-          variant="text"
-          onClick={() => refetch()}
-          size={"small"}
-        >
-          Refresh
-        </Button>
-        <Link href="/candling/create">
-          <Button
-            color="primary"
-            startIcon={<AddIcon />}
-            variant="text"
-            size={"small"}
-          >
-            Add new
-          </Button>
-        </Link>
-      </Box>
-      <GridToolbarQuickFilter />
-    </GridToolbarContainer>
+    <EditToolbar<EditableIncubation, Nutrient>
+      refetch={refetch}
+      title="Add Nutrient"
+      setRows={setRows}
+      rows={rows}
+      endpoint={nutrientApi.endpoints.getNutrients}
+      mapperKey="nutrient"
+    />
   );
 };
 
-const HatcheryEggEditableList = ({ data }: { data: Hatchery }) => {
+const IncubationEditableList = ({ data }: { data: Hatchery }) => {
   const columns: GridColDef[] = [
     {
-      field: "nutrient__name",
-      headerName: "Name",
+      field: "egg__week",
+      headerName: "Week",
       filterable: false,
-      valueGetter: (params) =>
-        params.row.nutrient ? params.row.nutrient.name : "",
+      valueGetter: (params) => (params.row.egg ? params.row.egg.week : ""),
     },
     {
-      field: "nutrient__abbreviation",
-      headerName: "Abbreviation",
-      flex: 1,
-      minWidth: 50,
+      field: "egg__eggs",
+      headerName: "No of eggs",
       filterable: false,
-      valueGetter: (params) =>
-        params.row.nutrient ? params.row.nutrient.abbreviation : "",
+      valueGetter: (params) => (params.row.egg ? params.row.egg.eggs : ""),
     },
     {
-      field: "value",
-      headerName: "Value [%]",
+      field: "no_egg",
+      headerName: "Egg Set",
       minWidth: 100,
       filterable: false,
       editable: true,
       type: "number",
     },
     {
-      field: "nutrient__unit",
-      headerName: "Unit",
-      flex: 1,
+      field: "no_egg",
+      headerName: "Egg Set",
+      minWidth: 100,
       filterable: false,
-      valueGetter: (params) =>
-        params.row.nutrient ? params.row.nutrient.unit.name : "",
+      editable: true,
+      type: "date",
+    },
+    {
+      field: "no_egg",
+      headerName: "Egg Set",
+      minWidth: 100,
+      filterable: false,
+      editable: true,
+      type: "number",
+    },
+    {
+      field: "no_egg",
+      headerName: "Egg Set",
+      minWidth: 100,
+      filterable: false,
+      editable: true,
+      type: "number",
+    },
+    {
+      field: "no_egg",
+      headerName: "Egg Set",
+      minWidth: 100,
+      filterable: false,
+      editable: true,
+      type: "number",
     },
   ];
 
+  const beforeSubmit = (values: Partial<Incubation>) => {
+    return values;
+  };
+
   return (
-    <ToolbarList<HatcheryEgg>
+    <EditableList<Incubation>
       getQuery={{ id: data?.id, query: {} }}
-      actions={[EditAction]}
-      toolbar={HatcheryEggToolbar}
+      toolbar={IncubationToolbar}
       columns={columns}
-      getEndpoint={hatcheryApi.endpoints.getEggsOfHatchery}
+      beforeSubmit={beforeSubmit}
+      getEndpoint={hatcheryApi.endpoints.getIncubationOfHatchery}
+      createEndpoint={hatcheryApi.endpoints.createIncubationForHatchery}
+      updateEndpoint={hatcheryApi.endpoints.updateIncubationOfHatchery}
+      deleteEndpoint={hatcheryApi.endpoints.deleteIncubationOfHatchery}
     />
   );
 };
 
-export default HatcheryEggEditableList;
+export default IncubationEditableList;

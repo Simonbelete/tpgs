@@ -86,6 +86,9 @@ wbft_router = routers.DefaultRouter()
 wbft_router.register(
     r'analyses/(?P<farm_id>.+)/(?P<flock_id>.+)/(?P<house_id>.+)/wbft', views.WBFT, basename="api_wbft")
 
+mortality_router = routers.DefaultRouter()
+mortality_router.register(
+    r'analyses/mortality', views.MortalityViewSet, basename="api_mortality")
 
 urlpatterns = [
     path('', include(router.urls)),
@@ -100,4 +103,5 @@ urlpatterns = [
     path('', include(fcre_router.urls)),
     path('', include(fcrw_router.urls)),
     path('', include(egg_mass_router.urls)),
+    path('', include(mortality_router.urls)),
 ]

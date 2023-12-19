@@ -23,8 +23,6 @@ export const CandlingList = () => {
       headerName: "Hatchery",
       flex: 1,
       minWidth: 150,
-      valueGetter: (params) =>
-        params.row.nutrient_group ? params.row.nutrient_group.name : "",
       renderCell: (params: GridRenderCellParams<any>) => {
         if (params.row.hatchery == null) return <></>;
         return (
@@ -37,29 +35,40 @@ export const CandlingList = () => {
       },
     },
     {
-      field: "date_time",
-      headerName: "Date",
+      field: "egg",
+      headerName: "Egg",
+      flex: 1,
+      minWidth: 150,
+      renderCell: (params: GridRenderCellParams<any>) => {
+        if (params.row.egg == null) return <></>;
+        return (
+          <Typography color={"link.primary"} variant="body2">
+            <Link href={`/eggs/${params.row.egg.id}`}>
+              {params.row.egg.display_name}
+            </Link>
+          </Typography>
+        );
+      },
+    },
+    {
+      field: "no_eggs",
+      headerName: "No of eggs",
+      flex: 1,
+    },
+    {
+      field: "canndle_date",
+      headerName: "Canndle Date",
       flex: 1,
       valueGetter: (params) =>
-        params.row.created_at
+        params.row.date_time
           ? dayjs(params.row.date_time).format(
-              process.env.NEXT_PUBLIC_DATETIME_FORMAT
+              process.env.NEXT_PUBLIC_DATE_FORMAT
             )
           : "",
     },
     {
-      field: "temperature_celsius",
-      headerName: "Temperature (°C)",
-      flex: 1,
-    },
-    {
-      field: "humidity_fahrenheit",
-      headerName: "Humidity (°F)",
-      flex: 1,
-    },
-    {
-      field: "humidity_percent",
-      headerName: "Humidity (%)",
+      field: "candled_eggs",
+      headerName: "Candled Eggs",
       flex: 1,
     },
   ];

@@ -52,7 +52,8 @@ class Chicken(CoreModel):
     def age_in_days(self):
         if self.hatch_date == None:
             return 0
-        return (date.today() - self.hatch_date).days
+        start_date = self.reduction_date if self.reduction_date else date.today()
+        return (start_date - self.hatch_date).days
 
     @property
     def age_in_weeks(self):

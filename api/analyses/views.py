@@ -6,7 +6,7 @@ from django.db.models import Count, Sum, Avg, F, Q, ExpressionWrapper, DecimalFi
 from django_tenants.utils import tenant_context
 from drf_spectacular.utils import extend_schema, OpenApiParameter
 from django.db import connection
-from datetime import timedelta, date
+from datetime import timedelta, date, datetime
 from rest_framework.exceptions import NotFound
 import numpy as np
 
@@ -1166,3 +1166,47 @@ class FeedGraphViewSet(AnalysesViewSet):
                     })
 
                 return Response({'results': results})
+
+
+class MortalityViewSet(AnalysesViewSet):
+    @extend_schema(
+        parameters=ANALYSES_PARAMETERS
+    )
+    def list(self, request, **kwargs):
+        start_week = int(self.request.GET.get('start_week', 0))
+        end_week = int(self.request.GET.get('end_week', 20))
+        reduction_reason_id = int(self.request.GET.get('reduction_reason', 0))
+
+        with tenant_context(self.get_farm(self.request.GET.get('farm', 0))):
+            queryset = self.filter_by_directory()
+            queryset_ids = list(zip(*queryset.values_list('id')))
+            queryset_ids = queryset_ids if len(
+                queryset_ids) == 0 else queryset_ids[0]
+
+            duration = ExpressionWrapper(
+                F('reduction_date') - F('hatch_date'), output_field=DurationField())
+            queryset = queryset.filter(~Q(hatch_date=None)).annotate(
+                duration=duration)
+
+            print('-------------')
+            print(queryset.count())
+
+            results = []
+            for week in range(start_week, end_week + 1):
+                current_queryset = queryset.filter(
+                    duration=timedelta(weeks=week))
+
+                all_chickens = current_queryset.count()
+                if (reduction_reason_id == 0):
+                    dead_chickens = current_queryset.filter(
+                        reduction_reason=reduction_reason_id).count()
+                else:
+                    dead_chickens = current_queryset.count()
+
+                mortality = dead_chickens/all_chickens * 100
+
+                results.append({
+                    'mortality': mortality
+                })
+
+            return Response({'results': results})

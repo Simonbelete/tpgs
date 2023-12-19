@@ -69,6 +69,10 @@ const ChickenReductionSelectDialog = ({ chicken }: { chicken: Chicken }) => {
     await updateChicken({ ...body, id: chicken.id });
   };
 
+  {
+    console.log(chicken);
+  }
+
   return (
     <>
       <Stack direction={"row"} justifyContent="space-between">
@@ -77,14 +81,18 @@ const ChickenReductionSelectDialog = ({ chicken }: { chicken: Chicken }) => {
           <>
             <Typography component="span" gutterBottom={true}>
               <Typography variant="body2" fontWeight={600}>
-                Restore
+                {dayjs(chicken?.reduction_date).isValid()
+                  ? dayjs(chicken?.reduction_date).format(
+                      process.env.NEXT_PUBLIC_DATE_FORMAT
+                    )
+                  : "-"}
               </Typography>
               <Typography
                 variant="caption"
                 color="text.light"
                 sx={{ lineHeight: 0 }}
               >
-                Restore Chicken
+                {_.get(chicken.reduction_reason, "name", "")}
               </Typography>
             </Typography>
             <Box>

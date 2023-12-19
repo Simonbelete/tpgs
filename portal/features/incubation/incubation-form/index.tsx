@@ -7,24 +7,29 @@ import { hatcheryApi } from "@/features/hatchery/services";
 import dayjs from "dayjs";
 
 const schema = yup.object({
-  name: yup.string().required(),
-  house: yup.object().required(),
+  hatchery: yup.object().required(),
+  date_time: yup.string().required(),
+  temperature_celsius: yup.number().nullable(),
+  humidity_fahrenheit: yup.number().nullable(),
+  humidity_percent: yup.number().nullable(),
+  remark: yup.string().nullable(),
 });
 
 export const IncubationForm = ({
-  pen,
-  redirect = true,
+  data,
+  shallowRoute = true,
 }: {
-  pen?: Incubation;
-  redirect?: boolean;
+  data?: Incubation;
+  shallowRoute?: boolean;
 }) => {
   return (
     <>
       <FormLayout<Incubation>
         title={"Incubation"}
-        id={pen?.id || 0}
-        data={pen}
+        id={data?.id || 0}
+        data={data}
         schema={schema}
+        shallowRoute={shallowRoute}
         createEndpoint={incubationApi.endpoints.createIncubation}
         updateEndpoint={incubationApi.endpoints.updateIncubation}
         deleteEndpoint={incubationApi.endpoints.deleteIncubation}
@@ -36,6 +41,10 @@ export const IncubationForm = ({
               process.env.NEXT_PUBLIC_API_DATETIME_FORMAT
             ),
             hatchery: (values.hatchery as Hatchery).id || 0,
+            temperature_celsius: values.temperature_celsius,
+            humidity_fahrenheit: values.humidity_fahrenheit,
+            humidity_percent: values.humidity_percent,
+            remark: values.remark,
           };
 
           return cleaned_data;
@@ -65,6 +74,10 @@ export const IncubationForm = ({
             label: "Humidity (%)",
             placeholder: "Humidity (%)",
             postfix: "%",
+          },
+          remark: {
+            label: "Remark",
+            placeholder: "Remark",
           },
         }}
       />

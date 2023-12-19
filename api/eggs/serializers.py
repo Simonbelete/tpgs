@@ -4,6 +4,12 @@ from . import models
 from chickens.serializers import ChickenSerializer_SLUG
 
 
+class EggSerializer_SLUG(serializers.ModelSerializer):
+    class Meta:
+        model = models.Egg
+        fields = ['id', 'display_name']
+
+
 class EggSerializer_GET(serializers.ModelSerializer):
     chicken = ChickenSerializer_SLUG()
 

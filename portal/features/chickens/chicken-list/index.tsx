@@ -55,7 +55,7 @@ export const ChickenList = () => {
     { field: "sex", headerName: "Tag", flex: 1 },
     {
       field: "hatcher",
-      headerName: "Hatcher",
+      headerName: "Hatch",
       flex: 1,
       minWidth: 150,
       renderCell: (params: GridRenderCellParams<any>) => {
@@ -68,6 +68,17 @@ export const ChickenList = () => {
           </Typography>
         );
       },
+    },
+    {
+      field: "hatch_date",
+      headerName: "Hatch Date",
+      flex: 1,
+      valueGetter: (params) =>
+        params.row.hatch_date
+          ? dayjs(params.row.hatch_date).format(
+              process.env.NEXT_PUBLIC_DATE_FORMAT
+            )
+          : "",
     },
     {
       field: "reduction_date",

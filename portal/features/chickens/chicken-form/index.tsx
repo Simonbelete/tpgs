@@ -126,75 +126,84 @@ export const ChickenForm = ({
         </Tabs>
         <Box sx={{ pt: 5 }}>
           {tab == 0 && (
-            <Card title="Chicken Form">
-              <Form<Chicken>
-                data={
-                  {
-                    ...formData,
-                    sex: _.find(sexOptions, { value: formData?.sex }),
-                  } as any
-                }
-                schema={schema}
-                shallowRoute={shallowRoute}
-                createEndpoint={chickenApi.endpoints.createChicken}
-                updateEndpoint={chickenApi.endpoints.updateChicken}
-                beforeSubmit={(values: Partial<Chicken>) => {
-                  const cleaned_data: Partial<Chicken> = {
-                    id: values.id,
-                    tag: values.tag,
-                    sex: _.get(values, "sex.value", null),
-                    sire: _.get(values, "sire.id", null),
-                    dam: _.get(values, "dam.id", null),
-                    hatchery: _.get(values, "hatchery.id", null),
-                    pen: _.get(values, "pen.id", null),
-                  };
+            <>
+              <Card title="Chicken">
+                <Form<Chicken>
+                  data={
+                    {
+                      ...formData,
+                      sex: _.find(sexOptions, { value: formData?.sex }),
+                    } as any
+                  }
+                  schema={schema}
+                  shallowRoute={shallowRoute}
+                  createEndpoint={chickenApi.endpoints.createChicken}
+                  updateEndpoint={chickenApi.endpoints.updateChicken}
+                  beforeSubmit={(values: Partial<Chicken>) => {
+                    const cleaned_data: Partial<Chicken> = {
+                      id: values.id,
+                      tag: values.tag,
+                      sex: _.get(values, "sex.value", null),
+                      sire: _.get(values, "sire.id", null),
+                      dam: _.get(values, "dam.id", null),
+                      hatchery: _.get(values, "hatchery.id", null),
+                      pen: _.get(values, "pen.id", null),
+                    };
 
-                  return cleaned_data;
-                }}
-                fields={{
-                  tag: { label: "Tag", placeholder: "Tag", xs: 12, md: 6 },
-                  sex: {
-                    label: "Sex",
-                    placeholder: "Sex",
-                    options: sexOptions,
-                    dataKey: "value",
-                    xs: 12,
-                    md: 6,
-                  },
-                  sire: {
-                    label: "Sire",
-                    placeholder: "Select Sire",
-                    endpoint: chickenApi.endpoints.getMaleChickens,
-                    dataKey: "display_name",
-                    xs: 12,
-                    md: 6,
-                  },
-                  dam: {
-                    label: "Dam",
-                    placeholder: "Select Dam",
-                    endpoint: chickenApi.endpoints.getFeMaleChickens,
-                    dataKey: "display_name",
-                    xs: 12,
-                    md: 6,
-                  },
-                  hatchery: {
-                    label: "Hatchery",
-                    placeholder: "Select Hatchery",
-                    endpoint: hatcheryApi.endpoints.getHatchery,
-                    xs: 12,
-                    md: 6,
-                  },
-                  pen: {
-                    label: "Pen",
-                    placeholder: "Select Pen",
-                    endpoint: penApi.endpoints.getPens,
-                    xs: 12,
-                    md: 6,
-                  },
-                }}
-                onCreateSuccess={handleCreated}
-              />
-            </Card>
+                    return cleaned_data;
+                  }}
+                  fields={{
+                    tag: { label: "Tag", placeholder: "Tag", xs: 12, md: 6 },
+                    sex: {
+                      label: "Sex",
+                      placeholder: "Sex",
+                      options: sexOptions,
+                      dataKey: "value",
+                      xs: 12,
+                      md: 6,
+                    },
+                    sire: {
+                      label: "Sire",
+                      placeholder: "Select Sire",
+                      endpoint: chickenApi.endpoints.getMaleChickens,
+                      dataKey: "display_name",
+                      xs: 12,
+                      md: 6,
+                    },
+                    dam: {
+                      label: "Dam",
+                      placeholder: "Select Dam",
+                      endpoint: chickenApi.endpoints.getFeMaleChickens,
+                      dataKey: "display_name",
+                      xs: 12,
+                      md: 6,
+                    },
+                    hatchery: {
+                      label: "Hatchery",
+                      placeholder: "Select Hatchery",
+                      endpoint: hatcheryApi.endpoints.getHatchery,
+                      xs: 12,
+                      md: 6,
+                    },
+                    hatch_date: {
+                      label: "Hatch Date",
+                      placeholder: "Hatch Date",
+                      type: "date",
+                      xs: 12,
+                      md: 6,
+                    },
+                    pen: {
+                      label: "Pen",
+                      placeholder: "Select Pen",
+                      endpoint: penApi.endpoints.getPens,
+                      xs: 12,
+                      md: 6,
+                    },
+                  }}
+                  onCreateSuccess={handleCreated}
+                />
+              </Card>
+            </>
           )}
 
           {formData && tab == 1 && <SiblingsList data={formData} />}

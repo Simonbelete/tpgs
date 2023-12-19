@@ -19,8 +19,8 @@ import { EditMode } from "@/types";
 import { eggApi } from "@/features/eggs/services";
 import { breedApi } from "@/features/breeds/services";
 import { BreedForm } from "@/features/breeds";
-// import HatcheryEggEditableList from "./HatcheryEggEditableList";
-// import IncubationEditableList from "./IncubationEditableList";
+import HatcheryEggEditableList from "./HatcheryEggEditableList";
+import IncubationEditableList from "./IncubationEditableList";
 
 const schema = yup.object({
   name: yup.string().required(),
@@ -75,16 +75,6 @@ export const HatcheryForm = ({ data }: { data?: Hatchery }) => {
     return values;
   };
 
-  // const cleanHatcheryEgg = (
-  //   values: Partial<HatcheryEgg>
-  // ): Partial<HatcheryEgg> => {
-  //   return {
-  //     id: data?.id, // Only for post data
-  //     hatchery: data?.id,
-  //     egg: (values.egg as Egg).id || undefined,
-  //   };
-  // };
-
   const handleCreated = (value: Hatchery) => {
     setFormData(value);
   };
@@ -121,9 +111,9 @@ export const HatcheryForm = ({ data }: { data?: Hatchery }) => {
           <Tab label="Detail" {...a11yProps(0)} />
           {formData && (
             <Tab
-              label="Hatchery"
+              label="Candling"
               iconPosition="end"
-              icon={<Chip label={0} size="small" />}
+              icon={<Chip label={formData.hatchery_egg_count} size="small" />}
               {...a11yProps(1)}
             />
           )}
@@ -131,7 +121,7 @@ export const HatcheryForm = ({ data }: { data?: Hatchery }) => {
             <Tab
               label="Incubation"
               iconPosition="end"
-              icon={<Chip label={0} size="small" />}
+              icon={<Chip label={formData.incubation_count} size="small" />}
               {...a11yProps(1)}
             />
           )}
@@ -179,8 +169,8 @@ export const HatcheryForm = ({ data }: { data?: Hatchery }) => {
               />
             </Card>
           )}
-          {/* {formData && tab == 1 && <HatcheryEggEditableList data={formData} />} */}
-          {/* {formData && tab == 2 && <IncubationEditableList data={formData} />} */}
+          {formData && tab == 1 && <HatcheryEggEditableList data={formData} />}
+          {formData && tab == 2 && <IncubationEditableList data={formData} />}
         </Box>
       </TabFormLayout>
     </>
