@@ -61,6 +61,12 @@ class Chicken(CoreModel):
             return 0
         return math.floor(self.age_in_days/7)
 
+    @property
+    def reduction_in_weeks(self):
+        if not self.hatch_date or not self.reduction_date:
+            return 0
+        return math.floor((self.reduction_date - self.hatch_date).days / 7)
+
     def offspring(self):
         if self.sex == 'M':
             return self.children_of_sire.all()
@@ -69,7 +75,6 @@ class Chicken(CoreModel):
         else:
             return []
 
-    @property
     def parents(self):
         parents = []
         if (self.sire):

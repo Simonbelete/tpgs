@@ -69,10 +69,6 @@ const ChickenReductionSelectDialog = ({ chicken }: { chicken: Chicken }) => {
     await updateChicken({ ...body, id: chicken.id });
   };
 
-  {
-    console.log(chicken);
-  }
-
   return (
     <>
       <Stack direction={"row"} justifyContent="space-between">

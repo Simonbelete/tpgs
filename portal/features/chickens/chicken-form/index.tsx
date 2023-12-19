@@ -17,13 +17,14 @@ import { hatcheryApi } from "@/features/hatchery/services";
 import { penApi } from "@/features/pen/services";
 import _ from "lodash";
 import { Card } from "@/components";
-import { Box, Tabs, Tab, tabsClasses, Chip } from "@mui/material";
+import { Box, Tabs, Tab, tabsClasses, Chip, Alert } from "@mui/material";
 import ChickenReductionSelectDialog from "./ChickenReductionModal";
 import OffspringList from "./OffspringList";
 import SiblingsList from "./SiblingsList";
 import EggList from "./EggList";
 import WeightList from "./WeightList";
 import FeedList from "./FeedList";
+import dayjs from "dayjs";
 
 const schema = yup.object({
   tag: yup.string().required(),
@@ -127,6 +128,18 @@ export const ChickenForm = ({
         <Box sx={{ pt: 5 }}>
           {tab == 0 && (
             <>
+              {formData && formData.reduction_date && (
+                <Alert severity="info" sx={{ mb: 3 }}>
+                  {dayjs(formData?.reduction_date).isValid()
+                    ? dayjs(formData?.reduction_date).format(
+                        process.env.NEXT_PUBLIC_DATE_FORMAT
+                      )
+                    : "-"}{" "}
+                  ({formData.reduction_in_weeks} Week) —{" "}
+                  {_.get(formData.reduction_reason, "name", "")}
+                </Alert>
+              )}
+
               <Card title="Chicken">
                 <Form<Chicken>
                   data={

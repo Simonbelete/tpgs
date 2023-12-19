@@ -17,5 +17,6 @@ export default interface Chicken extends AbstractBaseModel {
   pen: null | number | Pen;
   reduction_date: null | string;
   reduction_reason: null | string;
+  reduction_in_weeks?: number;
   generation: null | number;
 }
