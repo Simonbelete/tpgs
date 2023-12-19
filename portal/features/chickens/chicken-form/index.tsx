@@ -69,6 +69,10 @@ export const ChickenForm = ({
     setFormData(value);
   };
 
+  {
+    console.log(formData);
+  }
+
   return (
     <>
       <TabFormLayout<Chicken>
@@ -161,6 +165,9 @@ export const ChickenForm = ({
                       dam: _.get(values, "dam.id", null),
                       hatchery: _.get(values, "hatchery.id", null),
                       pen: _.get(values, "pen.id", null),
+                      hatch_date: dayjs(values.hatch_date).format(
+                        process.env.NEXT_PUBLIC_API_DATE_FORMAT
+                      ),
                     };
 
                     return cleaned_data;

@@ -170,7 +170,20 @@ const ChickenReductionSelectDialog = ({ chicken }: { chicken: Chicken }) => {
                   render={({
                     field: { onChange, value },
                     fieldState: { invalid, isTouched, isDirty, error },
-                  }) => <DatePicker onChange={onChange} value={value ?? ""} />}
+                  }) => (
+                    <DatePicker
+                      slotProps={{
+                        textField: {
+                          size: "small",
+                          fullWidth: true,
+                          error: !!error?.message,
+                          helperText: error?.message,
+                        },
+                      }}
+                      onChange={onChange}
+                      value={dayjs(value as string)}
+                    />
+                  )}
                 />
               </Grid>
             </Grid>

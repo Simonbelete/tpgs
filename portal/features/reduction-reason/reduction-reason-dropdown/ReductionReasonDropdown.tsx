@@ -40,7 +40,7 @@ const ReductionReasonDropdown = ({
       error={error}
       helperText={helperText}
       onChange={onChange}
-      createForm={<ReductionReasonForm />}
+      createForm={<ReductionReasonForm shallowRoute={false} />}
       createFormTitle="Create Reduction Reason"
       endpoint={reductionReasonApi.endpoints.getReductionReasons}
     />

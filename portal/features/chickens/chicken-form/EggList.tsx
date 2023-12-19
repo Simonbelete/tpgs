@@ -12,12 +12,12 @@ const columns: GridColDef[] = [
   { field: "week", headerName: "Week", flex: 1, minWidth: 150 },
   { field: "weight", headerName: "Egg Weight (g)", flex: 1, minWidth: 150 },
   { field: "eggs", headerName: "Total eggs", flex: 1, minWidth: 150 },
-  {
-    field: "hatchery_eggs",
-    headerName: "Hatchery eggs",
-    flex: 1,
-    minWidth: 150,
-  },
+  // {
+  //   field: "hatchery_eggs",
+  //   headerName: "Hatchery eggs",
+  //   flex: 1,
+  //   minWidth: 150,
+  // },
 ];
 
 const EggList = ({ data }: { data: Chicken }) => {
