@@ -12,3 +12,4 @@ export * from "./egg-grading";
 export * from "./weight-graph";
 export * from "./feed-graph";
 export * from "./ingredient-heatmap";
+export * from "./mortality";

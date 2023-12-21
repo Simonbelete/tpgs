@@ -6,20 +6,20 @@ import { MortalityAnalyses } from "@/features/analyses";
 import { Typography } from "@mui/material";
 import { ReportingLayout } from "@/layouts";
 
-const MortalityPage = () => {
+const LivabilityPage = () => {
   const { breadcrumbs } = useBreadcrumbs();
 
   return (
     <>
-      <SeoHead title="Mortality" />
+      <SeoHead title="Livability" />
       <ReportingLayout
         breadcrumbs={<Breadcrumbs items={breadcrumbs} />}
-        header={<Typography variant="title">Mortality</Typography>}
+        header={<Typography variant="title">Livability</Typography>}
       >
-        <MortalityAnalyses />
+        <MortalityAnalyses livability={true} />
       </ReportingLayout>
     </>
   );
 };
 
-export default MortalityPage;
+export default LivabilityPage;

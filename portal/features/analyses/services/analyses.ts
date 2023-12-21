@@ -104,6 +104,13 @@ export const analyseApi = baseApi.injectEndpoints({
           params: query,
         }),
       }),
+      getMortality: build.query<Response<any[]>, Object>({
+        query: (query?: Object) => ({
+          url: `${URL}/mortality/`,
+          method: "get",
+          params: query,
+        }),
+      }),
     };
   },
   overrideExisting: false,
@@ -135,4 +142,5 @@ export const {
   useGetCountAnalyseQuery,
   useGetPedigreeQuery,
   useLazyGetPedigreeQuery,
+  useLazyGetMortalityQuery,
 } = analyseApi;
