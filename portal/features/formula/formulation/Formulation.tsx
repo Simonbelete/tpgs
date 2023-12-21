@@ -1453,6 +1453,15 @@ const Formulation = ({ data }: { data?: Formula }) => {
             resetGraph={resetGraph}
           />
           <LoadLocalHistoryIcon onLoad={loadFromLocalstorage} />
+          <Button
+            color="secondary"
+            size="small"
+            startIcon={<CurrencyExchangeIcon fontSize="small" />}
+            sx={{ textTransform: "none" }}
+            onClick={solveFormulaExample}
+          >
+            Solve
+          </Button>
         </Stack>
         <Sizer>
           <DataEditor

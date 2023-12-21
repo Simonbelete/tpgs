@@ -1191,22 +1191,32 @@ class MortalityViewSet(AnalysesViewSet):
             print('-------------')
             print(queryset.count())
 
+            total_chickens = queryset.count()
+
             results = []
             for week in range(start_week, end_week + 1):
                 current_queryset = queryset.filter(
-                    duration=timedelta(weeks=week))
+                    duration__gte=timedelta(weeks=week-1),
+                    duration__lte=timedelta(weeks=week))
 
-                all_chickens = current_queryset.count()
-                if (reduction_reason_id == 0):
-                    dead_chickens = current_queryset.filter(
-                        reduction_reason=reduction_reason_id).count()
-                else:
-                    dead_chickens = current_queryset.count()
+                alive_chickens = queryset.exclude(
+                    duration__gte=timedelta(weeks=week)).count()
+                dead_chickens = current_queryset.count()
 
-                mortality = dead_chickens/all_chickens * 100
+                # if reduction_reason_id == 0:
+                #     dead_chickens = current_queryset.filter(
+                #         reduction_reason=reduction_reason_id).count()
+                # else:
+                #     dead_chickens = current_queryset.count()
+
+                mortality = dead_chickens/total_chickens * 100 if total_chickens != 0 else 0
+                livability = alive_chickens/total_chickens * 100 if total_chickens != 0 else 0
 
                 results.append({
-                    'mortality': mortality
+                    'week': week,
+                    'mortality': "{:.3f}".format(mortality),
+                    'livability': "{:.3f}".format(livability),
+
                 })
 
             return Response({'results': results})

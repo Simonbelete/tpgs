@@ -454,27 +454,31 @@ class SolveViewSet(viewsets.ViewSet):
         df_req.set_index('nutrient', inplace=True)
         df_req = df_req.reindex(df.columns.values, fill_value=0)
 
-        c = df_1['ingredient__price'].to_numpy()
-        c = np.multiply(c, -1)
+        c = -df_1['ingredient__price'].to_numpy()
 
         # # Row -> Nutrients, Col -> Ingredient * Nutrient Value
         A = [df[i].values for i in df.columns]
-        A = np.append(A, np.multiply(A, -1), axis=0)
+        # A = np.divide(A, 100)
+        # A = np.append(A, np.multiply(A, -1), axis=0)
 
         b = df_req['value'].values
-        b = np.append(b, np.multiply(b, -1))
+        # b = np.divide(b, 100)
+        # b = np.append(b, np.multiply(b, -1))
 
-        print('*****')
-        print(b)
-        print(A)
+        A_eq = [np.ones(len(df.index))]
+        b_eq = [100]
+
+        print('******')
         print(c)
+        print(A)
+        print(b)
 
-        results = linprog(c=c, A_ub=A, b_ub=b, bounds=[], method='highs-ds')
+        results = linprog(c=c, A_ub=A, b_ub=b, A_eq=A_eq,
+                          b_eq=b_eq)
 
         # results = linprog(c=c, A_ub=A, b_ub=b, A_eq=A_eq,
         #                   b_eq=b_eq, bounds=[], method='highs-ds')
 
-        print(f'Objective value: z* = {results.fun}')
-        print(results.x)
+        print(results)
 
         return Response({})
