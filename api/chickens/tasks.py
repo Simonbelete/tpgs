@@ -2,14 +2,18 @@ from celery import shared_task
 from chickens.models import Chicken, Pedigree
 from django_tenants.utils import get_tenant_model, schema_context
 
+from feeds.models import Feed
+from eggs.models import Egg
+from weights.models import Weight
 
 # @shared_task
+
+
 def build_pedigree_tree():
     chickens = Chicken.objects.all()
     print('Here')
     print(chickens)
     for chicken in chickens.iterator():
-        print('************')
 
         try:
             generation_count = 0
@@ -72,3 +76,31 @@ def build_pedigree_tree():
     #                 chicken.save()
     #             except Exception as ex:
     #                 print(ex)
+
+
+@shared_task
+def archive_resources(instance):
+    """Arhcive Egg, Feed & Weight
+
+    Args:
+        instance Chicken: 
+    """
+    feeds = Feed.objects.exclude(parent__isnull=True).filter(
+        chicken=instance.id).update(is_active=False)
+    eggs = Egg.objects.filter(chicken=instance.id).update(is_active=False)
+    weights = Weight.objects.filter(
+        chicken=instance.id).update(is_active=False)
+
+
+@shared_task
+def unarchive_resources(instance):
+    """Arhcive Egg, Feed & Weight
+
+    Args:
+        instance Chicken: 
+    """
+    feeds = Feed.objects.exclude(parent__isnull=True).filter(
+        chicken=instance.id).update(is_active=True)
+    eggs = Egg.objects.filter(chicken=instance.id).update(is_active=True)
+    weights = Weight.objects.filter(
+        chicken=instance.id).update(is_active=True)

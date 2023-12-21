@@ -1188,9 +1188,6 @@ class MortalityViewSet(AnalysesViewSet):
             queryset = queryset.filter(~Q(hatch_date=None)).annotate(
                 duration=duration)
 
-            print('-------------')
-            print(queryset.count())
-
             total_chickens = queryset.count()
 
             results = []
