@@ -2,7 +2,7 @@ from django.dispatch import receiver
 from django.db.models.signals import pre_save
 
 from chickens.models import Chicken
-from tasks import archive_resources, unarchive_resources
+from .tasks import archive_resources, unarchive_resources
 
 
 @receiver(pre_save, sender=Chicken)
