@@ -567,55 +567,6 @@ const SidebarMenu = () => {
             Reports
           </Typography>
         </MenuItem>
-        <SubMenu
-          label={
-            <Typography variant="body1" fontSize={14}>
-              Eggs Reporting
-            </Typography>
-          }
-          icon={<EggIcon fontSize="small" />}
-        >
-          <MenuItem
-            component={<Link href="/breeds" />}
-            icon={<AdjustIcon fontSize="small" />}
-          >
-            <Typography variant="body1" fontSize={14}>
-              Egg Grading
-            </Typography>
-          </MenuItem>
-          <MenuItem
-            component={<Link href="/eggs" />}
-            icon={<AdjustIcon fontSize="small" />}
-          >
-            <Typography variant="body1" fontSize={14}>
-              Egg Curve
-            </Typography>
-          </MenuItem>
-          <MenuItem
-            component={<Link href="/hhep" />}
-            icon={<AdjustIcon fontSize="small" />}
-          >
-            <Typography variant="body1" fontSize={14}>
-              HHEP
-            </Typography>
-          </MenuItem>
-          <MenuItem
-            component={<Link href="/feeds" />}
-            icon={<AdjustIcon fontSize="small" />}
-          >
-            <Typography variant="body1" fontSize={14}>
-              HDEP
-            </Typography>
-          </MenuItem>
-        </SubMenu>
-        <MenuItem
-          component={<Link href="/chickens" />}
-          icon={<AdjustIcon fontSize="small" />}
-        >
-          <Typography variant="body1" fontSize={14}>
-            Body Weight
-          </Typography>
-        </MenuItem>
       </Menu>
       <div
         style={{ padding: "0 24px", marginBottom: "8px", marginTop: "32px" }}

@@ -48,6 +48,49 @@ const ReportsPage = () => {
       ],
     },
     {
+      title: "Body Weight",
+      description: "",
+      reports: [
+        {
+          title: "Body weight graph",
+          description: "",
+          link: "/reports/weight-graph",
+        },
+        {
+          title: "Growth Performance",
+          description: "",
+          link: "/reports/growth-performance",
+        },
+      ],
+    },
+    {
+      title: "Feed Intake",
+      description: "",
+      reports: [
+        {
+          title: "Feed intake graph",
+          description: "",
+          link: "/reports/feed-graph",
+        },
+        {
+          title: "Feed consumption by body weight",
+          description: "",
+          link: "/reports/feed-by-weight",
+        },
+      ],
+    },
+    {
+      title: "Chicken",
+      description: "",
+      reports: [
+        {
+          title: "Chicken Sex Percentage Distribution",
+          description: "",
+          link: "/reports/gender-percentage-distribution",
+        },
+      ],
+    },
+    {
       title: "Egg productive",
       description: "",
       reports: [
@@ -87,64 +130,8 @@ const ReportsPage = () => {
     },
   ];
 
-  // const reports: Report[] = [
-  //   {
-  //     title: "Egg productive laying",
-  //     description:
-  //       "Shows the actual percentage of productive laying chickens over a period of time",
-  //     link: "/reports/egg-productive",
-  //   },
-  //   {
-  //     title: "Hen-Day Egg Production (HDEP)",
-  //     description: "",
-  //     link: "/reports/hdep",
-  //   },
-  //   {
-  //     title: "Hen-Housed Egg Production (HHEP)",
-  //     description: "",
-  //     link: "/reports/hhep",
-  //   },
-  //   {
-  //     title: "Egg Mass",
-  //     description:
-  //       "The use of egg mass rather than egg numbers will lead to better comparisons of flocks or strains of birds.",
-  //     link: "/reports/egg-mass",
-  //   },
-  //   {
-  //     title: "Egg Grading",
-  //     description: "",
-  //     link: "/reports/egg-grading",
-  //   },
-  //   {
-  //     title: "Average Egg Weight",
-  //     description: "",
-  //     link: "/reports/avg-egg-weight",
-  //   },
-  //   {
-  //     title: "Chicken Sex Percentage Distribution",
-  //     description: "",
-  //     link: "/reports/gender-percentage-distribution",
-  //   },
-  //   {
-  //     title: "Growth Performance",
-  //     description: "",
-  //     link: "/reports/growth-performance",
-  //   },
-  //   {
-  //     title: "Feed consumption by body weight",
-  //     description: "",
-  //     link: "/reports/feed-by-weight",
-  //   },
-  //   {
-  //     title: "Body weight graph",
-  //     description: "",
-  //     link: "/reports/weight-graph",
-  //   },
-  //   {
-  //     title: "Feed intake graph",
-  //     description: "",
-  //     link: "/reports/feed-graph",
-  //   },
+  //
+
   // ];
 
   return (
@@ -171,12 +158,12 @@ const ReportsPage = () => {
           </Grid>
           <Grid
             container
-            columns={{ xs: 1, md: 2 }}
+            // columns={{ xs: 1, md: 1 }}
             columnSpacing={4}
             spacing={4}
           >
             {data?.map((e: any, i) => (
-              <Grid key={i} item xs sx={{ mb: 5 }}>
+              <Grid key={i} item xs md={6} sx={{ mb: 5 }}>
                 <Typography
                   sx={{ mb: 2 }}
                   variant="overline"

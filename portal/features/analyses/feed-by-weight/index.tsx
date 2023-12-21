@@ -120,8 +120,6 @@ export const FeedByWeightAnalyses = () => {
       <DirectoryFilter
         onBatchFilterApply={handleOnBatchFilterApplay}
         onBatchFilterRemove={handleonBatchFilterRemove}
-        default_start_week={21}
-        default_end_week={41}
         onIndividualFilterApply={handleOnIndividualFilterApply}
         onIndividualFilterRemove={handleOnIndividualFilterRemove}
       />
