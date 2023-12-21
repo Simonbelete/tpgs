@@ -12,6 +12,7 @@ import numpy as np
 
 from . import models
 from . import serializers
+from core.pagination import AllPagination
 from core.schemas import ANALYSES_PARAMETERS
 from eggs.models import Egg
 from farms.models import Farm
@@ -354,6 +355,7 @@ class FarmHeatMap(viewsets.ViewSet):
 
 class PedigreeViewset(viewsets.ModelViewSet):
     queryset = Chicken.objects.all()
+    pagination_class = AllPagination
     serializer_class = serializers.PedigreeSerializer
 
 

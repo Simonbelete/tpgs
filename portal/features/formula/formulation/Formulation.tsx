@@ -1133,7 +1133,13 @@ const Formulation = ({ data }: { data?: Formula }) => {
   const solveFormulaExample = async () => {
     const data: any = {
       requirements: [],
-      ingredients: rows.map((e) => e.id),
+      ingredients: rows.map((e) => {
+        return {
+          id: e.id,
+          min: e.min,
+          max: e.max,
+        };
+      }),
     };
 
     _.forEach(requirement.nutrients, (value, key) => {
@@ -1145,7 +1151,20 @@ const Formulation = ({ data }: { data?: Formula }) => {
       }
     });
 
-    const response = await solveForm(data);
+    const response = await solveForm(data).unwrap();
+
+    const rowCopy = [...rows];
+    Object.keys(response?.results || {}).map((key, i) => {
+      // @ts-ignore
+      const index = _.findIndex(rowCopy, (o) => o.id == key);
+      console.log(index);
+      if (index > -1) {
+        _.set(rowCopy[index], "ratio", response?.results[key]);
+      }
+    });
+
+    console.log(response?.results);
+    setRows(rowCopy);
   };
 
   return (

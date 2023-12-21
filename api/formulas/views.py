@@ -429,25 +429,39 @@ class FormulaIngredientAnalyses(viewsets.ViewSet):
 
 class SolveViewSet(viewsets.ViewSet):
     def create(self, request):
+        ingredient_ids = []
+        ingredient_min_dict = {}
+        ingredient_max_dict = {}
+
+        for i in request.data['ingredients']:
+            key = i['id']
+            ingredient_ids.append(key)
+            ingredient_min_dict[key] = i['min']
+            ingredient_max_dict[key] = i['max']
+
         ingredient_nutrients = IngredientNutrient.all.filter(
-            ingredient__in=request.data['ingredients'])
+            ingredient__in=ingredient_ids)
         requirements = request.data['requirements']
 
         df = pd.DataFrame(list(ingredient_nutrients.values(
             'ingredient', 'nutrient', 'value', 'ingredient__price')))
-        # Type Case
-        df = df.astype({'value': 'float64', 'ingredient__price': 'float64'})
 
-        df_1 = df[['ingredient', 'ingredient__price']].drop_duplicates()
+        # Add Min Max to df
+        df['max'] = df['ingredient'].map(ingredient_max_dict)
+        df['min'] = df['ingredient'].map(ingredient_min_dict)
+
+        # Type Case
+        df = df.astype({'value': 'float64', 'ingredient__price': 'float64',
+                       'min': 'float64', 'max': 'float64'})
+
+        df_1 = df[['ingredient', 'ingredient__price',
+                   'min', 'max']].drop_duplicates()
         df_1.set_index('ingredient', inplace=True)
 
         df = df.pivot_table(index="ingredient",
                             columns="nutrient", values="value", fill_value=0)
         df_1 = df_1.reindex(df.index)
 
-        # TODO: remove it
-        # requirements = [{'nutrient': 15, 'value': 2.5},
-        #                 {'nutrient': 12, 'value': 65}]
         df_req = pd.DataFrame.from_dict(requirements)
         df_req = df_req.astype({'value': 'float64'})
         # Sort By Nutrient
@@ -459,26 +473,38 @@ class SolveViewSet(viewsets.ViewSet):
         # # Row -> Nutrients, Col -> Ingredient * Nutrient Value
         A = [df[i].values for i in df.columns]
         # A = np.divide(A, 100)
-        # A = np.append(A, np.multiply(A, -1), axis=0)
+        A = np.append(A, np.multiply(A, -1), axis=0)
 
+        # Requirements
+        between = 0.9  # +|- 10%
         b = df_req['value'].values
         # b = np.divide(b, 100)
-        # b = np.append(b, np.multiply(b, -1))
+        b_min = [(i - (i * between)) * -1 for i in b]
+        b_max = [i + (i * between) for i in b]
+        b = np.concatenate([b_max, b_min])
 
         A_eq = [np.ones(len(df.index))]
         b_eq = [100]
 
+        df_1['max'].replace(0, 100, inplace=True)
+        bounds = df_1[['min', 'max']].to_numpy()
+
         print('******')
+        print(bounds)
         print(c)
         print(A)
         print(b)
 
         results = linprog(c=c, A_ub=A, b_ub=b, A_eq=A_eq,
-                          b_eq=b_eq)
-
-        # results = linprog(c=c, A_ub=A, b_ub=b, A_eq=A_eq,
-        #                   b_eq=b_eq, bounds=[], method='highs-ds')
+                          b_eq=b_eq, bounds=[])
 
         print(results)
 
-        return Response({})
+        # results = linprog(c=c, A_ub=A, b_ub=b, A_eq=A_eq,
+        #                   b_eq=b_eq, bounds=[], method='highs-ds')
+        if not results.x is None:
+            df_result = pd.DataFrame([results.x], columns=df.index)
+
+            return Response({'results': df_result.to_dict('records')[0]})
+        else:
+            return Response({}, status=400)

@@ -47,6 +47,7 @@
     "next-auth": "^4.24.5",
     "notistack": "^3.0.1",
     "nprogress": "^0.2.0",
+    "pixi-viewport": "^5.0.2",
     "pixi.js": "^7.3.1",
     "plotly.js": "^2.26.0",
     "postcss": "^8.4.31",
