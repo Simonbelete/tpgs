@@ -45,6 +45,7 @@ import ChecklistIcon from "@mui/icons-material/Checklist";
 import AssignmentTurnedInIcon from "@mui/icons-material/AssignmentTurnedIn";
 import AutoGraphIcon from "@mui/icons-material/AutoGraph";
 import AccountTreeIcon from "@mui/icons-material/AccountTree";
+import { useProSidebar } from "react-pro-sidebar";
 
 function menuProps(key: string) {
   return {
@@ -124,6 +125,8 @@ const SidebarMenu = () => {
     await signOut();
   };
 
+  const { collapseSidebar, toggleSidebar } = useProSidebar();
+
   return (
     <Sidebar
       id="main-sidebar-menu"
@@ -136,7 +139,9 @@ const SidebarMenu = () => {
     >
       <Grid container justifyContent="center" mt={1} spacing={2}>
         <Grid item>
-          <img src="/images/logo_full.png" alt="" height={35} />
+          <Link onClick={() => toggleSidebar()} href="/">
+            <img src="/images/logo_full.png" alt="" height={35} />
+          </Link>
         </Grid>
       </Grid>
       <Box my={1}>
@@ -145,7 +150,7 @@ const SidebarMenu = () => {
 
       <Menu menuItemStyles={menuItemStyles}>
         <MenuItem
-          component={<Link href="/dashboard" />}
+          component={<Link onClick={() => toggleSidebar()} href="/dashboard" />}
           icon={<DashboardIcon fontSize="small" />}
           active={RegExp("^/dashboard(.*)$").test(router.pathname)}
         >
@@ -167,7 +172,7 @@ const SidebarMenu = () => {
             )}
           >
             <MenuItem
-              component={<Link href="/users" />}
+              component={<Link onClick={() => toggleSidebar()} href="/users" />}
               icon={<AdjustIcon fontSize="small" />}
               {...menuProps("users")}
               active={RegExp("/users(.*)$").test(router.pathname)}
@@ -177,7 +182,9 @@ const SidebarMenu = () => {
               </Typography>
             </MenuItem>
             <MenuItem
-              component={<Link href="/invitations" />}
+              component={
+                <Link onClick={() => toggleSidebar()} href="/invitations" />
+              }
               {...menuProps("invitations")}
               icon={<AdjustIcon fontSize="small" />}
               active={RegExp("/invitations(.*)$").test(router.pathname)}
@@ -187,7 +194,9 @@ const SidebarMenu = () => {
               </Typography>
             </MenuItem>
             <MenuItem
-              component={<Link href="/groups" />}
+              component={
+                <Link onClick={() => toggleSidebar()} href="/groups" />
+              }
               icon={<AdjustIcon fontSize="small" />}
               {...menuProps("groups")}
               active={RegExp("/groups(.*)$").test(router.pathname)}
@@ -200,7 +209,7 @@ const SidebarMenu = () => {
         )}
 
         <MenuItem
-          component={<Link href="/farms" />}
+          component={<Link onClick={() => toggleSidebar()} href="/farms" />}
           icon={<FactoryIcon fontSize="small" />}
         >
           <Typography variant="body1" fontSize={14}>
@@ -216,19 +225,21 @@ const SidebarMenu = () => {
           }
           icon={<BalanceIcon fontSize="small" />}
         >
-          <MenuItem component={<Link href="/units" />}>
+          <MenuItem
+            component={<Link onClick={() => toggleSidebar()} href="/units" />}
+          >
             <Typography variant="body1" fontSize={14}>
               Units
             </Typography>
           </MenuItem>
-          {/* <MenuItem component={<Link href="/unit-converters" />}>
+          {/* <MenuItem component={<Link onClick={() => toggleSidebar()} href="/unit-converters" />}>
             <Typography variant="body1" fontSize={14}>
               Units Convertor
             </Typography>
           </MenuItem> */}
         </SubMenu>
         <MenuItem
-          component={<Link href="/purposes" />}
+          component={<Link onClick={() => toggleSidebar()} href="/purposes" />}
           icon={<CrisisAlertIcon fontSize="small" />}
         >
           <Typography variant="body1" fontSize={14}>
@@ -260,7 +271,12 @@ const SidebarMenu = () => {
           ).test(router.pathname)}
         >
           <MenuItem
-            component={<Link href="/formulation/formulas" />}
+            component={
+              <Link
+                onClick={() => toggleSidebar()}
+                href="/formulation/formulas"
+              />
+            }
             active={RegExp("/formulation/formulas(.*)$").test(router.pathname)}
           >
             <Typography variant="body1" fontSize={14}>
@@ -268,7 +284,12 @@ const SidebarMenu = () => {
             </Typography>
           </MenuItem>
           <MenuItem
-            component={<Link href="/formulation/experimental" />}
+            component={
+              <Link
+                onClick={() => toggleSidebar()}
+                href="/formulation/experimental"
+              />
+            }
             active={RegExp("/formulation/experimental(.*)$").test(
               router.pathname
             )}
@@ -279,7 +300,9 @@ const SidebarMenu = () => {
           </MenuItem>
         </SubMenu>
         <MenuItem
-          component={<Link href="/ingredients" />}
+          component={
+            <Link onClick={() => toggleSidebar()} href="/ingredients" />
+          }
           icon={<LocalDiningIcon fontSize="small" />}
           active={RegExp("/ingredients(.*)$").test(router.pathname)}
         >
@@ -288,7 +311,7 @@ const SidebarMenu = () => {
           </Typography>
         </MenuItem>
         <MenuItem
-          component={<Link href="/nutrients" />}
+          component={<Link onClick={() => toggleSidebar()} href="/nutrients" />}
           icon={<BubbleChartIcon fontSize="small" />}
           active={RegExp("/nutrients(.*)$").test(router.pathname)}
         >
@@ -297,7 +320,9 @@ const SidebarMenu = () => {
           </Typography>
         </MenuItem>
         <MenuItem
-          component={<Link href="/requirements" />}
+          component={
+            <Link onClick={() => toggleSidebar()} href="/requirements" />
+          }
           icon={<ChecklistIcon fontSize="small" />}
           active={RegExp("^/requirements(.*)$").test(router.pathname)}
         >
@@ -317,7 +342,9 @@ const SidebarMenu = () => {
           )}
         >
           <MenuItem
-            component={<Link href="/ingredient-types" />}
+            component={
+              <Link onClick={() => toggleSidebar()} href="/ingredient-types" />
+            }
             icon={<AdjustIcon fontSize="small" />}
             active={RegExp("/ingredient-types(.*)$").test(router.pathname)}
           >
@@ -326,7 +353,9 @@ const SidebarMenu = () => {
             </Typography>
           </MenuItem>
           <MenuItem
-            component={<Link href="/nutrient-groups" />}
+            component={
+              <Link onClick={() => toggleSidebar()} href="/nutrient-groups" />
+            }
             icon={<AdjustIcon fontSize="small" />}
             active={RegExp("^/nutrient-groups(.*)$").test(router.pathname)}
           >
@@ -349,7 +378,7 @@ const SidebarMenu = () => {
       </div>
       <Menu menuItemStyles={menuItemStyles}>
         <MenuItem
-          component={<Link href="/chickens" />}
+          component={<Link onClick={() => toggleSidebar()} href="/chickens" />}
           icon={<ChickenIcon width="20" height="20" fill="inherit" />}
         >
           <Typography variant="body1" fontSize={14}>
@@ -357,7 +386,7 @@ const SidebarMenu = () => {
           </Typography>
         </MenuItem>
         <MenuItem
-          component={<Link href="/pedigree" />}
+          component={<Link onClick={() => toggleSidebar()} href="/pedigree" />}
           icon={<AccountTreeIcon width="20" height="20" fill="inherit" />}
         >
           <Typography variant="body1" fontSize={14}>
@@ -376,7 +405,9 @@ const SidebarMenu = () => {
           )}
         >
           <MenuItem
-            component={<Link href="/hatchery" />}
+            component={
+              <Link onClick={() => toggleSidebar()} href="/hatchery" />
+            }
             icon={<AdjustIcon fontSize="small" />}
             active={RegExp("^/hatchery(.*)$").test(router.pathname)}
           >
@@ -385,7 +416,9 @@ const SidebarMenu = () => {
             </Typography>
           </MenuItem>
           <MenuItem
-            component={<Link href="/candling" />}
+            component={
+              <Link onClick={() => toggleSidebar()} href="/candling" />
+            }
             icon={<AdjustIcon fontSize="small" />}
             active={RegExp("^/candling(.*)$").test(router.pathname)}
           >
@@ -394,7 +427,9 @@ const SidebarMenu = () => {
             </Typography>
           </MenuItem>
           <MenuItem
-            component={<Link href="/incubation" />}
+            component={
+              <Link onClick={() => toggleSidebar()} href="/incubation" />
+            }
             icon={<AdjustIcon fontSize="small" />}
             active={RegExp("^/incubation(.*)$").test(router.pathname)}
           >
@@ -404,7 +439,7 @@ const SidebarMenu = () => {
           </MenuItem>
         </SubMenu>
         <MenuItem
-          component={<Link href="/eggs" />}
+          component={<Link onClick={() => toggleSidebar()} href="/eggs" />}
           icon={<EggIcon fontSize="small" />}
           active={RegExp("^/eggs$").test(router.pathname)}
         >
@@ -422,7 +457,7 @@ const SidebarMenu = () => {
           defaultOpen={RegExp("^/feeds(.*)$").test(router.pathname)}
         >
           <MenuItem
-            component={<Link href="/feeds" />}
+            component={<Link onClick={() => toggleSidebar()} href="/feeds" />}
             icon={<AdjustIcon fontSize="small" />}
             active={RegExp("^/feeds$").test(router.pathname)}
           >
@@ -431,7 +466,9 @@ const SidebarMenu = () => {
             </Typography>
           </MenuItem>
           <MenuItem
-            component={<Link href="/feeds/batch" />}
+            component={
+              <Link onClick={() => toggleSidebar()} href="/feeds/batch" />
+            }
             icon={<AdjustIcon fontSize="small" />}
             active={RegExp("^/feeds/batch(.*)$").test(router.pathname)}
           >
@@ -442,7 +479,7 @@ const SidebarMenu = () => {
         </SubMenu>
 
         <MenuItem
-          component={<Link href="/weights" />}
+          component={<Link onClick={() => toggleSidebar()} href="/weights" />}
           icon={<ScaleIcon width="20" height="20" fill="inherit" />}
           active={RegExp("^/weights$").test(router.pathname)}
         >
@@ -451,7 +488,7 @@ const SidebarMenu = () => {
           </Typography>
         </MenuItem>
         <MenuItem
-          component={<Link href="/breeds" />}
+          component={<Link onClick={() => toggleSidebar()} href="/breeds" />}
           icon={<DNAHellxIcon width="20" height="20" fill="inherit" />}
           active={RegExp("^/breeds$").test(router.pathname)}
         >
@@ -469,7 +506,7 @@ const SidebarMenu = () => {
           defaultOpen={RegExp("^/(pen|houses)(.*)$").test(router.pathname)}
         >
           <MenuItem
-            component={<Link href="/houses" />}
+            component={<Link onClick={() => toggleSidebar()} href="/houses" />}
             icon={<AdjustIcon fontSize="small" />}
             active={RegExp("^/houses(.*)$").test(router.pathname)}
           >
@@ -478,7 +515,7 @@ const SidebarMenu = () => {
             </Typography>
           </MenuItem>
           <MenuItem
-            component={<Link href="/pen" />}
+            component={<Link onClick={() => toggleSidebar()} href="/pen" />}
             icon={<AdjustIcon fontSize="small" />}
             active={RegExp("^/pen(.*)$").test(router.pathname)}
           >
@@ -499,7 +536,9 @@ const SidebarMenu = () => {
           ).test(router.pathname)}
         >
           <MenuItem
-            component={<Link href="/guidelines/hdep" />}
+            component={
+              <Link onClick={() => toggleSidebar()} href="/guidelines/hdep" />
+            }
             icon={<AdjustIcon fontSize="small" />}
             active={RegExp("^/guidelines/hdep(.*)$").test(router.pathname)}
           >
@@ -508,7 +547,9 @@ const SidebarMenu = () => {
             </Typography>
           </MenuItem>
           <MenuItem
-            component={<Link href="/guidelines/hhep" />}
+            component={
+              <Link onClick={() => toggleSidebar()} href="/guidelines/hhep" />
+            }
             icon={<AdjustIcon fontSize="small" />}
             active={RegExp("^/guidelines/hhep(.*)$").test(router.pathname)}
           >
@@ -517,7 +558,9 @@ const SidebarMenu = () => {
             </Typography>
           </MenuItem>
           <MenuItem
-            component={<Link href="/guidelines/weight" />}
+            component={
+              <Link onClick={() => toggleSidebar()} href="/guidelines/weight" />
+            }
             icon={<AdjustIcon fontSize="small" />}
             active={RegExp("^/guidelines/weight(.*)$").test(router.pathname)}
           >
@@ -526,7 +569,9 @@ const SidebarMenu = () => {
             </Typography>
           </MenuItem>
           <MenuItem
-            component={<Link href="/guidelines/feed" />}
+            component={
+              <Link onClick={() => toggleSidebar()} href="/guidelines/feed" />
+            }
             icon={<AdjustIcon fontSize="small" />}
             active={RegExp("^/guidelines/feed(.*)$").test(router.pathname)}
           >
@@ -535,7 +580,9 @@ const SidebarMenu = () => {
             </Typography>
           </MenuItem>
           <MenuItem
-            component={<Link href="/guidelines/egg" />}
+            component={
+              <Link onClick={() => toggleSidebar()} href="/guidelines/egg" />
+            }
             icon={<AdjustIcon fontSize="small" />}
             active={RegExp("^/guidelines/egg(.*)$").test(router.pathname)}
           >
@@ -559,7 +606,7 @@ const SidebarMenu = () => {
 
       <Menu menuItemStyles={menuItemStyles}>
         <MenuItem
-          component={<Link href="/reports" />}
+          component={<Link onClick={() => toggleSidebar()} href="/reports" />}
           icon={<AutoGraphIcon fontSize="small" />}
           active={RegExp("/reports(.*)$").test(router.pathname)}
         >
@@ -592,7 +639,9 @@ const SidebarMenu = () => {
           )}
         >
           <MenuItem
-            component={<Link href="/reduction-reasons" />}
+            component={
+              <Link onClick={() => toggleSidebar()} href="/reduction-reasons" />
+            }
             icon={<AdjustIcon fontSize="small" />}
             active={RegExp("/reduction-reasons(.*)$").test(router.pathname)}
           >
@@ -601,7 +650,12 @@ const SidebarMenu = () => {
             </Typography>
           </MenuItem>
           <MenuItem
-            component={<Link href="/ingredient-nutrients" />}
+            component={
+              <Link
+                onClick={() => toggleSidebar()}
+                href="/ingredient-nutrients"
+              />
+            }
             icon={<AdjustIcon fontSize="small" />}
             active={RegExp("/ingredient-nutrients(.*)$").test(router.pathname)}
           >
@@ -611,7 +665,12 @@ const SidebarMenu = () => {
             </Typography>
           </MenuItem>
           <MenuItem
-            component={<Link href="/requirement-nutrients" />}
+            component={
+              <Link
+                onClick={() => toggleSidebar()}
+                href="/requirement-nutrients"
+              />
+            }
             icon={<AdjustIcon fontSize="small" />}
             active={RegExp("^/requirement-nutrients(.*)$").test(
               router.pathname
@@ -622,7 +681,12 @@ const SidebarMenu = () => {
             </Typography>
           </MenuItem>
           <MenuItem
-            component={<Link href="/requirement-ingredients" />}
+            component={
+              <Link
+                onClick={() => toggleSidebar()}
+                href="/requirement-ingredients"
+              />
+            }
             icon={<AdjustIcon fontSize="small" />}
             active={RegExp("^/requirement-ingredients(.*)$").test(
               router.pathname
@@ -634,7 +698,9 @@ const SidebarMenu = () => {
           </MenuItem>
         </SubMenu>
         <MenuItem
-          component={<Link href="/currencies" />}
+          component={
+            <Link onClick={() => toggleSidebar()} href="/currencies" />
+          }
           icon={<PaidIcon fontSize="small" />}
           active={RegExp("/currencies(.*)$").test(router.pathname)}
         >
@@ -655,7 +721,9 @@ const SidebarMenu = () => {
           )}
         >
           <MenuItem
-            component={<Link href="/countries" />}
+            component={
+              <Link onClick={() => toggleSidebar()} href="/countries" />
+            }
             icon={<AdjustIcon fontSize="small" />}
             active={RegExp("/countries(.*)$").test(router.pathname)}
           >
@@ -664,7 +732,7 @@ const SidebarMenu = () => {
             </Typography>
           </MenuItem>
           <MenuItem
-            component={<Link href="/cities" />}
+            component={<Link onClick={() => toggleSidebar()} href="/cities" />}
             icon={<AdjustIcon fontSize="small" />}
             active={RegExp("/cities(.*)$").test(router.pathname)}
           >
@@ -673,7 +741,7 @@ const SidebarMenu = () => {
             </Typography>
           </MenuItem>
           <MenuItem
-            component={<Link href="/regions" />}
+            component={<Link onClick={() => toggleSidebar()} href="/regions" />}
             icon={<AdjustIcon fontSize="small" />}
             active={RegExp("/regions(.*)$").test(router.pathname)}
           >
@@ -684,7 +752,9 @@ const SidebarMenu = () => {
         </SubMenu>
 
         <MenuItem
-          component={<Link href="/notifications" />}
+          component={
+            <Link onClick={() => toggleSidebar()} href="/notifications" />
+          }
           icon={<NotificationsIcon fontSize="small" />}
           active={RegExp("^/notifications(.*)$").test(router.pathname)}
         >
@@ -693,7 +763,7 @@ const SidebarMenu = () => {
           </Typography>
         </MenuItem>
         <MenuItem
-          component={<Link href="/settings" />}
+          component={<Link onClick={() => toggleSidebar()} href="/settings" />}
           icon={<SettingsIcon fontSize="small" />}
           active={RegExp("^/settings(.*)$").test(router.pathname)}
         >
@@ -718,7 +788,7 @@ const SidebarMenu = () => {
           icon={<HelpIcon fontSize="small" />}
         >
           <MenuItem
-            component={<Link href="/help" />}
+            component={<Link onClick={() => toggleSidebar()} href="/help" />}
             icon={<AdjustIcon fontSize="small" />}
           >
             <Typography variant="body1" fontSize={14}>
@@ -726,7 +796,9 @@ const SidebarMenu = () => {
             </Typography>
           </MenuItem>
           <MenuItem
-            component={<Link href="/flocks/reduction" />}
+            component={
+              <Link onClick={() => toggleSidebar()} href="/flocks/reduction" />
+            }
             icon={<AdjustIcon fontSize="small" />}
           >
             <Typography variant="body1" fontSize={14}>

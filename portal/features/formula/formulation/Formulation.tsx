@@ -1165,6 +1165,7 @@ const Formulation = ({ data }: { data?: Formula }) => {
 
     console.log(response?.results);
     setRows(rowCopy);
+    computeRation(rowCopy, requirement);
   };
 
   return (
