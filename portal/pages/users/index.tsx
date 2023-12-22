@@ -20,6 +20,4 @@ const UsersPage = () => {
   );
 };
 
-export default UsersPage;
-
-// export default withClientGroup(UsersPage, [GROUP_ADMIN]);
+export default withClientGroup(UsersPage, [GROUP_ADMIN]);

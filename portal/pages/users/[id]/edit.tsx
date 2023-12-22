@@ -8,6 +8,8 @@ import { useBreadcrumbs } from "@/hooks";
 import { User } from "@/models";
 import { SeoHead } from "@/seo";
 import { getServerSidePropsContext } from "@/services/getServerSidePropsContext";
+import { withGroup } from "@/hoc";
+import { GROUP_ADMIN } from "@/constants";
 
 const UserEditPage = ({ data }: { data: User }) => {
   const { breadcrumbs } = useBreadcrumbs();
@@ -24,6 +26,8 @@ const UserEditPage = ({ data }: { data: User }) => {
 
 export async function getServerSideProps(context: NextPageContext) {
   const { id } = context.query;
+
+  withGroup(context, [GROUP_ADMIN]);
 
   return getServerSidePropsContext<User>({
     context,
