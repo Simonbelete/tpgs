@@ -1,0 +1,153 @@
+\documentclass[a4paper,12pt]{article}
+
+\usepackage{graphicx}
+\usepackage[usenames,dvipsnames]{xcolor}
+\usepackage{tcolorbox}
+\usepackage{tabularx}
+\usepackage{array}
+\usepackage{colortbl}
+\tcbuselibrary{skins}
+\usepackage{tablefootnote}
+\usepackage[a4paper, total={6.5in, 8in}]{geometry}
+\usepackage[backend=biber,style=numeric,citestyle=authortitle-ibid]{biblatex}
+\usepackage{qrcode}
+\usepackage{environ}
+\usepackage{xcolor}
+\usepackage[tikz]{bclogo}
+\usepackage{tikz}
+\usetikzlibrary{calc}
+\usepackage{hyperref}
+
+\newcolumntype{Y}{>{\raggedleft\arraybackslash}X}
+
+\tcbset{tab1/.style={fonttitle=\bfseries\large,fontupper=\normalsize\sffamily,
+colback=yellow!10!white,colframe=red!75!black,colbacktitle=Salmon!40!white,
+coltitle=black,center title,freelance,frame code={
+\foreach \n in {north east,north west,south east,south west}
+{\path [fill=red!75!black] (interior.\n) circle (3mm); };},}}
+
+\tcbset{tab2/.style={enhanced,fonttitle=\bfseries,fontupper=\normalsize\sffamily,
+colback=yellow!10!white,colframe=red!50!black,colbacktitle=Salmon!40!white,
+coltitle=black,center title}}
+
+\addbibresource{cite.bib} % include citation file
+
+\begin{document}
+\begin{titlepage}
+    \centering 
+    \vfill
+    \includegraphics[width=10cm]{ilri_logo.png}
+    \vfill 
+    {\bfseries\Large
+        USER GUIDE\\
+        FOR\\
+        FEED FORMULATION APPLICATION\\
+        \vskip2cm
+    }   
+    
+    \vfill 
+    \vfill 
+    \vspace{50pt}
+    \textbf{A comprehensive user manual for Feed Formulation App\\
+			Addis Ababa, ETHIOPIA\\
+			Version 1.0\\
+			26/12/2023
+		}
+    
+    \vfill
+\end{titlepage}
+
+\newpage
+
+\tableofcontents
+\newpage
+
+\pagenumbering{arabic}
+
+\section{Legend}
+\begin{tcolorbox}[tab2,tabularx={X|Y|Y|Y|Y}]
+\textbf{Name} & \textbf{Abbreviation} & \textbf{Unit}  & \textbf{Description} \\\hline
+Dry matter & DM & \% &  The dry matter or dry weight is a measure of the mass of a completely dried substance.\footcite{enwiki:1178208071} \\\hline
+
+Metabolizable Energy   & ME & kcal/kg 	&  \\\hline
+
+Crude protein   	& CP	& \% 		&  \\\hline
+Lysine   & Lys 		& \% 	&	\\\hline
+Meth. +cystine   	& m+c 	& \% 		&  \\\hline
+Methionine   		& Met 	& \% 		&  \\\hline
+Ether extract   		& EE 	& \% 		&  \\\hline
+Crude fiber   		& CF 	& \% 		&  \\\hline
+Calcium & Ca 	& \% 		&  \\\hline
+Phosphorus   		& P 	& \% 		&  \\\hline
+\end{tcolorbox}
+
+
+\section{Glossary}
+\begin{tabular}{p{8cm}p{11cm}}
+Ration &  \\
+\\
+Formulation &  \\
+\\
+Formula &  \\
+\\
+Grid Formulation &  \\
+\\
+Ingredients &  \\
+\\
+Ingredient Group &  \\
+\\
+Ingredient Composition &  \\
+\\
+Nutrient Group &  \\
+\\
+Nutrients &  \\
+\\
+Requirements &  \\
+\\
+Requirement Compostion &  \\
+\\
+Requirement Boundires & (Min \& Max)  \\
+\\
+
+\\
+
+\end{tabular}
+
+\section{Introduction}
+Feed Formula Application is
+
+
+\NewEnviron{myremark}[1]
+  {\par\medskip\noindent
+  \begin{tikzpicture}
+    \node[inner sep=0pt] (box) {\parbox[t]{.99\textwidth}{%
+      \begin{minipage}{.3\textwidth}
+      \centering\tikz[scale=5]\node[scale=3,rotate=30]{\bclampe};
+      \end{minipage}%
+      \begin{minipage}{.65\textwidth}
+      \textbf{#1}\par\smallskip
+      \BODY
+      \end{minipage}\hfill}%
+    };
+    \draw[red!75!black,line width=3pt] 
+      ( $ (box.north east) + (-5pt,3pt) $ ) -- ( $ (box.north east) + (0,3pt) $ ) -- ( $ (box.south east) + (0,-3pt) $ ) -- + (-5pt,0);
+    \draw[red!75!black,line width=3pt] 
+      ( $ (box.north west) + (5pt,3pt) $ ) -- ( $ (box.north west) + (0,3pt) $ ) -- ( $ (box.south west) + (0,-3pt) $ ) -- + (5pt,0);
+  \end{tikzpicture}\par\medskip%
+}
+
+\begin{myremark}{To Access The App}
+\vspace{10px}
+Scan the QR Code or go to: \href{http://172.27.1.72:3000/}{http://172.27.1.72:3000/}
+
+\vspace{20px}
+
+\quad
+\qrcode[height=1in]{http://172.27.1.72:3000?qrcode=true}
+\end{myremark}
+
+\newpage
+\section{Reference}
+\printbibliography[title={References}]
+
+\end{document}
