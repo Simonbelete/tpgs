@@ -9,6 +9,7 @@ from django.db import connection
 from datetime import timedelta, date, datetime
 from rest_framework.exceptions import NotFound
 import numpy as np
+import uuid
 
 from . import models
 from . import serializers
@@ -35,9 +36,13 @@ from requirements.models import Requirement
 
 
 class AnalysesViewSet(viewsets.ViewSet):
+    queryset = Chicken.objects.all()
+    farm = None
+
     def get_farm(self, farm_id):
         try:
-            return Farm.objects.get(pk=farm_id)
+            self.farm = Farm.objects.get(pk=farm_id)
+            return self.farm
         except Farm.DoesNotExist:
             raise NotFound("Farm Not found")
 
@@ -69,7 +74,25 @@ class AnalysesViewSet(viewsets.ViewSet):
         if (sex):
             queryset = queryset.filter(sex=sex)
 
+        self.queryset = queryset
+
         return queryset
+
+    def get_query_directory(self):
+        """Return json of directory filters"""
+        if (not self.queryset):
+            return {}
+
+        query_data = self.queryset[0]
+        return {
+            'farm': self.farm.display_name,
+            'breed': query_data.breed.name,
+            'generation': query_data.generation,
+            'hatchery': query_data.hatchery.display_name,
+            'house': query_data.pen.house.name,
+            'pen': query_data.pen.name,
+            'sex': query_data.sex
+        }
 
 
 class DirectoryListFilter(django_filters.FilterSet):
@@ -1212,10 +1235,11 @@ class MortalityViewSet(AnalysesViewSet):
                 livability = alive_chickens/total_chickens * 100 if total_chickens != 0 else 0
 
                 results.append({
+                    'id': uuid.uuid4(),
+                    **self.get_query_directory(),
                     'week': week,
                     'mortality': "{:.3f}".format(mortality),
                     'livability': "{:.3f}".format(livability),
-
                 })
 
             return Response({'results': results})

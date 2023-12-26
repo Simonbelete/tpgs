@@ -5,75 +5,32 @@ import React, {
   useRef,
   forwardRef,
 } from "react";
+import { Application, TextStyle } from "pixi.js";
+import { Viewport as PixiViewport } from "pixi-viewport";
+import { Stage, PixiComponent, Container, Text, Graphics } from "@pixi/react";
 import * as d3 from "d3";
 import * as d3dag from "d3-dag";
-import * as d3force from "d3-force";
-import { BlurFilter, TextStyle } from "pixi.js";
-import { useGetPedigreeQuery } from "@/features/analyses/services";
-import { ReportingLayout } from "@/layouts";
-import { Box } from "@mui/material";
 import {
-  Stage,
-  Container,
-  Sprite,
-  Text,
-  Graphics,
-  PixiComponent,
-  useApp,
-} from "@pixi/react";
-import { Application } from "pixi.js";
-import { Viewport } from "pixi-viewport";
-import dynamic from "next/dynamic";
+  useGetPedigreeQuery,
+  useLazyGetPedigreeQuery,
+} from "@/features/analyses/services";
 
-const PixiViewportComponent = PixiComponent("Viewport", {
-  create(props) {
-    const { app, ...viewportProps } = props;
-
-    const viewport = new Viewport({
-      ticker: props.app.ticker,
-      interaction: props.app.renderer.plugins.interaction,
-      ...viewportProps,
+const PixiComponentViewport = PixiComponent("Viewport", {
+  create: (props) => {
+    const viewport = new PixiViewport({
+      screenWidth: window.innerWidth,
+      screenHeight: window.innerHeight,
+      worldWidth: 300,
+      worldHeight: 300,
+      events: props.app.renderer.events,
     });
-
-    // activate plugins
-    (props.plugins || []).forEach((plugin) => {
-      viewport[plugin]();
-    });
+    viewport.drag().pinch().wheel().decelerate();
 
     return viewport;
   },
-  applyProps(viewport, _oldProps, _newProps) {
-    const {
-      plugins: oldPlugins,
-      children: oldChildren,
-      ...oldProps
-    } = _oldProps;
-    const {
-      plugins: newPlugins,
-      children: newChildren,
-      ...newProps
-    } = _newProps;
-
-    Object.keys(newProps).forEach((p) => {
-      if (oldProps[p] !== newProps[p]) {
-        viewport[p] = newProps[p];
-      }
-    });
-  },
-  didMount() {
-    console.log("viewport mounted");
-  },
 });
 
-// create a component that can be consumed
-// that automatically pass down the app
-const PixiViewport = forwardRef((props, ref) => (
-  <PixiViewportComponent ref={ref} app={useApp()} {...props} />
-));
-
 const PedigreeTree = () => {
-  // const { data } = useGetPedigreeQuery({});
-  const data: any = { results: [] };
   const ref = useRef(null);
 
   const stageOptions = {
@@ -82,12 +39,127 @@ const PedigreeTree = () => {
     backgroundAlpha: 0,
   };
 
-  const width = 100;
-  const height = 200;
+  const { data } = useGetPedigreeQuery({});
+
+  const builder = d3dag.graphStratify();
+  const graph = builder(
+    (data?.results || []).map((e) => {
+      return {
+        id: e.tag,
+        parentIds: e.parents,
+        sex: e.sex,
+      };
+    })
+  );
+
+  const nodeRadius = 30;
+  const nodeSize = [nodeRadius * 4, nodeRadius * 4] as const;
+
+  const shape = d3dag.tweakShape(nodeSize, d3dag.shapeEllipse);
+
+  const line = d3.line();
+  // curveBasis
+  const layout = d3dag
+    .sugiyama()
+    .nodeSize(nodeSize)
+    .gap([nodeRadius, nodeRadius])
+    .tweaks([shape]);
+
+  const { width: layoutWidth, height: layoutHeight } = layout(graph);
+
+  // @ts-ignore
+  const nodes = [...graph.nodes()];
+
+  // @ts-ignore
+  const links = [...graph.links()];
+
+  const RECT_WIDTH = 50;
+  const RECT_HEIGHT = 50;
+
+  const width = window.innerWidth;
+  const height = window.innerHeight;
 
   return (
-    <Stage width={width} height={height}>
-      <PixiViewport ref={ref} />
+    <Stage
+      width={width}
+      height={height}
+      ref={ref}
+      options={{ backgroundColor: 0xffffff }}
+    >
+      {ref.current && (
+        <PixiComponentViewport
+          width={width}
+          height={height}
+          app={ref.current.app}
+        >
+          <Container width={width} height={height}>
+            {/* <Text
+              text={"Hello"}
+              x={100}
+              y={100}
+              style={
+                new TextStyle({
+                  fill: "blue",
+                  fontSize: 16,
+                  fontWeight: "700",
+                })
+              }
+            /> */}
+            <Graphics
+              draw={(g) => {
+                g.clear();
+                // g.lineStyle(5, 0xaa0000, 1);
+                // g.bezierCurveTo(0, 200, 200, 0, 240, 100);
+
+                nodes.forEach((d, i) => {
+                  if (d.data.sex == "M") {
+                    g.lineStyle(2, 0xf0000, 0.5);
+                    // Draw rectangle from center
+                    g.drawRect(
+                      d.x - RECT_WIDTH / 2,
+                      d.y - RECT_HEIGHT / 2,
+                      RECT_WIDTH,
+                      RECT_HEIGHT
+                    );
+                    g.endFill();
+                  } else if (d.data.sex == "F") {
+                    g.lineStyle(2, 0xf0000, 1);
+                    g.drawCircle(d.x, d.y, 30);
+                    g.endFill();
+                  } else {
+                    g.lineStyle(2, 0xc34288, 1);
+                    g.drawCircle(d.x, d.y, 30);
+                    g.endFill();
+                  }
+                });
+
+                links.forEach((d: any, i) => {
+                  g.lineStyle(1, 0xf0000);
+
+                  g.moveTo(d.source.x, d.source.y + RECT_HEIGHT);
+                  g.lineTo(d.target.x, d.target.y - RECT_HEIGHT);
+                  g.endFill();
+                });
+              }}
+            />
+            {nodes.map((d, i) => (
+              <Text
+                key={i}
+                text={d.data.id}
+                x={d.x - RECT_WIDTH / 2}
+                y={d.y + RECT_HEIGHT / 2}
+                style={
+                  new TextStyle({
+                    fill: "blue",
+                    fontSize: 16,
+                    fontWeight: "700",
+                  })
+                }
+              />
+            ))}
+          </Container>
+        </PixiComponentViewport>
+      )}
     </Stage>
   );
 };
