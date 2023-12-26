@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2023.11.12)  26 DEC 2023 16:32
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2023.11.12)  26 DEC 2023 16:48
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -960,6 +960,7 @@ File: puenc.def 2021-06-07 v7.00m Hyperref: PDF Unicode definition (HO)
 Now handling font encoding PU ...
 ... no UTF-8 mapping file for font encoding PU
 )
+Package hyperref Info: Option `colorlinks' set `true' on input line 4073.
 Package hyperref Info: Hyper figures OFF on input line 4192.
 Package hyperref Info: Link nesting OFF on input line 4197.
 Package hyperref Info: Hyper index ON on input line 4200.
@@ -985,7 +986,7 @@ Package hyperref Info: Hyper figures OFF on input line 6076.
 Package hyperref Info: Link nesting OFF on input line 6081.
 Package hyperref Info: Hyper index ON on input line 6084.
 Package hyperref Info: backreferencing OFF on input line 6091.
-Package hyperref Info: Link coloring OFF on input line 6096.
+Package hyperref Info: Link coloring ON on input line 6094.
 Package hyperref Info: Link coloring with OCG OFF on input line 6101.
 Package hyperref Info: PDF/A mode OFF on input line 6106.
 LaTeX Info: Redefining \ref on input line 6146.
@@ -1019,8 +1020,19 @@ Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
 )
 \Hy@SectionHShift=\skip157
 )
-\@quotelevel=\count460
-\@quotereset=\count461
+(/usr/share/texlive/texmf-dist/tex/latex/enumitem/enumitem.sty
+Package: enumitem 2019/06/20 v3.9 Customized lists
+\labelindent=\skip158
+\enit@outerparindent=\dimen275
+\enit@toks=\toks38
+\enit@inbox=\box80
+\enit@count@id=\count460
+\enitdp@description=\count461
+)
+\c@stepsi=\count462
+\enitdp@steps=\count463
+\@quotelevel=\count464
+\@quotereset=\count465
 
 (./user_guide.aux
 <Reading QR code for "http://172.27.1.72:3000?qrcode=true" at level 3-M from au
@@ -1028,37 +1040,37 @@ x file.>
 )
 \openout1 = `user_guide.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 35.
-LaTeX Font Info:    ... okay on input line 35.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 35.
-LaTeX Font Info:    ... okay on input line 35.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 35.
-LaTeX Font Info:    ... okay on input line 35.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 35.
-LaTeX Font Info:    ... okay on input line 35.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 35.
-LaTeX Font Info:    ... okay on input line 35.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 35.
-LaTeX Font Info:    ... okay on input line 35.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 35.
-LaTeX Font Info:    ... okay on input line 35.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 35.
-LaTeX Font Info:    ... okay on input line 35.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 35.
-LaTeX Font Info:    ... okay on input line 35.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 40.
+LaTeX Font Info:    ... okay on input line 40.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 40.
+LaTeX Font Info:    ... okay on input line 40.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 40.
+LaTeX Font Info:    ... okay on input line 40.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 40.
+LaTeX Font Info:    ... okay on input line 40.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 40.
+LaTeX Font Info:    ... okay on input line 40.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 40.
+LaTeX Font Info:    ... okay on input line 40.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 40.
+LaTeX Font Info:    ... okay on input line 40.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 40.
+LaTeX Font Info:    ... okay on input line 40.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 40.
+LaTeX Font Info:    ... okay on input line 40.
  (/usr/share/texlive/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count462
-\scratchdimen=\dimen275
-\scratchbox=\box80
-\nofMPsegments=\count463
-\nofMParguments=\count464
-\everyMPshowfont=\toks38
-\MPscratchCnt=\count465
-\MPscratchDim=\dimen276
-\MPnumerator=\count466
-\makeMPintoPDFobject=\count467
-\everyMPtoPDFconversion=\toks39
+\scratchcounter=\count466
+\scratchdimen=\dimen276
+\scratchbox=\box81
+\nofMPsegments=\count467
+\nofMParguments=\count468
+\everyMPshowfont=\toks39
+\MPscratchCnt=\count469
+\MPscratchDim=\dimen277
+\MPnumerator=\count470
+\makeMPintoPDFobject=\count471
+\everyMPtoPDFconversion=\toks40
 ) (/usr/share/texlive/texmf-dist/tex/latex/epstopdf-pkg/epstopdf-base.sty
 Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
 Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
@@ -1116,9 +1128,9 @@ Package biblatex Info: Trying to load bibliographic data...
 Package biblatex Info: ... file 'user_guide.bbl' found.
 
 (./user_guide.bbl)
-Package biblatex Info: Reference section=0 on input line 35.
-Package biblatex Info: Reference segment=0 on input line 35.
-Package hyperref Info: Link coloring OFF on input line 35.
+Package biblatex Info: Reference section=0 on input line 40.
+Package biblatex Info: Reference segment=0 on input line 40.
+Package hyperref Info: Link coloring ON on input line 40.
 
 (/usr/share/texlive/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2021-04-02 v2.47 Cross-referencing by name of section
@@ -1129,25 +1141,32 @@ Package: refcount 2019/12/15 v3.6 Data extraction from label references (HO)
 (/usr/share/texlive/texmf-dist/tex/generic/gettitlestring/gettitlestring.sty
 Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
 )
-\c@section@level=\count468
+\c@section@level=\count472
 )
-LaTeX Info: Redefining \ref on input line 35.
-LaTeX Info: Redefining \pageref on input line 35.
-LaTeX Info: Redefining \nameref on input line 35.
+LaTeX Info: Redefining \ref on input line 40.
+LaTeX Info: Redefining \pageref on input line 40.
+LaTeX Info: Redefining \nameref on input line 40.
 
 (./user_guide.out) (./user_guide.out)
 \@outlinefile=\write5
 \openout5 = `user_guide.out'.
 
-<ilri_logo.png, id=47, 1381.16pt x 409.53pt>
+<ilri_logo.png, id=131, 1381.16pt x 409.53pt>
 File: ilri_logo.png Graphic file (type png)
 <use ilri_logo.png>
-Package pdftex.def Info: ilri_logo.png  used on input line 39.
+Package pdftex.def Info: ilri_logo.png  used on input line 44.
 (pdftex.def)             Requested size: 284.52756pt x 84.36037pt.
  [1
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map} <./ilri_logo.png>] (./user_
-guide.toc)
+guide.toc
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <12> on input line 7.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <8> on input line 7.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <6> on input line 7.
+)
 \tf@toc=\write6
 \openout6 = `user_guide.toc'.
 
@@ -1155,14 +1174,14 @@ pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has
 been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.63 \newpage
+l.68 \newpage
               [1]
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <7> on input line 82.
+(Font)              <7> on input line 87.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <5> on input line 82.
+(Font)              <5> on input line 87.
 
-Overfull \hbox (94.84735pt too wide) in paragraph at lines 86--115
+Overfull \hbox (94.84735pt too wide) in paragraph at lines 91--120
 [] 
  []
 
@@ -1170,7 +1189,7 @@ pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has
 been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.116 \section
+l.121 \section
               {Introduction} [1]
 File: bc-lampe.mps Graphic file (type mps)
  [MP to PDF]
@@ -1181,22 +1200,22 @@ File: bc-lampe.mps Graphic file (type mps)
 
 <Copying the QR code for "http://172.27.1.72:3000?qrcode=true" in version 3-M a
 s previously calculated.>
-[2] [3] [4] (./user_guide.aux
+[2] [3] [4] [5] (./user_guide.aux
 <Reading QR code for "http://172.27.1.72:3000?qrcode=true" at level 3-M from au
 x file.>
 )
 Package rerunfilecheck Info: File `user_guide.out' has not changed.
-(rerunfilecheck)             Checksum: FDA80D69498A2AA59CE15CD5B5168AFB;347.
+(rerunfilecheck)             Checksum: 578B8F6079ADC12EE567FDC8F95D4AFA;2842.
 Package logreq Info: Writing requests to 'user_guide.run.xml'.
 \openout1 = `user_guide.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 33366 strings out of 478287
- 664167 string characters out of 5849288
- 1421356 words of memory out of 5000000
- 51071 multiletter control sequences out of 15000+600000
- 475373 words of font info for 48 fonts, out of 8000000 for 9000
+ 33755 strings out of 478287
+ 670616 string characters out of 5849288
+ 1434199 words of memory out of 5000000
+ 51433 multiletter control sequences out of 15000+600000
+ 475978 words of font info for 50 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  88i,16n,93p,1155b,1416s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></us
@@ -1207,10 +1226,10 @@ xmf-dist/fonts/type1/public/amsfonts/cm/cmssbx10.pfb></usr/share/texlive/texmf-
 dist/fonts/type1/public/amsfonts/cm/cmti12.pfb></usr/share/texlive/texmf-dist/f
 onts/type1/public/amsfonts/cm/cmti8.pfb></usr/share/texlive/texmf-dist/fonts/ty
 pe1/public/amsfonts/cm/cmtt12.pfb>
-Output written on user_guide.pdf (6 pages, 134447 bytes).
+Output written on user_guide.pdf (7 pages, 141703 bytes).
 PDF statistics:
- 132 PDF objects out of 1000 (max. 8388607)
- 88 compressed objects within 1 object stream
- 12 named destinations out of 1000 (max. 500000)
- 146 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 251 PDF objects out of 1000 (max. 8388607)
+ 204 compressed objects within 3 object streams
+ 35 named destinations out of 1000 (max. 500000)
+ 314 words of extra memory for PDF output out of 10000 (max. 10000000)
 

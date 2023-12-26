@@ -16,7 +16,12 @@
 \usepackage[tikz]{bclogo}
 \usepackage{tikz}
 \usetikzlibrary{calc}
-\usepackage{hyperref}
+\usepackage[colorlinks=true,linkcolor=blue]{hyperref}
+
+% Steps
+\usepackage{enumitem}
+\newlist{steps}{enumerate}{1}
+\setlist[steps, 1]{label = Step \arabic*:}
 
 \newcolumntype{Y}{>{\raggedleft\arraybackslash}X}
 
@@ -136,7 +141,7 @@ Feed Formula Application is
   \end{tikzpicture}\par\medskip%
 }
 
-\begin{myremark}{To Access The App}
+\begin{myremark}{To Access The App}\label{visite_site}
 \vspace{10px}
 Scan the QR Code or go to: \href{http://172.27.1.72:3000/}{http://172.27.1.72:3000/}
 
@@ -145,6 +150,49 @@ Scan the QR Code or go to: \href{http://172.27.1.72:3000/}{http://172.27.1.72:30
 \quad
 \qrcode[height=1in]{http://172.27.1.72:3000?qrcode=true}
 \end{myremark}
+
+\section{Sign Up}
+\begin{steps}
+	\item Head to \ref{visite_site}
+\end{steps}
+
+
+\section{Login}
+
+\section{Invitation}
+
+\subsection{View Invitations List}
+\subsection{Invite User}
+\subsection{Resend Invitation}
+\subsection{Remove Invitation}
+
+\section{Users}
+
+\subsection{View Users List}
+\subsection{Edit User}
+\subsection{Deactivate/Activate User's Account}
+\subsection{Delete User}
+Danger
+
+\section{Settings}
+\section{Change Password}
+
+\section{Forgot Password}
+
+\section{Nutrient Groups}
+
+\section{Nutrients}
+
+\section{Ingredient Groups}
+
+\section{Ingredients}
+
+\section{Requirement}
+
+\section{Ration Formulation}
+
+
+
 
 \newpage
 \section{Reference}

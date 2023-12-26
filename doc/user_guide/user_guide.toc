@@ -1,4 +1,25 @@
 \contentsline {section}{\numberline {1}Legend}{1}{section.1}%
 \contentsline {section}{\numberline {2}Glossary}{2}{section.2}%
 \contentsline {section}{\numberline {3}Introduction}{2}{section.3}%
-\contentsline {section}{\numberline {4}Reference}{4}{section.4}%
+\contentsline {section}{\numberline {4}Sign Up}{3}{section.4}%
+\contentsline {section}{\numberline {5}Login}{3}{section.5}%
+\contentsline {section}{\numberline {6}Invitation}{3}{section.6}%
+\contentsline {subsection}{\numberline {6.1}View Invitations List}{3}{subsection.6.1}%
+\contentsline {subsection}{\numberline {6.2}Invite User}{3}{subsection.6.2}%
+\contentsline {subsection}{\numberline {6.3}Resend Invitation}{3}{subsection.6.3}%
+\contentsline {subsection}{\numberline {6.4}Remove Invitation}{3}{subsection.6.4}%
+\contentsline {section}{\numberline {7}Users}{3}{section.7}%
+\contentsline {subsection}{\numberline {7.1}View Users List}{3}{subsection.7.1}%
+\contentsline {subsection}{\numberline {7.2}Edit User}{3}{subsection.7.2}%
+\contentsline {subsection}{\numberline {7.3}Deactivate/Activate User's Account}{3}{subsection.7.3}%
+\contentsline {subsection}{\numberline {7.4}Delete User}{3}{subsection.7.4}%
+\contentsline {section}{\numberline {8}Settings}{4}{section.8}%
+\contentsline {section}{\numberline {9}Change Password}{4}{section.9}%
+\contentsline {section}{\numberline {10}Forgot Password}{4}{section.10}%
+\contentsline {section}{\numberline {11}Nutrient Groups}{4}{section.11}%
+\contentsline {section}{\numberline {12}Nutrients}{4}{section.12}%
+\contentsline {section}{\numberline {13}Ingredient Groups}{4}{section.13}%
+\contentsline {section}{\numberline {14}Ingredients}{4}{section.14}%
+\contentsline {section}{\numberline {15}Requirement}{4}{section.15}%
+\contentsline {section}{\numberline {16}Ration Formulation}{4}{section.16}%
+\contentsline {section}{\numberline {17}Reference}{5}{section.17}%
