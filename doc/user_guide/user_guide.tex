@@ -17,6 +17,7 @@
 \usepackage{tikz}
 \usetikzlibrary{calc}
 \usepackage[colorlinks=true,linkcolor=blue]{hyperref}
+\usepackage[utf8]{inputenc}
 
 % Steps
 \usepackage{enumitem}
@@ -34,6 +35,8 @@ coltitle=black,center title,freelance,frame code={
 \tcbset{tab2/.style={enhanced,fonttitle=\bfseries,fontupper=\normalsize\sffamily,
 colback=yellow!10!white,colframe=red!50!black,colbacktitle=Salmon!40!white,
 coltitle=black,center title}}
+
+\newcounter{stepcounter}
 
 \addbibresource{cite.bib} % include citation file
 
@@ -118,6 +121,8 @@ Requirement Boundires & (Min \& Max)  \\
 
 \end{tabular}
 
+\newpage
+
 \section{Introduction}
 Feed Formula Application is
 
@@ -151,13 +156,20 @@ Scan the QR Code or go to: \href{http://172.27.1.72:3000/}{http://172.27.1.72:30
 \qrcode[height=1in]{http://172.27.1.72:3000?qrcode=true}
 \end{myremark}
 
+\newpage
 \section{Sign Up}
-\begin{steps}
-	\item Head to \ref{visite_site}
-\end{steps}
+\include{sign_up}
 
+\newpage
+\include{login}
 
-\section{Login}
+\newpage
+\section{Forgot Password}
+\begin{figure}[h!]
+  	\includegraphics[width=15cm]{screenshots/forgot_password_page.png}
+  	\caption{Forgot Password Page}
+  	\label{fig:forgot_password_page}
+\end{figure}
 
 \section{Invitation}
 
@@ -175,12 +187,13 @@ Scan the QR Code or go to: \href{http://172.27.1.72:3000/}{http://172.27.1.72:30
 Danger
 
 \section{Settings}
-\section{Change Password}
+\subsection{Change Password}
 
-\section{Forgot Password}
 
-\section{Nutrient Groups}
+\newpage
+\include{nutrient_group}
 
+\newpage
 \section{Nutrients}
 
 \section{Ingredient Groups}
@@ -192,7 +205,10 @@ Danger
 \section{Ration Formulation}
 
 
+\newpage
+\section{Contact Info}\label{sec:contact_info}
 
+support email address example@example.com
 
 \newpage
 \section{Reference}
