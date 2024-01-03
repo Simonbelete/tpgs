@@ -88,6 +88,41 @@ import "@/types/next-auth.d";
 //   return session;
 // };
 
+async function refreshAccessToken(token: JWT) {
+  try {
+    const response = await fetch(
+      process.env.NEXT_API_URL + "/api/token/refresh",
+      {
+        method: "POST",
+        body: JSON.stringify({
+          refresh: token?.refresh || "",
+        }),
+        headers: { "Content-Type": "application/json" },
+      }
+    );
+
+    const refreshedTokens = await response.json();
+
+    if (!response.ok) {
+      throw refreshedTokens;
+    }
+
+    return {
+      ...token,
+      accessToken: refreshedTokens.access,
+      accessTokenExpires: Date.now() + 1706854754 * 1000,
+      refresh: refreshedTokens.refresh ?? token.refresh, // Fall back to old refresh token
+    };
+  } catch (error) {
+    console.log(error);
+
+    return {
+      ...token,
+      error: "RefreshAccessTokenError",
+    };
+  }
+}
+
 export const authOptions = {
   // Configure one or more authentication providers
   providers: [
@@ -125,9 +160,14 @@ export const authOptions = {
         token.email = user.email;
         token.name = user.name;
         token.id = user.id;
+        token.accessTokenExpires = Date.now() + 1706854754 * 1000;
       }
 
-      return { ...token, ...user };
+      if (Date.now() < (token?.accessTokenExpires || 0)) {
+        return { ...token, ...user };
+      }
+
+      return refreshAccessToken(token);
     },
     async session({
       session,
