@@ -34,6 +34,7 @@ import SaveIcon from "@mui/icons-material/Save";
 import { useRouter } from "next/router";
 import { DatePicker, DateTimePicker } from "@mui/x-date-pickers";
 import AsyncDropdown from "../../components/AsyncDropdown";
+import CreatableAsyncDropdown from "../../components/CreatableAsyncDropdown";
 import getPreviousUrl from "@/util/getPreviousUrl";
 import dayjs from "dayjs";
 import { Dropdown } from "@/components/dropdowns";
@@ -59,6 +60,16 @@ export type Field<T> = {
   multiple?: boolean;
   disabled?: boolean;
   options?: Object;
+  creatable?: {
+    field: string;
+    endpoint: ApiEndpointMutation<
+      MutationDefinition<Partial<T>, ClientQueyFn, any, Promise<any>, any>,
+      EndpointDefinitions
+    > &
+      MutationHooks<
+        MutationDefinition<Partial<T>, ClientQueyFn, any, Promise<any>, any>
+      >;
+  };
 };
 
 export interface FormProps<T> {
@@ -127,8 +138,6 @@ export default function Form<
     resolver: yupResolver(schema),
   });
 
-  console.log(errors);
-
   const onSubmit: SubmitHandler<Inputs> = async (values) => {
     const cleaned_data = beforeSubmit == null ? values : beforeSubmit(values);
     if (data == null) {
@@ -178,7 +187,36 @@ export default function Form<
             // @ts-ignore
             const options = fields[key] as Field;
 
-            if (options.endpoint) {
+            if (options.creatable) {
+              return (
+                <Grid key={i} item xs={options.xs || 12} md={options.md || 6}>
+                  <Controller
+                    // @ts-ignore
+                    name={key}
+                    control={control}
+                    render={({
+                      field: { onChange, value },
+                      fieldState: { error },
+                    }) => (
+                      <CreatableAsyncDropdown
+                        label={options.label}
+                        dataKey={options?.dataKey || "name"}
+                        endpoint={options.endpoint}
+                        createForm={options.form}
+                        placeholder={options.placeholder}
+                        onChange={(_, data) => onChange(data)}
+                        value={value}
+                        error={!!error?.message}
+                        helperText={error?.message}
+                        multiple={options.multiple}
+                        disabled={options.disabled}
+                        creatable={options.creatable}
+                      />
+                    )}
+                  />
+                </Grid>
+              );
+            } else if (options.endpoint) {
               return (
                 <Grid key={i} item xs={options.xs || 12} md={options.md || 6}>
                   <Controller

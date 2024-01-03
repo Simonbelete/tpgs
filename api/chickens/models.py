@@ -45,7 +45,7 @@ class Chicken(CoreModel):
     def display_name(self):
         return "{tag} {sex}".format(
             tag=self.tag,
-            sex=self.sex
+            sex=self.sex or ""
         )
 
     @property

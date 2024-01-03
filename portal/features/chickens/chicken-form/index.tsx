@@ -186,6 +186,10 @@ export const ChickenForm = ({
                       label: "Sire",
                       placeholder: "Select Sire",
                       endpoint: chickenApi.endpoints.getMaleChickens,
+                      creatable: {
+                        field: "tag",
+                        endpoint: chickenApi.endpoints.createChicken,
+                      },
                       dataKey: "display_name",
                       xs: 12,
                       md: 6,

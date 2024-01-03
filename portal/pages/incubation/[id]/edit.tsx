@@ -2,7 +2,7 @@ import React from "react";
 import { NextPageContext } from "next";
 import { Typography } from "@mui/material";
 import { EditLayout } from "@/layouts";
-import { getIncubationByIdSSR } from "@/features/Incubation/services";
+import { getIncubationByIdSSR } from "@/features/incubation/services";
 import { Breadcrumbs, Loading } from "@/components";
 import { useBreadcrumbs } from "@/hooks";
 import { Incubation } from "@/models";

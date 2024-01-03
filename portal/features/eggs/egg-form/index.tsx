@@ -55,6 +55,7 @@ export const EggForm = ({
             form: <ChickenForm />,
             xs: 12,
             md: 12,
+            dataKey: "display_name",
           },
           week: { label: "Week", placeholder: "Week", xs: 12, md: 12 },
           eggs: {

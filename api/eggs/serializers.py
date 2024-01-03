@@ -15,14 +15,14 @@ class EggSerializer_GET(serializers.ModelSerializer):
 
     class Meta:
         model = models.Egg
-        fields = ['id', 'display_name', 'chicken',
-                  'week', 'eggs', 'available_eggs', 'hatchery_eggs', 'display_available_eggs']
+        fields = ['id', 'display_name', 'chicken', 'weight',
+                  'week', 'eggs', 'available_eggs', 'hatchery_eggs', 'display_available_eggs', 'is_active', 'created_at']
 
 
 class EggSerializer_POST(serializers.ModelSerializer):
     class Meta:
         model = models.Egg
-        fields = ['id', 'chicken', 'week', 'eggs', 'weight']
+        fields = ['id', 'chicken', 'week', 'eggs', 'weight', 'is_active']
 
 
 class EggHistorySerializer(serializers.ModelSerializer):
