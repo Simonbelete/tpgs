@@ -33,7 +33,7 @@ class ChickenSerializer_GET(serializers.ModelSerializer):
 class ChickenSerializer_POST(serializers.ModelSerializer):
     class Meta:
         model = models.Chicken
-        fields = ['display_name', 'tag', 'sex', 'sire', 'dam', 'hatchery', 'pen', 'hatch_date', 'is_active',
+        fields = ['id', 'display_name', 'tag', 'sex', 'sire', 'dam', 'hatchery', 'pen', 'hatch_date', 'is_active',
                   'reduction_date', 'reduction_reason', 'generation']
 
 

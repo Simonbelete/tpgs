@@ -189,6 +189,7 @@ export const ChickenForm = ({
                       creatable: {
                         field: "tag",
                         endpoint: chickenApi.endpoints.createChicken,
+                        defaults: { sex: "M" },
                       },
                       dataKey: "display_name",
                       xs: 12,
@@ -198,6 +199,11 @@ export const ChickenForm = ({
                       label: "Dam",
                       placeholder: "Select Dam",
                       endpoint: chickenApi.endpoints.getFeMaleChickens,
+                      creatable: {
+                        field: "tag",
+                        endpoint: chickenApi.endpoints.createChicken,
+                        defaults: { sex: "F" },
+                      },
                       dataKey: "display_name",
                       xs: 12,
                       md: 6,

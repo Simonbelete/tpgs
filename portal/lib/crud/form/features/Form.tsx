@@ -63,12 +63,13 @@ export type Field<T> = {
   creatable?: {
     field: string;
     endpoint: ApiEndpointMutation<
-      MutationDefinition<Partial<T>, ClientQueyFn, any, Promise<any>, any>,
+      MutationDefinition<any, ClientQueyFn, any, Promise<any>, any>,
       EndpointDefinitions
     > &
       MutationHooks<
-        MutationDefinition<Partial<T>, ClientQueyFn, any, Promise<any>, any>
+        MutationDefinition<any, ClientQueyFn, any, Promise<any>, any>
       >;
+    defaults?: Object;
   };
 };
 

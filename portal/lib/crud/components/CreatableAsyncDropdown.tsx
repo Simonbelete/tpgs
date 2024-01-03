@@ -151,7 +151,7 @@ export default function CreatableAsyncDropdown<T>({
   const [createTrigger, createResult] = creatable.endpoint.useMutation();
 
   const createNew = async (value: string) => {
-    let cleaned_data: any = {};
+    let cleaned_data: any = { ...(creatable.defaults || {}) };
     cleaned_data[creatable.field || ""] = value;
     const response = await createTrigger(cleaned_data).unwrap();
     console.log(response);
