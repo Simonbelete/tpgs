@@ -211,6 +211,7 @@ const SidebarMenu = () => {
         <MenuItem
           component={<Link onClick={() => toggleSidebar()} href="/farms" />}
           icon={<FactoryIcon fontSize="small" />}
+          active={RegExp("/farms(.*)$").test(router.pathname)}
         >
           <Typography variant="body1" fontSize={14}>
             Farms
@@ -227,6 +228,7 @@ const SidebarMenu = () => {
         >
           <MenuItem
             component={<Link onClick={() => toggleSidebar()} href="/units" />}
+            active={RegExp("/units(.*)$").test(router.pathname)}
           >
             <Typography variant="body1" fontSize={14}>
               Units
@@ -241,6 +243,7 @@ const SidebarMenu = () => {
         <MenuItem
           component={<Link onClick={() => toggleSidebar()} href="/purposes" />}
           icon={<CrisisAlertIcon fontSize="small" />}
+          active={RegExp("/purposes(.*)$").test(router.pathname)}
         >
           <Typography variant="body1" fontSize={14}>
             Production Purpose

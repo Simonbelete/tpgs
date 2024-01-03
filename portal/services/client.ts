@@ -4,7 +4,7 @@ import axios, {
   AxiosError,
   InternalAxiosRequestConfig,
 } from "axios";
-import { getSession } from "next-auth/react";
+import { getSession, signOut } from "next-auth/react";
 import NProgress from "nprogress";
 import Cookies from "universal-cookie";
 import { ClientQueyFn } from "@/types";
@@ -71,7 +71,7 @@ if (typeof window !== "undefined") {
       if (error.response?.status === 401) {
         // Unauthorized
         // TODO: Remove acess token(logout)
-        // Service.logout().catch(() => {});
+        signOut();
       } else if (error.response?.status === 403) {
         // Unauthorized
         // TODO: Remove acess token(logout)
