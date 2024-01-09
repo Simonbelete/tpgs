@@ -46,6 +46,7 @@ import AssignmentTurnedInIcon from "@mui/icons-material/AssignmentTurnedIn";
 import AutoGraphIcon from "@mui/icons-material/AutoGraph";
 import AccountTreeIcon from "@mui/icons-material/AccountTree";
 import { useProSidebar } from "react-pro-sidebar";
+import ViewTimelineIcon from "@mui/icons-material/ViewTimeline";
 
 function menuProps(key: string) {
   return {
@@ -380,6 +381,16 @@ const SidebarMenu = () => {
         </Typography>
       </div>
       <Menu menuItemStyles={menuItemStyles}>
+        <MenuItem
+          component={
+            <Link onClick={() => toggleSidebar()} href="/chicken-grid" />
+          }
+          icon={<ViewTimelineIcon width="20" height="20" fill="inherit" />}
+        >
+          <Typography variant="body1" fontSize={14}>
+            Grid Chicken
+          </Typography>
+        </MenuItem>
         <MenuItem
           component={<Link onClick={() => toggleSidebar()} href="/chickens" />}
           icon={<ChickenIcon width="20" height="20" fill="inherit" />}
