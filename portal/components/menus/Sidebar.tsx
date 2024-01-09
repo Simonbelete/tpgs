@@ -535,7 +535,7 @@ const SidebarMenu = () => {
           }
           icon={<AssignmentTurnedInIcon fontSize="small" />}
           defaultOpen={RegExp(
-            "^/(guidelines/weight|guidelines/feed|guidelines/eggs)(.*)$"
+            "^/(guidelines/hdep|guidelines/weight|guidelines/feed|guidelines/eggs)(.*)$"
           ).test(router.pathname)}
         >
           <MenuItem

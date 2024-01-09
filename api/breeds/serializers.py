@@ -64,7 +64,8 @@ class BreedHDEPGuidelineSerializer_GET(serializers.ModelSerializer):
 
     class Meta:
         model = models.BreedHDEPGuideline
-        fields = ['id', 'breed', 'week', 'hdep', 'display_name']
+        fields = ['id', 'breed', 'week', 'hdep',
+                  'display_name', 'is_active', 'created_at']
 
 
 class BreedHDEPGuidelineSerializer_POST(serializers.ModelSerializer):
@@ -93,13 +94,14 @@ class BreedHHEPGuidelineSerializer_GET(serializers.ModelSerializer):
 
     class Meta:
         model = models.BreedHHEPGuideline
-        fields = ['id', 'breed', 'week', 'hhep', 'display_name']
+        fields = ['id', 'breed', 'week', 'hhep',
+                  'display_name', 'is_active', 'created_at']
 
 
 class BreedHHEPGuidelineSerializer_POST(serializers.ModelSerializer):
     class Meta:
         model = models.BreedHHEPGuideline
-        fields = ['id', 'breed', 'week', 'hhep']
+        fields = ['id', 'breed', 'week', 'hhep', 'is_active']
 
     def create(self, validated_data):
         if ('breed_pk' in self.context["view"].kwargs):
@@ -121,13 +123,14 @@ class BreedFeedGuidelineSerializer_GET(serializers.ModelSerializer):
 
     class Meta:
         model = models.BreedFeedGuideline
-        fields = ['id', 'breed', 'week', 'weight', 'display_name']
+        fields = ['id', 'breed', 'week', 'weight',
+                  'display_name', 'is_active', 'created_at']
 
 
 class BreedFeedGuideSerializer_POST(serializers.ModelSerializer):
     class Meta:
         model = models.BreedFeedGuideline
-        fields = ['id', 'breed', 'week', 'weight']
+        fields = ['id', 'breed', 'week', 'weight', 'is_active']
 
     def create(self, validated_data):
         if ('breed_pk' in self.context["view"].kwargs):
@@ -149,13 +152,14 @@ class BreedEggGuidelineSerializer_GET(serializers.ModelSerializer):
 
     class Meta:
         model = models.BreedEggGuideline
-        fields = ['id', 'breed', 'week', 'egg', 'weight', 'display_name']
+        fields = ['id', 'breed', 'week', 'egg', 'weight',
+                  'display_name', 'is_active', 'created_at']
 
 
 class BreedEggGuideSerializer_POST(serializers.ModelSerializer):
     class Meta:
         model = models.BreedEggGuideline
-        fields = ['id', 'breed', 'week', 'egg', 'weight']
+        fields = ['id', 'breed', 'week', 'egg', 'weight', 'is_active']
 
     def create(self, validated_data):
         if ('breed_pk' in self.context["view"].kwargs):

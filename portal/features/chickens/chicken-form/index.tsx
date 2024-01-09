@@ -25,6 +25,8 @@ import EggList from "./EggList";
 import WeightList from "./WeightList";
 import FeedList from "./FeedList";
 import dayjs from "dayjs";
+import { ChickenStat } from "../chicken-stat";
+import { ChickenStages } from "../chicken-stages";
 
 const schema = yup.object({
   tag: yup.string().required(),
@@ -111,6 +113,12 @@ export const ChickenForm = ({
           </>
         }
       >
+        {formData && (
+          <Box sx={{ mb: 2 }}>
+            <ChickenStat data={formData} />
+          </Box>
+        )}
+
         <Tabs
           scrollButtons
           value={tab}

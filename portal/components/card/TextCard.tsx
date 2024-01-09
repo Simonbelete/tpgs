@@ -17,13 +17,11 @@ const NumberStatisticsCard = ({
   children,
   value,
   description,
-  icon,
 }: {
   title?: string;
   children?: React.ReactNode;
   value?: string;
   description?: string;
-  icon?: React.ReactNode;
 }) => {
   const theme = useTheme();
 
@@ -37,26 +35,12 @@ const NumberStatisticsCard = ({
             </Typography>
             <Stack direction={"row"} spacing={2}>
               <Tooltip title="Achived Cost">
-                <Typography variant="h5" fontWeight={600} color="secondary">
+                <Typography variant="h6" fontWeight={600} color="secondary">
                   {value}
                 </Typography>
               </Tooltip>
             </Stack>
           </Stack>
-          {icon && (
-            <ButtonBase sx={{ height: "100%" }}>
-              <Avatar
-                sx={{
-                  width: 46,
-                  height: 46,
-                  bgcolor: "#fff",
-                  color: "#6cb640",
-                }}
-              >
-                {icon}
-              </Avatar>
-            </ButtonBase>
-          )}
         </Stack>
         <Typography variant="caption" color="text.secondary">
           {description}

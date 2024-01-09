@@ -8,7 +8,7 @@ import { BreedForm } from "@/features/breeds";
 
 const schema = yup.object({
   week: yup.number().min(0).required(),
-  feed: yup.string().min(0).required(),
+  weight: yup.string().min(0).required(),
   breed: yup.object().required(),
 });
 
