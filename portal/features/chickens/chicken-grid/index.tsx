@@ -6,6 +6,8 @@ import {
   GridCellKind,
   GridColumn,
   Item,
+  GetRowThemeCallback,
+  GridMouseEventArgs,
 } from "@glideapps/glide-data-grid";
 import { Sizer } from "@/features/formula/components";
 import _ from "lodash";
@@ -14,10 +16,16 @@ import { ChickenDropdown } from "../chicken-dropdown";
 import {
   useLazyGetChickenGridQuery,
   useCreateChickenGridMutation,
+  useDeleteChickenGridMutation,
 } from "../services";
-import { Chicken } from "@/models";
+import { Chicken, ChickenGrid } from "@/models";
 import MuiSaveIcon from "@mui/icons-material/Save";
 import { Dna } from "react-loader-spinner";
+import { enqueueSnackbar } from "notistack";
+import {
+  useExtraCells,
+  ButtonCellType,
+} from "@glideapps/glide-data-grid-cells";
 
 type ColumnProperty = {} & Partial<GridCell>;
 
@@ -26,26 +34,17 @@ type Column = {
   property?: ColumnProperty;
 } & GridColumn;
 
-type Row = {
-  egg_id: number | null;
-  egg_weight: number | null;
-  eggs: number | null;
-  feed_id: number | null;
-  feed_weight: number | null;
-  week: number;
-  weight_id: number | null;
-};
-
 export const GridChickenInput = () => {
   const [chicken, setChicken] = useState<Chicken | null>(null);
 
   const [trigger, { data: gridData, isFetching: getChickenGridIsFetching }] =
     useLazyGetChickenGridQuery();
 
-  const [createTrigger] = useCreateChickenGridMutation();
+  const [createTrigger, createResult] = useCreateChickenGridMutation();
+  const [deleteTrigger, deleteResult] = useDeleteChickenGridMutation();
 
-  const [rows, setRows] = useState<Row[]>([]);
-  const [columns, setColumns] = useState<Column[]>([
+  const [rows, setRows] = useState<ChickenGrid[]>([]);
+  const columns = [
     {
       title: "Week",
       id: "week",
@@ -63,6 +62,7 @@ export const GridChickenInput = () => {
         allowOverlay: true,
         readonly: false,
       },
+      group: "Body Weight",
     },
     {
       title: "No of Eggs",
@@ -72,15 +72,17 @@ export const GridChickenInput = () => {
         allowOverlay: true,
         readonly: false,
       },
+      group: "Egg Production",
     },
     {
       title: "Total Egg Weight (g)",
-      id: "egg_weight",
+      id: "eggs_weight",
       property: {
         kind: GridCellKind.Number,
         allowOverlay: true,
         readonly: false,
       },
+      group: "Egg Production",
     },
     {
       title: "Feed Intake (g)",
@@ -90,43 +92,81 @@ export const GridChickenInput = () => {
         allowOverlay: true,
         readonly: false,
       },
+      group: "Feed Intake",
     },
-  ]);
+    {
+      title: "Setting",
+      id: "setting",
+      property: {
+        kind: GridCellKind.Custom,
+        copyData: "4",
+        allowOverlay: false,
+        data: {
+          kind: "button-cell",
+          backgroundColor: ["transparent", "#6572ffee"],
+          color: ["accentColor", "accentFg"],
+          borderColor: "#6572ffa0",
+          borderRadius: 9,
+
+          title: "Delete",
+        },
+      },
+    },
+  ];
+
+  const { customRenderers } = useExtraCells();
 
   const getContent = React.useCallback(
-    (cell: Item): GridCell => {
+    (cell: Item): GridCell | any => {
       const [col, row] = cell;
       const dataRow = rows[row];
       const dataCol = columns[col];
 
       const d = _.get(dataRow, dataCol.id, "");
 
-      // @ts-ignore
-      return {
-        kind: GridCellKind.Text,
-        allowOverlay: true,
-        readonly: false,
-        // ...dataCol.property,
-        displayData: String(d),
-        data: String(d),
-      };
+      if (dataCol.property.kind == GridCellKind.Custom) {
+        return {
+          ...dataCol.property,
+          data: {
+            kind: "button-cell",
+            backgroundColor: ["transparent", "#6572ffee"],
+            color: ["accentColor", "accentFg"],
+            borderColor: "#fff",
+            borderRadius: 9,
+            title: "Delete",
+            onClick: () => deleteRow(row),
+          },
+        };
+      } else {
+        // @ts-ignore
+        return {
+          kind: GridCellKind.Text,
+          allowOverlay: true,
+          readonly: false,
+          // ...dataCol.property,
+          displayData: String(d),
+          data: String(d),
+        };
+      }
     },
-    [rows, columns]
+    [rows]
   );
 
+  const getChickenData = async () => {
+    if (chicken == null) return;
+
+    const response = await trigger(chicken.id).unwrap();
+    if (response.results) {
+      const dr = _.map(response.results, (o) => {
+        return { ...o };
+      });
+      setRows(dr);
+    }
+  };
+
   useEffect(() => {
-    console.log("chicken");
     if (chicken != null) {
-      trigger(chicken.id)
-        .unwrap()
-        .then((response) => {
-          if (response.results) {
-            const dr = _.map(response.results, (o) => {
-              return { ...o };
-            });
-            setRows(dr);
-          }
-        });
+      getChickenData();
     }
   }, [chicken]);
 
@@ -134,8 +174,21 @@ export const GridChickenInput = () => {
     (cell: Item, newValue: EditableGridCell) => {
       const [col, row] = cell;
       const dataCol = columns[col];
+      const dataRow = rows[row];
 
       const rowCopy = [...rows];
+
+      const index = _.findIndex(
+        rows,
+        (o) => o != dataRow && o.week == dataRow.week
+      );
+
+      if (index != -1) {
+        enqueueSnackbar(`Week, Already exists`, {
+          variant: "warning",
+        });
+        return;
+      }
 
       _.set(rowCopy[row], dataCol.id, newValue.data);
 
@@ -145,11 +198,9 @@ export const GridChickenInput = () => {
     [rows]
   );
 
-  const sortByWeek = (rowCopy: Row[]) => {
+  const sortByWeek = (rowCopy: ChickenGrid[]) => {
     setRows(_.sortBy(rowCopy, ["week"]));
   };
-
-  const checkIfRowExists = (week: number) => {};
 
   const onRowAppended = React.useCallback(() => {
     const rowCopy = [...rows];
@@ -173,12 +224,63 @@ export const GridChickenInput = () => {
         data: rows,
       }).unwrap();
       if (response.results) {
+        enqueueSnackbar(`Updated`, {
+          variant: "success",
+        });
         setRows(response.results);
       } else {
-        // TODO: display error
+        enqueueSnackbar(`Failed to save`, {
+          variant: "error",
+        });
       }
-    } catch {}
+    } catch {
+      enqueueSnackbar(`Failed to save`, {
+        variant: "error",
+      });
+    }
   };
+
+  const deleteRow = async (index: number) => {
+    if (
+      chicken != null &&
+      (_.get(rows[index], "egg_id") != null ||
+        _.get(rows[index], "feed_id") != null ||
+        _.get(rows[index], "") != null)
+    ) {
+      const choice = confirm("Are you sure you want to delete!");
+      if (choice) {
+        const response = await deleteTrigger({
+          id: chicken.id,
+          data: rows[index],
+        }).unwrap();
+
+        getChickenData();
+      }
+    } else {
+      setRows(rows.filter((e, i) => i != index));
+    }
+  };
+
+  /**
+   * Row Hover
+   */
+  const [hoverRow, setHoverRow] = React.useState<number | undefined>(undefined);
+
+  const onItemHovered = React.useCallback((args: GridMouseEventArgs) => {
+    const [_, row] = args.location;
+    setHoverRow(args.kind !== "cell" ? undefined : row);
+  }, []);
+
+  const getRowThemeOverride = React.useCallback<GetRowThemeCallback>(
+    (row) => {
+      if (row !== hoverRow) return undefined;
+      return {
+        bgCell: "#f7f7f7",
+        bgCellMedium: "#f0f0f0",
+      };
+    },
+    [hoverRow]
+  );
 
   return (
     <div style={{ position: "relative" }}>
@@ -205,7 +307,7 @@ export const GridChickenInput = () => {
       </Backdrop>
       <Stack
         direction={{ xs: "column", md: "row" }}
-        sx={{ my: 5 }}
+        sx={{ my: 3 }}
         gap={1}
         alignItems={"center"}
       >
@@ -230,6 +332,7 @@ export const GridChickenInput = () => {
       <Sizer>
         <DataEditor
           width="100%"
+          customRenderers={customRenderers}
           onCellEdited={onCellEdited}
           getCellContent={getContent}
           columns={columns}
@@ -241,8 +344,27 @@ export const GridChickenInput = () => {
             tint: true,
             hint: "Add new",
           }}
+          rowMarkers={"both"}
+          onItemHovered={onItemHovered}
+          getRowThemeOverride={getRowThemeOverride}
         />
       </Sizer>
+      <Stack
+        direction={{ xs: "column", md: "row" }}
+        sx={{ my: 5 }}
+        gap={1}
+        alignItems={"center"}
+      >
+        <Button
+          onClick={save}
+          color="secondary"
+          size="small"
+          startIcon={<MuiSaveIcon fontSize="small" />}
+          sx={{ textTransform: "none" }}
+        >
+          Save
+        </Button>
+      </Stack>
     </div>
   );
 };

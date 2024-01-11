@@ -35,6 +35,7 @@ from . import filters
 from feeds.models import Feed
 from weights.models import Weight
 from eggs.models import Egg
+from chickens.models import Chicken
 
 
 class ChickenViewSet(CoreModelViewSet):
@@ -164,11 +165,18 @@ class GenerationViewSet(viewsets.GenericViewSet, mixins.ListModelMixin):
 
 
 class ChickenGridViewSet(viewsets.ViewSet):
+    def get_chicken(self, id):
+        try:
+            self.farm = Chicken.all.get(pk=id)
+            return self.farm
+        except Chicken.DoesNotExist:
+            raise NotFound("Not found")
+
     def get_chicken_grid(self, id=None):
         try:
             cursor = connection.cursor()
             cursor.execute("""
-                SELECT ww.id AS weight_id, ww.week AS week, ww.weight AS body_weight,
+                SELECT ww.id AS body_weight_id, ww.week AS week, ww.weight AS body_weight,
                     ee.id AS egg_id, ee.eggs AS eggs, ee.weight AS eggs_weight,
                     ff.id AS feed_id, ff.weight AS feed_weight
                 FROM weights_weight ww
@@ -183,8 +191,8 @@ class ChickenGridViewSet(viewsets.ViewSet):
                 order by ww.week
             """.format(chicken_id=id))
 
-            columns = ['weight_id', 'week', 'body_weight', 'egg_id',
-                       'eggs', 'egg_weight', 'feed_id', 'feed_weight']
+            columns = ['week', 'body_weight_id', 'body_weight', 'egg_id',
+                       'eggs', 'eggs_weight', 'feed_id', 'feed_weight']
 
             return [dict(zip(columns, row)) for row in cursor.fetchall()]
         except:
@@ -201,17 +209,35 @@ class ChickenGridViewSet(viewsets.ViewSet):
     def create(self, request, id=None):
         try:
             data = request.data['data']
-
+            chicken = self.get_chicken(id)
             for i in data:
-                Feed.objects.update_or_create(chicken=id, week=i['week'], defaults={
+                Feed.objects.update_or_create(chicken=chicken, week=i['week'], defaults={
                                               'weight': i['body_weight']})
-                Egg.objects.update_or_create(chicken=id, week=i['week'], defaults={
+                Egg.objects.update_or_create(chicken=chicken, week=i['week'], defaults={
                                              'eggs': i['eggs'], 'weight': i['eggs_weight']})
-                Weight.objects.update_or_create(chicken=id, week=i['week'], defaults={
-                                                'weight': i['body_weight']})
+                Weight.objects.update_or_create(chicken=chicken, week=i['week'], defaults={
+                                                'weight': i['feed_weight']})
 
             return Response({
                 'results': self.get_chicken_grid(id)
             }, status=201)
-        except:
-            return Response({}, status=500)
+        except Exception as ex:
+            print(ex)
+            return Response({'error': str(ex)}, status=500)
+
+    def delete(self, request, id=None):
+        try:
+            data = request.data['data']
+            if (data['feed_id']):
+                Feed.objects.filter(id=data['feed_id']).delete()
+
+            if (data['egg_id']):
+                Egg.objects.filter(id=data['egg_id']).delete()
+
+            if (data['body_weight_id']):
+                Weight.objects.filter(id=data['body_weight_id']).delete
+
+            return Response({}, status=204)
+        except Exception as ex:
+            print(ex)
+            return Response({'error': str(ex)}, status=500)

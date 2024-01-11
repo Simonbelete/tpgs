@@ -133,6 +133,15 @@ export const chickenApi = baseApi.injectEndpoints({
           data: data,
         }),
       }),
+      deleteChickenGrid: build.mutation<any, { id: number; data: ChickenGrid }>(
+        {
+          query: ({ id, data }) => ({
+            url: `chicken-grid/${id}/`,
+            method: "delete",
+            data: data,
+          }),
+        }
+      ),
     };
   },
   overrideExisting: false,
@@ -180,4 +189,5 @@ export const {
   useGetChickenGridQuery,
   useLazyGetChickenGridQuery,
   useCreateChickenGridMutation,
+  useDeleteChickenGridMutation,
 } = chickenApi;
