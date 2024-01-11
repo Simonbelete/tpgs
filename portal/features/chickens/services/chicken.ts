@@ -1,5 +1,11 @@
 import { baseApi } from "@/services/baseApi";
-import { AbstractSummary, Response, Chicken, ChickenHistory } from "@/models";
+import {
+  AbstractSummary,
+  Response,
+  Chicken,
+  ChickenHistory,
+  ChickenGrid,
+} from "@/models";
 import { AxiosResponse } from "axios";
 import clientSSR from "@/services/client_ssr";
 import client from "@/services/client";
@@ -111,6 +117,22 @@ export const chickenApi = baseApi.injectEndpoints({
       deleteChicken: build.mutation<any, number>({
         query: (id: number) => ({ url: `${URL}/${id}/`, method: "delete" }),
       }),
+      getChickenGrid: build.query<Response<ChickenGrid[]>, number>({
+        query: (id?: Object) => ({
+          url: `/chicken-grid/${id}/`,
+          method: "get",
+        }),
+      }),
+      createChickenGrid: build.mutation<
+        Promise<{ results: ChickenGrid[] }>,
+        { id: number; data: any }
+      >({
+        query: (data: { id: number; data: any }) => ({
+          url: `/chicken-grid/${data.id}/`,
+          method: "post",
+          data: data,
+        }),
+      }),
     };
   },
   overrideExisting: false,
@@ -155,4 +177,7 @@ export const {
   useCreateChickenMutation,
   useUpdateChickenMutation,
   useDeleteChickenMutation,
+  useGetChickenGridQuery,
+  useLazyGetChickenGridQuery,
+  useCreateChickenGridMutation,
 } = chickenApi;

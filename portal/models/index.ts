@@ -93,3 +93,4 @@ export type { default as BreedEggGuidelineHistory } from "./BreedEggGuidelineHis
 export type { default as BreedHDEPGuideline } from "./BreedHDEPGuideline";
 export type { default as BreedHHEPGuideline } from "./BreedHHEPGuideline";
 export type { default as BreedHHEPGuidelineHistory } from "./BreedHHEPGuidelineHistory";
+export type { default as ChickenGrid } from "./ChickenGrid";

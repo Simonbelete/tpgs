@@ -32,6 +32,9 @@ from . import models
 from . import serializers
 from . import admin
 from . import filters
+from feeds.models import Feed
+from weights.models import Weight
+from eggs.models import Egg
 
 
 class ChickenViewSet(CoreModelViewSet):
@@ -161,11 +164,8 @@ class GenerationViewSet(viewsets.GenericViewSet, mixins.ListModelMixin):
 
 
 class ChickenGridViewSet(viewsets.ViewSet):
-    def list(self, request, id=None):
+    def get_chicken_grid(self, id=None):
         try:
-            print('0000000000000000000000000000000')
-            print(id)
-
             cursor = connection.cursor()
             cursor.execute("""
                 SELECT ww.id AS weight_id, ww.week AS week, ww.weight AS body_weight,
@@ -186,8 +186,32 @@ class ChickenGridViewSet(viewsets.ViewSet):
             columns = ['weight_id', 'week', 'body_weight', 'egg_id',
                        'eggs', 'egg_weight', 'feed_id', 'feed_weight']
 
+            return [dict(zip(columns, row)) for row in cursor.fetchall()]
+        except:
+            return []
+
+    def list(self, request, id=None):
+        try:
             return Response({
-                'results': [dict(zip(columns, row)) for row in cursor.fetchall()]
+                'results': self.get_chicken_grid(id)
             }, status=200)
+        except Exception as ex:
+            return Response({}, status=500)
+
+    def create(self, request, id=None):
+        try:
+            data = request.data['data']
+
+            for i in data:
+                Feed.objects.update_or_create(chicken=id, week=i['week'], defaults={
+                                              'weight': i['body_weight']})
+                Egg.objects.update_or_create(chicken=id, week=i['week'], defaults={
+                                             'eggs': i['eggs'], 'weight': i['eggs_weight']})
+                Weight.objects.update_or_create(chicken=id, week=i['week'], defaults={
+                                                'weight': i['body_weight']})
+
+            return Response({
+                'results': self.get_chicken_grid(id)
+            }, status=201)
         except:
             return Response({}, status=500)

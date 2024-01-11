@@ -130,7 +130,7 @@ export const ChickenForm = ({
             },
           }}
         >
-          <Tab label="Detail" {...a11yProps(0)} />
+          <Tab label="Pedigree" {...a11yProps(0)} />
           {formData && <Tab label="Siblings" {...a11yProps(3)} />}
           {formData && <Tab label="Offspring" {...a11yProps(1)} />}
           {formData && <Tab label="Egg Production" {...a11yProps(1)} />}
