@@ -14,6 +14,7 @@ from django.db.models import Q
 from rest_framework.response import Response
 from rest_framework.exceptions import NotFound
 from .tasks import build_pedigree_tree
+from django.db import connection
 
 from core.views import (
     HistoryViewSet,
@@ -157,3 +158,36 @@ class GenerationViewSet(viewsets.GenericViewSet, mixins.ListModelMixin):
         'generation').exclude(generation__isnull=True)
     serializer_class = serializers.GenerationSerializer_GET
     ordering_fields = '__all__'
+
+
+class ChickenGridViewSet(viewsets.ViewSet):
+    def list(self, request, id=None):
+        try:
+            print('0000000000000000000000000000000')
+            print(id)
+
+            cursor = connection.cursor()
+            cursor.execute("""
+                SELECT ww.id AS weight_id, ww.week AS week, ww.weight AS body_weight,
+                    ee.id AS egg_id, ee.eggs AS eggs, ee.weight AS eggs_weight,
+                    ff.id AS feed_id, ff.weight AS feed_weight
+                FROM weights_weight ww
+                LEFT JOIN eggs_egg ee
+                    ON ee.week = ww.week AND ee.chicken_id = ww.chicken_id
+                LEFT JOIN feeds_feed ff
+                    ON ff.week = ww.week AND ff.chicken_id = ww.chicken_id
+                WHERE ff.parent_id IS NULL
+                    AND ww.chicken_id = {chicken_id}
+                    OR ee.chicken_id = {chicken_id}
+                    OR ff.chicken_id = {chicken_id}
+                order by ww.week
+            """.format(chicken_id=id))
+
+            columns = ['weight_id', 'week', 'body_weight', 'egg_id',
+                       'eggs', 'egg_weight', 'feed_id', 'feed_weight']
+
+            return Response({
+                'results': [dict(zip(columns, row)) for row in cursor.fetchall()]
+            }, status=200)
+        except:
+            return Response({}, status=500)

@@ -25,6 +25,9 @@ gen_router = routers.DefaultRouter()
 gen_router.register(r'chickens/generations', views.GenerationViewSet,
                     basename='api_generations')
 
+router.register(r'chicken-grid/(?P<id>.+)', views.ChickenGridViewSet,
+                basename='api_chicken_grid')
+
 urlpatterns = [
     path('', include(gen_router.urls)),
     path('', include(router.urls)),
