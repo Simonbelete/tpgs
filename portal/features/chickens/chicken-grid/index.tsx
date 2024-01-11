@@ -151,7 +151,19 @@ export const GridChickenInput = () => {
 
   const checkIfRowExists = (week: number) => {};
 
-  const onRowAppended = React.useCallback(() => {}, []);
+  const onRowAppended = React.useCallback(() => {
+    const rowCopy = [...rows];
+
+    _.set(rowCopy, rows.length, {
+      week: Number(_.get(rowCopy, `${rowCopy.length - 1}.week`, 0)) + 1,
+      egg_weight: 0,
+      eggs: 0,
+      feed_weight: 0,
+      body_weight: 0,
+    });
+
+    setRows(rowCopy);
+  }, [rows]);
 
   const save = async () => {
     if (chicken == null) return;
@@ -221,7 +233,7 @@ export const GridChickenInput = () => {
           onCellEdited={onCellEdited}
           getCellContent={getContent}
           columns={columns}
-          rows={rows.length + 2}
+          rows={rows.length}
           freezeColumns={1}
           onRowAppended={onRowAppended}
           trailingRowOptions={{
