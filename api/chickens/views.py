@@ -1,5 +1,6 @@
 import io
 import pandas as pd
+import numpy as np
 import django_filters
 from django.shortcuts import render
 from rest_framework import viewsets, mixins
@@ -176,25 +177,39 @@ class ChickenGridViewSet(viewsets.ViewSet):
         try:
             cursor = connection.cursor()
             cursor.execute("""
-                SELECT ww.id AS body_weight_id, ww.week AS week, ww.weight AS body_weight,
+                SELECT ww.week, ff.week, ee.week,
+                    ww.id AS body_weight_id, ww.weight AS body_weight,
                     ee.id AS egg_id, ee.eggs AS eggs, ee.weight AS eggs_weight,
                     ff.id AS feed_id, ff.weight AS feed_weight
                 FROM weights_weight ww
-                LEFT JOIN eggs_egg ee
+                FULL JOIN eggs_egg ee
                     ON ee.week = ww.week AND ee.chicken_id = ww.chicken_id
-                LEFT JOIN feeds_feed ff
+                FULL JOIN feeds_feed ff
                     ON ff.week = ww.week AND ff.chicken_id = ww.chicken_id
                 WHERE ff.parent_id IS NULL
                     AND ww.chicken_id = {chicken_id}
                     OR ee.chicken_id = {chicken_id}
                     OR ff.chicken_id = {chicken_id}
-                order by ww.week
+                order by ww.week, ff.week, ee.week
             """.format(chicken_id=id))
 
-            columns = ['week', 'body_weight_id', 'body_weight', 'egg_id',
+            columns = ['ww.week', 'ff.week', 'ee.week', 'body_weight_id', 'body_weight', 'egg_id',
                        'eggs', 'eggs_weight', 'feed_id', 'feed_weight']
 
-            return [dict(zip(columns, row)) for row in cursor.fetchall()]
+            result = []
+            for row in cursor.fetchall():
+                zipper = []
+                for i in range(len(columns)):
+                    if (columns[i] in ['ww.week', 'ff.week', 'ee.week']):
+                        zipper.append(('week', row[i]))
+                        a = row[i] if zipper[0][1] is None else zipper[0][1]
+                        zipper.append(('week', a))
+                    else:
+                        zipper.append((columns[i], row[i]))
+                result.append(dict(zipper))
+
+            return result
+            # return [dict(zip(columns, row)) for row in cursor.fetchall()]
         except:
             return []
 

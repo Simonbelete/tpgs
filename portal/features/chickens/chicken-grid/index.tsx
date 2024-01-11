@@ -331,6 +331,7 @@ export const GridChickenInput = () => {
       </Box>
       <Sizer>
         <DataEditor
+          height={"800px"}
           width="100%"
           customRenderers={customRenderers}
           onCellEdited={onCellEdited}
