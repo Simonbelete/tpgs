@@ -151,10 +151,12 @@ export const ChickenForm = ({
               <Card title="Chicken">
                 <Form<Chicken>
                   data={
-                    {
-                      ...formData,
-                      sex: _.find(sexOptions, { value: formData?.sex }),
-                    } as any
+                    formData
+                      ? ({
+                          ...formData,
+                          sex: _.find(sexOptions, { value: formData?.sex }),
+                        } as any)
+                      : undefined
                   }
                   schema={schema}
                   shallowRoute={shallowRoute}
