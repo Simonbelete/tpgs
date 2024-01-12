@@ -21,12 +21,8 @@ from core.views import (
     HistoryViewSet,
     SummaryViewSet,
     CoreModelViewSet,
-    XlsxExport,
-    XlsExport,
-    CsvExport,
-    XlsxImport,
-    XlsImport,
-    CsvImport
+    GenericExportView,
+    GenericImportView
 )
 from core.serializers import UploadSerializer
 from . import models
@@ -124,40 +120,18 @@ class SiblingsViewSet(viewsets.GenericViewSet):
         return Response(serializer.data)
 
 
-# Chicken Export
-class ChickenXlsxExport(XlsxExport):
+class ChickenExport(GenericExportView):
     def get_dataset(self):
         return admin.ChickenResource().export()
 
 
-class ChickenXlsExport(XlsExport):
-    def get_dataset(self):
-        return admin.ChickenResource().export()
-
-
-class ChickenCsvExport(CsvExport):
-    def get_dataset(self):
-        return admin.ChickenResource().export()
-
-# Chicken Import
-
-
-class ChickenXlsxImport(XlsxImport):
+class ChickenImport(GenericImportView):
     def get_resource(self):
         return admin.ChickenResource()
-
-
-class ChickenXlsImport(XlsImport):
-    def get_resource(self):
-        return admin.ChickenResource()
-
-
-class ChickenCsvImport(CsvImport):
-    def get_resource(self):
-        return admin.ChickenResource()
-
 
 # Generation
+
+
 class GenerationViewSet(viewsets.GenericViewSet, mixins.ListModelMixin):
     queryset = models.Chicken.all.distinct(
         'generation').exclude(generation__isnull=True)
