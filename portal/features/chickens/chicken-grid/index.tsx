@@ -207,7 +207,7 @@ export const GridChickenInput = () => {
 
     _.set(rowCopy, rows.length, {
       week: Number(_.get(rowCopy, `${rowCopy.length - 1}.week`, 0)) + 1,
-      egg_weight: 0,
+      eggs_weight: 0,
       eggs: 0,
       feed_weight: 0,
       body_weight: 0,

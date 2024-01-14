@@ -157,9 +157,9 @@ class ChickenGridViewSet(viewsets.ViewSet):
                     ff.id AS feed_id, ff.weight AS feed_weight
                 FROM weights_weight ww
                 FULL JOIN eggs_egg ee
-                    ON ee.week = ww.week OR ee.week = ff.week AND ee.chicken_id = ww.chicken_id
+                    ON ee.week = ww.week
                 FULL JOIN feeds_feed ff
-                    ON ff.week = ww.week OR ff.week = ee.week AND ff.chicken_id = ww.chicken_id
+                    ON ff.week = ww.week
                 WHERE ff.parent_id IS NULL
                     AND ww.chicken_id = {chicken_id}
                     OR ee.chicken_id = {chicken_id}
@@ -184,10 +184,7 @@ class ChickenGridViewSet(viewsets.ViewSet):
                 result.append(dict(zipper))
 
             return result
-            # return [dict(zip(columns, row)) for row in cursor.fetchall()]
         except Exception as ex:
-            print('********************')
-            print(ex)
             return []
 
     def list(self, request, id=None):
