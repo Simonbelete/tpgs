@@ -50,6 +50,7 @@ export interface ExportModalProps {
   beforeSubmit?: (values: any) => Object;
   name?: string;
   url: string;
+  fullUrl?: string;
   fields: {
     [key: string]: ExportField;
   };
@@ -57,6 +58,7 @@ export interface ExportModalProps {
 
 export const ExportModal = ({
   url,
+  fullUrl,
   fields,
   name = "Export",
   beforeSubmit,
@@ -82,7 +84,7 @@ export const ExportModal = ({
     setOpen(false);
     try {
       const response: Partial<AxiosResponse> = await client.get(
-        `${url}/export/${exportType}`,
+        fullUrl ? fullUrl : `${url}/export/${exportType}`,
         { params: query }
       );
       fileDownload(response.data as any, `${url}_.${exportType}`);

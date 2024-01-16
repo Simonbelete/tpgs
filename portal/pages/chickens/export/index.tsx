@@ -10,6 +10,7 @@ import { chickenApi } from "@/features/chickens/services";
 import { hatcheryApi } from "@/features/hatchery/services";
 import { houseApi } from "@/features/houses/services";
 import { penApi } from "@/features/pen/services";
+import _ from "lodash";
 
 const ExportChickensPage = () => {
   const { breadcrumbs } = useBreadcrumbs();
@@ -21,7 +22,8 @@ const ExportChickensPage = () => {
         <Container maxWidth="md">
           <Stack direction={"column"} spacing={2} alignItems={"flex-start"}>
             <ExportModal
-              url={"/chickens"}
+              url={""}
+              fullUrl={"/chickens/export/weights"}
               fields={{
                 chicken: {
                   endpoint: chickenApi.endpoints.getChickens,
@@ -53,7 +55,14 @@ const ExportChickensPage = () => {
                   md: 12,
                 },
               }}
-              beforeSubmit={(values) => values}
+              beforeSubmit={(values) => {
+                return {
+                  chicken: _.get(values.chicken, "id", null),
+                  hatchery: _.get(values.hatchery, "id", null),
+                  pen: _.get(values.pen, "id", null),
+                  generation: _.get(values, "generation", null),
+                };
+              }}
               name={"Export Body Weight"}
             />
             <ExportModal
