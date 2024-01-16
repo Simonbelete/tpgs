@@ -381,24 +381,68 @@ const SidebarMenu = () => {
         </Typography>
       </div>
       <Menu menuItemStyles={menuItemStyles}>
-        <MenuItem
-          component={
-            <Link onClick={() => toggleSidebar()} href="/chicken-grid" />
+        <SubMenu
+          label={
+            <Typography variant="body1" fontSize={14}>
+              Chicken
+            </Typography>
           }
-          icon={<ViewTimelineIcon width="20" height="20" fill="inherit" />}
-        >
-          <Typography variant="body1" fontSize={14}>
-            Grid Chicken
-          </Typography>
-        </MenuItem>
-        <MenuItem
-          component={<Link onClick={() => toggleSidebar()} href="/chickens" />}
           icon={<ChickenIcon width="20" height="20" fill="inherit" />}
+          defaultOpen={RegExp(
+            "^/(chickens|chicken-grid|chickens/export)(.*)$"
+          ).test(router.pathname)}
         >
-          <Typography variant="body1" fontSize={14}>
-            Chickens
-          </Typography>
-        </MenuItem>
+          <MenuItem
+            component={
+              <Link onClick={() => toggleSidebar()} href="/chickens" />
+            }
+            icon={<AdjustIcon fontSize="small" />}
+          >
+            <Typography variant="body1" fontSize={14}>
+              View/Edit Chickens
+            </Typography>
+          </MenuItem>
+          <MenuItem
+            component={
+              <Link onClick={() => toggleSidebar()} href="/chickens/create" />
+            }
+            icon={<AdjustIcon fontSize="small" />}
+          >
+            <Typography variant="body1" fontSize={14}>
+              Create Chicken
+            </Typography>
+          </MenuItem>
+          <MenuItem
+            component={
+              <Link onClick={() => toggleSidebar()} href="/chicken-grid" />
+            }
+            icon={<AdjustIcon fontSize="small" />}
+          >
+            <Typography variant="body1" fontSize={14}>
+              Grid Chicken
+            </Typography>
+          </MenuItem>
+          <MenuItem
+            component={
+              <Link onClick={() => toggleSidebar()} href="/chickens/create" />
+            }
+            icon={<AdjustIcon fontSize="small" />}
+          >
+            <Typography variant="body1" fontSize={14}>
+              Export Chickens
+            </Typography>
+          </MenuItem>
+          <MenuItem
+            component={
+              <Link onClick={() => toggleSidebar()} href="/chickens/cull" />
+            }
+            icon={<AdjustIcon fontSize="small" />}
+          >
+            <Typography variant="body1" fontSize={14}>
+              Cull Chicken
+            </Typography>
+          </MenuItem>
+        </SubMenu>
         <MenuItem
           component={<Link onClick={() => toggleSidebar()} href="/pedigree" />}
           icon={<AccountTreeIcon width="20" height="20" fill="inherit" />}
