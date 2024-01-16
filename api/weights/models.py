@@ -10,7 +10,7 @@ class Weight(CoreModel):
         Chicken, on_delete=models.CASCADE, null=True, blank=True, related_name='weights')
     week = models.IntegerField(default=0)
     weight = models.DecimalField(
-        max_digits=7, decimal_places=3, null=True, blank=True, default=0)  # g
+        max_digits=7, decimal_places=3, default=0)  # g
     history = HistoricalRecords()
 
     class Meta:
