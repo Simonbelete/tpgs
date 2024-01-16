@@ -37,4 +37,11 @@ urlpatterns = [
          views.ChickenExport.as_view(), name="api_chicken_export"),
     path('chickens/import/<str:import_type>/',
          views.ChickenImport.as_view(), name="api_chicken_import"),
+
+    path('chickens/export/weights/<str:export_type>/',
+         views.ChickenWeightExport.as_view(), name="api_chicken_export_weights"),
+    path('chickens/export/eggs/<str:export_type>/',
+         views.ChickenEggExport.as_view(), name="api_chicken_export_eggs"),
+    path('chickens/export/feeds/<str:export_type>/',
+         views.ChickenFeedExport.as_view(), name="api_chicken_export_feeds"),
 ]

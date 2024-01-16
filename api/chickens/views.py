@@ -58,6 +58,31 @@ class ChickenSummaryViewSet(SummaryViewSet):
         return models.Chicken.all.get(pk=self.id_pk)
 
 
+class ChickenExport(GenericExportView):
+    def get_dataset(self):
+        return admin.ChickenResource().export()
+
+
+class ChickenImport(GenericImportView):
+    def get_resource(self):
+        return admin.ChickenResource()
+
+
+class ChickenWeightExport(GenericExportView):
+    def get_dataset(self):
+        return admin.ChickenWeightResource().export()
+
+
+class ChickenEggExport(GenericExportView):
+    def get_dataset(self):
+        return admin.ChickenFeedResource().export()
+
+
+class ChickenFeedExport(GenericExportView):
+    def get_dataset(self):
+        return admin.ChickenFeedResource().export()
+
+
 class ChickenOffspringViewSet(viewsets.GenericViewSet):
     serializer_class = serializers.ChickenSerializer_GET
 
@@ -118,16 +143,6 @@ class SiblingsViewSet(viewsets.GenericViewSet):
 
         serializer = self.get_serializer(queryset, many=True)
         return Response(serializer.data)
-
-
-class ChickenExport(GenericExportView):
-    def get_dataset(self):
-        return admin.ChickenResource().export()
-
-
-class ChickenImport(GenericImportView):
-    def get_resource(self):
-        return admin.ChickenResource()
 
 # Generation
 
