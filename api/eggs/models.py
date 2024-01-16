@@ -40,4 +40,4 @@ class Egg(CoreModel):
         hatchery_eggs = HatcheryEgg.objects.filter(egg=self).aggregate(
             egg_set_sum=Sum('no_eggs'))['egg_set_sum'] or 0
         hatchery_eggs = hatchery_eggs if hatchery_eggs else 0
-        return self.eggs - hatchery_eggs
+        return (self.eggs or 0) - hatchery_eggs
