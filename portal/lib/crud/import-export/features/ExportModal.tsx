@@ -13,6 +13,7 @@ import {
   IconButton,
   Grid,
   Divider,
+  InputAdornment,
 } from "@mui/material";
 import DownloadIcon from "@mui/icons-material/Download";
 import CloseIcon from "@mui/icons-material/Close";
@@ -28,9 +29,10 @@ import { AxiosResponse } from "axios";
 import client from "@/services/client";
 import fileDownload from "@/util/fileDownload";
 import { useSnackbar } from "notistack";
+import { LabeledInput } from "@/components/inputs";
 
 type ExportField = {
-  endpoint: ApiEndpointQuery<
+  endpoint?: ApiEndpointQuery<
     QueryDefinition<Query, ClientQueyFn, any, Response<any>, any>,
     EndpointDefinitions
   > &
@@ -46,6 +48,7 @@ type ExportField = {
 
 export interface ExportModalProps {
   beforeSubmit?: (values: any) => Object;
+  name?: string;
   url: string;
   fields: {
     [key: string]: ExportField;
@@ -55,6 +58,7 @@ export interface ExportModalProps {
 export const ExportModal = ({
   url,
   fields,
+  name = "Export",
   beforeSubmit,
 }: ExportModalProps) => {
   const [open, setOpen] = useState(false);
@@ -100,7 +104,7 @@ export const ExportModal = ({
         sx={{ textTransform: "none" }}
         onClick={() => setOpen(true)}
       >
-        Export
+        {name}
       </Button>
       <Dialog disableEscapeKeyDown open={open} maxWidth="lg">
         <DialogTitle>
@@ -122,37 +126,72 @@ export const ExportModal = ({
                   // @ts-ignore
                   const options = fields[key] as ExportField;
 
-                  return (
-                    <Grid
-                      key={i}
-                      item
-                      xs={options.xs || 12}
-                      md={options.md || 6}
-                    >
-                      <Controller
-                        // @ts-ignore
-                        name={key}
-                        control={control}
-                        render={({
-                          field: { onChange, value },
-                          fieldState: { error },
-                        }) => (
-                          <AsyncDropdown
-                            label={options.label}
-                            dataKey={options?.dataKey || "name"}
-                            endpoint={options.endpoint}
-                            placeholder={options.placeholder}
-                            onChange={(_, data) => onChange(data)}
-                            value={value}
-                            error={!!error?.message}
-                            helperText={error?.message}
-                            multiple={options.multiple}
-                            disabled={options.disabled}
-                          />
-                        )}
-                      />
-                    </Grid>
-                  );
+                  if (options.endpoint) {
+                    return (
+                      <Grid
+                        key={i}
+                        item
+                        xs={options.xs || 12}
+                        md={options.md || 6}
+                      >
+                        <Controller
+                          // @ts-ignore
+                          name={key}
+                          control={control}
+                          render={({
+                            field: { onChange, value },
+                            fieldState: { error },
+                          }) => (
+                            <AsyncDropdown
+                              label={options.label}
+                              dataKey={options?.dataKey || "name"}
+                              // @ts-ignore
+                              endpoint={options.endpoint}
+                              placeholder={options.placeholder}
+                              onChange={(_, data) => onChange(data)}
+                              value={value}
+                              error={!!error?.message}
+                              helperText={error?.message}
+                              multiple={options.multiple}
+                              disabled={options.disabled}
+                            />
+                          )}
+                        />
+                      </Grid>
+                    );
+                  } else {
+                    return (
+                      <Grid
+                        key={i}
+                        item
+                        xs={options.xs || 12}
+                        md={options.md || 6}
+                      >
+                        <Controller
+                          // @ts-ignore
+                          name={key}
+                          control={control}
+                          render={({
+                            field: { onChange, value },
+                            fieldState: { error },
+                          }) => (
+                            <LabeledInput
+                              name={key}
+                              error={!!error?.message}
+                              helperText={error?.message}
+                              onChange={onChange}
+                              fullWidth
+                              size="small"
+                              value={value ?? ""}
+                              label={options.label}
+                              placeholder={options.placeholder}
+                              disabled={options.disabled}
+                            />
+                          )}
+                        />
+                      </Grid>
+                    );
+                  }
                 })}
             </Grid>
           </Box>

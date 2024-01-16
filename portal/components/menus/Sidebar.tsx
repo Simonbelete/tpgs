@@ -417,6 +417,7 @@ const SidebarMenu = () => {
               <Link onClick={() => toggleSidebar()} href="/chicken-grid" />
             }
             icon={<AdjustIcon fontSize="small" />}
+            active={RegExp("^/chicken-grid(.*)$").test(router.pathname)}
           >
             <Typography variant="body1" fontSize={14}>
               Grid Chicken
@@ -424,9 +425,10 @@ const SidebarMenu = () => {
           </MenuItem>
           <MenuItem
             component={
-              <Link onClick={() => toggleSidebar()} href="/chickens/create" />
+              <Link onClick={() => toggleSidebar()} href="/chickens/export" />
             }
             icon={<AdjustIcon fontSize="small" />}
+            active={RegExp("^/chickens/export(.*)$").test(router.pathname)}
           >
             <Typography variant="body1" fontSize={14}>
               Export Chickens
@@ -437,6 +439,7 @@ const SidebarMenu = () => {
               <Link onClick={() => toggleSidebar()} href="/chickens/cull" />
             }
             icon={<AdjustIcon fontSize="small" />}
+            active={RegExp("^/chickens/cull(.*)$").test(router.pathname)}
           >
             <Typography variant="body1" fontSize={14}>
               Cull Chicken
