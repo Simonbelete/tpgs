@@ -15,10 +15,10 @@ class ChickenFilter(CoreFilterSet):
 class ChickenResourceFilter(CoreFilterSet):
     class Meta:
         models = models.Chicken
-        field = {
-            'chicken': ['in', 'exact'],
-            'hatchery': ['exact'],
-            'house': ['exact'],
-            'pen': ['exact'],
-            'generation': ['exact']
+        {
+            'id': ['in', 'exact'],
+            'hatchery': ['in', 'exact'],
+            'generation': ['exact'],
+            'house': ['in', 'exact'],
+            'pen': ['in', 'exact'],
         }

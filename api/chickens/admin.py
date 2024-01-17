@@ -15,18 +15,7 @@ class ChickenWeightResource(resources.ModelResource):
     class Meta:
         model = models.Chicken
         fields = ['id', 'tag', 'hatch_date', 'sex',
-                  'breed']
-
-    def export_resource(self, obj):
-        for f in self.get_export_fields():
-            print(self.export_field(f, obj))
-        return [self.export_field(field, obj) for field in self.get_export_fields()]
-
-    def export_resource_dict(self, obj):
-        result = {}
-        for field in self.get_export_fields():
-            result[field.column_name] = self.export_field(field, obj)
-        return result
+                  'breed', 'generation', 'hatchery', 'pen']
 
     def export(self, *args, queryset=None, **kwargs):
         if len(args) == 1 and (
@@ -44,12 +33,14 @@ class ChickenWeightResource(resources.ModelResource):
             queryset = self.get_queryset()
         queryset = self.filter_export(queryset, *args, **kwargs)
 
-        ids = list(zip(*queryset.values_list('id')))[0] or []
+        ids = list(zip(*queryset.values_list('id')))[0]
+        ids = [] if len(ids) == 0 else ids
 
         weekly_data = Weight.objects.filter(chicken__in=ids)
         weeks = weekly_data.values_list(
             'week').distinct().order_by('week')
-        weeks = list(zip(*weeks))[0] or []
+        weeks = list(zip(*weeks))
+        weeks = [] if len(weeks) == 0 else weeks
 
         headers = [*self.get_export_headers(), *weeks]
 
@@ -76,17 +67,6 @@ class ChickenEggResource(resources.ModelResource):
         model = models.Chicken
         fields = ['id', 'tag', 'hatch_date', 'sex',
                   'breed']
-
-    def export_resource(self, obj):
-        for f in self.get_export_fields():
-            print(self.export_field(f, obj))
-        return [self.export_field(field, obj) for field in self.get_export_fields()]
-
-    def export_resource_dict(self, obj):
-        result = {}
-        for field in self.get_export_fields():
-            result[field.column_name] = self.export_field(field, obj)
-        return result
 
     def export(self, *args, queryset=None, **kwargs):
         if len(args) == 1 and (
@@ -137,27 +117,10 @@ class ChickenFeedResource(resources.ModelResource):
         fields = ['id', 'tag', 'hatch_date', 'sex',
                   'breed']
 
-    def export_resource(self, obj):
-        for f in self.get_export_fields():
-            print(self.export_field(f, obj))
-        return [self.export_field(field, obj) for field in self.get_export_fields()]
-
-    def export_resource_dict(self, obj):
-        result = {}
-        for field in self.get_export_fields():
-            result[field.column_name] = self.export_field(field, obj)
-        return result
-
     def export(self, *args, queryset=None, **kwargs):
         if len(args) == 1 and (
             isinstance(args[0], QuerySet) or isinstance(args[0], list)
         ):
-            # issue 1565: definition of export() was incorrect
-            # if queryset is being passed, it must be as the first arg or named
-            # parameter
-            # this logic is included for backwards compatibility:
-            # if the method is being called without a named parameter, add a warning
-            # this check should be removed in a future release
             warnings.warn(
                 "'queryset' must be supplied as a named parameter",
                 category=DeprecationWarning,

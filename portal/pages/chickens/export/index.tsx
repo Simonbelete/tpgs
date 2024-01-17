@@ -57,8 +57,9 @@ const ExportChickensPage = () => {
               }}
               beforeSubmit={(values) => {
                 return {
-                  chicken: _.get(values.chicken, "id", null),
+                  id: _.get(values.chicken, "id", null),
                   hatchery: _.get(values.hatchery, "id", null),
+                  house: _.get(values.house, "id", null),
                   pen: _.get(values.pen, "id", null),
                   generation: _.get(values, "generation", null),
                 };
@@ -66,7 +67,8 @@ const ExportChickensPage = () => {
               name={"Export Body Weight"}
             />
             <ExportModal
-              url={"/chickens"}
+              url={""}
+              fullUrl={"/chickens/export/feeds"}
               fields={{
                 chicken: {
                   endpoint: chickenApi.endpoints.getChickens,
@@ -98,11 +100,20 @@ const ExportChickensPage = () => {
                   md: 12,
                 },
               }}
-              beforeSubmit={(values) => values}
+              beforeSubmit={(values) => {
+                return {
+                  id: _.get(values.chicken, "id", null),
+                  hatchery: _.get(values.hatchery, "id", null),
+                  house: _.get(values.house, "id", null),
+                  pen: _.get(values.pen, "id", null),
+                  generation: _.get(values, "generation", null),
+                };
+              }}
               name={"Export Body Feed Intake"}
             />
             <ExportModal
-              url={"/chickens"}
+              url={""}
+              fullUrl={"/chickens/export/eggs"}
               fields={{
                 chicken: {
                   endpoint: chickenApi.endpoints.getChickens,
@@ -134,7 +145,15 @@ const ExportChickensPage = () => {
                   md: 12,
                 },
               }}
-              beforeSubmit={(values) => values}
+              beforeSubmit={(values) => {
+                return {
+                  id: _.get(values.chicken, "id", null),
+                  hatchery: _.get(values.hatchery, "id", null),
+                  house: _.get(values.house, "id", null),
+                  pen: _.get(values.pen, "id", null),
+                  generation: _.get(values, "generation", null),
+                };
+              }}
               name={"Export Body Egg Production"}
             />
           </Stack>

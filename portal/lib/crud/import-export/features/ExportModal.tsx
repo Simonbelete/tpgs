@@ -84,7 +84,7 @@ export const ExportModal = ({
     setOpen(false);
     try {
       const response: Partial<AxiosResponse> = await client.get(
-        fullUrl ? fullUrl : `${url}/export/${exportType}`,
+        fullUrl ? `${fullUrl}/${exportType}` : `${url}/export/${exportType}`,
         { params: query }
       );
       fileDownload(response.data as any, `${url}_.${exportType}`);
