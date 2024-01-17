@@ -69,21 +69,17 @@ class ChickenImport(GenericImportView):
 
 
 class ChickenWeightExport(GenericExportView):
-    queryset = models.Chicken.all.all()
-    filterset_class = filters.ChickenResourceFilter
+    queryset = models.Chicken.objects.all()
+    filterset_class = filters.ChickenExportFilter
 
     def get_dataset(self):
-        # qs = filters.ChickenResourceFilter(
-        #     self.request.GET, queryset=self.queryset)
-        # print('---------------------')
-        # print(qs.queryset)
-        qs = self.queryset.filter(id=1)
-        return admin.ChickenWeightResource().export(qs)
+        qs = self.filterset_class(self.request.GET, queryset=self.queryset)
+        return admin.ChickenWeightResource().export(qs.qs)
 
 
 class ChickenEggExport(GenericExportView):
     queryset = models.Chicken.objects.all()
-    filterset_class = filters.ChickenResourceFilter
+    filterset_class = filters.ChickenExportFilter
 
     def get_dataset(self):
         qs = self.filterset_class(self.request.GET, queryset=self.queryset)
@@ -92,7 +88,7 @@ class ChickenEggExport(GenericExportView):
 
 class ChickenFeedExport(GenericExportView):
     queryset = models.Chicken.objects.all()
-    filterset_class = filters.ChickenResourceFilter
+    filterset_class = filters.ChickenExportFilter
 
     def get_dataset(self):
         qs = self.filterset_class(self.request.GET, queryset=self.queryset)

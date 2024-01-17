@@ -33,14 +33,14 @@ class ChickenWeightResource(resources.ModelResource):
             queryset = self.get_queryset()
         queryset = self.filter_export(queryset, *args, **kwargs)
 
-        ids = list(zip(*queryset.values_list('id')))[0]
-        ids = [] if len(ids) == 0 else ids
+        ids = list(zip(*queryset.values_list('id')))
+        ids = [] if len(ids) == 0 else ids[0]
 
         weekly_data = Weight.objects.filter(chicken__in=ids)
         weeks = weekly_data.values_list(
             'week').distinct().order_by('week')
         weeks = list(zip(*weeks))
-        weeks = [] if len(weeks) == 0 else weeks
+        weeks = [] if len(weeks) == 0 else weeks[0]
 
         headers = [*self.get_export_headers(), *weeks]
 
