@@ -14,8 +14,6 @@ class Command(BaseCommand):
         for tenant in tenants.iterator():
             with schema_context(tenant):
                 chic = Chicken.objects.all()
-                print('***')
-                print(chic)
                 # for chicken in chickens.iterator():
                 #     try:
                 #         print('---------------')
