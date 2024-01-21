@@ -14,13 +14,14 @@ export interface PixiComponentViewportProps extends ViewportProps {
 }
 
 const PixiComponentViewport = PixiComponent("Viewport", {
-  create: (props: PixiComponentViewportProps) => {
+  create: (props: PixiComponentViewportProps): any => {
     const viewport = new PixiViewport({
       screenWidth: props.width,
       screenHeight: props.height,
       worldWidth: props.width * 2,
       worldHeight: props.height * 2,
       ticker: props.app.ticker,
+      // @ts-ignore
       interaction: props.app.renderer.plugins.interaction,
     });
     viewport.drag().pinch().wheel();

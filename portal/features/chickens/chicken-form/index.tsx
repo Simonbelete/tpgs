@@ -235,6 +235,13 @@ export const ChickenForm = ({
                       xs: 12,
                       md: 6,
                     },
+                    generation: {
+                      label: "Generation",
+                      placeholder: "Generation",
+                      xs: 12,
+                      md: 6,
+                      type: "number",
+                    },
                   }}
                   onCreateSuccess={handleCreated}
                 />

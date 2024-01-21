@@ -16,7 +16,7 @@ import {
 } from "@/features/analyses/services";
 
 const PixiComponentViewport = PixiComponent("Viewport", {
-  create: (props) => {
+  create: (props): any => {
     const viewport = new PixiViewport({
       screenWidth: window.innerWidth,
       screenHeight: window.innerHeight,
@@ -90,6 +90,7 @@ const PedigreeTree = () => {
         <PixiComponentViewport
           width={width}
           height={height}
+          // @ts-ignore
           app={ref.current.app}
         >
           <Container width={width} height={height}>
