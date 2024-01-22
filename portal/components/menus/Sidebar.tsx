@@ -47,6 +47,8 @@ import AutoGraphIcon from "@mui/icons-material/AutoGraph";
 import AccountTreeIcon from "@mui/icons-material/AccountTree";
 import { useProSidebar } from "react-pro-sidebar";
 import ViewTimelineIcon from "@mui/icons-material/ViewTimeline";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store";
 
 function menuProps(key: string) {
   return {
@@ -127,6 +129,7 @@ const SidebarMenu = () => {
   };
 
   const { collapseSidebar, toggleSidebar } = useProSidebar();
+  const tenant = useSelector((state: RootState) => state.tenant);
 
   return (
     <Sidebar
@@ -369,313 +372,380 @@ const SidebarMenu = () => {
           </MenuItem>
         </SubMenu>
       </Menu>
-      <div
-        style={{ padding: "0 24px", marginBottom: "8px", marginTop: "32px" }}
-      >
-        <Typography
-          variant="caption"
-          fontWeight={500}
-          style={{ opacity: 0.6, letterSpacing: "0.5px" }}
-        >
-          Breeding
-        </Typography>
-      </div>
-      <Menu menuItemStyles={menuItemStyles}>
-        <SubMenu
-          label={
-            <Typography variant="body1" fontSize={14}>
-              Chicken
-            </Typography>
-          }
-          icon={<ChickenIcon width="20" height="20" fill="inherit" />}
-          defaultOpen={RegExp(
-            "^/(chickens|chicken-grid|chickens/export)(.*)$"
-          ).test(router.pathname)}
-        >
-          <MenuItem
-            component={
-              <Link onClick={() => toggleSidebar()} href="/chickens" />
-            }
-            icon={<AdjustIcon fontSize="small" />}
+      {tenant.name != "public" ? (
+        <>
+          <div
+            style={{
+              padding: "0 24px",
+              marginBottom: "8px",
+              marginTop: "32px",
+            }}
           >
-            <Typography variant="body1" fontSize={14}>
-              View/Edit Chickens
+            <Typography
+              variant="caption"
+              fontWeight={500}
+              style={{ opacity: 0.6, letterSpacing: "0.5px" }}
+            >
+              Breeding
             </Typography>
-          </MenuItem>
-          <MenuItem
-            component={
-              <Link onClick={() => toggleSidebar()} href="/chickens/create" />
-            }
-            icon={<AdjustIcon fontSize="small" />}
-          >
-            <Typography variant="body1" fontSize={14}>
-              Create Chicken
-            </Typography>
-          </MenuItem>
-          <MenuItem
-            component={
-              <Link onClick={() => toggleSidebar()} href="/chicken-grid" />
-            }
-            icon={<AdjustIcon fontSize="small" />}
-            active={RegExp("^/chicken-grid(.*)$").test(router.pathname)}
-          >
-            <Typography variant="body1" fontSize={14}>
-              Grid Chicken
-            </Typography>
-          </MenuItem>
-          <MenuItem
-            component={
-              <Link onClick={() => toggleSidebar()} href="/chickens/export" />
-            }
-            icon={<AdjustIcon fontSize="small" />}
-            active={RegExp("^/chickens/export(.*)$").test(router.pathname)}
-          >
-            <Typography variant="body1" fontSize={14}>
-              Export Chickens
-            </Typography>
-          </MenuItem>
-          <MenuItem
-            component={
-              <Link onClick={() => toggleSidebar()} href="/chickens/cull" />
-            }
-            icon={<AdjustIcon fontSize="small" />}
-            active={RegExp("^/chickens/cull(.*)$").test(router.pathname)}
-          >
-            <Typography variant="body1" fontSize={14}>
-              Cull Chicken
-            </Typography>
-          </MenuItem>
-        </SubMenu>
-        <MenuItem
-          component={<Link onClick={() => toggleSidebar()} href="/pedigree" />}
-          icon={<AccountTreeIcon width="20" height="20" fill="inherit" />}
-        >
-          <Typography variant="body1" fontSize={14}>
-            Pedigree
-          </Typography>
-        </MenuItem>
-        <SubMenu
-          label={
-            <Typography variant="body1" fontSize={14}>
-              Hatchery
-            </Typography>
-          }
-          icon={<ChickenEasterIcon width="20" height="20" fill="inherit" />}
-          defaultOpen={RegExp("^/(hatchery|candling|incubation)(.*)$").test(
-            router.pathname
-          )}
-        >
-          <MenuItem
-            component={
-              <Link onClick={() => toggleSidebar()} href="/hatchery" />
-            }
-            icon={<AdjustIcon fontSize="small" />}
-            active={RegExp("^/hatchery(.*)$").test(router.pathname)}
-          >
-            <Typography variant="body1" fontSize={14}>
-              Hatchery
-            </Typography>
-          </MenuItem>
-          <MenuItem
-            component={
-              <Link onClick={() => toggleSidebar()} href="/candling" />
-            }
-            icon={<AdjustIcon fontSize="small" />}
-            active={RegExp("^/candling(.*)$").test(router.pathname)}
-          >
-            <Typography variant="body1" fontSize={14}>
-              Candling
-            </Typography>
-          </MenuItem>
-          <MenuItem
-            component={
-              <Link onClick={() => toggleSidebar()} href="/incubation" />
-            }
-            icon={<AdjustIcon fontSize="small" />}
-            active={RegExp("^/incubation(.*)$").test(router.pathname)}
-          >
-            <Typography variant="body1" fontSize={14}>
-              Incubation
-            </Typography>
-          </MenuItem>
-        </SubMenu>
-        <MenuItem
-          component={<Link onClick={() => toggleSidebar()} href="/eggs" />}
-          icon={<EggIcon fontSize="small" />}
-          active={RegExp("^/eggs$").test(router.pathname)}
-        >
-          <Typography variant="body1" fontSize={14}>
-            Egg Production
-          </Typography>
-        </MenuItem>
-        <SubMenu
-          label={
-            <Typography variant="body1" fontSize={14}>
-              Feed Intake
-            </Typography>
-          }
-          icon={<SackIcon width="20" height="20" fill="inherit" />}
-          defaultOpen={RegExp("^/feeds(.*)$").test(router.pathname)}
-        >
-          <MenuItem
-            component={<Link onClick={() => toggleSidebar()} href="/feeds" />}
-            icon={<AdjustIcon fontSize="small" />}
-            active={RegExp("^/feeds$").test(router.pathname)}
-          >
-            <Typography variant="body1" fontSize={14}>
-              Individual
-            </Typography>
-          </MenuItem>
-          <MenuItem
-            component={
-              <Link onClick={() => toggleSidebar()} href="/feeds/batch" />
-            }
-            icon={<AdjustIcon fontSize="small" />}
-            active={RegExp("^/feeds/batch(.*)$").test(router.pathname)}
-          >
-            <Typography variant="body1" fontSize={14}>
-              Batch
-            </Typography>
-          </MenuItem>
-        </SubMenu>
+          </div>
+          <Menu menuItemStyles={menuItemStyles}>
+            <SubMenu
+              label={
+                <Typography variant="body1" fontSize={14}>
+                  Chicken
+                </Typography>
+              }
+              icon={<ChickenIcon width="20" height="20" fill="inherit" />}
+              defaultOpen={RegExp(
+                "^/(chickens|chicken-grid|chickens/export)(.*)$"
+              ).test(router.pathname)}
+            >
+              <MenuItem
+                component={
+                  <Link onClick={() => toggleSidebar()} href="/chickens" />
+                }
+                icon={<AdjustIcon fontSize="small" />}
+              >
+                <Typography variant="body1" fontSize={14}>
+                  View/Edit Chickens
+                </Typography>
+              </MenuItem>
+              <MenuItem
+                component={
+                  <Link
+                    onClick={() => toggleSidebar()}
+                    href="/chickens/create"
+                  />
+                }
+                icon={<AdjustIcon fontSize="small" />}
+              >
+                <Typography variant="body1" fontSize={14}>
+                  Create Chicken
+                </Typography>
+              </MenuItem>
+              <MenuItem
+                component={
+                  <Link onClick={() => toggleSidebar()} href="/chicken-grid" />
+                }
+                icon={<AdjustIcon fontSize="small" />}
+                active={RegExp("^/chicken-grid(.*)$").test(router.pathname)}
+              >
+                <Typography variant="body1" fontSize={14}>
+                  Grid Chicken
+                </Typography>
+              </MenuItem>
+              <MenuItem
+                component={
+                  <Link
+                    onClick={() => toggleSidebar()}
+                    href="/chickens/export"
+                  />
+                }
+                icon={<AdjustIcon fontSize="small" />}
+                active={RegExp("^/chickens/export(.*)$").test(router.pathname)}
+              >
+                <Typography variant="body1" fontSize={14}>
+                  Export Chickens
+                </Typography>
+              </MenuItem>
+              <MenuItem
+                component={
+                  <Link onClick={() => toggleSidebar()} href="/chickens/cull" />
+                }
+                icon={<AdjustIcon fontSize="small" />}
+                active={RegExp("^/chickens/cull(.*)$").test(router.pathname)}
+              >
+                <Typography variant="body1" fontSize={14}>
+                  Cull Chicken
+                </Typography>
+              </MenuItem>
+            </SubMenu>
+            <MenuItem
+              component={
+                <Link onClick={() => toggleSidebar()} href="/pedigree" />
+              }
+              icon={<AccountTreeIcon width="20" height="20" fill="inherit" />}
+            >
+              <Typography variant="body1" fontSize={14}>
+                Pedigree
+              </Typography>
+            </MenuItem>
+            <SubMenu
+              label={
+                <Typography variant="body1" fontSize={14}>
+                  Hatchery
+                </Typography>
+              }
+              icon={<ChickenEasterIcon width="20" height="20" fill="inherit" />}
+              defaultOpen={RegExp("^/(hatchery|candling|incubation)(.*)$").test(
+                router.pathname
+              )}
+            >
+              <MenuItem
+                component={
+                  <Link onClick={() => toggleSidebar()} href="/hatchery" />
+                }
+                icon={<AdjustIcon fontSize="small" />}
+                active={RegExp("^/hatchery(.*)$").test(router.pathname)}
+              >
+                <Typography variant="body1" fontSize={14}>
+                  Hatchery
+                </Typography>
+              </MenuItem>
+              <MenuItem
+                component={
+                  <Link onClick={() => toggleSidebar()} href="/candling" />
+                }
+                icon={<AdjustIcon fontSize="small" />}
+                active={RegExp("^/candling(.*)$").test(router.pathname)}
+              >
+                <Typography variant="body1" fontSize={14}>
+                  Candling
+                </Typography>
+              </MenuItem>
+              <MenuItem
+                component={
+                  <Link onClick={() => toggleSidebar()} href="/incubation" />
+                }
+                icon={<AdjustIcon fontSize="small" />}
+                active={RegExp("^/incubation(.*)$").test(router.pathname)}
+              >
+                <Typography variant="body1" fontSize={14}>
+                  Incubation
+                </Typography>
+              </MenuItem>
+            </SubMenu>
+            <MenuItem
+              component={<Link onClick={() => toggleSidebar()} href="/eggs" />}
+              icon={<EggIcon fontSize="small" />}
+              active={RegExp("^/eggs$").test(router.pathname)}
+            >
+              <Typography variant="body1" fontSize={14}>
+                Egg Production
+              </Typography>
+            </MenuItem>
+            <SubMenu
+              label={
+                <Typography variant="body1" fontSize={14}>
+                  Feed Intake
+                </Typography>
+              }
+              icon={<SackIcon width="20" height="20" fill="inherit" />}
+              defaultOpen={RegExp("^/feeds(.*)$").test(router.pathname)}
+            >
+              <MenuItem
+                component={
+                  <Link onClick={() => toggleSidebar()} href="/feeds" />
+                }
+                icon={<AdjustIcon fontSize="small" />}
+                active={RegExp("^/feeds$").test(router.pathname)}
+              >
+                <Typography variant="body1" fontSize={14}>
+                  Individual
+                </Typography>
+              </MenuItem>
+              <MenuItem
+                component={
+                  <Link onClick={() => toggleSidebar()} href="/feeds/batch" />
+                }
+                icon={<AdjustIcon fontSize="small" />}
+                active={RegExp("^/feeds/batch(.*)$").test(router.pathname)}
+              >
+                <Typography variant="body1" fontSize={14}>
+                  Batch
+                </Typography>
+              </MenuItem>
+            </SubMenu>
 
-        <MenuItem
-          component={<Link onClick={() => toggleSidebar()} href="/weights" />}
-          icon={<ScaleIcon width="20" height="20" fill="inherit" />}
-          active={RegExp("^/weights$").test(router.pathname)}
-        >
-          <Typography variant="body1" fontSize={14}>
-            Body Weight
-          </Typography>
-        </MenuItem>
-        <MenuItem
-          component={<Link onClick={() => toggleSidebar()} href="/breeds" />}
-          icon={<DNAHellxIcon width="20" height="20" fill="inherit" />}
-          active={RegExp("^/breeds$").test(router.pathname)}
-        >
-          <Typography variant="body1" fontSize={14}>
-            Breeds
-          </Typography>
-        </MenuItem>
-        <SubMenu
-          label={
-            <Typography variant="body1" fontSize={14}>
-              House
-            </Typography>
-          }
-          icon={<CabinIcon fontSize="small" />}
-          defaultOpen={RegExp("^/(pen|houses)(.*)$").test(router.pathname)}
-        >
-          <MenuItem
-            component={<Link onClick={() => toggleSidebar()} href="/houses" />}
-            icon={<AdjustIcon fontSize="small" />}
-            active={RegExp("^/houses(.*)$").test(router.pathname)}
+            <MenuItem
+              component={
+                <Link onClick={() => toggleSidebar()} href="/weights" />
+              }
+              icon={<ScaleIcon width="20" height="20" fill="inherit" />}
+              active={RegExp("^/weights$").test(router.pathname)}
+            >
+              <Typography variant="body1" fontSize={14}>
+                Body Weight
+              </Typography>
+            </MenuItem>
+            <MenuItem
+              component={
+                <Link onClick={() => toggleSidebar()} href="/breeds" />
+              }
+              icon={<DNAHellxIcon width="20" height="20" fill="inherit" />}
+              active={RegExp("^/breeds$").test(router.pathname)}
+            >
+              <Typography variant="body1" fontSize={14}>
+                Breeds
+              </Typography>
+            </MenuItem>
+            <SubMenu
+              label={
+                <Typography variant="body1" fontSize={14}>
+                  House
+                </Typography>
+              }
+              icon={<CabinIcon fontSize="small" />}
+              defaultOpen={RegExp("^/(pen|houses)(.*)$").test(router.pathname)}
+            >
+              <MenuItem
+                component={
+                  <Link onClick={() => toggleSidebar()} href="/houses" />
+                }
+                icon={<AdjustIcon fontSize="small" />}
+                active={RegExp("^/houses(.*)$").test(router.pathname)}
+              >
+                <Typography variant="body1" fontSize={14}>
+                  House
+                </Typography>
+              </MenuItem>
+              <MenuItem
+                component={<Link onClick={() => toggleSidebar()} href="/pen" />}
+                icon={<AdjustIcon fontSize="small" />}
+                active={RegExp("^/pen(.*)$").test(router.pathname)}
+              >
+                <Typography variant="body1" fontSize={14}>
+                  Pen
+                </Typography>
+              </MenuItem>
+            </SubMenu>
+            <SubMenu
+              label={
+                <Typography variant="body1" fontSize={14}>
+                  Guidelines
+                </Typography>
+              }
+              icon={<AssignmentTurnedInIcon fontSize="small" />}
+              defaultOpen={RegExp(
+                "^/(guidelines/hdep|guidelines/weight|guidelines/feed|guidelines/eggs)(.*)$"
+              ).test(router.pathname)}
+            >
+              <MenuItem
+                component={
+                  <Link
+                    onClick={() => toggleSidebar()}
+                    href="/guidelines/hdep"
+                  />
+                }
+                icon={<AdjustIcon fontSize="small" />}
+                active={RegExp("^/guidelines/hdep(.*)$").test(router.pathname)}
+              >
+                <Typography variant="body1" fontSize={14}>
+                  HDEP Guideline
+                </Typography>
+              </MenuItem>
+              <MenuItem
+                component={
+                  <Link
+                    onClick={() => toggleSidebar()}
+                    href="/guidelines/hhep"
+                  />
+                }
+                icon={<AdjustIcon fontSize="small" />}
+                active={RegExp("^/guidelines/hhep(.*)$").test(router.pathname)}
+              >
+                <Typography variant="body1" fontSize={14}>
+                  HHEP Guideline
+                </Typography>
+              </MenuItem>
+              <MenuItem
+                component={
+                  <Link
+                    onClick={() => toggleSidebar()}
+                    href="/guidelines/weight"
+                  />
+                }
+                icon={<AdjustIcon fontSize="small" />}
+                active={RegExp("^/guidelines/weight(.*)$").test(
+                  router.pathname
+                )}
+              >
+                <Typography variant="body1" fontSize={14}>
+                  Weight Guideline
+                </Typography>
+              </MenuItem>
+              <MenuItem
+                component={
+                  <Link
+                    onClick={() => toggleSidebar()}
+                    href="/guidelines/feed"
+                  />
+                }
+                icon={<AdjustIcon fontSize="small" />}
+                active={RegExp("^/guidelines/feed(.*)$").test(router.pathname)}
+              >
+                <Typography variant="body1" fontSize={14}>
+                  Feed Guideline
+                </Typography>
+              </MenuItem>
+              <MenuItem
+                component={
+                  <Link
+                    onClick={() => toggleSidebar()}
+                    href="/guidelines/egg"
+                  />
+                }
+                icon={<AdjustIcon fontSize="small" />}
+                active={RegExp("^/guidelines/egg(.*)$").test(router.pathname)}
+              >
+                <Typography variant="body1" fontSize={14}>
+                  Egg Guideline
+                </Typography>
+              </MenuItem>
+            </SubMenu>
+          </Menu>
+          <div
+            style={{
+              padding: "0 24px",
+              marginBottom: "8px",
+              marginTop: "32px",
+            }}
           >
-            <Typography variant="body1" fontSize={14}>
-              House
+            <Typography
+              variant="caption"
+              fontWeight={500}
+              style={{ opacity: 0.6, letterSpacing: "0.5px" }}
+            >
+              Reporting
             </Typography>
-          </MenuItem>
-          <MenuItem
-            component={<Link onClick={() => toggleSidebar()} href="/pen" />}
-            icon={<AdjustIcon fontSize="small" />}
-            active={RegExp("^/pen(.*)$").test(router.pathname)}
-          >
-            <Typography variant="body1" fontSize={14}>
-              Pen
-            </Typography>
-          </MenuItem>
-        </SubMenu>
-        <SubMenu
-          label={
-            <Typography variant="body1" fontSize={14}>
-              Guidelines
-            </Typography>
-          }
-          icon={<AssignmentTurnedInIcon fontSize="small" />}
-          defaultOpen={RegExp(
-            "^/(guidelines/hdep|guidelines/weight|guidelines/feed|guidelines/eggs)(.*)$"
-          ).test(router.pathname)}
-        >
-          <MenuItem
-            component={
-              <Link onClick={() => toggleSidebar()} href="/guidelines/hdep" />
-            }
-            icon={<AdjustIcon fontSize="small" />}
-            active={RegExp("^/guidelines/hdep(.*)$").test(router.pathname)}
-          >
-            <Typography variant="body1" fontSize={14}>
-              HDEP Guideline
-            </Typography>
-          </MenuItem>
-          <MenuItem
-            component={
-              <Link onClick={() => toggleSidebar()} href="/guidelines/hhep" />
-            }
-            icon={<AdjustIcon fontSize="small" />}
-            active={RegExp("^/guidelines/hhep(.*)$").test(router.pathname)}
-          >
-            <Typography variant="body1" fontSize={14}>
-              HHEP Guideline
-            </Typography>
-          </MenuItem>
-          <MenuItem
-            component={
-              <Link onClick={() => toggleSidebar()} href="/guidelines/weight" />
-            }
-            icon={<AdjustIcon fontSize="small" />}
-            active={RegExp("^/guidelines/weight(.*)$").test(router.pathname)}
-          >
-            <Typography variant="body1" fontSize={14}>
-              Weight Guideline
-            </Typography>
-          </MenuItem>
-          <MenuItem
-            component={
-              <Link onClick={() => toggleSidebar()} href="/guidelines/feed" />
-            }
-            icon={<AdjustIcon fontSize="small" />}
-            active={RegExp("^/guidelines/feed(.*)$").test(router.pathname)}
-          >
-            <Typography variant="body1" fontSize={14}>
-              Feed Guideline
-            </Typography>
-          </MenuItem>
-          <MenuItem
-            component={
-              <Link onClick={() => toggleSidebar()} href="/guidelines/egg" />
-            }
-            icon={<AdjustIcon fontSize="small" />}
-            active={RegExp("^/guidelines/egg(.*)$").test(router.pathname)}
-          >
-            <Typography variant="body1" fontSize={14}>
-              Egg Guideline
-            </Typography>
-          </MenuItem>
-        </SubMenu>
-      </Menu>
-      <div
-        style={{ padding: "0 24px", marginBottom: "8px", marginTop: "32px" }}
-      >
-        <Typography
-          variant="caption"
-          fontWeight={500}
-          style={{ opacity: 0.6, letterSpacing: "0.5px" }}
-        >
-          Reporting
-        </Typography>
-      </div>
+          </div>
 
-      <Menu menuItemStyles={menuItemStyles}>
-        <MenuItem
-          component={<Link onClick={() => toggleSidebar()} href="/reports" />}
-          icon={<AutoGraphIcon fontSize="small" />}
-          active={RegExp("/reports(.*)$").test(router.pathname)}
-        >
-          <Typography variant="body1" fontSize={14}>
-            Reports
-          </Typography>
-        </MenuItem>
-      </Menu>
+          <Menu menuItemStyles={menuItemStyles}>
+            <MenuItem
+              component={
+                <Link onClick={() => toggleSidebar()} href="/reports" />
+              }
+              icon={<AutoGraphIcon fontSize="small" />}
+              active={RegExp("/reports(.*)$").test(router.pathname)}
+            >
+              <Typography variant="body1" fontSize={14}>
+                Reports
+              </Typography>
+            </MenuItem>
+          </Menu>
+        </>
+      ) : (
+        <>
+          <div
+            style={{
+              padding: "0 24px",
+              marginBottom: "8px",
+              marginTop: "32px",
+            }}
+          >
+            <Link href="/farms">
+              <Typography
+                variant="caption"
+                fontWeight={500}
+                style={{ opacity: 0.6, letterSpacing: "0.5px", color: "#fff" }}
+              >
+                Switch Farm to use breeding datas
+              </Typography>
+            </Link>
+          </div>
+        </>
+      )}
       <div
         style={{ padding: "0 24px", marginBottom: "8px", marginTop: "32px" }}
       >
