@@ -33,10 +33,10 @@ urlpatterns = [
     path('', include(router.urls)),
     path('', include(summary_router.urls)),
 
-    #     path('chickens/export/<str:export_type>/',
-    #          views.ChickenExport.as_view(), name="api_chicken_export"),
-    #     path('chickens/import/<str:import_type>/',
-    #          views.ChickenImport.as_view(), name="api_chicken_import"),
+    path('chickens/export/<str:export_type>/',
+         views.ChickenExport.as_view(), name="api_chicken_export"),
+    path('chickens/import/<str:import_type>/',
+         views.ChickenImport.as_view(), name="api_chicken_import"),
 
     path('chickens/export/weights/<str:export_type>/',
          views.ChickenWeightExport.as_view(), name="api_chicken_export_weights"),

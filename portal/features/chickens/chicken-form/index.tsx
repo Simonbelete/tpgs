@@ -82,7 +82,7 @@ export const ChickenForm = ({
         summaryEndpoint={chickenApi.endpoints.getChickenSummary}
         menus={
           <>
-            <DashboardIcon />
+            {/* <DashboardIcon /> */}
             <CreateNewIcon />
             <HistoryIcon />
             <CancelIcon />
@@ -116,7 +116,6 @@ export const ChickenForm = ({
         )}
 
         <Tabs
-          scrollButtons
           value={tab}
           onChange={handleTabChange}
           aria-label="basic tabs example"
@@ -125,6 +124,8 @@ export const ChickenForm = ({
               "&.Mui-disabled": { opacity: 0.3 },
             },
           }}
+          variant="scrollable"
+          scrollButtons="auto"
         >
           <Tab label="Pedigree" {...a11yProps(0)} />
           {formData && <Tab label="Siblings" {...a11yProps(3)} />}

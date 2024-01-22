@@ -294,7 +294,7 @@ export default function Form<
                             },
                           }}
                           onChange={onChange}
-                          value={dayjs(value as string)}
+                          value={value ? dayjs(value as string) : null}
                         />
                       </Stack>
                     )}

@@ -12,10 +12,11 @@ import {
 } from "@/lib/crud";
 import { chickenApi, URL } from "../services";
 import { Chicken } from "@/models";
-import { Typography } from "@mui/material";
+import { Typography, Button } from "@mui/material";
 import Link from "next/link";
 import dayjs from "dayjs";
 import { breedApi } from "@/features/breeds/services";
+import DownloadIcon from "@mui/icons-material/Download";
 
 export const ChickenList = () => {
   const columns: GridColDef[] = [
@@ -121,11 +122,21 @@ export const ChickenList = () => {
       menus={
         <>
           <CreateButton />
-          <ExportModal
+          {/* <ExportModal
             url={URL}
             fields={{}}
             beforeSubmit={(values) => values}
-          />
+          /> */}
+          <Link href="/chickens/export">
+            <Button
+              startIcon={<DownloadIcon />}
+              size="small"
+              color="secondary"
+              sx={{ textTransform: "none" }}
+            >
+              Export
+            </Button>
+          </Link>
           <ImportButton url={URL} />
         </>
       }

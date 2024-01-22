@@ -9,7 +9,14 @@ class ChickenFilter(CoreFilterSet):
 
     class Meta:
         model = models.Chicken
-        fields = ['tag', 'sex']
+        fields = ['tag', 'sex', 'breed']
+        fields = {
+            'tag': ['exact'],
+            'sex': ['exact'],
+            'pen': ['in', 'exact'],
+            'pen__house': ['in', 'exact'],
+            'hatchery': ['in', 'exact']
+        }
 
 
 class ChickenResourceFilter(CoreFilterSet):
