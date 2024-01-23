@@ -182,15 +182,12 @@ class ChickenGridViewSet(viewsets.ViewSet):
                     ww.id AS body_weight_id, ww.weight AS body_weight,
                     ee.id AS egg_id, ee.eggs AS eggs, ee.weight AS eggs_weight,
                     ff.id AS feed_id, ff.weight AS feed_weight
-                FROM weights_weight ww
-                FULL JOIN eggs_egg ee
+                FROM ( SELECT * FROM weights_weight ww WHERE ww.chicken_id = {chicken_id} ) ww
+                FULL JOIN (SELECT * FROM eggs_egg ee WHERE ee.chicken_id={chicken_id}) ee
                     ON ee.week = ww.week
-                FULL JOIN feeds_feed ff
+                FULL JOIN (SELECT * FROM feeds_feed ff WHERE ff.chicken_id={chicken_id}) ff
                     ON ff.week = ww.week
                 WHERE ff.parent_id IS NULL
-                    AND ww.chicken_id = {chicken_id}
-                    OR ee.chicken_id = {chicken_id}
-                    OR ff.chicken_id = {chicken_id}
                 order by ww.week, ff.week, ee.week
             """.format(chicken_id=id))
 
@@ -216,8 +213,9 @@ class ChickenGridViewSet(viewsets.ViewSet):
 
     def list(self, request, id=None):
         try:
+            result = self.get_chicken_grid(id)
             return Response({
-                'results': self.get_chicken_grid(id)
+                'results': result
             }, status=200)
         except Exception as ex:
             return Response({}, status=500)

@@ -175,6 +175,7 @@ export const ChickenForm = ({
                       hatch_date: dayjs(values.hatch_date).format(
                         process.env.NEXT_PUBLIC_API_DATE_FORMAT
                       ),
+                      generation: values.generation,
                     };
 
                     return cleaned_data;

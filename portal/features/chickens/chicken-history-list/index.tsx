@@ -8,7 +8,7 @@ import Link from "next/link";
 
 export const ChickenHistoryList = ({ data }: { data: Chicken }) => {
   const columns: GridColDef[] = [
-    { field: "name", headerName: "Name" },
+    { field: "tag", headerName: "Tag" },
     {
       field: "house",
       headerName: "House",
