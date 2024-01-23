@@ -3,9 +3,12 @@ import { ReportingLayout } from "@/layouts";
 import { Box } from "@mui/material";
 import dynamic from "next/dynamic";
 
-const PedigreeTree = dynamic(() => import("./PedigreeTree"), {
-  ssr: false,
-});
+const PedigreeTree = dynamic(
+  () => import("../../features/pedigree/PedigreeTree"),
+  {
+    ssr: false,
+  }
+);
 
 const PedigreeChart = () => {
   return (
