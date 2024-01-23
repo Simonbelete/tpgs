@@ -121,7 +121,12 @@ export const ExportModal = ({
           <Divider />
         </DialogTitle>
         <DialogContent>
-          <Box component="form" sx={{ display: "flex", flexWrap: "wrap" }}>
+          <Box component="form">
+            <Box sx={{ width: "90%" }}>
+              <Typography variant="caption" mb={2}>
+                *Leaving field empty will consider all values
+              </Typography>
+            </Box>
             <Grid container spacing={2}>
               {fields &&
                 Object.keys(fields).map((key, i) => {

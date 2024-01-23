@@ -83,7 +83,7 @@ class ChickenEggExport(GenericExportView):
 
     def get_dataset(self):
         qs = self.filterset_class(self.request.GET, queryset=self.queryset)
-        return admin.ChickenFeedResource().export(qs.qs)
+        return admin.ChickenEggResource().export(qs.qs)
 
 
 class ChickenFeedExport(GenericExportView):

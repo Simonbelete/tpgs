@@ -12,10 +12,46 @@ from eggs.models import Egg
 
 
 class ChickenWeightResource(resources.ModelResource):
+    id = fields.Field(column_name='id', attribute='id')
+    tag = fields.Field(column_name='tag', attribute='tag')
+    hatch_date = fields.Field(column_name='hatch_date', attribute='hatch_date')
+    sex = fields.Field(column_name='sex', attribute='sex')
+    generation = fields.Field(column_name='generation', attribute='generation')
+    breed = fields.Field(
+        column_name='breed',
+        attribute='breed',
+        widget=widgets.ForeignKeyWidget('breeds.Breed', field='name'))
+    hatchery = fields.Field(
+        column_name='hatchery',
+        attribute='hatchery',
+        widget=widgets.ForeignKeyWidget('hatchery.Hatchery', field='name'))
+    house = fields.Field(
+        column_name='house',
+        attribute='pen__house',
+        widget=widgets.ForeignKeyWidget('houses.House', field='name'))
+    pen = fields.Field(
+        column_name='pen',
+        attribute='pen',
+        widget=widgets.ForeignKeyWidget('pen.Pen', field='name'))
+    sire = fields.Field(
+        column_name='sire',
+        attribute='sire',
+        widget=widgets.ForeignKeyWidget('chickens.Chicken', field='tag'))
+    dam = fields.Field(
+        column_name='dam',
+        attribute='dam',
+        widget=widgets.ForeignKeyWidget('chickens.Chicken', field='tag'))
+    reduction_date = fields.Field(
+        column_name='reduction_date', attribute='reduction_date')
+    reduction_reason = fields.Field(
+        column_name='reduction_reason',
+        attribute='reduction_reason',
+        widget=widgets.ForeignKeyWidget('reduction_reason.ReductionReason', field='name'))
+
     class Meta:
         model = models.Chicken
         fields = ['id', 'tag', 'hatch_date', 'sex',
-                  'breed', 'generation', 'hatchery', 'pen']
+                  'breed', 'generation', 'hatchery', 'pen', 'sire', 'dam', 'reduction_date', 'reduction_reason']
 
     def export(self, *args, queryset=None, **kwargs):
         if len(args) == 1 and (
@@ -42,7 +78,9 @@ class ChickenWeightResource(resources.ModelResource):
         weeks = list(zip(*weeks))
         weeks = [] if len(weeks) == 0 else weeks[0]
 
-        headers = [*self.get_export_headers(), *weeks]
+        week_header = ["Week {week}".format(week=w) for w in weeks]
+
+        headers = [*self.get_export_headers(), *week_header]
 
         data = tablib.Dataset(headers=headers)
 
@@ -63,10 +101,46 @@ class ChickenWeightResource(resources.ModelResource):
 
 
 class ChickenEggResource(resources.ModelResource):
+    id = fields.Field(column_name='id', attribute='id')
+    tag = fields.Field(column_name='tag', attribute='tag')
+    hatch_date = fields.Field(column_name='hatch_date', attribute='hatch_date')
+    sex = fields.Field(column_name='sex', attribute='sex')
+    generation = fields.Field(column_name='generation', attribute='generation')
+    breed = fields.Field(
+        column_name='breed',
+        attribute='breed',
+        widget=widgets.ForeignKeyWidget('breeds.Breed', field='name'))
+    hatchery = fields.Field(
+        column_name='hatchery',
+        attribute='hatchery',
+        widget=widgets.ForeignKeyWidget('hatchery.Hatchery', field='name'))
+    house = fields.Field(
+        column_name='house',
+        attribute='pen__house',
+        widget=widgets.ForeignKeyWidget('houses.House', field='name'))
+    pen = fields.Field(
+        column_name='pen',
+        attribute='pen',
+        widget=widgets.ForeignKeyWidget('pen.Pen', field='name'))
+    sire = fields.Field(
+        column_name='sire',
+        attribute='sire',
+        widget=widgets.ForeignKeyWidget('chickens.Chicken', field='tag'))
+    dam = fields.Field(
+        column_name='dam',
+        attribute='dam',
+        widget=widgets.ForeignKeyWidget('chickens.Chicken', field='tag'))
+    reduction_date = fields.Field(
+        column_name='reduction_date', attribute='reduction_date')
+    reduction_reason = fields.Field(
+        column_name='reduction_reason',
+        attribute='reduction_reason',
+        widget=widgets.ForeignKeyWidget('reduction_reason.ReductionReason', field='name'))
+
     class Meta:
         model = models.Chicken
         fields = ['id', 'tag', 'hatch_date', 'sex',
-                  'breed']
+                  'breed', 'generation', 'hatchery', 'pen', 'sire', 'dam', 'reduction_date', 'reduction_reason']
 
     def export(self, *args, queryset=None, **kwargs):
         if len(args) == 1 and (
@@ -91,7 +165,13 @@ class ChickenEggResource(resources.ModelResource):
             'week').distinct().order_by('week')
         weeks = list(zip(*weeks))[0] or []
 
-        headers = [*self.get_export_headers(), *weeks]
+        # Number of Egg & Eggs weight
+        week_header = []
+        for w in weeks:
+            week_header.append("Week {week}".format(week=w))
+            week_header.append("-")
+
+        headers = [*self.get_export_headers(), *week_header]
 
         data = tablib.Dataset(headers=headers)
 
@@ -101,8 +181,10 @@ class ChickenEggResource(resources.ModelResource):
                 week_data = weekly_data.filter(
                     chicken=obj.id, week=week).first()
                 if (week_data):
+                    row.append(week_data.eggs)
                     row.append(week_data.weight)
                 else:
+                    row.append('-')
                     row.append('-')
             data.append(row)
 
@@ -112,10 +194,46 @@ class ChickenEggResource(resources.ModelResource):
 
 
 class ChickenFeedResource(resources.ModelResource):
+    id = fields.Field(column_name='id', attribute='id')
+    tag = fields.Field(column_name='tag', attribute='tag')
+    hatch_date = fields.Field(column_name='hatch_date', attribute='hatch_date')
+    sex = fields.Field(column_name='sex', attribute='sex')
+    generation = fields.Field(column_name='generation', attribute='generation')
+    breed = fields.Field(
+        column_name='breed',
+        attribute='breed',
+        widget=widgets.ForeignKeyWidget('breeds.Breed', field='name'))
+    hatchery = fields.Field(
+        column_name='hatchery',
+        attribute='hatchery',
+        widget=widgets.ForeignKeyWidget('hatchery.Hatchery', field='name'))
+    house = fields.Field(
+        column_name='house',
+        attribute='pen__house',
+        widget=widgets.ForeignKeyWidget('houses.House', field='name'))
+    pen = fields.Field(
+        column_name='pen',
+        attribute='pen',
+        widget=widgets.ForeignKeyWidget('pen.Pen', field='name'))
+    sire = fields.Field(
+        column_name='sire',
+        attribute='sire',
+        widget=widgets.ForeignKeyWidget('chickens.Chicken', field='tag'))
+    dam = fields.Field(
+        column_name='dam',
+        attribute='dam',
+        widget=widgets.ForeignKeyWidget('chickens.Chicken', field='tag'))
+    reduction_date = fields.Field(
+        column_name='reduction_date', attribute='reduction_date')
+    reduction_reason = fields.Field(
+        column_name='reduction_reason',
+        attribute='reduction_reason',
+        widget=widgets.ForeignKeyWidget('reduction_reason.ReductionReason', field='name'))
+
     class Meta:
         model = models.Chicken
         fields = ['id', 'tag', 'hatch_date', 'sex',
-                  'breed']
+                  'breed', 'generation', 'hatchery', 'pen', 'sire', 'dam', 'reduction_date', 'reduction_reason']
 
     def export(self, *args, queryset=None, **kwargs):
         if len(args) == 1 and (
@@ -140,7 +258,9 @@ class ChickenFeedResource(resources.ModelResource):
             'week').distinct().order_by('week')
         weeks = list(zip(*weeks))[0] or []
 
-        headers = [*self.get_export_headers(), *weeks]
+        week_header = ["Week {week}".format(week=w) for w in weeks]
+
+        headers = [*self.get_export_headers(), *week_header]
 
         data = tablib.Dataset(headers=headers)
 
