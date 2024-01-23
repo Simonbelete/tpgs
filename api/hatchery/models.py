@@ -26,6 +26,47 @@ class Hatchery(CoreModel):
     def incubation_count(self):
         return Incubation.objects.filter(hatchery=self.id).count()
 
+    # Hatchery Egg Propery
+
+    @property
+    def total_egg_set(self):
+        return self.total_egg_set()
+
+    @property
+    def total_removed_eggs(self):
+        """Culled, Dead and infertile eggs"""
+        total = 0
+        for he in self.hatchery_eggs.iterator():
+            total += (he.no_dead or 0) + (he.no_culled or 0) + \
+                (he.infertile_egg or 0)
+
+    @property
+    def total_infertile_eggs(self):
+        return self.total_infertile_egg()
+
+    @property
+    def total_hatched_egg(self):
+        return self.total_hatched_egg()
+
+    def total_egg_set(self):
+        """Total no of eggs seted"""
+        total = 0
+        for he in self.hatchery_eggs.iterator():
+            total = total + (he.no_eggs or 0)
+        return total
+
+    def total_infertile_egg(self):
+        total = 0
+        for he in self.hatchery_eggs.iterator():
+            total = total + (he.infertile_egg or 0)
+        return total
+
+    def total_hatched_egg(self):
+        total = 0
+        for he in self.hatchery_eggs.iterator():
+            total = total + (he.no_of_hatched or 0)
+        return total
+
 
 class HatcheryEgg(CoreModel):
     """ Single Chicken's egg """

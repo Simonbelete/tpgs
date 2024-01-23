@@ -10,7 +10,7 @@ const HatcheryPage = () => {
 
   return (
     <>
-      <SeoHead title="Hatchery" />
+      <SeoHead title="Hatch" />
       <ListLayout breadcrumbs={<Breadcrumbs items={breadcrumbs} />}>
         <HatcheryList />
       </ListLayout>

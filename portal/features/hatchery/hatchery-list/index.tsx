@@ -59,10 +59,10 @@ export const HatcheryList = () => {
   ];
   return (
     <ListLayout<Hatchery>
-      title="Hatchery"
+      title="Hatch"
       columns={columns}
       actions={[
-        DashboardAction,
+        // DashboardAction,
         EditAction,
         HistoryAction,
         PermanentlyDeleteAction,

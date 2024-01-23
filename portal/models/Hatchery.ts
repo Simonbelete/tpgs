@@ -9,4 +9,9 @@ export default interface Hatchery extends AbstractBaseModel {
   note: string;
   incubation_count: number;
   hatchery_egg_count: number;
+
+  total_egg_set?: number;
+  total_infertile_eggs?: number;
+  total_removed_eggs?: number;
+  total_hatched_egg?: number;
 }

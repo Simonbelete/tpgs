@@ -18,7 +18,8 @@ class HatcherySerializer_SLUG(serializers.ModelSerializer):
 
     class Meta:
         model = models.Hatchery
-        fields = ['id', 'name', 'display_name']
+        fields = ['id', 'name', 'display_name', 'hatchery_egg_count', 'incubation_count',
+                  'total_egg_set', 'total_infertile_eggs', 'total_removed_eggs', 'total_hatched_egg']
 
 
 class HatcherySerializer_GET(serializers.ModelSerializer):
