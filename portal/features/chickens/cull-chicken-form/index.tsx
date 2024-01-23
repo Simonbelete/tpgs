@@ -117,7 +117,7 @@ export const CullChickenForm = ({
                       },
                     }}
                     onChange={onChange}
-                    value={dayjs(value as string)}
+                    value={value ? dayjs(value as string) : null}
                   />
                 )}
               />
