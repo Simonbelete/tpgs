@@ -90,16 +90,13 @@ import "@/types/next-auth.d";
 
 async function refreshAccessToken(token: JWT) {
   try {
-    const response = await fetch(
-      process.env.NEXT_API_URL + "/api/token/refresh",
-      {
-        method: "POST",
-        body: JSON.stringify({
-          refresh: token?.refresh || "",
-        }),
-        headers: { "Content-Type": "application/json" },
-      }
-    );
+    const response = await fetch(process.env.NEXT_API_URL + "/token/refresh", {
+      method: "POST",
+      body: JSON.stringify({
+        refresh: token?.refresh || "",
+      }),
+      headers: { "Content-Type": "application/json" },
+    });
 
     const refreshedTokens = await response.json();
 
@@ -134,7 +131,7 @@ export const authOptions = {
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials, req) {
-        const res = await fetch(process.env.NEXT_API_URL + "/api/token/", {
+        const res = await fetch(process.env.NEXT_API_URL + "/token/", {
           method: "POST",
           body: JSON.stringify({
             email: credentials?.email || "",
