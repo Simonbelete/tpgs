@@ -15,7 +15,7 @@ const calculatePercentage = (loaded: number, total: number) =>
   Math.floor(loaded * 1.0) / total;
 
 export const instance = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_URL + "/api",
+  baseURL: process.env.NEXT_PUBLIC_API_URL,
   timeout: 10000,
 });
 
