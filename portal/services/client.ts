@@ -88,7 +88,7 @@ export const clientBaseQuery =
   async ({ url, method, data, params, headers }) => {
     try {
       const result = await instance({
-        url: baseUrl + url,
+        url: url,
         method,
         data,
         params,

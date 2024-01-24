@@ -6,7 +6,7 @@ import Cookies from "universal-cookie";
 
 const instance = (context: NextPageContext) => {
   const inst = axios.create({
-    baseURL: process.env.NEXT_PUBLIC_API_URL + "/api",
+    baseURL: process.env.NEXT_PUBLIC_API_URL,
     timeout: 1000,
   });
 
