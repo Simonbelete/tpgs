@@ -29,6 +29,7 @@ from drf_spectacular.views import SpectacularAPIView, SpectacularRedocView, Spec
 from django.views.decorators.cache import never_cache
 from django.http import JsonResponse
 from rest_framework.views import APIView
+from django.conf import settings
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -99,3 +100,6 @@ urlpatterns = [
     path('api/schema/redoc/',
          SpectacularRedocView.as_view(url_name='schema'), name='redoc'),
 ]
+
+if settings.URL_PREFIX:
+    urlpatterns = [path(f'{settings.URL_PREFIX}/', include(urlpatterns))]
