@@ -32,39 +32,13 @@ from rest_framework.views import APIView
 from django.conf import settings
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('api-auth/', include('rest_framework.urls')),
-    path('api/activity/', include('actstream.urls')),
-    path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
-    path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
-    path('api/token/verify/', TokenVerifyView.as_view(), name='token_verify'),
-    # path('api/inbox/notifications/', include([
-    #     path('', notificationsView.AllNotificationsList.as_view(), name='all'),
-    #     path('unread/', notificationsView.UnreadNotificationsList.as_view(), name='unread'),
-    #     path('mark-all-as-read/', notificationsView.mark_all_as_read,
-    #          name='mark_all_as_read'),
-    #     path('mark-as-read/(?P<slug>\d+)/',
-    #          notificationsView.mark_as_read, name='mark_as_read'),
-    #     path('mark-as-unread/(?P<slug>\d+)/',
-    #          notificationsView.mark_as_unread, name='mark_as_unread'),
-    #     path('delete/(?P<slug>\d+)/', notificationsView.delete, name='delete'),
-
-    #     path('all_count/', notificationsView.live_all_notification_count,
-    #          name='live_all_notification_count'),
-    #     path('unread_list/', notificationsView.live_unread_notification_list,
-    #          name='live_unread_notification_list'),
-    #     path('all_list/', notificationsView.live_all_notification_list,
-    #          name='live_all_notification_list'),
-    # ])),
-
-    path('mark-as-read/(?P<slug>\d+)/',
-         notificationsView.mark_as_read, name='mark_as_read'),
-    path('mark-as-unread/(?P<slug>\d+)/',
-         notificationsView.mark_as_unread, name='mark_as_unread'),
-
-    path('adminactions/', include('adminactions.urls')),
-    path('api/', include([
-        # path('', include('cities_light.contrib.restframework3')),
+    path('api-v1/', include([
+        path('admin/', admin.site.urls),
+        path('activity/', include('actstream.urls')),
+        path('token/', TokenObtainPairView.as_view(),
+             name='token_obtain_pair'),
+        path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+        path('token/verify/', TokenVerifyView.as_view(), name='token_verify'),
         path('', include('users.urls')),
         path('', include('auths.urls')),
         path('', include('flocks.urls')),
@@ -91,15 +65,11 @@ urlpatterns = [
         path('', include('hatchery.urls')),
         path('', include('requirements.urls')),
         path('', include('city.urls')),
-    ])),
-
-    path('api/schema/', SpectacularAPIView.as_view(), name='schema'),
-    # Optional UI:
-    path('api/schema/swagger-ui/',
+        path('schema/', SpectacularAPIView.as_view(), name='schema'),
+        # Optional UI:
+        path('schema/swagger-ui/',
          SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),
-    path('api/schema/redoc/',
+        path('schema/redoc/',
          SpectacularRedocView.as_view(url_name='schema'), name='redoc'),
+    ])),
 ]
-
-if settings.URL_PREFIX:
-    urlpatterns = [path(f'{settings.URL_PREFIX}/', include(urlpatterns))]
