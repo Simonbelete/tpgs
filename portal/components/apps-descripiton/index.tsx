@@ -33,7 +33,7 @@ nutrition, elucidating the nuances of a balanced diet and providing insights int
 macro and micronutrients. It further delineates the Recommended Daily Allowances (RDAs) of essential
 vitamins and minerals, fostering a deep understanding of the nutritional requirements for optimal
 health.`,
-      // link: "/login",
+      link: "/nutrition-literacy",
       // linkAndroid: "asf",
     },
     {
