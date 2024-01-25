@@ -2,13 +2,12 @@ import React, { ReactElement } from "react";
 import { DefaultLayout } from "@/layouts";
 import { AuthSignUp } from "@/features/auth";
 import Head from "next/head";
+import { SeoHead } from "@/seo";
 
 const SingUpPage = () => {
   return (
     <>
-      <Head>
-        <title>ILRI TPGS - Sign up</title>
-      </Head>
+      <SeoHead title="Sign-up" />
       <AuthSignUp />
     </>
   );

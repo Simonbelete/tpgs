@@ -139,7 +139,7 @@ const ResetPassword = () => {
         </Box>
         <Stack sx={{ my: 3 }} gap={1}>
           <Divider></Divider>
-          <Link href="/sing-up">
+          <Link href="/sign-up">
             <Button fullWidth>Sign up</Button>
           </Link>
         </Stack>

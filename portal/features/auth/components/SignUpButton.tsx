@@ -4,7 +4,7 @@ import { Button } from "@mui/material";
 
 const SignUpButton = () => {
   return (
-    <Link href="/sing-up" id="sign-up">
+    <Link href="/sign-up" id="sign-up">
       <Button fullWidth>Sign up</Button>
     </Link>
   );

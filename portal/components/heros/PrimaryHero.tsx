@@ -48,7 +48,7 @@ const PrimaryHero = () => {
                     Login
                   </Button>
                 </Link>
-                <Link href="/sing-up" style={{ marginLeft: "20px" }}>
+                <Link href="/sign-up" style={{ marginLeft: "20px" }}>
                   <Button variant="outlined" type="button">
                     Sign-up
                   </Button>
