@@ -1,11 +1,11 @@
 {
-    "name": "nea",
-    "short_name": "nea",
-    "start_url": ".",
+    "name": "Nutrition Literacy | SAPLING - ILRI TPGS",
+    "short_name": "Nutrition Literacy",
+    "start_url": "/nutrition-literacy",
     "display": "standalone",
     "background_color": "#0175C2",
     "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
+    "description": " This farmer-friendly application, thoughtfully translated into three languages—English, Amharic, and Swahili—exemplifies inclusivity and accessibility, ensuring that a diverse audience of farmers can harness its wealth of knowledge",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [
