@@ -11,7 +11,7 @@ const PrimaryMenu = () => {
           <Button>Login</Button>
         </Link>
         <Link href="/sing-up">
-          <Button variant="outlined">Sign Up</Button>
+          <Button variant="outlined">Sign-up</Button>
         </Link>
       </Stack>
     </Box>

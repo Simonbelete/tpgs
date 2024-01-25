@@ -1,0 +1,372 @@
+id,ingredient,nutrient,value
+ ,coconutmeal (solv.extr.),ME,1340
+ ,coconutmeal (solv.extr.),CP,21.3
+ ,coconutmeal (solv.extr.),Lys, 0.49
+ ,coconutmeal (solv.extr.),m+c,0.62
+ ,coconutmeal (solv.extr.),Met, 0.3
+ ,coconutmeal (solv.extr.),EE,2.4
+ ,coconutmeal (solv.extr.),CF,14.1
+ ,coconutmeal (solv.extr.),Ca,0.13
+ ,coconutmeal (solv.extr.),P,0.58
+
+ ,coconut-expeller/cake,ME,1850
+ ,coconut-expeller/cake,CP,20
+ ,coconut-expeller/cake,Lys, 0.46
+ ,coconut-expeller/cake,m+c,0.58
+ ,coconut-expeller/cake,Met, 0.29
+ ,coconut-expeller/cake,EE,12.2
+ ,coconut-expeller/cake,CF,13.4
+ ,coconut-expeller/cake,Ca,0.11
+ ,coconut-expeller/cake,P,0.44
+
+ ,linseedmeal (solv extr.),ME,1400
+ ,linseedmeal (solv extr.),CP,32.2
+ ,linseedmeal (solv extr.),Lys, 1.19
+ ,linseedmeal (solv extr.),m+c,1.26
+ ,linseedmeal (solv extr.),Met, 0.64
+ ,linseedmeal (solv extr.),EE,3.1
+ ,linseedmeal (solv extr.),CF,10.2
+ ,linseedmeal (solv extr.),Ca,0.37
+ ,linseedmeal (solv extr.),P,0.86
+
+ ,linseed-expeller/cake,ME,1630
+ ,linseed-expeller/cake,CP,31.5
+ ,linseed-expeller/cake,Lys, 1.17
+ ,linseed-expeller/cake,m+c,1.23
+ ,linseed-expeller/cake,Met, 0.63
+ ,linseed-expeller/cake,EE,6.3
+ ,linseed-expeller/cake,CF,10.4
+ ,linseed-expeller/cake,Ca,0.33
+ ,linseed-expeller/cake,P,0.82
+
+ ,palmkernelmeal (solv. extr.),ME,0
+ ,palmkernelmeal (solv. extr.),CP,15.3
+ ,palmkernelmeal (solv. extr.),Lys, 0.52
+ ,palmkernelmeal (solv. extr.),m+c,0.61
+ ,palmkernelmeal (solv. extr.),Met, 0.34
+ ,palmkernelmeal (solv. extr.),EE,1.6
+ ,palmkernelmeal (solv. extr.),CF,19.5
+ ,palmkernelmeal (solv. extr.),Ca,0.24
+ ,palmkernelmeal (solv. extr.),P,0.56
+
+ ,palmkernel-expeller/cake,ME,0
+ ,palmkernel-expeller/cake,CP,13
+ ,palmkernel-expeller/cake,Lys, 0.44
+ ,palmkernel-expeller/cake,m+c,0.52
+ ,palmkernel-expeller/cake,Met, 0.32
+ ,palmkernel-expeller/cake,EE,8.7
+ ,palmkernel-expeller/cake,CF,25
+ ,palmkernel-expeller/cake,Ca,0.18
+ ,palmkernel-expeller/cake,P,0.46
+
+
+ ,rapeseedmeal (solv. extr.),ME,1730
+ ,rapeseedmeal (solv. extr.),CP,34
+ ,rapeseedmeal (solv. extr.),Lys, 1.7
+ ,rapeseedmeal (solv. extr.),m+c,1.56
+ ,rapeseedmeal (solv. extr.),Met, 0.73
+ ,rapeseedmeal (solv. extr.),EE,2.3
+ ,rapeseedmeal (solv. extr.),CF,11
+ ,rapeseedmeal (solv. extr.),Ca,0.71
+ ,rapeseedmeal (solv. extr.),P,1.09
+
+ ,rapeseed-expeller/cake,ME,2030
+ ,rapeseed-expeller/cake,CP,34.8
+ ,rapeseed-expeller/cake,Lys, 1.74
+ ,rapeseed-expeller/cake,m+c,1.6
+ ,rapeseed-expeller/cake,Met, 0.73
+ ,rapeseed-expeller/cake,EE,5.8
+ ,rapeseed-expeller/cake,CF,10.8
+ ,rapeseed-expeller/cake,Ca,0.68
+ ,rapeseed-expeller/cake,P,1.07
+
+ ,sunflowerseedmeal (solv. extr.),ME,1370
+ ,sunflowerseedmeal (solv. extr.),CP,28.5
+ ,sunflowerseedmeal (solv. extr.),Lys, 0.97
+ ,sunflowerseedmeal (solv. extr.),m+c,1.11
+ ,sunflowerseedmeal (solv. extr.),Met, 0.63
+ ,sunflowerseedmeal (solv. extr.),EE,2
+ ,sunflowerseedmeal (solv. extr.),CF,24.5
+ ,sunflowerseedmeal (solv. extr.),Ca,0.33
+ ,sunflowerseedmeal (solv. extr.),P,1.08
+
+ ,sunflowerseed-expeller/cake,ME,1510
+ ,sunflowerseed-expeller/cake,CP,29.1
+ ,sunflowerseed-expeller/cake,Lys, 0.99
+ ,sunflowerseed-expeller/cake,m+c,1.13
+ ,sunflowerseed-expeller/cake,Met, 0.64
+ ,sunflowerseed-expeller/cake,EE,3.8
+ ,sunflowerseed-expeller/cake,CF,25
+ ,sunflowerseed-expeller/cake,Ca,0.36
+ ,sunflowerseed-expeller/cake,P,1.16
+
+ ,bonemeal,ME,1500
+ ,bonemeal,CP,40.7
+ ,bonemeal,Lys, 1.83
+ ,bonemeal,m+c,0.77
+ ,bonemeal,Met, 0.45
+ ,bonemeal,EE,5.4
+ ,bonemeal,CF,0
+ ,bonemeal,Ca,16.04
+ ,bonemeal,P,7.42
+
+ ,meatmeal (50/14/26),ME,2830
+ ,meatmeal (50/14/26),CP,50
+ ,meatmeal (50/14/26),Lys, 2.4
+ ,meatmeal (50/14/26),m+c,1.05
+ ,meatmeal (50/14/26),Met, 0.6
+ ,meatmeal (50/14/26),EE,14
+ ,meatmeal (50/14/26),CF,0
+ ,meatmeal (50/14/26),Ca,8
+ ,meatmeal (50/14/26),P,3.9
+
+
+ ,meatmeal (58/13/20),ME,3090
+ ,meatmeal (58/13/20),CP,58.2
+ ,meatmeal (58/13/20),Lys, 3.26
+ ,meatmeal (58/13/20),m+c,1.4
+ ,meatmeal (58/13/20),Met, 0.87
+ ,meatmeal (58/13/20),EE,13
+ ,meatmeal (58/13/20),CF,0
+ ,meatmeal (58/13/20),Ca,6
+ ,meatmeal (58/13/20),P,2.9
+
+ ,skimmilkpowder,ME,2490
+ ,skimmilkpowder,CP,34.8
+ ,skimmilkpowder,Lys, 2.85
+ ,skimmilkpowder,m+c,1.22
+ ,skimmilkpowder,Met, 0.9
+ ,skimmilkpowder,EE,1.1
+ ,skimmilkpowder,CF,0
+ ,skimmilkpowder,Ca,1.35
+ ,skimmilkpowder,P,1.01
+
+ ,feathermeal (hydrolized),ME,3170
+ ,feathermeal (hydrolized),CP,82.5
+ ,feathermeal (hydrolized),Lys, 1.57
+ ,feathermeal (hydrolized),m+c,3.8
+ ,feathermeal (hydrolized),Met, 0.58
+ ,feathermeal (hydrolized),EE,7.5
+ ,feathermeal (hydrolized),CF,0
+ ,feathermeal (hydrolized),Ca,0.44
+ ,feathermeal (hydrolized),P,0.23
+
+
+ ,fishmeal (70% c.p.),ME,3320
+ ,fishmeal (70% c.p.),CP,70
+ ,fishmeal (70% c.p.),Lys, 5.39
+ ,fishmeal (70% c.p.),m+c,2.66
+ ,fishmeal (70% c.p.),Met, 2.03
+ ,fishmeal (70% c.p.),EE,8
+ ,fishmeal (70% c.p.),CF,0
+ ,fishmeal (70% c.p.),Ca,3.5
+ ,fishmeal (70% c.p.),P,2.6
+
+ ,fishmeal (South American),ME,3320
+ ,fishmeal (South American),CP,65.9
+ ,fishmeal (South American),Lys, 5.07
+ ,fishmeal (South American),m+c,2.44
+ ,fishmeal (South American),Met, 1.85
+ ,fishmeal (South American),EE,10.3
+ ,fishmeal (South American),CF,0
+ ,fishmeal (South American),Ca,3.5
+ ,fishmeal (South American),P,2.6
+
+ ,wheypowder (delact. 20% c.p.),ME,1890
+ ,wheypowder (delact. 20% c.p.),CP,20
+ ,wheypowder (delact. 20% c.p.),Lys, 1.44
+ ,wheypowder (delact. 20% c.p.),m+c,0.72
+ ,wheypowder (delact. 20% c.p.),Met, 0.32
+ ,wheypowder (delact. 20% c.p.),EE,1.7
+ ,wheypowder (delact. 20% c.p.),CF,0
+ ,wheypowder (delact. 20% c.p.),Ca,5
+ ,wheypowder (delact. 20% c.p.),P,1.6
+
+
+ ,wheypowder (sweet),ME,1960
+ ,wheypowder (sweet),CP,3518
+ ,wheypowder (sweet),Lys, 10.8
+ ,wheypowder (sweet),m+c,0.43
+ ,wheypowder (sweet),Met, 0.19
+ ,wheypowder (sweet),EE,0.7
+ ,wheypowder (sweet),CF,0
+ ,wheypowder (sweet),Ca,0.86
+ ,wheypowder (sweet),P,0.66
+
+ ,soybeanoil,ME,9300
+ ,soybeanoil,CP,0
+ ,soybeanoil,Lys, 0
+ ,soybeanoil,m+c,0
+ ,soybeanoil,Met, 0
+ ,soybeanoil,EE,0
+ ,soybeanoil,CF,0
+ ,soybeanoil,Ca,0
+ ,soybeanoil,P,0
+
+ ,animal fat (destructor-),ME,8500
+ ,animal fat (destructor-),CP,0
+ ,animal fat (destructor-),Lys, 0
+ ,animal fat (destructor-),m+c,0
+ ,animal fat (destructor-),Met, 0
+ ,animal fat (destructor-),EE,99.5
+ ,animal fat (destructor-),CF,0
+ ,animal fat (destructor-),Ca,0
+ ,animal fat (destructor-),P,0
+
+
+ ,citruspulp,ME,0
+ ,citruspulp,CP,6.3
+ ,citruspulp,Lys, 0.16
+ ,citruspulp,m+c,0.14
+ ,citruspulp,Met, 0.06
+ ,citruspulp,EE,2.3
+ ,citruspulp,CF,11.9
+ ,citruspulp,Ca,1.4
+ ,citruspulp,P,0.12
+
+ ,yeast (beer),ME,2860
+ ,yeast (beer),CP,45.3
+ ,yeast (beer),Lys, 3.35
+ ,yeast (beer),m+c,1.18
+ ,yeast (beer),Met, 0.72
+ ,yeast (beer),EE,1
+ ,yeast (beer),CF,3.1
+ ,yeast (beer),Ca,0.26
+ ,yeast (beer),P,1.5
+
+ ,grassmeal (less than 16% c.p.),ME,1010
+ ,grassmeal (less than 16% c.p.),CP,13.7
+ ,grassmeal (less than 16% c.p.),Lys, 0.64
+ ,grassmeal (less than 16% c.p.),m+c,0.36
+ ,grassmeal (less than 16% c.p.),Met, 0.26
+ ,grassmeal (less than 16% c.p.),EE,3.2
+ ,grassmeal (less than 16% c.p.),CF,25.4
+ ,grassmeal (less than 16% c.p.),Ca,0.49
+ ,grassmeal (less than 16% c.p.),P,0.31
+
+
+ ,grassmeal (more than 20% c.p.),ME,1350
+ ,grassmeal (more than 20% c.p.),CP,20.8
+ ,grassmeal (more than 20% c.p.),Lys, 0.98
+ ,grassmeal (more than 20% c.p.),m+c,0.54
+ ,grassmeal (more than 20% c.p.),Met, 0.31
+ ,grassmeal (more than 20% c.p.),EE,3.8
+ ,grassmeal (more than 20% c.p.),CF,21
+ ,grassmeal (more than 20% c.p.),Ca,0.49
+ ,grassmeal (more than 20% c.p.),P,0.31
+
+ ,alfalfa meal (sundried),ME,700
+ ,alfalfa meal (sundried),CP,10.1
+ ,alfalfa meal (sundried),Lys, 0.47
+ ,alfalfa meal (sundried),m+c,0.26
+ ,alfalfa meal (sundried),Met, 0.23
+ ,alfalfa meal (sundried),EE,1.8
+ ,alfalfa meal (sundried),CF,27.4
+ ,alfalfa meal (sundried),Ca,1.78
+ ,alfalfa meal (sundried),P,0.25
+
+
+ ,molasses (beet),ME,1890
+ ,molasses (beet),CP,9.7
+ ,molasses (beet),Lys, 0.04
+ ,molasses (beet),m+c,0.04
+ ,molasses (beet),Met, 0.04
+ ,molasses (beet),EE,0
+ ,molasses (beet),CF,0
+ ,molasses (beet),Ca,0.5
+ ,molasses (beet),P,0.03
+
+
+ ,molasses (cane),ME,1800
+ ,molasses (cane),CP,4
+ ,molasses (cane),Lys, 0.02
+ ,molasses (cane),m+c,0.02
+ ,molasses (cane),Met, 0.02
+ ,molasses (cane),EE,0
+ ,molasses (cane),CF,0
+ ,molasses (cane),Ca,0.67
+ ,molasses (cane),P,0.05
+
+ ,sugar,ME,3900
+ ,sugar,CP,0
+ ,sugar,Lys, 0
+ ,sugar,m+c,0
+ ,sugar,Met, 0
+ ,sugar,EE,0
+ ,sugar,CF,0
+ ,sugar,Ca,0
+ ,sugar,P,0
+
+ ,soybean hulls,ME,0
+ ,soybean hulls,CP,11.7
+ ,soybean hulls,Lys, 0.56
+ ,soybean hulls,m+c,0.56
+ ,soybean hulls,Met, 0.33
+ ,soybean hulls,EE,2.1
+ ,soybean hulls,CF,34.8
+ ,soybean hulls,Ca,0.57
+ ,soybean hulls,P,0.14
+
+
+ ,dicalciumphosphate,ME,0
+ ,dicalciumphosphate,CP,0
+ ,dicalciumphosphate,Lys, 0
+ ,dicalciumphosphate,m+c,0
+ ,dicalciumphosphate,Met, 0
+ ,dicalciumphosphate,EE,0
+ ,dicalciumphosphate,CF,0
+ ,dicalciumphosphate,Ca,24.0
+ ,dicalciumphosphate,P,18.0
+
+ ,monocalciumphosphate,ME,0
+ ,monocalciumphosphate,CP,0
+ ,monocalciumphosphate,Lys, 0
+ ,monocalciumphosphate,m+c,0
+ ,monocalciumphosphate,Met, 0
+ ,monocalciumphosphate,EE,0
+ ,monocalciumphosphate,CF,0
+ ,monocalciumphosphate,Ca,16.0
+ ,monocalciumphosphate,P,22.5
+
+
+ ,limestone/shells,ME,0
+ ,limestone/shells,CP,0
+ ,limestone/shells,Lys, 0
+ ,limestone/shells,m+c,0
+ ,limestone/shells,Met, 0
+ ,limestone/shells,EE,0
+ ,limestone/shells,CF,0
+ ,limestone/shells,Ca,38.0
+ ,limestone/shells,P,0
+
+
+ ,salt (NaCl),ME,0
+ ,salt (NaCl),CP,0
+ ,salt (NaCl),Lys, 0
+ ,salt (NaCl),m+c,0
+ ,salt (NaCl),Met, 0
+ ,salt (NaCl),EE,0
+ ,salt (NaCl),CF,0
+ ,salt (NaCl),Ca,0
+ ,salt (NaCl),P,0
+
+ ,L-lysine HCl,ME,3730
+ ,L-lysine HCl,CP,94.5
+ ,L-lysine HCl,Lys, 78.0
+ ,L-lysine HCl,m+c,0
+ ,L-lysine HCl,Met, 0
+ ,L-lysine HCl,EE,0
+ ,L-lysine HCl,CF,0
+ ,L-lysine HCl,Ca,0
+ ,L-lysine HCl,P,0
+
+
+ ,DL-metionine,ME,4360
+ ,DL-metionine,CP,58.0
+ ,DL-metionine,Lys, 0
+ ,DL-metionine,m+c,99.0
+ ,DL-metionine,Met, 99.0
+ ,DL-metionine,EE,0
+ ,DL-metionine,CF,0
+ ,DL-metionine,Ca,0
+ ,DL-metionine,P,0

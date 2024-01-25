@@ -5,9 +5,24 @@ import AppList from "../apps-list";
 
 const AppIntro = () => {
   const content = {
-    "header-p1": "TPGS Platforms",
-    description:
-      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries,",
+    "header-p1": "SAPLING - TPGS Platforms",
+    description: `
+    Tropical Poultry Genetics Solutions (TPGS): Delivering farmer preferred, productive and ecologically
+    adapted poultry to smallholders. The project will build on the gains of ACGG and its bridging phase that
+    concluded in April 2022. In addition, the new phase will benefit from on-going activities of the Asian
+    Chicken Genetic Gains (AsCGG) project in South-East Asia. This new phase shifts the focus towards
+    impact, intervention through the establishment of new partnerships, and the close involvement of
+    investors. It will have more emphasis on local chicken breed development and conservation. This three-
+    year project will run as part of the One CGIAR initiative (SAPLING). TPGS is working in countries outside
+    of SAPLING such as Cambodia and Nigeria.
+    `,
+    description2: `
+    The initiative Sustainable Animal Productivity for Livelihoods, Nutrition and Gender Inclusion (SAPLING)
+is a CGIAR initiative focusing on sustainable animal productivity. This initiative aims to contribute to
+transforming livestock sectors in target countries to make them more productive, resilient, equitable
+and sustainable. The initiative is working in seven countries located in East Africa (Ethiopia, Kenya,
+Tanzania, Uganda), West Africa (Mali), Southeast Asia (Vietnam) and South Asia (Nepal) on 15 livestock
+value chains in total.`,
   };
   return (
     <Container>
@@ -24,7 +39,7 @@ const AppIntro = () => {
             >
               {content["description"]}
             </Typography>
-            <Typography
+            {/* <Typography
               variant="subtitle1"
               color="textSecondary"
               paragraph={true}
@@ -35,9 +50,9 @@ const AppIntro = () => {
               </Link>{" "}
               ,{" "}
               <Link href="https://wondmenehesatu.com/">Dr Wondmeneh Esatu</Link>
-            </Typography>
+            </Typography> */}
           </Box>
-          <AppList />
+          {/* <AppList /> */}
         </Grid>
         <Grid item xs={12} md={6}>
           <Box>
@@ -47,6 +62,13 @@ const AppIntro = () => {
               style={{ marginBottom: "20px" }}
             />
           </Box>
+          <Typography
+            variant="subtitle1"
+            color="textSecondary"
+            paragraph={true}
+          >
+            {content["description2"]}
+          </Typography>
         </Grid>
       </Grid>
     </Container>

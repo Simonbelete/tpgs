@@ -1,5 +1,4 @@
 id,name,abbreviation,unit,nutrient_group,order
- ,Metabolizable Energy,ME,kcal/kg,Energy,0
  ,Crude protein,CP,%,Unknown,1
  ,Lysine,Lys,%,Unknown,2
  ,Meth. +cystine,m+c,%,Unknown,3

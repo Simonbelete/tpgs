@@ -5,10 +5,10 @@ import Link from "next/link";
 
 const PrimaryHero = () => {
   const content = {
-    "header-p1": "TPGS - ",
-    "header-p2": "Tropical Poultry Genetics Solutions",
+    "header-p1": "SAPLING - ",
+    "header-p2": "TPGS Platforms",
     description:
-      "Suspendisse aliquam tellus ante, porttitor mattis diam eleifend quis. Pellentesque pulvinar commodo eros sit amet finibus.",
+      "Delivering farmer preferred, productive and ecologically adapted poultry to smallholders.",
     image:
       "https://images.unsplash.com/photo-1497681883844-82b4f0a359a4?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80",
   };
@@ -50,7 +50,7 @@ const PrimaryHero = () => {
                 </Link>
                 <Link href="/sing-up" style={{ marginLeft: "20px" }}>
                   <Button variant="outlined" type="button">
-                    Sign up
+                    Sign-up
                   </Button>
                 </Link>
               </Box>
