@@ -158,7 +158,6 @@ export const IngredientForm = ({
         }
       >
         <Tabs
-          scrollButtons
           value={tab}
           onChange={handleTabChange}
           aria-label="basic tabs example"
@@ -167,6 +166,8 @@ export const IngredientForm = ({
               "&.Mui-disabled": { opacity: 0.3 },
             },
           }}
+          variant="scrollable"
+          scrollButtons="auto"
         >
           <Tab label="Detail" {...a11yProps(0)} />
           {formData && (

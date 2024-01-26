@@ -80,7 +80,6 @@ export const HatcheryForm = ({ data }: { data?: Hatchery }) => {
           </Box>
         )}
         <Tabs
-          scrollButtons
           value={tab}
           onChange={handleTabChange}
           aria-label="basic tabs example"
@@ -89,6 +88,8 @@ export const HatcheryForm = ({ data }: { data?: Hatchery }) => {
               "&.Mui-disabled": { opacity: 0.3 },
             },
           }}
+          variant="scrollable"
+          scrollButtons="auto"
         >
           <Tab label="Detail" {...a11yProps(0)} />
           {formData && (

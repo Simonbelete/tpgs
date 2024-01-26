@@ -84,6 +84,7 @@ const SettingsForm = () => {
             variant="scrollable"
             value={value}
             onChange={handleChange}
+            scrollButtons="auto"
           >
             <Tab label="Profile" {...a11yProps(0)} />
             <Tab label="Account setting" {...a11yProps(1)} />

@@ -59,8 +59,6 @@ export const BreedForm = ({
         }
       >
         <Tabs
-          scrollButtons
-          variant="scrollable"
           allowScrollButtonsMobile
           value={tab}
           onChange={handleTabChange}
@@ -70,6 +68,8 @@ export const BreedForm = ({
               "&.Mui-disabled": { opacity: 0.3 },
             },
           }}
+          variant="scrollable"
+          scrollButtons="auto"
         >
           <Tab label="Detail" {...a11yProps(0)} />
           {formData && (

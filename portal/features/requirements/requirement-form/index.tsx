@@ -151,7 +151,6 @@ export const RequirementForm = ({
         }
       >
         <Tabs
-          scrollButtons
           value={tab}
           onChange={handleTabChange}
           aria-label="basic tabs example"
@@ -160,6 +159,8 @@ export const RequirementForm = ({
               "&.Mui-disabled": { opacity: 0.3 },
             },
           }}
+          variant="scrollable"
+          scrollButtons="auto"
         >
           <Tab label="Detail" {...a11yProps(0)} />
           {formData && (

@@ -153,7 +153,6 @@ export const FormulaForm = ({
           </Box>
         )}
         <Tabs
-          scrollButtons
           value={tab}
           onChange={handleTabChange}
           aria-label="basic tabs example"
@@ -162,6 +161,8 @@ export const FormulaForm = ({
               "&.Mui-disabled": { opacity: 0.3 },
             },
           }}
+          variant="scrollable"
+          scrollButtons="auto"
         >
           <Tab label="Detail" {...a11yProps(0)} />
           {formData && (
