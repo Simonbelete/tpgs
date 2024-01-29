@@ -20,12 +20,11 @@ import DownloadIcon from "@mui/icons-material/Download";
 
 export const ChickenList = () => {
   const columns: GridColDef[] = [
-    { field: "tag", headerName: "Tag", flex: 1 },
+    { field: "tag", headerName: "Tag", minWidth: 150 },
     {
       field: "breed",
       headerName: "Breed",
       flex: 1,
-      minWidth: 150,
       renderCell: (params: GridRenderCellParams<any>) => {
         if (params.row.breed == null) return <></>;
         return (
