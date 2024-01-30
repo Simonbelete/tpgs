@@ -10,7 +10,7 @@ const EggGuidelinePage = () => {
 
   return (
     <>
-      <SeoHead title="Body weight guideline" />
+      <SeoHead title="Egg production guideline" />
       <ListLayout breadcrumbs={<Breadcrumbs items={breadcrumbs} />}>
         <EggGuidelineList />
       </ListLayout>

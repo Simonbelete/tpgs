@@ -10,7 +10,7 @@ const FeedGuidelinePage = () => {
 
   return (
     <>
-      <SeoHead title="Body weight guideline" />
+      <SeoHead title="Feed intake guideline" />
       <ListLayout breadcrumbs={<Breadcrumbs items={breadcrumbs} />}>
         <FeedGuidelineList />
       </ListLayout>

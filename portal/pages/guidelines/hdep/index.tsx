@@ -10,7 +10,7 @@ const HDEPGuidelinePage = () => {
 
   return (
     <>
-      <SeoHead title="Body weight guideline" />
+      <SeoHead title="HDEP Guideline" />
       <ListLayout breadcrumbs={<Breadcrumbs items={breadcrumbs} />}>
         <HDEPGuidelineList />
       </ListLayout>

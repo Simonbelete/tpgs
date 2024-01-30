@@ -10,7 +10,7 @@ const HHEPGuidelinePage = () => {
 
   return (
     <>
-      <SeoHead title="Body HHEP guideline" />
+      <SeoHead title="HHEP guideline" />
       <ListLayout breadcrumbs={<Breadcrumbs items={breadcrumbs} />}>
         <HHEPGuidelineList />
       </ListLayout>
