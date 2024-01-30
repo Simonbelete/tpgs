@@ -49,8 +49,8 @@ CORS_ALLOW_HEADERS = [
     'X-Superuser-Mode'
 ]
 
-ALLOWED_HOSTS = ['*']
-# ALLOWED_HOSTS = []
+hosts = env('ALLOWED_HOSTS') or ""
+ALLOWED_HOSTS = hosts.split(",")
 
 # Email
 EMAIL_HOST = env('EMAIL_HOST')
@@ -286,7 +286,10 @@ REST_FRAMEWORK = {
         'django_filters.rest_framework.DjangoFilterBackend',
         'rest_framework.filters.SearchFilter',
         'rest_framework.filters.OrderingFilter',
-    ]
+    ],
+    'DEFAULT_RENDERER_CLASSES': {
+        'rest_framework.renderers.JSONRenderer',
+    }
 }
 
 SIMPLE_JWT = {
