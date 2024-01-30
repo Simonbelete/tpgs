@@ -1,15 +1,15 @@
 [0] Config.pm:307> INFO - This is Biber 2.17
 [0] Config.pm:310> INFO - Logfile is 'user_guide.blg'
-[67] biber:340> INFO - === Mon Jan 29, 2024, 10:55:15
-[77] Biber.pm:418> INFO - Reading 'user_guide.bcf'
-[132] Biber.pm:972> INFO - Found 1 citekeys in bib section 0
-[143] Biber.pm:4383> INFO - Processing section 0
-[151] Biber.pm:4574> INFO - Looking for bibtex file 'cite.bib' for section 0
-[151] bibtex.pm:1713> INFO - LaTeX decoding ...
-[153] bibtex.pm:1518> INFO - Found BibTeX data source 'cite.bib'
-[183] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'normalization = NFD' with 'normalization = prenormalized'
-[183] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'variable = shifted' with 'variable = non-ignorable'
-[183] Biber.pm:4203> INFO - Sorting list 'nty/global//global/global' of type 'entry' with template 'nty' and locale 'en-US'
-[183] Biber.pm:4209> INFO - No sort tailoring available for locale 'en-US'
-[188] bbl.pm:654> INFO - Writing 'user_guide.bbl' with encoding 'UTF-8'
-[188] bbl.pm:757> INFO - Output to user_guide.bbl
+[68] biber:340> INFO - === Tue Jan 30, 2024, 10:48:13
+[78] Biber.pm:418> INFO - Reading 'user_guide.bcf'
+[125] Biber.pm:972> INFO - Found 1 citekeys in bib section 0
+[136] Biber.pm:4383> INFO - Processing section 0
+[145] Biber.pm:4574> INFO - Looking for bibtex file 'cite.bib' for section 0
+[145] bibtex.pm:1713> INFO - LaTeX decoding ...
+[147] bibtex.pm:1518> INFO - Found BibTeX data source 'cite.bib'
+[177] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'variable = shifted' with 'variable = non-ignorable'
+[177] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'normalization = NFD' with 'normalization = prenormalized'
+[177] Biber.pm:4203> INFO - Sorting list 'nty/global//global/global' of type 'entry' with template 'nty' and locale 'en-US'
+[178] Biber.pm:4209> INFO - No sort tailoring available for locale 'en-US'
+[182] bbl.pm:654> INFO - Writing 'user_guide.bbl' with encoding 'UTF-8'
+[183] bbl.pm:757> INFO - Output to user_guide.bbl
