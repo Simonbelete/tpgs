@@ -214,10 +214,20 @@ export const DirectoryFilter = ({
   return (
     <>
       <Dialog disableEscapeKeyDown open={isOpen3} maxWidth="md" fullWidth>
-        <DialogTitle>Select Guideline</DialogTitle>
+        <DialogTitle>
+          <Stack direction={"row"} justifyContent={"space-between"}>
+            <Typography variant="h5" fontWeight={500} color={"text.main"}>
+              Select Guideline
+            </Typography>
+            <IconButton onClick={handleClose3}>
+              <CloseIcon />
+            </IconButton>
+          </Stack>
+          <Divider />
+        </DialogTitle>
         <DialogContent>
           <form onSubmit={handleSubmit3(onSubmit3)}>
-            <Box component="form" sx={{ display: "flex", flexWrap: "wrap" }}>
+            <Box sx={{ display: "flex", flexWrap: "wrap" }}>
               <Grid container spacing={2}>
                 <Grid item xs={12}>
                   <Controller
@@ -313,7 +323,7 @@ export const DirectoryFilter = ({
         </DialogTitle>
         <DialogContent>
           <form onSubmit={handleSubmit2(onSubmit2)}>
-            <Box component="form" sx={{ display: "flex", flexWrap: "wrap" }}>
+            <Box sx={{ display: "flex", flexWrap: "wrap" }}>
               <Grid container spacing={2}>
                 <Grid item xs={12}>
                   <Controller
@@ -408,7 +418,7 @@ export const DirectoryFilter = ({
         </DialogTitle>
         <DialogContent>
           <form onSubmit={handleSubmit(onSubmit)}>
-            <Box component="form" sx={{ display: "flex", flexWrap: "wrap" }}>
+            <Box sx={{ display: "flex", flexWrap: "wrap" }}>
               <Typography variant="caption" mb={2}>
                 *Leaving field empty will consider all values
               </Typography>
