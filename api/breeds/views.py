@@ -165,6 +165,8 @@ class BreedFeedGuidelineSummaryViewSet(SummaryViewSet):
 class BreedHDEPGuidelineViewSet(CoreModelViewSet):
     queryset = models.BreedHDEPGuideline.all.all()
     serializer_class = serializers.BreedHDEPGuidelineSerializer_GET
+    filterset_class = filters.BreedHDEPGuidelineFilter
+    search_fields = ['breed__name', 'week', 'hdep']
 
     def get_queryset(self):
         if ('breed_pk' in self.kwargs):

@@ -6,3 +6,11 @@ from . import models
 
 class BreedFilter(CoreFilterSet):
     pass
+
+
+class BreedHDEPGuidelineFilter(CoreFilterSet):
+    class Meta:
+        model = models.BreedHDEPGuideline
+        fields = {
+            'breed': ['in', 'exact']
+        }
