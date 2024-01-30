@@ -181,7 +181,7 @@ export default function AsyncDropdown<T>({
             });
           }
         }}
-        value={value}
+        value={value ?? {}}
         defaultValue={value}
         getOptionLabel={(option) => option[dataKey] ?? ""}
         options={options}
