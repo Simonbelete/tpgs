@@ -14,3 +14,35 @@ class BreedHDEPGuidelineFilter(CoreFilterSet):
         fields = {
             'breed': ['in', 'exact']
         }
+
+
+class BreedHHEPGuidelineFilter(CoreFilterSet):
+    class Meta:
+        model = models.BreedHHEPGuideline
+        fields = {
+            'breed': ['in', 'exact']
+        }
+
+
+class BreedWeightGuidelineFilter(CoreFilterSet):
+    class Meta:
+        model = models.BreedWeightGuideline
+        fields = {
+            'breed': ['in', 'exact']
+        }
+
+
+class BreedEggGuidelineFilter(CoreFilterSet):
+    class Meta:
+        model = models.BreedEggGuideline
+        fields = {
+            'breed': ['in', 'exact']
+        }
+
+
+class BreedFeedGuidelineFilter(CoreFilterSet):
+    class Meta:
+        model = models.BreedFeedGuideline
+        fields = {
+            'breed': ['in', 'exact']
+        }

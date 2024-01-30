@@ -54,6 +54,8 @@ class BreedImport(GenericImportView):
 class BreedWeightGuidelineViewSet(CoreModelViewSet):
     queryset = models.BreedWeightGuideline.all.all()
     serializer_class = serializers.BreedWeightGuidelineSerializer_GET
+    filterset_class = filters.BreedWeightGuidelineFilter
+    search_fields = ['breed__name', 'week', 'weight']
 
     def get_queryset(self):
         if ('breed_pk' in self.kwargs):
@@ -91,6 +93,8 @@ class BreedWeightGuidelineSummaryViewSet(SummaryViewSet):
 class BreedEggGuidelineViewSet(CoreModelViewSet):
     queryset = models.BreedEggGuideline.all.all()
     serializer_class = serializers.BreedEggGuidelineSerializer_GET
+    filterset_class = filters.BreedEggGuidelineFilter
+    search_fields = ['breed__name', 'week', 'egg', 'weight']
 
     def get_queryset(self):
         if ('breed_pk' in self.kwargs):
@@ -128,6 +132,8 @@ class BreedEggGuidelineSummaryViewSet(SummaryViewSet):
 class BreedFeedGuidelineViewSet(CoreModelViewSet):
     queryset = models.BreedFeedGuideline.all.all()
     serializer_class = serializers.BreedFeedGuidelineSerializer_GET
+    filterset_class = filters.BreedFeedGuidelineFilter
+    search_fields = ['breed__name', 'week', 'weight']
 
     def get_queryset(self):
         if ('breed_pk' in self.kwargs):
@@ -204,6 +210,8 @@ class BreedHDEPGuidelineSummaryViewSet(SummaryViewSet):
 class BreedHHEPGuidelineViewSet(CoreModelViewSet):
     queryset = models.BreedHHEPGuideline.all.all()
     serializer_class = serializers.BreedHHEPGuidelineSerializer_GET
+    filterset_class = filters.BreedHHEPGuidelineFilter
+    search_fields = ['breed__name', 'week', 'hhep']
 
     def get_queryset(self):
         if ('breed_pk' in self.kwargs):
