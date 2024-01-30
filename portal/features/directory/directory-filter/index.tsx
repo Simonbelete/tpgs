@@ -152,6 +152,10 @@ export const DirectoryFilter = ({
   } = useForm<Inputs3>({
     // @ts-ignore
     resolver: yupResolver(schema3),
+    defaultValues: {
+      start_week: default_start_week,
+      end_week: default_end_week,
+    },
   });
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
@@ -188,9 +192,10 @@ export const DirectoryFilter = ({
     if (guidelineFilters) {
       const newFilters = guidelineFilters.filter((e, i) => index != i);
       setGuidelineFilters(newFilters);
-      onIndividualFilterRemove(
-        index + individualFilters.length + batchFilters.length
-      );
+      onGuidelineFilterRemove &&
+        onGuidelineFilterRemove(
+          index + individualFilters.length + batchFilters.length
+        );
     }
   };
 

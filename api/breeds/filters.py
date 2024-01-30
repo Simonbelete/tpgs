@@ -9,10 +9,13 @@ class BreedFilter(CoreFilterSet):
 
 
 class BreedHDEPGuidelineFilter(CoreFilterSet):
+    start_week = filters.NumberFilter(field_name='week', lookup_expr='gte')
+    end_week = filters.NumberFilter(field_name='week', lookup_expr='lte')
+
     class Meta:
         model = models.BreedHDEPGuideline
         fields = {
-            'breed': ['in', 'exact']
+            'breed': ['in', 'exact'],
         }
 
 

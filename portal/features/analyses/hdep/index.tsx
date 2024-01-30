@@ -52,12 +52,6 @@ export const HDEPAnalyses = () => {
       mode: "lines+markers",
       name: directoryToLabel(directory),
     };
-    const chartData2: GraphProps = {
-      x: [],
-      y: [],
-      mode: "lines+markers",
-      name: directoryToLabel(directory),
-    };
 
     if (response.results) {
       for (let val in response.results) {
@@ -107,10 +101,28 @@ export const HDEPAnalyses = () => {
   const handleOnGuidelineFilterApply = async (gdata: GuidelineFilterProps) => {
     const response = await hdepTrigger({
       id: gdata.breed.id,
-      query: { limit: 10 },
+      query: {
+        limit: Math.abs(gdata.end_week - gdata.start_week) + 2,
+        start_week: gdata.start_week || 0,
+        end_week: gdata.end_week || 10,
+      },
     });
 
-    console.log(response);
+    const chartData: GraphProps = {
+      x: [],
+      y: [],
+      mode: "lines+markers",
+      name: gdata.breed.display_name,
+    };
+
+    if (response.data?.results) {
+      for (let val in response.data.results) {
+        chartData.x.push(Number(response.data.results[val]["week"]) || 0);
+        chartData.y.push(Number(response.data.results[val]["hdep"]) || 0);
+      }
+
+      setData([...data, chartData]);
+    }
   };
 
   const handleOnGuidelineFilterRemove = (index: number) => {
@@ -123,15 +135,14 @@ export const HDEPAnalyses = () => {
       <DirectoryFilter
         onBatchFilterApply={handleOnBatchFilterApplay}
         onBatchFilterRemove={handleonBatchFilterRemove}
-        default_start_week={21}
-        default_end_week={41}
+        default_start_week={0}
+        default_end_week={20}
         onIndividualFilterApply={handleOnIndividualFilterApply}
         onIndividualFilterRemove={handleOnIndividualFilterRemove}
         onGuidelineFilterApply={handleOnGuidelineFilterApply}
         onGuidelineFilterRemove={handleOnGuidelineFilterRemove}
       />
       <Box mt={10}>
-        s
         <Plot
           layout={{
             title: "Hen-Day Egg Production",
