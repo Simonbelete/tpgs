@@ -319,4 +319,6 @@ export const {
   useCreateBreedMutation,
   useUpdateBreedMutation,
   useDeleteBreedMutation,
+
+  useLazyGetHDEPGuidelineOfBreedQuery,
 } = breedApi;

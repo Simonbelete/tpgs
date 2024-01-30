@@ -1,11 +1,16 @@
 import React, { useState } from "react";
-import { DirectoryFilter, IndividualFilterProps } from "@/features/directory";
+import {
+  DirectoryFilter,
+  IndividualFilterProps,
+  GuidelineFilterProps,
+} from "@/features/directory";
 import { useLazyGetHdepQuery } from "../services";
 import dynamic from "next/dynamic";
 import { BarChartSkeleton } from "@/components";
 import { Box } from "@mui/material";
 import directoryToLabel from "@/util/directoryToLabel";
 import { Directory, DirectoryFilterData } from "@/models";
+import { useLazyGetHDEPGuidelineOfBreedQuery } from "@/features/breeds/services";
 
 const Plot = dynamic(() => import("react-plotly.js"), {
   ssr: false,
@@ -23,6 +28,8 @@ export const HDEPAnalyses = () => {
   const [data, setData] = useState<any[]>([]);
 
   const [trigger] = useLazyGetHdepQuery();
+
+  const [hdepTrigger] = useLazyGetHDEPGuidelineOfBreedQuery();
 
   const handleOnBatchFilterApplay = async (directory: Directory) => {
     const query = {
@@ -97,6 +104,20 @@ export const HDEPAnalyses = () => {
     setData(newData);
   };
 
+  const handleOnGuidelineFilterApply = async (gdata: GuidelineFilterProps) => {
+    const response = await hdepTrigger({
+      id: gdata.breed.id,
+      query: { limit: 10 },
+    });
+
+    console.log(response);
+  };
+
+  const handleOnGuidelineFilterRemove = (index: number) => {
+    const newData = data.filter((e, i) => i != index);
+    setData(newData);
+  };
+
   return (
     <Box>
       <DirectoryFilter
@@ -106,8 +127,11 @@ export const HDEPAnalyses = () => {
         default_end_week={41}
         onIndividualFilterApply={handleOnIndividualFilterApply}
         onIndividualFilterRemove={handleOnIndividualFilterRemove}
+        onGuidelineFilterApply={handleOnGuidelineFilterApply}
+        onGuidelineFilterRemove={handleOnGuidelineFilterRemove}
       />
       <Box mt={10}>
+        s
         <Plot
           layout={{
             title: "Hen-Day Egg Production",

@@ -18,7 +18,7 @@ import {
 } from "@mui/material";
 import { LabeledInput } from "@/components/inputs";
 import Image from "next/image";
-import { Chicken, Directory, Farm, DirectoryFilterData } from "@/models";
+import { Chicken, Directory, Farm, DirectoryFilterData, Breed } from "@/models";
 import AddIcon from "@mui/icons-material/Add";
 import CloseIcon from "@mui/icons-material/Close";
 import { FarmDropdown } from "@/features/farms";
@@ -37,6 +37,7 @@ import {
 } from "@/services/client";
 import { useDispatch } from "react-redux";
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
+import { BreedDropdown } from "@/features/breeds";
 
 export interface IndividualFilterProps {
   chicken: Chicken;
@@ -44,8 +45,15 @@ export interface IndividualFilterProps {
   end_week: number;
 }
 
+export interface GuidelineFilterProps {
+  breed: Breed;
+  start_week: number;
+  end_week: number;
+}
+
 type Inputs = Partial<Directory>;
 type Inputs2 = IndividualFilterProps;
+type Inputs3 = GuidelineFilterProps;
 
 const sexOptions = [
   { value: null, name: "---" },
@@ -68,11 +76,17 @@ const schema2 = yup.object({
   chicken: yup.object().required("Select chicken"),
 });
 
+const schema3 = yup.object({
+  breed: yup.object().required("Select Breed"),
+});
+
 export const DirectoryFilter = ({
   onBatchFilterApply,
   onBatchFilterRemove,
   onIndividualFilterApply,
   onIndividualFilterRemove,
+  onGuidelineFilterApply,
+  onGuidelineFilterRemove,
   default_start_week = 0,
   default_end_week = 20,
   compact,
@@ -83,24 +97,30 @@ export const DirectoryFilter = ({
   onBatchFilterRemove: (data: number) => void;
   onIndividualFilterApply: (data: IndividualFilterProps) => void;
   onIndividualFilterRemove: (index: number) => void;
+  onGuidelineFilterApply?: (data: Inputs3) => void;
+  onGuidelineFilterRemove?: (index: number) => void;
   default_start_week?: number;
   default_end_week?: number;
   compact?: boolean;
   initBatchFilter?: Partial<Directory>[];
   title?: string;
 }) => {
+  // TODO: Change names
   const [isOpen, setIsOpen] = useState(false);
   const [isOpen2, setIsOpen2] = useState(false);
+  const [isOpen3, setIsOpen3] = useState(false);
   const [selectedFarm, setSelectedFarm] = useState<Farm | null>(null);
   const [showCompactFilters, setShowCompactFilters] = useState(false);
 
   const handleClose = () => setIsOpen(false);
   const handleClose2 = () => setIsOpen2(false);
+  const handleClose3 = () => setIsOpen3(false);
 
   const [batchFilters, setBatchFilters] = useState<Inputs[]>(initBatchFilter);
   const [individualFilters, setIndividualFilters] = useState<
     IndividualFilterProps[]
   >([]);
+  const [guidelineFilters, setGuidelineFilters] = useState<Inputs3[]>();
 
   const { handleSubmit, control, setError, clearErrors, reset } =
     useForm<Inputs>({
@@ -123,6 +143,15 @@ export const DirectoryFilter = ({
     },
     // @ts-ignore
     resolver: yupResolver(schema2),
+  });
+
+  const {
+    handleSubmit: handleSubmit3,
+    control: control3,
+    setError: setError3,
+  } = useForm<Inputs3>({
+    // @ts-ignore
+    resolver: yupResolver(schema3),
   });
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
@@ -149,6 +178,22 @@ export const DirectoryFilter = ({
     onIndividualFilterRemove(index + batchFilters.length);
   };
 
+  const onSubmit3: SubmitHandler<Inputs3> = async (data) => {
+    setIsOpen3(false);
+    setGuidelineFilters([...(guidelineFilters || []), data]);
+    onGuidelineFilterApply && onGuidelineFilterApply(data);
+  };
+
+  const handleGuidelineFilterRemove = (index: number) => {
+    if (guidelineFilters) {
+      const newFilters = guidelineFilters.filter((e, i) => index != i);
+      setGuidelineFilters(newFilters);
+      onIndividualFilterRemove(
+        index + individualFilters.length + batchFilters.length
+      );
+    }
+  };
+
   useEffect(() => {
     return () => {
       axiosInstance.interceptors.request.use(defaultTenantInterceptor);
@@ -168,6 +213,92 @@ export const DirectoryFilter = ({
 
   return (
     <>
+      <Dialog disableEscapeKeyDown open={isOpen3} maxWidth="md" fullWidth>
+        <DialogTitle>Select Guideline</DialogTitle>
+        <DialogContent>
+          <form onSubmit={handleSubmit3(onSubmit3)}>
+            <Box component="form" sx={{ display: "flex", flexWrap: "wrap" }}>
+              <Grid container spacing={2}>
+                <Grid item xs={12}>
+                  <Controller
+                    name={"breed"}
+                    control={control3}
+                    render={({
+                      field: { onChange, value },
+                      fieldState: { error },
+                    }) => (
+                      <BreedDropdown
+                        onChange={(_, data) => onChange(data)}
+                        value={value}
+                        error={!!error?.message}
+                        helperText={error?.message}
+                      />
+                    )}
+                  />
+                </Grid>
+                <Grid item xs={12} md={6}>
+                  <Controller
+                    name={"start_week"}
+                    control={control3}
+                    render={({
+                      field: { onChange, value },
+                      fieldState: { invalid, isTouched, isDirty, error },
+                    }) => (
+                      <LabeledInput
+                        error={!!error?.message}
+                        helperText={error?.message}
+                        onChange={onChange}
+                        fullWidth
+                        size="small"
+                        value={value}
+                        label={"Start Week"}
+                        placeholder={"Start Week"}
+                      />
+                    )}
+                  />
+                </Grid>
+                <Grid item xs={12} md={6}>
+                  <Controller
+                    name={"end_week"}
+                    control={control3}
+                    render={({
+                      field: { onChange, value },
+                      fieldState: { invalid, isTouched, isDirty, error },
+                    }) => (
+                      <LabeledInput
+                        error={!!error?.message}
+                        helperText={error?.message}
+                        onChange={onChange}
+                        fullWidth
+                        size="small"
+                        value={value}
+                        label={"End Week"}
+                        placeholder={"End Week"}
+                      />
+                    )}
+                  />
+                </Grid>
+              </Grid>
+            </Box>
+          </form>
+        </DialogContent>
+        <DialogActions
+          sx={{ display: "felx", justifyContent: "space-between" }}
+        >
+          <Button onClick={handleClose3} color="error" size="small">
+            Cancel
+          </Button>
+          <Button
+            onClick={() => handleSubmit3(onSubmit3)()}
+            variant="contained"
+            disableElevation
+            size="small"
+          >
+            Add
+          </Button>
+        </DialogActions>
+      </Dialog>
+
       <Dialog disableEscapeKeyDown open={isOpen2} maxWidth="md" fullWidth>
         <DialogTitle>
           <Stack direction={"row"} justifyContent={"space-between"}>
@@ -641,6 +772,17 @@ export const DirectoryFilter = ({
           title="Filters"
           actions={
             <>
+              {onGuidelineFilterApply && (
+                <Button
+                  variant="text"
+                  startIcon={<AddIcon fontSize="small" />}
+                  size="small"
+                  onClick={() => setIsOpen3(true)}
+                  disableElevation
+                >
+                  Add Guideline
+                </Button>
+              )}
               <Button
                 variant="contained"
                 startIcon={<AddIcon fontSize="small" />}
@@ -811,6 +953,32 @@ export const DirectoryFilter = ({
                   </Box>
                 </Stack>
               ))}
+            </Box>
+            <Box mt={3}>
+              {guidelineFilters &&
+                guidelineFilters.map((e, i) => (
+                  <Stack
+                    key={i}
+                    direction={"row"}
+                    justifyContent={"space-between"}
+                  >
+                    <Typography variant="caption" color="text.primary">
+                      {e.breed ? (e.breed as any).display_name || 0 : "-"}
+                    </Typography>
+                    <Box>
+                      <Typography variant="caption" fontWeight={600}>
+                        ({e.start_week}, {e.end_week})
+                      </Typography>
+                    </Box>
+                    <Box>
+                      <IconButton
+                        onClick={() => handleGuidelineFilterRemove(i)}
+                      >
+                        <CloseIcon />
+                      </IconButton>
+                    </Box>
+                  </Stack>
+                ))}
             </Box>
           </Box>
           <Box mt={5}></Box>
