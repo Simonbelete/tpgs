@@ -11,7 +11,7 @@ const HDEPPage = () => {
 
   return (
     <>
-      <SeoHead title="HHEP" />
+      <SeoHead title="HDEP" />
       <ReportingLayout
         breadcrumbs={<Breadcrumbs items={breadcrumbs} />}
         header={
