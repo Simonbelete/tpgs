@@ -1,11 +1,16 @@
 import React, { useState } from "react";
-import { DirectoryFilter, IndividualFilterProps } from "@/features/directory";
+import {
+  DirectoryFilter,
+  IndividualFilterProps,
+  GuidelineFilterProps,
+} from "@/features/directory";
 import { useLazyGetHdepQuery } from "../services";
 import dynamic from "next/dynamic";
 import { BarChartSkeleton } from "@/components";
 import { Box } from "@mui/material";
 import directoryToLabel from "@/util/directoryToLabel";
 import { Directory, DirectoryFilterData } from "@/models";
+import { useLazyGetHHEPGuidelineOfBreedQuery } from "@/features/breeds/services";
 
 const Plot = dynamic(() => import("react-plotly.js"), {
   ssr: false,
@@ -23,6 +28,8 @@ export const HHEPAnalyses = () => {
   const [data, setData] = useState<any[]>([]);
 
   const [trigger] = useLazyGetHdepQuery();
+
+  const [hhepTrigger] = useLazyGetHHEPGuidelineOfBreedQuery();
 
   const handleOnBatchFilterApplay = async (directory: Directory) => {
     const query = {
@@ -97,15 +104,49 @@ export const HHEPAnalyses = () => {
     setData(newData);
   };
 
+  const handleOnGuidelineFilterApply = async (gdata: GuidelineFilterProps) => {
+    const response = await hhepTrigger({
+      id: gdata.breed.id,
+      query: {
+        limit: Math.abs(gdata.end_week - gdata.start_week) + 2,
+        start_week: gdata.start_week || 0,
+        end_week: gdata.end_week || 10,
+      },
+    });
+
+    const chartData: GraphProps = {
+      x: [],
+      y: [],
+      mode: "lines+markers",
+      name: gdata.breed.display_name,
+    };
+
+    if (response.data?.results) {
+      for (let val in response.data.results) {
+        chartData.x.push(Number(response.data.results[val]["week"]) || 0);
+        chartData.y.push(Number(response.data.results[val]["hhep"]) || 0);
+      }
+
+      setData([...data, chartData]);
+    }
+  };
+
+  const handleOnGuidelineFilterRemove = (index: number) => {
+    const newData = data.filter((e, i) => i != index);
+    setData(newData);
+  };
+
   return (
     <Box>
       <DirectoryFilter
         onBatchFilterApply={handleOnBatchFilterApplay}
         onBatchFilterRemove={handleonBatchFilterRemove}
-        default_start_week={21}
-        default_end_week={41}
+        default_start_week={0}
+        default_end_week={20}
         onIndividualFilterApply={handleOnIndividualFilterApply}
         onIndividualFilterRemove={handleOnIndividualFilterRemove}
+        onGuidelineFilterApply={handleOnGuidelineFilterApply}
+        onGuidelineFilterRemove={handleOnGuidelineFilterRemove}
       />
       <Box mt={10}>
         <Plot
