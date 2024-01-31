@@ -20,6 +20,9 @@ class BreedHDEPGuidelineFilter(CoreFilterSet):
 
 
 class BreedHHEPGuidelineFilter(CoreFilterSet):
+    start_week = filters.NumberFilter(field_name='week', lookup_expr='gte')
+    end_week = filters.NumberFilter(field_name='week', lookup_expr='lte')
+
     class Meta:
         model = models.BreedHHEPGuideline
         fields = {
@@ -28,6 +31,9 @@ class BreedHHEPGuidelineFilter(CoreFilterSet):
 
 
 class BreedWeightGuidelineFilter(CoreFilterSet):
+    start_week = filters.NumberFilter(field_name='week', lookup_expr='gte')
+    end_week = filters.NumberFilter(field_name='week', lookup_expr='lte')
+
     class Meta:
         model = models.BreedWeightGuideline
         fields = {
@@ -36,6 +42,9 @@ class BreedWeightGuidelineFilter(CoreFilterSet):
 
 
 class BreedEggGuidelineFilter(CoreFilterSet):
+    start_week = filters.NumberFilter(field_name='week', lookup_expr='gte')
+    end_week = filters.NumberFilter(field_name='week', lookup_expr='lte')
+
     class Meta:
         model = models.BreedEggGuideline
         fields = {
@@ -44,6 +53,9 @@ class BreedEggGuidelineFilter(CoreFilterSet):
 
 
 class BreedFeedGuidelineFilter(CoreFilterSet):
+    start_week = filters.NumberFilter(field_name='week', lookup_expr='gte')
+    end_week = filters.NumberFilter(field_name='week', lookup_expr='lte')
+
     class Meta:
         model = models.BreedFeedGuideline
         fields = {
