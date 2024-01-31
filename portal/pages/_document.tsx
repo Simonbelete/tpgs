@@ -14,19 +14,6 @@ export default function Document() {
         <Main />
         <NextScript />
       </body>
-      <Script id="google-analytics">
-        {`
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-  
-            gtag('config', 'G-591F0GY996');
-          `}
-      </Script>
-      <Script
-        async
-        src="https://www.googletagmanager.com/gtag/js?id=G-591F0GY996"
-      ></Script>
     </Html>
   );
 }

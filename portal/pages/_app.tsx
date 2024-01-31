@@ -21,6 +21,7 @@ import siteMetadata from "@/data/siteMetadata";
 import { Inter } from "next/font/google";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import Script from "next/script";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -76,26 +77,42 @@ export default function App({
     ((page) => <DashboardLayout>{page}</DashboardLayout>);
 
   return (
-    <Provider store={store}>
-      <SessionProvider session={session}>
-        <ThemeProvider theme={lightTheme}>
-          <LocalizationProvider dateAdapter={AdapterDayjs}>
-            {/* <OnBoardingProvider> */}
-            <SnackbarProvider
-              anchorOrigin={{
-                vertical: "top",
-                horizontal: "center",
-              }}
-              action={(key) => <SnackbarCloseButton dataKey={key} />}
-            >
-              <main className={`${inter.className}`}>
-                {getLayout(<Component {...pageProps} />)}
-              </main>
-            </SnackbarProvider>
-            {/* </OnBoardingProvider> */}
-          </LocalizationProvider>
-        </ThemeProvider>
-      </SessionProvider>
-    </Provider>
+    <>
+      <Script id="google-analytics">
+        {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+  
+            gtag('config', 'G-591F0GY996');
+          `}
+      </Script>
+      <Script
+        async
+        src="https://www.googletagmanager.com/gtag/js?id=G-591F0GY996"
+      ></Script>
+
+      <Provider store={store}>
+        <SessionProvider session={session}>
+          <ThemeProvider theme={lightTheme}>
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+              {/* <OnBoardingProvider> */}
+              <SnackbarProvider
+                anchorOrigin={{
+                  vertical: "top",
+                  horizontal: "center",
+                }}
+                action={(key) => <SnackbarCloseButton dataKey={key} />}
+              >
+                <main className={`${inter.className}`}>
+                  {getLayout(<Component {...pageProps} />)}
+                </main>
+              </SnackbarProvider>
+              {/* </OnBoardingProvider> */}
+            </LocalizationProvider>
+          </ThemeProvider>
+        </SessionProvider>
+      </Provider>
+    </>
   );
 }
