@@ -12,6 +12,10 @@ import { Box, Tabs, Tab, tabsClasses } from "@mui/material";
 import { Card } from "@/components";
 import { breedApi } from "../services";
 import BreedWeightGuideline from "./BreedWeightGuideline";
+import HDEPGuideline from "./HDEPGuideline";
+import HHEPGuideline from "./HHEPGuideline";
+import EggGuideline from "./EggGuideline";
+import FeedGuideline from "./FeedGuideline";
 
 const schema = yup.object({
   name: yup.string().required(),
@@ -124,6 +128,10 @@ export const BreedForm = ({
             </Card>
           )}
           {formData && tab == 1 && <BreedWeightGuideline data={formData} />}
+          {formData && tab == 2 && <FeedGuideline data={formData} />}
+          {formData && tab == 3 && <EggGuideline data={formData} />}
+          {formData && tab == 4 && <HDEPGuideline data={formData} />}
+          {formData && tab == 5 && <HHEPGuideline data={formData} />}
         </Box>
       </TabFormLayout>
     </>

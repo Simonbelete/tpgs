@@ -9,6 +9,7 @@ import {
   HHEPGuideline,
   FeedGuideline,
   EggGuideline,
+  BreedFeedGuideline,
 } from "@/models";
 import { AxiosResponse } from "axios";
 import clientSSR from "@/services/client_ssr";
@@ -158,7 +159,7 @@ export const breedApi = baseApi.injectEndpoints({
 
       // Weight Guideline
       getWeightGuidelineOfBreed: build.query<
-        Response<BreedWeightGuideline[]>,
+        Response<BreedFeedGuideline[]>,
         { id: number; query?: Object }
       >({
         query: ({ id, query }) => ({
