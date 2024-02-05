@@ -46,7 +46,7 @@ export const WeightList = () => {
 
   return (
     <ListLayout<Weight>
-      title="Weight"
+      title="Body Weight"
       columns={columns}
       actions={[EditAction, HistoryAction, PermanentlyDeleteAction]}
       getEndpoint={weightApi.endpoints.getWeights}

@@ -1,4 +1,4 @@
-package com.example.nea
+package com.tpgs.ilri
 
 import io.flutter.embedding.android.FlutterActivity
 
