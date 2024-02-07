@@ -4,8 +4,6 @@ import 'package:nea/bloc/local/events.dart';
 import 'package:nea/bloc/onboarding/states.dart';
 import 'package:nea/router.dart';
 import 'package:nea/screens/home_screen.dart';
-import 'package:nea/utils/responsive_widget.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import 'utils/preferencess.dart';
 import 'utils/bloc_observer.dart';
@@ -16,17 +14,10 @@ import 'bloc/search/bloc.dart';
 import 'screens/onboarding_screen.dart';
 import 'theme.dart';
 
-import 'package:firebase_core/firebase_core.dart';
-import 'firebase_options.dart';
-
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   Bloc.observer = AppBlocObserver();
   await Preferencess.init();
-
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
 
   runApp(NutritionEductionApp());
 }

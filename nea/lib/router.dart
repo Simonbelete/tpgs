@@ -3,14 +3,11 @@ import 'package:nea/i18n/courses.dart';
 import 'package:nea/i18n/foods.dart';
 import 'package:nea/models/course_model.dart';
 import 'package:nea/models/food_model.dart';
-import 'package:nea/screens/chat.dart';
 import 'package:nea/screens/food_screen.dart';
 import 'package:nea/screens/home_screen.dart';
 import 'package:nea/screens/course_screen.dart';
 import 'package:nea/screens/image_screen.dart';
-import 'package:nea/screens/message.dart';
 import 'package:nea/screens/not_found_screen.dart';
-import 'package:nea/screens/users.dart';
 import 'package:nea/utils/preferencess.dart';
 import 'package:nea/widgets/title_text.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -26,14 +23,6 @@ List<Path> paths = [
   Path(
     r'^' + HomeScreen.routeName,
     (context, match) => HomeScreen(),
-  ),
-  Path(
-    r'^' + MessageScreen.routeName,
-    (context, match) => const MessageScreen(),
-  ),
-  Path(
-    r'^' + UsersPage.routeName,
-    (context, match) => UsersPage(),
   ),
   Path(
     r'^/course/([\w-]+)$',
@@ -90,50 +79,8 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
   }
 
   switch (routeSettings.name) {
-    case ChatPage.routeName:
-      return MaterialPageRoute(
-          settings: routeSettings,
-          builder: (_) => ChatPage(userId: routeSettings.arguments as String));
     default:
       return MaterialPageRoute(
           settings: routeSettings, builder: (_) => HomeScreen());
   }
-
-  // return MaterialPageRoute(
-  //     settings: routeSettings, builder: (_) => HomeScreen());
-
-  // const Scaffold(
-  //       body: SafeArea(
-  //           child: Center(
-  //         child: TitleText(text: '404! Page not found'),
-  //       )),
-  //     ));
-
-  // switch (routeSettings.name) {
-  //   case HomeScreen.routeName:
-  //     return MaterialPageRoute(
-  //         settings: routeSettings, builder: (_) => HomeScreen());
-  //   case CourseScreen.routeName:
-  //     Course course = routeSettings.arguments as Course;
-  //     return MaterialPageRoute(
-  //         settings: routeSettings,
-  //         builder: (_) => CourseScreen(
-  //               course: course,
-  //             ));
-  //   case ImageScreen.routeName:
-  //     String image = routeSettings.arguments as String;
-  //     return MaterialPageRoute(
-  //         settings: routeSettings, builder: (_) => ImageScreen(image: image));
-  //   case FoodScreen.routeName:
-  //     Food food = routeSettings.arguments as Food;
-  //     return MaterialPageRoute(
-  //         settings: routeSettings,
-  //         builder: (_) => FoodScreen(
-  //               food: food,
-  //             ));
-  //   default:
-  //     return MaterialPageRoute(
-  //         settings: routeSettings,
-  //         builder: (_) => const Center(child: Text('Error: Page Not Found')));
-  // }
 }
