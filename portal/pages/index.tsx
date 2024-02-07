@@ -10,6 +10,7 @@ import {
   Stack,
   Grid,
   useTheme,
+  Typography,
 } from "@mui/material";
 
 import {
@@ -97,6 +98,11 @@ export default function Home() {
         >
           <Container>
             <PrimaryFooter />
+            <Box sx={{ pb: 3, display: "flex", justifyContent: "center" }}>
+              <Link href="https://www.ilri.org/ilri-privacy-statement">
+                <Typography variant="caption">Privacy policy</Typography>
+              </Link>
+            </Box>
           </Container>
         </footer>
       </main>

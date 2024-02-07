@@ -9,7 +9,7 @@ import EmailIcon from "@mui/icons-material/Email";
 const PrimaryFooter = () => {
   return (
     <>
-      <Box sx={{ minHeight: 50, px: 10, py: 10 }}>
+      <Box sx={{ minHeight: 50, px: 10, pt: 10, pb: 7 }}>
         <Grid container spacing={2}>
           <Grid item xs={12} md={4}>
             <img
@@ -31,13 +31,13 @@ const PrimaryFooter = () => {
               <Link href="#" variant="body2" color={"#ffff"}>
                 <Stack direction={"row"} spacing={2}>
                   <MarkunreadMailboxIcon fontSize="small" />
-                  <span style={{color: "#ffff"}}>PO Box 30709</span>
+                  <span style={{ color: "#ffff" }}>PO Box 30709</span>
                 </Stack>
               </Link>
               <Link href="#" variant="body2" color={"#ffff"}>
                 <Stack direction={"row"} spacing={2}>
                   <LocationOnIcon fontSize="small" />
-                  <span style={{color: "#ffff"}}>Nairobi 00100, Kenya</span>
+                  <span style={{ color: "#ffff" }}>Nairobi 00100, Kenya</span>
                 </Stack>
               </Link>
               <Link href="tel:+254-204223000" variant="body2" color={"#ffff"}>
@@ -49,7 +49,7 @@ const PrimaryFooter = () => {
               <Link href="tel:+254-204223001" variant="body2" color={"#ffff"}>
                 <Stack direction={"row"} spacing={2}>
                   <PhoneIcon fontSize="small" />
-                  <span style={{color: "#ffff"}}>+254-20 422 3001</span>
+                  <span style={{ color: "#ffff" }}>+254-20 422 3001</span>
                 </Stack>
               </Link>
               <Link
@@ -59,7 +59,7 @@ const PrimaryFooter = () => {
               >
                 <Stack direction={"row"} spacing={2}>
                   <EmailIcon fontSize="small" />
-                  <span style={{color: "#ffff"}}>ILRI-Kenya@cgiar.org</span>
+                  <span style={{ color: "#ffff" }}>ILRI-Kenya@cgiar.org</span>
                 </Stack>
               </Link>
             </Stack>
@@ -77,13 +77,13 @@ const PrimaryFooter = () => {
               <Link href="#" variant="body2" color={"#ffff"}>
                 <Stack direction={"row"} spacing={2}>
                   <MarkunreadMailboxIcon fontSize="small" />
-                  <span style={{color: "#ffff"}}>PO Box 5689</span>
+                  <span style={{ color: "#ffff" }}>PO Box 5689</span>
                 </Stack>
               </Link>
               <Link href="#" variant="body2" color={"#ffff"}>
                 <Stack direction={"row"} spacing={2}>
                   <LocationOnIcon fontSize="small" />
-                  <span style={{color: "#ffff"}}>Addis Ababa, Ethiopia</span>
+                  <span style={{ color: "#ffff" }}>Addis Ababa, Ethiopia</span>
                 </Stack>
               </Link>
               <Link href="tel:+251-116172000" variant="body2" color={"#ffff"}>
@@ -95,7 +95,7 @@ const PrimaryFooter = () => {
               <Link href="tel:+251-116172001" variant="body2" color={"#ffff"}>
                 <Stack direction={"row"} spacing={2}>
                   <PhoneIcon fontSize="small" />
-                  <span style={{color: "#ffff"}}>+251-11 617 2001</span>
+                  <span style={{ color: "#ffff" }}>+251-11 617 2001</span>
                 </Stack>
               </Link>
               <Link
@@ -105,7 +105,9 @@ const PrimaryFooter = () => {
               >
                 <Stack direction={"row"} spacing={2}>
                   <EmailIcon fontSize="small" />
-                  <span style={{color: "#ffff"}}>ILRI-Ethiopia@cgiar.org</span>
+                  <span style={{ color: "#ffff" }}>
+                    ILRI-Ethiopia@cgiar.org
+                  </span>
                 </Stack>
               </Link>
             </Stack>
