@@ -78,7 +78,7 @@ export default function App({
 
   return (
     <>
-      <Script id="google-analytics">
+      {/* <Script id="google-analytics">
         {`
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
@@ -90,7 +90,7 @@ export default function App({
       <Script
         async
         src="https://www.googletagmanager.com/gtag/js?id=G-591F0GY996"
-      ></Script>
+      ></Script> */}
 
       <Provider store={store}>
         <SessionProvider session={session}>
