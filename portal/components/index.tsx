@@ -14,6 +14,7 @@ export { default as BarChartSkeleton } from "./BarChartSkeleton";
 export { default as PieChartSkeleton } from "./PieChartSkeleton";
 export { default as SnackbarCloseButton } from "./SnackbarCloseButton";
 export { default as HtmlModal } from "./HtmlModal";
+import { default as CookieConsent } from "./CookieConsent";
 
 export * from "./call-to-actions";
 export * from "./heros";

@@ -21,7 +21,7 @@ import siteMetadata from "@/data/siteMetadata";
 import { Inter } from "next/font/google";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import Script from "next/script";
+import CookieConsent from "@/components/CookieConsent";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -113,6 +113,7 @@ export default function App({
           </ThemeProvider>
         </SessionProvider>
       </Provider>
+      <CookieConsent />
     </>
   );
 }
