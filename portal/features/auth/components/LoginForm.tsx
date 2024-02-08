@@ -94,7 +94,7 @@ const LoginForm = () => {
       )}
       {/* <Box height="10vh" mr={4}> */}
       <Box sx={{ width: "100%" }}>
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form method="POST" onSubmit={handleSubmit(onSubmit)}>
           <Grid container spacing={4} direction="column">
             <Grid item xs={12}>
               <Controller
