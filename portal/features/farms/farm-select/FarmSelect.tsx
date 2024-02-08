@@ -16,20 +16,25 @@ import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "@/store";
 import { setTenant } from "../slices";
 import Link from "next/link";
+import _ from "lodash";
 
 const FarmSelect = () => {
   const dispatch = useDispatch();
   const { data, isLoading } = useGetFarmsQuery({});
   const tenant = useSelector((state: RootState) => state.tenant);
+  const tenant_model = _.find(data?.results, { name: tenant.name });
+
+  console.log(tenant_model);
 
   return (
     <FormControl sx={{ width: "100%" }}>
       <RadioGroup
         aria-labelledby="demo-radio-buttons-group-label"
         name="farm-radio-buttons-group"
-        defaultValue={tenant.name}
+        value={tenant.name}
         onChange={(e: any) => {
-          dispatch(setTenant(e.target.value));
+          const selected_farm = _.find(data?.results, { name: e.target.value });
+          if (selected_farm != undefined) dispatch(setTenant(selected_farm));
         }}
       >
         <List
@@ -80,7 +85,7 @@ const FarmSelect = () => {
             >
               <FormControlLabel
                 sx={{ p: 0 }}
-                value={e}
+                value={e.name}
                 control={<Radio size="small" />}
                 label={e.display_name}
               />
