@@ -11,11 +11,12 @@ class FarmSerializer_SLUG(serializers.ModelSerializer):
 class FarmSerializer_GET(serializers.ModelSerializer):
     class Meta:
         model = models.Farm
-        fields = ['id', 'name', 'display_name', 'tenant_name', 'tenant_uuid']
+        fields = ['id', 'name', 'display_name', 'tenant_name', 'tenant_uuid', 'phone_number', 'email',
+                  'address', 'country', 'city']
 
 
 class FarmSerializer_POST(serializers.ModelSerializer):
     class Meta:
         model = models.Farm
         fields = ['phone_number', 'email', 'tenant_name',
-                  'webiste', 'address', 'country', 'city']
+                  'address', 'country', 'city']

@@ -15,6 +15,7 @@ import DriveFileRenameOutlineIcon from "@mui/icons-material/DriveFileRenameOutli
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "@/store";
 import { setTenant } from "../slices";
+import Link from "next/link";
 
 const FarmSelect = () => {
   const dispatch = useDispatch();
@@ -84,9 +85,11 @@ const FarmSelect = () => {
                 label={e.display_name}
               />
               <Stack>
-                <IconButton>
-                  <DriveFileRenameOutlineIcon fontSize="small" />
-                </IconButton>
+                <Link href={`/farms/${e.id}/edit`}>
+                  <IconButton>
+                    <DriveFileRenameOutlineIcon fontSize="small" />
+                  </IconButton>
+                </Link>
               </Stack>
             </ListItem>
           ))}
