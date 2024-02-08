@@ -17,5 +17,5 @@ class FarmSerializer_GET(serializers.ModelSerializer):
 class FarmSerializer_POST(serializers.ModelSerializer):
     class Meta:
         model = models.Farm
-        fields = ['phone_number', 'email',
+        fields = ['phone_number', 'email', 'tenant_name',
                   'webiste', 'address', 'country', 'city']
