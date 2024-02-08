@@ -8,6 +8,8 @@ import { Farm } from "@/models";
 import { SeoHead } from "@/seo";
 import { getServerSidePropsContext } from "@/services/getServerSidePropsContext";
 import { FarmForm } from "@/features/farms";
+import { withGroup } from "@/hoc";
+import { GROUP_ADMIN } from "@/constants";
 
 const FarmEditPage = ({ data }: { data: Farm }) => {
   const { breadcrumbs } = useBreadcrumbs();
@@ -25,6 +27,8 @@ const FarmEditPage = ({ data }: { data: Farm }) => {
 
 export async function getServerSideProps(context: NextPageContext) {
   const { id } = context.query;
+
+  withGroup(context, [GROUP_ADMIN]);
 
   return getServerSidePropsContext<Farm>({
     context,
