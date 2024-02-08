@@ -14,7 +14,6 @@ import { GROUP_ADMIN } from "@/constants";
 const FarmEditPage = ({ data }: { data: Farm }) => {
   const { breadcrumbs } = useBreadcrumbs();
 
-  console.log(data);
   return (
     <>
       <SeoHead title={`${data.display_name || ""} - Edit`} />
