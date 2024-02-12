@@ -34,7 +34,7 @@ class NutritionEductionApp extends StatelessWidget {
         BlocProvider(create: ((context) => SearchBloc())),
       ],
       child: MaterialApp(
-        title: 'Nutrition Literacy - ILRI TPGS',
+        title: 'Nutrition Literacy - SAPLING TPGS',
         debugShowCheckedModeBanner: false,
         theme: defaultTheme,
         home: Main(),

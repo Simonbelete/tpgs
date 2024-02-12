@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.tpgs.ilri">
    <application
-        android:label="Nutrition Literacy - ILRI TPGS"
+        android:label="Nutrition Literacy - SAPLING TPGS"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher"
         android:usesCleartextTraffic="true"
