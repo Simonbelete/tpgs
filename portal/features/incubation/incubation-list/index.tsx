@@ -20,7 +20,7 @@ export const IncubationList = () => {
   const columns: GridColDef[] = [
     {
       field: "hatchery",
-      headerName: "Hatchery",
+      headerName: "Hatch",
       flex: 1,
       minWidth: 150,
       valueGetter: (params) =>
