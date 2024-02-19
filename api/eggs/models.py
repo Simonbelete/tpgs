@@ -3,6 +3,7 @@ from django.db.models import Sum
 from simple_history.models import HistoricalRecords
 from django.core.exceptions import ValidationError
 from rest_framework import serializers
+from core.validators import WEEK_VALIDATOR
 
 from core.models import CoreModel
 from chickens.models import Chicken
@@ -12,7 +13,7 @@ from hatchery.models import HatcheryEgg
 class Egg(CoreModel):
     chicken = models.ForeignKey(
         Chicken, on_delete=models.CASCADE, null=True, blank=True, related_name='eggs')
-    week = models.IntegerField(default=0)
+    week = models.PositiveIntegerField(validators=WEEK_VALIDATOR, default=0)
     eggs = models.IntegerField(null=True, blank=True)
     weight = models.FloatField(null=True, blank=True)  # in g
     history = HistoricalRecords()
