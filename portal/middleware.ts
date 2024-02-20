@@ -42,5 +42,7 @@ export const config = {
     "/unit-converters/:path*",
     "/users/:path*",
     "/weights/:path*",
+    "/steps/:path*",
+    "/selections/:path*",
   ],
 };

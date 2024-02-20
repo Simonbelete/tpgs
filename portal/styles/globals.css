@@ -124,3 +124,77 @@ a:active { text-decoration: none; color: #0077AF;}
 #main-sidebar-menu > div::-webkit-scrollbar-thumb {        
   box-shadow: inset 0 0 0 10px;
 }
+
+--border
+
+/* Tringle Steps */
+  .steps {
+    margin: 40px;
+    padding: 0;
+    overflow: hidden;
+    background: transparent;
+  }
+  .steps a {
+    color: #2c3f4c;
+    text-decoration: none;
+  }
+
+  .steps li {
+    float: left;
+    margin-left: 0;
+    width: 100px; /* 100 / number of steps */
+    height: 50px; /* total height */
+    list-style-type: none;
+    padding: 5px 5px 5px 30px; /* padding around text, last should include arrow width */
+    border-right: 4px solid #F6F9FC; /* width: gap between arrows, color: background of document */
+    position: relative;
+    margin-bottom: 10px;
+  }
+  /* remove extra padding on the first object since it doesn't have an arrow to the left */
+  .steps li:first-child {
+    padding-left: 5px;
+  }
+  /* white arrow to the left to "erase" background (starting from the 2nd object) */
+  .steps li:nth-child(n+2)::before {
+    position: absolute;
+    top:0;
+    left:0;
+    display: block;
+    border-left: 25px solid #F6F9FC; /* width: arrow width, color: background of document */
+    border-top: 30px solid transparent; /* width: half height */
+    border-bottom: 30px solid transparent; /* width: half height */
+    width: 0;
+    height: 0;
+    content: " ";
+  }
+  /* colored arrow to the right */
+  .steps li::after {
+    z-index: 1; /* need to bring this above the next item */
+    position: absolute;
+    top: 0;
+    right: -25px; /* arrow width (negated) */
+    display: block;
+    border-left: 25px solid #7c8437; /* width: arrow width */
+    border-top: 30px solid transparent; /* width: half height */
+    border-bottom: 30px solid transparent; /* width: half height */
+    width:0;
+    height:0;
+    content: " ";
+  }
+  
+  /* Setup colors (both the background and the arrow) */
+  
+  /* Completed */
+  .steps li { background-color: #edeff0; color: #2c3f4c; }
+  .steps li::after { border-left-color: #edeff0; }
+  
+  /* Current */
+  .steps li.current { background-color: #008a3f; }
+  .steps li.current a { color: white; }
+  .steps li.current::after { border-left-color: #008a3f; }
+  
+  /* Hover for completed and current */
+  .steps li:hover { background-color: #008a3f; }
+  .steps li:hover a { color: white; }
+  .steps li:hover::after {border-left-color: #008a3f;}
+  
