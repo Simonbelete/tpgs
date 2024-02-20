@@ -10,48 +10,27 @@ import {
   ExportModal,
   ImportButton,
 } from "@/lib/crud";
-import { penApi, URL } from "../services";
-import { Pen } from "@/models";
+import { stageApi, URL } from "../services";
+import { Stage } from "@/models";
 import { houseApi } from "@/features/houses/services";
 import { Typography } from "@mui/material";
 import Link from "next/link";
 
-export const PenList = () => {
+export const StageList = () => {
   const columns: GridColDef[] = [
     { field: "name", headerName: "Name", flex: 1 },
-    {
-      field: "house",
-      headerName: "House",
-      flex: 1,
-      minWidth: 150,
-      valueGetter: (params) =>
-        params.row.nutrient_group ? params.row.nutrient_group.name : "",
-      renderCell: (params: GridRenderCellParams<any>) => {
-        if (params.row.house == null) return <></>;
-        return (
-          <Typography color={"link.primary"} variant="body2">
-            <Link href={`/houses/${params.row.house.id}`}>
-              {params.row.house.name}
-            </Link>
-          </Typography>
-        );
-      },
-    },
+    { field: "order", headerName: "Order", flex: 1 },
+    { field: "min_week", headerName: "Min Week", flex: 1 },
+    { field: "max_week", headerName: "Max Week", flex: 1 },
   ];
   return (
-    <ListLayout<Pen>
-      title="Pen"
+    <ListLayout<Stage>
+      title="Stage"
       columns={columns}
       actions={[EditAction, HistoryAction, PermanentlyDeleteAction]}
-      getEndpoint={penApi.endpoints.getPens}
-      deleteEndpoint={penApi.endpoints.deletePen}
-      filters={{
-        house: {
-          label: "House",
-          dataDisplayKey: "name",
-          endpoint: houseApi.endpoints.getHouses,
-        },
-      }}
+      getEndpoint={stageApi.endpoints.getStages}
+      deleteEndpoint={stageApi.endpoints.deleteStage}
+      filters={{}}
       menus={
         <>
           <CreateButton />

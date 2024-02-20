@@ -13,6 +13,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { Selection } from "@/models";
 import { styled } from "@mui/material/styles";
+import { useGetStagesQuery } from "@/features/stage/services";
 
 type Inputs = Partial<Selection>;
 
@@ -30,6 +31,8 @@ const LightTooltip = styled(({ className, ...props }: TooltipProps) => (
 }));
 
 export const HatchSteps = () => {
+  const { data: stageData } = useGetStagesQuery({});
+
   const { handleSubmit: handleSubmit, control: control } = useForm<Inputs>({
     resolver: yupResolver(schema),
   });
@@ -62,73 +65,29 @@ export const HatchSteps = () => {
           <Typography color="text.primary" sx={{ fontWeight: 700 }}>
             Previous Steps
           </Typography>
-          <LightTooltip title="Add">
-            <Typography>Step 1</Typography>
-          </LightTooltip>
           <Box>
             <ul className="steps steps-5">
-              <li>
-                <a href="#" title="">
-                  <LightTooltip title="Step 1">
-                    <Box>
-                      <Typography variant="subtitle2" sx={{ fontWeight: 700 }}>
-                        Step 1
-                      </Typography>
-                      <Typography variant="caption" noWrap>
-                        Et nequ a quam turpis duisi
-                      </Typography>
-                    </Box>
-                  </LightTooltip>
-                </a>
-              </li>
-              <li>
-                <a href="#" title="">
-                  <LightTooltip
-                    title="Step 1
-                  Et nequ a quam turpis duisi
-                  "
-                  >
-                    <>
-                      <Typography>Step 1</Typography>
-                      <Typography variant="caption" noWrap>
-                        Et nequ a quam turpis duisi
-                      </Typography>
-                    </>
-                  </LightTooltip>
-                </a>
-              </li>
-              <li className="current">
-                <a href="#" title="">
-                  <LightTooltip
-                    title="Step 1
-                  Et nequ a quam turpis duisi
-                  "
-                  >
-                    <>
-                      <Typography>Step 1</Typography>
-                      <Typography variant="caption" noWrap>
-                        Et nequ a quam turpis duisi
-                      </Typography>
-                    </>
-                  </LightTooltip>
-                </a>
-              </li>
-              <li>
-                <a href="#" title="">
-                  <LightTooltip
-                    title="Step 1
-                  Et nequ a quam turpis duisi
-                  "
-                  >
-                    <>
-                      <Typography>Step 1</Typography>
-                      <Typography variant="caption" noWrap>
-                        Et nequ a quam turpis duisi
-                      </Typography>
-                    </>
-                  </LightTooltip>
-                </a>
-              </li>
+              {stageData &&
+                stageData.results?.map((e, i) => (
+                  <li key={i}>
+                    <a href="#" title="">
+                      <LightTooltip title={"Step ${e.order} ${e.name}"}>
+                        <Box>
+                          <Typography
+                            variant="subtitle2"
+                            sx={{ fontWeight: 700 }}
+                          >
+                            Step {e.order}
+                          </Typography>
+                          <Typography variant="caption" noWrap>
+                            {e.name}
+                          </Typography>
+                        </Box>
+                      </LightTooltip>
+                    </a>
+                  </li>
+                ))}
+              {/* current */}
             </ul>
           </Box>
         </Grid>

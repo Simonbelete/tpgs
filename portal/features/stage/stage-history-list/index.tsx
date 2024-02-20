@@ -1,42 +1,18 @@
 import React from "react";
 import { GridColDef, GridRenderCellParams } from "@mui/x-data-grid";
 import { HistoryList } from "@/lib/crud";
-import { penApi } from "../services";
-import { Pen, PenHistory } from "@/models";
+import { stageApi } from "../services";
+import { Stage, StageHistory } from "@/models";
 import { IconButton, Tooltip, Typography, Button } from "@mui/material";
 import Link from "next/link";
 
-export const PenHistoryList = ({ data }: { data: Pen }) => {
-  const columns: GridColDef[] = [
-    { field: "name", headerName: "Name" },
-    {
-      field: "house",
-      headerName: "House",
-      flex: 1,
-      minWidth: 150,
-      valueGetter: (params) =>
-        params.row.nutrient_group ? params.row.nutrient_group.name : "",
-      renderCell: (params: GridRenderCellParams<any>) => {
-        if (params.row.house == null) return <></>;
-        return (
-          <Link href={`/houses/${params.row.house}`}>
-            <Tooltip title="Click to view">
-              <Button>
-                <Typography color={"link.primary"} variant="body2">
-                  {params.row.house}
-                </Typography>
-              </Button>
-            </Tooltip>
-          </Link>
-        );
-      },
-    },
-  ];
+export const StageHistoryList = ({ data }: { data: Stage }) => {
+  const columns: GridColDef[] = [{ field: "name", headerName: "Name" }];
   return (
-    <HistoryList<PenHistory>
+    <HistoryList<StageHistory>
       columns={columns}
       getHistoryQuery={{ id: data.id, query: {} }}
-      getHistoryEndpoint={penApi.endpoints.getPenHistory}
+      getHistoryEndpoint={stageApi.endpoints.getStageHistory}
     />
   );
 };

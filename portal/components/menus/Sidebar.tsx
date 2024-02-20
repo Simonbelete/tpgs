@@ -49,6 +49,7 @@ import { useProSidebar } from "react-pro-sidebar";
 import ViewTimelineIcon from "@mui/icons-material/ViewTimeline";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store";
+import PinIcon from "@mui/icons-material/Pin";
 
 function menuProps(key: string) {
   return {
@@ -696,6 +697,17 @@ const SidebarMenu = () => {
                 </Typography>
               </MenuItem>
             </SubMenu>
+            <MenuItem
+              component={
+                <Link onClick={() => toggleSidebar()} href="/stages" />
+              }
+              icon={<PinIcon width="20" height="20" fill="inherit" />}
+              active={RegExp("^/stages$").test(router.pathname)}
+            >
+              <Typography variant="body1" fontSize={14}>
+                Stages
+              </Typography>
+            </MenuItem>
           </Menu>
           <div
             style={{
