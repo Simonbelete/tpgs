@@ -33,7 +33,11 @@ const LightTooltip = styled(({ className, ...props }: TooltipProps) => (
 export const HatchSteps = () => {
   const { data: stageData } = useGetStagesQuery({});
 
-  const { handleSubmit: handleSubmit, control: control } = useForm<Inputs>({
+  const {
+    handleSubmit: handleSubmit,
+    control: control,
+    setValue,
+  } = useForm<Inputs>({
     resolver: yupResolver(schema),
   });
 
@@ -52,7 +56,10 @@ export const HatchSteps = () => {
                 fieldState: { error },
               }) => (
                 <HatcheryDropdown
-                  onChange={(_, data) => onChange(data)}
+                  onChange={(_, data) => {
+                    onChange(data);
+                    setValue("name", "");
+                  }}
                   value={value}
                   error={!!error?.message}
                   helperText={error?.message}
@@ -71,7 +78,7 @@ export const HatchSteps = () => {
                 stageData.results?.map((e, i) => (
                   <li key={i}>
                     <a href="#" title="">
-                      <LightTooltip title={"Step ${e.order} ${e.name}"}>
+                      <LightTooltip title={`Step ${e.order} ${e.name}`}>
                         <Box>
                           <Typography
                             variant="subtitle2"

@@ -2,6 +2,7 @@ from typing import Any
 from django.shortcuts import render
 from rest_framework import viewsets
 from rest_framework.exceptions import NotFound
+from rest_framework.response import Response
 
 from core.views import (
     HistoryViewSet,
@@ -22,6 +23,9 @@ from . import filters
 class HatcheryViewSet(CoreModelViewSet):
     queryset = models.Hatchery.objects.all()
     serializer_class = serializers.HatcherySerializer_GET
+    filterset_class = filters.HatcheryFilter
+    search_fields = ['name']
+    ordering_fields = '__all__'
 
     def get_serializer_class(self):
         if self.request.method in ['POST', 'PUT', 'PATCH']:
@@ -124,3 +128,22 @@ class IncubationHistoryViewSet(HistoryViewSet):
 class IncubationSummaryViewSet(SummaryViewSet):
     def get_query(self):
         return models.Incubation.all.get(pk=self.id_pk)
+
+
+class HatcheryLastStage(viewsets.ViewSet):
+    def get_queryset(self):
+        try:
+            return models.Hatchery.all.get(pk=self.kwargs['id'])
+        except models.Hatchery.DoesNotExist as ex:
+            raise NotFound()
+
+    def list(self, request, id=None, **kwargs):
+        queryset = self.get_queryset()
+
+        return Response({
+            'last_stage': queryset.dm,
+            'culled_count': queryset.price,
+            'selected_chs'
+            'nutrient_count': queryset.nutrient_count(),
+            'composition_total': queryset.composition_total()
+        }, status=200)

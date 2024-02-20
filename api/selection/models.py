@@ -19,7 +19,7 @@ class Selection(CoreModel):
         Stage, on_delete=models.SET_NULL, null=True, blank=True, related_name='selection')
     selected_chickens = models.ManyToManyField(
         Chicken, null=True, blank=True, related_name='selection')
-    culled_chickens = selected_chickens = models.ManyToManyField(
+    unselected_chickens = selected_chickens = models.ManyToManyField(
         Chicken, null=True, blank=True, related_name='selection')
 
     history = HistoricalRecords()

@@ -477,7 +477,7 @@ const SidebarMenu = () => {
             <SubMenu
               label={
                 <Typography variant="body1" fontSize={14}>
-                  Hatchery
+                  Hatch
                 </Typography>
               }
               icon={<ChickenEasterIcon width="20" height="20" fill="inherit" />}
@@ -493,7 +493,7 @@ const SidebarMenu = () => {
                 active={RegExp("^/hatchery(.*)$").test(router.pathname)}
               >
                 <Typography variant="body1" fontSize={14}>
-                  Hatchery
+                  Hatch
                 </Typography>
               </MenuItem>
               <MenuItem

@@ -1,8 +1,11 @@
+from typing import Iterable
 from django.db import models
 from simple_history.models import HistoricalRecords
 
 from core.models import CoreModel
 from breeds.models import Breed
+from stages.models import Stage
+from chickens.models import Chicken
 
 
 class Hatchery(CoreModel):
@@ -12,7 +15,25 @@ class Hatchery(CoreModel):
     breed = models.ForeignKey(
         Breed, on_delete=models.SET_NULL, null=True, blank=True)
     note = models.TextField(null=True, blank=True)
+
+    # Selection
+    selected_from = models.ManyToManyField(
+        "self", null=True, blank=True, related_name='moved_to')
+    stage = models.ForeignKey(
+        Stage, on_delete=models.SET_NULL, null=True, blank=True, related_name='selection')
+    from_stage = models.ForeignKey(
+        Stage, on_delete=models.SET_NULL, null=True, blank=True, related_name='from_selection')  # Stage History
+    selected_chickens = models.ManyToManyField(
+        Chicken, null=True, blank=True, related_name='selected_selection')
+    unselected_chickens = models.ManyToManyField(
+        Chicken, null=True, blank=True, related_name='unselected_selection')
+
     history = HistoricalRecords()
+
+    def save(self, force_insert: bool = ..., force_update: bool = ..., using: str | None = ..., update_fields: Iterable[str] | None = ...) -> None:
+        if (not self.stage):
+            self.stage = Stage.objects.get(order=1)
+        return super().save(force_insert, force_update, using, update_fields)
 
     @property
     def display_name(self):
