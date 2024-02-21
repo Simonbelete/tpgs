@@ -96,3 +96,4 @@ export type { default as BreedHHEPGuidelineHistory } from "./BreedHHEPGuidelineH
 export type { default as ChickenGrid } from "./ChickenGrid";
 export type { default as StageHistory } from "./StageHistory";
 export type { default as Selection } from "./Selection";
+export type { default as ChickenRanking } from "./ChickenRanking";

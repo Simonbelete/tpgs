@@ -9,6 +9,8 @@ import {
   Typography,
   Paper,
   Stack,
+  Divider,
+  Grid,
 } from "@mui/material";
 import { HatchSelect } from "./HatchSelect";
 import { ChickenSelect } from "./ChickenSelect";
@@ -35,6 +37,7 @@ const steps = [
               and learn how to enhance your ads using features like ad extensions.
               If you run into any problems with your ads, find out how to tell if
               they're running and how to resolve approval issues.`,
+    component: ChickenSelect,
   },
 ];
 
@@ -56,12 +59,12 @@ export const SelectionForm = () => {
 
   const isNextButtonActive = () => {
     if (activeStep == 0 && selection.stage != null) return true;
-    return false;
+    return true;
   };
 
   return (
-    <Stack direction={"row"}>
-      <Box sx={{ minWidth: 400 }}>
+    <Grid container gap={2} direction={"row"}>
+      <Grid item xs={7.5} sx={{ minWidth: 400 }}>
         <Stepper activeStep={activeStep} orientation="vertical">
           {steps.map((step, index) => (
             <Step key={step.label}>
@@ -112,8 +115,12 @@ export const SelectionForm = () => {
             </Button>
           </Paper>
         )}
-      </Box>
-      <StatusInfo />
-    </Stack>
+      </Grid>
+      <Divider orientation="vertical" variant="middle" flexItem />
+
+      <Grid item xs={4}>
+        <StatusInfo />
+      </Grid>
+    </Grid>
   );
 };

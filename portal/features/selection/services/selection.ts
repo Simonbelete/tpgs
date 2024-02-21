@@ -1,9 +1,6 @@
 import { baseApi } from "@/services/baseApi";
-import { AbstractSummary, Response, Stage, StageHistory } from "@/models";
-import { AxiosResponse } from "axios";
-import clientSSR from "@/services/client_ssr";
-import client from "@/services/client";
-import { NextPageContext } from "next";
+import { Response } from "@/models";
+import { ChickenRanking } from "@/models";
 
 export const URL = "/stages";
 const HISTORY_URL = `histories`;
@@ -12,9 +9,9 @@ const SUMMARY_URL = `summary`;
 export const stageApi = baseApi.injectEndpoints({
   endpoints: (build) => {
     return {
-      listChickens: build.query<string[], number>({
+      getChickensRanking: build.query<Response<ChickenRanking[]>, Object>({
         query: (query?: Object) => ({
-          url: `/`,
+          url: `/analyses/chicken-ranking`,
           method: "get",
           params: query,
         }),
@@ -22,7 +19,7 @@ export const stageApi = baseApi.injectEndpoints({
           return endpointName;
         },
         merge: (currentCache, newItems) => {
-          currentCache.push(...newItems);
+          currentCache.results.push(...newItems.results);
         },
         forceRefetch({ currentArg, previousArg }) {
           return currentArg !== previousArg;
@@ -33,4 +30,5 @@ export const stageApi = baseApi.injectEndpoints({
   overrideExisting: false,
 });
 
-export const {} = stageApi;
+export const { useGetChickensRankingQuery, useLazyGetChickensRankingQuery } =
+  stageApi;

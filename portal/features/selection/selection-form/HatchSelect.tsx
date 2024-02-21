@@ -13,7 +13,7 @@ export const HatchSelect = () => {
   const selection = useSelector((state: RootState) => state.selection);
 
   return (
-    <Box>
+    <Box sx={{ maxWidth: "80%" }}>
       <AsyncDropdown<Hatchery>
         multiple={true}
         dataKey={"name"}
