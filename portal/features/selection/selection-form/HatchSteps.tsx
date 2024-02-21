@@ -11,11 +11,11 @@ import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import { HatcheryDropdown } from "@/features/hatchery";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { Selection } from "@/models";
+import { Hatchery, Selection } from "@/models";
 import { styled } from "@mui/material/styles";
 import { useGetStagesQuery } from "@/features/stage/services";
 
-type Inputs = Partial<Selection>;
+type Inputs = Partial<Hatchery>;
 
 const schema = yup.object({});
 

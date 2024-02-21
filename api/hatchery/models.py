@@ -30,10 +30,10 @@ class Hatchery(CoreModel):
 
     history = HistoricalRecords()
 
-    def save(self, force_insert: bool = ..., force_update: bool = ..., using: str | None = ..., update_fields: Iterable[str] | None = ...) -> None:
+    def save(self,  *args, **kwargs) -> None:
         if (not self.stage):
             self.stage = Stage.objects.get(order=1)
-        return super().save(force_insert, force_update, using, update_fields)
+        return super().save(*args, **kwargs)
 
     @property
     def display_name(self):

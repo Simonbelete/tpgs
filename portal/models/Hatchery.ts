@@ -1,5 +1,7 @@
 import AbstractBaseModel from "./AbstractBaseModel";
 import Breed from "./Breed";
+import Stage from "./Stage";
+import Chicken from "./Chicken";
 
 export default interface Hatchery extends AbstractBaseModel {
   name: string;
@@ -9,6 +11,11 @@ export default interface Hatchery extends AbstractBaseModel {
   note: string;
   incubation_count: number;
   hatchery_egg_count: number;
+  stage?: Stage;
+  from_state?: Stage;
+  selected_from?: Hatchery[] | number[] | null;
+  selected_chickens?: Chicken[] | number[] | null;
+  unselected_chickens?: Chicken[] | number[] | null;
 
   total_egg_set?: number;
   total_infertile_eggs?: number;

@@ -10,17 +10,19 @@ import {
   Paper,
 } from "@mui/material";
 import { HatchSteps } from "./HatchSteps";
+import { ChickenSelect } from "./ChickenSelect";
 
 const steps = [
   {
     label: "Select campaign settings",
     description: `Select hatch`,
-    component: HatchSteps,
+    component: ChickenSelect, //HatchSteps,
   },
   {
     label: "Create an ad group",
     description:
       "An ad group contains one or more ads which target a shared set of keywords.",
+    component: ChickenSelect,
   },
   {
     label: "Create an ad",
