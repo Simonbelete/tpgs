@@ -57,3 +57,7 @@ class ChickenRanking(models.Model):
     egg_number_avg = models.DecimalField(max_digits=19, decimal_places=3)
     egg_weight_total = models.DecimalField(max_digits=19, decimal_places=3)
     egg_weight_avg = models.DecimalField(max_digits=19, decimal_places=3)
+
+    class Meta:
+        managed = False
+        db_table = 'chicken_ranking'

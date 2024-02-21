@@ -49,7 +49,7 @@ class Migration(migrations.Migration):
                     decimal_places=3, max_digits=19)),
                 ('egg_number_total', models.DecimalField(
                     decimal_places=3, max_digits=19)),
-                ('egg_number_avg', models.DecimalFissseld(
+                ('egg_number_avg', models.DecimalField(
                     decimal_places=3, max_digits=19)),
                 ('egg_weight_total', models.DecimalField(
                     decimal_places=3, max_digits=19)),
@@ -62,7 +62,7 @@ class Migration(migrations.Migration):
         migrations.RunSQL(
             """
             CREATE OR REPLACE VIEW chicken_ranking AS
-               SELECT ww.chicken_id, ww.body_weight_avg, ww.body_weight_total,
+               SELECT ww.chicken_id AS id, ww.chicken_id, ww.body_weight_avg, ww.body_weight_total,
                 ff.feed_weight_avg, ff.feed_weight_total,
                 ee.egg_number_avg, ee.egg_number_total, ee.egg_weight_avg, ee.egg_weight_total
                 FROM 
@@ -89,5 +89,5 @@ class Migration(migrations.Migration):
                 ) ee ON ff.chicken_id = ee.chicken_id;
             """,
             """DROP VIEW chicken_ranking"""
-        )js
+        )
     ]

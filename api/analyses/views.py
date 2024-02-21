@@ -13,6 +13,7 @@ import uuid
 
 from . import models
 from . import serializers
+from . import filters
 from core.pagination import AllPagination
 from core.schemas import ANALYSES_PARAMETERS
 from eggs.models import Egg
@@ -1245,16 +1246,9 @@ class MortalityViewSet(AnalysesViewSet):
             return Response({'results': results})
 
 
-class ChickenRanking(viewsets.ViewSet):
-    def get_farm(self, farm_id):
-        try:
-            return Farm.objects.get(pk=farm_id)
-        except Farm.DoesNotExist:
-            raise NotFound("Farm Not found")
-
-    def list(self, request, **kwargs):
-        with tenant_context(self.get_farm(self.request.GET.get('farm', 0))):
-            cursor = connection.cursor()
-            cursor.execute("""
-                SELECT * FROM feeds_feed ff
-            """)
+class ChickenRanking(mixins.RetrieveModelMixin,
+                     mixins.ListModelMixin,
+                     viewsets.GenericViewSet):
+    queryset = models.ChickenRanking.objects.all()
+    serializer_class = serializers.ChickenRankingSerializer
+    filterset_class = filters.ChickenRankingFilter

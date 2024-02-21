@@ -19,3 +19,9 @@ class PedigreeSerializer(serializers.ModelSerializer):
     class Meta:
         model = Chicken
         fields = ['id', 'tag', 'sex', 'parents']
+
+
+class ChickenRankingSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.ChickenRanking
+        fields = '__all__'
