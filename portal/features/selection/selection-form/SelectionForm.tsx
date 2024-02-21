@@ -8,10 +8,14 @@ import {
   Button,
   Typography,
   Paper,
+  Stack,
 } from "@mui/material";
-import { HatchSteps } from "./HatchSteps";
+import { HatchSelect } from "./HatchSelect";
 import { ChickenSelect } from "./ChickenSelect";
 import { StageSelect } from "./StageSelect";
+import { StatusInfo } from "./StatusInfo";
+import { useSelector, useDispatch } from "react-redux";
+import { RootState } from "@/store";
 
 const steps = [
   {
@@ -23,7 +27,7 @@ const steps = [
     label: "Create an ad group",
     description:
       "An ad group contains one or more ads which target a shared set of keywords.",
-    component: ChickenSelect,
+    component: HatchSelect,
   },
   {
     label: "Create an ad",
@@ -36,6 +40,7 @@ const steps = [
 
 export const SelectionForm = () => {
   const [activeStep, setActiveStep] = React.useState(0);
+  const selection = useSelector((state: RootState) => state.selection);
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -49,57 +54,66 @@ export const SelectionForm = () => {
     setActiveStep(0);
   };
 
+  const isNextButtonActive = () => {
+    if (activeStep == 0 && selection.stage != null) return true;
+    return false;
+  };
+
   return (
-    <Box sx={{ minWidth: 400 }}>
-      <Stepper activeStep={activeStep} orientation="vertical">
-        {steps.map((step, index) => (
-          <Step key={step.label}>
-            <StepLabel
-              optional={
-                index === 2 ? (
-                  <Typography variant="caption">Last step</Typography>
-                ) : null
-              }
-            >
-              {step.label}
-            </StepLabel>
-            <StepContent>
-              <Typography variant="caption" color={"text.secondary"}>
-                {step.description}
-              </Typography>
-              <Box sx={{ mb: 2 }}>
-                <step.component />
-              </Box>
-              <Box sx={{ mb: 2 }}>
-                <div>
-                  <Button
-                    variant="contained"
-                    onClick={handleNext}
-                    sx={{ mt: 1, mr: 1 }}
-                  >
-                    {index === steps.length - 1 ? "Finish" : "Continue"}
-                  </Button>
-                  <Button
-                    disabled={index === 0}
-                    onClick={handleBack}
-                    sx={{ mt: 1, mr: 1 }}
-                  >
-                    Back
-                  </Button>
-                </div>
-              </Box>
-            </StepContent>
-          </Step>
-        ))}
-      </Stepper>
-      {activeStep === steps.length && (
-        <Paper square elevation={0} sx={{ p: 3 }}>
-          <Typography>All steps completed - you&apos;re finished</Typography>
-          <Button onClick={handleReset} sx={{ mt: 1, mr: 1 }}>
-            Reset
-          </Button>
-        </Paper>
-      )}
-    </Box>
+    <Stack direction={"row"}>
+      <Box sx={{ minWidth: 400 }}>
+        <Stepper activeStep={activeStep} orientation="vertical">
+          {steps.map((step, index) => (
+            <Step key={step.label}>
+              <StepLabel
+                optional={
+                  index === 2 ? (
+                    <Typography variant="caption">Last step</Typography>
+                  ) : null
+                }
+              >
+                {step.label}
+              </StepLabel>
+              <StepContent>
+                <Typography variant="caption" color={"text.secondary"}>
+                  {step.description}
+                </Typography>
+                <Box sx={{ mb: 2 }}>
+                  <step.component />
+                </Box>
+                <Box sx={{ mb: 2 }}>
+                  <div>
+                    <Button
+                      variant="contained"
+                      onClick={handleNext}
+                      sx={{ mt: 1, mr: 1 }}
+                      disabled={!isNextButtonActive()}
+                    >
+                      {index === steps.length - 1 ? "Finish" : "Continue"}
+                    </Button>
+                    <Button
+                      disabled={index === 0}
+                      onClick={handleBack}
+                      sx={{ mt: 1, mr: 1 }}
+                    >
+                      Back
+                    </Button>
+                  </div>
+                </Box>
+              </StepContent>
+            </Step>
+          ))}
+        </Stepper>
+        {activeStep === steps.length && (
+          <Paper square elevation={0} sx={{ p: 3 }}>
+            <Typography>All steps completed - you&apos;re finished</Typography>
+            <Button onClick={handleReset} sx={{ mt: 1, mr: 1 }}>
+              Reset
+            </Button>
+          </Paper>
+        )}
+      </Box>
+      <StatusInfo />
+    </Stack>
   );
 };

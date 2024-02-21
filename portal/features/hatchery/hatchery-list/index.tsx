@@ -35,6 +35,21 @@ export const HatcheryList = () => {
       },
     },
     {
+      field: "stage",
+      headerName: "Stage",
+      flex: 1,
+      renderCell: (params: GridRenderCellParams<any>) => {
+        if (params.row.stage == null) return <></>;
+        return (
+          <Typography color={"link.primary"} variant="body2">
+            <Link href={`/stages/${params.row.stage.id}`}>
+              {params.row.stage.name}
+            </Link>
+          </Typography>
+        );
+      },
+    },
+    {
       field: "hatch_date",
       headerName: "Hatch Date",
       flex: 1,

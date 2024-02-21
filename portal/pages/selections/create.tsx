@@ -4,7 +4,7 @@ import { useBreadcrumbs } from "@/hooks";
 import { CreateLayout } from "@/layouts";
 import { SeoHead } from "@/seo";
 import { SelectionForm } from "@/features/selection";
-import { Container, Grid, Box, Typography } from "@mui/material";
+import { Stack, Box, Typography } from "@mui/material";
 
 const PenCreatePage = () => {
   const { breadcrumbs } = useBreadcrumbs();
@@ -13,14 +13,14 @@ const PenCreatePage = () => {
     <>
       <SeoHead title="Selection" />
       <CreateLayout breadcrumbs={<Breadcrumbs items={breadcrumbs} />}>
-        <Grid>
+        <Stack>
           <Box sx={{ display: "flex" }} justifyContent={"start"}>
             <Typography variant="title">Selection Process</Typography>
           </Box>
-          <Container maxWidth="lg" sx={{ mt: 5 }}>
+          <Box sx={{ mt: 5 }}>
             <SelectionForm />
-          </Container>
-        </Grid>
+          </Box>
+        </Stack>
       </CreateLayout>
     </>
   );

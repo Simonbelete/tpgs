@@ -9,32 +9,17 @@ import {
   tooltipClasses,
 } from "@mui/material";
 import { styled } from "@mui/material/styles";
-import { Stage } from "@/models";
 import { useGetStagesQuery } from "@/features/stage/services";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "@/store";
 import { setStage } from "./slice";
-
-const LightTooltip = styled(({ className, ...props }: TooltipProps) => (
-  <Tooltip {...props} classes={{ popper: className }} />
-))(({ theme }) => ({
-  [`& .${tooltipClasses.tooltip}`]: {
-    backgroundColor: theme.palette.common.white,
-    color: "rgba(0, 0, 0, 0.87)",
-    boxShadow: theme.shadows[1],
-    fontSize: 11,
-  },
-}));
+import LightTooltip from "./components/LightTooltip";
 
 export const StageSelect = () => {
   const { data: stageData } = useGetStagesQuery({});
   const dispatch = useDispatch();
 
   const option = useSelector((state: RootState) => state.selection.stage);
-
-  useEffect(() => {
-    console.log(option);
-  }, [option]);
 
   return (
     <Grid container>

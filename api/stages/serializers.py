@@ -3,6 +3,12 @@ from rest_framework import serializers
 from . import models
 
 
+class StageSerializer_SLUG(serializers.ModelSerializer):
+    class Meta:
+        model = models.Stage
+        fields = ['id', 'name', 'display_name']
+
+
 class StageSerializer_GET(serializers.ModelSerializer):
     class Meta:
         model = models.Stage

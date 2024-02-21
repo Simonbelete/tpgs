@@ -12,6 +12,7 @@ const HatcheryDropdown = ({
   helperText,
   dataKey = "name",
   disabled,
+  multiple = false,
 }: {
   value?: any;
   label?: string;
@@ -20,9 +21,11 @@ const HatcheryDropdown = ({
   dataKey?: string;
   onChange?: (event: any, newValue: any) => void;
   disabled?: boolean;
+  multiple?: boolean;
 }) => {
   return (
     <AsyncDropdown<Hatchery>
+      multiple={multiple}
       value={value}
       dataKey={dataKey}
       label={label}

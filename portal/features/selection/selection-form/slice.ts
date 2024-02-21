@@ -13,9 +13,12 @@ export const selectionSlice = createSlice({
     setStage: (state, action: PayloadAction<Stage>) => {
       state.stage = action.payload;
     },
+    setSelectedFrom: (state, action: PayloadAction<Hatchery[]>) => {
+      state.selected_from = action.payload;
+    },
   },
 });
 
-export const { setStage } = selectionSlice.actions;
+export const { setStage, setSelectedFrom } = selectionSlice.actions;
 
 export const selectionReducer = selectionSlice.reducer;
