@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from rest_framework import viewsets, status
+from rest_framework import viewsets, mixins
 import django_filters
 from rest_framework.response import Response
 from django.db.models import Count, Sum, Avg, F, Q, ExpressionWrapper, DecimalField, IntegerField, DurationField
@@ -1243,3 +1243,18 @@ class MortalityViewSet(AnalysesViewSet):
                 })
 
             return Response({'results': results})
+
+
+class ChickenRanking(viewsets.ViewSet):
+    def get_farm(self, farm_id):
+        try:
+            return Farm.objects.get(pk=farm_id)
+        except Farm.DoesNotExist:
+            raise NotFound("Farm Not found")
+
+    def list(self, request, **kwargs):
+        with tenant_context(self.get_farm(self.request.GET.get('farm', 0))):
+            cursor = connection.cursor()
+            cursor.execute("""
+                SELECT * FROM feeds_feed ff
+            """)

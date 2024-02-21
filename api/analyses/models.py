@@ -44,3 +44,16 @@ class DirectoryList(models.Model):
         return "{hatchery} / {house} / {pen}".format(house=self.house_name,
                                                      pen=self.pen_name,
                                                      hatchery=self.hatchery_name)
+
+
+class ChickenRanking(models.Model):
+    id = models.BigIntegerField(primary_key=True)
+    chicken = models.ForeignKey('chickens.Chicken', on_delete=models.CASCADE)
+    feed_weight_total = models.DecimalField(max_digits=19, decimal_places=3)
+    feed_weight_avg = models.DecimalField(max_digits=19, decimal_places=3)
+    body_weight_total = models.DecimalField(max_digits=19, decimal_places=3)
+    body_weight_avg = models.DecimalField(max_digits=19, decimal_places=3)
+    egg_number_total = models.DecimalField(max_digits=19, decimal_places=3)
+    egg_number_avg = models.DecimalField(max_digits=19, decimal_places=3)
+    egg_weight_total = models.DecimalField(max_digits=19, decimal_places=3)
+    egg_weight_avg = models.DecimalField(max_digits=19, decimal_places=3)
