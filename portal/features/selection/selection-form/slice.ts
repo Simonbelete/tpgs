@@ -10,8 +10,12 @@ export const selectionSlice = createSlice({
   name: "Selection",
   initialState,
   reducers: {
-    setStep: (state, action: PayloadAction<Stage>) => {
-      state.s;
+    setStage: (state, action: PayloadAction<Stage>) => {
+      state.stage = action.payload;
     },
   },
 });
+
+export const { setStage } = selectionSlice.actions;
+
+export const selectionReducer = selectionSlice.reducer;
