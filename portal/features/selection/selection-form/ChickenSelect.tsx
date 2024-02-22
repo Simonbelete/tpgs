@@ -36,7 +36,13 @@ export const ChickenSelect = () => {
   const dispatch = useDispatch();
   const selection = useSelector((state: RootState) => state.selection);
 
-  const { data, refetch } = useGetChickensRankingQuery(buildPage(pageModel));
+  const { data, refetch } = useGetChickensRankingQuery({
+    ...buildPage(pageModel),
+    hatchery__in: _.map(
+      (selection?.selected_from || []) as number[],
+      (e) => e.id
+    ).join(","),
+  });
 
   const hasMore =
     pageModel.page < Math.floor((data?.count || 0) / pageModel.pageSize);
