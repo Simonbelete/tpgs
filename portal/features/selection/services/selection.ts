@@ -21,9 +21,9 @@ export const stageApi = baseApi.injectEndpoints({
         merge: (currentCache, newItems) => {
           currentCache.results.push(...newItems.results);
         },
-        forceRefetch({ currentArg, previousArg }) {
-          return currentArg !== previousArg;
-        },
+        // forceRefetch({ currentArg, previousArg }) {
+        //   return currentArg !== previousArg;
+        // },
       }),
     };
   },

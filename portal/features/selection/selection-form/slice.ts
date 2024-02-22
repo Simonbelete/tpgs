@@ -16,9 +16,25 @@ export const selectionSlice = createSlice({
     setSelectedFrom: (state, action: PayloadAction<Hatchery[]>) => {
       state.selected_from = action.payload;
     },
+    addSelectedChicken: (state, action: PayloadAction<number>) => {
+      state.selected_chickens = [
+        ...((state?.selected_chickens || []) as number[]),
+        action.payload,
+      ];
+    },
+    removeSelectedChicken: (state, action: PayloadAction<number>) => {
+      state.selected_chickens = (state?.selected_chickens || []).filter(
+        (e) => e != action.payload
+      ) as number[];
+    },
   },
 });
 
-export const { setStage, setSelectedFrom } = selectionSlice.actions;
+export const {
+  setStage,
+  setSelectedFrom,
+  addSelectedChicken,
+  removeSelectedChicken,
+} = selectionSlice.actions;
 
 export const selectionReducer = selectionSlice.reducer;
