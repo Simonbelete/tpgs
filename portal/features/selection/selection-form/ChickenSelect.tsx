@@ -38,7 +38,7 @@ export const ChickenSelect = () => {
 
   const { data, refetch } = useGetChickensRankingQuery({
     ...buildPage(pageModel),
-    hatchery__in: _.map(
+    chicken__hatchery__in: _.map(
       (selection?.selected_from || []) as number[],
       (e) => e.id
     ).join(","),

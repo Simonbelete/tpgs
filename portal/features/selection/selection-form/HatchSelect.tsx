@@ -16,6 +16,7 @@ export const HatchSelect = () => {
     <Box sx={{ maxWidth: "80%" }}>
       <AsyncDropdown<Hatchery>
         multiple={true}
+        value={selection?.selected_from || []}
         dataKey={"name"}
         label={"Hatch Selections"}
         placeholder="Hatch Selections"
