@@ -7,6 +7,7 @@ import { ReductionReason } from "@/models";
 import { AsyncDropdown } from "@/components/dropdowns";
 import { RootState } from "@/store";
 import { DatePicker } from "@mui/x-date-pickers";
+import dayjs from "dayjs";
 
 const ReductionReasonSelect = () => {
   const dispatch = useDispatch();
@@ -29,8 +30,13 @@ const ReductionReasonSelect = () => {
             fullWidth: true,
           },
         }}
+        // @ts-ignore
         onChange={(data) => dispatch(setReductionDate(data))}
-        value={selection.reduction_date}
+        value={
+          selection.reduction_date
+            ? dayjs(selection.reduction_date as string)
+            : null
+        }
       />
     </Stack>
   );

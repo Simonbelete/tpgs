@@ -24,6 +24,7 @@ import ReductionReasonSelect from "./ReductionReasonSelect";
 import { useCreateHatcheryMutation } from "@/features/hatchery/services";
 import { Hatchery } from "@/models";
 import _ from "lodash";
+import dayjs from "dayjs";
 
 const steps = [
   {
@@ -83,7 +84,9 @@ export const SelectionForm = () => {
       selected_from: _.map((selection?.selected_from || []) as any, "id"),
       selected_chickens: selection.selected_chickens || [],
       unselected_chickens: selection.unselected_chickens || [],
-      reduction_date: selection.reduction_date,
+      reduction_date: dayjs(selection.reduction_date).format(
+        process.env.NEXT_PUBLIC_API_DATE_FORMAT
+      ),
       reduction_reason: _.get(selection.reduction_reason, "id", null),
       generation: selection.generation,
     };
@@ -104,7 +107,7 @@ export const SelectionForm = () => {
                       key.replace("_", " ").slice(1)}
                   </strong>{" "}
                   — {/* @ts-ignore */}
-                  {error.data[key][0]}
+                  {error.data[key][0]}s
                 </div>
               );
             })}

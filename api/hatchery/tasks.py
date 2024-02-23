@@ -4,6 +4,7 @@ from chickens.models import Chicken
 from django_tenants.utils import tenant_context
 
 
+@shared_task
 def sync_selected_chickens(hatchery):
     """"Update Chicken detail from hatchery staging"""
     # with tenant_context(farm):
@@ -15,6 +16,7 @@ def sync_selected_chickens(hatchery):
         hatchery=hatchery, generation=hatchery.generation)
 
 
+@shared_task
 def unsync_selected_chickens(hatchery):
     ids = list(zip(*hatchery.selected_chickens.values_list('id')))
     ids = ids if len(ids) == 0 else ids[0]
@@ -23,6 +25,7 @@ def unsync_selected_chickens(hatchery):
         hatchery=None, generation=None)
 
 
+@shared_task
 def sync_unselected_chickens(hatchery):
     ids = list(zip(*hatchery.unselected_chickens.values_list('id')))
     ids = ids if len(ids) == 0 else ids[0]
@@ -31,6 +34,7 @@ def sync_unselected_chickens(hatchery):
         reduction_reason=hatchery.reduction_reason, reduction_date=hatchery.reduction_date)
 
 
+@shared_task
 def unsync_unselected_chickens(hatchery):
     ids = list(zip(*hatchery.selected_chickens.values_list('id')))
     ids = ids if len(ids) == 0 else ids[0]
