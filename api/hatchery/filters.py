@@ -10,7 +10,7 @@ class HatcheryFilter(CoreFilterSet):
 
     class Meta:
         model = models.Hatchery
-        fields = ['stage__order']
+        fields = ['stage__order', 'stage', 'breed']
 
 
 class IncubationFilter(CoreFilterSet):

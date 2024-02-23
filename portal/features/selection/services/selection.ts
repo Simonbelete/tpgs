@@ -3,10 +3,8 @@ import { Response } from "@/models";
 import { ChickenRanking } from "@/models";
 
 export const URL = "/stages";
-const HISTORY_URL = `histories`;
-const SUMMARY_URL = `summary`;
 
-export const stageApi = baseApi.injectEndpoints({
+export const selectionApi = baseApi.injectEndpoints({
   endpoints: (build) => {
     return {
       getChickensRanking: build.query<Response<ChickenRanking[]>, Object>({
@@ -31,4 +29,4 @@ export const stageApi = baseApi.injectEndpoints({
 });
 
 export const { useGetChickensRankingQuery, useLazyGetChickensRankingQuery } =
-  stageApi;
+  selectionApi;

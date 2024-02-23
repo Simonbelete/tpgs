@@ -15,6 +15,8 @@ import { Hatchery } from "@/models";
 import dayjs from "dayjs";
 import { Typography } from "@mui/material";
 import Link from "next/link";
+import { breedApi } from "@/features/breeds/services";
+import { stageApi } from "@/features/stage/services";
 
 export const HatcheryList = () => {
   const columns: GridColDef[] = [
@@ -61,12 +63,13 @@ export const HatcheryList = () => {
           : "",
     },
     {
-      field: "incubation_moved_date",
-      headerName: "Incubation Moved Date",
+      field: "created_at",
+      headerName: "Create at",
       flex: 1,
+      minWidth: 150,
       valueGetter: (params) =>
-        params.row.incubation_moved_date
-          ? dayjs(params.row.incubation_moved_date).format(
+        params.row.created_at
+          ? dayjs(params.row.created_at).format(
               process.env.NEXT_PUBLIC_DATE_FORMAT
             )
           : "",
@@ -84,7 +87,18 @@ export const HatcheryList = () => {
       ]}
       getEndpoint={hatcheryApi.endpoints.getHatchery}
       deleteEndpoint={hatcheryApi.endpoints.deleteHatchery}
-      filters={{}}
+      filters={{
+        breed: {
+          label: "Breed",
+          endpoint: breedApi.endpoints.getBreeds,
+          dataDisplayKey: "name",
+        },
+        stage: {
+          label: "Stage",
+          endpoint: stageApi.endpoints.getStages,
+          dataDisplayKey: "name",
+        },
+      }}
       menus={
         <>
           <CreateButton />
