@@ -17,7 +17,8 @@ export default interface Hatchery extends AbstractBaseModel {
   selected_from?: Hatchery[] | number[] | null;
   selected_chickens?: Chicken[] | number[] | null;
   unselected_chickens?: Chicken[] | number[] | null;
-  reduction_reason?: ReductionReason | null;
+  reduction_date?: string | null;
+  reduction_reason?: ReductionReason | number | null;
   generation?: number | null;
 
   total_egg_set?: number;

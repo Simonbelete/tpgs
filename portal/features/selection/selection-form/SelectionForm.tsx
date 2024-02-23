@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Box,
   Stepper,
@@ -11,6 +11,8 @@ import {
   Stack,
   Divider,
   Grid,
+  Alert,
+  AlertTitle,
 } from "@mui/material";
 import { HatchSelect } from "./HatchSelect";
 import { ChickenSelect } from "./ChickenSelect";
@@ -19,6 +21,9 @@ import { StatusInfo } from "./StatusInfo";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "@/store";
 import ReductionReasonSelect from "./ReductionReasonSelect";
+import { useCreateHatcheryMutation } from "@/features/hatchery/services";
+import { Hatchery } from "@/models";
+import _ from "lodash";
 
 const steps = [
   {
@@ -52,6 +57,8 @@ export const SelectionForm = () => {
   const [activeStep, setActiveStep] = React.useState(0);
   const selection = useSelector((state: RootState) => state.selection);
 
+  const [createHatchery, { error }] = useCreateHatcheryMutation();
+
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
   };
@@ -69,9 +76,42 @@ export const SelectionForm = () => {
     return true;
   };
 
+  const handleSubmit = async () => {
+    const body: Partial<Hatchery> = {
+      name: selection.name,
+      stage: _.get(selection.stage, "id", null) as any,
+      selected_from: _.map((selection?.selected_from || []) as any, "id"),
+      selected_chickens: selection.selected_chickens || [],
+      unselected_chickens: selection.unselected_chickens || [],
+      reduction_date: selection.reduction_date,
+      reduction_reason: _.get(selection.reduction_reason, "id", null),
+      generation: selection.generation,
+    };
+    const response = await createHatchery(body);
+  };
+
   return (
     <Grid container gap={2} direction={"row"}>
       <Grid item xs={7.5} sx={{ minWidth: 400 }}>
+        {error && Object.keys((error as any).data).length != 0 ? (
+          <Alert severity="error" sx={{ mb: 3 }}>
+            <AlertTitle>Error</AlertTitle>
+            {Object.keys((error as any).data).map((key, index) => {
+              return (
+                <div key={index}>
+                  <strong>
+                    {key.replace("_", " ").charAt(0).toUpperCase() +
+                      key.replace("_", " ").slice(1)}
+                  </strong>{" "}
+                  — {/* @ts-ignore */}
+                  {error.data[key][0]}
+                </div>
+              );
+            })}
+          </Alert>
+        ) : (
+          <></>
+        )}
         <Stepper activeStep={activeStep} orientation="vertical">
           {steps.map((step, index) => (
             <Step key={step.label}>
@@ -93,14 +133,26 @@ export const SelectionForm = () => {
                 </Box>
                 <Box sx={{ mb: 2 }}>
                   <div>
-                    <Button
-                      variant="contained"
-                      onClick={handleNext}
-                      sx={{ mt: 1, mr: 1 }}
-                      disabled={!isNextButtonActive()}
-                    >
-                      {index === steps.length - 1 ? "Finish" : "Continue"}
-                    </Button>
+                    {index === steps.length - 1 ? (
+                      <Button
+                        variant="contained"
+                        onClick={handleSubmit}
+                        sx={{ mt: 1, mr: 1 }}
+                        disabled={!isNextButtonActive()}
+                      >
+                        Finish
+                      </Button>
+                    ) : (
+                      <Button
+                        variant="contained"
+                        onClick={handleNext}
+                        sx={{ mt: 1, mr: 1 }}
+                        disabled={!isNextButtonActive()}
+                      >
+                        Continue
+                      </Button>
+                    )}
+
                     <Button
                       disabled={index === 0}
                       onClick={handleBack}

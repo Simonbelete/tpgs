@@ -1,29 +1,38 @@
 import React from "react";
-import { Box } from "@mui/material";
+import { Box, Stack } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
-import { setSelectedFrom } from "./slice";
+import { setReductionReason, setReductionDate } from "./slice";
 import { reductionReasonApi } from "@/features/reduction-reason/services";
 import { ReductionReason } from "@/models";
 import { AsyncDropdown } from "@/components/dropdowns";
 import { RootState } from "@/store";
+import { DatePicker } from "@mui/x-date-pickers";
 
 const ReductionReasonSelect = () => {
   const dispatch = useDispatch();
   const selection = useSelector((state: RootState) => state.selection);
 
   return (
-    <Box sx={{ maxWidth: "80%" }}>
+    <Stack gap={2} sx={{ maxWidth: "80%" }}>
       <AsyncDropdown<ReductionReason>
-        multiple={true}
-        value={selection?.selected_from || []}
+        value={selection?.reduction_reason || []}
         dataKey={"name"}
         label={"Cull"}
         placeholder="Cull"
         endpoint={reductionReasonApi.endpoints.getReductionReasons}
-        query={{ stage__order__lt: selection?.stage?.order || 1 }}
-        onChange={(_, data) => dispatch(setSelectedFrom(data))}
+        onChange={(_, data) => dispatch(setReductionReason(data))}
       />
-    </Box>
+      <DatePicker
+        slotProps={{
+          textField: {
+            size: "small",
+            fullWidth: true,
+          },
+        }}
+        onChange={(data) => dispatch(setReductionDate(data))}
+        value={selection.reduction_date}
+      />
+    </Stack>
   );
 };
 
