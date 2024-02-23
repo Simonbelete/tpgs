@@ -18,6 +18,7 @@ import { StageSelect } from "./StageSelect";
 import { StatusInfo } from "./StatusInfo";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "@/store";
+import ReductionReasonSelect from "./ReductionReasonSelect";
 
 const steps = [
   {
@@ -38,6 +39,12 @@ const steps = [
               If you run into any problems with your ads, find out how to tell if
               they're running and how to resolve approval issues.`,
     component: ChickenSelect,
+  },
+  {
+    label: "Create an ads group",
+    description:
+      "An ad group contains one or more ads which target a shared set of keywords.",
+    component: ReductionReasonSelect,
   },
 ];
 

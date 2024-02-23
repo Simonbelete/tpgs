@@ -6,6 +6,7 @@ from core.models import CoreModel
 from breeds.models import Breed
 from stages.models import Stage
 from chickens.models import Chicken
+from reduction_reason.models import ReductionReason
 
 
 class Hatchery(CoreModel):
@@ -27,6 +28,10 @@ class Hatchery(CoreModel):
         Chicken, null=True, blank=True, related_name='selected_selection')
     unselected_chickens = models.ManyToManyField(
         Chicken, null=True, blank=True, related_name='unselected_selection')
+    reduction_reason = models.ForeignKey(
+        ReductionReason, on_delete=models.SET_NULL, null=True, blank=True, related_name='selection')
+    generation = models.PositiveIntegerField(
+        null=True, blank=True)
 
     history = HistoricalRecords()
 
