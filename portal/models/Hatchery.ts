@@ -2,6 +2,7 @@ import AbstractBaseModel from "./AbstractBaseModel";
 import Breed from "./Breed";
 import Stage from "./Stage";
 import Chicken from "./Chicken";
+import ReductionReason from "./ReductionReason";
 
 export default interface Hatchery extends AbstractBaseModel {
   name: string;
@@ -16,6 +17,8 @@ export default interface Hatchery extends AbstractBaseModel {
   selected_from?: Hatchery[] | number[] | null;
   selected_chickens?: Chicken[] | number[] | null;
   unselected_chickens?: Chicken[] | number[] | null;
+  reduction_reason?: ReductionReason | null;
+  generation?: number | null;
 
   total_egg_set?: number;
   total_infertile_eggs?: number;

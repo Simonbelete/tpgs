@@ -28,6 +28,7 @@ class Hatchery(CoreModel):
         Chicken, null=True, blank=True, related_name='selected_selection')
     unselected_chickens = models.ManyToManyField(
         Chicken, null=True, blank=True, related_name='unselected_selection')
+    reduction_date = models.DateField(null=True, blank=True)
     reduction_reason = models.ForeignKey(
         ReductionReason, on_delete=models.SET_NULL, null=True, blank=True, related_name='selection')
     generation = models.PositiveIntegerField(
