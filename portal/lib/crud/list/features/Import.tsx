@@ -8,9 +8,10 @@ import client from "@/services/client";
 
 export interface ImportProps {
   url: string;
+  full_url?: string;
 }
 
-const Import = ({ url }: ImportProps) => {
+const Import = ({ url, full_url }: ImportProps) => {
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   const [responseHtml, setResponseHtml] = useState({
     open: false,
@@ -38,23 +39,35 @@ const Import = ({ url }: ImportProps) => {
       try {
         let response: Partial<AxiosResponse> = {};
         if (file.name.includes(".xlsx"))
-          response = await client.post(`${url}/import/xlsx/`, formData, {
-            headers: {
-              "Content-Type": "multipart/form-data",
-            },
-          });
+          response = await client.post(
+            full_url ? `${full_url}/xlsx/` : `${url}/import/xlsx/`,
+            formData,
+            {
+              headers: {
+                "Content-Type": "multipart/form-data",
+              },
+            }
+          );
         if (file.name.includes(".xls"))
-          response = await client.post(`${url}/import/xls/`, formData, {
-            headers: {
-              "Content-Type": "multipart/form-data",
-            },
-          });
+          response = await client.post(
+            full_url ? `${full_url}/xls/` : `${url}/import/xls/`,
+            formData,
+            {
+              headers: {
+                "Content-Type": "multipart/form-data",
+              },
+            }
+          );
         if (file.name.includes(".csv"))
-          response = await client.post(`${url}/import/csv/`, formData, {
-            headers: {
-              "Content-Type": "multipart/form-data",
-            },
-          });
+          response = await client.post(
+            full_url ? `${full_url}/csv/` : `${url}/import/csv/`,
+            formData,
+            {
+              headers: {
+                "Content-Type": "multipart/form-data",
+              },
+            }
+          );
         if (response.status == 200) {
           setResponseHtml({
             open: true,

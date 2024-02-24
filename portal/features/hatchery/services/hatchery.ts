@@ -30,6 +30,14 @@ export const hatcheryApi = baseApi.injectEndpoints({
         }),
         providesTags: ["TENANT_AWARE_LIST"],
       }),
+      getStage1Hatchery: build.query<Response<Hatchery[]>, Object>({
+        query: (query?: Object) => ({
+          url: `${URL}/`,
+          method: "get",
+          params: { ...query, stage__order: 1 },
+        }),
+        providesTags: ["TENANT_AWARE_LIST"],
+      }),
       getHatcheryHistory: build.query<
         Response<Hatchery>,
         { id: number; query: Object }

@@ -4,6 +4,7 @@ from simple_history.admin import SimpleHistoryAdmin
 import warnings
 import tablib
 from django.db.models.query import QuerySet
+from django.db.models import Q
 
 from . import models
 from feeds.models import Feed
@@ -11,7 +12,7 @@ from weights.models import Weight
 from eggs.models import Egg
 
 
-class ChickenWeightResource(resources.ModelResource):
+class BaseChickenResource(resources.ModelResource):
     id = fields.Field(column_name='id', attribute='id')
     tag = fields.Field(column_name='tag', attribute='tag')
     hatch_date = fields.Field(column_name='hatch_date', attribute='hatch_date')
@@ -53,6 +54,8 @@ class ChickenWeightResource(resources.ModelResource):
         fields = ['id', 'tag', 'hatch_date', 'sex',
                   'breed', 'generation', 'hatchery', 'pen', 'sire', 'dam', 'reduction_date', 'reduction_reason']
 
+
+class ChickenWeightResource(BaseChickenResource):
     def export(self, *args, queryset=None, **kwargs):
         if len(args) == 1 and (
             isinstance(args[0], QuerySet) or isinstance(args[0], list)
@@ -99,49 +102,13 @@ class ChickenWeightResource(resources.ModelResource):
 
         return data
 
+    def after_import_row(self, row, row_result, row_number=None, **kwargs):
+        print('------------------')
+        print(row)
+        return super().after_import_row(row, row_result, row_number, **kwargs)
 
-class ChickenEggResource(resources.ModelResource):
-    id = fields.Field(column_name='id', attribute='id')
-    tag = fields.Field(column_name='tag', attribute='tag')
-    hatch_date = fields.Field(column_name='hatch_date', attribute='hatch_date')
-    sex = fields.Field(column_name='sex', attribute='sex')
-    generation = fields.Field(column_name='generation', attribute='generation')
-    breed = fields.Field(
-        column_name='breed',
-        attribute='breed',
-        widget=widgets.ForeignKeyWidget('breeds.Breed', field='name'))
-    hatchery = fields.Field(
-        column_name='hatchery',
-        attribute='hatchery',
-        widget=widgets.ForeignKeyWidget('hatchery.Hatchery', field='name'))
-    house = fields.Field(
-        column_name='house',
-        attribute='pen__house',
-        widget=widgets.ForeignKeyWidget('houses.House', field='name'))
-    pen = fields.Field(
-        column_name='pen',
-        attribute='pen',
-        widget=widgets.ForeignKeyWidget('pen.Pen', field='name'))
-    sire = fields.Field(
-        column_name='sire',
-        attribute='sire',
-        widget=widgets.ForeignKeyWidget('chickens.Chicken', field='tag'))
-    dam = fields.Field(
-        column_name='dam',
-        attribute='dam',
-        widget=widgets.ForeignKeyWidget('chickens.Chicken', field='tag'))
-    reduction_date = fields.Field(
-        column_name='reduction_date', attribute='reduction_date')
-    reduction_reason = fields.Field(
-        column_name='reduction_reason',
-        attribute='reduction_reason',
-        widget=widgets.ForeignKeyWidget('reduction_reason.ReductionReason', field='name'))
 
-    class Meta:
-        model = models.Chicken
-        fields = ['id', 'tag', 'hatch_date', 'sex',
-                  'breed', 'generation', 'hatchery', 'pen', 'sire', 'dam', 'reduction_date', 'reduction_reason']
-
+class ChickenEggResource(BaseChickenResource):
     def export(self, *args, queryset=None, **kwargs):
         if len(args) == 1 and (
             isinstance(args[0], QuerySet) or isinstance(args[0], list)
@@ -193,48 +160,7 @@ class ChickenEggResource(resources.ModelResource):
         return data
 
 
-class ChickenFeedResource(resources.ModelResource):
-    id = fields.Field(column_name='id', attribute='id')
-    tag = fields.Field(column_name='tag', attribute='tag')
-    hatch_date = fields.Field(column_name='hatch_date', attribute='hatch_date')
-    sex = fields.Field(column_name='sex', attribute='sex')
-    generation = fields.Field(column_name='generation', attribute='generation')
-    breed = fields.Field(
-        column_name='breed',
-        attribute='breed',
-        widget=widgets.ForeignKeyWidget('breeds.Breed', field='name'))
-    hatchery = fields.Field(
-        column_name='hatchery',
-        attribute='hatchery',
-        widget=widgets.ForeignKeyWidget('hatchery.Hatchery', field='name'))
-    house = fields.Field(
-        column_name='house',
-        attribute='pen__house',
-        widget=widgets.ForeignKeyWidget('houses.House', field='name'))
-    pen = fields.Field(
-        column_name='pen',
-        attribute='pen',
-        widget=widgets.ForeignKeyWidget('pen.Pen', field='name'))
-    sire = fields.Field(
-        column_name='sire',
-        attribute='sire',
-        widget=widgets.ForeignKeyWidget('chickens.Chicken', field='tag'))
-    dam = fields.Field(
-        column_name='dam',
-        attribute='dam',
-        widget=widgets.ForeignKeyWidget('chickens.Chicken', field='tag'))
-    reduction_date = fields.Field(
-        column_name='reduction_date', attribute='reduction_date')
-    reduction_reason = fields.Field(
-        column_name='reduction_reason',
-        attribute='reduction_reason',
-        widget=widgets.ForeignKeyWidget('reduction_reason.ReductionReason', field='name'))
-
-    class Meta:
-        model = models.Chicken
-        fields = ['id', 'tag', 'hatch_date', 'sex',
-                  'breed', 'generation', 'hatchery', 'pen', 'sire', 'dam', 'reduction_date', 'reduction_reason']
-
+class ChickenFeedResource(BaseChickenResource):
     def export(self, *args, queryset=None, **kwargs):
         if len(args) == 1 and (
             isinstance(args[0], QuerySet) or isinstance(args[0], list)
@@ -253,7 +179,7 @@ class ChickenFeedResource(resources.ModelResource):
 
         ids = list(zip(*queryset.values_list('id')))[0] or []
 
-        feeds = Feed.objects.filter(chicken__in=ids)
+        feeds = Feed.objects.filter(chicken__in=ids, chicken__isnull=False)
         weeks = feeds.values_list(
             'week').distinct().order_by('week')
         weeks = list(zip(*weeks))[0] or []
@@ -279,11 +205,8 @@ class ChickenFeedResource(resources.ModelResource):
         return data
 
 
-class ChickenResource(resources.ModelResource):
-    class Meta:
-        model = models.Chicken
-        fields = ['id', 'tag', 'hatch_date', 'sex',
-                  'breed']
+class ChickenResource(BaseChickenResource):
+    pass
 
 
 admin.site.register(models.Chicken, SimpleHistoryAdmin)

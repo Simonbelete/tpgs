@@ -11,6 +11,11 @@ router.register(r'hatchery', views.HatcheryViewSet,
 router.register(r'hatchery/(?P<id>.+)/histories',
                 views.HatcheryHistoryViewSet, basename='api_breeds_histories'),
 
+summary_router = NestedDefaultRouter(
+    router, r'hatchery', lookup='id')
+summary_router.register(r'hatchery', views.HatcherySummaryViewSet,
+                        basename='api_hatchery_summary')
+
 # Hatchery Eggs
 router.register(r'hatchery-eggs', views.HatcheryEggViewSet,
                 basename='api_hatchery_egg')
@@ -48,6 +53,7 @@ hatchery_incubation_router.register(r'incubations', views.HatcheryEggViewSet,
 
 urlpatterns = [
     path('', include(router.urls)),
+    path('', include(summary_router.urls)),
     path('', include(hatchery_egg_summary_router.urls)),
     path('', include(hatchery_egg_router.urls)),
     path('', include(incubation_summary_router.urls)),

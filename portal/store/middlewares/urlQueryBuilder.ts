@@ -1,10 +1,10 @@
-import { createListenerMiddleware, isAnyOf } from '@reduxjs/toolkit'
-import Router from 'next/router';
-import { filterSlice } from '@/store/slices';
-import buildURLParams from '@/util/buildURLParams';
+import { createListenerMiddleware, isAnyOf } from "@reduxjs/toolkit";
+import Router from "next/router";
+import { filterSlice } from "@/store/slices";
+import buildURLParams from "@/util/buildURLParams";
 import { RootState } from "@/store";
 
-const listenerMiddleware = createListenerMiddleware()
+const listenerMiddleware = createListenerMiddleware();
 
 listenerMiddleware.startListening({
   matcher: isAnyOf(
@@ -12,23 +12,28 @@ listenerMiddleware.startListening({
     filterSlice.actions.setIsActive,
     filterSlice.actions.pushFilter,
     filterSlice.actions.popFilter,
-    filterSlice.actions.reset,
+    filterSlice.actions.reset
     // ...Object.values(filterSlice.actions)
   ),
   effect: async (action, listenerApi) => {
     const state: RootState = listenerApi.getState() as RootState;
 
-    if(String(action.type).includes(filterSlice.name)) {
-      Router.push({
-        pathname: Router.pathname,
-        query: buildURLParams({
-          search: state.filter.search,
-          is_active: state.filter.is_active,
-          ...state.filter.filters,
-        }),
-      }, undefined, {shallow: true}); 
+    if (String(action.type).includes(filterSlice.name)) {
+      Router.push(
+        {
+          pathname: Router.pathname,
+          query: buildURLParams({
+            search: state.filter.search,
+            is_active: state.filter.is_active,
+            //
+            // ...state.filter.filters,
+          }),
+        },
+        undefined,
+        { shallow: true }
+      );
     }
-  }
-})
+  },
+});
 
 export const urlQueryBuilder = listenerMiddleware;

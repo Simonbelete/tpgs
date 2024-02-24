@@ -19,25 +19,16 @@ class ChickenFilter(CoreFilterSet):
         }
 
 
-class ChickenResourceFilter(CoreFilterSet):
-
-    class Meta:
-        models = models.Chicken
-        fields = ['tag', 'sex']
-        # fields = {
-        #     'id': ['in', 'exact'],
-        #     'hatchery': ['in', 'exact'],
-        #     'generation': ['exact'],
-        #     'house': ['in', 'exact'],
-        #     'pen': ['in', 'exact'],
-        #     'sex': ['exact']
-        # }
-
-
 class ChickenExportFilter(CoreFilterSet):
     tag = filters.CharFilter(field_name='tag', lookup_expr='contains')
     house = filters.NumberFilter(field_name='pen__house', lookup_expr='exact')
 
     class Meta:
         model = models.Chicken
-        fields = ['tag', 'sex', 'id', 'hatchery', 'generation', 'pen']
+        fields = {
+            'id': ['exact', 'in'],
+            'sex': ['exact'],
+            'pen': ['in', 'exact'],
+            'pen__house': ['in', 'exact'],
+            'hatchery': ['in', 'exact']
+        }
