@@ -15,6 +15,7 @@ from rest_framework.renderers import TemplateHTMLRenderer
 from django_tenants.utils import schema_context
 from django_tenants.utils import tenant_context
 from farms.models import Farm
+import numpy as np
 
 from core.serializers import UploadSerializer
 
@@ -176,6 +177,7 @@ class GenericImportView(APIView):
     def import_xlsx(self, request):
         file = request.FILES.get('file')
         df = pd.read_excel(file, header=0)
+        df = df.replace(np.nan, None)
         df = self.after_read_file(df)
         dataset = Dataset().load(df)
         resource = self.get_resource()
@@ -188,6 +190,7 @@ class GenericImportView(APIView):
     def import_xls(self, request):
         file = request.FILES.get('file')
         df = pd.read_excel(file, header=0)
+        df = df.replace(np.nan, None)
         df = self.after_read_file(df)
         dataset = Dataset().load(df)
         resource = self.get_resource()
@@ -201,6 +204,7 @@ class GenericImportView(APIView):
         with tenant_context(Farm.objects.get(name="test")):
             file = request.FILES.get('file')
             df = pd.read_csv(file, header=0)
+            df = df.replace(np.nan, None)
             df = self.after_read_file(df)
             dataset = Dataset().load(df)
             resource = self.get_resource()
