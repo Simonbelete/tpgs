@@ -85,6 +85,19 @@ class ChickenWeightImport(GenericImportView):
     def get_resource(self):
         return admin.ChickenWeightResource()
 
+    # def after_read_file(self, df):
+    #     col_filter = "((W|w)eek(\s)?)[0-9]+"
+    #     df = df[df.columns.drop(list(df.filter(regex=col_filter)))]
+
+    #     self.df_weekly = df.filter(
+    #         regex=(col_filter)).copy(deep=True)
+    #     return df
+
+    # def after_imported(self):
+    #     for index, row in self.df_weekly.iterrows():
+    #         print('-----------------s-----')
+    #         print(row)
+
 
 class ChickenEggExport(GenericExportView):
     queryset = models.Chicken.objects.all()

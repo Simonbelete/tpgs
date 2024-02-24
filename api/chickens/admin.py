@@ -1,5 +1,6 @@
 from django.contrib import admin
 from import_export import resources, fields, widgets
+from import_export.widgets import ForeignKeyWidget
 from simple_history.admin import SimpleHistoryAdmin
 import warnings
 import tablib
@@ -10,48 +11,56 @@ from . import models
 from feeds.models import Feed
 from weights.models import Weight
 from eggs.models import Egg
+from hatchery.models import Hatchery
+from breeds.models import Breed
+from houses.models import House
+from pen.models import Pen
+from chickens.models import Chicken
+from reduction_reason.models import ReductionReason
 
 
 class BaseChickenResource(resources.ModelResource):
-    id = fields.Field(column_name='id', attribute='id')
     tag = fields.Field(column_name='tag', attribute='tag')
     hatch_date = fields.Field(column_name='hatch_date', attribute='hatch_date')
     sex = fields.Field(column_name='sex', attribute='sex')
-    generation = fields.Field(column_name='generation', attribute='generation')
+    generation = fields.Field(column_name='generation',
+                              attribute='generation', readonly=True)
     breed = fields.Field(
         column_name='breed',
         attribute='breed',
-        widget=widgets.ForeignKeyWidget('breeds.Breed', field='name'))
+        widget=widgets.ForeignKeyWidget(Breed, field='name'))
     hatchery = fields.Field(
         column_name='hatchery',
         attribute='hatchery',
-        widget=widgets.ForeignKeyWidget('hatchery.Hatchery', field='name'))
+        widget=widgets.ForeignKeyWidget(Hatchery, field='name'))
     house = fields.Field(
         column_name='house',
         attribute='pen__house',
-        widget=widgets.ForeignKeyWidget('houses.House', field='name'))
+        widget=widgets.ForeignKeyWidget(House, field='name'))
     pen = fields.Field(
         column_name='pen',
         attribute='pen',
-        widget=widgets.ForeignKeyWidget('pen.Pen', field='name'))
+        widget=widgets.ForeignKeyWidget(Pen, field='name'))
     sire = fields.Field(
         column_name='sire',
         attribute='sire',
-        widget=widgets.ForeignKeyWidget('chickens.Chicken', field='tag'))
+        widget=widgets.ForeignKeyWidget(Chicken, field='tag'))
     dam = fields.Field(
         column_name='dam',
         attribute='dam',
-        widget=widgets.ForeignKeyWidget('chickens.Chicken', field='tag'))
+        widget=widgets.ForeignKeyWidget(Chicken, field='tag'))
     reduction_date = fields.Field(
         column_name='reduction_date', attribute='reduction_date')
     reduction_reason = fields.Field(
         column_name='reduction_reason',
         attribute='reduction_reason',
-        widget=widgets.ForeignKeyWidget('reduction_reason.ReductionReason', field='name'))
+        widget=widgets.ForeignKeyWidget(ReductionReason, field='name'))
 
     class Meta:
         model = models.Chicken
-        fields = ['id', 'tag', 'hatch_date', 'sex',
+        import_id_fields = ['tag']
+        exclude = ['id']
+        fields = ['tag', 'hatch_date', 'sex',
                   'breed', 'generation', 'hatchery', 'pen', 'sire', 'dam', 'reduction_date', 'reduction_reason']
 
 
@@ -101,11 +110,6 @@ class ChickenWeightResource(BaseChickenResource):
         self.after_export(queryset, data, *args, **kwargs)
 
         return data
-
-    def after_import_row(self, row, row_result, row_number=None, **kwargs):
-        print('------------------')
-        print(row)
-        return super().after_import_row(row, row_result, row_number, **kwargs)
 
 
 class ChickenEggResource(BaseChickenResource):

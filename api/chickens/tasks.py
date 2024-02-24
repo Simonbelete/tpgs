@@ -104,3 +104,10 @@ def unarchive_resources(instance):
     eggs = Egg.objects.filter(chicken=instance.id).update(is_active=True)
     weights = Weight.objects.filter(
         chicken=instance.id).update(is_active=True)
+
+
+@shared_task
+def import_weekly_weights(df):
+    for index, row in df.iterrows():
+        print('----------------------')
+        print(row)

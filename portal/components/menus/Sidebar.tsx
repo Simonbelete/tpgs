@@ -50,6 +50,7 @@ import ViewTimelineIcon from "@mui/icons-material/ViewTimeline";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store";
 import PinIcon from "@mui/icons-material/Pin";
+import RuleIcon from "@mui/icons-material/Rule";
 
 function menuProps(key: string) {
   return {
@@ -560,7 +561,6 @@ const SidebarMenu = () => {
                 </Typography>
               </MenuItem>
             </SubMenu>
-
             <MenuItem
               component={
                 <Link onClick={() => toggleSidebar()} href="/weights" />
@@ -706,6 +706,20 @@ const SidebarMenu = () => {
             >
               <Typography variant="body1" fontSize={14}>
                 Stages
+              </Typography>
+            </MenuItem>
+            <MenuItem
+              component={
+                <Link
+                  onClick={() => toggleSidebar()}
+                  href="/selections/create"
+                />
+              }
+              icon={<RuleIcon width="20" height="20" fill="inherit" />}
+              active={RegExp("^/selections$").test(router.pathname)}
+            >
+              <Typography variant="body1" fontSize={14}>
+                Selection
               </Typography>
             </MenuItem>
           </Menu>

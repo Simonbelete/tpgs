@@ -13,6 +13,8 @@ from import_export import resources
 import pandas as pd
 from rest_framework.renderers import TemplateHTMLRenderer
 from django_tenants.utils import schema_context
+from django_tenants.utils import tenant_context
+from farms.models import Farm
 
 from core.serializers import UploadSerializer
 
@@ -162,38 +164,51 @@ class GenericImportView(APIView):
     renderer_classes = [TemplateHTMLRenderer]
     template_name = 'import_result.html'
 
+    def after_read_file(self, df):
+        return df
+
+    def after_imported(self):
+        pass
+
     def get_resource(self):
         raise NotImplemented()
 
     def import_xlsx(self, request):
         file = request.FILES.get('file')
         df = pd.read_excel(file, header=0)
+        df = self.after_read_file(df)
         dataset = Dataset().load(df)
         resource = self.get_resource()
         result = resource.import_data(dataset, dry_run=True)
         if not result.has_errors():
             result = resource.import_data(dataset, dry_run=False)
+            self.after_imported()
         return Response({'result': result})
 
     def import_xls(self, request):
         file = request.FILES.get('file')
         df = pd.read_excel(file, header=0)
+        df = self.after_read_file(df)
         dataset = Dataset().load(df)
         resource = self.get_resource()
         result = resource.import_data(dataset, dry_run=True)
         if not result.has_errors():
             result = resource.import_data(dataset, dry_run=False)
+            self.after_imported()
         return Response({'result': result})
 
     def import_csv(self, request):
-        file = request.FILES.get('file')
-        df = pd.read_csv(file, header=0)
-        dataset = Dataset().load(df)
-        resource = self.get_resource()
-        result = resource.import_data(dataset, dry_run=True)
-        if not result.has_errors():
-            result = resource.import_data(dataset, dry_run=False)
-        return Response({'result': result})
+        with tenant_context(Farm.objects.get(name="test")):
+            file = request.FILES.get('file')
+            df = pd.read_csv(file, header=0)
+            df = self.after_read_file(df)
+            dataset = Dataset().load(df)
+            resource = self.get_resource()
+            result = resource.import_data(dataset, dry_run=True)
+            if not result.has_errors():
+                result = resource.import_data(dataset, dry_run=False)
+                self.after_imported()
+            return Response({'result': result})
 
     def post(self, request, import_type=None):
         if (import_type == 'xlsx'):
