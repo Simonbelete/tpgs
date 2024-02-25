@@ -10,21 +10,25 @@ from django.template import Context
 logger = logging.getLogger(__name__)
 
 
-def open_file(file):
-    return file.open('r')
-
-
-def create_dataframe(instance):
-    return pd.read_csv(open_file(instance.file), header=0)
+def read_file(file, format):
+    file_open = file.open('r')
+    if (format == "csv"):
+        return pd.read_csv(file_open, header=0)
+    elif (format == "xlsx" or format == "xls"):
+        return pd.read_excel(file_open, header=0)
+    else:
+        raise Exception("Not Valid file format try csv,xlsx, xls")
 
 
 def _run_import(instance, dry_run=False):
-    print('--------------------------')
-    df = create_dataframe(instance)
-    dataset = Dataset().load(df)
+    df = read_file(instance.file, instance.format)
     module = importlib.import_module('import_export_job.resources')
     resource = getattr(module, instance.resource)
-    result = resource().import_data(dataset=dataset, dry_run=dry_run)
+    resource = resource()
+
+    df = resource.after_read_file(df)
+    dataset = Dataset().load(df)
+    result = resource.import_data(dataset=dataset, dry_run=dry_run)
 
     rendered = render_to_string("import_result.html", {'result': result})
 

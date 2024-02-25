@@ -51,3 +51,6 @@ class ImportJob(models.Model):
 
     def __str__(self):
         return self.uploaded_on.date()
+
+    class Meta:
+        ordering = ('-uploaded_on',)

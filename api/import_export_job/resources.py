@@ -13,7 +13,13 @@ from chickens.models import Chicken
 from reduction_reason.models import ReductionReason
 
 
-class BaseChickenResource(resources.ModelResource):
+class BaseResource(resources.ModelResource):
+    def after_read_file(self, df):
+        """ After pd.read_csv"""
+        return df
+
+
+class BaseChickenResource(BaseResource):
     tag = fields.Field(column_name='tag', attribute='tag')
     hatch_date = fields.Field(column_name='hatch_date', attribute='hatch_date')
     sex = fields.Field(column_name='sex', attribute='sex')
@@ -59,4 +65,14 @@ class BaseChickenResource(resources.ModelResource):
 
 
 class ChickenWeightResource(BaseChickenResource):
-    pass
+    def after_read_file(self, df):
+        col_filter = "((W|w)eek(\s)?)[0-9]+"
+        self.df_weekly = df.filter(
+            regex=(col_filter)).copy(deep=True)
+        self.df_weekly['tag'] = df['tag']
+
+        df = df[df.columns.drop(list(df.filter(regex=col_filter)))]
+
+        print(self.df_weekly.head)
+
+        return df
