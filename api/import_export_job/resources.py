@@ -1,5 +1,9 @@
 from django.contrib import admin
 from import_export import resources, fields, widgets
+import numpy as np
+import pandas as pd
+from tablib import Dataset
+from django.template.loader import get_template, render_to_string
 
 from . import models
 from feeds.models import Feed
@@ -71,8 +75,39 @@ class ChickenWeightResource(BaseChickenResource):
             regex=(col_filter)).copy(deep=True)
         self.df_weekly['tag'] = df['tag']
 
+        df = df.replace(np.nan, None)
+        columns = list(df.filter(regex=col_filter))
+
         df = df[df.columns.drop(list(df.filter(regex=col_filter)))]
 
-        print(self.df_weekly.head)
+        # Build for weight resource
+        self.df_weights = pd.melt(self.df_weekly, id_vars=[
+                                  'tag'], value_vars=columns)
+        self.df_weights.rename(
+            columns={'tag': 'chicken', 'variable': 'week', 'value': 'weight'}, inplace=True)
+        self.df_weights['week'] = self.df_weights['week'].str.replace(
+            '\D+', '', regex=True)
 
         return df
+
+    def after_import(self, dataset, result, using_transactions, dry_run, **kwargs):
+        resource = WeightResource()
+        dataset = Dataset().load(self.df_weights)
+        print(dataset)
+        result = resource.import_data(dataset, dry_run=dry_run)
+
+        rendered = render_to_string("import_result.html", {'result': result})
+        if result.has_errors():
+            raise Exception(rendered)
+
+
+class WeightResource(BaseResource):
+    chicken = fields.Field(
+        column_name='chicken',
+        attribute='chicken',
+        widget=widgets.ForeignKeyWidget(Chicken, field='tag'))
+
+    class Meta:
+        model = Weight
+        import_id_fields = ['chicken', 'week']
+        fields = ['id', 'chicken', 'week', 'weight']

@@ -11,7 +11,7 @@ const typeMapper = {
     label: "Done",
     color: "success",
   },
-  DRY_RUN: {
+  "DRY RUN": {
     label: "Dry Run",
     color: "warning",
   },
