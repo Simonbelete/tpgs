@@ -90,8 +90,8 @@ export default function List<T>({
 
   const settingColumn: GridColDef = {
     field: "Actions",
-    flex: 1,
-    minWidth: 200,
+    flex: 2,
+    // minWidth: 200,
     headerAlign: "center",
     align: "right",
     renderCell(params) {
