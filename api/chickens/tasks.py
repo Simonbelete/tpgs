@@ -108,6 +108,10 @@ def unarchive_resources(instance):
 
 @shared_task
 def import_weekly_weights(df):
+    columns = df.columns
+    col_filter = "((W|w)eek(\s)?)[0-9]+"
     for index, row in df.iterrows():
-        print('----------------------')
-        print(row)
+        for col in columns:
+            week_num = col.lower().split('week')[1]
+            Weight.objects.update_or_create(chicken__tag=row['tag'], week=week_num, defaults={
+                'weight': row[col]})

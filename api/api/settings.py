@@ -107,7 +107,8 @@ SHARED_APPS = [
     'inbox',
     'requirements',
     'city',
-    'drf_standardized_errors'
+    'drf_standardized_errors',
+    'import_export_job'
 ]
 
 TENANT_APPS = [

@@ -51,6 +51,8 @@ import { useSelector } from "react-redux";
 import { RootState } from "@/store";
 import PinIcon from "@mui/icons-material/Pin";
 import RuleIcon from "@mui/icons-material/Rule";
+import FileDownloadIcon from "@mui/icons-material/FileDownload";
+import FileUploadIcon from "@mui/icons-material/FileUpload";
 
 function menuProps(key: string) {
   return {
@@ -749,6 +751,19 @@ const SidebarMenu = () => {
             >
               <Typography variant="body1" fontSize={14}>
                 Reports
+              </Typography>
+            </MenuItem>
+          </Menu>
+          <Menu menuItemStyles={menuItemStyles}>
+            <MenuItem
+              component={
+                <Link onClick={() => toggleSidebar()} href="/import-job" />
+              }
+              icon={<FileUploadIcon fontSize="small" />}
+              active={RegExp("/import-job(.*)$").test(router.pathname)}
+            >
+              <Typography variant="body1" fontSize={14}>
+                Import
               </Typography>
             </MenuItem>
           </Menu>

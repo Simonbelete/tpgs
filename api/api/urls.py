@@ -65,6 +65,7 @@ urlpatterns = [
         path('', include('hatchery.urls')),
         path('', include('requirements.urls')),
         path('', include('city.urls')),
+        path('', include('import_export_job.urls')),
         path('schema/', SpectacularAPIView.as_view(), name='schema'),
         # Optional UI:
         path('schema/swagger-ui/',

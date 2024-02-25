@@ -14,7 +14,7 @@ from tablib import Dataset
 from django.db.models import Q
 from rest_framework.response import Response
 from rest_framework.exceptions import NotFound
-from .tasks import build_pedigree_tree
+from .tasks import build_pedigree_tree, import_weekly_weights
 from django.db import connection
 
 from core.views import (
@@ -87,16 +87,18 @@ class ChickenWeightImport(GenericImportView):
 
     def after_read_file(self, df):
         col_filter = "((W|w)eek(\s)?)[0-9]+"
-        df = df[df.columns.drop(list(df.filter(regex=col_filter)))]
 
         self.df_weekly = df.filter(
             regex=(col_filter)).copy(deep=True)
+        self.df_weekly['tag'] = df['tag']
+
+        df = df[df.columns.drop(list(df.filter(regex=col_filter)))]
+
+        print(self.df_weekly.head)
         return df
 
     def after_imported(self):
-        for index, row in self.df_weekly.iterrows():
-            print('-----------------s-----')
-            print(row)
+        import_weekly_weights.delay(self.df_weekly)
 
 
 class ChickenEggExport(GenericExportView):
