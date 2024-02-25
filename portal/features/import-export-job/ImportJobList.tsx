@@ -5,6 +5,7 @@ import {
   DashboardAction,
   PermanentlyDeleteAction,
   EditAction,
+  ViewAction,
   HistoryAction,
   CreateButton,
   ExportModal,
@@ -29,7 +30,7 @@ export const ImportJobList = () => {
     <ListLayout<ImportJob>
       title="Import"
       columns={columns}
-      actions={[EditAction, HistoryAction, PermanentlyDeleteAction]}
+      actions={[ViewAction]}
       getEndpoint={importjobApi.endpoints.getImportJobs}
       deleteEndpoint={importjobApi.endpoints.deleteImportJob}
       filters={{}}

@@ -30,6 +30,11 @@ class ImportJob(models.Model):
         default="",
         blank=True,
     )
+    report = models.TextField(
+        verbose_name="HTML rendered report",
+        default="",
+        blank=True,
+    )
     resource = models.CharField(
         verbose_name="Name of resource to import to",
         max_length=160,

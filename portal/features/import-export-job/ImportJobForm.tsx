@@ -13,6 +13,7 @@ import _ from "lodash";
 const resources = [
   { name: "---", resource: "" },
   { name: "Chicken Detail", resource: "ChickenDetailResource" },
+  { name: "Body Weight", resource: "ChickenWeightResource" },
 ];
 
 type Inputs = Partial<ImportJob>;

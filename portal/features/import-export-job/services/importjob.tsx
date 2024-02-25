@@ -1,5 +1,8 @@
 import { baseApi } from "@/services/baseApi";
 import { AbstractSummary, Response, ImportJob } from "@/models";
+import { NextPageContext } from "next";
+import { AxiosResponse } from "axios";
+import clientSSR from "@/services/client_ssr";
 
 export const URL = "/import/jobs";
 
@@ -40,6 +43,12 @@ export const importjobApi = baseApi.injectEndpoints({
   },
   overrideExisting: false,
 });
+
+export const getImportJobByIdSSR = async (
+  context: NextPageContext,
+  id: number
+): Promise<AxiosResponse<Response<ImportJob>>> =>
+  clientSSR(context).get(`${URL}/${id}`);
 
 export const {
   useGetImportJobsQuery,
