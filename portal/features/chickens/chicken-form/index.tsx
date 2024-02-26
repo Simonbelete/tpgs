@@ -176,6 +176,7 @@ export const ChickenForm = ({
                         process.env.NEXT_PUBLIC_API_DATE_FORMAT
                       ),
                       generation: values.generation,
+                      color: values.color,
                     };
 
                     return cleaned_data;
@@ -243,6 +244,12 @@ export const ChickenForm = ({
                       xs: 12,
                       md: 6,
                       type: "number",
+                    },
+                    color: {
+                      label: "Color",
+                      placeholder: "Color",
+                      xs: 12,
+                      md: 6,
                     },
                   }}
                   onCreateSuccess={handleCreated}

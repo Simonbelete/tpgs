@@ -65,7 +65,7 @@ class BaseChickenResource(BaseResource):
         import_id_fields = ['tag']
         exclude = ['id']
         fields = ['tag', 'hatch_date', 'sex',
-                  'breed', 'generation', 'hatchery', 'pen', 'sire', 'dam', 'reduction_date', 'reduction_reason']
+                  'breed', 'generation', 'hatchery', 'pen', 'sire', 'dam', 'reduction_date', 'reduction_reason', 'color']
 
 
 class ChickenWeightResource(BaseChickenResource):
