@@ -15,7 +15,9 @@ import { useRouter } from "next/router";
 const resources = [
   { name: "---", resource: "" },
   { name: "Chicken Detail", resource: "ChickenDetailResource" },
-  { name: "Body Weight", resource: "ChickenWeightResource" },
+  { name: "Import Chicken Body Weights", resource: "ChickenWeightResource" },
+  { name: "Import Chicken Feed Intake", resource: "ChickenFeedResource" },
+  { name: "Import Chicken Egg Production", resource: "EggResource" },
 ];
 
 type Inputs = Partial<ImportJob>;
@@ -88,7 +90,7 @@ export const ImportJobForm = () => {
       <form onSubmit={handleSubmit(onSubmit)}>
         <Grid container spacing={4}>
           <Grid item xs={12}>
-            <Stack alignContent={"space-between"} direction="row">
+            <Stack alignContent={"space-betweens"} direction="row">
               <Button variant="outlined" size="small" component="label">
                 Select File
                 <input

@@ -101,6 +101,39 @@ class ChickenWeightResource(BaseChickenResource):
             raise Exception(rendered)
 
 
+class ChickenFeedResource(BaseChickenResource):
+    def after_read_file(self, df):
+        col_filter = "((W|w)eek(\s)?)[0-9]+"
+        self.df_weekly = df.filter(
+            regex=(col_filter)).copy(deep=True)
+        self.df_weekly['tag'] = df['tag']
+
+        df = df.replace(np.nan, None)
+        columns = list(df.filter(regex=col_filter))
+
+        df = df[df.columns.drop(list(df.filter(regex=col_filter)))]
+
+        # Build for weight resource
+        self.df_weights = pd.melt(self.df_weekly, id_vars=[
+                                  'tag'], value_vars=columns)
+        self.df_weights.rename(
+            columns={'tag': 'chicken', 'variable': 'week', 'value': 'weight'}, inplace=True)
+        self.df_weights['week'] = self.df_weights['week'].str.replace(
+            '\D+', '', regex=True)
+
+        return df
+
+    def after_import(self, dataset, result, using_transactions, dry_run, **kwargs):
+        resource = FeedResource()
+        dataset = Dataset().load(self.df_weights)
+        print(dataset)
+        result = resource.import_data(dataset, dry_run=dry_run)
+
+        rendered = render_to_string("import_result.html", {'result': result})
+        if result.has_errors():
+            raise Exception(rendered)
+
+
 class WeightResource(BaseResource):
     chicken = fields.Field(
         column_name='chicken',
@@ -111,3 +144,27 @@ class WeightResource(BaseResource):
         model = Weight
         import_id_fields = ['chicken', 'week']
         fields = ['id', 'chicken', 'week', 'weight']
+
+
+class FeedResource(BaseResource):
+    chicken = fields.Field(
+        column_name='chicken',
+        attribute='chicken',
+        widget=widgets.ForeignKeyWidget(Chicken, field='tag'))
+
+    class Meta:
+        model = Feed
+        import_id_fields = ['chicken', 'week']
+        fields = ['id', 'chicken', 'week', 'weight']
+
+
+class EggResource(BaseResource):
+    chicken = fields.Field(
+        column_name='chicken',
+        attribute='chicken',
+        widget=widgets.ForeignKeyWidget(Chicken, field='tag'))
+
+    class Meta:
+        model = Egg
+        import_id_fields = ['chicken', 'week']
+        fields = ['id', 'chicken', 'week', 'eggs', 'weight']
