@@ -168,3 +168,9 @@ class EggResource(BaseResource):
         model = Egg
         import_id_fields = ['chicken', 'week']
         fields = ['id', 'chicken', 'week', 'eggs', 'weight']
+
+
+class BreedResource(BaseResource):
+    class Meta:
+        model = Breed
+        fields = ['id', 'name', 'color']
