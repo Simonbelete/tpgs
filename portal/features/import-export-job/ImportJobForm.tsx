@@ -19,6 +19,7 @@ const resources = [
   { name: "Import Chicken Feed Intake", resource: "ChickenFeedResource" },
   { name: "Import Chicken Egg Production", resource: "EggResource" },
   { name: "Breeds", resource: "BreedResource" },
+  { name: "Import Hatch(Batch)", resource: "HatcheryResource" },
 ];
 
 type Inputs = Partial<ImportJob>;

@@ -21,7 +21,7 @@ def read_file(file, format):
         raise Exception("Not Valid file format try csv,xlsx, xls")
 
 
-def _run_import(instance, dry_run=False):
+def _run_import(instance, dry_run=True):
     with tenant_context(instance.farm):
         df = read_file(instance.file, instance.format)
         module = importlib.import_module('import_export_job.resources')
@@ -49,7 +49,7 @@ def run_import_job(pk):
     with tenant_context(import_job.farm):
         try:
             _run_import(import_job, dry_run=True)
-            _run_import(import_job, dry_run=False)
+            # _run_import(import_job, dry_run=False)
         except Exception as e:
             logger.error(
                 "Some error occurred while deleting ImportJob file: {0}".format(

@@ -25,7 +25,8 @@ class BaseResource(resources.ModelResource):
 
 class BaseChickenResource(BaseResource):
     tag = fields.Field(column_name='tag', attribute='tag')
-    hatch_date = fields.Field(column_name='hatch_date', attribute='hatch_date')
+    hatch_date = fields.Field(column_name="hatch_date", attribute="hatch_date",
+                              widget=widgets.DateWidget(format="%d/%m/%Y"))
     sex = fields.Field(column_name='sex', attribute='sex')
     generation = fields.Field(column_name='generation',
                               attribute='generation')
@@ -174,3 +175,17 @@ class BreedResource(BaseResource):
     class Meta:
         model = Breed
         fields = ['id', 'name', 'color']
+
+
+class HatcheryResource(BaseResource):
+    breed = fields.Field(
+        column_name='breed',
+        attribute='breed',
+        widget=widgets.ForeignKeyWidget(Breed, field='name'))
+    hatch_date = fields.Field(column_name="hatch_date", attribute="hatch_date",
+                              widget=widgets.DateWidget(format="%d/%m/%Y"))
+
+    class Meta:
+        model = Hatchery
+        import_id_fields = ['name']
+        fields = ['name', 'hatch_date', 'breed']

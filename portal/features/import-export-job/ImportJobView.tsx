@@ -91,10 +91,10 @@ export const ImportJobView = ({ data }: { data: ImportJob }) => {
                 <Chip
                   variant="outlined"
                   // @ts-ignore
-                  label={typeMapper[data.job_status].label}
+                  label={_.get(typeMapper[data.job_status], "label", "")}
                   size="small"
                   // @ts-ignore
-                  color={typeMapper[data.job_status].color}
+                  color={_.get(typeMapper[data.job_status], "color", "default")}
                 />
               )}
             </Stack>

@@ -7,11 +7,11 @@ from .tasks import sync_selected_chickens, unsync_selected_chickens, sync_unsele
 
 @receiver(post_save, sender=Hatchery)
 def sync_to_chicken(sender, instance, update_fields=None, **kwargs):
-    sync_selected_chickens.delay(hatchery=instance.id)
-    sync_unselected_chickens.delay(hatchery=instance.id)
+    sync_selected_chickens.delay(instance.id)
+    sync_unselected_chickens.delay(instance.id)
 
 
 @receiver(post_delete, sender=Hatchery)
 def remove_hatchery(sender, instance, update_fields=None, **kwargs):
-    unsync_selected_chickens.delay(hatchery=instance.id)
-    unsync_unselected_chickens.delay(hatchery=instance.id)
+    unsync_selected_chickens.delay(instance.id)
+    unsync_unselected_chickens.delay(instance.id)

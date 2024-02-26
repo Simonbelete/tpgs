@@ -41,7 +41,7 @@ class Chicken(CoreModel):
     history = HistoricalRecords()
 
     def __str__(self):
-        return self.tag
+        return str(self.tag)
 
     @property
     def display_name(self):

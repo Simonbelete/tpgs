@@ -5,6 +5,7 @@ import { importjobApi, URL } from "./services";
 import { ImportJob } from "@/models";
 import { Stack, Chip } from "@mui/material";
 import dayjs from "dayjs";
+import _ from "lodash";
 
 const typeMapper = {
   DONE: {
@@ -54,7 +55,6 @@ export const ImportJobList = () => {
             )
           : "",
     },
-
     {
       field: "error",
       headerName: "Job Status",
@@ -63,14 +63,18 @@ export const ImportJobList = () => {
       renderCell: (params: GridRenderCellParams<any>) => {
         return (
           <Stack direction="row" spacing={1}>
-            {params.row.job_status && (
+            {params.row.job_status.length > 0 && (
               <Chip
                 variant="outlined"
                 // @ts-ignore
-                label={typeMapper[params.row.job_status].label}
+                label={_.get(typeMapper[params.row.job_status], "label", "")}
                 size="small"
-                // @ts-ignore
-                color={typeMapper[params.row.job_status].color}
+                color={_.get(
+                  // @ts-ignore
+                  typeMapper[params.row.job_status],
+                  "color",
+                  "default"
+                )}
               />
             )}
           </Stack>

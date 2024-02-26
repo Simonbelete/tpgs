@@ -37,18 +37,22 @@
             <tbody>
                 {% for row_result in result %}
                     <tr>
-                        {% for key, errors in row_result.validation_error %}
-                        <td>
-                           {{ key }}
-                        </td>
-                        <td>
-                            <ul>
-                                {% for err in errors %}
-                                    <li>{{ err }}</li>
-                                {% endfor %}
-                            </ul>
-                       </td>
-                        {% endfor %}
+                        {{ row_result.validation_error }}
+                        {% comment %}
+                            {% for key, errors in row_result.validation_error %}
+                            <td>
+                            {{ key }}
+                            </td>
+                            <td>
+                                <ul>
+                                    {% for err in errors %}
+                                        <li>{{ err }}</li>
+                                    {% endfor %}
+                                </ul>
+                            </td>
+                        
+                            {% endfor %}
+                        {% endcomment %}
                     </tr>
                 {% endfor %}
             </tbody>
