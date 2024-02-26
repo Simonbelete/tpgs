@@ -28,7 +28,7 @@ class BaseChickenResource(BaseResource):
     hatch_date = fields.Field(column_name='hatch_date', attribute='hatch_date')
     sex = fields.Field(column_name='sex', attribute='sex')
     generation = fields.Field(column_name='generation',
-                              attribute='generation', readonly=True)
+                              attribute='generation')
     breed = fields.Field(
         column_name='breed',
         attribute='breed',

@@ -24,6 +24,7 @@ class Hatchery(CoreModel):
         Stage, on_delete=models.SET_NULL, null=True, blank=True, related_name='selection')
     from_stage = models.ForeignKey(
         Stage, on_delete=models.SET_NULL, null=True, blank=True, related_name='from_selection')  # Stage History
+    # All the fields are for merely sync to Chicken model
     selected_chickens = models.ManyToManyField(
         Chicken, null=True, blank=True, related_name='selected_selection')
     unselected_chickens = models.ManyToManyField(
