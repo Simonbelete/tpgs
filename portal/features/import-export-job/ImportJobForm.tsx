@@ -1,6 +1,6 @@
 import React, { useState, ChangeEvent } from "react";
 import { useSnackbar } from "notistack";
-import { Box, Button, Grid, TextField } from "@mui/material";
+import { Box, Button, Grid, Stack, Typography } from "@mui/material";
 import { Dropdown } from "@/components/dropdowns";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -9,6 +9,8 @@ import { ImportJob } from "@/models";
 import { useCreateImportJobMutation } from "./services";
 import client from "@/services/client";
 import _ from "lodash";
+import { Card } from "@/components";
+import { useRouter } from "next/router";
 
 const resources = [
   { name: "---", resource: "" },
@@ -24,10 +26,9 @@ const schema = yup.object({
 
 export const ImportJobForm = () => {
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+  const router = useRouter();
 
-  const [create] = useCreateImportJobMutation();
-
-  const { handleSubmit, control, setValue } = useForm<Inputs>({
+  const { handleSubmit, control, setValue, getValues } = useForm<Inputs>({
     // @ts-ignore
     resolver: yupResolver(schema),
   });
@@ -43,11 +44,25 @@ export const ImportJobForm = () => {
       format: extension,
     };
 
-    const response = await client.post("import/jobs/", body, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    });
+    try {
+      const response = await client.post("import/jobs/", body, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
+      if (response.status == 201) {
+        router.push(`/import-job/${response.data.id}`);
+      } else {
+        enqueueSnackbar("Please select file type either csv or excel", {
+          variant: "error",
+        });
+      }
+    } catch {
+      enqueueSnackbar("500 Server Error check you file and try again", {
+        variant: "error",
+      });
+    }
   };
 
   const handleFileUpload = async (event: ChangeEvent<HTMLInputElement>) => {
@@ -69,45 +84,55 @@ export const ImportJobForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <Grid container spacing={4}>
-        <Grid item xs={12}>
-          <Button variant="contained" component="label">
-            Upload File
-            <input
-              type="file"
-              hidden
-              accept=".csv,.xlsx,.xls"
-              value={""}
-              onChange={handleFileUpload}
+    <Card title="Submit Import Job">
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <Grid container spacing={4}>
+          <Grid item xs={12}>
+            <Stack alignContent={"space-between"} direction="row">
+              <Button variant="outlined" size="small" component="label">
+                Select File
+                <input
+                  type="file"
+                  hidden
+                  accept=".csv,.xlsx,.xls"
+                  value={""}
+                  onChange={handleFileUpload}
+                />
+              </Button>
+              <Typography>{_.get(getValues("file"), "name", "")}</Typography>
+            </Stack>
+          </Grid>
+          <Grid item xs={12}>
+            <Controller
+              name={"resource"}
+              control={control}
+              render={({
+                field: { onChange, value },
+                fieldState: { invalid, isTouched, isDirty, error },
+              }) => (
+                <Dropdown
+                  options={resources}
+                  error={!!error?.message}
+                  helperText={error?.message}
+                  onChange={(_, data) => onChange(data)}
+                  value={value ?? { name: "---", resource: "" }}
+                  dataKey="name"
+                />
+              )}
             />
-          </Button>
+          </Grid>
+          <Grid item xs={12}>
+            <Button
+              variant="contained"
+              size="small"
+              disableElevation
+              type="submit"
+            >
+              Submit
+            </Button>
+          </Grid>
         </Grid>
-        <Grid item xs={12}>
-          <Controller
-            name={"resource"}
-            control={control}
-            render={({
-              field: { onChange, value },
-              fieldState: { invalid, isTouched, isDirty, error },
-            }) => (
-              <Dropdown
-                options={resources}
-                error={!!error?.message}
-                helperText={error?.message}
-                onChange={(_, data) => onChange(data)}
-                value={value ?? { name: "---", resource: "" }}
-                dataKey="name"
-              />
-            )}
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <Button variant="contained" type="submit">
-            Submit
-          </Button>
-        </Grid>
-      </Grid>
-    </form>
+      </form>
+    </Card>
   );
 };

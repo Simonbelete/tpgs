@@ -46,6 +46,7 @@ def run_import_job(pk):
     import_job = models.ImportJob.objects.get(pk=pk)
     try:
         _run_import(import_job, dry_run=True)
+        # _run_import(import_job, dry_run=False)
     except Exception as e:
         logger.error(
             "Some error occurred while deleting ImportJob file: {0}".format(e)
