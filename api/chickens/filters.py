@@ -6,6 +6,8 @@ from . import models
 
 class ChickenFilter(CoreFilterSet):
     tag = filters.CharFilter(field_name='tag', lookup_expr='contains')
+    reduction_date__isnull = filters.BooleanFilter(
+        field_name='reduction_date', lookup_expr='isnull')
 
     class Meta:
         model = models.Chicken

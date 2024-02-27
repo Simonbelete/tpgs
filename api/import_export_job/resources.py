@@ -159,7 +159,7 @@ class MasterChicken(BaseChickenResource):
         df_feed['week'] = df_feed['week'].str.replace(
             '\D+', '', regex=True)  # Remove week stirng
 
-        result = WeightResource(self.import_job).import_data(
+        result = FeedResource(self.import_job).import_data(
             Dataset().load(df_feed),
             dry_run=dry_run
         )
@@ -249,11 +249,11 @@ class FeedResource(BaseResource):
         attribute='chicken',
         widget=widgets.ForeignKeyWidget(Chicken, field='tag'))
     hatchery = fields.Field(
-        column_name='Batch Feed',
+        column_name=BATCH_FEED_COLUMN_NAME,
         attribute='hatchery',
         widget=widgets.ForeignKeyWidget(Hatchery, field='name'))
     pen = fields.Field(
-        column_name=BATCH_FEED_COLUMN_NAME,
+        column_name="Pen",
         attribute='pen',
         widget=widgets.ForeignKeyWidget(Hatchery, field='name'))
 

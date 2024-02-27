@@ -51,7 +51,7 @@ export const EggForm = ({
           chicken: {
             label: "chicken",
             placeholder: "Chicken",
-            endpoint: chickenApi.endpoints.getChickens,
+            endpoint: chickenApi.endpoints.getAliveChickens,
             form: <ChickenForm />,
             xs: 12,
             md: 12,

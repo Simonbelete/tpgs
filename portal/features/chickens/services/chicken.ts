@@ -27,6 +27,13 @@ export const chickenApi = baseApi.injectEndpoints({
           params: query,
         }),
       }),
+      getAliveChickens: build.query<Response<Chicken[]>, Object>({
+        query: (query?: Object) => ({
+          url: `${URL}/`,
+          method: "get",
+          params: { ...query, reduction_date__isnull: "False" },
+        }),
+      }),
       getMaleChickens: build.query<Response<Chicken[]>, Object>({
         query: (query?: Object) => ({
           url: `${URL}/`,
