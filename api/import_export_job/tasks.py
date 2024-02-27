@@ -25,6 +25,9 @@ def _run_import(instance, dry_run=True):
 
         rendered = render_to_string("import_result.html", {'result': result})
 
+        # Append all results if found
+        rendered += resource.get_rendered_results()
+
         instance.report = rendered
         if result.has_errors():
             instance.job_status = 'ERROR'

@@ -19,6 +19,7 @@ from reduction_reason.models import ReductionReason
 
 # Shared Column Name
 TAG_COLUMN_NAME = "ID (Wing Tag)"
+BATCH_FEED_COLUMN_NAME = "Batch Feed"
 
 
 class BaseResource(resources.ModelResource):
@@ -28,10 +29,26 @@ class BaseResource(resources.ModelResource):
 
     def __init__(self, import_job):
         self.import_job = import_job
+        self.resutls = []
 
     def read_file(self):
         df = util.read_file(self.import_job.file, self.import_job.format)
         return self.after_read_file(df)
+
+    def get_rendered_results(self):
+        rendered_result = "<br />"
+        for r in self.results:
+            rendered_result += self.render_result(r)
+        return rendered_result
+
+    def render_result(self, result):
+        rendered = render_to_string("import_result.html", {'result': result})
+        if result.has_errors():
+            raise Exception(rendered)
+        return rendered
+
+    def add_result(self, result):
+        self.results.append(result)
 
 
 class BaseChickenResource(BaseResource):
@@ -96,10 +113,12 @@ class MasterChicken(BaseChickenResource):
         df = df.replace(np.nan, None)
         return df
 
-    def render_result(self, result):
-        rendered = render_to_string("import_result.html", {'result': result})
-        if result.has_errors():
-            raise Exception(rendered)
+    def read_feed_intake_sheet(self):
+        df = util.read_file(self.import_job.file,
+                            self.import_job.format,
+                            sheet_name="Feed Intake")
+        df = df.replace(np.nan, None)
+        return df
 
     # TODO: Log each step
     def after_import(self, dataset, result, using_transactions, dry_run, **kwargs):
@@ -120,16 +139,31 @@ class MasterChicken(BaseChickenResource):
         df_weight['week'] = df_weight['week'].str.replace(
             '\D+', '', regex=True)  # Remove week stirng
 
-        print('*********************'
-              )
-        print(df_weight.head)
         result = WeightResource(self.import_job).import_data(
             Dataset().load(df_weight),
             dry_run=dry_run
         )
-        self.render_result(result)
+        self.add_result(result)
 
         # Load Feed Intake sheet
+        df_feed = self.read_feed_intake_sheet()
+        weight_columns = list(df_feed.filter(regex=col_filter))
+
+        df_feed = pd.melt(df_feed,
+                          id_vars=[tag_col_name],
+                          value_vars=weight_columns)
+        df_feed.rename(
+            columns={'variable': 'week',
+                     'value': 'weight'},
+            inplace=True)
+        df_feed['week'] = df_feed['week'].str.replace(
+            '\D+', '', regex=True)  # Remove week stirng
+
+        result = WeightResource(self.import_job).import_data(
+            Dataset().load(df_feed),
+            dry_run=dry_run
+        )
+        self.add_result(result)
 
 
 class ChickenWeightResource(BaseChickenResource):
@@ -211,14 +245,22 @@ class WeightResource(BaseResource):
 
 class FeedResource(BaseResource):
     chicken = fields.Field(
-        column_name='chicken',
+        column_name=TAG_COLUMN_NAME,
         attribute='chicken',
         widget=widgets.ForeignKeyWidget(Chicken, field='tag'))
+    hatchery = fields.Field(
+        column_name='Batch Feed',
+        attribute='hatchery',
+        widget=widgets.ForeignKeyWidget(Hatchery, field='name'))
+    pen = fields.Field(
+        column_name=BATCH_FEED_COLUMN_NAME,
+        attribute='pen',
+        widget=widgets.ForeignKeyWidget(Hatchery, field='name'))
 
     class Meta:
         model = Feed
         import_id_fields = ['chicken', 'week']
-        fields = ['id', 'chicken', 'week', 'weight']
+        fields = ['id', 'chicken', 'hatchery', 'pen', 'week', 'weight']
 
 
 class EggResource(BaseResource):

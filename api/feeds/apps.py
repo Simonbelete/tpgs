@@ -7,6 +7,6 @@ class FeedsConfig(AppConfig):
     name = 'feeds'
 
     def ready(self) -> None:
-        from .signals import create_individual_from_batch
+        from .signals import feed_post_save
 
-        setting_changed.connect(create_individual_from_batch)
+        setting_changed.connect(feed_post_save)
