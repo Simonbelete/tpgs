@@ -3,6 +3,7 @@ from simple_history.models import HistoricalRecords
 from core.validators import WEEK_VALIDATOR
 
 from core.models import CoreModel
+from core.fields import WEIGHT_IN_GRAM_FIELD
 from hatchery.models import Hatchery
 from chickens.models import Chicken
 from formulas.models import Formula
@@ -22,8 +23,7 @@ class Feed(CoreModel):
     formula = models.ForeignKey(
         Formula, on_delete=models.SET_NULL, null=True, blank=True, related_name='feeds')
     week = models.PositiveIntegerField(validators=WEEK_VALIDATOR, default=0)
-    weight = models.DecimalField(
-        max_digits=7, decimal_places=3, null=True, blank=True, default=0)  # g
+    weight = WEIGHT_IN_GRAM_FIELD
     history = HistoricalRecords()
 
     # class Meta:

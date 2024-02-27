@@ -121,49 +121,50 @@ class MasterChicken(BaseChickenResource):
         return df
 
     # TODO: Log each step
-    # def after_import(self, dataset, result, using_transactions, dry_run, **kwargs):
-    #     col_filter = "((W|w)eek(\s)?)[0-9]+"
-    #     tag_col_name = TAG_COLUMN_NAME
+    def after_import(self, dataset, result, using_transactions, dry_run, **kwargs):
+        col_filter = "((W|w)eek(\s)?)[0-9]+"
+        tag_col_name = TAG_COLUMN_NAME
 
-    #     # Load Body Weight sheet
-    #     df_weight = self.read_body_weight_sheet()
-    #     weight_columns = list(df_weight.filter(regex=col_filter))
+        # Load Body Weight sheet
+        df_weight = self.read_body_weight_sheet()
+        weight_columns = list(df_weight.filter(regex=col_filter))
 
-    #     df_weight = pd.melt(df_weight,
-    #                         id_vars=[tag_col_name],
-    #                         value_vars=weight_columns)
-    #     df_weight.rename(
-    #         columns={'variable': 'week',
-    #                  'value': 'weight'},
-    #         inplace=True)
-    #     df_weight['week'] = df_weight['week'].str.replace(
-    #         '\D+', '', regex=True)  # Remove week stirng
+        df_weight = pd.melt(df_weight,
+                            id_vars=[tag_col_name],
+                            value_vars=weight_columns)
+        df_weight.rename(
+            columns={'variable': 'week',
+                     'value': 'weight'},
+            inplace=True)
+        df_weight['week'] = df_weight['week'].str.replace(
+            '\D+', '', regex=True)  # Remove week stirng
 
-    #     result = WeightResource(self.import_job).import_data(
-    #         Dataset().load(df_weight),
-    #         dry_run=dry_run
-    #     )
-    #     self.add_result(result)
+        result = WeightResource(self.import_job).import_data(
+            Dataset().load(df_weight),
+            dry_run=dry_run
+        )
+        self.add_result(result)
 
     #     # Load Feed Intake sheet
-    #     df_feed = self.read_feed_intake_sheet()
-    #     weight_columns = list(df_feed.filter(regex=col_filter))
+        df_feed = self.read_feed_intake_sheet()
+        feed_columns = list(df_feed.filter(regex=col_filter))
 
-    #     df_feed = pd.melt(df_feed,
-    #                       id_vars=[tag_col_name],
-    #                       value_vars=weight_columns)
-    #     df_feed.rename(
-    #         columns={'variable': 'week',
-    #                  'value': 'weight'},
-    #         inplace=True)
-    #     df_feed['week'] = df_feed['week'].str.replace(
-    #         '\D+', '', regex=True)  # Remove week stirng
+        df_feed = pd.melt(df_feed,
+                          id_vars=[tag_col_name,
+                                   BATCH_FEED_COLUMN_NAME, 'Pen'],
+                          value_vars=feed_columns)
+        df_feed.rename(
+            columns={'variable': 'week',
+                     'value': 'weight'},
+            inplace=True)
+        df_feed['week'] = df_feed['week'].str.replace(
+            '\D+', '', regex=True)  # Remove week stirng
 
-    #     result = FeedResource(self.import_job).import_data(
-    #         Dataset().load(df_feed),
-    #         dry_run=dry_run
-    #     )
-    #     self.add_result(result)
+        result = FeedResource(self.import_job).import_data(
+            Dataset().load(df_feed),
+            dry_run=dry_run
+        )
+        self.add_result(result)
 
 
 class ChickenWeightResource(BaseChickenResource):
@@ -201,9 +202,13 @@ class ChickenWeightResource(BaseChickenResource):
 class ChickenFeedResource(BaseChickenResource):
     def after_read_file(self, df):
         col_filter = "((W|w)eek(\s)?)[0-9]+"
+        print('******************')
+        print(df)
         self.df_weekly = df.filter(
             regex=(col_filter)).copy(deep=True)
-        self.df_weekly['tag'] = df['tag']
+        self.df_weekly[TAG_COLUMN_NAME] = df[TAG_COLUMN_NAME]
+        self.df_weekly[BATCH_FEED_COLUMN_NAME] = df[BATCH_FEED_COLUMN_NAME]
+        self.df_weekly['Pen'] = df['Pen']
 
         df = df.replace(np.nan, None)
         columns = list(df.filter(regex=col_filter))
@@ -212,16 +217,18 @@ class ChickenFeedResource(BaseChickenResource):
 
         # Build for weight resource
         self.df_weights = pd.melt(self.df_weekly, id_vars=[
-                                  'tag'], value_vars=columns)
+                                  TAG_COLUMN_NAME, BATCH_FEED_COLUMN_NAME, 'Pen'], value_vars=columns)
+        self.df_weights = self.df_weights.replace(np.nan, None)
+        print(self.df_weights)
         self.df_weights.rename(
-            columns={'tag': 'chicken', 'variable': 'week', 'value': 'weight'}, inplace=True)
+            columns={'variable': 'week', 'value': 'weight'}, inplace=True)
         self.df_weights['week'] = self.df_weights['week'].str.replace(
             '\D+', '', regex=True)
 
         return df
 
     def after_import(self, dataset, result, using_transactions, dry_run, **kwargs):
-        resource = FeedResource()
+        resource = BatchFeedResource(self.import_job)
         dataset = Dataset().load(self.df_weights)
         result = resource.import_data(dataset, dry_run=dry_run)
 
@@ -242,6 +249,22 @@ class WeightResource(BaseResource):
         fields = ['id', 'chicken', 'week', 'weight']
 
 
+class BatchFeedResource(BaseResource):
+    hatchery = fields.Field(
+        column_name=BATCH_FEED_COLUMN_NAME,
+        attribute='hatchery',
+        widget=widgets.ForeignKeyWidget(Hatchery, field='name'))
+    pen = fields.Field(
+        column_name="Pen",
+        attribute='pen',
+        widget=widgets.ForeignKeyWidget(Hatchery, field='name'))
+
+    class Meta:
+        model = Feed
+        import_id_fields = ['week', 'hatchery', 'pen']
+        fields = ['id', 'hatchery', 'pen', 'week', 'weight']
+
+
 class FeedResource(BaseResource):
     chicken = fields.Field(
         column_name=TAG_COLUMN_NAME,
@@ -258,7 +281,7 @@ class FeedResource(BaseResource):
 
     class Meta:
         model = Feed
-        import_id_fields = ['chicken', 'week']
+        import_id_fields = ['chicken', 'week', 'hatchery', 'pen']
         fields = ['id', 'chicken', 'hatchery', 'pen', 'week', 'weight']
 
 

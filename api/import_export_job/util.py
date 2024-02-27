@@ -1,7 +1,7 @@
 import pandas as pd
 
 
-def read_file(file, format="csv", sheet_name=None):
+def read_file(file, format="csv", sheet_name=0):
     file_open = file.open('rb')
     if (format == "csv"):
         return pd.read_csv(file_open, header=0, sheet_name=sheet_name, encoding='utf-8', engine='python')

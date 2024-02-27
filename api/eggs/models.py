@@ -6,6 +6,7 @@ from rest_framework import serializers
 from core.validators import WEEK_VALIDATOR
 
 from core.models import CoreModel
+from core.fields import WEIGHT_IN_GRAM_FIELD
 from chickens.models import Chicken
 from hatchery.models import HatcheryEgg
 
@@ -15,7 +16,7 @@ class Egg(CoreModel):
         Chicken, on_delete=models.CASCADE, null=True, blank=True, related_name='eggs')
     week = models.PositiveIntegerField(validators=WEEK_VALIDATOR, default=0)
     eggs = models.IntegerField(null=True, blank=True)
-    weight = models.FloatField(null=True, blank=True)  # in g
+    weight = WEIGHT_IN_GRAM_FIELD
     history = HistoricalRecords()
 
     class Meta:
