@@ -16,13 +16,13 @@ import { Tabs, Tab, Box, tabsClasses, Chip, Button } from "@mui/material";
 import { Card } from "@/components";
 import { hatcheryApi } from "../services";
 import { EditMode } from "@/types";
-import { eggApi } from "@/features/eggs/services";
 import { breedApi } from "@/features/breeds/services";
 import { BreedForm } from "@/features/breeds";
 import HatcheryEggEditableList from "./HatcheryEggEditableList";
 import IncubationEditableList from "./IncubationEditableList";
 import { HatcheryStat } from "./HatcheryStat";
 import dayjs from "dayjs";
+import _ from "lodash";
 
 const schema = yup.object({
   name: yup.string().required(),
@@ -59,9 +59,7 @@ export const HatcheryForm = ({ data }: { data?: Hatchery }) => {
       hatch_date: dayjs(values.hatch_date).format(
         process.env.NEXT_PUBLIC_API_DATE_FORMAT
       ),
-      breed: dayjs(values.breed).format(
-        process.env.NEXT_PUBLIC_API_DATE_FORMAT
-      ),
+      breed: _.get(values.breed, "id", null),
     };
   };
 

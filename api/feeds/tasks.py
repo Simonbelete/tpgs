@@ -1,5 +1,7 @@
 import logging
 from celery import shared_task
+from django.db.models import F, ExpressionWrapper, DurationField
+from datetime import timedelta
 
 from .models import Feed
 from chickens.models import Chicken
@@ -18,12 +20,18 @@ def create_individual_feed_from_batch(pk):
     try:
         feed = Feed.objects.get(pk=pk)
 
+        # Filter out reduction_date is gretter than current week
+        duration = ExpressionWrapper(
+            F('reduction_date') - F('hatch_date'), output_field=DurationField())
+
+        chickens = Chicken.objects.filter(
+            hatchery=feed.hatchery).annotate(
+                duration=duration)
+
+        chickens = chickens.filter(duration__lt=timedelta(weeks=feed.week))
+
         if (feed.pen):
-            chickens = Chicken.objects.filter(
-                pen=feed.pen, hatchery=feed.hatchery).exclude(reduction_date__isnull=True)
-        else:
-            chickens = Chicken.objects.filter(
-                hatchery=feed.hatchery).exclude(reduction_date__isnull=True)
+            chickens = chickens.filter(pen=feed.pen)
 
         individual_weight = feed.weight/chickens.count() if chickens.count() != 0 else 0
 
