@@ -110,9 +110,14 @@ export const ChickenForm = ({
         }
       >
         {formData && (
-          <Box sx={{ mb: 2 }}>
-            <ChickenStat data={formData} />
-          </Box>
+          <>
+            <Box sx={{ width: "100%", mb: 2 }}>
+              <ChickenStages data={formData} />
+            </Box>
+            <Box sx={{ mb: 2 }}>
+              <ChickenStat data={formData} />
+            </Box>
+          </>
         )}
 
         <Tabs

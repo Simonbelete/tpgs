@@ -4,31 +4,22 @@ import pandas as pd
 from tablib import Dataset
 import importlib
 import logging
-from django.template.loader import get_template, render_to_string
-from django.template import Context
+from django.template.loader import render_to_string
 from django_tenants.utils import tenant_context
 
 logger = logging.getLogger(__name__)
 
 
-def read_file(file, format):
-    file_open = file.open('r')
-    if (format == "csv"):
-        return pd.read_csv(file_open, header=0, encoding='utf-8', engine='python')
-    elif (format == "xlsx" or format == "xls"):
-        return pd.read_excel(file_open, header=0)
-    else:
-        raise Exception("Not Valid file format try csv,xlsx, xls")
-
-
 def _run_import(instance, dry_run=True):
     with tenant_context(instance.farm):
-        df = read_file(instance.file, instance.format)
+        # Load resource
         module = importlib.import_module('import_export_job.resources')
         resource = getattr(module, instance.resource)
-        resource = resource()
 
-        df = resource.after_read_file(df)
+        resource = resource(import_job=instance)
+
+        df = resource.read_file()
+
         dataset = Dataset().load(df)
         result = resource.import_data(dataset=dataset, dry_run=dry_run)
 

@@ -3,9 +3,10 @@ from import_export import resources, fields, widgets
 import numpy as np
 import pandas as pd
 from tablib import Dataset
-from django.template.loader import get_template, render_to_string
+from django.template.loader import render_to_string
 
 from . import models
+from . import util
 from feeds.models import Feed
 from weights.models import Weight
 from eggs.models import Egg
@@ -16,48 +17,58 @@ from pen.models import Pen
 from chickens.models import Chicken
 from reduction_reason.models import ReductionReason
 
+# Shared Column Name
+TAG_COLUMN_NAME = "ID (Wing Tag)"
+
 
 class BaseResource(resources.ModelResource):
     def after_read_file(self, df):
-        """ After pd.read_csv"""
+        """ After pd.read_[type]"""
         return df
+
+    def __init__(self, import_job):
+        self.import_job = import_job
+
+    def read_file(self):
+        df = util.read_file(self.import_job.file, self.import_job.format)
+        return self.after_read_file(df)
 
 
 class BaseChickenResource(BaseResource):
-    tag = fields.Field(column_name='tag', attribute='tag')
-    hatch_date = fields.Field(column_name="hatch_date", attribute="hatch_date",
+    tag = fields.Field(column_name=TAG_COLUMN_NAME, attribute='tag')
+    hatch_date = fields.Field(column_name="Hatch Date", attribute="hatch_date",
                               widget=widgets.DateWidget(format="%d/%m/%Y"))
-    sex = fields.Field(column_name='sex', attribute='sex')
+    sex = fields.Field(column_name='Sex', attribute='sex')
     generation = fields.Field(column_name='generation',
                               attribute='generation')
     breed = fields.Field(
-        column_name='breed',
+        column_name='Breed',
         attribute='breed',
         widget=widgets.ForeignKeyWidget(Breed, field='name'))
     hatchery = fields.Field(
-        column_name='hatchery',
+        column_name='Batch',
         attribute='hatchery',
         widget=widgets.ForeignKeyWidget(Hatchery, field='name'))
     house = fields.Field(
-        column_name='house',
+        column_name='House',
         attribute='pen__house',
-        widget=widgets.ForeignKeyWidget(House, field='name'))
+        widget=widgets.ForeignKeyWidget(House, field='name'), readonly=True)
     pen = fields.Field(
         column_name='pen',
         attribute='pen',
         widget=widgets.ForeignKeyWidget(Pen, field='name'))
     sire = fields.Field(
-        column_name='sire',
+        column_name='Sire ID',
         attribute='sire',
         widget=widgets.ForeignKeyWidget(Chicken, field='tag'))
     dam = fields.Field(
-        column_name='dam',
+        column_name='Dam ID',
         attribute='dam',
         widget=widgets.ForeignKeyWidget(Chicken, field='tag'))
     reduction_date = fields.Field(
-        column_name='reduction_date', attribute='reduction_date')
+        column_name='Cull Date', attribute='reduction_date')
     reduction_reason = fields.Field(
-        column_name='reduction_reason',
+        column_name='Cull Reason',
         attribute='reduction_reason',
         widget=widgets.ForeignKeyWidget(ReductionReason, field='name'))
 
@@ -67,6 +78,58 @@ class BaseChickenResource(BaseResource):
         exclude = ['id']
         fields = ['tag', 'hatch_date', 'sex',
                   'breed', 'generation', 'hatchery', 'pen', 'sire', 'dam', 'reduction_date', 'reduction_reason', 'color']
+
+
+class MasterChicken(BaseChickenResource):
+    def read_file(self):
+        """ Load Chicken detail sheet"""
+        df = util.read_file(self.import_job.file,
+                            self.import_job.format,
+                            sheet_name="Pedigree")
+        df = df.replace(np.nan, None)
+        return df
+
+    def read_body_weight_sheet(self):
+        df = util.read_file(self.import_job.file,
+                            self.import_job.format,
+                            sheet_name="Body Weight")
+        df = df.replace(np.nan, None)
+        return df
+
+    def render_result(self, result):
+        rendered = render_to_string("import_result.html", {'result': result})
+        if result.has_errors():
+            raise Exception(rendered)
+
+    # TODO: Log each step
+    def after_import(self, dataset, result, using_transactions, dry_run, **kwargs):
+        col_filter = "((W|w)eek(\s)?)[0-9]+"
+        tag_col_name = TAG_COLUMN_NAME
+
+        # Load Body Weight sheet
+        df_weight = self.read_body_weight_sheet()
+        weight_columns = list(df_weight.filter(regex=col_filter))
+
+        df_weight = pd.melt(df_weight,
+                            id_vars=[tag_col_name],
+                            value_vars=weight_columns)
+        df_weight.rename(
+            columns={'variable': 'week',
+                     'value': 'weight'},
+            inplace=True)
+        df_weight['week'] = df_weight['week'].str.replace(
+            '\D+', '', regex=True)  # Remove week stirng
+
+        print('*********************'
+              )
+        print(df_weight.head)
+        result = WeightResource(self.import_job).import_data(
+            Dataset().load(df_weight),
+            dry_run=dry_run
+        )
+        self.render_result(result)
+
+        # Load Feed Intake sheet
 
 
 class ChickenWeightResource(BaseChickenResource):
@@ -136,7 +199,7 @@ class ChickenFeedResource(BaseChickenResource):
 
 class WeightResource(BaseResource):
     chicken = fields.Field(
-        column_name='chicken',
+        column_name=TAG_COLUMN_NAME,
         attribute='chicken',
         widget=widgets.ForeignKeyWidget(Chicken, field='tag'))
 

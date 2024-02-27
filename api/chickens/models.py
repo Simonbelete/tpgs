@@ -51,6 +51,12 @@ class Chicken(CoreModel):
         )
 
     @property
+    def stage(self):
+        if self.hatchery and self.hatchery.stage:
+            return self.hatchery.stage.order
+        return 0
+
+    @property
     def age_in_days(self):
         if self.hatch_date == None:
             return 0

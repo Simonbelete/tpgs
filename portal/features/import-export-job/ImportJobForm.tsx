@@ -14,6 +14,10 @@ import { useRouter } from "next/router";
 
 const resources = [
   { name: "---", resource: "" },
+  {
+    name: "Import Pedigree, Body Weight, Feed Intake & Egg Production",
+    resource: "MasterChicken",
+  },
   { name: "Chicken Detail", resource: "ChickenDetailResource" },
   { name: "Import Chicken Body Weights", resource: "ChickenWeightResource" },
   { name: "Import Chicken Feed Intake", resource: "ChickenFeedResource" },

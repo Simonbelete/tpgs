@@ -23,4 +23,5 @@ export default interface Chicken extends AbstractBaseModel {
 
   age_in_days?: number;
   age_in_weeks?: number;
+  stage?: number | null;
 }

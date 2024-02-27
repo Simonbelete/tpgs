@@ -3,6 +3,7 @@ service-account-file.json
 db.sqlite3
 
 *.csv
+*.xlsx
 
 .DS_Store
 # .env
