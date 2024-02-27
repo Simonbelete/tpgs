@@ -13,7 +13,7 @@ export default interface Chicken extends AbstractBaseModel {
   hatchery: null | number | Hatchery;
   hatch_date?: string;
   house: null | number | House;
-  breed: number | Breed;
+  breed: number | Breed | null;
   pen: null | number | Pen;
   reduction_date: null | string;
   reduction_reason: null | string;

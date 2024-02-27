@@ -14,7 +14,7 @@ logger = logging.getLogger(__name__)
 def read_file(file, format):
     file_open = file.open('r')
     if (format == "csv"):
-        return pd.read_csv(file_open, header=0)
+        return pd.read_csv(file_open, header=0, encoding='utf-8', engine='python')
     elif (format == "xlsx" or format == "xls"):
         return pd.read_excel(file_open, header=0)
     else:
@@ -49,7 +49,7 @@ def run_import_job(pk):
     with tenant_context(import_job.farm):
         try:
             _run_import(import_job, dry_run=True)
-            # _run_import(import_job, dry_run=False)
+            _run_import(import_job, dry_run=False)
         except Exception as e:
             logger.error(
                 "Some error occurred while deleting ImportJob file: {0}".format(

@@ -22,6 +22,7 @@ import { BreedForm } from "@/features/breeds";
 import HatcheryEggEditableList from "./HatcheryEggEditableList";
 import IncubationEditableList from "./IncubationEditableList";
 import { HatcheryStat } from "./HatcheryStat";
+import dayjs from "dayjs";
 
 const schema = yup.object({
   name: yup.string().required(),
@@ -49,7 +50,19 @@ export const HatcheryForm = ({ data }: { data?: Hatchery }) => {
     setTab(newValue);
 
   const cleanData = (values: Partial<Hatchery>): Partial<Hatchery> => {
-    return values;
+    return {
+      id: values.id,
+      name: values.name,
+      incubation_moved_date: dayjs(values.incubation_moved_date).format(
+        process.env.NEXT_PUBLIC_API_DATE_FORMAT
+      ),
+      hatch_date: dayjs(values.hatch_date).format(
+        process.env.NEXT_PUBLIC_API_DATE_FORMAT
+      ),
+      breed: dayjs(values.breed).format(
+        process.env.NEXT_PUBLIC_API_DATE_FORMAT
+      ),
+    };
   };
 
   const handleCreated = (value: Hatchery) => {

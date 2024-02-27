@@ -94,7 +94,6 @@ class ChickenWeightResource(BaseChickenResource):
     def after_import(self, dataset, result, using_transactions, dry_run, **kwargs):
         resource = WeightResource()
         dataset = Dataset().load(self.df_weights)
-        print(dataset)
         result = resource.import_data(dataset, dry_run=dry_run)
 
         rendered = render_to_string("import_result.html", {'result': result})

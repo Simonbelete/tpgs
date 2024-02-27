@@ -4,10 +4,8 @@ import { Chicken } from "@/models";
 import {
   CancelIcon,
   CreateNewIcon,
-  FormLayout,
   HistoryIcon,
   TabFormLayout,
-  DashboardIcon,
   Form,
   InfoZone,
   DangerZone,
@@ -27,6 +25,7 @@ import FeedList from "./FeedList";
 import dayjs from "dayjs";
 import { ChickenStat } from "../chicken-stat";
 import { ChickenStages } from "../chicken-stages";
+import { breedApi } from "@/features/breeds/services";
 
 const schema = yup.object({
   tag: yup.string().required(),
@@ -35,6 +34,7 @@ const schema = yup.object({
   dam: yup.object().nullable(),
   hatchery: yup.object().nullable(),
   pen: yup.object().nullable(),
+  breed: yup.object().nullable(),
 });
 
 const sexOptions = [
@@ -177,6 +177,7 @@ export const ChickenForm = ({
                       ),
                       generation: values.generation,
                       color: values.color,
+                      breed: _.get(values, "breed.id", null),
                     };
 
                     return cleaned_data;
@@ -218,7 +219,7 @@ export const ChickenForm = ({
                       md: 6,
                     },
                     hatchery: {
-                      label: "Hatchery",
+                      label: "Hatch / Batch",
                       placeholder: "Select Hatchery",
                       endpoint: hatcheryApi.endpoints.getStage1Hatchery,
                       xs: 12,
@@ -235,6 +236,13 @@ export const ChickenForm = ({
                       label: "Pen",
                       placeholder: "Select Pen",
                       endpoint: penApi.endpoints.getPens,
+                      xs: 12,
+                      md: 6,
+                    },
+                    breed: {
+                      label: "breed",
+                      placeholder: "Select Breed",
+                      endpoint: breedApi.endpoints.getBreeds,
                       xs: 12,
                       md: 6,
                     },

@@ -8,7 +8,7 @@ export default interface Hatchery extends AbstractBaseModel {
   name: string;
   incubation_moved_date: string;
   hatch_date: string;
-  breed: number | Breed;
+  breed: number | Breed | null;
   note: string;
   incubation_count: number;
   hatchery_egg_count: number;

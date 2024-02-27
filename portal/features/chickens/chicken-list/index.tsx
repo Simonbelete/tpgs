@@ -17,6 +17,8 @@ import Link from "next/link";
 import dayjs from "dayjs";
 import { breedApi } from "@/features/breeds/services";
 import DownloadIcon from "@mui/icons-material/Download";
+import { penApi } from "@/features/pen/services";
+import { hatcheryApi } from "@/features/hatchery/services";
 
 export const ChickenList = () => {
   const columns: GridColDef[] = [
@@ -55,7 +57,7 @@ export const ChickenList = () => {
     { field: "sex", headerName: "Tag", flex: 1 },
     {
       field: "hatcher",
-      headerName: "Hatch",
+      headerName: "Hatch / Batch",
       flex: 1,
       minWidth: 150,
       renderCell: (params: GridRenderCellParams<any>) => {
@@ -117,15 +119,21 @@ export const ChickenList = () => {
           endpoint: breedApi.endpoints.getBreeds,
           dataDisplayKey: "name",
         },
+        pen: {
+          label: "Pen",
+          endpoint: penApi.endpoints.getPens,
+          dataDisplayKey: "name",
+        },
+        hatchery: {
+          label: "Hatch / Batch",
+          endpoint: hatcheryApi.endpoints.getHatchery,
+          dataDisplayKey: "name",
+        },
       }}
       menus={
         <>
           <CreateButton />
-          {/* <ExportModal
-            url={URL}
-            fields={{}}
-            beforeSubmit={(values) => values}
-          /> */}
+          {/* 
           <Link href="/chickens/export">
             <Button
               startIcon={<DownloadIcon />}
@@ -136,7 +144,7 @@ export const ChickenList = () => {
               Export
             </Button>
           </Link>
-          <ImportButton url={URL} />
+          <ImportButton url={URL} /> */}
         </>
       }
     />
