@@ -53,9 +53,11 @@ export const HatcheryForm = ({ data }: { data?: Hatchery }) => {
     return {
       id: values.id,
       name: values.name,
-      incubation_moved_date: dayjs(values.incubation_moved_date).format(
-        process.env.NEXT_PUBLIC_API_DATE_FORMAT
-      ),
+      incubation_moved_date:
+        values.incubation_moved_date &&
+        dayjs(values.incubation_moved_date).format(
+          process.env.NEXT_PUBLIC_API_DATE_FORMAT
+        ),
       hatch_date: dayjs(values.hatch_date).format(
         process.env.NEXT_PUBLIC_API_DATE_FORMAT
       ),

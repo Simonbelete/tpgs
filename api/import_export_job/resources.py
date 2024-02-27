@@ -29,7 +29,7 @@ class BaseResource(resources.ModelResource):
 
     def __init__(self, import_job):
         self.import_job = import_job
-        self.resutls = []
+        self.results = []
 
     def read_file(self):
         df = util.read_file(self.import_job.file, self.import_job.format)
@@ -121,49 +121,49 @@ class MasterChicken(BaseChickenResource):
         return df
 
     # TODO: Log each step
-    def after_import(self, dataset, result, using_transactions, dry_run, **kwargs):
-        col_filter = "((W|w)eek(\s)?)[0-9]+"
-        tag_col_name = TAG_COLUMN_NAME
+    # def after_import(self, dataset, result, using_transactions, dry_run, **kwargs):
+    #     col_filter = "((W|w)eek(\s)?)[0-9]+"
+    #     tag_col_name = TAG_COLUMN_NAME
 
-        # Load Body Weight sheet
-        df_weight = self.read_body_weight_sheet()
-        weight_columns = list(df_weight.filter(regex=col_filter))
+    #     # Load Body Weight sheet
+    #     df_weight = self.read_body_weight_sheet()
+    #     weight_columns = list(df_weight.filter(regex=col_filter))
 
-        df_weight = pd.melt(df_weight,
-                            id_vars=[tag_col_name],
-                            value_vars=weight_columns)
-        df_weight.rename(
-            columns={'variable': 'week',
-                     'value': 'weight'},
-            inplace=True)
-        df_weight['week'] = df_weight['week'].str.replace(
-            '\D+', '', regex=True)  # Remove week stirng
+    #     df_weight = pd.melt(df_weight,
+    #                         id_vars=[tag_col_name],
+    #                         value_vars=weight_columns)
+    #     df_weight.rename(
+    #         columns={'variable': 'week',
+    #                  'value': 'weight'},
+    #         inplace=True)
+    #     df_weight['week'] = df_weight['week'].str.replace(
+    #         '\D+', '', regex=True)  # Remove week stirng
 
-        result = WeightResource(self.import_job).import_data(
-            Dataset().load(df_weight),
-            dry_run=dry_run
-        )
-        self.add_result(result)
+    #     result = WeightResource(self.import_job).import_data(
+    #         Dataset().load(df_weight),
+    #         dry_run=dry_run
+    #     )
+    #     self.add_result(result)
 
-        # Load Feed Intake sheet
-        df_feed = self.read_feed_intake_sheet()
-        weight_columns = list(df_feed.filter(regex=col_filter))
+    #     # Load Feed Intake sheet
+    #     df_feed = self.read_feed_intake_sheet()
+    #     weight_columns = list(df_feed.filter(regex=col_filter))
 
-        df_feed = pd.melt(df_feed,
-                          id_vars=[tag_col_name],
-                          value_vars=weight_columns)
-        df_feed.rename(
-            columns={'variable': 'week',
-                     'value': 'weight'},
-            inplace=True)
-        df_feed['week'] = df_feed['week'].str.replace(
-            '\D+', '', regex=True)  # Remove week stirng
+    #     df_feed = pd.melt(df_feed,
+    #                       id_vars=[tag_col_name],
+    #                       value_vars=weight_columns)
+    #     df_feed.rename(
+    #         columns={'variable': 'week',
+    #                  'value': 'weight'},
+    #         inplace=True)
+    #     df_feed['week'] = df_feed['week'].str.replace(
+    #         '\D+', '', regex=True)  # Remove week stirng
 
-        result = FeedResource(self.import_job).import_data(
-            Dataset().load(df_feed),
-            dry_run=dry_run
-        )
-        self.add_result(result)
+    #     result = FeedResource(self.import_job).import_data(
+    #         Dataset().load(df_feed),
+    #         dry_run=dry_run
+    #     )
+    #     self.add_result(result)
 
 
 class ChickenWeightResource(BaseChickenResource):
@@ -223,7 +223,6 @@ class ChickenFeedResource(BaseChickenResource):
     def after_import(self, dataset, result, using_transactions, dry_run, **kwargs):
         resource = FeedResource()
         dataset = Dataset().load(self.df_weights)
-        print(dataset)
         result = resource.import_data(dataset, dry_run=dry_run)
 
         rendered = render_to_string("import_result.html", {'result': result})
