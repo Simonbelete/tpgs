@@ -19,46 +19,56 @@ def _create_individual_feed_from_batch(pk):
     Args:
         pk (int): Feed
     """
-    try:
-        print('---------------------')
-        feed = Feed.objects.get(pk=pk)
+    # try:
 
-        # Filter out reduction_date is gretter than current week
-        duration = ExpressionWrapper(
-            F('reduction_date') - F('hatch_date'), output_field=DurationField())
+    # except Exception as e:
+    #     print(e)
+    #     logger.error(
+    #         "Error occured while creating individual feed from batch feed: {0}".format(
+    #             e)
+    #     )
+    #     return
 
-        chickens = Chicken.objects.filter(
-            hatchery=feed.hatchery).annotate(
-                duration=duration)
+    feed = Feed.objects.get(pk=pk)
 
-        for c in chickens.iterator():
-            print(c.tag, c.duration)
+    # Filter out reduction_date is gretter than current week
+    duration = ExpressionWrapper(
+        F('reduction_date') - F('hatch_date'), output_field=DurationField())
 
-        chickens = chickens.filter(Q(duration__lt=timedelta(
-            weeks=feed.week)) | Q(duration__isnull=True))
+    chickens = Chicken.objects.filter(
+        hatchery=feed.hatchery)
 
-        print('**')
-        for c in chickens.iterator():
-            print(c.tag, c.duration)
+    if (feed.pen):
+        chickens = chickens.filter(pen=feed.pen)
 
-        # if (feed.pen):
-        #     chickens = chickens.filter(pen=feed.pen)
+    # Remove previously created individual weights
+    chicken_ids = chickens.values_list('id', flat=True)
+    previous_feeds = Feed.objects.filter(
+        chicken__in=chicken_ids, week=feed.week).delete()
 
-        individual_weight = feed.weight/chickens.count() if chickens.count() != 0 else 0
+    chickens = chickens.annotate(
+        duration=duration).filter(
+        (
+            Q(duration__gte=timedelta(days=0)) &
+            Q(duration__gt=timedelta(weeks=feed.week))
+        ) |
+        Q(duration__isnull=True))
 
-        for chicken in chickens.iterator():
-            created, feed = Feed.objects.update_or_create(week=feed.week, chicken=chicken, defaults={
-                'formula': feed.formula,
+    individual_weight = feed.weight/chickens.count() if chickens.count() != 0 else 0
+
+    for c in chickens.iterator():
+        print(c.tag, individual_weight)
+        Feed.objects.update_or_create(
+            week=feed.week,
+            chicken=c,
+            defaults={
+                'chicken': c,
+                'week': feed.week,
                 'weight': individual_weight,
+                'formula': feed.formula,
                 'parent': feed
-            })
-
-    except Exception as e:
-        logger.error(
-            "Error occured while creating individual feed from batch feed: {0}".format(
-                e)
+            }
         )
-        return
 
 
 @shared_task

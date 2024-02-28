@@ -1,6 +1,7 @@
 from django.db import models
 from simple_history.models import HistoricalRecords
 from core.validators import WEEK_VALIDATOR
+from django.db.models import Q
 
 from core.models import CoreModel
 from core.fields import WEIGHT_IN_GRAM_FIELD
@@ -35,7 +36,10 @@ class Feed(CoreModel):
 
     @property
     def total_chickens(self):
-        return Chicken.objects.filter(pen=self.pen, hatchery=self.hatchery).count()
+        chickens = Chicken.objects.filter(hatchery=self.hatchery)
+        if (self.pen):
+            chickens = chickens.filter(pen=self.pen)
+        return chickens.count()
 
     @property
     def children_feed_count(self):
