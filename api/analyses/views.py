@@ -912,7 +912,7 @@ class FeedByWeightViewSet(AnalysesViewSet):
             results = []
             for week in range(start_week, end_week + 1):
                 feed_queryset = Feed.objects.filter(
-                    chicken__in=queryset_ids, week=week, parent__isnull=True).aggregate(weight_avg=Avg('weight'))['weight_avg'] or 0
+                    chicken__in=queryset_ids, week=week, hatchery__isnull=True).aggregate(weight_avg=Avg('weight'))['weight_avg'] or 0
 
                 weight_queryset = Weight.objects.filter(
                     chicken__in=queryset_ids, week=week).aggregate(weight_avg=Avg('weight'))['weight_avg'] or 0
@@ -935,7 +935,7 @@ class FeedByWeightViewSet(AnalysesViewSet):
                 results = []
                 for week in range(start_week, end_week + 1):
                     feed_queryset = Feed.objects.filter(
-                        chicken__in=queryset_ids, week=week, parent__isnull=True).aggregate(weight_avg=Avg('weight'))['weight_avg'] or 0
+                        chicken__in=queryset_ids, week=week, hatchery__isnull=True).aggregate(weight_avg=Avg('weight'))['weight_avg'] or 0
 
                     weight_queryset = Weight.objects.filter(
                         chicken__in=queryset_ids, week=week).aggregate(weight_avg=Avg('weight'))['weight_avg'] or 0
