@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { DirectoryFilter, IndividualFilterProps } from "@/features/directory";
 import { useLazyGetFeedAnalyseQuery } from "../services";
 import dynamic from "next/dynamic";
@@ -55,6 +55,10 @@ export const FeedGraphAnalyses = () => {
     }
   };
 
+  useEffect(() => {
+    console.log(data);
+  }, [data]);
+
   const handleonBatchFilterRemove = (index: number) => {
     const newData = data.filter((e, i) => i != index);
     setData(newData);
@@ -79,7 +83,7 @@ export const FeedGraphAnalyses = () => {
     if (response.results) {
       for (let val in response.results) {
         chartData.x.push(Number(response.results[val]["week"]) || 0);
-        chartData.y.push(Number(response.results[val]["egg_mass"]) || 0);
+        chartData.y.push(Number(response.results[val]["weight"]) || 0);
       }
 
       setData([...data, chartData]);
@@ -96,8 +100,8 @@ export const FeedGraphAnalyses = () => {
       <DirectoryFilter
         onBatchFilterApply={handleOnBatchFilterApplay}
         onBatchFilterRemove={handleonBatchFilterRemove}
-        default_start_week={21}
-        default_end_week={41}
+        default_start_week={0}
+        default_end_week={20}
         onIndividualFilterApply={handleOnIndividualFilterApply}
         onIndividualFilterRemove={handleOnIndividualFilterRemove}
       />

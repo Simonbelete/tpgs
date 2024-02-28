@@ -48,6 +48,7 @@ def _create_individual_feed_from_batch(pk):
         individual_weight = feed.weight/chickens.count() if chickens.count() != 0 else 0
 
         for c in chickens.iterator():
+            print(c.tag, individual_weight)
             Feed.objects.update_or_create(
                 week=feed.week,
                 chicken=c,
@@ -60,6 +61,7 @@ def _create_individual_feed_from_batch(pk):
                 }
             )
     except Exception as e:
+        print(e)
         logger.error(
             "Error occured while creating individual feed from batch feed: {0}".format(
                 e)

@@ -11,7 +11,7 @@ const FeedGraphPage = () => {
 
   return (
     <>
-      <SeoHead title="HHEP" />
+      <SeoHead title="Feed intake graph" />
       <ReportingLayout
         breadcrumbs={<Breadcrumbs items={breadcrumbs} />}
         header={<Typography variant="title">Feed intake graph</Typography>}

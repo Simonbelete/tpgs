@@ -1183,7 +1183,7 @@ class FeedGraphViewSet(AnalysesViewSet):
 
                 results = []
                 for week in range(start_week, end_week + 1):
-                    weight_avg = Feed.objects.filter(chicken__in=queryset_ids, week=week, parent__isnull=True).aggregate(
+                    weight_avg = Feed.objects.filter(chicken__in=queryset_ids, week=week, hatchery__isnull=True).aggregate(
                         weight_avg=Avg('weight'))['weight_avg'] or 0
 
                     results.append({
