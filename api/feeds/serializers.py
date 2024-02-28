@@ -14,14 +14,14 @@ class FeedSerializer_GET(serializers.ModelSerializer):
     class Meta:
         model = models.Feed
         fields = ['id', 'hatchery', 'chicken',
-                  'pen', 'formula', 'week', 'weight', 'total_chickens', 'children_feed_count']
+                  'pen', 'formula', 'week', 'weight', 'total_chickens', 'children_feed_count', 'created_at', 'is_active']
 
 
 class FeedSerializer_POST(serializers.ModelSerializer):
     class Meta:
         model = models.Feed
         fields = ['id', 'chicken', 'pen',
-                  'week', 'weight', 'hatchery', 'formula']
+                  'week', 'weight', 'hatchery', 'formula', 'is_active']
 
 
 class FeedHistorySerializer(serializers.ModelSerializer):

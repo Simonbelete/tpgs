@@ -4,6 +4,7 @@ import numpy as np
 import pandas as pd
 from tablib import Dataset
 from django.template.loader import render_to_string
+from django_tenants.utils import tenant_context
 
 from . import models
 from . import util
@@ -16,6 +17,7 @@ from houses.models import House
 from pen.models import Pen
 from chickens.models import Chicken
 from reduction_reason.models import ReductionReason
+from feeds.tasks import create_individual_feed_from_batch
 
 # Shared Column Name
 TAG_COLUMN_NAME = "ID (Wing Tag)"
@@ -113,10 +115,10 @@ class MasterChicken(BaseChickenResource):
         df = df.replace(np.nan, None)
         return df
 
-    def read_feed_intake_sheet(self):
+    def read_batch_feed_intake_sheet(self):
         df = util.read_file(self.import_job.file,
                             self.import_job.format,
-                            sheet_name="Feed Intake")
+                            sheet_name="Batch Feed Intake")
         df = df.replace(np.nan, None)
         return df
 
@@ -145,13 +147,12 @@ class MasterChicken(BaseChickenResource):
         )
         self.add_result(result)
 
-    #     # Load Feed Intake sheet
-        df_feed = self.read_feed_intake_sheet()
+        # Load Feed Intake sheet
+        df_feed = self.read_batch_feed_intake_sheet()
         feed_columns = list(df_feed.filter(regex=col_filter))
 
         df_feed = pd.melt(df_feed,
-                          id_vars=[tag_col_name,
-                                   BATCH_FEED_COLUMN_NAME, 'Pen'],
+                          id_vars=[BATCH_FEED_COLUMN_NAME, 'Pen'],
                           value_vars=feed_columns)
         df_feed.rename(
             columns={'variable': 'week',
@@ -160,7 +161,7 @@ class MasterChicken(BaseChickenResource):
         df_feed['week'] = df_feed['week'].str.replace(
             '\D+', '', regex=True)  # Remove week stirng
 
-        result = FeedResource(self.import_job).import_data(
+        result = BatchFeedResource(self.import_job).import_data(
             Dataset().load(df_feed),
             dry_run=dry_run
         )
@@ -202,8 +203,7 @@ class ChickenWeightResource(BaseChickenResource):
 class ChickenFeedResource(BaseChickenResource):
     def after_read_file(self, df):
         col_filter = "((W|w)eek(\s)?)[0-9]+"
-        print('******************')
-        print(df)
+
         self.df_weekly = df.filter(
             regex=(col_filter)).copy(deep=True)
         self.df_weekly[TAG_COLUMN_NAME] = df[TAG_COLUMN_NAME]
@@ -219,7 +219,6 @@ class ChickenFeedResource(BaseChickenResource):
         self.df_weights = pd.melt(self.df_weekly, id_vars=[
                                   TAG_COLUMN_NAME, BATCH_FEED_COLUMN_NAME, 'Pen'], value_vars=columns)
         self.df_weights = self.df_weights.replace(np.nan, None)
-        print(self.df_weights)
         self.df_weights.rename(
             columns={'variable': 'week', 'value': 'weight'}, inplace=True)
         self.df_weights['week'] = self.df_weights['week'].str.replace(
@@ -263,6 +262,13 @@ class BatchFeedResource(BaseResource):
         model = Feed
         import_id_fields = ['week', 'hatchery', 'pen']
         fields = ['id', 'hatchery', 'pen', 'week', 'weight']
+
+    def after_import_row(self, row, row_result, row_number=None, **kwargs):
+        return super().after_import_row(row, row_result, row_number, **kwargs)
+
+    # def after_import_instance(self, instance, new, row_number=None, **kwargs):
+    #     create_individual_feed_from_batch.delay(
+    #         instance.pk, self.import_job.farm.id)
 
 
 class FeedResource(BaseResource):

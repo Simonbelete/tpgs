@@ -1,23 +1,26 @@
 import logging
 from celery import shared_task
-from django.db.models import F, ExpressionWrapper, DurationField
+from django.db.models import Q, F, ExpressionWrapper, DurationField
 from datetime import timedelta
+from django_tenants.utils import tenant_context
 
 from .models import Feed
 from chickens.models import Chicken
 from notifications.signals import notify
+from farms.models import Farm
+
 
 logger = logging.getLogger(__name__)
 
 
-@shared_task
-def create_individual_feed_from_batch(pk):
+def _create_individual_feed_from_batch(pk):
     """_summary_
 
     Args:
         pk (int): Feed
     """
     try:
+        print('---------------------')
         feed = Feed.objects.get(pk=pk)
 
         # Filter out reduction_date is gretter than current week
@@ -28,10 +31,18 @@ def create_individual_feed_from_batch(pk):
             hatchery=feed.hatchery).annotate(
                 duration=duration)
 
-        chickens = chickens.filter(duration__lt=timedelta(weeks=feed.week))
+        for c in chickens.iterator():
+            print(c.tag, c.duration)
 
-        if (feed.pen):
-            chickens = chickens.filter(pen=feed.pen)
+        chickens = chickens.filter(Q(duration__lt=timedelta(
+            weeks=feed.week)) | Q(duration__isnull=True))
+
+        print('**')
+        for c in chickens.iterator():
+            print(c.tag, c.duration)
+
+        # if (feed.pen):
+        #     chickens = chickens.filter(pen=feed.pen)
 
         individual_weight = feed.weight/chickens.count() if chickens.count() != 0 else 0
 
@@ -48,3 +59,23 @@ def create_individual_feed_from_batch(pk):
                 e)
         )
         return
+
+
+@shared_task
+def create_individual_feed_from_batch(pk):
+    """_summary_
+
+    Args:
+        pk (int): Feed
+    """
+    _create_individual_feed_from_batch(pk)
+    # farm = Farm.objects.get(pk=farm_pk)
+    # with tenant_context(farm):
+    #     try:
+    #         _create_individual_feed_from_batch(pk)
+    #     except Exception as e:
+    #         logger.error(
+    #             "Some error occurred while deleting ImportJob file: {0}".format(
+    #                 e)
+    #         )
+    #         return

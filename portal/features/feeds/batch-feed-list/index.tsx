@@ -18,6 +18,7 @@ import { hatcheryApi } from "@/features/hatchery/services";
 import { penApi } from "@/features/pen/services";
 import { houseApi } from "@/features/houses/services";
 import _ from "lodash";
+import dayjs from "dayjs";
 
 export const BatchFeedList = () => {
   const columns: GridColDef[] = [
@@ -44,8 +45,8 @@ export const BatchFeedList = () => {
         if (params.row.hatchery == null) return <></>;
         return (
           <Typography color={"link.primary"} variant="body2">
-            <Link href={`/pens/${params.row.pen.id}`}>
-              {params.row.pen.display_name}
+            <Link href={`/pens/${params.row.pen?.id}`}>
+              {params.row.pen?.display_name}
             </Link>
           </Typography>
         );
@@ -64,6 +65,18 @@ export const BatchFeedList = () => {
           />
         );
       },
+    },
+    {
+      field: "created_at",
+      headerName: "Create at",
+      flex: 1,
+      minWidth: 150,
+      valueGetter: (params) =>
+        params.row.created_at
+          ? dayjs(params.row.created_at).format(
+              process.env.NEXT_PUBLIC_DATE_FORMAT
+            )
+          : "",
     },
   ];
 
@@ -85,10 +98,15 @@ export const BatchFeedList = () => {
       getEndpoint={feedApi.endpoints.getBatchFeeds}
       deleteEndpoint={feedApi.endpoints.deleteFeed}
       filters={{
-        chicken: {
-          label: "Chicken",
+        hatchery: {
+          label: "Hatch / Batch",
           dataDisplayKey: "name",
-          endpoint: chickenApi.endpoints.getChickens,
+          endpoint: hatcheryApi.endpoints.getHatchery,
+        },
+        pen: {
+          label: "Pen",
+          dataDisplayKey: "name",
+          endpoint: penApi.endpoints.getPens,
         },
       }}
       menus={

@@ -81,6 +81,7 @@ export interface FormProps<T> {
     [K in keyof Partial<T>]: Field<T[K]>;
   };
   onCreateSuccess?: (data: T) => void;
+  onUpdateSuccess?: (data: T) => void;
   createEndpoint: ApiEndpointMutation<
     MutationDefinition<Partial<T>, ClientQueyFn, any, Promise<T>, any>,
     EndpointDefinitions
@@ -120,6 +121,7 @@ export default function Form<
   updateEndpoint,
   beforeSubmit,
   onCreateSuccess,
+  onUpdateSuccess,
   shallowRoute = true,
 }: FormProps<T>) {
   type Inputs = Partial<T>;
@@ -153,7 +155,15 @@ export default function Form<
           );
         }
       }
-    } else await updateTrigger({ ...cleaned_data, id: data.id });
+    } else {
+      const response = await updateTrigger({
+        ...cleaned_data,
+        id: data.id,
+      }).unwrap();
+      if (response?.status == 200 && onUpdateSuccess != undefined) {
+        onUpdateSuccess(response);
+      }
+    }
   };
 
   const useCRUDHook = useCRUD({

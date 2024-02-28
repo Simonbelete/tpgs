@@ -27,7 +27,7 @@ function a11yProps(index: number) {
 
 const schema = yup.object({
   hatchery: yup.object().required(),
-  pen: yup.object().required(),
+  pen: yup.object().nullable(),
   formula: yup.object().nullable(),
   week: yup
     .number()

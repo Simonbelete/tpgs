@@ -6,9 +6,11 @@ class BaseActiveManager(models.Manager):
     def get_queryset(self):
         return super().get_queryset().filter(is_active=True)
 
+
 class BaseAllDataManger(models.Manager):
     def get_queryset(self):
         return super().get_queryset().all()
+
 
 class BaseTimestampedModel(models.Model):
     created_at = models.DateTimeField(auto_now_add=True, null=True)
@@ -47,3 +49,4 @@ class BaseDeleteModel(models.Model):
 class CoreModel(BaseTimestampedModel, BaseUserTrackedModel, BaseDeleteModel):
     class Meta:
         abstract = True
+        ordering = ['-created_at']

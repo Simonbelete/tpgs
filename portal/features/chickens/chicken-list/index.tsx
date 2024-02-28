@@ -7,8 +7,6 @@ import {
   EditAction,
   HistoryAction,
   CreateButton,
-  ExportModal,
-  ImportButton,
 } from "@/lib/crud";
 import { chickenApi, URL } from "../services";
 import { Chicken } from "@/models";
@@ -16,7 +14,6 @@ import { Typography, Button } from "@mui/material";
 import Link from "next/link";
 import dayjs from "dayjs";
 import { breedApi } from "@/features/breeds/services";
-import DownloadIcon from "@mui/icons-material/Download";
 import { penApi } from "@/features/pen/services";
 import { hatcheryApi } from "@/features/hatchery/services";
 

@@ -26,18 +26,20 @@ class Feed(CoreModel):
     weight = WEIGHT_IN_GRAM_FIELD
     history = HistoricalRecords()
 
-    # class Meta:
-    #     unique_together = ['flock', 'pen', 'chicken', 'week']
+    @property
+    def display_name(self):
+        if (self.hatchery):
+            return "{0} W{1}".format(self.hatchery.name, self.week)
+        else:
+            return "{0} W{1}".format(self.chicken.tag, self.week)
 
     @property
-    def adjusted_weight(self):
-        return 0
-        # if (not self.hat):
-        #     return self.weight / self.flock.total_chickens
-        # elif (self.chicken):
-        #     return self.weight
-        # else:
-        #     return self.weight / (self.flock.total_chickens + 1)
+    def total_chickens(self):
+        return Chicken.objects.filter(pen=self.pen, hatchery=self.hatchery).count()
+
+    @property
+    def children_feed_count(self):
+        return self.children.count()
 
     def get_total_no_of_chickens(self):
         if (self.chicken):
@@ -55,11 +57,3 @@ class Feed(CoreModel):
             return self.weight / total_no_chickens if total_no_chickens != 0 else 0
         else:
             return 0
-
-    @property
-    def total_chickens(self):
-        return Chicken.objects.filter(pen=self.pen, hatchery=self.hatchery).count()
-
-    @property
-    def children_feed_count(self):
-        return self.children.count()
