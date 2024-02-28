@@ -263,12 +263,17 @@ class BatchFeedResource(BaseResource):
         import_id_fields = ['week', 'hatchery', 'pen']
         fields = ['id', 'hatchery', 'pen', 'week', 'weight']
 
+    def import_data(self, dataset, dry_run=False, raise_errors=False, use_transactions=None, collect_failed_rows=False, rollback_on_validation_errors=False, **kwargs):
+        self.dry_run = dry_run
+        return super().import_data(dataset, dry_run, raise_errors, use_transactions, collect_failed_rows, rollback_on_validation_errors, **kwargs)
+
     def after_import_row(self, row, row_result, row_number=None, **kwargs):
         return super().after_import_row(row, row_result, row_number, **kwargs)
 
-    # def after_import_instance(self, instance, new, row_number=None, **kwargs):
-    #     create_individual_feed_from_batch.delay(
-    #         instance.pk, self.import_job.farm.id)
+    def after_import_instance(self, instance, new, row_number=None, **kwargs):
+        if (self.dry_run == False):
+            create_individual_feed_from_batch.delay(
+                instance.pk, self.import_job.farm.id)
 
 
 class FeedResource(BaseResource):
