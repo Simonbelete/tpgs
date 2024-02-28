@@ -122,6 +122,20 @@ class MasterChicken(BaseChickenResource):
         df = df.replace(np.nan, None)
         return df
 
+    def read_individual_feed_intake_sheet(self):
+        df = util.read_file(self.import_job.file,
+                            self.import_job.format,
+                            sheet_name="Individual Feed Intake")
+        df = df.replace(np.nan, None)
+        return df
+
+    def read_egg_production_sheet(self):
+        df = util.read_file(self.import_job.file,
+                            self.import_job.format,
+                            sheet_name="Egg Production")
+        df = df.replace(np.nan, None)
+        return df
+
     # TODO: Log each step
     def after_import(self, dataset, result, using_transactions, dry_run, **kwargs):
         col_filter = "((W|w)eek(\s)?)[0-9]+"
@@ -147,7 +161,7 @@ class MasterChicken(BaseChickenResource):
         )
         self.add_result(result)
 
-        # Load Feed Intake sheet
+        # Load Batch Feed Intake sheet
         df_feed = self.read_batch_feed_intake_sheet()
         feed_columns = list(df_feed.filter(regex=col_filter))
 
@@ -163,6 +177,35 @@ class MasterChicken(BaseChickenResource):
 
         result = BatchFeedResource(self.import_job).import_data(
             Dataset().load(df_feed),
+            dry_run=dry_run
+        )
+        self.add_result(result)
+
+        # Load Individual Feed Intake sheet
+        df_feed_indv = self.read_individual_feed_intake_sheet()
+        feed_indv_columns = list(df_feed_indv.filter(regex=col_filter))
+
+        df_feed_indv = pd.melt(df_feed_indv,
+                               id_vars=[TAG_COLUMN_NAME],
+                               value_vars=feed_indv_columns)
+        df_feed_indv.rename(
+            columns={'variable': 'week',
+                     'value': 'weight'},
+            inplace=True)
+        df_feed_indv['week'] = df_feed_indv['week'].str.replace(
+            '\D+', '', regex=True)  # Remove week stirng
+
+        result = FeedResource(self.import_job).import_data(
+            Dataset().load(df_feed_indv),
+            dry_run=dry_run
+        )
+        self.add_result(result)
+
+        # Load Eggg Production sheet
+        df_egg = self.read_egg_production_sheet()
+
+        result = BatchFeedResource(self.import_job).import_data(
+            Dataset().load(df_egg),
             dry_run=dry_run
         )
         self.add_result(result)
@@ -267,9 +310,6 @@ class BatchFeedResource(BaseResource):
         self.dry_run = dry_run
         return super().import_data(dataset, dry_run, raise_errors, use_transactions, collect_failed_rows, rollback_on_validation_errors, **kwargs)
 
-    def after_import_row(self, row, row_result, row_number=None, **kwargs):
-        return super().after_import_row(row, row_result, row_number, **kwargs)
-
     def after_import_instance(self, instance, new, row_number=None, **kwargs):
         if (self.dry_run == False):
             create_individual_feed_from_batch.delay(
@@ -281,26 +321,21 @@ class FeedResource(BaseResource):
         column_name=TAG_COLUMN_NAME,
         attribute='chicken',
         widget=widgets.ForeignKeyWidget(Chicken, field='tag'))
-    hatchery = fields.Field(
-        column_name=BATCH_FEED_COLUMN_NAME,
-        attribute='hatchery',
-        widget=widgets.ForeignKeyWidget(Hatchery, field='name'))
-    pen = fields.Field(
-        column_name="Pen",
-        attribute='pen',
-        widget=widgets.ForeignKeyWidget(Hatchery, field='name'))
 
     class Meta:
         model = Feed
-        import_id_fields = ['chicken', 'week', 'hatchery', 'pen']
-        fields = ['id', 'chicken', 'hatchery', 'pen', 'week', 'weight']
+        import_id_fields = ['chicken', 'week']
+        fields = ['id', 'chicken', 'week', 'weight']
 
 
 class EggResource(BaseResource):
     chicken = fields.Field(
-        column_name='chicken',
+        column_name=TAG_COLUMN_NAME,
         attribute='chicken',
         widget=widgets.ForeignKeyWidget(Chicken, field='tag'))
+    week = fields.Field(column_name='Week', attribute='week')
+    eggs = fields.Field(column_name='No of Eggs', attribute='eggs')
+    weight = fields.Field(column_name='Total Egg Weight', attribute='weight')
 
     class Meta:
         model = Egg
