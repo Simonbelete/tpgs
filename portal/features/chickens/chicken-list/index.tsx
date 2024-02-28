@@ -51,7 +51,7 @@ export const ChickenList = () => {
         );
       },
     },
-    { field: "sex", headerName: "Tag", flex: 1 },
+    { field: "sex", headerName: "Sex", flex: 1 },
     {
       field: "hatcher",
       headerName: "Hatch / Batch",

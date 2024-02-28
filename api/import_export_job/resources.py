@@ -204,7 +204,7 @@ class MasterChicken(BaseChickenResource):
         # Load Eggg Production sheet
         df_egg = self.read_egg_production_sheet()
 
-        result = BatchFeedResource(self.import_job).import_data(
+        result = EggResource(self.import_job).import_data(
             Dataset().load(df_egg),
             dry_run=dry_run
         )
