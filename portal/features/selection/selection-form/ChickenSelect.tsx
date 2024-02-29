@@ -24,7 +24,7 @@ import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
 import _ from "lodash";
 import BarChartIcon from "@mui/icons-material/BarChart";
-import { ChickenRanking } from "@/models";
+import { ChickenRanking, Hatchery } from "@/models";
 import { addSelectedChicken, removeSelectedChicken } from "./slice";
 
 export const ChickenSelect = () => {
@@ -39,7 +39,7 @@ export const ChickenSelect = () => {
   const { data, refetch } = useGetChickensRankingQuery({
     ...buildPage(pageModel),
     chicken__hatchery__in: _.map(
-      (selection?.selected_from || []) as number[],
+      (selection?.selected_from || []) as Hatchery[],
       (e) => e.id
     ).join(","),
   });
@@ -73,7 +73,7 @@ export const ChickenSelect = () => {
       height={400}
       endMessage={
         <p style={{ textAlign: "center" }}>
-          <b>Yay! You have seen it all</b>
+          <b>End! You have seen it all</b>
         </p>
       }
     >

@@ -25,7 +25,9 @@ export const selectionSlice = createSlice({
       ];
     },
     removeSelectedChicken: (state, action: PayloadAction<number>) => {
+      // @ts-ignore
       state.selected_chickens = (state?.selected_chickens || []).filter(
+        // @ts-ignore
         (e) => e != action.payload
       ) as number[];
     },

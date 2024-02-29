@@ -25,7 +25,7 @@ const PenEditPage = ({ data }: { data: ImportJob }) => {
 export async function getServerSideProps(context: NextPageContext) {
   const { id } = context.query;
 
-  return getServerSidePropsContext<Pen>({
+  return getServerSidePropsContext<ImportJob>({
     context,
     id: Number(id),
     getByIdSSR: getImportJobByIdSSR,

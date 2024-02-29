@@ -2,6 +2,7 @@ import Farm from "./Farm";
 import User from "./User";
 
 export default interface ImportJob {
+  display_name: string;
   id: number;
   file: any;
   farm: number | Farm;
@@ -12,5 +13,5 @@ export default interface ImportJob {
   uploaded_on: string;
   created_by: number | User;
   resource: string;
-  report: stirng;
+  report: string;
 }

@@ -54,10 +54,6 @@ export const MortalityAnalyses = ({ livability }: { livability?: boolean }) => {
     }
   };
 
-  useEffect(() => {
-    console.log(data);
-  }, [data]);
-
   const handleonBatchFilterRemove = (index: number) => {
     const newData = data.filter((e, i) => i != index);
     setData(newData);
