@@ -90,8 +90,8 @@ class AnalysesViewSet(viewsets.ViewSet):
             'breed': query_data.breed.name,
             'generation': query_data.generation,
             'hatchery': query_data.hatchery.display_name,
-            'house': query_data.pen.house.name,
-            'pen': query_data.pen.name,
+            'house': query_data.pen.house.name if query_data.pen else None,
+            'pen': query_data.pen.name if query_data.pen else None,
             'sex': query_data.sex
         }
 
@@ -935,7 +935,7 @@ class FeedByWeightViewSet(AnalysesViewSet):
                 results = []
                 for week in range(start_week, end_week + 1):
                     feed_queryset = Feed.objects.filter(
-                        chicken__in=queryset_ids, week=week, hatchery__isnull=True).aggregate(weight_avg=Avg('weight'))['weight_avg'] or 0
+                        chicken__in=queryset_ids, week=week, hatcherys__isnull=True).aggregate(weight_avg=Avg('weight'))['weight_avg'] or 0
 
                     weight_queryset = Weight.objects.filter(
                         chicken__in=queryset_ids, week=week).aggregate(weight_avg=Avg('weight'))['weight_avg'] or 0

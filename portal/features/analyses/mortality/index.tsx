@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { DirectoryFilter, IndividualFilterProps } from "@/features/directory";
 import { useLazyGetMortalityQuery } from "../services";
 import dynamic from "next/dynamic";
@@ -53,6 +53,10 @@ export const MortalityAnalyses = ({ livability }: { livability?: boolean }) => {
       setData([...data, chartData]);
     }
   };
+
+  useEffect(() => {
+    console.log(data);
+  }, [data]);
 
   const handleonBatchFilterRemove = (index: number) => {
     const newData = data.filter((e, i) => i != index);
