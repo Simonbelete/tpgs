@@ -766,6 +766,17 @@ const SidebarMenu = () => {
                 Import
               </Typography>
             </MenuItem>
+            <MenuItem
+              component={
+                <Link onClick={() => toggleSidebar()} href="/export-job" />
+              }
+              icon={<FileDownloadIcon fontSize="small" />}
+              active={RegExp("/export-job(.*)$").test(router.pathname)}
+            >
+              <Typography variant="body1" fontSize={14}>
+                Export
+              </Typography>
+            </MenuItem>
           </Menu>
         </>
       ) : (

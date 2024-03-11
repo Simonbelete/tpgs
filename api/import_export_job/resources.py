@@ -2,9 +2,12 @@ from django.contrib import admin
 from import_export import resources, fields, widgets
 import numpy as np
 import pandas as pd
+import warnings
+import tablib
 from tablib import Dataset
 from django.template.loader import render_to_string
 from django_tenants.utils import tenant_context
+from django.db.models.query import QuerySet
 
 from . import models
 from . import util
@@ -24,6 +27,7 @@ TAG_COLUMN_NAME = "ID (Wing Tag)"
 BATCH_FEED_COLUMN_NAME = "Batch Feed"
 
 
+# Import Resource
 class BaseResource(resources.ModelResource):
     def after_read_file(self, df):
         """ After pd.read_[type]"""
@@ -54,6 +58,52 @@ class BaseResource(resources.ModelResource):
 
 
 class BaseChickenResource(BaseResource):
+    tag = fields.Field(column_name=TAG_COLUMN_NAME, attribute='tag')
+    hatch_date = fields.Field(column_name="Hatch Date", attribute="hatch_date",
+                              widget=widgets.DateWidget(format="%d/%m/%Y"))
+    sex = fields.Field(column_name='Sex', attribute='sex')
+    generation = fields.Field(column_name='generation',
+                              attribute='generation')
+    breed = fields.Field(
+        column_name='Breed',
+        attribute='breed',
+        widget=widgets.ForeignKeyWidget(Breed, field='name'))
+    hatchery = fields.Field(
+        column_name='Batch',
+        attribute='hatchery',
+        widget=widgets.ForeignKeyWidget(Hatchery, field='name'))
+    house = fields.Field(
+        column_name='House',
+        attribute='pen__house',
+        widget=widgets.ForeignKeyWidget(House, field='name'), readonly=True)
+    pen = fields.Field(
+        column_name='pen',
+        attribute='pen',
+        widget=widgets.ForeignKeyWidget(Pen, field='name'))
+    sire = fields.Field(
+        column_name='Sire ID',
+        attribute='sire',
+        widget=widgets.ForeignKeyWidget(Chicken, field='tag'))
+    dam = fields.Field(
+        column_name='Dam ID',
+        attribute='dam',
+        widget=widgets.ForeignKeyWidget(Chicken, field='tag'))
+    reduction_date = fields.Field(
+        column_name='Cull Date', attribute='reduction_date')
+    reduction_reason = fields.Field(
+        column_name='Cull Reason',
+        attribute='reduction_reason',
+        widget=widgets.ForeignKeyWidget(ReductionReason, field='name'))
+
+    class Meta:
+        model = Chicken
+        import_id_fields = ['tag']
+        exclude = ['id']
+        fields = ['tag', 'hatch_date', 'sex',
+                  'breed', 'generation', 'hatchery', 'pen', 'sire', 'dam', 'reduction_date', 'reduction_reason', 'color']
+
+
+class BaseExportChickenResource(resources.ModelResource):
     tag = fields.Field(column_name=TAG_COLUMN_NAME, attribute='tag')
     hatch_date = fields.Field(column_name="Hatch Date", attribute="hatch_date",
                               widget=widgets.DateWidget(format="%d/%m/%Y"))
@@ -361,3 +411,51 @@ class HatcheryResource(BaseResource):
         model = Hatchery
         import_id_fields = ['name']
         fields = ['name', 'hatch_date', 'breed']
+
+
+class ChickenExportResource(BaseExportChickenResource):
+    def export(self, *args, queryset=None, **kwargs):
+        if len(args) == 1 and (
+            isinstance(args[0], QuerySet) or isinstance(args[0], list)
+        ):
+            warnings.warn(
+                "'queryset' must be supplied as a named parameter",
+                category=DeprecationWarning,
+            )
+            queryset = args[0]
+
+        self.before_export(queryset, *args, **kwargs)
+
+        if queryset is None:
+            queryset = self.get_queryset()
+        queryset = self.filter_export(queryset, *args, **kwargs)
+
+        ids = list(zip(*queryset.values_list('id')))
+        ids = [] if len(ids) == 0 else ids[0]
+
+        weekly_data = Weight.objects.filter(chicken__in=ids)
+        weeks = weekly_data.values_list(
+            'week').distinct().order_by('week')
+        weeks = list(zip(*weeks))
+        weeks = [] if len(weeks) == 0 else weeks[0]
+
+        week_header = ["Week {week}".format(week=w) for w in weeks]
+
+        headers = [*self.get_export_headers(), *week_header]
+
+        data = tablib.Dataset(headers=headers)
+
+        for obj in self.iter_queryset(queryset):
+            row = self.export_resource(obj)
+            for week in weeks:
+                week_data = weekly_data.filter(
+                    chicken=obj.id, week=week).first()
+                if (week_data):
+                    row.append(week_data.weight)
+                else:
+                    row.append('-')
+            data.append(row)
+
+        self.after_export(queryset, data, *args, **kwargs)
+
+        return data

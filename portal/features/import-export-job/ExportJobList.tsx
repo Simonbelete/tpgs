@@ -1,8 +1,8 @@
 import React from "react";
 import { GridColDef, GridRenderCellParams } from "@mui/x-data-grid";
 import { ListLayout, ViewAction, CreateButton } from "@/lib/crud";
-import { importjobApi } from "./services";
-import { ImportJob } from "@/models";
+import { exportjobApi } from "./services";
+import { ExportJob } from "@/models";
 import { Stack, Chip } from "@mui/material";
 import dayjs from "dayjs";
 import _ from "lodash";
@@ -12,8 +12,8 @@ const typeMapper = {
     label: "Done",
     color: "success",
   },
-  "DRY RUN": {
-    label: "Dry Run",
+  EXPORTING: {
+    label: "Exporting",
     color: "warning",
   },
   START: {
@@ -26,8 +26,7 @@ const typeMapper = {
   },
 };
 
-export const ImportJobList = () => {
-  console.log(process.env.NEXT_PUBLIC_API_DATETIME_FORMAT);
+export const ExportJobList = () => {
   const columns: GridColDef[] = [
     { field: "resource", headerName: "Name", flex: 1, minWidth: 150 },
     {
@@ -84,12 +83,12 @@ export const ImportJobList = () => {
     { field: "errors", headerName: "Errors", flex: 1, minWidth: 200 },
   ];
   return (
-    <ListLayout<ImportJob>
-      title="Import"
+    <ListLayout<ExportJob>
+      title="Export"
       columns={columns}
       actions={[ViewAction]}
-      getEndpoint={importjobApi.endpoints.getImportJobs}
-      deleteEndpoint={importjobApi.endpoints.deleteImportJob}
+      getEndpoint={exportjobApi.endpoints.getExportJobs}
+      deleteEndpoint={exportjobApi.endpoints.deleteExportJob}
       filters={{}}
       menus={
         <>

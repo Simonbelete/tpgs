@@ -98,3 +98,4 @@ export type { default as StageHistory } from "./StageHistory";
 export type { default as Selection } from "./Selection";
 export type { default as ChickenRanking } from "./ChickenRanking";
 export type { default as ImportJob } from "./ImportJob";
+export type { default as ExportJob } from "./ExportJob";

@@ -4,8 +4,11 @@ import pandas as pd
 from tablib import Dataset
 import importlib
 import logging
+from django.utils import timezone
 from django.template.loader import render_to_string
 from django_tenants.utils import tenant_context
+from django.core.files.base import ContentFile
+from django.core.files.storage import default_storage
 
 logger = logging.getLogger(__name__)
 
@@ -60,7 +63,7 @@ def run_import_job(pk):
             return
 
 
-def _run_export_job(instance):
+def _run_export(instance):
     """_summary_
 
     Args:
@@ -72,12 +75,28 @@ def _run_export_job(instance):
         resource = getattr(module, instance.resource)
 
         resource_obj = resource()
-        qs = resource_obj.Meta.model
+        qs = resource_obj.Meta.model.objects.filter(pk=95635)
+
+        print('----------------*******')
+        print(qs)
 
         dataset = resource_obj.export(qs)
-
-        print('----------------')
         print(dataset)
+
+        filename = "{name}-{date}.{extension}".format(
+            name=instance.resource,
+            date=str(timezone.now()),
+            extension=instance.format,
+        )
+
+        print(filename)
+
+        path = default_storage.save(
+            "{0}".format(filename), ContentFile(dataset.csv))
+
+        instance.file.name = path
+        instance.job_status = 'DONE'
+        instance.save()
         return
 
 
@@ -86,8 +105,9 @@ def run_export_job(pk):
     export_job = models.ExportJob.objects.get(pk=pk)
     with tenant_context(export_job.farm):
         try:
-            _run_export_job(export_job)
+            _run_export(export_job)
         except Exception as e:
+            print(e)
             logger.error(
                 "Error occured while exporting: {0}".format(str(e))
             )

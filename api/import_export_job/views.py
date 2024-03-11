@@ -6,7 +6,7 @@ from rest_framework import status
 from . import models
 from . import serializers
 from farms.models import Farm
-from .tasks import _run_import
+from .tasks import _run_import, _run_export
 
 from . import filters
 
@@ -38,3 +38,8 @@ class ExportJobViewSet(viewsets.ModelViewSet):
         if self.request.method == 'GET':
             return serializers.ExportJobSerializer_GET
         return serializers.ExportJobSerializer_POST
+
+    def perform_create(self, serializer):
+        farm = Farm.objects.get(name=self.request.tenant)
+        serializer.save(created_by=self.request.user,
+                        farm=farm)

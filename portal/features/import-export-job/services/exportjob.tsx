@@ -1,23 +1,23 @@
 import { baseApi } from "@/services/baseApi";
-import { AbstractSummary, Response, ImportJob } from "@/models";
+import { AbstractSummary, Response, ExportJob } from "@/models";
 import { NextPageContext } from "next";
 import { AxiosResponse } from "axios";
 import clientSSR from "@/services/client_ssr";
 
-const URL = "/import/jobs";
+const URL = "/export/jobs";
 
-export const importjobApi = baseApi.injectEndpoints({
+export const exportjobApi = baseApi.injectEndpoints({
   endpoints: (build) => {
     return {
-      getImportJobs: build.query<Response<ImportJob[]>, Object>({
+      getExportJobs: build.query<Response<ExportJob[]>, Object>({
         query: (query?: Object) => ({
           url: `${URL}/`,
           method: "get",
           params: query,
         }),
       }),
-      createImportJob: build.mutation<Promise<ImportJob>, Partial<ImportJob>>({
-        query: (data: Partial<ImportJob>) => ({
+      createExportJob: build.mutation<Promise<ExportJob>, Partial<ExportJob>>({
+        query: (data: Partial<ExportJob>) => ({
           url: `${URL}/`,
           method: "post",
           data: data,
@@ -26,9 +26,9 @@ export const importjobApi = baseApi.injectEndpoints({
           },
         }),
       }),
-      updateImportJob: build.mutation<
-        Promise<ImportJob>,
-        Pick<ImportJob, "id"> & Partial<ImportJob>
+      updateExportJob: build.mutation<
+        Promise<ExportJob>,
+        Pick<ExportJob, "id"> & Partial<ExportJob>
       >({
         query: ({ id, ...patch }) => ({
           url: `${URL}/${id}/`,
@@ -36,7 +36,7 @@ export const importjobApi = baseApi.injectEndpoints({
           data: patch,
         }),
       }),
-      deleteImportJob: build.mutation<any, number>({
+      deleteExportJob: build.mutation<any, number>({
         query: (id: number) => ({ url: `${URL}/${id}/`, method: "delete" }),
       }),
     };
@@ -44,16 +44,16 @@ export const importjobApi = baseApi.injectEndpoints({
   overrideExisting: false,
 });
 
-export const getImportJobByIdSSR = async (
+export const getExportJobByIdSSR = async (
   context: NextPageContext,
   id: number
-): Promise<AxiosResponse<Response<ImportJob>>> =>
+): Promise<AxiosResponse<Response<ExportJob>>> =>
   clientSSR(context).get(`${URL}/${id}`);
 
 export const {
-  useGetImportJobsQuery,
-  useLazyGetImportJobsQuery,
-  useCreateImportJobMutation,
-  useUpdateImportJobMutation,
-  useDeleteImportJobMutation,
-} = importjobApi;
+  useGetExportJobsQuery,
+  useLazyGetExportJobsQuery,
+  useCreateExportJobMutation,
+  useUpdateExportJobMutation,
+  useDeleteExportJobMutation,
+} = exportjobApi;
