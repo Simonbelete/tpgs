@@ -22,3 +22,12 @@ class ImportJobViewSet(viewsets.ModelViewSet):
         farm = Farm.objects.get(name=self.request.tenant)
         serializer.save(created_by=self.request.user,
                         farm=farm)
+
+
+class ExportJobViewSet(viewsets.ModelViewSet):
+    queryset = models.ExportJob.objects.all()
+
+    def get_serializer_class(self):
+        if self.request.method == 'GET':
+            return serializers.ExportJobSerializer_GET
+        return serializers.ExportJobSerializer_POST

@@ -92,6 +92,11 @@ class ExportJob(models.Model):
         verbose_name="Send me an email when this export job is complete",
         default=True,
     )
+    errors = models.TextField(
+        verbose_name="Errors",
+        default="",
+        blank=True,
+    )
     process_finished = models.DateTimeField(
         null=True, blank=True, default=None)
     created_by = models.ForeignKey(

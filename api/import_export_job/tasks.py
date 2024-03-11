@@ -11,6 +11,12 @@ logger = logging.getLogger(__name__)
 
 
 def _run_import(instance, dry_run=True):
+    """_summary_
+
+    Args:
+        instance (ImportJob): ImportJob model
+        dry_run (bool, optional): _description_. Defaults to True.
+    """
     with tenant_context(instance.farm):
         # Load resource
         module = importlib.import_module('import_export_job.resources')
@@ -46,10 +52,46 @@ def run_import_job(pk):
             _run_import(import_job, dry_run=False)
         except Exception as e:
             logger.error(
-                "Some error occurred while deleting ImportJob file: {0}".format(
-                    e)
+                "Some error occurred while ImportJob file: {0}".format(e)
             )
             import_job.errors += "Import error %s" % e + "\n"
             import_job.job_status = 'ERROR'
             import_job.save()
+            return
+
+
+def _run_export_job(instance):
+    """_summary_
+
+    Args:
+        instance (ExportJob): ExportJob model
+    """
+    with tenant_context(instance.farm):
+        # Load resource
+        module = importlib.import_module('import_export_job.resources')
+        resource = getattr(module, instance.resource)
+
+        resource_obj = resource()
+        qs = resource_obj.Meta.model
+
+        dataset = resource_obj.export(qs)
+
+        print('----------------')
+        print(dataset)
+        return
+
+
+@shared_task
+def run_export_job(pk):
+    export_job = models.ExportJob.objects.get(pk=pk)
+    with tenant_context(export_job.farm):
+        try:
+            _run_export_job(export_job)
+        except Exception as e:
+            logger.error(
+                "Error occured while exporting: {0}".format(str(e))
+            )
+            export_job.errors = str(e)
+            export_job.job_status = 'ERROR'
+            export_job.save()
             return
