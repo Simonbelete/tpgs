@@ -881,7 +881,7 @@ class GrowthPerformanceViewSet(AnalysesViewSet):
                     weights) == 0 else weights[0]
 
                 avg = np.average(weights)
-                std = np.std(weights)
+                std = np.std(s)
 
                 results.append({
                     'week': week,
@@ -935,7 +935,7 @@ class FeedByWeightViewSet(AnalysesViewSet):
                 results = []
                 for week in range(start_week, end_week + 1):
                     feed_queryset = Feed.objects.filter(
-                        chicken__in=queryset_ids, week=week, hatcherys__isnull=True).aggregate(weight_avg=Avg('weight'))['weight_avg'] or 0
+                        chicken__in=queryset_ids, week=week, hatchery__isnull=True).aggregate(weight_avg=Avg('weight'))['weight_avg'] or 0
 
                     weight_queryset = Weight.objects.filter(
                         chicken__in=queryset_ids, week=week).aggregate(weight_avg=Avg('weight'))['weight_avg'] or 0

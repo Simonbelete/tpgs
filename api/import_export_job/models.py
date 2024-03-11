@@ -54,3 +54,48 @@ class ImportJob(models.Model):
 
     class Meta:
         ordering = ('-uploaded_on',)
+
+
+class ExportJob(models.Model):
+    JOB_STATUS = (
+        ('START', 'Starting'),
+        ('EXPORTING', 'Exporting'),
+        ('ERROR', 'Error'),
+        ('DONE', 'Done'),
+    )
+
+    file = models.FileField()
+    farm = models.ForeignKey(Farm, on_delete=models.CASCADE)
+
+    processing_initiated = models.DateTimeField(
+        null=True,
+        blank=True,
+        default=None,
+    )
+
+    resource = models.CharField(
+        verbose_name="Name of resource to export to",
+        max_length=160,
+    )
+
+    format = models.CharField(
+        verbose_name="Format of file to be imported",
+        max_length=255,
+    )
+    job_status = models.CharField(
+        verbose_name="Status of the job",
+        max_length=160,
+        blank=True,
+        choices=JOB_STATUS
+    )
+    email_on_completion = models.BooleanField(
+        verbose_name="Send me an email when this export job is complete",
+        default=True,
+    )
+    process_finished = models.DateTimeField(
+        null=True, blank=True, default=None)
+    created_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.PROTECT, null=True)
+
+    class Meta:
+        ordering = ('-process_finished',)
