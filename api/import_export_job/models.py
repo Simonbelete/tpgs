@@ -103,4 +103,4 @@ class ExportJob(models.Model):
         settings.AUTH_USER_MODEL, on_delete=models.PROTECT, null=True)
 
     class Meta:
-        ordering = ('-process_finished',)
+        ordering = ('-processing_initiated',)

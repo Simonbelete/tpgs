@@ -43,18 +43,6 @@ export const ExportJobList = () => {
     },
     { field: "format", headerName: "format", flex: 1 },
     {
-      field: "uploaded_on",
-      headerName: "Uploaded on",
-      flex: 1,
-      minWidth: 150,
-      valueGetter: (params) =>
-        params.row.uploaded_on
-          ? dayjs(params.row.uploaded_on).format(
-              process.env.NEXT_PUBLIC_API_DATETIME_FORMAT
-            )
-          : "",
-    },
-    {
       field: "error",
       headerName: "Job Status",
       flex: 1,
@@ -81,6 +69,7 @@ export const ExportJobList = () => {
       },
     },
     { field: "errors", headerName: "Errors", flex: 1, minWidth: 200 },
+    { field: "file", headerName: "File", flex: 1, minWidth: 200 },
   ];
   return (
     <ListLayout<ExportJob>

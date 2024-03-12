@@ -77,11 +77,7 @@ def _run_export(instance):
         resource_obj = resource()
         qs = resource_obj.Meta.model.objects.filter(pk=95635)
 
-        print('----------------*******')
-        print(qs)
-
         dataset = resource_obj.export(qs)
-        print(dataset)
 
         filename = "{name}-{date}.{extension}".format(
             name=instance.resource,
@@ -94,7 +90,7 @@ def _run_export(instance):
         path = default_storage.save(
             "{0}".format(filename), ContentFile(dataset.csv))
 
-        instance.file.name = path
+        instance.file = path
         instance.job_status = 'DONE'
         instance.save()
         return

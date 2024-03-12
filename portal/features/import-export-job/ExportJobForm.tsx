@@ -23,6 +23,10 @@ const resources = [
     name: "Export Pedigree, Body Weight, Feed Intake & Egg Production",
     resource: "ChickenExportResource",
   },
+  {
+    name: "Example",
+    resource: "ExampleExportResource",
+  },
 ];
 
 type Inputs = Partial<ExportJob>;
