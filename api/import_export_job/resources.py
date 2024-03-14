@@ -467,7 +467,6 @@ class ExampleExportResource():
 
     def export(self, queryset):
         print('*******')
-        print(queryset)
 
         df = pd.DataFrame([['A1', 'M', '1', '10', 'F1'], ['A1', 'M', '2', '20', 'F2'],
                            ['A1', 'M', '3', '0', 'F3'], ['A2', 'F', '1', '1', 'F4']],
@@ -502,7 +501,7 @@ class ExampleExportResource():
 
         # print(df4)
 
-        # df.to_('test.xlsx')
+        df.to_excel('test.xlsx')
 
         return self
 
