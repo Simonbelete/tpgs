@@ -42,7 +42,6 @@ class ExportJobViewSet(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         farm = Farm.objects.get(name=self.request.tenant)
         x = serializer.save(created_by=self.request.user,
-                            farm=farm)
+                            farm=farm, filter_dict=self.request.GET.dict())
         print('000000000000000')
-        print(x)
         _run_export(x)

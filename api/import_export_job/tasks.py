@@ -75,7 +75,7 @@ def _run_export(instance):
         resource = getattr(module, instance.resource)
 
         resource_obj = resource()
-        qs = resource_obj.Meta.model.objects.filter(pk=95635)
+        qs = resource_obj.Meta.model.objects.filter(**instance.filter_dict)
 
         dataset = resource_obj.export(qs)
 
@@ -84,8 +84,6 @@ def _run_export(instance):
             date=str(timezone.now()),
             extension=instance.format,
         )
-
-        print(filename)
 
         path = default_storage.save(
             "{0}".format(filename), ContentFile(dataset.csv))

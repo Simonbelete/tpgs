@@ -78,6 +78,11 @@ class ExportJob(models.Model):
         max_length=160,
     )
 
+    filter_dict = models.TextField(
+        verbose_name="Dict of query parameters",
+        null=True,
+    )
+
     format = models.CharField(
         verbose_name="Format of file to be imported",
         max_length=255,

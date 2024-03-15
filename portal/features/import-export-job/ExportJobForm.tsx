@@ -111,7 +111,7 @@ export const ExportJobForm = () => {
 
   const buildChickenExportResource = (values: any) => {
     return {
-      chicken: _.get(values.chicken, "id", null),
+      id: _.get(values.chicken, "id", null),
       hatchery: _.get(values.hatchery, "id", null),
       house: _.get(values.house, "id", null),
       pen: _.get(values.pen, "id", null),
