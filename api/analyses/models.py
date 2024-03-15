@@ -1,6 +1,9 @@
 from django.db import models
 from django.db import connection
 
+from core.fields import WEIGHT_IN_GRAM_FIELD
+from core.validators import WEEK_VALIDATOR
+
 
 class DirectoryList(models.Model):
     unique_id = models.CharField(max_length=255, primary_key=True)
@@ -61,3 +64,19 @@ class ChickenRanking(models.Model):
     class Meta:
         managed = False
         db_table = 'chicken_ranking'
+
+
+class ChickenRecordset(models.Model):
+    id = models.BigIntegerField(primary_key=True)
+    week = models.PositiveIntegerField(validators=WEEK_VALIDATOR, default=0)
+    feed_weight = models.DecimalField(
+        max_digits=16, decimal_places=3, null=True, blank=True, default=0)
+    body_weight = models.DecimalField(
+        max_digits=16, decimal_places=3, null=True, blank=True, default=0)
+    no_eggs = models.IntegerField(null=True, blank=True)
+    eggs_weight = models.DecimalField(
+        max_digits=16, decimal_places=3, null=True, blank=True, default=0)
+
+    class Meta:
+        managed = False
+        db_table = 'chicken_recordset'

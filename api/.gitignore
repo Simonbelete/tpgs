@@ -2,8 +2,9 @@ ilri_pfm_api/google-services.json
 service-account-file.json
 db.sqlite3
 
-*.csv
-*.xlsx
+# *.csv
+# *.xlsx
+apidata/
 
 .DS_Store
 # .env

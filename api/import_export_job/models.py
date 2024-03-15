@@ -1,6 +1,11 @@
 from django.db import models
 from farms.models import Farm
 from django.conf import settings
+from django.core.files.storage import FileSystemStorage
+
+
+export_fs = FileSystemStorage(location="apidata/exportdata")
+import_fs = FileSystemStorage(location="apidata/importdata")
 
 
 class ImportJob(models.Model):
@@ -12,7 +17,7 @@ class ImportJob(models.Model):
         ('DONE', 'Done'),
     )
 
-    file = models.FileField()
+    file = models.FileField(storage=import_fs)
     farm = models.ForeignKey(Farm, on_delete=models.CASCADE)
 
     processing_initiated = models.DateTimeField(
@@ -64,7 +69,7 @@ class ExportJob(models.Model):
         ('DONE', 'Done'),
     )
 
-    file = models.FileField()
+    file = models.FileField(storage=export_fs)
     farm = models.ForeignKey(Farm, on_delete=models.CASCADE)
 
     processing_initiated = models.DateTimeField(

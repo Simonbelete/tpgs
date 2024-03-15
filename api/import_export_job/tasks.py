@@ -86,7 +86,7 @@ def _run_export(instance):
         )
 
         path = default_storage.save(
-            "{0}".format(filename), ContentFile(dataset.csv))
+            "apidata/exportdata/{0}".format(filename), ContentFile(dataset.xlsx))
 
         instance.file = path
         instance.job_status = 'DONE'

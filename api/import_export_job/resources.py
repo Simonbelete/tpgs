@@ -462,14 +462,16 @@ class ChickenExportResource(BaseExportChickenResource):
 
 
 class BaseExportResouce():
+    def __init__(self) -> None:
+        self.csv = ""
+        self.xlsx = ""
+
     def get_queryset(self):
         """ Overide here to filter your custom queryset"""
         return self.Meta.model.objects.all()
 
 
 class ExampleExportResource(BaseExportResouce):
-    def __init__(self) -> None:
-        self.csv = ""
 
     # def get_queryset(self):
     #     return
