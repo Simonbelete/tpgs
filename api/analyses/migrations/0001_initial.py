@@ -113,10 +113,11 @@ class Migration(migrations.Migration):
         migrations.RunSQL(
             """
                 CREATE OR REPLACE VIEW chicken_recordset AS
-                    SELECT ww.chicken_id, ww.week AS ww_week, ff.week AS ff_week, ee.week AS ee_week,
+                    SELECT row_number() OVER () AS id,
+                        ww.chicken_id, ww.week AS ww_week, ff.week AS ff_week, ee.week AS ee_week,
                         COALESCE(COALESCE(ww.week, ff.week), ee.week) AS week,
                         ww.id AS body_weight_id, ww.weight AS body_weight,
-                        ee.id AS egg_id, ee.eggs AS eggs, ee.weight AS eggs_weight,
+                        ee.id AS egg_id, ee.eggs AS no_eggs, ee.weight AS eggs_weight,
                         ff.id AS feed_id, ff.weight AS feed_weight
                     FROM weights_weight ww
                     FULL JOIN eggs_egg ee

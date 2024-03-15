@@ -44,5 +44,7 @@ export const config = {
     "/weights/:path*",
     "/steps/:path*",
     "/selections/:path*",
+    "/export-job/:path",
+    "/import-job/:path",
   ],
 };

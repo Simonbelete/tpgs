@@ -122,7 +122,7 @@ export const ExportJobForm = () => {
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     const body = {
       resource: _.get(data.resource, "resource", null),
-      format: data.format,
+      format: "xlsx",
     };
 
     let query = {};
@@ -247,7 +247,7 @@ export const ExportJobForm = () => {
                 );
               }
             })}
-          <Grid item xs={12}>
+          {/* <Grid item xs={12}>
             <Controller
               name={"format"}
               control={control}
@@ -269,7 +269,7 @@ export const ExportJobForm = () => {
                 </ToggleButtonGroup>
               )}
             />
-          </Grid>
+          </Grid> */}
           <Grid item xs={12}>
             <Button
               variant="contained"

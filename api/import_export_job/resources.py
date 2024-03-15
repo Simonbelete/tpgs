@@ -4,6 +4,7 @@ import numpy as np
 import pandas as pd
 import warnings
 import tablib
+import io
 from tablib import Dataset
 from django.template.loader import render_to_string
 from django_tenants.utils import tenant_context
@@ -21,6 +22,7 @@ from pen.models import Pen
 from chickens.models import Chicken
 from reduction_reason.models import ReductionReason
 from feeds.tasks import create_individual_feed_from_batch
+from analyses.models import ChickenRecordset
 
 # Shared Column Name
 TAG_COLUMN_NAME = "ID (Wing Tag)"
@@ -413,7 +415,7 @@ class HatcheryResource(BaseResource):
         fields = ['name', 'hatch_date', 'breed']
 
 
-class ChickenExportResource(BaseExportChickenResource):
+class ChickenBodyWeightExportResource(BaseExportChickenResource):
     def export(self, *args, queryset=None, **kwargs):
         if len(args) == 1 and (
             isinstance(args[0], QuerySet) or isinstance(args[0], list)
@@ -472,49 +474,59 @@ class BaseExportResouce():
 
 
 class ExampleExportResource(BaseExportResouce):
-
-    # def get_queryset(self):
-    #     return
-
     def export(self, queryset):
         print('*******')
 
-        df = pd.DataFrame([['A1', 'M', '1', '10', 'F1'], ['A1', 'M', '2', '20', 'F2'],
-                           ['A1', 'M', '3', '0', 'F3'], ['A2', 'F', '1', '1', 'F4']],
-                          columns=['Chicken', 'Sex', 'Week', 'Body-Weight', 'Feed'])
+        # df = pd.DataFrame([['A1', 'M', '1', '10', 'F1'], ['A1', 'M', '2', '20', 'F2'],
+        #                    ['A1', 'M', '3', '0', 'F3'], ['A2', 'F', '1', '1', 'F4']],
+        #                   columns=['Chicken', 'Sex', 'Week', 'Body-Weight', 'Feed'])
+
+        # # col_index = pd.MultiIndex.from_product(
+        # # data = [['Mark', 'Test_1', 'Maths', 75], ['Mark', 'Test_2', 'Science', 85],
+        # #         ['Juli', 'Test_1', 'Physics', 65], [
+        # #             'Juli', 'Test_2', 'Maths', 70],
+        # #         ['Kevin', 'Test_1', 'Science', 80], ['Kevin', 'Test_2', 'History', 90]]
+        # # df = pd.DataFrame(data, columns=['Name', 'Test', 'Subject', 'Score'])
+
+        # # df2 = df.set_index(['Name', 'Test'])
+
+        # INDEXES = ['Chicken', 'Sex']
+
+        # df = df.pivot(index=['Chicken', 'Sex'], columns=[
+        #               'Week'], values=['Feed', 'Body-Weight'])
+
+        # df.columns = df.columns.swaplevel(0, 1)
 
         # col_index = pd.MultiIndex.from_product(
-        # data = [['Mark', 'Test_1', 'Maths', 75], ['Mark', 'Test_2', 'Science', 85],
-        #         ['Juli', 'Test_1', 'Physics', 65], [
-        #             'Juli', 'Test_2', 'Maths', 70],
-        #         ['Kevin', 'Test_1', 'Science', 80], ['Kevin', 'Test_2', 'History', 90]]
-        # df = pd.DataFrame(data, columns=['Name', 'Test', 'Subject', 'Score'])
+        #     [['1', '2', '3'], ['Feed', 'Body-Weight']])
 
-        # df2 = df.set_index(['Name', 'Test'])
+        # df = df.reindex(col_index, axis='columns')
 
-        INDEXES = ['Chicken', 'Sex']
+        # # dfr = pd.concat([dfr, ['A2', 'A', 'B']])
 
-        df = df.pivot(index=['Chicken', 'Sex'], columns=[
-                      'Week'], values=['Feed', 'Body-Weight'])
+        # data = []
 
-        df.columns = df.columns.swaplevel(0, 1)
+        # # df4 = [df2[x] for x in df['Week'].unique().tolist()]
 
-        col_index = pd.MultiIndex.from_product(
-            [['1', '2', '3'], ['Feed', 'Body-Weight']])
+        # # print(df4)
 
-        df = df.reindex(col_index, axis='columns')
+        # df.to_excel('test.xlsx')
 
-        # dfr = pd.concat([dfr, ['A2', 'A', 'B']])
+        df = pd.DataFrame(list(queryset))
 
-        data = []
+        print('------------------')
+        print(queryset)
+        print(df.head)
 
-        # df4 = [df2[x] for x in df['Week'].unique().tolist()]
+        buffer = io.BytesIO()
+        # write dataframe to excel
+        df.to_excel(buffer)
+        # Rewind the buffer.
+        buffer.seek(0)
 
-        # print(df4)
-
-        df.to_excel('test.xlsx')
+        self.xlsx = buffer.read()
 
         return self
 
     class Meta:
-        model = Chicken
+        model = ChickenRecordset
