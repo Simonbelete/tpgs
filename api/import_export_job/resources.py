@@ -463,7 +463,7 @@ class ChickenBodyWeightExportResource(BaseExportChickenResource):
         return data
 
 
-class BaseExportResouce():
+class BaseExportResource():
     def __init__(self) -> None:
         self.csv = ""
         self.xlsx = ""
@@ -473,45 +473,8 @@ class BaseExportResouce():
         return self.Meta.model.objects.all()
 
 
-class ExampleExportResource(BaseExportResouce):
+class ChickenRecordsetExportResource(BaseExportResource):
     def export(self, queryset):
-        print('*******')
-
-        # df = pd.DataFrame([['A1', 'M', '1', '10', 'F1'], ['A1', 'M', '2', '20', 'F2'],
-        #                    ['A1', 'M', '3', '0', 'F3'], ['A2', 'F', '1', '1', 'F4']],
-        #                   columns=['Chicken', 'Sex', 'Week', 'Body-Weight', 'Feed'])
-
-        # # col_index = pd.MultiIndex.from_product(
-        # # data = [['Mark', 'Test_1', 'Maths', 75], ['Mark', 'Test_2', 'Science', 85],
-        # #         ['Juli', 'Test_1', 'Physics', 65], [
-        # #             'Juli', 'Test_2', 'Maths', 70],
-        # #         ['Kevin', 'Test_1', 'Science', 80], ['Kevin', 'Test_2', 'History', 90]]
-        # # df = pd.DataFrame(data, columns=['Name', 'Test', 'Subject', 'Score'])
-
-        # # df2 = df.set_index(['Name', 'Test'])
-
-        # INDEXES = ['Chicken', 'Sex']
-
-        # df = df.pivot(index=['Chicken', 'Sex'], columns=[
-        #               'Week'], values=['Feed', 'Body-Weight'])
-
-        # df.columns = df.columns.swaplevel(0, 1)
-
-        # col_index = pd.MultiIndex.from_product(
-        #     [['1', '2', '3'], ['Feed', 'Body-Weight']])
-
-        # df = df.reindex(col_index, axis='columns')
-
-        # # dfr = pd.concat([dfr, ['A2', 'A', 'B']])
-
-        # data = []
-
-        # # df4 = [df2[x] for x in df['Week'].unique().tolist()]
-
-        # # print(df4)
-
-        # df.to_excel('test.xlsx')
-
         df = pd.DataFrame(list(queryset.values()))
 
         list_of_weeks = np.array(df['week'].unique().tolist())
@@ -531,9 +494,6 @@ class ExampleExportResource(BaseExportResouce):
         )
 
         df = df.reindex(col_index, axis='columns')
-
-        print('------------------')
-        print(df.head)
 
         buffer = io.BytesIO()
         # write dataframe to excel

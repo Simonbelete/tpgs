@@ -51,77 +51,70 @@ type Res = {
   };
 };
 
+const chickenFileds = {
+  chicken: {
+    endpoint: chickenApi.endpoints.getChickens,
+    label: "Chicken",
+    placeholder: "Select Chicken",
+    md: 6,
+    xs: 12,
+    dataKey: "display_name",
+  },
+  hatchery: {
+    endpoint: hatcheryApi.endpoints.getHatchery,
+    label: "hatchery",
+    placeholder: "Select Hatch / Batch",
+    md: 6,
+    xs: 12,
+    dataKey: "display_name",
+  },
+  house: {
+    endpoint: houseApi.endpoints.getHouses,
+    label: "House",
+    placeholder: "Select House",
+    md: 6,
+    xs: 12,
+    dataKey: "display_name",
+  },
+  pen: {
+    endpoint: penApi.endpoints.getPens,
+    label: "Pen",
+    placeholder: "Select Pen",
+    md: 6,
+    xs: 12,
+    dataKey: "display_name",
+  },
+  generation: {
+    label: "Generation",
+    placeholder: "Generation",
+    md: 6,
+    xs: 12,
+  },
+  start_week: {
+    label: "Start Week",
+    placeholder: "Start Week",
+    md: 6,
+    xs: 12,
+  },
+  end_week: {
+    label: "End Week",
+    placeholder: "End Week",
+    md: 6,
+    xs: 12,
+  },
+};
+
 const resources: Res[] = [
   { name: "---", resource: "", fields: {} },
   {
     name: "Export Pedigree, Body Weight, Feed Intake & Egg Production",
-    resource: "ChickenExportResource",
-    fields: {
-      chicken: {
-        endpoint: chickenApi.endpoints.getChickens,
-        label: "Chicken",
-        md: 12,
-        dataKey: "display_name",
-      },
-      hatchery: {
-        endpoint: hatcheryApi.endpoints.getHatchery,
-        label: "hatchery",
-        md: 12,
-        dataKey: "display_name",
-      },
-      house: {
-        endpoint: houseApi.endpoints.getHouses,
-        label: "House",
-        md: 12,
-        dataKey: "display_name",
-      },
-      pen: {
-        endpoint: penApi.endpoints.getPens,
-        label: "Pen",
-        md: 12,
-        dataKey: "display_name",
-      },
-      generation: {
-        label: "Generation",
-        placeholder: "Generation",
-        md: 12,
-      },
-    },
+    resource: "ChickenRecordsetExportResource",
+    fields: chickenFileds,
   },
   {
-    name: "Example",
-    resource: "ExampleExportResource",
-    fields: {
-      chicken: {
-        endpoint: chickenApi.endpoints.getChickens,
-        label: "Chicken",
-        md: 12,
-        dataKey: "display_name",
-      },
-      hatchery: {
-        endpoint: hatcheryApi.endpoints.getHatchery,
-        label: "hatchery",
-        md: 12,
-        dataKey: "display_name",
-      },
-      house: {
-        endpoint: houseApi.endpoints.getHouses,
-        label: "House",
-        md: 12,
-        dataKey: "display_name",
-      },
-      pen: {
-        endpoint: penApi.endpoints.getPens,
-        label: "Pen",
-        md: 12,
-        dataKey: "display_name",
-      },
-      generation: {
-        label: "Generation",
-        placeholder: "Generation",
-        md: 12,
-      },
-    },
+    name: "Export Pedigree & Body Weight",
+    resource: "ChickenBodyWeightExportResource",
+    fields: chickenFileds,
   },
 ];
 
@@ -146,6 +139,8 @@ export const ExportJobForm = () => {
       house: _.get(values.house, "id", null),
       pen: _.get(values.pen, "id", null),
       generation: _.get(values, "generation", null),
+      week__gte: _.get(values, "start_week", 0),
+      week__lte: _.get(values, "end_week", 0),
     };
   };
 
@@ -158,8 +153,8 @@ export const ExportJobForm = () => {
     let query = {};
 
     switch (body.resource) {
-      case "ChickenExportResource":
-      case "ExampleExportResource":
+      case "ChickenRecordsetExportResource":
+      case "ChickenBodyWeightExportResource":
         query = buildChickenExportResource(data);
         break;
     }
@@ -220,7 +215,7 @@ export const ExportJobForm = () => {
           {activeResouce &&
             Object.keys(activeResouce?.fields).map((key, i) => {
               const options = activeResouce.fields[key] as ExportField;
-
+              console.log(options.placeholder);
               if (options.endpoint) {
                 return (
                   <Grid key={i} item xs={options.xs || 12} md={options.md || 6}>

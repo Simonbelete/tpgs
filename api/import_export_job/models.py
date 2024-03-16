@@ -69,7 +69,7 @@ class ExportJob(models.Model):
         ('DONE', 'Done'),
     )
 
-    file = models.FileField(storage=export_fs)
+    file = models.FileField()
     farm = models.ForeignKey(Farm, on_delete=models.CASCADE)
 
     processing_initiated = models.DateTimeField(
