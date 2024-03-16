@@ -477,18 +477,20 @@ class ChickenRecordsetExportResource(BaseExportResource):
     def export(self, queryset):
         df = pd.DataFrame(list(queryset.values()))
 
+        if (df.empty):
+            raise Exception('Data is empty')
+
         list_of_weeks = np.array(df['week'].unique().tolist())
         list_of_weeks = np.sort(list_of_weeks).tolist()
 
-        df = df.pivot(index=['chicken_id'],
-                      columns=['week'],
-                      values=['feed_weight', 'body_weight', 'no_eggs', 'eggs_weight'])
-
-        print('-----------')
+        # Sum values if duplicates are found
+        df = df.pivot_table(index=['chicken_id'],
+                            columns=['week'],
+                            values=['feed_weight', 'body_weight',
+                                    'no_eggs', 'eggs_weight'],
+                            aggfunc='sum')
 
         df.columns = df.columns.swaplevel(0, 1)
-
-        print(df.head)
 
         col_index = pd.MultiIndex.from_product(
             [

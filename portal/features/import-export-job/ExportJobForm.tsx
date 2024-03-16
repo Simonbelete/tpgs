@@ -1,13 +1,6 @@
 import React, { useState, ChangeEvent } from "react";
 import { useSnackbar } from "notistack";
-import {
-  Box,
-  Button,
-  Grid,
-  ToggleButtonGroup,
-  ToggleButton,
-  Typography,
-} from "@mui/material";
+import { Box, Button, Grid, Typography } from "@mui/material";
 import { Dropdown, AsyncDropdown } from "@/components/dropdowns";
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import { ExportJob } from "@/models";
@@ -133,15 +126,17 @@ export const ExportJobForm = () => {
   });
 
   const buildChickenExportResource = (values: any) => {
-    return {
+    const vals = {
       chicken_id: _.get(values.chicken, "id", null),
       hatchery: _.get(values.hatchery, "id", null),
       house: _.get(values.house, "id", null),
       pen: _.get(values.pen, "id", null),
       generation: _.get(values, "generation", null),
-      week__gte: _.get(values, "start_week", 0),
-      week__lte: _.get(values, "end_week", 0),
+      week__gte: _.get(values, "start_week", null),
+      week__lte: _.get(values, "end_week", null),
     };
+
+    return vals;
   };
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
