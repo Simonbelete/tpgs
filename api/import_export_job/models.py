@@ -114,3 +114,10 @@ class ExportJob(models.Model):
 
     class Meta:
         ordering = ('-processing_initiated',)
+
+    @property
+    def file_exists(self):
+        if (self.file):
+            return export_fs.exists(self.file.path)
+        else:
+            return False

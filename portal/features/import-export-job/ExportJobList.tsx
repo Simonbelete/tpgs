@@ -3,9 +3,17 @@ import { GridColDef, GridRenderCellParams } from "@mui/x-data-grid";
 import { ListLayout, ViewAction, CreateButton } from "@/lib/crud";
 import { exportjobApi } from "./services";
 import { ExportJob } from "@/models";
-import { Stack, Chip } from "@mui/material";
+import {
+  Stack,
+  Chip,
+  Link,
+  Tooltip,
+  IconButton,
+  Typography,
+} from "@mui/material";
 import dayjs from "dayjs";
 import _ from "lodash";
+import CloudDownloadIcon from "@mui/icons-material/CloudDownload";
 
 const typeMapper = {
   DONE: {
@@ -24,6 +32,24 @@ const typeMapper = {
     label: "Error",
     color: "error",
   },
+};
+
+const DownloadAction: React.FC<GridRenderCellParams> = ({ id, ...params }) => {
+  // TODO: use passed basePath
+  if (params.row.file_exists)
+    return (
+      <Link
+        href={`${process.env.NEXT_PUBLIC_API_URL}/export/jobs/${id}/download`}
+        data-testid="data-table-view"
+      >
+        <Tooltip title="Download">
+          <IconButton aria-label="View">
+            <CloudDownloadIcon fontSize="small" />
+          </IconButton>
+        </Tooltip>
+      </Link>
+    );
+  else return <></>;
 };
 
 export const ExportJobList = () => {
@@ -69,13 +95,33 @@ export const ExportJobList = () => {
       },
     },
     { field: "errors", headerName: "Errors", flex: 1, minWidth: 200 },
-    { field: "file", headerName: "File", flex: 1, minWidth: 200 },
+    {
+      field: "process_finished",
+      headerName: "Processing Time",
+      flex: 1,
+      minWidth: 200,
+      renderCell: (params: GridRenderCellParams<any>) => {
+        if (
+          params.row.processing_initiated != null &&
+          params.row.process_finished != null
+        ) {
+          return (
+            <Typography>
+              {dayjs(params.row.process_finished).diff(
+                params.row.processing_initiated,
+                "minute"
+              )}
+            </Typography>
+          );
+        } else return <>A</>;
+      },
+    },
   ];
   return (
     <ListLayout<ExportJob>
       title="Export"
       columns={columns}
-      actions={[ViewAction]}
+      actions={[DownloadAction, ViewAction]}
       getEndpoint={exportjobApi.endpoints.getExportJobs}
       deleteEndpoint={exportjobApi.endpoints.deleteExportJob}
       filters={{}}

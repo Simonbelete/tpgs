@@ -91,10 +91,9 @@ def _run_export(instance):
         path = default_storage.save(
             "apidata/exportdata/{0}".format(filename), ContentFile(dataset.xlsx))
 
-        print('0000000000000')
-
         instance.file = path
         instance.job_status = 'DONE'
+        instance.process_finished = timezone.now()
         instance.save()
         return
 

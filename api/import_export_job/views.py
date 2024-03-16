@@ -31,9 +31,6 @@ class ImportJobViewSet(viewsets.ModelViewSet):
                         farm=farm)
 
 
-# class ExportJobViewSet(viewsets.ModelViewSet):
-
-
 class PassthroughRenderer(renderers.BaseRenderer):
     """
         Return data as-is. View should supply a Response.
@@ -45,7 +42,7 @@ class PassthroughRenderer(renderers.BaseRenderer):
         return data
 
 
-class ExportJobViewSet(viewsets.ReadOnlyModelViewSet):
+class ExportJobViewSet(viewsets.ModelViewSet):
     queryset = models.ExportJob.objects.all()
     serializer_class = serializers.ExportJobSerializer_GET
     filterset_class = filters.ExportJobFilter
@@ -60,8 +57,8 @@ class ExportJobViewSet(viewsets.ReadOnlyModelViewSet):
         farm = Farm.objects.get(name=self.request.tenant)
         x = serializer.save(created_by=self.request.user,
                             farm=farm, filter_dict=self.request.GET.dict())
-        print('000000000000000')
-        _run_export(x)
+        # print('000000000000000')
+        # _run_export(x)
 
     @action(methods=['get'], detail=True, renderer_classes=(PassthroughRenderer,))
     def download(self, *args, **kwargs):
