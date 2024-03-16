@@ -1,7 +1,8 @@
-import React, { useState, ChangeEvent } from "react";
+import React, { useState, ChangeEvent, ReactNode } from "react";
 import { useSnackbar } from "notistack";
 import { Box, Button, Grid, Typography } from "@mui/material";
-import { Dropdown, AsyncDropdown } from "@/components/dropdowns";
+import { Dropdown } from "@/components/dropdowns";
+import AsyncDropdown from "@/lib/crud/components/AsyncDropdown";
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import { ExportJob } from "@/models";
 import client from "@/services/client";
@@ -20,6 +21,7 @@ import { hatcheryApi } from "@/features/hatchery/services";
 import { houseApi } from "@/features/houses/services";
 import { penApi } from "@/features/pen/services";
 import buildQuery from "@/util/buildQuery";
+import { ChickenForm } from "../chickens";
 
 type ExportField = {
   endpoint?: ApiEndpointQuery<
@@ -34,6 +36,7 @@ type ExportField = {
   dataKey?: string;
   multiple?: boolean;
   disabled?: boolean;
+  ViewFormFC?: React.Component<any>;
 };
 
 type Res = {
@@ -44,7 +47,9 @@ type Res = {
   };
 };
 
-const chickenFileds = {
+const chickenFileds: {
+  [key: string]: ExportField;
+} = {
   chicken: {
     endpoint: chickenApi.endpoints.getChickens,
     label: "Chicken",
@@ -52,6 +57,7 @@ const chickenFileds = {
     md: 6,
     xs: 12,
     dataKey: "display_name",
+    ViewFormFC: ChickenForm,
   },
   hatchery: {
     endpoint: hatcheryApi.endpoints.getHatchery,
@@ -234,6 +240,12 @@ export const ExportJobForm = () => {
                           helperText={error?.message}
                           multiple={options.multiple}
                           disabled={options.disabled}
+                          viewForm={
+                            <options.ViewFormFC
+                              data={value}
+                              shallowRoute={false}
+                            />
+                          }
                         />
                       )}
                     />

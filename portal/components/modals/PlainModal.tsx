@@ -5,7 +5,7 @@ import { CloseOutlined } from "@mui/icons-material";
 const style = {
   position: "absolute" as "absolute",
   top: "50%",
-  left: "50%",
+  left: "55%",
   transform: "translate(-50%, -50%)",
   width: "60%",
   bgcolor: "background.paper",
@@ -22,7 +22,7 @@ export default function BasicModal({
 }: {
   open: boolean;
   onClose: () => void;
-  children?: React.ReactElement;
+  children?: React.ReactNode;
   width?: string;
 }) {
   const handleClose = React.useCallback(() => onClose(), [onClose]);
