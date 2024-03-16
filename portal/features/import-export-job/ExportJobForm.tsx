@@ -241,11 +241,13 @@ export const ExportJobForm = () => {
                           multiple={options.multiple}
                           disabled={options.disabled}
                           viewForm={
-                            // @ts-ignore
-                            <options.ViewFormFC
-                              data={value}
-                              shallowRoute={false}
-                            />
+                            options.ViewFormFC && (
+                              // @ts-ignore
+                              <options.ViewFormFC
+                                data={value}
+                                shallowRoute={false}
+                              />
+                            )
                           }
                         />
                       )}
