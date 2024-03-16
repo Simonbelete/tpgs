@@ -100,6 +100,7 @@ export const ExportJobList = () => {
       headerName: "Processing Time",
       flex: 1,
       minWidth: 200,
+      align: "center",
       renderCell: (params: GridRenderCellParams<any>) => {
         if (
           params.row.processing_initiated != null &&
@@ -110,10 +111,11 @@ export const ExportJobList = () => {
               {dayjs(params.row.process_finished).diff(
                 params.row.processing_initiated,
                 "minute"
-              )}
+              )}{" "}
+              m
             </Typography>
           );
-        } else return <>A</>;
+        } else return <></>;
       },
     },
   ];

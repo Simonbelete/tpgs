@@ -484,7 +484,11 @@ class ChickenRecordsetExportResource(BaseExportResource):
                       columns=['week'],
                       values=['feed_weight', 'body_weight', 'no_eggs', 'eggs_weight'])
 
+        print('-----------')
+
         df.columns = df.columns.swaplevel(0, 1)
+
+        print(df.head)
 
         col_index = pd.MultiIndex.from_product(
             [

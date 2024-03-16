@@ -77,7 +77,9 @@ def _run_export(instance):
 
         resource_obj = resource()
 
-        parm_dict = instance.filter_dict  # json.loads(instance.filter_dict)
+        query_params = str(instance.filter_dict).replace('\'', "\"")
+        parm_dict = json.loads(query_params)
+
         qs = resource_obj.Meta.model.objects.filter(**parm_dict)
 
         dataset = resource_obj.export(qs)

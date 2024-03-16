@@ -114,7 +114,7 @@ class Migration(migrations.Migration):
             """
                 CREATE OR REPLACE VIEW chicken_recordset AS
                     SELECT row_number() OVER () AS id,
-                        ww.chicken_id, 
+                        COALESCE(COALESCE(ww.chicken_id, ff.chicken_id), ee.chicken_id) AS chicken_id, 
                         ww.week AS ww_week, ff.week AS ff_week, ee.week AS ee_week,
                         COALESCE(COALESCE(ww.week, ff.week), ee.week) AS week,
                         ww.id AS body_weight_id, ww.weight AS body_weight,
@@ -125,7 +125,7 @@ class Migration(migrations.Migration):
                         ON ee.week = ww.week AND ee.chicken_id = ww.chicken_id
                     FULL JOIN feeds_feed ff
                         ON ff.week = ww.week AND ff.chicken_id = ee.chicken_id
-                    WHERE ff.parent_id IS NULL
+                    WHERE ff.chicken_id IS NOT NULL
                     order by ww.week, ff.week, ee.week;
             """,
             """DROP VIEW chicken_recordset"""
