@@ -36,7 +36,7 @@ type ExportField = {
   dataKey?: string;
   multiple?: boolean;
   disabled?: boolean;
-  ViewFormFC?: React.Component<any>;
+  ViewFormFC?: React.FC<any>;
 };
 
 type Res = {
@@ -241,6 +241,7 @@ export const ExportJobForm = () => {
                           multiple={options.multiple}
                           disabled={options.disabled}
                           viewForm={
+                            // @ts-ignore
                             <options.ViewFormFC
                               data={value}
                               shallowRoute={false}

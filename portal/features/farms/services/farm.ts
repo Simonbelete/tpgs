@@ -17,13 +17,6 @@ export const farmApi = baseApi.injectEndpoints({
           params: query,
         }),
       }),
-      createChicken: build.mutation<Promise<Farm>, Partial<Farm>>({
-        query: (data: Partial<Farm>) => ({
-          url: `${URL}/`,
-          method: "post",
-          data: data,
-        }),
-      }),
       updateFarm: build.mutation<
         Promise<Farm>,
         Pick<Farm, "id"> & Partial<Farm>
