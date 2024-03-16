@@ -91,7 +91,37 @@ const resources: Res[] = [
   {
     name: "Example",
     resource: "ExampleExportResource",
-    fields: {},
+    fields: {
+      chicken: {
+        endpoint: chickenApi.endpoints.getChickens,
+        label: "Chicken",
+        md: 12,
+        dataKey: "display_name",
+      },
+      hatchery: {
+        endpoint: hatcheryApi.endpoints.getHatchery,
+        label: "hatchery",
+        md: 12,
+        dataKey: "display_name",
+      },
+      house: {
+        endpoint: houseApi.endpoints.getHouses,
+        label: "House",
+        md: 12,
+        dataKey: "display_name",
+      },
+      pen: {
+        endpoint: penApi.endpoints.getPens,
+        label: "Pen",
+        md: 12,
+        dataKey: "display_name",
+      },
+      generation: {
+        label: "Generation",
+        placeholder: "Generation",
+        md: 12,
+      },
+    },
   },
 ];
 
@@ -111,7 +141,7 @@ export const ExportJobForm = () => {
 
   const buildChickenExportResource = (values: any) => {
     return {
-      id: _.get(values.chicken, "id", null),
+      chicken_id: _.get(values.chicken, "id", null),
       hatchery: _.get(values.hatchery, "id", null),
       house: _.get(values.house, "id", null),
       pen: _.get(values.pen, "id", null),
@@ -129,6 +159,7 @@ export const ExportJobForm = () => {
 
     switch (body.resource) {
       case "ChickenExportResource":
+      case "ExampleExportResource":
         query = buildChickenExportResource(data);
         break;
     }

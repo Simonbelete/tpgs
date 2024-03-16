@@ -4,6 +4,7 @@ import pandas as pd
 from tablib import Dataset
 import importlib
 import logging
+import json
 from django.utils import timezone
 from django.template.loader import render_to_string
 from django_tenants.utils import tenant_context
@@ -75,7 +76,9 @@ def _run_export(instance):
         resource = getattr(module, instance.resource)
 
         resource_obj = resource()
-        qs = resource_obj.Meta.model.objects.filter(**instance.filter_dict)
+
+        parm_dict = instance.filter_dict  # json.loads(instance.filter_dict)
+        qs = resource_obj.Meta.model.objects.filter(**parm_dict)
 
         dataset = resource_obj.export(qs)
 
@@ -87,6 +90,8 @@ def _run_export(instance):
 
         path = default_storage.save(
             "apidata/exportdata/{0}".format(filename), ContentFile(dataset.xlsx))
+
+        print('0000000000000')
 
         instance.file = path
         instance.job_status = 'DONE'

@@ -68,6 +68,7 @@ class ChickenRanking(models.Model):
 
 class ChickenRecordset(models.Model):
     id = models.BigIntegerField(primary_key=True)
+    chicken = models.ForeignKey('chickens.Chicken', on_delete=models.CASCADE)
     week = models.PositiveIntegerField(validators=WEEK_VALIDATOR, default=0)
     feed_weight = models.DecimalField(
         max_digits=16, decimal_places=3, null=True, blank=True, default=0)

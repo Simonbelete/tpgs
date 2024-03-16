@@ -512,10 +512,27 @@ class ExampleExportResource(BaseExportResouce):
 
         # df.to_excel('test.xlsx')
 
-        df = pd.DataFrame(list(queryset))
+        df = pd.DataFrame(list(queryset.values()))
+
+        list_of_weeks = np.array(df['week'].unique().tolist())
+        list_of_weeks = np.sort(list_of_weeks).tolist()
+
+        df = df.pivot(index=['chicken_id'],
+                      columns=['week'],
+                      values=['feed_weight', 'body_weight', 'no_eggs', 'eggs_weight'])
+
+        df.columns = df.columns.swaplevel(0, 1)
+
+        col_index = pd.MultiIndex.from_product(
+            [
+                list_of_weeks,
+                ['feed_weight', 'body_weight', 'no_eggs', 'eggs_weight']
+            ]
+        )
+
+        df = df.reindex(col_index, axis='columns')
 
         print('------------------')
-        print(queryset)
         print(df.head)
 
         buffer = io.BytesIO()
