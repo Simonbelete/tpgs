@@ -107,7 +107,7 @@ const resources: Res[] = [
   { name: "---", resource: "", fields: {} },
   {
     name: "Export Pedigree, Body Weight, Feed Intake & Egg Production",
-    resource: "ChickenRecordsetExportResource",
+    resource: "ExampleChickenBodyWeightExportResource",
     fields: chickenFileds,
   },
   {
@@ -154,7 +154,7 @@ export const ExportJobForm = () => {
     let query = {};
 
     switch (body.resource) {
-      case "ChickenRecordsetExportResource":
+      case "ExampleChickenBodyWeightExportResource":
       case "ChickenBodyWeightExportResource":
         query = buildChickenExportResource(data);
         break;

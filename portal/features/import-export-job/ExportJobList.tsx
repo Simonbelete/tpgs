@@ -107,12 +107,12 @@ export const ExportJobList = () => {
           params.row.process_finished != null
         ) {
           return (
-            <Typography>
+            <Typography variant="caption">
               {dayjs(params.row.process_finished).diff(
                 params.row.processing_initiated,
-                "minute"
+                "minutes"
               )}{" "}
-              m
+              minutes
             </Typography>
           );
         } else return <></>;

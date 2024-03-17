@@ -9,6 +9,7 @@ from tablib import Dataset
 from django.template.loader import render_to_string
 from django_tenants.utils import tenant_context
 from django.db.models.query import QuerySet
+from django.db.models import F
 
 from . import models
 from . import util
@@ -35,7 +36,7 @@ class BaseResource(resources.ModelResource):
         """ After pd.read_[type]"""
         return df
 
-    def __init__(self, import_job):
+    def __init__(self, import_job=None):
         self.import_job = import_job
         self.results = []
 
@@ -105,8 +106,8 @@ class BaseChickenResource(BaseResource):
                   'breed', 'generation', 'hatchery', 'pen', 'sire', 'dam', 'reduction_date', 'reduction_reason', 'color']
 
 
-class BaseExportChickenResource(resources.ModelResource):
-    tag = fields.Field(column_name=TAG_COLUMN_NAME, attribute='tag')
+class BaseChickenRecordsetResource(BaseResource):
+    tag = fields.Field(column_name=TAG_COLUMN_NAME, attribute='chicken__tag')
     hatch_date = fields.Field(column_name="Hatch Date", attribute="hatch_date",
                               widget=widgets.DateWidget(format="%d/%m/%Y"))
     sex = fields.Field(column_name='Sex', attribute='sex')
@@ -415,7 +416,7 @@ class HatcheryResource(BaseResource):
         fields = ['name', 'hatch_date', 'breed']
 
 
-class ChickenBodyWeightExportResource(BaseExportChickenResource):
+class ChickenBodyWeightExportResource(BaseChickenResource):
     def export(self, *args, queryset=None, **kwargs):
         if len(args) == 1 and (
             isinstance(args[0], QuerySet) or isinstance(args[0], list)
@@ -475,7 +476,15 @@ class BaseExportResource():
 
 class ChickenRecordsetExportResource(BaseExportResource):
     def export(self, queryset):
-        df = pd.DataFrame(list(queryset.values()))
+        df = pd.DataFrame(list(queryset.annotate(
+            tag=F('chicken__tag'),
+            hatch_date=F('hatch_date'),
+            sex=F('chicken__sex'),
+            generation=F('chicken__generation'),
+            breed=F('chicken__breed__name'),
+            batch=F('chicken__')
+
+        ).values()))
 
         if (df.empty):
             raise Exception('Data is empty')
@@ -501,15 +510,128 @@ class ChickenRecordsetExportResource(BaseExportResource):
 
         df = df.reindex(col_index, axis='columns')
 
-        buffer = io.BytesIO()
-        # write dataframe to excel
-        df.to_excel(buffer)
-        # Rewind the buffer.
-        buffer.seek(0)
+        # buffer = io.BytesIO()
+        # # write dataframe to excel
+        # df.to_excel(buffer)
+        # # Rewind the buffer.
+        # buffer.seek(0)
 
+        # self.xlsx = buffer.read()
+
+        buffer = io.BytesIO()
+
+        with pd.ExcelWriter(buffer) as writer:
+            df.to_excel(writer)
+
+            # workbook = writer.book
+            # worksheet = writer.sheets["Sheet1"]
+
+            # format1 = workbook.add_format(
+            #     {"bg_color": "#FFC7CE", "font_color": "#9C0006"})
+
+            # worksheet.set_column(
+            #     "B:E", 10, format1
+            # )
+
+        buffer.seek(0)
         self.xlsx = buffer.read()
 
         return self
 
     class Meta:
         model = ChickenRecordset
+
+
+class ExampleChickenBodyWeightExportResource(BaseChickenRecordsetResource):
+    week = fields.Field(column_name='week', attribute='week')
+    feed_weight = fields.Field(
+        column_name='Feed Intake', attribute='feed_weight')
+    body_weight = fields.Field(
+        column_name='Body Weight', attribute='body_weight')
+    no_eggs = fields.Field(column_name='No of Eggs', attribute='no_eggs')
+    eggs_weight = fields.Field(
+        column_name='Eggs Weight(Total)', attribute='eggs_weight')
+
+    def export(self, *args, queryset=None, **kwargs):
+        if len(args) == 1 and (
+            isinstance(args[0], QuerySet) or isinstance(args[0], list)
+        ):
+            # issue 1565: definition of export() was incorrect
+            # if queryset is being passed, it must be as the first arg or named
+            # parameter
+            # this logic is included for backwards compatibility:
+            # if the method is being called without a named parameter, add a warning
+            # this check should be removed in a future release
+            warnings.warn(
+                "'queryset' must be supplied as a named parameter",
+                category=DeprecationWarning,
+            )
+            queryset = args[0]
+
+        self.before_export(queryset, *args, **kwargs)
+
+        if queryset is None:
+            queryset = self.get_queryset()
+        queryset = self.filter_export(queryset, *args, **kwargs)
+        headers = self.get_export_headers()
+        data = tablib.Dataset(headers=headers)
+
+        for obj in self.iter_queryset(queryset):
+            data.append(self.export_resource(obj))
+
+        df = data.export('df')
+        list_of_weeks = np.array(df['week'].unique().tolist()).astype(int)
+        list_of_weeks = np.sort(list_of_weeks).astype(str).tolist()
+
+        # Sum values if duplicates are found
+        df = df.pivot_table(
+            index=[
+                self.fields['tag'].column_name,
+                self.fields['hatch_date'].column_name,
+                self.fields['sex'].column_name,
+                self.fields['generation'].column_name,
+                self.fields['breed'].column_name,
+                self.fields['hatchery'].column_name,
+                self.fields['house'].column_name,
+                self.fields['pen'].column_name,
+                self.fields['sire'].column_name,
+                self.fields['dam'].column_name,
+                self.fields['reduction_date'].column_name,
+                self.fields['reduction_reason'].column_name,
+            ],
+            columns=[self.fields['week'].column_name],
+            values=[self.fields['body_weight'].column_name, self.fields['feed_weight'].column_name,
+                    self.fields['no_eggs'].column_name, self.fields['eggs_weight'].column_name],
+            aggfunc='sum')
+        df.columns = df.columns.swaplevel(0, 1)
+        col_index = pd.MultiIndex.from_product(
+            [
+                list_of_weeks,
+                [self.fields['body_weight'].column_name, self.fields['feed_weight'].column_name,
+                 self.fields['no_eggs'].column_name, self.fields['eggs_weight'].column_name]
+            ]
+        )
+        df = df.reindex(col_index, axis='columns')
+
+        print(list_of_weeks)
+        print('==--------------')
+        print(df.head)
+
+        self.after_export(queryset, data, *args, **kwargs)
+
+        buffer = io.BytesIO()
+        with pd.ExcelWriter(buffer) as writer:
+            df.to_excel(writer)
+        buffer.seek(0)
+
+        # Custom Exports
+        self.xlsx = buffer.read()
+
+        return self
+
+    class Meta:
+        model = ChickenRecordset
+        import_id_fields = ['chicken']
+        exclude = ['id']
+        fields = ['tag', 'hatch_date', 'sex',
+                  'breed', 'generation', 'hatchery', 'pen', 'sire', 'dam', 'reduction_date', 'reduction_reason', 'color']

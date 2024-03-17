@@ -47,3 +47,4 @@ flower
 django-rest-passwordreset
 drf_standardized_errors
 scipy
+XlsxWriter
