@@ -29,7 +29,7 @@ type Inputs = VerifyInvitation & {
 };
 
 const schema = yup.object({
-  password: yup.string().length(6).required(),
+  password: yup.string().min(6).required(),
   confirm_password: yup
     .string()
     .label("confirm password")
