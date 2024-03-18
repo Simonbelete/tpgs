@@ -107,12 +107,17 @@ const resources: Res[] = [
   { name: "---", resource: "", fields: {} },
   {
     name: "Export Pedigree, Body Weight, Feed Intake & Egg Production",
-    resource: "ExampleChickenBodyWeightExportResource",
+    resource: "ChickenRecordsetExportResource",
     fields: chickenFileds,
   },
   {
     name: "Export Pedigree & Body Weight",
     resource: "ChickenBodyWeightExportResource",
+    fields: chickenFileds,
+  },
+  {
+    name: "Export Feed conversition ratio",
+    resource: "ChickenFeedFCRResource",
     fields: chickenFileds,
   },
 ];
@@ -145,6 +150,20 @@ export const ExportJobForm = () => {
     return vals;
   };
 
+  const buildChickenRefResource = (values: any) => {
+    const vals = {
+      chicken: _.get(values.chicken, "id", null),
+      chicken__hatchery: _.get(values.hatchery, "id", null),
+      chicken__pen__house: _.get(values.house, "id", null),
+      chicken__pen: _.get(values.pen, "id", null),
+      chicken__generation: _.get(values, "generation", null),
+      week__gte: _.get(values, "start_week", null),
+      week__lte: _.get(values, "end_week", null),
+    };
+
+    return vals;
+  };
+
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     const body = {
       resource: _.get(data.resource, "resource", null),
@@ -154,9 +173,12 @@ export const ExportJobForm = () => {
     let query = {};
 
     switch (body.resource) {
-      case "ExampleChickenBodyWeightExportResource":
+      case "ChickenRecordsetExportResource":
       case "ChickenBodyWeightExportResource":
         query = buildChickenExportResource(data);
+        break;
+      case "ChickenFeedFCRResource":
+        query = buildChickenRefResource(data);
         break;
     }
 

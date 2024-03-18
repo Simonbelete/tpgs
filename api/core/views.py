@@ -4,7 +4,7 @@ from rest_framework.response import Response
 from rest_framework.exceptions import NotFound
 from django.core.exceptions import ObjectDoesNotExist
 from rest_framework.views import APIView
-from django.http import HttpResponse, JsonResponse
+from django.http import HttpResponse
 from datetime import date
 from django.conf import settings
 from rest_framework.parsers import MultiPartParser
@@ -12,25 +12,120 @@ from tablib import Dataset
 from import_export import resources
 import pandas as pd
 from rest_framework.renderers import TemplateHTMLRenderer
-from django_tenants.utils import schema_context
 from django_tenants.utils import tenant_context
 from farms.models import Farm
 import numpy as np
+import warnings
 
 from core.serializers import UploadSerializer
 
 
+def get_content_type_for_model(obj):
+    # Since this module gets imported in the application's root package,
+    # it cannot import models from other applications at the module level.
+    from django.contrib.contenttypes.models import ContentType
+
+    return ContentType.objects.get_for_model(obj, for_concrete_model=False)
+
+
 class CoreModelViewSet(viewsets.ModelViewSet):
-    # def get_queryset(self):
-    #     is_active = self.request.GET.get('is_active')
-    #     print('-------------')
-    #     print(is_active)
-    #     if (not is_active or distutils.util.strtobool(is_active)):
-    #         return self.queryset
-    #     return self.all_queryset
+    def _get_changed_field_from_objects(self, new_object, old_object):
+        delta = new_object.diff_against(old_object)
+        changed_field = []
+        for change in delta.changes:
+            changed_field.append(change.field)
+            print(change)
+            print("{} changed from {} to {}".format(
+                change.field, change.old, change.new))
+        return changed_field
+
+    def log_addition(self, request, obj, message):
+        """
+        Log that an object has been successfully added.
+
+        The default implementation creates an admin LogEntry object.
+        """
+        from django.contrib.admin.models import ADDITION, LogEntry
+
+        return LogEntry.objects.log_action(
+            user_id=request.user.pk,
+            content_type_id=get_content_type_for_model(obj).pk,
+            object_id=obj.pk,
+            object_repr=str(obj),
+            action_flag=ADDITION,
+            change_message=message,
+        )
+
+    def log_change(self, request, obj, message):
+        """
+        Log that an object has been successfully changed.
+
+        The default implementation creates an admin LogEntry object.
+        """
+        from django.contrib.admin.models import CHANGE, LogEntry
+
+        return LogEntry.objects.log_action(
+            user_id=request.user.pk,
+            content_type_id=get_content_type_for_model(obj).pk,
+            object_id=obj.pk,
+            object_repr=str(obj),
+            action_flag=CHANGE,
+            change_message=message,
+        )
+
+    def log_deletion(self, request, obj, object_repr):
+        """
+        Log that an object will be deleted. Note that this method must be
+        called before the deletion.
+
+        The default implementation creates an admin LogEntry object.
+        """
+        from django.contrib.admin.models import DELETION, LogEntry
+
+        return LogEntry.objects.log_action(
+            user_id=request.user.pk,
+            content_type_id=get_content_type_for_model(obj).pk,
+            object_id=obj.pk,
+            object_repr=object_repr,
+            action_flag=DELETION,
+        )
 
     def perform_create(self, serializer):
-        serializer.save(created_by=self.request.user)
+        new_object = serializer.save(created_by=self.request.user)
+
+        change_message = [{
+            "added": {
+                "name": str(self.queryset.model.__name__),
+                "object": str(new_object)
+            }
+        }]
+        self.log_addition(self.request, new_object, change_message)
+
+    def perform_update(self, serializer):
+        new_object = serializer.save()
+
+        new_record = new_object.history.first()
+        old_record = new_record.prev_record
+
+        change_message = [{
+            "changed": {
+                "name":  str(self.queryset.model.__name__),
+                "object": str(new_record),
+                "fields": self._get_changed_field_from_objects(new_record, old_record)
+            }
+        }]
+
+        self.log_change(self.request, new_object, change_message)
+
+    def perform_destroy(self, instance):
+        deleted_object = instance.delete()
+        change_message = [{
+            "deleted": {
+                "name":  str(self.queryset.model.__name__),
+                "object": str(deleted_object),
+            }
+        }]
+        self.log_deletion(self.request, deleted_object, change_message)
 
 
 class HistoryViewSet(viewsets.ModelViewSet):

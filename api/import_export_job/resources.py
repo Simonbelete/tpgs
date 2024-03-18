@@ -542,7 +542,7 @@ class ChickenRecordsetExportResource(BaseExportResource):
         model = ChickenRecordset
 
 
-class ExampleChickenBodyWeightExportResource(BaseChickenRecordsetResource):
+class ChickenRecordsetResource(BaseChickenRecordsetResource):
     week = fields.Field(column_name='week', attribute='week')
     feed_weight = fields.Field(
         column_name='Feed Intake', attribute='feed_weight')
@@ -613,10 +613,6 @@ class ExampleChickenBodyWeightExportResource(BaseChickenRecordsetResource):
         )
         df = df.reindex(col_index, axis='columns')
 
-        print(list_of_weeks)
-        print('==--------------')
-        print(df.head)
-
         self.after_export(queryset, data, *args, **kwargs)
 
         buffer = io.BytesIO()
@@ -635,3 +631,51 @@ class ExampleChickenBodyWeightExportResource(BaseChickenRecordsetResource):
         exclude = ['id']
         fields = ['tag', 'hatch_date', 'sex',
                   'breed', 'generation', 'hatchery', 'pen', 'sire', 'dam', 'reduction_date', 'reduction_reason', 'color']
+
+
+class ChickenFeedFCRResource(BaseChickenRecordsetResource):
+    week = fields.Field(column_name='week', attribute='week')
+    weight = fields.Field(column_name='Weight (g)', attribute='weight')
+
+    def export(self, *args, queryset=None, **kwargs):
+        if len(args) == 1 and (
+            isinstance(args[0], QuerySet) or isinstance(args[0], list)
+        ):
+            warnings.warn(
+                "'queryset' must be supplied as a named parameter",
+                category=DeprecationWarning,
+            )
+            queryset = args[0]
+
+        # Remove batch feed parent
+        queryset = queryset.filter(chicken__isnull=False)
+
+        self.before_export(queryset, *args, **kwargs)
+
+        if queryset is None:
+            queryset = self.get_queryset()
+        queryset = self.filter_export(queryset, *args, **kwargs)
+        headers = self.get_export_headers()
+        data = tablib.Dataset(headers=headers)
+
+        for obj in self.iter_queryset(queryset):
+            data.append(self.export_resource(obj))
+
+        df = data.export('df')
+
+        df.groupby([
+            self.fields['tag'].column_name,
+            self.fields['week'].column_name
+        ])[self.fields['weight'].column_name].sum()
+        # df['weight_sum'] = df[self.fields['weight'].column_name].transform(
+        #     'sum')
+
+        print('----------------')
+        print(df.head)
+
+        self.after_export(queryset, data, *args, **kwargs)
+
+        return data
+
+    class Meta:
+        model = Feed
