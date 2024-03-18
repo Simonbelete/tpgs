@@ -20,6 +20,7 @@ import LoadingButton from "@mui/lab/LoadingButton";
 import auth_service from "../services/auth_service";
 import { isAxiosError } from "axios";
 import errorToForm from "@/util/errorToForm";
+import _ from "lodash";
 
 type Inputs = {
   password: string;
@@ -34,6 +35,8 @@ const schema = yup
 const ResetPassword = () => {
   const router = useRouter();
   const [error, setErrorMessage] = useState<string | null>(null);
+  // TODO: use rtk
+  const [errorBody, setErrorBody] = useState<object | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -45,20 +48,24 @@ const ResetPassword = () => {
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     setIsLoading(true);
     setErrorMessage(null);
+    setErrorBody(null);
     try {
       const response = await auth_service.reset_password_confirm({
         password: data.password,
-        token: router.query?.token ? router.query?.token[0] : "",
+        // @ts-ignore
+        token: router.query?.token ? router.query?.token : "",
       });
       if (response.status == 200) {
         setSuccess(
           "Password reset email sent, please check your email to reset your password"
         );
+        router.push("/login");
       }
     } catch (ex: any) {
       if (ex.status == 400) {
         setErrorMessage("Error check if your email address is correct");
         errorToForm(ex.data, setError);
+        setErrorBody(ex.data);
       } else
         setErrorMessage(
           "Server error, please check your connection and try again"
@@ -66,6 +73,23 @@ const ResetPassword = () => {
     } finally {
       setIsLoading(false);
     }
+  };
+
+  const buildErrorBodyMessage = () => {
+    let result = "";
+    Object.keys(errorBody || {}).forEach((key) => {
+      const value = _.get(errorBody, key, []);
+
+      for (let i = 0; i < value.length; i++) {
+        result =
+          result +
+          `
+        
+        ` +
+          value[i];
+      }
+    });
+    return result;
   };
 
   return (
@@ -82,8 +106,15 @@ const ResetPassword = () => {
           </Typography>
           {error && (
             <Box sx={{ mt: 1, maxWidth: 250 }}>
-              <Alert variant="outlined" severity="error">
-                {error}
+              <Alert
+                variant="outlined"
+                severity="error"
+                sx={{ whiteSpace: "pre-line" }}
+              >
+                <>
+                  {error}
+                  {buildErrorBodyMessage()}
+                </>
               </Alert>
             </Box>
           )}

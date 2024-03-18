@@ -2,13 +2,12 @@ import React, { ReactElement } from "react";
 import { DefaultLayout } from "@/layouts";
 import { ResetPassword } from "@/features/auth";
 import Head from "next/head";
+import { SeoHead } from "@/seo";
 
 const ResetPasswordPage = () => {
   return (
     <>
-      <Head>
-        <title>ILRI TPGS - Reset Password</title>
-      </Head>
+      <SeoHead title="Reset Password" />
       <ResetPassword />
     </>
   );

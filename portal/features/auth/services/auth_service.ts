@@ -4,7 +4,7 @@ import client from "@/services/client";
 
 export const URL = "/auth";
 const RESET_PASSWORD_URL = `${URL}/reset-password`;
-const RESET_PASSWORD_CONFIRM_URL = `${URL}/reset-password`;
+const RESET_PASSWORD_CONFIRM_URL = `${URL}/reset-password/confirm`;
 
 export default {
   reset_password: async (data: ResetPassword) =>

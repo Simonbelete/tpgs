@@ -2,13 +2,12 @@ import React, { ReactElement } from "react";
 import { DefaultLayout } from "@/layouts";
 import { ForgotPassword } from "@/features/auth";
 import Head from "next/head";
+import { SeoHead } from "@/seo";
 
 const ForgotPasswordPage = () => {
   return (
     <>
-      <Head>
-        <title>ILRI TPGS - Forgot Password</title>
-      </Head>
+      <SeoHead title="Forgot Password" />
       <ForgotPassword />
     </>
   );
