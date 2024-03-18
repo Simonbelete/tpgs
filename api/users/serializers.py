@@ -46,4 +46,4 @@ class UserSerializer_POST(serializers.ModelSerializer):
 class UserSerializer_SLUG(serializers.ModelSerializer):
     class Meta:
         model = models.User
-        fields = ['id', 'name', 'username']
+        fields = ['id', 'name', 'display_name', 'username']

@@ -53,6 +53,7 @@ import PinIcon from "@mui/icons-material/Pin";
 import RuleIcon from "@mui/icons-material/Rule";
 import FileDownloadIcon from "@mui/icons-material/FileDownload";
 import FileUploadIcon from "@mui/icons-material/FileUpload";
+import TimelineIcon from "@mui/icons-material/Timeline";
 
 function menuProps(key: string) {
   return {
@@ -725,59 +726,6 @@ const SidebarMenu = () => {
               </Typography>
             </MenuItem>
           </Menu>
-          <div
-            style={{
-              padding: "0 24px",
-              marginBottom: "8px",
-              marginTop: "32px",
-            }}
-          >
-            <Typography
-              variant="caption"
-              fontWeight={500}
-              style={{ opacity: 0.6, letterSpacing: "0.5px" }}
-            >
-              Reporting
-            </Typography>
-          </div>
-
-          <Menu menuItemStyles={menuItemStyles}>
-            <MenuItem
-              component={
-                <Link onClick={() => toggleSidebar()} href="/reports" />
-              }
-              icon={<AutoGraphIcon fontSize="small" />}
-              active={RegExp("/reports(.*)$").test(router.pathname)}
-            >
-              <Typography variant="body1" fontSize={14}>
-                Reports
-              </Typography>
-            </MenuItem>
-          </Menu>
-          <Menu menuItemStyles={menuItemStyles}>
-            <MenuItem
-              component={
-                <Link onClick={() => toggleSidebar()} href="/import-job" />
-              }
-              icon={<FileUploadIcon fontSize="small" />}
-              active={RegExp("/import-job(.*)$").test(router.pathname)}
-            >
-              <Typography variant="body1" fontSize={14}>
-                Import
-              </Typography>
-            </MenuItem>
-            <MenuItem
-              component={
-                <Link onClick={() => toggleSidebar()} href="/export-job" />
-              }
-              icon={<FileDownloadIcon fontSize="small" />}
-              active={RegExp("/export-job(.*)$").test(router.pathname)}
-            >
-              <Typography variant="body1" fontSize={14}>
-                Export
-              </Typography>
-            </MenuItem>
-          </Menu>
         </>
       ) : (
         <>
@@ -800,6 +748,70 @@ const SidebarMenu = () => {
           </div>
         </>
       )}
+      <div
+        style={{
+          padding: "0 24px",
+          marginBottom: "8px",
+          marginTop: "32px",
+        }}
+      >
+        <Typography
+          variant="caption"
+          fontWeight={500}
+          style={{ opacity: 0.6, letterSpacing: "0.5px" }}
+        >
+          Reporting
+        </Typography>
+      </div>
+
+      <Menu menuItemStyles={menuItemStyles}>
+        <MenuItem
+          component={<Link onClick={() => toggleSidebar()} href="/reports" />}
+          icon={<AutoGraphIcon fontSize="small" />}
+          active={RegExp("/reports(.*)$").test(router.pathname)}
+        >
+          <Typography variant="body1" fontSize={14}>
+            Reports
+          </Typography>
+        </MenuItem>
+
+        <MenuItem
+          component={
+            <Link onClick={() => toggleSidebar()} href="/import-job" />
+          }
+          icon={<FileUploadIcon fontSize="small" />}
+          active={RegExp("/import-job(.*)$").test(router.pathname)}
+        >
+          <Typography variant="body1" fontSize={14}>
+            Import
+          </Typography>
+        </MenuItem>
+        <MenuItem
+          component={
+            <Link onClick={() => toggleSidebar()} href="/export-job" />
+          }
+          icon={<FileDownloadIcon fontSize="small" />}
+          active={RegExp("/export-job(.*)$").test(router.pathname)}
+        >
+          <Typography variant="body1" fontSize={14}>
+            Export
+          </Typography>
+        </MenuItem>
+
+        {(isSuperUser || isAdmin) && (
+          <MenuItem
+            component={
+              <Link onClick={() => toggleSidebar()} href="/activities" />
+            }
+            icon={<TimelineIcon fontSize="small" />}
+            active={RegExp("/activities(.*)$").test(router.pathname)}
+          >
+            <Typography variant="body1" fontSize={14}>
+              Activities
+            </Typography>
+          </MenuItem>
+        )}
+      </Menu>
       <div
         style={{ padding: "0 24px", marginBottom: "8px", marginTop: "32px" }}
       >

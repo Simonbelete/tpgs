@@ -8,6 +8,7 @@ from django_tenants.models import TenantMixin, DomainMixin
 from farms.models import Farm
 from core.models import BaseAllDataManger
 
+
 class UserManager(BaseUserManager):
     """
     Custom user model manager where email is the unique identifiers
@@ -44,7 +45,7 @@ class UserManager(BaseUserManager):
 class User(AbstractUser):
     objects = UserManager()
     all = BaseAllDataManger()
-    
+
     username = models.CharField(
         "username", max_length=150, unique=False, null=True, blank=True)
     email = models.EmailField(
@@ -59,3 +60,10 @@ class User(AbstractUser):
 
     def __str__(self):
         return self.email
+
+    @property
+    def display_name(self):
+        if (self.name):
+            return self.name
+        else:
+            return "{0}@*****".format(self.email[0:5])
