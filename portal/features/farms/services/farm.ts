@@ -27,6 +27,13 @@ export const farmApi = baseApi.injectEndpoints({
           data: patch,
         }),
       }),
+      createFarm: build.mutation<Promise<Farm>, Partial<Farm>>({
+        query: (data: Partial<Farm>) => ({
+          url: `${URL}/`,
+          method: "post",
+          data: data,
+        }),
+      }),
     };
   },
   overrideExisting: false,

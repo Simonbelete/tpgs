@@ -1,5 +1,5 @@
 import { baseApi } from "@/services/baseApi";
-import { Activity } from "@/models";
+import { Activity, Response } from "@/models";
 import { AxiosResponse } from "axios";
 import { NextPageContext } from "next";
 import clientSSR from "@/services/client_ssr";

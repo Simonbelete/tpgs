@@ -5,7 +5,7 @@ import {
   GridRenderCellParams,
 } from "@mui/x-data-grid";
 import { Typography } from "@mui/material";
-import { Notification } from "@/models";
+import { Activity } from "@/models";
 import _ from "lodash";
 import { useGetActivitiesQuery, activityApi } from "./services";
 import buildQuery from "@/util/buildQuery";
@@ -58,7 +58,7 @@ export const ActivityList = () => {
   );
 
   return (
-    <ListLayout<Notification>
+    <ListLayout<Activity>
       title="Activites"
       columns={columns}
       actions={[ViewAction]}

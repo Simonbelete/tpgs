@@ -37,7 +37,7 @@ export const FarmForm = ({
           data={data}
           schema={schema}
           shallowRoute={shallowRoute}
-          createEndpoint={farmApi.endpoints.createChicken}
+          createEndpoint={farmApi.endpoints.createFarm}
           updateEndpoint={farmApi.endpoints.updateFarm}
           beforeSubmit={(values: Partial<Farm>) => {
             const cleaned_data: Partial<Farm> = {
