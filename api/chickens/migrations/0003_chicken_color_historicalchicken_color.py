@@ -20,4 +20,8 @@ class Migration(migrations.Migration):
             name='color',
             field=models.TextField(blank=True, default=''),
         ),
+        migrations.AlterModelOptions(
+            name='chicken',
+            options={'ordering': ['-created_at']},
+        ),
     ]
