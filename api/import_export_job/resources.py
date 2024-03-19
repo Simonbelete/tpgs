@@ -111,8 +111,8 @@ class BaseChickenRecordsetResource(BaseResource):
     hatch_date = fields.Field(column_name="Hatch Date", attribute="chicken__hatch_date",
                               widget=widgets.DateWidget(format="%d/%m/%Y"))
     sex = fields.Field(column_name='Sex', attribute='chicken__sex')
-    generation = fields.Field(column_name='chicken__generation',
-                              attribute='generation')
+    generation = fields.Field(column_name='Generation',
+                              attribute='chicken__generation')
     breed = fields.Field(
         column_name='Breed',
         attribute='chicken__breed',
@@ -145,7 +145,7 @@ class BaseChickenRecordsetResource(BaseResource):
         widget=widgets.ForeignKeyWidget(ReductionReason, field='name'))
 
     class Meta:
-        model = Chicken
+        model = ChickenRecordset
         import_id_fields = ['tag']
         exclude = ['id']
         fields = ['tag', 'hatch_date', 'sex',
@@ -533,6 +533,10 @@ class ChickenRecordsetResource(BaseChickenRecordsetResource):
             values=[self.fields['body_weight'].column_name, self.fields['feed_weight'].column_name,
                     self.fields['no_eggs'].column_name, self.fields['eggs_weight'].column_name],
             aggfunc='sum')
+
+        print('===================')
+        print(df.head)
+
         df.columns = df.columns.swaplevel(0, 1)
         col_index = pd.MultiIndex.from_product(
             [
@@ -599,10 +603,6 @@ class ChickenFeedFCRResource(BaseChickenRecordsetResource):
         ])[self.fields['weight'].column_name].sum()
         # df['weight_sum'] = df[self.fields['weight'].column_name].transform(
         #     'sum')
-
-        print('----------------')
-        print(df.head)
-
         self.after_export(queryset, data, *args, **kwargs)
 
         return data

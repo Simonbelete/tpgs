@@ -14,7 +14,8 @@ class InvitationSerializer_GET(serializers.ModelSerializer):
 
     class Meta:
         model = models.Invitation
-        fields = '__all__'
+        fields = ['id', 'inviter', 'email', 'sent_date', 'expire_date',
+                  'accepted', 'farms', 'is_active', 'is_expired']
 
 
 class InvitationSerializer_POST(serializers.ModelSerializer):

@@ -173,7 +173,7 @@ export const ExportJobForm = () => {
     let query = {};
 
     switch (body.resource) {
-      case "ChickenRecordsetExportResource":
+      case "ChickenRecordsetResource":
       case "ChickenBodyWeightExportResource":
         query = buildChickenExportResource(data);
         break;
