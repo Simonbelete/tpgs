@@ -10,7 +10,7 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ('chickens', '0003_chicken_color_historicalchicken_color'),
+        ('chickens', '0002_initial'),
     ]
 
     operations = [
