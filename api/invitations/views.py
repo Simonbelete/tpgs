@@ -9,6 +9,7 @@ from rest_framework.permissions import IsAuthenticated
 from django.core.exceptions import ValidationError
 from django.utils import timezone
 from rest_framework.exceptions import NotFound
+from rest_framework.permissions import AllowAny
 
 from . import models
 from . import serializers
@@ -55,6 +56,7 @@ class InvitationViewSet(viewsets.ModelViewSet):
 
 class VerifyInvitationViewSet(viewsets.ViewSet):
     serializer_class = serializers.VerifyInvitationSerializer_POST
+    permission_classes = [AllowAny]
 
     @transaction.atomic
     def create(self, request):
@@ -117,6 +119,7 @@ class ResendInvitationViewSet(viewsets.ViewSet):
 
 class InvitationDetailViewSet(viewsets.ViewSet):
     serializer_class = serializers.InvitationSerializer_GET
+    permission_classes = [AllowAny]
 
     def list(self, request, token=None):
         try:
