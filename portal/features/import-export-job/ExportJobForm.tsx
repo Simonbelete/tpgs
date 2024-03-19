@@ -107,7 +107,7 @@ const resources: Res[] = [
   { name: "---", resource: "", fields: {} },
   {
     name: "Export Pedigree, Body Weight, Feed Intake & Egg Production",
-    resource: "ChickenRecordsetExportResource",
+    resource: "ChickenRecordsetResource",
     fields: chickenFileds,
   },
   {

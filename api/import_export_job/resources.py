@@ -108,40 +108,40 @@ class BaseChickenResource(BaseResource):
 
 class BaseChickenRecordsetResource(BaseResource):
     tag = fields.Field(column_name=TAG_COLUMN_NAME, attribute='chicken__tag')
-    hatch_date = fields.Field(column_name="Hatch Date", attribute="hatch_date",
+    hatch_date = fields.Field(column_name="Hatch Date", attribute="chicken__hatch_date",
                               widget=widgets.DateWidget(format="%d/%m/%Y"))
-    sex = fields.Field(column_name='Sex', attribute='sex')
-    generation = fields.Field(column_name='generation',
+    sex = fields.Field(column_name='Sex', attribute='chicken__sex')
+    generation = fields.Field(column_name='chicken__generation',
                               attribute='generation')
     breed = fields.Field(
         column_name='Breed',
-        attribute='breed',
+        attribute='chicken__breed',
         widget=widgets.ForeignKeyWidget(Breed, field='name'))
     hatchery = fields.Field(
         column_name='Batch',
-        attribute='hatchery',
+        attribute='chicken__hatchery',
         widget=widgets.ForeignKeyWidget(Hatchery, field='name'))
     house = fields.Field(
         column_name='House',
-        attribute='pen__house',
+        attribute='chicken__pen__house',
         widget=widgets.ForeignKeyWidget(House, field='name'), readonly=True)
     pen = fields.Field(
         column_name='pen',
-        attribute='pen',
+        attribute='chicken__pen',
         widget=widgets.ForeignKeyWidget(Pen, field='name'))
     sire = fields.Field(
         column_name='Sire ID',
-        attribute='sire',
+        attribute='chicken__sire',
         widget=widgets.ForeignKeyWidget(Chicken, field='tag'))
     dam = fields.Field(
         column_name='Dam ID',
-        attribute='dam',
+        attribute='chicken__dam',
         widget=widgets.ForeignKeyWidget(Chicken, field='tag'))
     reduction_date = fields.Field(
-        column_name='Cull Date', attribute='reduction_date')
+        column_name='Cull Date', attribute='chicken__reduction_date')
     reduction_reason = fields.Field(
         column_name='Cull Reason',
-        attribute='reduction_reason',
+        attribute='chicken__reduction_reason',
         widget=widgets.ForeignKeyWidget(ReductionReason, field='name'))
 
     class Meta:
@@ -474,74 +474,6 @@ class BaseExportResource():
         return self.Meta.model.objects.all()
 
 
-class ChickenRecordsetExportResource(BaseExportResource):
-    def export(self, queryset):
-        df = pd.DataFrame(list(queryset.annotate(
-            tag=F('chicken__tag'),
-            hatch_date=F('hatch_date'),
-            sex=F('chicken__sex'),
-            generation=F('chicken__generation'),
-            breed=F('chicken__breed__name'),
-            batch=F('chicken__')
-
-        ).values()))
-
-        if (df.empty):
-            raise Exception('Data is empty')
-
-        list_of_weeks = np.array(df['week'].unique().tolist())
-        list_of_weeks = np.sort(list_of_weeks).tolist()
-
-        # Sum values if duplicates are found
-        df = df.pivot_table(index=['chicken_id'],
-                            columns=['week'],
-                            values=['feed_weight', 'body_weight',
-                                    'no_eggs', 'eggs_weight'],
-                            aggfunc='sum')
-
-        df.columns = df.columns.swaplevel(0, 1)
-
-        col_index = pd.MultiIndex.from_product(
-            [
-                list_of_weeks,
-                ['feed_weight', 'body_weight', 'no_eggs', 'eggs_weight']
-            ]
-        )
-
-        df = df.reindex(col_index, axis='columns')
-
-        # buffer = io.BytesIO()
-        # # write dataframe to excel
-        # df.to_excel(buffer)
-        # # Rewind the buffer.
-        # buffer.seek(0)
-
-        # self.xlsx = buffer.read()
-
-        buffer = io.BytesIO()
-
-        with pd.ExcelWriter(buffer) as writer:
-            df.to_excel(writer)
-
-            # workbook = writer.book
-            # worksheet = writer.sheets["Sheet1"]
-
-            # format1 = workbook.add_format(
-            #     {"bg_color": "#FFC7CE", "font_color": "#9C0006"})
-
-            # worksheet.set_column(
-            #     "B:E", 10, format1
-            # )
-
-        buffer.seek(0)
-        self.xlsx = buffer.read()
-
-        return self
-
-    class Meta:
-        model = ChickenRecordset
-
-
 class ChickenRecordsetResource(BaseChickenRecordsetResource):
     week = fields.Field(column_name='week', attribute='week')
     feed_weight = fields.Field(
@@ -556,12 +488,6 @@ class ChickenRecordsetResource(BaseChickenRecordsetResource):
         if len(args) == 1 and (
             isinstance(args[0], QuerySet) or isinstance(args[0], list)
         ):
-            # issue 1565: definition of export() was incorrect
-            # if queryset is being passed, it must be as the first arg or named
-            # parameter
-            # this logic is included for backwards compatibility:
-            # if the method is being called without a named parameter, add a warning
-            # this check should be removed in a future release
             warnings.warn(
                 "'queryset' must be supplied as a named parameter",
                 category=DeprecationWarning,
@@ -580,6 +506,10 @@ class ChickenRecordsetResource(BaseChickenRecordsetResource):
             data.append(self.export_resource(obj))
 
         df = data.export('df')
+
+        if (df.empty):
+            raise Exception('Data is empty')
+
         list_of_weeks = np.array(df['week'].unique().tolist()).astype(int)
         list_of_weeks = np.sort(list_of_weeks).astype(str).tolist()
 

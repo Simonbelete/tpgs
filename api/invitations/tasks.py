@@ -41,6 +41,8 @@ def send_invitation_email(sender, email, token, expire_date):
                 email=email),
             level='info')
     except Exception as ex:
+        print('----------')
+        print(ex)
         user = User.objects.get(pk=sender)
         notify.send(
             sender=user,
