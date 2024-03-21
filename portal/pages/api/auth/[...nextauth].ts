@@ -107,7 +107,7 @@ async function refreshAccessToken(token: JWT) {
     return {
       ...token,
       accessToken: refreshedTokens.access,
-      accessTokenExpires: Date.now() + 1706854754 * 1000,
+      accessTokenExpires: Date.now() + 7,
       refresh: refreshedTokens.refresh ?? token.refresh, // Fall back to old refresh token
     };
   } catch (error) {
@@ -157,7 +157,7 @@ export const authOptions = {
         token.email = user.email;
         token.name = user.name;
         token.id = user.id;
-        token.accessTokenExpires = Date.now() + 1706854754 * 1000;
+        token.accessTokenExpires = Date.now() + 7;
       }
 
       if (Date.now() < (token?.accessTokenExpires || 0)) {
