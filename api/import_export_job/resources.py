@@ -46,6 +46,7 @@ class BaseResource(resources.ModelResource):
 
     def read_file(self):
         df = util.read_file(self.import_job.file, self.import_job.format)
+        self.df = df
         return self.after_read_file(df)
 
     def get_rendered_results(self):
@@ -157,7 +158,7 @@ class BaseChickenRecordsetResource(BaseResource):
 
 
 class AllChickenDataImportResource(BaseChickenResource):
-    def melt_to_rows(df, tags, col_name, week_columns=[], level='type', value_name=None):
+    def melt_to_rows(self, df, tags, col_name, week_columns=[], level='type', value_name=None):
         """_summary_
 
         Args:
@@ -179,9 +180,9 @@ class AllChickenDataImportResource(BaseChickenResource):
             id_vars=[TAG_COLUMN_NAME], 
             value_vars=week_columns,
             value_name=value_name or col_name,
-            var_name='week')
+            var_name=WEEK)
         data = data.dropna()
-        data['week'] = data['week'].str.replace(
+        data[WEEK] = data[WEEK].str.replace(
                 '\D+', '', regex=True)  # Remove week stirng
         return data
 
@@ -217,45 +218,42 @@ class AllChickenDataImportResource(BaseChickenResource):
         
         self.df_data = df_data
         self.df_pedigree = df_pedigree
-        
-        print(df_pedigree)
-        
+                
         return df_pedigree
     
     def after_import(self, dataset, result, using_transactions, dry_run, **kwargs):
         col_filter = "((W|w)eek(\s)?)[0-9]+"
-        week_columns = list(self.df_data.filter(regex=col_filter))
-        
+        week_columns = list(self.df.filter(regex=col_filter))
         tags = self.df_pedigree[TAG_COLUMN_NAME]
         
         # Import Body Weight
-        df_body_weight = self.melt_to_rows(self.df_data, tags, col_name=EGGS_WEIGHT)
-        self.import_body_weight(df_body_weight, week_columns, dry_run=dry_run)
+        df_body_weight = self.melt_to_rows(self.df_data, tags, col_name=BODY_WEIGHT, week_columns=week_columns)
+        self.import_body_weight(df_body_weight, dry_run=dry_run)
         
         # Import Egg Production
-        df_no_eggs = self.melt_to_rows(self.df_data, tags, col_name=NO_EGGS)
-        df_eggs_weight = self.melt_to_rows(self.df_data, tags, col_name=EGGS_WEIGHT)
-        df_eggs = pd.merge(df_no_eggs, df_eggs_weight, how='left', left_on=[TAG_COLUMN_NAME, 'week'], right_on=[TAG_COLUMN_NAME, 'week'])
-        self.import_body_weight(df_eggs, week_columns, dry_run=dry_run)
+        df_no_eggs = self.melt_to_rows(self.df_data, tags, col_name=NO_EGGS, week_columns=week_columns)
+        df_eggs_weight = self.melt_to_rows(self.df_data, tags, col_name=EGGS_WEIGHT, week_columns=week_columns)
+        df_eggs = pd.merge(df_no_eggs, df_eggs_weight, how='left', left_on=[TAG_COLUMN_NAME, WEEK], right_on=[TAG_COLUMN_NAME, WEEK])
+        self.import_egg_production(df_eggs, dry_run=dry_run)
         
-        # Import Feed Intake
-        df_feed = self.melt_to_rows(self.df_data, tags, col_name=FEED_WEIGHT)
-        self.import_body_weight(df_feed, week_columns, dry_run=dry_run)
+        # # # Import Feed Intake
+        df_feed = self.melt_to_rows(self.df_data, tags, col_name=FEED_WEIGHT, week_columns=week_columns)
+        self.import_feed_intake(df_feed, dry_run=dry_run)
         
         
-    def import_body_weight(self, df, week_columns=[], dry_run=True):
+    def import_body_weight(self, df, dry_run=True):
         resource = WeightResource()
         dataset = Dataset().load(df)
         result = resource.import_data(dataset, dry_run=dry_run)
         self.add_result(result)
 
-    def import_egg_production(self, df, week_columns=[], dry_run=True):
+    def import_egg_production(self, df, dry_run=True):
         resource = EggResource()
         dataset = Dataset().load(df)
         result = resource.import_data(dataset, dry_run=dry_run)
         self.add_result(result)
         
-    def import_feed_intake(self, df, week_columns=[], dry_run=True):
+    def import_feed_intake(self, df, dry_run=True):
         resource = FeedResource()
         dataset = Dataset().load(df)
         result = resource.import_data(dataset, dry_run=dry_run)
@@ -453,7 +451,8 @@ class WeightResource(BaseResource):
     class Meta:
         model = Weight
         import_id_fields = ['chicken', 'week']
-        fields = ['id', 'chicken', 'week', 'weight']
+        exclude = ['id']
+        fields = ['chicken', 'week', 'weight']
 
 
 class BatchFeedResource(BaseResource):
@@ -492,7 +491,8 @@ class FeedResource(BaseResource):
     class Meta:
         model = Feed
         import_id_fields = ['chicken', 'week']
-        fields = ['id', 'chicken', 'week', 'weight']
+        exclude = ['id']
+        fields = ['chicken', 'week', 'weight']
 
 
 class EggResource(BaseResource):
@@ -507,7 +507,8 @@ class EggResource(BaseResource):
     class Meta:
         model = Egg
         import_id_fields = ['chicken', 'week']
-        fields = ['id', 'chicken', 'week', 'eggs', 'weight']
+        exclude = ['id']
+        fields = ['chicken', 'week', 'eggs', 'weight']
 
 
 class BreedResource(BaseResource):
@@ -647,9 +648,6 @@ class ChickenRecordsetResource(BaseChickenRecordsetResource):
             values=[self.fields['body_weight'].column_name, self.fields['feed_weight'].column_name,
                     self.fields['no_eggs'].column_name, self.fields['eggs_weight'].column_name],
             aggfunc='sum')
-
-        print('===================')
-        print(df.head)
 
         df.columns = df.columns.swaplevel(0, 1)
         col_index = pd.MultiIndex.from_product(

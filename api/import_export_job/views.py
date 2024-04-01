@@ -29,7 +29,7 @@ class ImportJobViewSet(viewsets.ModelViewSet):
         farm = Farm.objects.get(name=self.request.tenant)
         x = serializer.save(created_by=self.request.user,
                         farm=farm)
-        _run_import(x, dry_run=True)
+        _run_import(x, dry_run=False)
         
 
 
