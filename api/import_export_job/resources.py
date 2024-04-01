@@ -196,6 +196,7 @@ class AllChickenDataImportResource(BaseChickenResource):
         df_pedigree.drop(0, inplace=True)
         df_pedigree.drop(1, inplace=True)
         df_pedigree.columns = pedigree_columns
+        df_pedigree = df_pedigree.replace(np.nan, None)
 
 
         # Weekly chicken's data
@@ -217,6 +218,8 @@ class AllChickenDataImportResource(BaseChickenResource):
         self.df_data = df_data
         self.df_pedigree = df_pedigree
         
+        print(df_pedigree)
+        
         return df_pedigree
     
     def after_import(self, dataset, result, using_transactions, dry_run, **kwargs):
@@ -230,8 +233,8 @@ class AllChickenDataImportResource(BaseChickenResource):
         self.import_body_weight(df_body_weight, week_columns, dry_run=dry_run)
         
         # Import Egg Production
-        df_no_eggs = self.melt_to_rows(self.df_data, self.df_pedigree[TAG_COLUMN_NAME], NO_EGGS)
-        df_eggs_weight = self.melt_to_rows(self.df_data, self.df_pedigree[TAG_COLUMN_NAME], EGGS_WEIGHT)
+        df_no_eggs = self.melt_to_rows(self.df_data, tags, col_name=NO_EGGS)
+        df_eggs_weight = self.melt_to_rows(self.df_data, tags, col_name=EGGS_WEIGHT)
         df_eggs = pd.merge(df_no_eggs, df_eggs_weight, how='left', left_on=[TAG_COLUMN_NAME, 'week'], right_on=[TAG_COLUMN_NAME, 'week'])
         self.import_body_weight(df_eggs, week_columns, dry_run=dry_run)
         

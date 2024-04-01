@@ -5,12 +5,12 @@ from . import models
 
 
 class HatcheryFilter(CoreFilterSet):
-    stage__order__lt = filters.NumberFilter(
-        field_name='stage__order', lookup_expr='lt')
+    # stage__order__lt = filters.NumberFilter(
+    #     field_name='stage__order', lookup_expr='lt')
 
     class Meta:
         model = models.Hatchery
-        fields = ['stage__order', 'stage', 'breed']
+        fields = ['breed']
 
 
 class IncubationFilter(CoreFilterSet):

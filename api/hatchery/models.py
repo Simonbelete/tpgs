@@ -17,30 +17,30 @@ class Hatchery(CoreModel):
         Breed, on_delete=models.SET_NULL, null=True, blank=True)
     note = models.TextField(null=True, blank=True)
 
-    # Selection
-    selected_from = models.ManyToManyField(
-        "self", null=True, blank=True, related_name='moved_to')
-    stage = models.ForeignKey(
-        Stage, on_delete=models.SET_NULL, null=True, blank=True, related_name='selection')
-    from_stage = models.ForeignKey(
-        Stage, on_delete=models.SET_NULL, null=True, blank=True, related_name='from_selection')  # Stage History
-    # All the fields are for merely sync to Chicken model
-    selected_chickens = models.ManyToManyField(
-        Chicken, null=True, blank=True, related_name='selected_selection')
-    unselected_chickens = models.ManyToManyField(
-        Chicken, null=True, blank=True, related_name='unselected_selection')
-    reduction_date = models.DateField(null=True, blank=True)
-    reduction_reason = models.ForeignKey(
-        ReductionReason, on_delete=models.SET_NULL, null=True, blank=True, related_name='selection')
-    generation = models.PositiveIntegerField(
-        null=True, blank=True)
+    # # Selection
+    # selected_from = models.ManyToManyField(
+    #     "self", null=True, blank=True, related_name='moved_to')
+    # stage = models.ForeignKey(
+    #     Stage, on_delete=models.SET_NULL, null=True, blank=True, related_name='selection')
+    # from_stage = models.ForeignKey(
+    #     Stage, on_delete=models.SET_NULL, null=True, blank=True, related_name='from_selection')  # Stage History
+    # # All the fields are for merely sync to Chicken model
+    # selected_chickens = models.ManyToManyField(
+    #     Chicken, null=True, blank=True, related_name='selected_selection')
+    # unselected_chickens = models.ManyToManyField(
+    #     Chicken, null=True, blank=True, related_name='unselected_selection')
+    # reduction_date = models.DateField(null=True, blank=True)
+    # reduction_reason = models.ForeignKey(
+    #     ReductionReason, on_delete=models.SET_NULL, null=True, blank=True, related_name='selection')
+    # generation = models.PositiveIntegerField(
+    #     null=True, blank=True)
 
     history = HistoricalRecords()
 
-    def save(self,  *args, **kwargs) -> None:
-        if (not self.stage):
-            self.stage = Stage.objects.get(order=1)
-        return super().save(*args, **kwargs)
+    # def save(self,  *args, **kwargs) -> None:
+    #     if (not self.stage):
+    #         self.stage = Stage.objects.get(order=1)
+    #     return super().save(*args, **kwargs)
 
     @property
     def display_name(self):

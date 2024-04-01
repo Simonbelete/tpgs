@@ -7,6 +7,7 @@ class HatcheryConfig(AppConfig):
     name = 'hatchery'
 
     def ready(self):
-        from .signals import sync_to_chicken, remove_hatchery
-        setting_changed.connect(remove_hatchery)
-        setting_changed.connect(sync_to_chicken)
+        # from .signals import sync_to_chicken, remove_hatchery
+        # setting_changed.connect(remove_hatchery)
+        # setting_changed.connect(sync_to_chicken)
+        pass

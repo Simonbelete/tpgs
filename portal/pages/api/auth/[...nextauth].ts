@@ -90,7 +90,7 @@ import "@/types/next-auth.d";
 
 async function refreshAccessToken(token: JWT) {
   try {
-    const response = await fetch(process.env.NEXT_API_URL + "/token/refresh", {
+    const response = await fetch(process.env.NEXT_API_URL + "/token/refresh/", {
       method: "POST",
       body: JSON.stringify({
         refresh: token?.refresh || "",
