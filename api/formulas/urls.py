@@ -6,7 +6,7 @@ from . import views
 
 router = routers.DefaultRouter()
 router.register(r'formulas', views.FormulaViewSet,
-                basename='api_formulas')
+                basename='api_formulas') 
 
 router.register(
     r'formulas/(?P<id>.+)/nutrients', views.FormulaNutrients, basename="api_formual_nutrients")

@@ -27,8 +27,10 @@ class ImportJobViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         farm = Farm.objects.get(name=self.request.tenant)
-        serializer.save(created_by=self.request.user,
+        x = serializer.save(created_by=self.request.user,
                         farm=farm)
+        _run_import(x, dry_run=True)
+        
 
 
 class PassthroughRenderer(renderers.BaseRenderer):

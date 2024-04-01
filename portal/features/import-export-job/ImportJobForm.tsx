@@ -16,6 +16,10 @@ const resources = [
   { name: "---", resource: "" },
   {
     name: "Import Pedigree, Body Weight, Feed Intake & Egg Production",
+    resource: "AllChickenDataImportResource",
+  },
+  {
+    name: "Import Pedigree, Body Weight, Feed Intake & Egg Production(Multiple sheet)",
     resource: "MasterChicken",
   },
   { name: "Import Egg Production", resource: "ChickenEgg" },
@@ -61,7 +65,7 @@ export const ImportJobForm = () => {
       });
 
       if (response.status == 201) {
-        router.push(`/import-job/${response.data.id}`);
+        // router.push(`/import-job/${response.data.id}`);
       } else {
         enqueueSnackbar("Please select file type either csv or excel", {
           variant: "error",
