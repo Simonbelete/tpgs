@@ -22,10 +22,8 @@ import { Chicken, ChickenGrid } from "@/models";
 import MuiSaveIcon from "@mui/icons-material/Save";
 import { Dna } from "react-loader-spinner";
 import { enqueueSnackbar } from "notistack";
-import {
-  useExtraCells,
-  ButtonCellType,
-} from "@glideapps/glide-data-grid-cells";
+import { useExtraCells } from "@glideapps/glide-data-grid-cells";
+import { ChickenForm } from "../chicken-form";
 
 type ColumnProperty = {} & Partial<GridCell>;
 
@@ -34,8 +32,8 @@ type Column = {
   property?: ColumnProperty;
 } & GridColumn;
 
-export const GridChickenInput = () => {
-  const [chicken, setChicken] = useState<Chicken | null>(null);
+export const GridChickenInput = ({ tag = null }: { tag?: string }) => {
+  const [chicken, setChicken] = useState<Chicken | null>(tag ?? null);
 
   const [trigger, { data: gridData, isFetching: getChickenGridIsFetching }] =
     useLazyGetChickenGridQuery();
@@ -48,6 +46,7 @@ export const GridChickenInput = () => {
     {
       title: "Week",
       id: "week",
+      width: 80,
       property: {
         kind: GridCellKind.Number,
         allowOverlay: true,
@@ -309,11 +308,12 @@ export const GridChickenInput = () => {
         direction={{ xs: "column", md: "row" }}
         sx={{ my: 3 }}
         gap={1}
-        alignItems={"center"}
+        alignItems={"start"}
       >
         <Button
           onClick={save}
-          color="secondary"
+          color="primary"
+          variant="contained"
           size="small"
           startIcon={<MuiSaveIcon fontSize="small" />}
           sx={{ textTransform: "none" }}
@@ -327,6 +327,7 @@ export const GridChickenInput = () => {
             console.log(newValue);
             setChicken(newValue);
           }}
+          viewForm={<ChickenForm shallowRoute={false} />}
         />
       </Box>
       <Sizer>
@@ -358,7 +359,8 @@ export const GridChickenInput = () => {
       >
         <Button
           onClick={save}
-          color="secondary"
+          color="primary"
+          variant="contained"
           size="small"
           startIcon={<MuiSaveIcon fontSize="small" />}
           sx={{ textTransform: "none" }}
