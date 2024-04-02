@@ -30,7 +30,8 @@ class InvitationViewSet(viewsets.ModelViewSet):
     ordering_fields = '__all__'
 
     def get_queryset(self):
-        superuser_mode = self.request.headers.get('X-Superuser-Mode', 'false')
+        # TODO: set default to false for x-superuser-mode
+        superuser_mode = self.request.headers.get('X-Superuser-Mode', 'true')
         superuser_mode = eval(superuser_mode.capitalize())
         if (superuser_mode and self.request.user.is_superuser):
             return super().get_queryset()

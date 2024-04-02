@@ -39,18 +39,12 @@ class Invitation(models.Model):
 
     @property
     def is_expired(self):
-        print('---------------')
-        print(timezone.now())
-        print(self.expire_date)
         if (timezone.now() > self.expire_date):
             return True
         else:
             return False
 
     def is_expired(self):
-        print('---------------')
-        print(timezone.now())
-        print(self.expire_date)
         if (timezone.now() > self.expire_date):
             return True
         else:

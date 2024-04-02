@@ -325,6 +325,7 @@ const DataTable = ({
               <Box>
                 <Tooltip title="Resend Email">
                   <IconButton
+                    disabled={params.row.accepted}
                     aria-label="resend-email"
                     onClick={() => handleOnResendEmail(params.id)}
                   >
@@ -333,6 +334,7 @@ const DataTable = ({
                 </Tooltip>
                 <Tooltip title="Delete">
                   <IconButton
+                    disabled={params.row.accepted}
                     aria-label="delete"
                     onClick={() => handleDeleteModalOpen(params.id)}
                   >

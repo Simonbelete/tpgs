@@ -77,11 +77,10 @@ const columns: GridColDef[] = [
     minWidth: 150,
     renderCell: (params: GridRenderCellParams<any>) => {
       if (params.row.accepted) {
-        <Chip label="Accepted" color="success" size="small" />;
-      }
-      if (params.row.accepted == false) {
-        <Chip label="Not Accepted" color="error" size="small" />;
-      }
+        return <Chip label="Accepted" color="success" variant="outlined" size="small" />;
+      } else if (params.row.accepted == false) {
+        return <Chip label="Not Accepted" color="error" variant="outlined" size="small" />;
+      } else
       return (
         <Chip label="Pending" color="warning" variant="outlined" size="small" />
       );
