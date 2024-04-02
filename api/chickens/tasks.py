@@ -104,3 +104,12 @@ def unarchive_resources(instance):
     eggs = Egg.objects.filter(chicken=instance.id).update(is_active=True)
     weights = Weight.objects.filter(
         chicken=instance.id).update(is_active=True)
+
+@shared_task
+def sync_chicken_batch_feed(instance):
+    """Update
+
+    Args:
+        instance (_type_): _description_
+    """
+    pass
