@@ -12,6 +12,7 @@ import { Button, Chip, Stack } from "@mui/material";
 import { SeoHead } from "@/seo";
 import SendIcon from "@mui/icons-material/Send";
 import { InvitationFormModal } from "@/features/invitations";
+import dayjs from "dayjs";
 
 const Actions = (): ReactElement => {
   const [openModal, setOpenModal] = useState(false);
@@ -80,6 +81,18 @@ export const UserList = () => {
           </Stack>
         );
       },
+    },
+    {
+      field: "last_login",
+      headerName: "Last Login",
+      flex: 1,
+      minWidth: 150,
+      valueGetter: (params) =>
+        params.row.last_login
+          ? dayjs(params.row.last_login).format(
+              process.env.NEXT_PUBLIC_DATETIME_FORMAT
+            )
+          : "",
     },
   ];
   return (

@@ -2,7 +2,6 @@ import React from "react";
 import { GridColDef, GridRenderCellParams } from "@mui/x-data-grid";
 import {
   ListLayout,
-  DashboardAction,
   PermanentlyDeleteAction,
   EditAction,
   HistoryAction,
@@ -12,9 +11,6 @@ import {
 } from "@/lib/crud";
 import { unitApi, URL } from "../services";
 import { Unit } from "@/models";
-import { houseApi } from "@/features/houses/services";
-import { Typography } from "@mui/material";
-import Link from "next/link";
 
 export const UnitList = () => {
   const columns: GridColDef[] = [
