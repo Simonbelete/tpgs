@@ -5,6 +5,7 @@ from datetime import date
 
 from core.models import CoreModel
 from pen.models import Pen
+from houses.models import House
 from reduction_reason.models import ReductionReason
 from breeds.models import Breed
 
@@ -25,6 +26,8 @@ class Chicken(CoreModel):
         'self', models.SET_NULL, blank=True, null=True, limit_choices_to={'sex': 'F'}, related_name='children_of_dam')
     hatchery = models.ForeignKey(
         'hatchery.Hatchery', on_delete=models.SET_NULL, null=True, blank=True, related_name='chickens')
+    house = models.ForeignKey(
+        House, on_delete=models.CASCADE, null=True, blank=True, related_name='chickens')
     pen = models.ForeignKey(
         Pen, on_delete=models.CASCADE, null=True, blank=True, related_name='chickens')
     breed = models.ForeignKey(

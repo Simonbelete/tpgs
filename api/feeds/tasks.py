@@ -14,7 +14,7 @@ logger = logging.getLogger(__name__)
 
 
 def _create_individual_feed_from_batch(pk):
-    """_summary_
+    """Create or update individual feed from batch feed
 
     Args:
         pk (int): Feed

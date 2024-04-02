@@ -179,6 +179,7 @@ class ChickenGridViewSet(viewsets.ViewSet):
 
     def get_chicken_grid(self, id=None):
         try:
+            # TODO: using chicken recordset model
             cursor = connection.cursor()
             cursor.execute("""
                 SELECT ww.week, ff.week, ee.week,
@@ -227,12 +228,16 @@ class ChickenGridViewSet(viewsets.ViewSet):
         try:
             data = request.data['data']
             chicken = self.get_chicken(id)
+            print(i)
             for i in data:
-                Feed.objects.update_or_create(chicken=chicken, week=i['week'], defaults={
+                if(i['body_weight'] != 0 and i['body_weight'] != None):
+                    Feed.objects.update_or_create(chicken=chicken, week=i['week'], defaults={
                                               'weight': i['body_weight']})
-                Egg.objects.update_or_create(chicken=chicken, week=i['week'], defaults={
+                if(i['eggs_weight'] != 0 and i['eggs'] !=0):
+                    Egg.objects.update_or_create(chicken=chicken, week=i['week'], defaults={
                                              'eggs': i['eggs'], 'weight': i['eggs_weight']})
-                Weight.objects.update_or_create(chicken=chicken, week=i['week'], defaults={
+                if(i['feed_weight'] != 0):
+                    Weight.objects.update_or_create(chicken=chicken, week=i['week'], defaults={
                                                 'weight': i['feed_weight']})
 
             return Response({
@@ -244,15 +249,16 @@ class ChickenGridViewSet(viewsets.ViewSet):
 
     def delete(self, request, id=None):
         try:
-            data = request.data['data']
+            data = request.data
+            print(data)
             if (data['feed_id']):
-                Feed.objects.filter(id=data['feed_id']).delete()
+                Feed.objects.get(pk=data['feed_id']).delete()
 
             if (data['egg_id']):
-                Egg.objects.filter(id=data['egg_id']).delete()
+                Egg.objects.get(pk=data['egg_id']).delete()
 
             if (data['body_weight_id']):
-                Weight.objects.filter(id=data['body_weight_id']).delete
+                Weight.objects.get(pk=data['body_weight_id']).delete()
 
             return Response({}, status=204)
         except Exception as ex:

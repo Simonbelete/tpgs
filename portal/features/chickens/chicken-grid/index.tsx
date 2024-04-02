@@ -207,10 +207,10 @@ export const GridChickenInput = () => {
 
     _.set(rowCopy, rows.length, {
       week: Number(_.get(rowCopy, `${rowCopy.length - 1}.week`, 0)) + 1,
-      eggs_weight: 0,
-      eggs: 0,
-      feed_weight: 0,
-      body_weight: 0,
+      eggs_weight: null,
+      eggs: null,
+      feed_weight: null,
+      body_weight: null,
     });
 
     setRows(rowCopy);
@@ -245,7 +245,7 @@ export const GridChickenInput = () => {
       chicken != null &&
       (_.get(rows[index], "egg_id") != null ||
         _.get(rows[index], "feed_id") != null ||
-        _.get(rows[index], "") != null)
+        _.get(rows[index], "body_weight_id") != null)
     ) {
       const choice = confirm("Are you sure you want to delete!");
       if (choice) {
