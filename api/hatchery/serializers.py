@@ -25,11 +25,11 @@ class HatcherySerializer_SLUG(serializers.ModelSerializer):
 
 class HatcherySerializer_GET(serializers.ModelSerializer):
     breed = BreedSerializer_SLUG()
-    stage = StageSerializer_SLUG()
+    # stage = StageSerializer_SLUG()
 
     class Meta:
         model = models.Hatchery
-        fields = ['id', 'name', 'display_name', 'stage',  'hatchery_egg_count', 'incubation_count',
+        fields = ['id', 'name', 'display_name',  'hatchery_egg_count', 'incubation_count',
                   'incubation_moved_date', 'hatch_date', 'breed', 'note', 'is_active', 'created_at']
 
 
