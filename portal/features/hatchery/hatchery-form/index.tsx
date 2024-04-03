@@ -42,7 +42,13 @@ function a11yProps(index: number) {
 
 export interface EditableHatcheryEgg extends HatcheryEgg, EditMode {}
 
-export const HatcheryForm = ({ data }: { data?: Hatchery }) => {
+export const HatcheryForm = ({
+  data,
+  shallowRoute = true,
+}: {
+  data?: Hatchery;
+  shallowRoute?: boolean;
+}) => {
   const [formData, setFormData] = useState<Hatchery | undefined>(data);
   const [tab, setTab] = useState(0);
 
@@ -58,9 +64,11 @@ export const HatcheryForm = ({ data }: { data?: Hatchery }) => {
         dayjs(values.incubation_moved_date).format(
           process.env.NEXT_PUBLIC_API_DATE_FORMAT
         ),
-      hatch_date: dayjs(values.hatch_date).format(
-        process.env.NEXT_PUBLIC_API_DATE_FORMAT
-      ),
+      hatch_date:
+        values.hatch_date &&
+        dayjs(values.hatch_date).format(
+          process.env.NEXT_PUBLIC_API_DATE_FORMAT
+        ),
       breed: _.get(values.breed, "id", null),
     };
   };
@@ -74,7 +82,7 @@ export const HatcheryForm = ({ data }: { data?: Hatchery }) => {
       <TabFormLayout<Hatchery>
         id={formData?.id || 0}
         data={formData}
-        title="Create Hatchery"
+        title="Create Hatch/Batch"
         updateEndpoint={hatcheryApi.endpoints.updateHatchery}
         deleteEndpoint={hatcheryApi.endpoints.deleteHatchery}
         summaryEndpoint={hatcheryApi.endpoints.getHatcherySummary}
@@ -126,6 +134,7 @@ export const HatcheryForm = ({ data }: { data?: Hatchery }) => {
           {tab == 0 && (
             <Card title="Hatchery Detail">
               <Form
+                shallowRoute={shallowRoute}
                 data={formData}
                 schema={schema}
                 createEndpoint={hatcheryApi.endpoints.createHatchery}

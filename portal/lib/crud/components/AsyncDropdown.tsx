@@ -13,6 +13,7 @@ import { ClientQueyFn, Query } from "@/types";
 import { Response } from "@/models";
 import buildPage from "@/util/buildPage";
 import PreviewIcon from "@mui/icons-material/Preview";
+import QueuePlayNextIcon from "@mui/icons-material/QueuePlayNext";
 
 export interface AsyncDropdownProps<T> {
   query?: Object;
@@ -243,7 +244,7 @@ export default function AsyncDropdown<T>({
                         disabled={disabled}
                         onClick={handleOpenViewFormOpen}
                       >
-                        <PreviewIcon />
+                        <QueuePlayNextIcon />
                       </IconButton>
                     </Tooltip>
                   )}

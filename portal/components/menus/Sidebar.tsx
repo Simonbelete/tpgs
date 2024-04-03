@@ -411,7 +411,9 @@ const SidebarMenu = () => {
                   <Link onClick={() => toggleSidebar()} href="/chickens" />
                 }
                 icon={<AdjustIcon fontSize="small" />}
-                active={RegExp("^/chickens(.*)$").test(router.pathname)}
+                active={RegExp("^/chickens/*([0-9])*(/edit)*$").test(
+                  router.pathname
+                )}
               >
                 <Typography variant="body1" fontSize={14}>
                   View/Edit Chickens

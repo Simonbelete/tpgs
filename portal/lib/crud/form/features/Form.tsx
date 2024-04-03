@@ -55,7 +55,7 @@ export type Field<T> = {
   placeholder?: string;
   label?: string;
   form?: ReactNode;
-  viewForm?: ReactNode;
+  viewForm?: any;
   type?: "string" | "number" | "date" | "datetime";
   dataKey?: string;
   multiple?: boolean;
@@ -244,7 +244,6 @@ export default function Form<
                         dataKey={options?.dataKey || "name"}
                         endpoint={options.endpoint}
                         createForm={options.form}
-                        viewForm={options.viewForm}
                         placeholder={options.placeholder}
                         onChange={(_, data) => onChange(data)}
                         value={value}
@@ -252,6 +251,14 @@ export default function Form<
                         helperText={error?.message}
                         multiple={options.multiple}
                         disabled={options.disabled}
+                        viewForm={
+                          options.viewForm && (
+                            <options.viewForm
+                              data={value}
+                              shallowRoute={false}
+                            />
+                          )
+                        }
                       />
                     )}
                   />

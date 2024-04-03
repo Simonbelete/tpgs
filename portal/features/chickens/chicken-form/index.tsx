@@ -26,6 +26,11 @@ import dayjs from "dayjs";
 import { ChickenStat } from "../chicken-stat";
 import { ChickenStages } from "../chicken-stages";
 import { breedApi } from "@/features/breeds/services";
+import { houseApi } from "@/features/houses/services";
+import { HatcheryForm } from "@/features/hatchery";
+import { HouseForm } from "@/features/houses";
+import { BreedForm } from "@/features/breeds";
+import { PenForm } from "@/features/pen";
 
 const schema = yup.object({
   tag: yup.string().required(),
@@ -229,6 +234,7 @@ export const ChickenForm = ({
                       endpoint: hatcheryApi.endpoints.getStage1Hatchery,
                       xs: 12,
                       md: 6,
+                      viewForm: HatcheryForm,
                     },
                     hatch_date: {
                       label: "Hatch Date",
@@ -237,12 +243,21 @@ export const ChickenForm = ({
                       xs: 12,
                       md: 6,
                     },
+                    house: {
+                      label: "House",
+                      placeholder: "House",
+                      endpoint: houseApi.endpoints.getHouses,
+                      xs: 12,
+                      md: 6,
+                      viewForm: HouseForm,
+                    },
                     pen: {
                       label: "Pen",
                       placeholder: "Select Pen",
                       endpoint: penApi.endpoints.getPens,
                       xs: 12,
                       md: 6,
+                      viewForm: PenForm,
                     },
                     breed: {
                       label: "breed",
@@ -250,6 +265,7 @@ export const ChickenForm = ({
                       endpoint: breedApi.endpoints.getBreeds,
                       xs: 12,
                       md: 6,
+                      viewForm: BreedForm,
                     },
                     generation: {
                       label: "Generation",

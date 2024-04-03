@@ -8,9 +8,11 @@ import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import CheckIcon from "@mui/icons-material/Check";
 
 export const QR = () => {
-  const [code, setCode] = useState();
+  const [code, setCode] = useState<string | null>(null);
 
-  const handleScan = () => {};
+  const handleScan = (result: any) => {
+    setCode(result);
+  };
 
   const handleScanError = () => {};
 
@@ -38,9 +40,7 @@ export const QR = () => {
         disableFlip={false}
         qrCodeSuccessCallback={handleCameraScan}
       />
-      <Box>
-        <GridChickenInput tag={code} />
-      </Box>
+      <Box>{code && <GridChickenInput tag={code} />}</Box>
     </Box>
   );
 };
