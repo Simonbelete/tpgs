@@ -47,5 +47,6 @@ export const config = {
     "/export-job/:path*",
     "/import-job/:path*",
     "/activities/:path*",
+    "/qr/:path*",
   ],
 };

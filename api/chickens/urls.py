@@ -11,6 +11,9 @@ summary_router = NestedDefaultRouter(
 summary_router.register(r'summary', views.ChickenSummaryViewSet,
                         basename='api_chicken_summary')
 
+router.register(r'chickens/tag/(?P<tag>.+)',
+                views.ChickenGetByTagViewSet, basename='api_chicken_by_tag'),
+
 router.register(r'chickens/(?P<id>.+)/offspring',
                 views.ChickenOffspringViewSet, basename='api_chicken_offspring'),
 router.register(r'chickens/(?P<id>.+)/ancestors',

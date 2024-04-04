@@ -13,7 +13,7 @@ class FeedSerializer_GET(serializers.ModelSerializer):
 
     class Meta:
         model = models.Feed
-        fields = ['id', 'hatchery', 'chicken',
+        fields = ['id', 'hatchery', 'chicken', 'display_name',
                   'pen', 'formula', 'week', 'weight', 'total_chickens', 'children_feed_count', 'created_at', 'is_active']
 
 

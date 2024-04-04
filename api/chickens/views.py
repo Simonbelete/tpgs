@@ -79,6 +79,19 @@ class ChickenWeightExport(GenericExportView):
         qs = self.filterset_class(self.request.GET, queryset=self.queryset)
         return admin.ChickenWeightResource().export(qs.qs)
 
+class ChickenGetByTagViewSet(viewsets.GenericViewSet):
+    serializer_class = serializers.ChickenSerializer_GET
+
+    def list(self, request, tag=None, **kwargs):
+        tag = self.kwargs['tag']
+        
+        try:
+            queryset = models.Chicken.all.get(tag=tag)
+            serializer = self.get_serializer(queryset, many=False)
+            return Response(serializer.data)
+        except models.Chicken.DoesNotExist as ex:
+            raise NotFound()
+
 
 class ChickenEggExport(GenericExportView):
     queryset = models.Chicken.objects.all()
@@ -100,7 +113,7 @@ class ChickenFeedExport(GenericExportView):
 
 class ChickenOffspringViewSet(viewsets.GenericViewSet):
     serializer_class = serializers.ChickenSerializer_GET
-
+    
     def list(self, request, id=None, **kwargs):
         id = self.kwargs['id']
 
@@ -228,7 +241,6 @@ class ChickenGridViewSet(viewsets.ViewSet):
         try:
             data = request.data['data']
             chicken = self.get_chicken(id)
-            print(i)
             for i in data:
                 if(i['body_weight'] != 0 and i['body_weight'] != None):
                     Feed.objects.update_or_create(chicken=chicken, week=i['week'], defaults={

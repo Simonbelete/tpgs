@@ -16,10 +16,7 @@ import {
   Button,
   IconButton,
 } from "@mui/material";
-import { Card } from "@/components";
-import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
-import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import { useRouter } from "next/router";
 import getPreviousUrl from "@/util/getPreviousUrl";
 
@@ -48,13 +45,6 @@ export default function FormLayout<T extends AbstractBaseModel>({
       <Grid container mb={5}>
         <Grid item xs={12} md={6}>
           <Box sx={{ display: "flex" }} justifyContent={"start"}>
-            <IconButton
-              onClick={() => router.push(getPreviousUrl(router.pathname))}
-              sx={{ mr: 1 }}
-              color="primary"
-            >
-              <ArrowBackIosIcon />
-            </IconButton>
             <Typography variant="title">
               {data ? `${data.display_name || ""} - Edit` : title}
             </Typography>

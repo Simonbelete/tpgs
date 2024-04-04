@@ -5,7 +5,7 @@ import { QR } from "@/features/qr";
 const QRPage = () => {
   return (
     <>
-      <SeoHead title="Login" />
+      <SeoHead title="Scan QR Code" />
       <QR />
     </>
   );

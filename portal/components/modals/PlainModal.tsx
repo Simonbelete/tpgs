@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Modal, Box, Typography, IconButton } from "@mui/material";
+import { Modal, Box, Typography, IconButton, Divider } from "@mui/material";
 import { CloseOutlined } from "@mui/icons-material";
 
 const style = {
@@ -12,6 +12,8 @@ const style = {
   // border: "1px solid #000",
   boxShadow: 24,
   p: 4,
+  height: "90%",
+  overflow: "scroll",
 };
 
 export default function BasicModal({
@@ -49,6 +51,7 @@ export default function BasicModal({
             <CloseOutlined />
           </IconButton>
         </Box>
+        <Divider sx={{ mt: 3, mb: 2 }} />
         {children}
       </Box>
     </Modal>

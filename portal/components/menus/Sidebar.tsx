@@ -54,6 +54,8 @@ import RuleIcon from "@mui/icons-material/Rule";
 import FileDownloadIcon from "@mui/icons-material/FileDownload";
 import FileUploadIcon from "@mui/icons-material/FileUpload";
 import TimelineIcon from "@mui/icons-material/Timeline";
+import QrCode2Icon from "@mui/icons-material/QrCode2";
+import QrCodeIcon from "@mui/icons-material/QrCode";
 
 function menuProps(key: string) {
   return {
@@ -534,7 +536,16 @@ const SidebarMenu = () => {
                 Egg Production
               </Typography>
             </MenuItem>
-            <SubMenu
+            <MenuItem
+              component={<Link onClick={() => toggleSidebar()} href="/feeds" />}
+              icon={<EggIcon fontSize="small" />}
+              active={RegExp("^/feeds$").test(router.pathname)}
+            >
+              <Typography variant="body1" fontSize={14}>
+                Feed Intake
+              </Typography>
+            </MenuItem>
+            {/* <SubMenu
               label={
                 <Typography variant="body1" fontSize={14}>
                   Feed Intake
@@ -565,7 +576,7 @@ const SidebarMenu = () => {
                   Batch
                 </Typography>
               </MenuItem>
-            </SubMenu>
+            </SubMenu> */}
             <MenuItem
               component={
                 <Link onClick={() => toggleSidebar()} href="/weights" />
@@ -725,6 +736,26 @@ const SidebarMenu = () => {
             >
               <Typography variant="body1" fontSize={14}>
                 Selection
+              </Typography>
+            </MenuItem>
+            <MenuItem
+              component={<Link onClick={() => toggleSidebar()} href="/qr" />}
+              icon={<QrCode2Icon width="20" height="20" fill="inherit" />}
+              active={RegExp("^/qr$").test(router.pathname)}
+            >
+              <Typography variant="body1" fontSize={14}>
+                Scan QR
+              </Typography>
+            </MenuItem>
+            <MenuItem
+              component={
+                <Link onClick={() => toggleSidebar()} href="/qr/generate" />
+              }
+              icon={<QrCodeIcon width="20" height="20" fill="inherit" />}
+              active={RegExp("^/qr/generate$").test(router.pathname)}
+            >
+              <Typography variant="body1" fontSize={14}>
+                Generate QR
               </Typography>
             </MenuItem>
           </Menu>

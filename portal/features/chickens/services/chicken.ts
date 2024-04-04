@@ -27,11 +27,17 @@ export const chickenApi = baseApi.injectEndpoints({
           params: query,
         }),
       }),
+      getChickenByTag: build.query<Chicken, string>({
+        query: (tag?: string) => ({
+          url: `${URL}/tag/${tag}/`,
+          method: "get",
+        }),
+      }),
       getAliveChickens: build.query<Response<Chicken[]>, Object>({
         query: (query?: Object) => ({
           url: `${URL}/`,
           method: "get",
-          params: { ...query, reduction_date__isnull: "False" },
+          params: { ...query, reduction_date__isnull: true },
         }),
       }),
       getMaleChickens: build.query<Response<Chicken[]>, Object>({
@@ -184,6 +190,8 @@ export const importChickensXLS = async (data: FormData) =>
 
 export const {
   useGetChickensQuery,
+  useGetChickenByTagQuery,
+  useLazyGetChickenByTagQuery,
   useLazyGetChickensQuery,
   useGetChickenHistoryQuery,
   useGetChickenSummaryQuery,

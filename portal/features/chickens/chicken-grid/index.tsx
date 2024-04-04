@@ -32,8 +32,15 @@ type Column = {
   property?: ColumnProperty;
 } & GridColumn;
 
-export const GridChickenInput = ({ tag = null }: { tag?: string }) => {
-  const [chicken, setChicken] = useState<Chicken | null>(tag ?? null);
+export const GridChickenInput = ({ data }: { data?: Chicken | null }) => {
+  const [chicken, setChicken] = useState<Chicken | null>(data ?? null);
+
+  // useEffect(() => {
+  //   setChicken(data);
+  //   console.log("seted");
+  // }, []);
+
+  console.log(data);
 
   const [trigger, { data: gridData, isFetching: getChickenGridIsFetching }] =
     useLazyGetChickenGridQuery();
@@ -323,6 +330,7 @@ export const GridChickenInput = ({ tag = null }: { tag?: string }) => {
       </Stack>
       <Box sx={{ mb: 2 }}>
         <ChickenDropdown
+          value={chicken ?? null}
           onChange={(event: any, newValue: any) => {
             console.log(newValue);
             setChicken(newValue);
