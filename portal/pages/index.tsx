@@ -26,12 +26,14 @@ import { ILRILogo } from "@/components/logos";
 import { ReactElement } from "react";
 import { PrimaryFooter } from "@/components/footers";
 import { ContactUsForm } from "@/features/contact-us";
-import Head from "next/head";
 import { SeoHead } from "@/seo";
+import { NextPageContext } from "next";
+import { getServerSession } from "next-auth/next";
+import { authOptions } from "@/pages/api/auth/[...nextauth]";
 
 const inter = Inter({ subsets: ["latin"] });
 
-export default function Home() {
+function Home() {
   const theme = useTheme();
 
   return (
@@ -113,3 +115,25 @@ export default function Home() {
 Home.getLayout = function getLayout(page: ReactElement) {
   return <>{page}</>;
 };
+
+export async function getServerSideProps(context: NextPageContext) {
+  // @ts-ignore
+  const session = await getServerSession(context.req, context.res, authOptions);
+
+  if (session) {
+    return {
+      redirect: {
+        destination: "/dashboard",
+        permanent: false,
+      },
+    };
+  }
+
+  return {
+    props: {
+      session,
+    },
+  };
+}
+
+export default Home;
