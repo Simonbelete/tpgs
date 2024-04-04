@@ -10,8 +10,8 @@ export const ChickenStat = ({ data }: { data: Chicken }) => {
         <Grid item xs={3} md={3}>
           <TextCard
             title="Age"
-            value={`${data.age_in_weeks || "-"} Week`}
-            description={`${data.age_in_days || "-"} Days`}
+            value={`${data.age_in_weeks ?? "-"} Week`}
+            description={`${data.age_in_days ?? "-"} Day`}
           />
         </Grid>
         <Grid item xs={3} md={3}>

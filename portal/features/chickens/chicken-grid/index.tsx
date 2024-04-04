@@ -23,24 +23,11 @@ import MuiSaveIcon from "@mui/icons-material/Save";
 import { Dna } from "react-loader-spinner";
 import { enqueueSnackbar } from "notistack";
 import { useExtraCells } from "@glideapps/glide-data-grid-cells";
-import { ChickenForm } from "../chicken-form";
 
 type ColumnProperty = {} & Partial<GridCell>;
 
-type Column = {
-  id: string;
-  property?: ColumnProperty;
-} & GridColumn;
-
 export const GridChickenInput = ({ data }: { data?: Chicken | null }) => {
   const [chicken, setChicken] = useState<Chicken | null>(data ?? null);
-
-  // useEffect(() => {
-  //   setChicken(data);
-  //   console.log("seted");
-  // }, []);
-
-  console.log(data);
 
   const [trigger, { data: gridData, isFetching: getChickenGridIsFetching }] =
     useLazyGetChickenGridQuery();
@@ -146,12 +133,12 @@ export const GridChickenInput = ({ data }: { data?: Chicken | null }) => {
       } else {
         // @ts-ignore
         return {
-          kind: GridCellKind.Text,
+          kind: GridCellKind.Number,
           allowOverlay: true,
           readonly: false,
+          displayData: String(d ?? ""),
+          data: Number(d),
           // ...dataCol.property,
-          displayData: String(d),
-          data: String(d),
         };
       }
     },
@@ -196,7 +183,11 @@ export const GridChickenInput = ({ data }: { data?: Chicken | null }) => {
         return;
       }
 
-      _.set(rowCopy[row], dataCol.id, newValue.data);
+      // Copy object to avoid Cannot assign to read only property
+      const newRow = { ...rowCopy[row] };
+      _.set(newRow, dataCol.id, Number(newValue.data));
+
+      rowCopy[row] = newRow;
 
       setRows(rowCopy);
       sortByWeek(rowCopy);
@@ -332,10 +323,8 @@ export const GridChickenInput = ({ data }: { data?: Chicken | null }) => {
         <ChickenDropdown
           value={chicken ?? null}
           onChange={(event: any, newValue: any) => {
-            console.log(newValue);
             setChicken(newValue);
           }}
-          viewForm={<ChickenForm shallowRoute={false} />}
         />
       </Box>
       <Sizer>

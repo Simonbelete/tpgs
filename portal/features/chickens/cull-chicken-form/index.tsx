@@ -3,7 +3,7 @@ import * as yup from "yup";
 import { Egg, Chicken } from "@/models";
 import { chickenApi } from "@/features/chickens/services";
 import { ChickenDropdown } from "../chicken-dropdown";
-import { Grid, Box, Button, Stack } from "@mui/material";
+import { Grid, Box, Button, Stack, Typography } from "@mui/material";
 import { ReductionReasonDropdown } from "@/features/reduction-reason";
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import { useUpdateChickenMutation } from "../services";
@@ -100,6 +100,14 @@ export const CullChickenForm = ({
               />
             </Grid>
             <Grid item xs={12}>
+              <Typography
+                variant="body2"
+                fontWeight={700}
+                color={"text.primary"}
+                mb={1}
+              >
+                Cull Date
+              </Typography>
               <Controller
                 name={"reduction_date"}
                 control={control}

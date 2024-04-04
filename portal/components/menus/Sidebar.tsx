@@ -446,7 +446,7 @@ const SidebarMenu = () => {
                   Grid Chicken
                 </Typography>
               </MenuItem>
-              <MenuItem
+              {/* <MenuItem
                 component={
                   <Link
                     onClick={() => toggleSidebar()}
@@ -459,7 +459,7 @@ const SidebarMenu = () => {
                 <Typography variant="body1" fontSize={14}>
                   Export Chickens
                 </Typography>
-              </MenuItem>
+              </MenuItem> */}
               <MenuItem
                 component={
                   <Link onClick={() => toggleSidebar()} href="/chickens/cull" />

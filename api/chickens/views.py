@@ -243,14 +243,15 @@ class ChickenGridViewSet(viewsets.ViewSet):
             chicken = self.get_chicken(id)
             for i in data:
                 if(i['body_weight'] != 0 and i['body_weight'] != None):
-                    Feed.objects.update_or_create(chicken=chicken, week=i['week'], defaults={
-                                              'weight': i['body_weight']})
-                if(i['eggs_weight'] != 0 and i['eggs'] !=0):
+                    Weight.objects.update_or_create(chicken=chicken, week=i['week'], defaults={
+                                                'weight': i['body_weight']})
+                if((i['eggs_weight'] !=0 and i['eggs_weight'] != None) and (i['eggs'] !=0 and i['eggs'] != None)):
+                    print('found')
                     Egg.objects.update_or_create(chicken=chicken, week=i['week'], defaults={
                                              'eggs': i['eggs'], 'weight': i['eggs_weight']})
-                if(i['feed_weight'] != 0):
-                    Weight.objects.update_or_create(chicken=chicken, week=i['week'], defaults={
-                                                'weight': i['feed_weight']})
+                if(i['feed_weight'] != 0 and i['feed_weight'] != None):
+                    Feed.objects.update_or_create(chicken=chicken, week=i['week'], defaults={
+                                              'weight': i['feed_weight']})
 
             return Response({
                 'results': self.get_chicken_grid(id)

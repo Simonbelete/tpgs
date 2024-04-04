@@ -26,7 +26,7 @@ export interface AsyncDropdownProps<T> {
   helperText?: string;
   placeholder?: string;
   createForm?: React.ReactNode;
-  viewForm?: React.ReactNode;
+  viewForm?: any;
   createFormTitle?: string;
   onChange?: (event: any, newValue: any) => void;
   endpoint: ApiEndpointQuery<

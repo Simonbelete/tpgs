@@ -5,6 +5,7 @@ import { Chicken } from "@/models";
 import AsyncDropdown, {
   AsyncDropdownProps,
 } from "@/lib/crud/components/AsyncDropdown";
+import { ChickenForm } from "../chicken-form";
 
 const ChickenDropdown = ({
   sex,
@@ -33,6 +34,7 @@ const ChickenDropdown = ({
       query={{ ...(sex ? { sex: sex } : {}) }}
       endpoint={chickenApi.endpoints.getChickens}
       onChange={onChange}
+      viewForm={<ChickenForm data={value} shallowRoute={false} />}
       {...props}
     />
   );
