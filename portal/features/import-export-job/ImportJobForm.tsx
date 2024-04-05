@@ -18,17 +18,13 @@ const resources = [
     name: "Import Pedigree, Body Weight, Feed Intake & Egg Production",
     resource: "AllChickenDataImportResource",
   },
-  {
-    name: "Import Pedigree, Body Weight, Feed Intake & Egg Production(Multiple sheet)",
-    resource: "MasterChicken",
-  },
-  { name: "Import Egg Production", resource: "ChickenEgg" },
-  { name: "Chicken Detail", resource: "ChickenDetailResource" },
-  { name: "Import Chicken Body Weights", resource: "ChickenWeightResource" },
-  { name: "Import Chicken Feed Intake", resource: "ChickenFeedResource" },
-  { name: "Import Chicken Egg Production", resource: "EggResource" },
-  { name: "Breeds", resource: "BreedResource" },
-  { name: "Import Hatch(Batch)", resource: "HatcheryResource" },
+  // { name: "Import Egg Production", resource: "ChickenEgg" },
+  // { name: "Chicken Detail", resource: "ChickenDetailResource" },
+  // { name: "Import Chicken Body Weights", resource: "ChickenWeightResource" },
+  // { name: "Import Chicken Feed Intake", resource: "ChickenFeedResource" },
+  // { name: "Import Chicken Egg Production", resource: "EggResource" },
+  // { name: "Breeds", resource: "BreedResource" },
+  // { name: "Import Hatch(Batch)", resource: "HatcheryResource" },
 ];
 
 type Inputs = Partial<ImportJob>;

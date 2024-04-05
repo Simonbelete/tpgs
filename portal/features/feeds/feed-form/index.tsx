@@ -53,7 +53,8 @@ export const FeedForm = ({
           chicken: {
             label: "chicken",
             placeholder: "Chicken",
-            endpoint: chickenApi.endpoints.getAliveChickens,
+            // endpoint: chickenApi.endpoints.getAliveChickens,
+            endpoint: chickenApi.endpoints.getChickens,
             form: <ChickenForm />,
             dataKey: "display_name",
             xs: 12,

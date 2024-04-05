@@ -84,6 +84,10 @@ class BaseChickenResource(BaseResource):
         column_name='House',
         attribute='pen__house',
         widget=widgets.ForeignKeyWidget(House, field='name'), readonly=True)
+    house = fields.Field(
+        column_name='House',
+        attribute='house',
+        widget=widgets.ForeignKeyWidget(House, field='name'))
     pen = fields.Field(
         column_name='pen',
         attribute='pen',
@@ -158,19 +162,12 @@ class BaseChickenRecordsetResource(BaseResource):
 
 
 class AllChickenDataImportResource(BaseChickenResource):
+    """Chicken + Feed + Weight + Egg"""
     def melt_to_rows(self, df, tags, col_name, week_columns=[], level='type', value_name=None):
         """_summary_
 
         Args:
-            df (_type_): _description_
-            tags (_type_): _description_
             col_name (_type_): Read from column and the output column
-            week_columns (list, optional): _description_. Defaults to [].
-            level (str, optional): _description_. Defaults to 'type'.
-            value_name (str, optional): _description_. Defaults to 'weight'.
-
-        Returns:
-            _type_: _description_
         """
         data = df.iloc[:, df.columns.get_level_values(level)==col_name].copy(deep=True)
         data = data.droplevel('type', axis=1) 
@@ -241,20 +238,29 @@ class AllChickenDataImportResource(BaseChickenResource):
         self.import_feed_intake(df_feed, dry_run=dry_run)
         
         
+    def _drop_empty_row(self, df, col_name):
+        """Drop row if either 0 or NaN"""
+        df = df[df[col_name] != 0]
+        df = df[df[col_name].notna()]
+        return df
+        
     def import_body_weight(self, df, dry_run=True):
-        resource = WeightResource()
+        resource = _WeightResource()
+        df = self._drop_empty_row(df, BODY_WEIGHT)
         dataset = Dataset().load(df)
         result = resource.import_data(dataset, dry_run=dry_run)
         self.add_result(result)
 
     def import_egg_production(self, df, dry_run=True):
-        resource = EggResource()
+        resource = _EggResource()
+        df = self._drop_empty_row(df, EGGS_WEIGHT)
         dataset = Dataset().load(df)
         result = resource.import_data(dataset, dry_run=dry_run)
         self.add_result(result)
         
     def import_feed_intake(self, df, dry_run=True):
-        resource = FeedResource()
+        resource = _FeedResource()
+        df = self._drop_empty_row(df, FEED_WEIGHT)
         dataset = Dataset().load(df)
         result = resource.import_data(dataset, dry_run=dry_run)
         self.add_result(result)
@@ -440,14 +446,14 @@ class ChickenFeedResource(BaseChickenResource):
             raise Exception(rendered)
 
 
-class WeightResource(BaseResource):
+class _WeightResource(BaseResource):
     chicken = fields.Field(
         column_name=TAG_COLUMN_NAME,
         attribute='chicken',
         widget=widgets.ForeignKeyWidget(Chicken, field='tag'))
     week = fields.Field(column_name=WEEK, attribute='week')
     weight = fields.Field(column_name=BODY_WEIGHT, attribute='weight')
-
+    
     class Meta:
         model = Weight
         import_id_fields = ['chicken', 'week']
@@ -480,7 +486,7 @@ class BatchFeedResource(BaseResource):
                 instance.pk, self.import_job.farm.id)
 
 
-class FeedResource(BaseResource):
+class _FeedResource(BaseResource):
     chicken = fields.Field(
         column_name=TAG_COLUMN_NAME,
         attribute='chicken',
@@ -495,7 +501,7 @@ class FeedResource(BaseResource):
         fields = ['chicken', 'week', 'weight']
 
 
-class EggResource(BaseResource):
+class _EggResource(BaseResource):
     chicken = fields.Field(
         column_name=TAG_COLUMN_NAME,
         attribute='chicken',
