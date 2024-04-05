@@ -10,6 +10,7 @@ from django.template.loader import render_to_string
 from django_tenants.utils import tenant_context
 from django.db.models.query import QuerySet
 from django.db.models import F
+from datetime import datetime, timedelta, date
 
 from . import models
 from . import util
@@ -107,13 +108,30 @@ class BaseChickenResource(BaseResource):
         attribute='reduction_reason',
         widget=widgets.ForeignKeyWidget(ReductionReason, field='name'))
 
+    
+    def before_import_row(self, row, row_number=None, **kwargs):
+        reduction_date = row['Cull Date']
+        hatch_date = row['Hatch Date']
+        # TODO: use global from setting
+        format="%d/%m/%Y"
+
+        if(reduction_date == None): return None
+        if(hatch_date == None): return None
+        
+        hatch_date = datetime.strptime(hatch_date, format).date()
+
+        if(not isinstance(reduction_date, date)):
+            reduction_date = hatch_date + timedelta(weeks=reduction_date)
+            
+        row['Cull Date'] = reduction_date
+
     class Meta:
         model = Chicken
         import_id_fields = ['tag']
         exclude = ['id']
         fields = ['tag', 'hatch_date', 'sex',
                   'breed', 'generation', 'hatchery', 'pen', 'sire', 'dam', 'reduction_date', 'reduction_reason', 'color']
-
+        
 
 class BaseChickenRecordsetResource(BaseResource):
     tag = fields.Field(column_name=TAG_COLUMN_NAME, attribute='chicken__tag')
@@ -195,7 +213,11 @@ class AllChickenDataImportResource(BaseChickenResource):
         df_pedigree.drop(1, inplace=True)
         df_pedigree.columns = pedigree_columns
         df_pedigree = df_pedigree.replace(np.nan, None)
-
+        
+        print(df_pedigree)
+        
+        # Convert Cull Week to 
+    
 
         # Weekly chicken's data
         df_data = df.iloc[:, len(pedigree_columns):].copy(deep=True)
@@ -322,7 +344,7 @@ class MasterChicken(BaseChickenResource):
         df_weight['week'] = df_weight['week'].str.replace(
             '\D+', '', regex=True)  # Remove week stirng
 
-        result = WeightResource(self.import_job).import_data(
+        result = _WeightResource(self.import_job).import_data(
             Dataset().load(df_weight),
             dry_run=dry_run
         )
@@ -362,7 +384,7 @@ class MasterChicken(BaseChickenResource):
         df_feed_indv['week'] = df_feed_indv['week'].str.replace(
             '\D+', '', regex=True)  # Remove week stirng
 
-        result = FeedResource(self.import_job).import_data(
+        result = _FeedResource(self.import_job).import_data(
             Dataset().load(df_feed_indv),
             dry_run=dry_run
         )
@@ -371,7 +393,7 @@ class MasterChicken(BaseChickenResource):
         # Load Eggg Production sheet
         df_egg = self.read_egg_production_sheet()
 
-        result = EggResource(self.import_job).import_data(
+        result = _EggResource(self.import_job).import_data(
             Dataset().load(df_egg),
             dry_run=dry_run
         )
@@ -401,7 +423,7 @@ class ChickenWeightResource(BaseChickenResource):
         return df
 
     def after_import(self, dataset, result, using_transactions, dry_run, **kwargs):
-        resource = WeightResource()
+        resource = _WeightResource()
         dataset = Dataset().load(self.df_weights)
         result = resource.import_data(dataset, dry_run=dry_run)
 
