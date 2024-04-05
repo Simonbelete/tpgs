@@ -158,7 +158,7 @@ export default function List<T>({
         loading={isFetching}
         density="compact"
         rowHeight={55}
-        columns={[...columns, settingColumn]}
+        columns={[...columns, ...(actions.length > 0 ? [settingColumn] : [])]}
         disableRowSelectionOnClick
         slots={{
           toolbar: Toolbar,

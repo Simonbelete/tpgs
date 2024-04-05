@@ -41,7 +41,7 @@ const CardBasic = ({
           </Stack>
         </Grid>
         <Grid item xs>
-          <Divider />
+          {title && <Divider />}
         </Grid>
       </Grid>
       <CardContent>{children}</CardContent>

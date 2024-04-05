@@ -10,7 +10,7 @@ const createConfig = (props: any) => {
     config.fps = props.fps;
   }
   if (props.qrbox) {
-    config.qrbox = props.qrbox;
+    // config.qrbox = props.qrbox;
   }
   if (props.aspectRatio) {
     config.aspectRatio = props.aspectRatio;
@@ -18,6 +18,8 @@ const createConfig = (props: any) => {
   if (props.disableFlip !== undefined) {
     config.disableFlip = props.disableFlip;
   }
+
+  // config.qrbox = { width: 500, height: 250 };
   return config;
 };
 

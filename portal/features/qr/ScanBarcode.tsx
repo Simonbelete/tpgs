@@ -1,18 +1,31 @@
 import React, { useEffect, useState } from "react";
-import { Box, IconButton, Alert } from "@mui/material";
+import {
+  Box,
+  IconButton,
+  Alert,
+  Typography,
+  Button,
+  Stack,
+} from "@mui/material";
 // @ts-ignore
 import BarcodeReader from "react-barcode-reader";
 import Html5QrcodePlugin from "./Html5QrcodePlugin";
 import { GridChickenInput } from "../chickens/chicken-grid";
 import CheckIcon from "@mui/icons-material/Check";
-import { useLazyGetChickenByTagQuery } from "../chickens/services";
+import {
+  useCreateChickenMutation,
+  useLazyGetChickenByTagQuery,
+} from "../chickens/services";
 import Link from "next/link";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
+import { Card } from "@/components";
+import LoadingButton from "@mui/lab/LoadingButton";
 
 export const QR = () => {
   const [code, setCode] = useState<string | null>(null);
 
-  const [trigger, { data }] = useLazyGetChickenByTagQuery();
+  const [trigger, { data, error: gridError }] = useLazyGetChickenByTagQuery();
+  const [createTrigger, createResult] = useCreateChickenMutation();
 
   useEffect(() => {
     if (code) {
@@ -21,14 +34,23 @@ export const QR = () => {
   }, [code]);
 
   const handleScan = (result: any) => {
-    setCode(result);
     console.log(result);
+    setCode(result);
   };
 
   const handleScanError = () => {};
 
   const handleCameraScan = (decodedText: any, decodedResult: any) => {
-    console.log(decodedText, decodedResult);
+    setCode(decodedText);
+  };
+
+  const createNewChicken = async () => {
+    if (code) {
+      const resposne = await createTrigger({ tag: code }).unwrap();
+      if (resposne) {
+        trigger(code);
+      }
+    }
   };
 
   return (
@@ -37,9 +59,6 @@ export const QR = () => {
       py={{ xs: 10, md: 10 }}
       display="flex"
       flexDirection="column"
-      //   justifyContent="center"
-      //   alignItems="center"
-      //   minHeight="100vh"
     >
       <Box>
         <Link href="/chickens">
@@ -58,7 +77,37 @@ export const QR = () => {
         disableFlip={false}
         qrCodeSuccessCallback={handleCameraScan}
       />
-      <Box>{data && <GridChickenInput data={data} />}</Box>
+      {gridError != null && (
+        <>
+          <Box
+            mt={10}
+            display={"flex"}
+            justifyContent={"center"}
+            alignContent={"center"}
+          >
+            <Card>
+              <Stack gap={3} alignItems={"center"}>
+                <Typography variant="h3" fontWeight={800}>
+                  {code}
+                </Typography>
+                <Typography>No chicken found with {code} tag</Typography>
+                <Box>
+                  <LoadingButton
+                    size="large"
+                    style={{ textTransform: "none" }}
+                    variant="contained"
+                    onClick={createNewChicken}
+                    loading={createResult.isLoading}
+                  >
+                    Create chicken with tag &quot;{code}&quot;
+                  </LoadingButton>
+                </Box>
+              </Stack>
+            </Card>
+          </Box>
+        </>
+      )}
+      <Box>{data && gridError == null && <GridChickenInput data={data} />}</Box>
     </Box>
   );
 };

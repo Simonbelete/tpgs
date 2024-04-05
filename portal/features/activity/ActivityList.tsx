@@ -4,7 +4,7 @@ import {
   GridColDef,
   GridRenderCellParams,
 } from "@mui/x-data-grid";
-import { Typography } from "@mui/material";
+import { Typography, Chip } from "@mui/material";
 import { Activity } from "@/models";
 import _ from "lodash";
 import { useGetActivitiesQuery, activityApi } from "./services";
@@ -13,15 +13,53 @@ import buildPage from "@/util/buildPage";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import { ListLayout, ViewAction } from "@/lib/crud";
+import Link from "next/link";
 
 dayjs.extend(relativeTime);
+
+const modelToUrl = {
+  breeds: "breeds",
+};
+
+const mapAppLabelToURL = (app_label: string, object_id: string) => {
+  return _.get(modelToUrl, app_label, app_label) + "/" + object_id;
+};
+
+const typeMapper = {
+  "1": {
+    label: "Addition",
+    color: "success",
+  },
+  "2": {
+    label: "Change",
+    color: "info",
+  },
+  "3": {
+    label: "Deletion",
+    color: "error",
+  },
+};
 
 const columns: GridColDef[] = [
   {
     field: "__str__",
     headerName: "Message",
     minWidth: 400,
-    valueGetter: (params) => params.row["__str__"],
+    renderCell: (params: GridRenderCellParams<any>) => {
+      if (params.row["__str__"] == null) return <></>;
+      return (
+        <Link
+          href={mapAppLabelToURL(
+            params.row?.content_type.app_label,
+            params.row.object_id
+          )}
+        >
+          <Typography color={"link.primary"} variant="body2">
+            {params.row["__str__"]}
+          </Typography>
+        </Link>
+      );
+    },
   },
   {
     field: "user",
@@ -36,7 +74,7 @@ const columns: GridColDef[] = [
     renderCell: (params: GridRenderCellParams<any>) => {
       if (params.row.action_time == null) return <></>;
       return (
-        <Typography color={"link.primary"} variant="body2">
+        <Typography variant="body2">
           {dayjs(params.row.action_time).format(
             process.env.NEXT_PUBLIC_DATETIME_FORMAT
           )}
@@ -44,7 +82,26 @@ const columns: GridColDef[] = [
       );
     },
   },
-  { field: "action_flag", headerName: "Action Type", flex: 1 },
+  {
+    field: "action_flag",
+    headerName: "Action Type",
+    flex: 1,
+    headerAlign: "center",
+    align: "center",
+    renderCell: (params: GridRenderCellParams<any>) => {
+      if (params.row.action_flag == null) return <></>;
+      return (
+        <Chip
+          variant="outlined"
+          // @ts-ignore
+          label={typeMapper[params.row.action_flag].label}
+          size="small"
+          // @ts-ignore
+          color={typeMapper[params.row.action_flag].color}
+        />
+      );
+    },
+  },
 ];
 
 export const ActivityList = () => {
@@ -61,7 +118,7 @@ export const ActivityList = () => {
     <ListLayout<Activity>
       title="Activites"
       columns={columns}
-      actions={[ViewAction]}
+      actions={[]}
       getEndpoint={activityApi.endpoints.getActivities}
       filters={{}}
       menus={<></>}

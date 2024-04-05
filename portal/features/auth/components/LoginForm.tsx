@@ -37,7 +37,7 @@ const LoginForm = () => {
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
-  const { handleSubmit, watch, control } = useForm<Inputs>({
+  const { handleSubmit, watch, control, setValue } = useForm<Inputs>({
     // @ts-ignore
     resolver: yupResolver(schema),
     defaultValues: {
@@ -63,6 +63,7 @@ const LoginForm = () => {
       setError("Server error, please check your connection and try again");
     } finally {
       setIsLoading(false);
+      setValue("password", "");
     }
   };
 

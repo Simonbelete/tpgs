@@ -42,6 +42,9 @@ class Hatchery(CoreModel):
     #         self.stage = Stage.objects.get(order=1)
     #     return super().save(*args, **kwargs)
 
+    def __str__(self):
+        return self.name
+
     @property
     def display_name(self):
         return self.name

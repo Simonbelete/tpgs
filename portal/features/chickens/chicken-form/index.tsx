@@ -76,8 +76,6 @@ export const ChickenForm = ({
     setFormData(value);
   };
 
-  console.log(data);
-
   return (
     <>
       <TabFormLayout<Chicken>
