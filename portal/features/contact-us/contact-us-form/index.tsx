@@ -16,7 +16,15 @@ const schema = object({
   message: string().required(),
 }).required();
 
-const ContactUsForm = ({ message }: { message?: string }) => {
+const ContactUsForm = ({
+  message,
+  email,
+  name,
+}: {
+  message?: string;
+  email?: string;
+  name?: string;
+}) => {
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
   const {
@@ -28,6 +36,8 @@ const ContactUsForm = ({ message }: { message?: string }) => {
     resolver: yupResolver(schema),
     defaultValues: {
       message: message,
+      email: email,
+      name: name,
     },
   });
 

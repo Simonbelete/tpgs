@@ -216,6 +216,17 @@ const SidebarMenu = () => {
                 Groups
               </Typography>
             </MenuItem>
+            <MenuItem
+              component={
+                <Link onClick={() => toggleSidebar()} href="/contact-us" />
+              }
+              icon={<AdjustIcon fontSize="small" />}
+              active={RegExp("/contact-us$").test(router.pathname)}
+            >
+              <Typography variant="body1" fontSize={14}>
+                Contact us messages
+              </Typography>
+            </MenuItem>
           </SubMenu>
         )}
 
@@ -1027,12 +1038,12 @@ const SidebarMenu = () => {
           </MenuItem>
           <MenuItem
             component={
-              <Link onClick={() => toggleSidebar()} href="/flocks/reduction" />
+              <Link onClick={() => toggleSidebar()} href="/contact-us/create" />
             }
             icon={<AdjustIcon fontSize="small" />}
           >
             <Typography variant="body1" fontSize={14}>
-              Contact Us
+              Contact us
             </Typography>
           </MenuItem>
         </SubMenu>
