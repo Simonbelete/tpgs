@@ -4,8 +4,8 @@ from django.conf import settings
 from django.core.files.storage import FileSystemStorage
 
 
-export_fs = FileSystemStorage(location="apidata/exportdata")
-import_fs = FileSystemStorage(location="apidata/importdata")
+export_fs = FileSystemStorage(location="{0}/exportdata".format(settings.MEDIA_ROOT))
+import_fs = FileSystemStorage(location="{0}/importdata".format(settings.MEDIA_ROOT))
 
 
 class ImportJob(models.Model):

@@ -213,9 +213,7 @@ class AllChickenDataImportResource(BaseChickenResource):
         df_pedigree.drop(1, inplace=True)
         df_pedigree.columns = pedigree_columns
         df_pedigree = df_pedigree.replace(np.nan, None)
-        
-        print(df_pedigree)
-        
+                
         # Convert Cull Week to 
     
 

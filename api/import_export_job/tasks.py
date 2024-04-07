@@ -10,6 +10,7 @@ from django.template.loader import render_to_string
 from django_tenants.utils import tenant_context
 from django.core.files.base import ContentFile
 from django.core.files.storage import default_storage
+from django.conf import settings
 
 logger = logging.getLogger(__name__)
 
@@ -91,7 +92,7 @@ def _run_export(instance):
         )
 
         path = default_storage.save(
-            "apidata/exportdata/{0}".format(filename), ContentFile(dataset.xlsx))
+            "{0}/exportdata/{1}".format(settings.MEDIA_ROOT, filename), ContentFile(dataset.xlsx))
 
         instance.file = path
         instance.job_status = 'DONE'
