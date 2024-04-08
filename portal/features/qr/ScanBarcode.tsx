@@ -22,7 +22,7 @@ import { Card } from "@/components";
 import LoadingButton from "@mui/lab/LoadingButton";
 
 export const QR = () => {
-  const [code, setCode] = useState<string | null>(null);
+  const [code, setCode] = useState<string | null>("0879");
 
   const [trigger, { data, error: gridError }] = useLazyGetChickenByTagQuery();
   const [createTrigger, createResult] = useCreateChickenMutation();
