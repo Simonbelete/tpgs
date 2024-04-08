@@ -182,9 +182,11 @@ export const ChickenForm = ({
                       dam: _.get(values, "dam.id", null),
                       hatchery: _.get(values, "hatchery.id", null),
                       pen: _.get(values, "pen.id", null),
-                      hatch_date: dayjs(values.hatch_date).format(
-                        process.env.NEXT_PUBLIC_API_DATE_FORMAT
-                      ),
+                      hatch_date:
+                        values.hatch_date &&
+                        dayjs(values.hatch_date).format(
+                          process.env.NEXT_PUBLIC_API_DATE_FORMAT
+                        ),
                       generation: values.generation,
                       color: values.color,
                       breed: _.get(values, "breed.id", null),

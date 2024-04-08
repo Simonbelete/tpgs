@@ -35,8 +35,7 @@ class Chicken(CoreModel):
     reduction_date = models.DateField(null=True, blank=True)
     reduction_reason = models.ForeignKey(
         ReductionReason, on_delete=models.SET_NULL, null=True, blank=True, related_name='chickens')
-    color = models.TextField(default="",
-                             blank=True)
+    color = models.TextField(blank=True, null=True)
 
     generation = models.PositiveIntegerField(
         null=True, blank=True)
