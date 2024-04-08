@@ -110,6 +110,8 @@ class BaseChickenResource(BaseResource):
 
     
     def before_import_row(self, row, row_number=None, **kwargs):
+        if not "Cull Date" in row: return None
+        
         reduction_date = row['Cull Date']
         hatch_date = row['Hatch Date']
         # TODO: use global from setting
@@ -131,6 +133,33 @@ class BaseChickenResource(BaseResource):
         exclude = ['id']
         fields = ['tag', 'hatch_date', 'sex',
                   'breed', 'generation', 'hatchery', 'pen', 'sire', 'dam', 'reduction_date', 'reduction_reason', 'color']
+
+    def _drop_empty_row(self, df, col_name):
+        """Drop row if either 0 or NaN"""
+        df = df[df[col_name] != 0]
+        df = df[df[col_name].notna()]
+        return df
+        
+    def import_body_weight(self, df, dry_run=True):
+        resource = _WeightResource()
+        df = self._drop_empty_row(df, BODY_WEIGHT)
+        dataset = Dataset().load(df)
+        result = resource.import_data(dataset, dry_run=dry_run)
+        self.add_result(result)
+
+    def import_egg_production(self, df, dry_run=True):
+        resource = _EggResource()
+        df = self._drop_empty_row(df, EGGS_WEIGHT)
+        dataset = Dataset().load(df)
+        result = resource.import_data(dataset, dry_run=dry_run)
+        self.add_result(result)
+        
+    def import_feed_intake(self, df, dry_run=True):
+        resource = _FeedResource()
+        df = self._drop_empty_row(df, FEED_WEIGHT)
+        dataset = Dataset().load(df)
+        result = resource.import_data(dataset, dry_run=dry_run)
+        self.add_result(result)
         
 
 class BaseChickenRecordsetResource(BaseResource):
@@ -213,9 +242,6 @@ class AllChickenDataImportResource(BaseChickenResource):
         df_pedigree.drop(1, inplace=True)
         df_pedigree.columns = pedigree_columns
         df_pedigree = df_pedigree.replace(np.nan, None)
-                
-        # Convert Cull Week to 
-    
 
         # Weekly chicken's data
         df_data = df.iloc[:, len(pedigree_columns):].copy(deep=True)
@@ -256,34 +282,6 @@ class AllChickenDataImportResource(BaseChickenResource):
         # # # Import Feed Intake
         df_feed = self.melt_to_rows(self.df_data, tags, col_name=FEED_WEIGHT, week_columns=week_columns)
         self.import_feed_intake(df_feed, dry_run=dry_run)
-        
-        
-    def _drop_empty_row(self, df, col_name):
-        """Drop row if either 0 or NaN"""
-        df = df[df[col_name] != 0]
-        df = df[df[col_name].notna()]
-        return df
-        
-    def import_body_weight(self, df, dry_run=True):
-        resource = _WeightResource()
-        df = self._drop_empty_row(df, BODY_WEIGHT)
-        dataset = Dataset().load(df)
-        result = resource.import_data(dataset, dry_run=dry_run)
-        self.add_result(result)
-
-    def import_egg_production(self, df, dry_run=True):
-        resource = _EggResource()
-        df = self._drop_empty_row(df, EGGS_WEIGHT)
-        dataset = Dataset().load(df)
-        result = resource.import_data(dataset, dry_run=dry_run)
-        self.add_result(result)
-        
-    def import_feed_intake(self, df, dry_run=True):
-        resource = _FeedResource()
-        df = self._drop_empty_row(df, FEED_WEIGHT)
-        dataset = Dataset().load(df)
-        result = resource.import_data(dataset, dry_run=dry_run)
-        self.add_result(result)
 
 
 class MasterChicken(BaseChickenResource):
@@ -401,44 +399,39 @@ class MasterChicken(BaseChickenResource):
 class ChickenWeightResource(BaseChickenResource):
     def after_read_file(self, df):
         col_filter = "((W|w)eek(\s)?)[0-9]+"
-        self.df_weekly = df.filter(
-            regex=(col_filter)).copy(deep=True)
-        self.df_weekly['tag'] = df['tag']
-
+        
+        week_columns = list(df.filter(regex=col_filter))
+        
         df = df.replace(np.nan, None)
-        columns = list(df.filter(regex=col_filter))
+        df_pedigree = df[df.columns.drop(week_columns)]
+        
+        self.df_data = df.filter(
+            regex=(col_filter)).copy(deep=True)
+        self.df_data[TAG_COLUMN_NAME] = df[TAG_COLUMN_NAME]
 
-        df = df[df.columns.drop(list(df.filter(regex=col_filter)))]
-
-        # Build for weight resource
-        self.df_weights = pd.melt(self.df_weekly, id_vars=[
-                                  'tag'], value_vars=columns)
-        self.df_weights.rename(
-            columns={'tag': 'chicken', 'variable': 'week', 'value': 'weight'}, inplace=True)
-        self.df_weights['week'] = self.df_weights['week'].str.replace(
-            '\D+', '', regex=True)
-
-        return df
-
+        self.df_data = pd.melt(
+            self.df_data, 
+            id_vars=[TAG_COLUMN_NAME], 
+            value_vars=week_columns,
+            value_name=BODY_WEIGHT,
+            var_name=WEEK)
+        self.df_data = self.df_data.dropna()
+        self.df_data[WEEK] = self.df_data[WEEK].str.replace(
+                '\D+', '', regex=True)  # Remove week stirng
+        return df_pedigree
+    
     def after_import(self, dataset, result, using_transactions, dry_run, **kwargs):
-        resource = _WeightResource()
-        dataset = Dataset().load(self.df_weights)
-        result = resource.import_data(dataset, dry_run=dry_run)
-
-        rendered = render_to_string("import_result.html", {'result': result})
-        if result.has_errors():
-            raise Exception(rendered)
+        # self.import_body_weight(self.df_data, dry_run=dry_run)
+        pass
 
 
 class ChickenFeedResource(BaseChickenResource):
     def after_read_file(self, df):
         col_filter = "((W|w)eek(\s)?)[0-9]+"
 
-        self.df_weekly = df.filter(
+        self.df_data = df.filter(
             regex=(col_filter)).copy(deep=True)
         self.df_weekly[TAG_COLUMN_NAME] = df[TAG_COLUMN_NAME]
-        self.df_weekly[BATCH_FEED_COLUMN_NAME] = df[BATCH_FEED_COLUMN_NAME]
-        self.df_weekly['Pen'] = df['Pen']
 
         df = df.replace(np.nan, None)
         columns = list(df.filter(regex=col_filter))

@@ -18,6 +18,7 @@ const resources = [
     name: "Import Pedigree, Body Weight, Feed Intake & Egg Production",
     resource: "AllChickenDataImportResource",
   },
+  { name: "Import Body Weight", resource: "ChickenWeightResource" },
   // { name: "Import Egg Production", resource: "ChickenEgg" },
   // { name: "Chicken Detail", resource: "ChickenDetailResource" },
   // { name: "Import Chicken Body Weights", resource: "ChickenWeightResource" },
