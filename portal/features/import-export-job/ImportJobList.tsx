@@ -81,7 +81,7 @@ export const ImportJobList = () => {
         );
       },
     },
-    { field: "errors", headerName: "Errors", flex: 1, minWidth: 200 },
+    // { field: "errors", headerName: "Errors", flex: 1, minWidth: 200 },
   ];
   return (
     <ListLayout<ImportJob>

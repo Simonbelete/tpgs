@@ -31,6 +31,11 @@ class ImportJobViewSet(viewsets.ModelViewSet):
                         farm=farm)
         # _run_import(x, dry_run=False)
         
+    def retrieve(self, request, *args, **kwargs):
+        instance = self.get_object()
+        serializer = serializers.ImportJobSerializer_GET_BY_ID(instance)
+        return Response(serializer.data)
+        
 
 
 class PassthroughRenderer(renderers.BaseRenderer):

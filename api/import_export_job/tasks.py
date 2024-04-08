@@ -59,7 +59,9 @@ def run_import_job(pk):
             logger.error(
                 "Some error occurred while ImportJob file: {0}".format(e)
             )
-            import_job.errors += "Import error %s" % e + "\n"
+            # The error contains html error
+            # import_job.errors += "Import error %s" % e + "\n"
+            import_job.errors += "Import error " + "\n"
             import_job.job_status = 'ERROR'
             import_job.save()
             return
