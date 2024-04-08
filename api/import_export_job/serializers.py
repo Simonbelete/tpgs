@@ -24,7 +24,7 @@ class ExportJobSerializer_GET(serializers.ModelSerializer):
     class Meta:
         model = models.ExportJob
         fields = ['id', 'file', 'farm', 'processing_initiated',
-                  'resource', 'format', 'job_status', 'errors',
+                  'resource', 'format', 'job_status',
                   'process_finished', 'created_by', 'file_exists']
 
 
@@ -32,5 +32,5 @@ class ExportJobSerializer_POST(serializers.ModelSerializer):
 
     class Meta:
         model = models.ExportJob
-        fields = ['id', 'resource', 'format',
+        fields = ['id', '  source', 'format',
                   'email_on_completion']

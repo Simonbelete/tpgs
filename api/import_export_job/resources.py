@@ -141,6 +141,8 @@ class BaseChickenResource(BaseResource):
         return df
         
     def import_body_weight(self, df, dry_run=True):
+        # If new chicken is not saved it will raise Chicken matching query does not exist error
+        if(dry_run): return
         resource = _WeightResource()
         df = self._drop_empty_row(df, BODY_WEIGHT)
         dataset = Dataset().load(df)
@@ -148,6 +150,7 @@ class BaseChickenResource(BaseResource):
         self.add_result(result)
 
     def import_egg_production(self, df, dry_run=True):
+        if(dry_run): return
         resource = _EggResource()
         df = self._drop_empty_row(df, EGGS_WEIGHT)
         dataset = Dataset().load(df)
@@ -155,6 +158,7 @@ class BaseChickenResource(BaseResource):
         self.add_result(result)
         
     def import_feed_intake(self, df, dry_run=True):
+        if(dry_run): return
         resource = _FeedResource()
         df = self._drop_empty_row(df, FEED_WEIGHT)
         dataset = Dataset().load(df)
