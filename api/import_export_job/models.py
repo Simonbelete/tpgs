@@ -7,6 +7,8 @@ from django.core.files.storage import FileSystemStorage
 export_fs = FileSystemStorage(location="{0}/exportdata".format(settings.MEDIA_ROOT))
 import_fs = FileSystemStorage(location="{0}/importdata".format(settings.MEDIA_ROOT))
 
+def select_storage():
+    return import_fs
 
 class ImportJob(models.Model):
     JOB_STATUS = (
@@ -17,7 +19,7 @@ class ImportJob(models.Model):
         ('DONE', 'Done'),
     )
 
-    file = models.FileField(storage=import_fs)
+    file = models.FileField(storage=select_storage)
     farm = models.ForeignKey(Farm, on_delete=models.CASCADE)
 
     processing_initiated = models.DateTimeField(
