@@ -55,10 +55,10 @@ export const FeedForm = ({
             placeholder: "Chicken",
             // endpoint: chickenApi.endpoints.getAliveChickens,
             endpoint: chickenApi.endpoints.getChickens,
-            form: <ChickenForm />,
             dataKey: "display_name",
             xs: 12,
             md: 12,
+            viewForm: ChickenForm,
           },
           week: { label: "Week", placeholder: "Week", xs: 12, md: 12 },
           weight: {

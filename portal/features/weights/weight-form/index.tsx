@@ -51,10 +51,10 @@ export const WeightForm = ({
             placeholder: "Chicken",
             // endpoint: chickenApi.endpoints.getAliveChickens,
             endpoint: chickenApi.endpoints.getChickens,
-            form: <ChickenForm />,
             xs: 12,
             md: 12,
             dataKey: "display_name",
+            viewForm: ChickenForm,
           },
           week: { label: "Week", placeholder: "Week", xs: 12, md: 12 },
           weight: {
