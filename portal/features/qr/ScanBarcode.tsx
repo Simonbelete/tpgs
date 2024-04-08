@@ -28,17 +28,21 @@ export const QR = () => {
   const [createTrigger, createResult] = useCreateChickenMutation();
 
   useEffect(() => {
+    console.log("Code tirggered");
+    console.log(code);
     if (code) {
       trigger(code ?? "");
     }
   }, [code]);
 
   const handleScan = (result: any) => {
-    console.log(result);
+    console.log(result, "My");
     setCode(result);
   };
 
-  const handleScanError = () => {};
+  const handleScanError = (result: any) => {
+    setCode(result);
+  };
 
   const handleCameraScan = (decodedText: any, decodedResult: any) => {
     setCode(decodedText);
