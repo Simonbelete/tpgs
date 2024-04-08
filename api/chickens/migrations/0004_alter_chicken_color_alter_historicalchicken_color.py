@@ -10,6 +10,16 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
+        migrations.AddField(
+            model_name='chicken',
+            name='color',
+            field=models.TextField(blank=True, default=''),
+        ),
+        migrations.AddField(
+            model_name='historicalchicken',
+            name='color',
+            field=models.TextField(blank=True, default=''),
+        ),
         migrations.AlterField(
             model_name='chicken',
             name='color',

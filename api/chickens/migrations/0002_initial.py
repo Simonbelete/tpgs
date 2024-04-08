@@ -103,16 +103,6 @@ class Migration(migrations.Migration):
             field=models.ForeignKey(blank=True, limit_choices_to={
                                     'sex': 'M'}, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='children_of_sire', to='chickens.chicken'),
         ),
-        migrations.AddField(
-            model_name='chicken',
-            name='color',
-            field=models.TextField(blank=True, default=''),
-        ),
-        migrations.AddField(
-            model_name='historicalchicken',
-            name='color',
-            field=models.TextField(blank=True, default=''),
-        ),
         migrations.AlterModelOptions(
             name='chicken',
             options={'ordering': ['-created_at']},
