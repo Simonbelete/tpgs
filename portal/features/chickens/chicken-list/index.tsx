@@ -19,11 +19,10 @@ import { hatcheryApi } from "@/features/hatchery/services";
 
 export const ChickenList = () => {
   const columns: GridColDef[] = [
-    { field: "tag", headerName: "Tag", minWidth: 150 },
+    { field: "tag", headerName: "Tag" },
     {
       field: "breed",
       headerName: "Breed",
-      flex: 1,
       renderCell: (params: GridRenderCellParams<any>) => {
         if (params.row.breed == null) return <></>;
         return (
@@ -38,8 +37,6 @@ export const ChickenList = () => {
     {
       field: "pen",
       headerName: "Pen",
-      flex: 1,
-      minWidth: 150,
       renderCell: (params: GridRenderCellParams<any>) => {
         if (params.row.pen == null) return <></>;
         return (
@@ -55,8 +52,6 @@ export const ChickenList = () => {
     {
       field: "hatcher",
       headerName: "Hatch / Batch",
-      flex: 1,
-      minWidth: 150,
       renderCell: (params: GridRenderCellParams<any>) => {
         if (params.row.hatchery == null) return <></>;
         return (
@@ -71,7 +66,6 @@ export const ChickenList = () => {
     {
       field: "hatch_date",
       headerName: "Hatch Date",
-      flex: 1,
       valueGetter: (params) =>
         params.row.hatch_date
           ? dayjs(params.row.hatch_date).format(
@@ -82,7 +76,6 @@ export const ChickenList = () => {
     {
       field: "reduction_date",
       headerName: "Mortality",
-      flex: 1,
       valueGetter: (params) =>
         params.row.reduction_date
           ? dayjs(params.row.reduction_date).format(
@@ -93,8 +86,6 @@ export const ChickenList = () => {
     {
       field: "created_at",
       headerName: "Create at",
-      flex: 1,
-      minWidth: 150,
       valueGetter: (params) =>
         params.row.created_at
           ? dayjs(params.row.created_at).format(

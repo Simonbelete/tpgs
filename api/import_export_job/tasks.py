@@ -44,7 +44,7 @@ def _run_import(instance, dry_run=True):
             instance.job_status = 'ERROR'
             instance.errors += "[DRY RUN] Failed to Import" if not dry_run else "[COMMIT] Failed to Import"
         else:
-            instance.job_status = "DRY RUN" if not dry_run else "DONE"
+            instance.job_status = "COMMIT" if not dry_run else "DONE"
         instance.save()
 
 

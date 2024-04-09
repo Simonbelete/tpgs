@@ -1,12 +1,5 @@
 import React, { useCallback, useState } from "react";
-import {
-  DataGrid,
-  GridRowsProp,
-  GridColDef,
-  GridToolbar,
-  gridClasses,
-  DataGridProps,
-} from "@mui/x-data-grid";
+import { DataGrid, gridClasses } from "@mui/x-data-grid";
 import { Box } from "@mui/material";
 import { alpha, styled } from "@mui/material/styles";
 

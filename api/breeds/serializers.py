@@ -6,7 +6,7 @@ from . import models
 class BreedSerializer_SLUG(serializers.ModelSerializer):
     class Meta:
         model = models.Breed
-        fields = ['id', 'name']
+        fields = ['id', 'name', 'display_name']
 
 
 class BreedSerializer_GET(serializers.ModelSerializer):

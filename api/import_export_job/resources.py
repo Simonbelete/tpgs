@@ -71,7 +71,7 @@ class BaseChickenResource(BaseResource):
     hatch_date = fields.Field(column_name="Hatch Date", attribute="hatch_date",
                               widget=widgets.DateWidget(format="%d/%m/%Y"))
     sex = fields.Field(column_name='Sex', attribute='sex')
-    generation = fields.Field(column_name='generation',
+    generation = fields.Field(column_name='Generation',
                               attribute='generation')
     breed = fields.Field(
         column_name='Breed',
@@ -108,7 +108,9 @@ class BaseChickenResource(BaseResource):
         attribute='reduction_reason',
         widget=widgets.ForeignKeyWidget(ReductionReason, field='name'))
 
-    
+    def after_read_file(self, df):
+        return df.replace(np.nan, None)
+
     def before_import_row(self, row, row_number=None, **kwargs):
         if not "Cull Date" in row: return None
         
