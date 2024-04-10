@@ -72,6 +72,33 @@ export const chickenApi = baseApi.injectEndpoints({
           params: { field: "generation" },
         }),
       }),
+      getHatchDates: build.query<
+        Response<Pick<Chicken, "hatch_date">[]>,
+        Object
+      >({
+        query: (query?: Object) => ({
+          url: `${URL}/uniques`,
+          method: "get",
+          params: { field: "hatch_date" },
+        }),
+      }),
+      getReductionDates: build.query<
+        Response<Pick<Chicken, "reduction_date">[]>,
+        Object
+      >({
+        query: (query?: Object) => ({
+          url: `${URL}/uniques`,
+          method: "get",
+          params: { field: "reduction_date" },
+        }),
+      }),
+      getColors: build.query<Response<Pick<Chicken, "color">[]>, Object>({
+        query: (query?: Object) => ({
+          url: `${URL}/uniques`,
+          method: "get",
+          params: { field: "color" },
+        }),
+      }),
       getChickenHistory: build.query<
         Response<ChickenHistory[]>,
         { id: number; query: Object }

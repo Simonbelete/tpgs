@@ -178,7 +178,7 @@ class ChickenUniqueViewSet(viewsets.GenericViewSet, mixins.ListModelMixin):
     )
     def list(self, request, *args, **kwargs):
         field_name = request.GET.get('field')
-        queryset = models.Chicken.all.order_by(field_name).distinct(field_name).values(field_name).annotate(id=F('generation'))
+        queryset = models.Chicken.all.order_by(field_name).distinct(field_name).values(field_name).annotate(id=F(str(field_name)))
 
         page = self.paginate_queryset(queryset)
         if page is not None:

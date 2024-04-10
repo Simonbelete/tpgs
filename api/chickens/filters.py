@@ -14,10 +14,19 @@ class ChickenFilter(CoreFilterSet):
         fields = ['tag', 'sex', 'breed']
         fields = {
             'tag': ['exact'],
-            'sex': ['exact'],
+            'sex': ['in', 'exact'],
+            'hatch_date': ['in', 'exact'],
+            'sire': ['in', 'exact'],
+            'dam': ['in', 'exact'],
+            'hatchery': ['in', 'exact'],
+            'house': ['in', 'exact'],
             'pen': ['in', 'exact'],
             'pen__house': ['in', 'exact'],
-            'hatchery': ['in', 'exact']
+            'breed': ['in', 'exact'],
+            'reduction_date': ['in', 'exact'],
+            'reduction_reason': ['in', 'exact'],
+            'color': ['in', 'exact'],
+            'generation': ['in', 'exact'] 
         }
 
 

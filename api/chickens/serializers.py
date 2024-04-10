@@ -5,6 +5,7 @@ from . import models
 from users.serializers import UserSerializer_GET
 from hatchery.serializers import HatcherySerializer_SLUG
 from pen.serializers import PenSerializer_SLUG
+from houses.serializers import HouseSerializer_SLUG
 from reduction_reason.models import ReductionReason
 from breeds.serializers import BreedSerializer_SLUG
 from reduction_reason.serializers import ReductionReasonSerializer_SLUG
@@ -21,12 +22,13 @@ class ChickenSerializer_GET(serializers.ModelSerializer):
     dam = ChickenSerializer_SLUG()
     hatchery = HatcherySerializer_SLUG()
     pen = PenSerializer_SLUG()
+    house = HouseSerializer_SLUG()
     breed = BreedSerializer_SLUG()
     reduction_reason = ReductionReasonSerializer_SLUG()
 
     class Meta:
         model = models.Chicken
-        fields = ['id', 'display_name', 'tag', 'breed', 'sex', 'sire', 'dam', 'hatchery', 'pen', 'hatch_date', 'age_in_days', 'age_in_weeks', 'generation',
+        fields = ['id', 'display_name', 'tag', 'breed', 'sex', 'sire', 'dam', 'hatchery', 'pen', 'house', 'hatch_date', 'age_in_days', 'age_in_weeks', 'generation',
                   'reduction_date', 'reduction_reason', 'reduction_in_weeks', 'is_active', 'created_at', 'color']
 
 
@@ -48,6 +50,7 @@ class ChickenHistorySerializer(serializers.ModelSerializer):
 #
 # Distinict Values
 class ChickenUniqueSerializer_GET(serializers.ModelSerializer):
+    id = serializers.CharField()
     class Meta:
         model = models.Chicken
         # fields = '__all__'

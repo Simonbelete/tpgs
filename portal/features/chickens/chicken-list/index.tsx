@@ -16,6 +16,9 @@ import dayjs from "dayjs";
 import { breedApi } from "@/features/breeds/services";
 import { penApi } from "@/features/pen/services";
 import { hatcheryApi } from "@/features/hatchery/services";
+import { houseApi } from "@/features/houses/services";
+import { reductionReasonApi } from "@/features/reduction-reason/services";
+import { userApi } from "@/features/users/services";
 
 export const ChickenList = () => {
   const columns: GridColDef[] = [
@@ -88,6 +91,21 @@ export const ChickenList = () => {
             )
           : "",
     },
+    { field: "color", headerName: "color" },
+    {
+      field: "Reduction reason",
+      headerName: "reduction_reason",
+      renderCell: (params: GridRenderCellParams<any>) => {
+        if (params.row.reduction_reason == null) return <></>;
+        return (
+          <Typography color={"link.primary"} variant="body2">
+            <Link href={`/reduction-reasons/${params.row.reduction_reason.id}`}>
+              {params.row.reduction_reason.display_name}
+            </Link>
+          </Typography>
+        );
+      },
+    },
     {
       field: "reduction_date",
       headerName: "Mortality",
@@ -144,8 +162,37 @@ export const ChickenList = () => {
         generation: {
           label: "Generation",
           dataDisplayKey: "generation",
-          dataValueKey: "generation",
           endpoint: chickenApi.endpoints.getGenerations,
+        },
+        house: {
+          label: "House",
+          dataDisplayKey: "display_name",
+          endpoint: houseApi.endpoints.getHouses,
+        },
+        color: {
+          label: "Color",
+          dataDisplayKey: "color",
+          endpoint: chickenApi.endpoints.getColors,
+        },
+        hatch_date: {
+          label: "Hatch date",
+          dataDisplayKey: "hatch_date",
+          endpoint: chickenApi.endpoints.getHatchDates,
+        },
+        reduction_reason: {
+          label: "Reduction reason",
+          dataDisplayKey: "display_name",
+          endpoint: reductionReasonApi.endpoints.getReductionReasons,
+        },
+        reduction_date: {
+          label: "Reduction date",
+          dataDisplayKey: "reduction_date",
+          endpoint: chickenApi.endpoints.getReductionDates,
+        },
+        created_by: {
+          label: "Created By",
+          dataDisplayKey: "display_name",
+          endpoint: userApi.endpoints.getUsers,
         },
       }}
       menus={
