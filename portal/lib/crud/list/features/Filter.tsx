@@ -24,6 +24,7 @@ import { EndpointDefinitions } from "@reduxjs/toolkit/dist/query/endpointDefinit
 import { QueryHooks } from "@reduxjs/toolkit/dist/query/react/buildHooks";
 import { ClientQueyFn, Query } from "@/types";
 import _ from "lodash";
+// import CheckboxDropdown from "../../components/CheckboxDropdown";
 
 export type FilterField<T> = {
   endpoint?: ApiEndpointQuery<
@@ -38,6 +39,8 @@ export type FilterField<T> = {
   placeholder?: string;
   label?: string;
   dataDisplayKey: string;
+  dataValueKey?: string;
+  options?: Object;
 };
 
 export interface FilterProps<T> {
@@ -128,7 +131,7 @@ export default function Filter<T>({ filters }: FilterProps<T>) {
 
           <Grid container spacing={1}>
             <Grid item xs={12}>
-              <Stack direction={"row"} spacing={2}>
+              <Stack direction={"row"} flexWrap={"wrap"} gap={2}>
                 <CheckboxDropdown
                   multiple={false}
                   menus={activeMenu}
@@ -149,12 +152,6 @@ export default function Filter<T>({ filters }: FilterProps<T>) {
                         query={{}}
                         label={options.label}
                         onChange={(event: SelectChangeEvent) => {
-                          const val = { id: event.target.value };
-                          _.set(
-                            val,
-                            options.dataDisplayKey,
-                            event.target.value[options.dataDisplayKey]
-                          );
                           dispatch(
                             filterSlice.actions.pushFilter({
                               key: key,
@@ -166,6 +163,26 @@ export default function Filter<T>({ filters }: FilterProps<T>) {
                         dataValueKey="id"
                         dataLableKey={options.dataDisplayKey}
                         endpoint={options.endpoint}
+                      />
+                    );
+                  } else if (options.options) {
+                    return (
+                      <CheckboxDropdown
+                        key={i}
+                        menus={options.options}
+                        dataLableKey={options.dataDisplayKey}
+                        dataValueKey={options.dataValueKey}
+                        onChange={(event: SelectChangeEvent) => {
+                          console.log(event.target);
+                          dispatch(
+                            filterSlice.actions.pushFilter({
+                              key: key,
+                              value: event.target.value,
+                            })
+                          );
+                        }}
+                        selected={selector.filters[key] || []}
+                        label={options.label}
                       />
                     );
                   }

@@ -117,22 +117,19 @@ export const ChickenList = () => {
           endpoint: hatcheryApi.endpoints.getHatchery,
           dataDisplayKey: "name",
         },
+        sex: {
+          label: "Sex",
+          dataDisplayKey: "name",
+          dataValueKey: "value",
+          options: [
+            { value: "M", name: "Male" },
+            { value: "F", name: "Female" },
+          ],
+        },
       }}
       menus={
         <>
           <CreateButton />
-          {/* 
-          <Link href="/chickens/export">
-            <Button
-              startIcon={<DownloadIcon />}
-              size="small"
-              color="secondary"
-              sx={{ textTransform: "none" }}
-            >
-              Export
-            </Button>
-          </Link>
-          <ImportButton url={URL} /> */}
         </>
       }
     />

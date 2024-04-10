@@ -10,9 +10,11 @@ import {
   InputBase,
   Typography,
   Box,
+  LinearProgress,
 } from "@mui/material";
 import { styled, alpha } from "@mui/material/styles";
-import { SearchInputIcon } from "../inputs";
+import { SearchInputIcon } from "@/components/inputs";
+import buildPage from "@/util/buildPage";
 
 const WIDTH = 150;
 
@@ -41,17 +43,18 @@ const BootstrapInput = styled(InputBase)(({ theme }) => ({
 }));
 
 export default function CheckboxDropdown<T>({
-  menus,
   label,
   onChange,
   selected,
   dataValueKey,
   dataLableKey,
   multiple = true,
+  options,
 }: {
+  query?: object;
   dataValueKey: string;
   dataLableKey: string;
-  menus?: object[];
+  options: T[];
   label: string;
   onChange: (event: SelectChangeEvent) => void;
   selected: object[];
@@ -60,12 +63,14 @@ export default function CheckboxDropdown<T>({
   const [open, setOpen] = useState<boolean>(false);
   const [searchInput, setSearchInput] = useState<string>("");
 
-  const handleOpen = () => {
+  const handleOpen = async () => {
     setOpen(true);
   };
   const handleClose = () => setOpen(false);
 
-  const handleSearchInput = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleSearchInput = async (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
     setSearchInput(event.target.value);
   };
 
@@ -99,9 +104,18 @@ export default function CheckboxDropdown<T>({
                 paddingBottom: 10,
               },
             },
+            PaperProps: {
+              style: {
+                maxHeight: "400px",
+              },
+            },
           }}
         >
-          <li aria-selected="false" role="option">
+          <li
+            aria-selected="false"
+            role="option"
+            onKeyDown={(e) => e.stopPropagation()}
+          >
             <Box
               display="flex"
               aria-label="None"
@@ -111,9 +125,9 @@ export default function CheckboxDropdown<T>({
               }}
               justifyContent="center"
               alignItems="center"
-              sx={{ width: WIDTH }}
+              sx={{ width: "100%" }}
             >
-              <Box sx={{ py: 1, px: 1 }}>
+              <Box sx={{ py: 1, px: 1, width: "100%" }}>
                 <SearchInputIcon
                   label="Search..."
                   value={searchInput}
@@ -123,10 +137,15 @@ export default function CheckboxDropdown<T>({
             </Box>
           </li>
 
-          {menus &&
-            menus.map((e: any, key: any) => (
+          {options &&
+            options.map((e: any, key: any) => (
               // @ts-ignore
-              <MenuItem key={key} value={e} sx={{ paddingLeft: "6px" }}>
+              <MenuItem
+                key={key}
+                value={e}
+                sx={{ paddingLeft: "6px" }}
+                onKeyDown={(e) => e.stopPropagation()}
+              >
                 <Checkbox
                   checked={
                     Array.isArray(selected) &&
@@ -135,7 +154,11 @@ export default function CheckboxDropdown<T>({
                     )
                   }
                   size="small"
-                  sx={{ paddingTop: 0, paddingBottom: 0, paddingRight: "15px" }}
+                  sx={{
+                    paddingTop: 0,
+                    paddingBottom: 0,
+                    paddingRight: "15px",
+                  }}
                 />
                 <ListItemText
                   disableTypography

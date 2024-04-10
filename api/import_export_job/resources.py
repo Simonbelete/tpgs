@@ -427,42 +427,35 @@ class ChickenWeightResource(BaseChickenResource):
         return df_pedigree
     
     def after_import(self, dataset, result, using_transactions, dry_run, **kwargs):
-        # self.import_body_weight(self.df_data, dry_run=dry_run)
-        pass
+        self.import_body_weight(self.df_data, dry_run=dry_run)
 
 
 class ChickenFeedResource(BaseChickenResource):
     def after_read_file(self, df):
         col_filter = "((W|w)eek(\s)?)[0-9]+"
-
+        
+        week_columns = list(df.filter(regex=col_filter))
+        
+        df = df.replace(np.nan, None)
+        df_pedigree = df[df.columns.drop(week_columns)]
+        
         self.df_data = df.filter(
             regex=(col_filter)).copy(deep=True)
-        self.df_weekly[TAG_COLUMN_NAME] = df[TAG_COLUMN_NAME]
+        self.df_data[TAG_COLUMN_NAME] = df[TAG_COLUMN_NAME]
 
-        df = df.replace(np.nan, None)
-        columns = list(df.filter(regex=col_filter))
-
-        df = df[df.columns.drop(list(df.filter(regex=col_filter)))]
-
-        # Build for weight resource
-        self.df_weights = pd.melt(self.df_weekly, id_vars=[
-                                  TAG_COLUMN_NAME, BATCH_FEED_COLUMN_NAME, 'Pen'], value_vars=columns)
-        self.df_weights = self.df_weights.replace(np.nan, None)
-        self.df_weights.rename(
-            columns={'variable': 'week', 'value': 'weight'}, inplace=True)
-        self.df_weights['week'] = self.df_weights['week'].str.replace(
-            '\D+', '', regex=True)
-
-        return df
-
+        self.df_data = pd.melt(
+            self.df_data, 
+            id_vars=[TAG_COLUMN_NAME], 
+            value_vars=week_columns,
+            value_name=BODY_WEIGHT,
+            var_name=WEEK)
+        self.df_data = self.df_data.dropna()
+        self.df_data[WEEK] = self.df_data[WEEK].str.replace(
+                '\D+', '', regex=True)  # Remove week stirng
+        return df_pedigree
+    
     def after_import(self, dataset, result, using_transactions, dry_run, **kwargs):
-        resource = BatchFeedResource(self.import_job)
-        dataset = Dataset().load(self.df_weights)
-        result = resource.import_data(dataset, dry_run=dry_run)
-
-        rendered = render_to_string("import_result.html", {'result': result})
-        if result.has_errors():
-            raise Exception(rendered)
+        self.import_feed_intake(self.df_data, dry_run=dry_run)
 
 
 class _WeightResource(BaseResource):
@@ -479,30 +472,6 @@ class _WeightResource(BaseResource):
         exclude = ['id']
         fields = ['chicken', 'week', 'weight']
 
-
-class BatchFeedResource(BaseResource):
-    hatchery = fields.Field(
-        column_name=BATCH_FEED_COLUMN_NAME,
-        attribute='hatchery',
-        widget=widgets.ForeignKeyWidget(Hatchery, field='name'))
-    pen = fields.Field(
-        column_name="Pen",
-        attribute='pen',
-        widget=widgets.ForeignKeyWidget(Hatchery, field='name'))
-
-    class Meta:
-        model = Feed
-        import_id_fields = ['week', 'hatchery', 'pen']
-        fields = ['id', 'hatchery', 'pen', 'week', 'weight']
-
-    def import_data(self, dataset, dry_run=False, raise_errors=False, use_transactions=None, collect_failed_rows=False, rollback_on_validation_errors=False, **kwargs):
-        self.dry_run = dry_run
-        return super().import_data(dataset, dry_run, raise_errors, use_transactions, collect_failed_rows, rollback_on_validation_errors, **kwargs)
-
-    def after_import_instance(self, instance, new, row_number=None, **kwargs):
-        if (self.dry_run == False):
-            create_individual_feed_from_batch.delay(
-                instance.pk, self.import_job.farm.id)
 
 
 class _FeedResource(BaseResource):
