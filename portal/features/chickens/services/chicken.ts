@@ -16,6 +16,7 @@ const HISTORY_URL = `histories`;
 const SUMMARY_URL = `summary`;
 const EXPORT_URL = `${URL}/export`;
 const IMPORT_URL = `${URL}/import`;
+const UNIQUES_URL = `${URL}/uniques`;
 
 export const chickenApi = baseApi.injectEndpoints({
   endpoints: (build) => {
@@ -54,14 +55,21 @@ export const chickenApi = baseApi.injectEndpoints({
           params: { ...query, sex: "F" },
         }),
       }),
+      getChickenUniques: build.query<Response<Chicken[]>, String>({
+        query: (field_name: String) => ({
+          url: `${UNIQUES_URL}`,
+          method: "get",
+          params: { field: field_name },
+        }),
+      }),
       getGenerations: build.query<
         Response<Pick<Chicken, "generation">[]>,
         Object
       >({
         query: (query?: Object) => ({
-          url: `${URL}/`,
+          url: `${URL}/uniques`,
           method: "get",
-          params: query,
+          params: { field: "generation" },
         }),
       }),
       getChickenHistory: build.query<

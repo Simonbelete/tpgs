@@ -45,7 +45,10 @@ class ChickenHistorySerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class GenerationSerializer_GET(serializers.ModelSerializer):
+#
+# Distinict Values
+class ChickenUniqueSerializer_GET(serializers.ModelSerializer):
     class Meta:
         model = models.Chicken
-        fields = ['generation']
+        # fields = '__all__'
+        exclude = ('tag', )

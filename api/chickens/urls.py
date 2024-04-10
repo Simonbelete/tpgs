@@ -24,15 +24,15 @@ router.register(r'chickens/(?P<id>.+)/histories',
                 views.ChickenHistoryViewSet, basename='api_chickens_histories'),
 
 
-gen_router = routers.DefaultRouter()
-gen_router.register(r'chickens/generations', views.GenerationViewSet,
-                    basename='api_generations')
+distinct_router = routers.DefaultRouter()
+distinct_router.register(r'chickens/uniques', views.ChickenUniqueViewSet,
+                    basename='api_uniques')
 
 router.register(r'chicken-grid/(?P<id>.+)', views.ChickenGridViewSet,
                 basename='api_chicken_grid')
 
 urlpatterns = [
-    path('', include(gen_router.urls)),
+    path('', include(distinct_router.urls)),
     path('', include(router.urls)),
     path('', include(summary_router.urls)),
 

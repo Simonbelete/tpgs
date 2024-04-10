@@ -173,11 +173,15 @@ export default function Filter<T>({ filters }: FilterProps<T>) {
                         dataLableKey={options.dataDisplayKey}
                         dataValueKey={options.dataValueKey}
                         onChange={(event: SelectChangeEvent) => {
-                          console.log(event.target);
+                          console.log(options?.dataValueKey);
+                          // Filter feture uses `id` as value, replace id with data value key
+                          let val: any = event.target.value;
+                          val["id"] = val[options?.dataValueKey];
+
                           dispatch(
                             filterSlice.actions.pushFilter({
                               key: key,
-                              value: event.target.value,
+                              value: val,
                             })
                           );
                         }}

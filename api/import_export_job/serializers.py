@@ -40,5 +40,5 @@ class ExportJobSerializer_POST(serializers.ModelSerializer):
 
     class Meta:
         model = models.ExportJob
-        fields = ['id', '  source', 'format',
+        fields = ['id', 'resource', 'format',
                   'email_on_completion']

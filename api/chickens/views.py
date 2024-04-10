@@ -1,20 +1,12 @@
-import io
-import pandas as pd
-import numpy as np
-import django_filters
 from django.shortcuts import render
 from rest_framework import viewsets, mixins
-from rest_framework.views import APIView
-from django.http import HttpResponse, JsonResponse
-from datetime import date
 from django.conf import settings
-from import_export import resources
-from rest_framework.parsers import MultiPartParser
-from tablib import Dataset
 from django.db.models import Q
 from rest_framework.response import Response
 from rest_framework.exceptions import NotFound
 from django.db import connection
+from drf_spectacular.utils import extend_schema, OpenApiParameter
+from django.db.models import F
 
 from core.views import (
     HistoryViewSet,
@@ -23,7 +15,7 @@ from core.views import (
     GenericExportView,
     GenericImportView
 )
-from core.serializers import UploadSerializer
+from core.pagination import AllPagination
 from . import models
 from . import serializers
 from . import admin
@@ -172,15 +164,29 @@ class SiblingsViewSet(viewsets.GenericViewSet):
         serializer = self.get_serializer(queryset, many=True)
         return Response(serializer.data)
 
-# Generation
 
+# unique
+class ChickenUniqueViewSet(viewsets.GenericViewSet, mixins.ListModelMixin):
+    serializer_class = serializers.ChickenUniqueSerializer_GET
+    @extend_schema(
+        parameters=[OpenApiParameter(
+        name='field',
+        description='field name',
+        location=OpenApiParameter.QUERY,
+        required=True,
+        type=str),]
+    )
+    def list(self, request, *args, **kwargs):
+        field_name = request.GET.get('field')
+        queryset = models.Chicken.all.order_by(field_name).distinct(field_name).values(field_name).annotate(id=F('generation'))
 
-class GenerationViewSet(viewsets.GenericViewSet, mixins.ListModelMixin):
-    queryset = models.Chicken.all.distinct(
-        'generation').exclude(generation__isnull=True)
-    serializer_class = serializers.GenerationSerializer_GET
-    ordering_fields = '__all__'
+        page = self.paginate_queryset(queryset)
+        if page is not None:
+            serializer = self.get_serializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
 
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data)
 
 class ChickenGridViewSet(viewsets.ViewSet):
     def get_chicken(self, id):

@@ -20,6 +20,22 @@ import { hatcheryApi } from "@/features/hatchery/services";
 export const ChickenList = () => {
   const columns: GridColDef[] = [
     { field: "tag", headerName: "Tag" },
+    { field: "sex", headerName: "Sex" },
+    { field: "generation", headerName: "Generation" },
+    {
+      field: "hatcher",
+      headerName: "Hatch / Batch",
+      renderCell: (params: GridRenderCellParams<any>) => {
+        if (params.row.hatchery == null) return <></>;
+        return (
+          <Typography color={"link.primary"} variant="body2">
+            <Link href={`/hatchery/${params.row.hatchery.id}`}>
+              {params.row.hatchery.display_name}
+            </Link>
+          </Typography>
+        );
+      },
+    },
     {
       field: "breed",
       headerName: "Breed",
@@ -35,6 +51,20 @@ export const ChickenList = () => {
       },
     },
     {
+      field: "house",
+      headerName: "House",
+      renderCell: (params: GridRenderCellParams<any>) => {
+        if (params.row.house == null) return <></>;
+        return (
+          <Typography color={"link.primary"} variant="body2">
+            <Link href={`/houses/${params.row.house.id}`}>
+              {params.row.house.display_name}
+            </Link>
+          </Typography>
+        );
+      },
+    },
+    {
       field: "pen",
       headerName: "Pen",
       renderCell: (params: GridRenderCellParams<any>) => {
@@ -43,21 +73,6 @@ export const ChickenList = () => {
           <Typography color={"link.primary"} variant="body2">
             <Link href={`/pen/${params.row.pen.id}`}>
               {params.row.pen.display_name}
-            </Link>
-          </Typography>
-        );
-      },
-    },
-    { field: "sex", headerName: "Sex", flex: 1 },
-    {
-      field: "hatcher",
-      headerName: "Hatch / Batch",
-      renderCell: (params: GridRenderCellParams<any>) => {
-        if (params.row.hatchery == null) return <></>;
-        return (
-          <Typography color={"link.primary"} variant="body2">
-            <Link href={`/hatchery/${params.row.hatchery.id}`}>
-              {params.row.hatchery.display_name}
             </Link>
           </Typography>
         );
@@ -125,6 +140,12 @@ export const ChickenList = () => {
             { value: "M", name: "Male" },
             { value: "F", name: "Female" },
           ],
+        },
+        generation: {
+          label: "Generation",
+          dataDisplayKey: "generation",
+          dataValueKey: "generation",
+          endpoint: chickenApi.endpoints.getGenerations,
         },
       }}
       menus={
