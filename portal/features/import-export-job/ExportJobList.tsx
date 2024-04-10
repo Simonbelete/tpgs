@@ -54,12 +54,10 @@ const DownloadAction: React.FC<GridRenderCellParams> = ({ id, ...params }) => {
 
 export const ExportJobList = () => {
   const columns: GridColDef[] = [
-    { field: "resource", headerName: "Name", flex: 1, minWidth: 150 },
+    { field: "resource", headerName: "Name", minWidth: 200 },
     {
       field: "processing_initiated",
       headerName: "Processing Inititated",
-      flex: 1,
-      minWidth: 150,
       valueGetter: (params) =>
         params.row.processing_initiated
           ? dayjs(params.row.processing_initiated).format(
@@ -71,8 +69,6 @@ export const ExportJobList = () => {
     {
       field: "error",
       headerName: "Job Status",
-      flex: 1,
-      minWidth: 80,
       renderCell: (params: GridRenderCellParams<any>) => {
         return (
           <Stack direction="row" spacing={1}>
@@ -94,12 +90,10 @@ export const ExportJobList = () => {
         );
       },
     },
-    { field: "errors", headerName: "Errors", flex: 1, minWidth: 200 },
+    { field: "errors", headerName: "Errors" },
     {
       field: "process_finished",
       headerName: "Processing Time",
-      flex: 1,
-      minWidth: 200,
       align: "center",
       renderCell: (params: GridRenderCellParams<any>) => {
         if (

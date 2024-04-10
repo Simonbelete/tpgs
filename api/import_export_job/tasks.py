@@ -14,6 +14,7 @@ from django.conf import settings
 
 logger = logging.getLogger(__name__)
 
+from .models import export_fs
 
 def _run_import(instance, dry_run=True):
     """_summary_
@@ -94,7 +95,8 @@ def _run_export(instance):
         )
 
         path = default_storage.save(
-            "{0}/exportdata/{1}".format(settings.MEDIA_ROOT, filename), ContentFile(dataset.xlsx))
+            settings.MEDIA_ROOT + "/exportdata/" + filename,
+            ContentFile(dataset.xlsx))
 
         instance.file = path
         instance.job_status = 'DONE'

@@ -62,10 +62,10 @@ class ExportJobViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         farm = Farm.objects.get(name=self.request.tenant)
-        serializer.save(created_by=self.request.user,
+        x = serializer.save(created_by=self.request.user,
                             farm=farm, filter_dict=self.request.GET.dict())
-        # print('000000000000000')
-        # _run_export(x)
+        print('000000000000000')
+        _run_export(x)
 
     @action(methods=['get'], detail=True, renderer_classes=(PassthroughRenderer,))
     def download(self, *args, **kwargs):

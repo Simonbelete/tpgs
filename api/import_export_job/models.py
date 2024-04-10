@@ -119,7 +119,10 @@ class ExportJob(models.Model):
 
     @property
     def file_exists(self):
-        if (self.file):
-            return export_fs.exists(self.file.path)
-        else:
+        try:
+            if (self.file):
+                return export_fs.exists(self.file.path)
+            else:
+                return False
+        except:
             return False
