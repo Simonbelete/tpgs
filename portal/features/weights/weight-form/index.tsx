@@ -60,7 +60,13 @@ export const WeightForm = ({
             viewForm: ChickenForm,
             resettable: true,
           },
-          week: { label: "Week", placeholder: "Week", xs: 12, md: 12 },
+          week: {
+            label: "Week",
+            placeholder: "Week",
+            xs: 12,
+            md: 12,
+            type: "number",
+          },
           weight: {
             label: "Body weight (g)",
             placeholder: "Body weight (g)",
@@ -68,6 +74,7 @@ export const WeightForm = ({
             md: 12,
             postfix: "g",
             resettable: true,
+            type: "number",
           },
         }}
         menus={

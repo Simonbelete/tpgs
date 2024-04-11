@@ -33,7 +33,7 @@ const EditLayout = ({
           )}
         </Box>
       )}
-      <Box sx={{ height: "auto" }}>{children}</Box>
+      <Box sx={{ height: "auto", pb: 10 }}>{children}</Box>
     </>
   );
 };
