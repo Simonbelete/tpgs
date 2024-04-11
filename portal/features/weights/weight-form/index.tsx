@@ -7,13 +7,13 @@ import { chickenApi } from "@/features/chickens/services";
 import { ChickenForm } from "@/features/chickens";
 
 const schema = yup.object({
-  chicken: yup.object().required(),
+  chicken: yup.object().required("Chicken tag is required"),
   week: yup
     .number()
     .typeError("Week must be number")
     .min(0)
     .required("Week is required"),
-  weight: yup.number(),
+  weight: yup.number().min(0).required("Body Weight is required"),
 });
 
 export const WeightForm = ({
@@ -26,7 +26,7 @@ export const WeightForm = ({
   return (
     <>
       <FormLayout<Weight>
-        title="Body Weight Form"
+        title="Body Weight"
         id={data?.id || 0}
         data={data}
         schema={schema}
@@ -47,14 +47,18 @@ export const WeightForm = ({
         }}
         fields={{
           chicken: {
-            label: "chicken",
+            label: "Chicken",
             placeholder: "Chicken",
-            // endpoint: chickenApi.endpoints.getAliveChickens,
             endpoint: chickenApi.endpoints.getChickens,
             xs: 12,
             md: 12,
             dataKey: "display_name",
+            creatable: {
+              field: "tag",
+              endpoint: chickenApi.endpoints.createChicken,
+            },
             viewForm: ChickenForm,
+            resettable: true,
           },
           week: { label: "Week", placeholder: "Week", xs: 12, md: 12 },
           weight: {
@@ -63,6 +67,7 @@ export const WeightForm = ({
             xs: 12,
             md: 12,
             postfix: "g",
+            resettable: true,
           },
         }}
         menus={

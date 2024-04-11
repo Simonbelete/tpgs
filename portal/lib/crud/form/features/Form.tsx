@@ -71,6 +71,7 @@ export type Field<T> = {
         MutationDefinition<any, ClientQueyFn, any, Promise<any>, any>
       >;
     defaults?: Object;
+    resettable?: boolean;
   };
 };
 
@@ -136,13 +137,16 @@ export default function Form<
     handleSubmit,
     control,
     setError,
+    getValues,
+    resetField,
+    setFocus,
     formState: { errors },
   } = useForm<Inputs>({
     defaultValues: data || ({} as any),
     resolver: yupResolver(schema),
   });
 
-  const onSubmit: SubmitHandler<Inputs> = async (values) => {
+  const onCreateOrUpdateSubmit: SubmitHandler<Inputs> = async (values) => {
     const cleaned_data = beforeSubmit == null ? values : beforeSubmit(values);
     if (data == null) {
       const response = await createTrigger(cleaned_data as T).unwrap();
@@ -172,6 +176,31 @@ export default function Form<
     setError: setError,
   });
 
+  const cleanData = (values: Partial<T>) => {
+    return beforeSubmit == null ? values : beforeSubmit(values);
+  };
+
+  const onCreateOrUpdateAndNewSubmit: SubmitHandler<Inputs> = async (
+    values
+  ) => {
+    const cleaned_data = beforeSubmit == null ? values : beforeSubmit(values);
+    const formQuery: Object = {
+      week: _.get(cleaned_data, "week", 0),
+    };
+
+    if (data == null) {
+      const response = await createTrigger(cleaned_data as T).unwrap();
+      if (response?.status == 201 && onCreateSuccess != undefined) {
+        Object.keys(fields).map((key, i) => {
+          // @ts-ignore
+          const options = fields[key] as Field;
+          if (options.resettable) resetField(key as any);
+        });
+      }
+    } else {
+    }
+  };
+
   return (
     <>
       {Object.keys(errors).length != 0 ? (
@@ -193,7 +222,7 @@ export default function Form<
       ) : (
         <></>
       )}
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={handleSubmit(onCreateOrUpdateSubmit)}>
         <Grid container spacing={4}>
           {Object.keys(fields).map((key, i) => {
             // @ts-ignore
@@ -223,6 +252,14 @@ export default function Form<
                         multiple={options.multiple}
                         disabled={options.disabled}
                         creatable={options.creatable}
+                        viewForm={
+                          options.viewForm && (
+                            <options.viewForm
+                              data={value}
+                              shallowRoute={false}
+                            />
+                          )
+                        }
                       />
                     )}
                   />
@@ -236,10 +273,11 @@ export default function Form<
                     name={key}
                     control={control}
                     render={({
-                      field: { onChange, value },
+                      field: { onChange, value, ref },
                       fieldState: { error },
                     }) => (
                       <AsyncDropdown
+                        ref={ref}
                         label={options.label}
                         dataKey={options?.dataKey || "name"}
                         endpoint={options.endpoint}
@@ -393,21 +431,29 @@ export default function Form<
           <Stack
             spacing={2}
             direction={"row"}
-            justifyContent="flex-start"
+            justifyContent="space-between"
             alignItems="center"
           >
             <Box>
               <Button
+                variant="outlined"
+                color="primary"
+                size="small"
+                onClick={() => handleSubmit(onCreateOrUpdateAndNewSubmit)()}
+              >
+                Create & New
+              </Button>
+            </Box>
+            <Box display={"flex"} gap={2}>
+              <Button
                 variant="contained"
                 size="small"
                 startIcon={<SaveIcon />}
-                onClick={() => handleSubmit(onSubmit)()}
+                onClick={() => handleSubmit(onCreateOrUpdateSubmit)()}
                 data-testid="data-submit"
               >
                 {data ? "Update" : "Create"}
               </Button>
-            </Box>
-            <Box>
               <Button
                 variant="outlined"
                 color="error"

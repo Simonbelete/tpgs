@@ -4,7 +4,7 @@ import Autocomplete from "@mui/material/Autocomplete";
 import CircularProgress from "@mui/material/CircularProgress";
 import { IconButton, Tooltip, Stack, Typography, Box } from "@mui/material";
 import AddToQueueIcon from "@mui/icons-material/AddToQueue";
-import { FullScreenModal } from "@/components/modals";
+import { FullScreenModal, PlainModal } from "@/components/modals";
 import { ApiEndpointQuery } from "@reduxjs/toolkit/dist/query/core/module";
 import { QueryDefinition } from "@reduxjs/toolkit/dist/query";
 import { EndpointDefinitions } from "@reduxjs/toolkit/dist/query/endpointDefinitions";
@@ -12,6 +12,7 @@ import { QueryHooks } from "@reduxjs/toolkit/dist/query/react/buildHooks";
 import { ClientQueyFn, Query } from "@/types";
 import { Response } from "@/models";
 import buildPage from "@/util/buildPage";
+import QueuePlayNextIcon from "@mui/icons-material/QueuePlayNext";
 
 export interface CreatableAsyncDropdownProps<T> {
   query?: Object;
@@ -35,6 +36,7 @@ export interface CreatableAsyncDropdownProps<T> {
   name?: string;
   // TODO: use one type for the form
   creatable?: any;
+  viewForm?: any;
 }
 
 export default function CreatableAsyncDropdown<T>({
@@ -54,6 +56,7 @@ export default function CreatableAsyncDropdown<T>({
   disabled = false,
   name,
   creatable,
+  viewForm,
   ...props
 }: CreatableAsyncDropdownProps<T>) {
   const [open, setOpen] = React.useState(false);
@@ -65,6 +68,11 @@ export default function CreatableAsyncDropdown<T>({
   const [modalOpen, setModalOpen] = React.useState(false);
   const handleModalOpen = () => setModalOpen(true);
   const handleModalClose = () => setModalOpen(false);
+
+  // View form modal
+  const [openViewForm, setOpenViewForm] = React.useState(false);
+  const handleOpenViewFormOpen = () => setOpenViewForm(true);
+  const handleOpenViewFormClose = () => setOpenViewForm(false);
 
   const [paginationModel, setPaginationModel] = React.useState({
     page: 0,
@@ -171,6 +179,9 @@ export default function CreatableAsyncDropdown<T>({
       >
         {createForm}
       </FullScreenModal>
+      <PlainModal open={openViewForm} onClose={handleOpenViewFormClose}>
+        {viewForm}
+      </PlainModal>
       {label && (
         <Typography
           variant="body2"
@@ -217,7 +228,6 @@ export default function CreatableAsyncDropdown<T>({
           }
 
           if (newValue && newValue.inputValue) {
-            console.log("new value", newValue.inputValue);
             createNew(newValue.inputValue);
           }
         }}
@@ -261,6 +271,19 @@ export default function CreatableAsyncDropdown<T>({
                         onClick={handleModalOpen}
                       >
                         <AddToQueueIcon />
+                      </IconButton>
+                    </Tooltip>
+                  )}
+                  {viewForm && (
+                    <Tooltip title={createFormTitle}>
+                      <IconButton
+                        sx={{ py: 0 }}
+                        size="large"
+                        // color="secondary.main"
+                        disabled={disabled}
+                        onClick={handleOpenViewFormOpen}
+                      >
+                        <QueuePlayNextIcon />
                       </IconButton>
                     </Tooltip>
                   )}

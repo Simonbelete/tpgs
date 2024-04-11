@@ -36,6 +36,8 @@ export interface AsyncDropdownProps<T> {
     QueryHooks<QueryDefinition<Query, ClientQueyFn, any, Response<T[]>, any>>;
   disabled?: boolean;
   name?: string;
+  autoFocus?: boolean;
+  ref?: any;
 }
 
 export default function AsyncDropdown<T>({
@@ -55,6 +57,8 @@ export default function AsyncDropdown<T>({
   placeholder,
   disabled = false,
   name,
+  autoFocus = false,
+  ref,
   ...props
 }: AsyncDropdownProps<T>) {
   const [open, setOpen] = React.useState(false);
@@ -176,6 +180,7 @@ export default function AsyncDropdown<T>({
       )}
       <Autocomplete
         fullWidth
+        autoFocus={autoFocus}
         clearOnBlur={false}
         multiple={multiple}
         size="small"
@@ -206,7 +211,9 @@ export default function AsyncDropdown<T>({
         disabled={disabled}
         renderInput={(params) => (
           <TextField
+            ref={ref}
             {...params}
+            autoFocus={autoFocus}
             name={name}
             error={error}
             helperText={helperText}

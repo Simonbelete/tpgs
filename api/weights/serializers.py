@@ -9,13 +9,13 @@ class WeightSerializer_GET(serializers.ModelSerializer):
 
     class Meta:
         model = models.Weight
-        fields = '__all__'
+        fields = ['id', 'display_name', 'chicken', 'week', 'weight', 'created_at', 'is_active']
 
 
 class WeightSerializer_POST(serializers.ModelSerializer):
     class Meta:
         model = models.Weight
-        fields = ['chicken', 'week', 'weight']
+        fields = ['id', 'chicken', 'week', 'weight', 'is_active']
 
 
 class WeightHistorySerializer(serializers.ModelSerializer):

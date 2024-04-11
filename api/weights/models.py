@@ -16,3 +16,7 @@ class Weight(CoreModel):
 
     class Meta:
         unique_together = ['chicken', 'week']
+
+    @property
+    def display_name(self):
+        return "{0} W{1}".format(self.chicken.tag, self.week)

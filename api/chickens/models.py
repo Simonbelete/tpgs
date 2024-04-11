@@ -47,10 +47,13 @@ class Chicken(CoreModel):
 
     @property
     def display_name(self):
-        return "{tag} {sex}".format(
+        if(self.sex):
+            return "{tag} {sex}".format(
             tag=self.tag,
             sex=self.sex or ""
-        )
+            )
+        else:
+            return self.tag
 
     @property
     def age_in_days(self):
