@@ -71,8 +71,8 @@ export type Field<T> = {
         MutationDefinition<any, ClientQueyFn, any, Promise<any>, any>
       >;
     defaults?: Object;
-    resettable?: boolean;
   };
+  resettable?: boolean;
 };
 
 export interface FormProps<T> {
