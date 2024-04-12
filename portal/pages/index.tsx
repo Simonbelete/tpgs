@@ -1,5 +1,4 @@
 import React from "react";
-import { Inter } from "next/font/google";
 import LaunchIcon from "@mui/icons-material/Launch";
 import {
   AppBar,
@@ -8,18 +7,14 @@ import {
   Box,
   Link,
   Stack,
-  Grid,
-  useTheme,
   Typography,
 } from "@mui/material";
-
+import { useTheme } from "@mui/material/styles";
 import {
-  Logo,
   PrimaryMenu,
   SignUpNowCTA,
   PrimaryHero,
   AppIntro,
-  Copyright,
   AppsDescription,
 } from "@/components";
 import { ILRILogo } from "@/components/logos";
@@ -30,8 +25,6 @@ import { SeoHead } from "@/seo";
 import { NextPageContext } from "next";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/pages/api/auth/[...nextauth]";
-
-const inter = Inter({ subsets: ["latin"] });
 
 function Home() {
   const theme = useTheme();

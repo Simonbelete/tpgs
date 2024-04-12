@@ -1,17 +1,8 @@
 import React from "react";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import {
-  Grid,
-  Typography,
-  Avatar,
-  Box,
-  Tab,
-  Tabs,
-  IconButton,
-  useMediaQuery,
-  useTheme,
-} from "@mui/material";
+import { Grid, Box, Tab, Tabs, useMediaQuery } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import { Setting } from "@/models";
 import { useSession, signOut } from "next-auth/react";

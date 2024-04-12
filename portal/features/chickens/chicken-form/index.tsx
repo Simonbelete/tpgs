@@ -15,7 +15,7 @@ import { hatcheryApi } from "@/features/hatchery/services";
 import { penApi } from "@/features/pen/services";
 import _ from "lodash";
 import { Card } from "@/components";
-import { Box, Tabs, Tab, tabsClasses, Chip, Alert } from "@mui/material";
+import { Box, Tabs, Tab, Chip, Alert } from "@mui/material";
 import ChickenReductionSelectDialog from "./ChickenReductionModal";
 import OffspringList from "./OffspringList";
 import SiblingsList from "./SiblingsList";
@@ -129,11 +129,11 @@ export const ChickenForm = ({
           value={tab}
           onChange={handleTabChange}
           aria-label="basic tabs example"
-          sx={{
-            [`& .${tabsClasses.scrollButtons}`]: {
-              "&.Mui-disabled": { opacity: 0.3 },
-            },
-          }}
+          // sx={{
+          //   [`& .${tabsClasses.scrollButtons}`]: {
+          //     "&.Mui-disabled": { opacity: 0.3 },
+          //   },
+          // }}
           variant="scrollable"
           scrollButtons="auto"
         >

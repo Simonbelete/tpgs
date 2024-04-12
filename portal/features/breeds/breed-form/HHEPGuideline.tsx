@@ -58,7 +58,7 @@ const HHEPGuidelineToolbar = ({
   );
 };
 
-const HHEPGuideline = ({ data }: { data: Breed }) => {
+const HHEPGuidelineForm = ({ data }: { data: Breed }) => {
   const columns: GridColDef[] = [
     {
       field: "week",
@@ -85,4 +85,4 @@ const HHEPGuideline = ({ data }: { data: Breed }) => {
   );
 };
 
-export default HHEPGuideline;
+export default HHEPGuidelineForm;

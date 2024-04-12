@@ -60,7 +60,7 @@ const BreedWeightGuidelineToolbar = ({
   );
 };
 
-const BreedWeightGuideline = ({ data }: { data: Breed }) => {
+const BreedWeightGuidelineForm = ({ data }: { data: Breed }) => {
   const columns: GridColDef[] = [
     {
       field: "week",
@@ -87,4 +87,4 @@ const BreedWeightGuideline = ({ data }: { data: Breed }) => {
   );
 };
 
-export default BreedWeightGuideline;
+export default BreedWeightGuidelineForm;

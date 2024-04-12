@@ -15,15 +15,7 @@ import {
 } from "../services";
 import _ from "lodash";
 import { Card } from "@/components";
-import {
-  Tabs,
-  Tab,
-  Box,
-  tabsClasses,
-  Chip,
-  Tooltip,
-  IconButton,
-} from "@mui/material";
+import { Tabs, Tab, Box, Chip, Tooltip, IconButton } from "@mui/material";
 import { purposeApi } from "@/features/purposes/services";
 import { countryApi } from "@/features/countries/services";
 import { FormulaIngredientForm } from "./FormulaIngredients";
@@ -31,7 +23,6 @@ import { FormulaRequirementForm } from "./FormulaRequirements";
 import AchivementCard from "./AchivementCard";
 import Link from "next/link";
 import FunctionsIcon from "@mui/icons-material/Functions";
-import PictureAsPdfIcon from "@mui/icons-material/PictureAsPdf";
 import fileDownload from "@/util/fileDownload";
 import TableViewIcon from "@mui/icons-material/TableView";
 
@@ -156,11 +147,11 @@ export const FormulaForm = ({
           value={tab}
           onChange={handleTabChange}
           aria-label="basic tabs example"
-          sx={{
-            [`& .${tabsClasses.scrollButtons}`]: {
-              "&.Mui-disabled": { opacity: 0.3 },
-            },
-          }}
+          // sx={{
+          //   [`& .${tabsClasses.scrollButtons}`]: {
+          //     "&.Mui-disabled": { opacity: 0.3 },
+          //   },
+          // }}
           variant="scrollable"
           scrollButtons="auto"
         >

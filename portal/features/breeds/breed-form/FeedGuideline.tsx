@@ -58,7 +58,7 @@ const FeedGuidelineToolbar = ({
   );
 };
 
-const FeedGuideline = ({ data }: { data: Breed }) => {
+const FeedGuidelineForm = ({ data }: { data: Breed }) => {
   const columns: GridColDef[] = [
     {
       field: "week",
@@ -85,4 +85,4 @@ const FeedGuideline = ({ data }: { data: Breed }) => {
   );
 };
 
-export default FeedGuideline;
+export default FeedGuidelineForm;

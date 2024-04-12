@@ -1,5 +1,11 @@
 import React from "react";
-import Plot from "react-plotly.js";
+import dynamic from "next/dynamic";
+import { BarChartSkeleton } from "@/components";
+
+const Plot = dynamic(() => import("react-plotly.js"), {
+  ssr: false,
+  loading: () => <BarChartSkeleton />,
+});
 
 const PieChart = ({
   data,

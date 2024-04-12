@@ -10,7 +10,7 @@ import {
   Form,
   DashboardIcon,
 } from "@/lib/crud";
-import { Tabs, Tab, Box, tabsClasses, Chip } from "@mui/material";
+import { Tabs, Tab, Box, Chip } from "@mui/material";
 import { Card } from "@/components";
 import { feedApi } from "../services";
 import { ChickenFeed } from "./ChickenFeed";
@@ -77,11 +77,11 @@ export const BatchFeedForm = ({
           value={tab}
           onChange={handleTabChange}
           aria-label="basic tabs example"
-          sx={{
-            [`& .${tabsClasses.scrollButtons}`]: {
-              "&.Mui-disabled": { opacity: 0.3 },
-            },
-          }}
+          // sx={{
+          //   [`& .${tabsClasses.scrollButtons}`]: {
+          //     "&.Mui-disabled": { opacity: 0.3 },
+          //   },
+          // }}
         >
           <Tab label="Detail" {...a11yProps(0)} />
           {formData && (

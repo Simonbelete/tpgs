@@ -4,7 +4,6 @@ import {
   Divider,
   Typography,
   Stack,
-  useTheme,
   Button,
   Box,
   Dialog,
@@ -13,6 +12,7 @@ import {
   DialogContentText,
   DialogActions,
 } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
 import ManageHistoryIcon from "@mui/icons-material/ManageHistory";
 import LoadingButton from "@mui/lab/LoadingButton";
 import { useGroup } from "@/hooks";

@@ -8,7 +8,7 @@ import {
   TabFormLayout,
   Form,
 } from "@/lib/crud";
-import { Box, Tabs, Tab, tabsClasses } from "@mui/material";
+import { Box, Tabs, Tab } from "@mui/material";
 import { Card } from "@/components";
 import { breedApi } from "../services";
 import BreedWeightGuideline from "./BreedWeightGuideline";
@@ -67,11 +67,11 @@ export const BreedForm = ({
           value={tab}
           onChange={handleTabChange}
           aria-label="basic tabs example"
-          sx={{
-            [`& .${tabsClasses.scrollButtons}`]: {
-              "&.Mui-disabled": { opacity: 0.3 },
-            },
-          }}
+          // sx={{
+          //   [`& .${tabsClasses.scrollButtons}`]: {
+          //     "&.Mui-disabled": { opacity: 0.3 },
+          //   },
+          // }}
           variant="scrollable"
           scrollButtons="auto"
         >

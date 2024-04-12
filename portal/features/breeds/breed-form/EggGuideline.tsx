@@ -58,7 +58,7 @@ const EggGuidelineToolbar = ({
   );
 };
 
-const EggGuideline = ({ data }: { data: Breed }) => {
+const EggGuidelineForm = ({ data }: { data: Breed }) => {
   const columns: GridColDef[] = [
     {
       field: "week",
@@ -92,4 +92,4 @@ const EggGuideline = ({ data }: { data: Breed }) => {
   );
 };
 
-export default EggGuideline;
+export default EggGuidelineForm;

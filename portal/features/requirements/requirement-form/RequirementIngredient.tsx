@@ -42,7 +42,7 @@ const RequirementIngredientToolbar = ({
   );
 };
 
-const RequirementIngredient = ({ data }: { data: Requirement }) => {
+const RequirementIngredientForm = ({ data }: { data: Requirement }) => {
   const columns: GridColDef[] = [
     {
       field: "ingredient__name",
@@ -96,4 +96,4 @@ const RequirementIngredient = ({ data }: { data: Requirement }) => {
   );
 };
 
-export default RequirementIngredient;
+export default RequirementIngredientForm;

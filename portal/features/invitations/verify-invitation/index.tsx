@@ -40,7 +40,7 @@ const schema = yup.object({
   company: yup.string(),
 });
 
-const VerifyInvitation = ({
+const VerifyInvitationForm = ({
   token,
   data,
 }: {
@@ -270,4 +270,4 @@ const VerifyInvitation = ({
   );
 };
 
-export default VerifyInvitation;
+export default VerifyInvitationForm;

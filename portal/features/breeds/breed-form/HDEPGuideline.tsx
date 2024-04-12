@@ -58,7 +58,7 @@ const HDEPGuidelineToolbar = ({
   );
 };
 
-const HDEPGuideline = ({ data }: { data: Breed }) => {
+const HDEPGuidelineForm = ({ data }: { data: Breed }) => {
   const columns: GridColDef[] = [
     {
       field: "week",
@@ -85,4 +85,4 @@ const HDEPGuideline = ({ data }: { data: Breed }) => {
   );
 };
 
-export default HDEPGuideline;
+export default HDEPGuidelineForm;

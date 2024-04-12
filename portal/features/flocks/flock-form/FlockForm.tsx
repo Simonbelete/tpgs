@@ -1,17 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { Grid, Stack, Box, Tabs, Tab, tabsClasses } from "@mui/material";
+import { Grid, Stack, Box } from "@mui/material";
 import { Flock } from "@/models";
 import { useRouter } from "next/router";
 import FlockInfoZone from "./FlockInfoZone";
 import FlockDangerZone from "./FlockDangerZone";
 import FlockDetailForm from "./FlockDetailForm";
-
-function a11yProps(index: number) {
-  return {
-    id: `simple-tab-${index}`,
-    "aria-controls": `simple-tabpanel-${index}`,
-  };
-}
 
 const FlockForm = ({
   flock,

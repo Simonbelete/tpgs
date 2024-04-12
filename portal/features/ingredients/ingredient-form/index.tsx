@@ -12,7 +12,7 @@ import {
   EditableList,
   EditToolbar,
 } from "@/lib/crud";
-import { Tabs, Tab, Box, tabsClasses, Chip, Button } from "@mui/material";
+import { Tabs, Tab, Box, Chip, Button } from "@mui/material";
 import { Card } from "@/components";
 import { ingredientApi } from "../services";
 import { nutrientApi } from "@/features/nutrients/services";
@@ -161,11 +161,11 @@ export const IngredientForm = ({
           value={tab}
           onChange={handleTabChange}
           aria-label="basic tabs example"
-          sx={{
-            [`& .${tabsClasses.scrollButtons}`]: {
-              "&.Mui-disabled": { opacity: 0.3 },
-            },
-          }}
+          // sx={{
+          //   [`& .${tabsClasses.scrollButtons}`]: {
+          //     "&.Mui-disabled": { opacity: 0.3 },
+          //   },
+          // }}
           variant="scrollable"
           scrollButtons="auto"
         >
