@@ -13,8 +13,8 @@ const schema = yup.object({
     .typeError("Week must be number")
     .min(0)
     .required("Week is required"),
-  weight: yup.number().required(),
-  eggs: yup.number().required(),
+  eggs: yup.number().min(0).required(),
+  weight: yup.number().optional(),
 });
 
 export const EggForm = ({
@@ -27,7 +27,7 @@ export const EggForm = ({
   return (
     <>
       <FormLayout<Egg>
-        title="Egg Form"
+        title="Egg production"
         id={data?.id || 0}
         data={data}
         schema={schema}
@@ -58,12 +58,20 @@ export const EggForm = ({
             dataKey: "display_name",
             viewForm: ChickenForm,
           },
-          week: { label: "Week", placeholder: "Week", xs: 12, md: 12 },
+          week: {
+            label: "Week",
+            placeholder: "Week",
+            xs: 12,
+            md: 12,
+            type: "number",
+            unresectable: true,
+          },
           eggs: {
             label: "No of eggs",
             placeholder: "No of eggs",
             xs: 12,
             md: 12,
+            type: "number",
           },
           weight: {
             label: "Total eggs weight (g)",
@@ -71,6 +79,7 @@ export const EggForm = ({
             xs: 12,
             md: 12,
             postfix: "g",
+            type: "number",
           },
         }}
         menus={

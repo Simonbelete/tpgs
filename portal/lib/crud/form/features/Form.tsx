@@ -72,7 +72,7 @@ export type Field<T> = {
       >;
     defaults?: Object;
   };
-  resettable?: boolean;
+  unresectable?: boolean;
 };
 
 export interface FormProps<T> {
@@ -194,7 +194,7 @@ export default function Form<
         Object.keys(fields).map((key, i) => {
           // @ts-ignore
           const options = fields[key] as Field;
-          if (options.resettable) resetField(key as any);
+          if (!options.unresectable) resetField(key as any);
         });
       }
     } else {
@@ -403,6 +403,7 @@ export default function Form<
                     }) => (
                       <LabeledInput
                         name={key}
+                        type={options.type ?? "text"}
                         error={!!error?.message}
                         helperText={error?.message}
                         onChange={onChange}

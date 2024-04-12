@@ -58,7 +58,6 @@ export const WeightForm = ({
               endpoint: chickenApi.endpoints.createChicken,
             },
             viewForm: ChickenForm,
-            resettable: true,
           },
           week: {
             label: "Week",
@@ -66,6 +65,7 @@ export const WeightForm = ({
             xs: 12,
             md: 12,
             type: "number",
+            unresectable: true,
           },
           weight: {
             label: "Body weight (g)",
@@ -73,7 +73,6 @@ export const WeightForm = ({
             xs: 12,
             md: 12,
             postfix: "g",
-            resettable: true,
             type: "number",
           },
         }}

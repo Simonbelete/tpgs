@@ -60,13 +60,21 @@ export const FeedForm = ({
             md: 12,
             viewForm: ChickenForm,
           },
-          week: { label: "Week", placeholder: "Week", xs: 12, md: 12 },
+          week: {
+            label: "Week",
+            placeholder: "Week",
+            xs: 12,
+            md: 12,
+            type: "number",
+            unresectable: true,
+          },
           weight: {
             label: "Feed weight (g)",
             placeholder: "Feed weight (g)",
             xs: 12,
             md: 12,
             postfix: "g",
+            type: "number",
           },
           formula: {
             label: "Formula",

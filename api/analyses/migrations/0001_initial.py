@@ -110,8 +110,8 @@ class Migration(migrations.Migration):
                     FROM eggs_egg ee 
                     GROUP BY ee.chicken_id
                 ) ee ON ff.chicken_id = ee.chicken_id;
-            """,
-            """DROP VIEW chicken_ranking"""
+            """
+            # """DROP VIEW chicken_ranking"""
         ),
         migrations.RunSQL(
             """
@@ -130,7 +130,7 @@ class Migration(migrations.Migration):
                         ON ff.week = ww.week AND ff.chicken_id = ee.chicken_id
                     WHERE ff.chicken_id IS NOT NULL
                     order by ww.week, ff.week, ee.week;
-            """,
-            """DROP VIEW chicken_recordset"""
+            """
+            # """DROP VIEW chicken_recordset"""
         )
     ]

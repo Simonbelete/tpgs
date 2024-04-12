@@ -142,7 +142,7 @@ const SidebarMenu = () => {
     <Sidebar
       id="main-sidebar-menu"
       style={{ height: "100vh" }}
-      breakPoint="md"
+      breakPoint="lg"
       backgroundColor={sidebarTheme.sidebar.backgroundColor}
       rootStyles={{
         color: sidebarTheme.sidebar.color,
