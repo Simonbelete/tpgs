@@ -29,7 +29,7 @@ class WeightViewSet(CoreModelViewSet):
     queryset = models.Weight.objects.all()
     serializer_class = serializers.WeightSerializer_GET
     filterset_class = filters.WeightFilter
-    search_fields = ['chicken__tag', 'flock__name']
+    search_fields = ['chicken__tag', 'week', 'weight']
     ordering_fields = '__all__'
 
     def get_serializer_class(self):
