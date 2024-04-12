@@ -18,6 +18,7 @@ import {
 import LoadingButton from "@mui/lab/LoadingButton";
 import CircularProgress from "@mui/material/CircularProgress";
 import Link from "next/link";
+import Image from "next/image";
 
 type Inputs = {
   email: string;
@@ -72,7 +73,15 @@ const LoginForm = () => {
       <Box sx={{ mb: 4 }} justifyContent={"center"} alignItems={"center"}>
         <Box sx={{ mb: 2, display: "flex", justifyContent: "center" }}>
           <Link href="/">
-            <img src="/images/ilri_logo.png" height={50} />
+            {/* <img src="/images/ilri_logo.png" height={50} /> */}
+            <Image
+              alt="ilri cgiar logo"
+              src="/images/ilri_logo.png"
+              width={0}
+              height={0}
+              sizes="100vw"
+              style={{ width: "200px", height: "auto" }} // optional
+            />
           </Link>
         </Box>
         <Typography color={"primary.dark"} variant="h6" fontWeight={600}>

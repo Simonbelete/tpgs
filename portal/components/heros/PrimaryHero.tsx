@@ -58,7 +58,15 @@ const PrimaryHero = () => {
           </Box>
         </Grid>
         <Grid item xs={12} md={6}>
-          <img src="/images/hero_3.png" alt="Hero Image" width="100%" />
+          <Image
+            alt="Hero Image"
+            src="/images/hero_3.png"
+            width={0}
+            height={0}
+            sizes="100vw"
+            style={{ width: "100%", height: "auto" }}
+          />
+          {/* <img src="/images/hero_3.png" alt="Hero Image" width="100%" /> */}
         </Grid>
       </Grid>
     </Container>

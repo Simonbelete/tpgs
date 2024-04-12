@@ -2,6 +2,7 @@ import React from "react";
 import { Container, Grid, Stack, Box, Typography } from "@mui/material";
 import Link from "next/link";
 import AppList from "../apps-list";
+import Image from "next/image";
 
 const AppIntro = () => {
   const content = {
@@ -56,11 +57,19 @@ value chains in total.`,
         </Grid>
         <Grid item xs={12} md={6}>
           <Box>
-            <img
+            <Image
+              alt="Chickens Image"
+              src="/images/chickens_image.jpg"
+              width={0}
+              height={0}
+              sizes="100vw"
+              style={{ width: "100%", height: "auto", marginBottom: "20px" }}
+            />
+            {/* <img
               src="/images/chickens_image.jpg"
               width={"100%"}
               style={{ marginBottom: "20px" }}
-            />
+            /> */}
           </Box>
           <Typography
             variant="subtitle1"

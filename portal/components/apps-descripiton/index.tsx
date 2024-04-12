@@ -2,6 +2,7 @@ import React from "react";
 import { Container, Grid, Typography, Box, Button, Stack } from "@mui/material";
 import Link from "next/link";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
+import Image from "next/image";
 
 interface AppsDescriptionData {
   image: string;
@@ -75,7 +76,17 @@ teaching respectively.`,
             <Grid container spacing={10}>
               <Grid item xs={12} md={6}>
                 <Link href={e.image}>
-                  <img src={e.image} width={"100%"} />
+                  <Image
+                    alt=""
+                    src={e.image}
+                    width={0}
+                    height={0}
+                    sizes="100vw"
+                    style={{
+                      width: "100%",
+                      height: "auto",
+                    }}
+                  />
                 </Link>
               </Grid>
               <Grid item xs={12} md={6}>
