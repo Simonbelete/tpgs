@@ -31,7 +31,7 @@ class EggViewSet(CoreModelViewSet):
     queryset = models.Egg.objects.all()
     serializer_class = serializers.EggSerializer_GET
     filterset_class = filters.EggFilter
-    search_fields = ['chicken__tag', 'flock__name']
+    search_fields = ['chicken__tag', 'week']
     ordering_fields = '__all__'
 
     def get_serializer_class(self):
