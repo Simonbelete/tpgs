@@ -23,6 +23,7 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import CookieConsent from "@/components/CookieConsent";
 import Script from "next/script";
+import { AppCacheProvider } from "@mui/material-nextjs/v13-pagesRouter";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -71,6 +72,7 @@ export const metadata: Metadata = {
 export default function App({
   Component,
   pageProps: { session, ...pageProps },
+  ...props
 }: AppPropsWithLayout) {
   // Use the layout defined at the page level, if available
   const getLayout =
@@ -79,42 +81,44 @@ export default function App({
 
   return (
     <>
-      <Script id="google-analytics">
-        {`
+      <AppCacheProvider {...props}>
+        <Script id="google-analytics">
+          {`
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
   
             gtag('config', 'G-591F0GY996');
           `}
-      </Script>
-      <Script
-        async
-        src="https://www.googletagmanager.com/gtag/js?id=G-591F0GY996"
-      ></Script>
+        </Script>
+        <Script
+          async
+          src="https://www.googletagmanager.com/gtag/js?id=G-591F0GY996"
+        ></Script>
 
-      <Provider store={store}>
-        <SessionProvider session={session}>
-          <ThemeProvider theme={lightTheme}>
-            <LocalizationProvider dateAdapter={AdapterDayjs}>
-              {/* <OnBoardingProvider> */}
-              <SnackbarProvider
-                anchorOrigin={{
-                  vertical: "top",
-                  horizontal: "center",
-                }}
-                action={(key) => <SnackbarCloseButton dataKey={key} />}
-              >
-                <main className={`${inter.className}`}>
-                  {getLayout(<Component {...pageProps} />)}
-                </main>
-              </SnackbarProvider>
-              {/* </OnBoardingProvider> */}
-            </LocalizationProvider>
-          </ThemeProvider>
-        </SessionProvider>
-      </Provider>
-      <CookieConsent />
+        <Provider store={store}>
+          <SessionProvider session={session}>
+            <ThemeProvider theme={lightTheme}>
+              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                {/* <OnBoardingProvider> */}
+                <SnackbarProvider
+                  anchorOrigin={{
+                    vertical: "top",
+                    horizontal: "center",
+                  }}
+                  action={(key) => <SnackbarCloseButton dataKey={key} />}
+                >
+                  <main className={`${inter.className}`}>
+                    {getLayout(<Component {...pageProps} />)}
+                  </main>
+                </SnackbarProvider>
+                {/* </OnBoardingProvider> */}
+              </LocalizationProvider>
+            </ThemeProvider>
+          </SessionProvider>
+        </Provider>
+        <CookieConsent />
+      </AppCacheProvider>
     </>
   );
 }

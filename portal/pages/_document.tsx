@@ -1,10 +1,15 @@
 import { Html, Head, Main, NextScript } from "next/document";
-import Script from "next/script";
+import {
+  DocumentHeadTags,
+  documentGetInitialProps,
+} from "@mui/material-nextjs/v13-pagesRouter";
 
-export default function Document() {
+export default function Document(props: any) {
   return (
     <Html lang="en">
-      <Head></Head>
+      <Head>
+        <DocumentHeadTags {...props} />
+      </Head>
       <body>
         <div
           id="portal"
@@ -17,3 +22,8 @@ export default function Document() {
     </Html>
   );
 }
+
+Document.getInitialProps = async (ctx: any) => {
+  const finalProps = await documentGetInitialProps(ctx);
+  return finalProps;
+};
