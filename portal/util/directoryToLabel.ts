@@ -1,4 +1,5 @@
 import { Directory } from "@/models";
+import _ from "lodash";
 
 export default function (data: Directory) {
   let name = "";
@@ -11,7 +12,7 @@ export default function (data: Directory) {
   }
 
   if (data.generation) {
-    name += "/ G" + data.generation;
+    name += "/ G" + _.get(data.generation, "generation", "all");
   }
 
   if (data.breed) {

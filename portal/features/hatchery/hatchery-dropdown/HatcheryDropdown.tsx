@@ -6,7 +6,7 @@ import { HatcheryForm } from "../hatchery-form";
 
 const HatcheryDropdown = ({
   value,
-  label = "Hatchery",
+  label = "Hatch / Batch",
   error,
   onChange,
   helperText,

@@ -12,6 +12,10 @@ const typeMapper = {
     label: "Done",
     color: "success",
   },
+  COMMIT: {
+    label: "Commit",
+    color: "primary",
+  },
   "DRY RUN": {
     label: "Dry Run",
     color: "warning",
@@ -66,8 +70,12 @@ export const ImportJobList = () => {
             {params.row.job_status.length > 0 && (
               <Chip
                 variant="outlined"
-                // @ts-ignore
-                label={_.get(typeMapper[params.row.job_status], "label", "")}
+                label={_.get(
+                  // @ts-ignore
+                  typeMapper[params.row.job_status],
+                  "label",
+                  "Started"
+                )}
                 size="small"
                 color={_.get(
                   // @ts-ignore

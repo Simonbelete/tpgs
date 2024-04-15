@@ -4,7 +4,7 @@ import Autocomplete from "@mui/material/Autocomplete";
 import CircularProgress from "@mui/material/CircularProgress";
 import { IconButton, Tooltip, Stack, Typography, Box } from "@mui/material";
 import AddToQueueIcon from "@mui/icons-material/AddToQueue";
-import { FullScreenModal } from "@/components/modals";
+import { FullScreenModal, PlainModal } from "@/components/modals";
 import { ApiEndpointQuery } from "@reduxjs/toolkit/dist/query/core/module";
 import { QueryDefinition } from "@reduxjs/toolkit/dist/query";
 import { EndpointDefinitions } from "@reduxjs/toolkit/dist/query/endpointDefinitions";
@@ -12,6 +12,8 @@ import { QueryHooks } from "@reduxjs/toolkit/dist/query/react/buildHooks";
 import { ClientQueyFn, Query } from "@/types";
 import { Response } from "@/models";
 import buildPage from "@/util/buildPage";
+import PreviewIcon from "@mui/icons-material/Preview";
+import QueuePlayNextIcon from "@mui/icons-material/QueuePlayNext";
 
 export interface AsyncDropdownProps<T> {
   query?: Object;
@@ -24,6 +26,7 @@ export interface AsyncDropdownProps<T> {
   helperText?: string;
   placeholder?: string;
   createForm?: React.ReactNode;
+  viewForm?: any;
   createFormTitle?: string;
   onChange?: (event: any, newValue: any) => void;
   endpoint: ApiEndpointQuery<
@@ -33,6 +36,8 @@ export interface AsyncDropdownProps<T> {
     QueryHooks<QueryDefinition<Query, ClientQueyFn, any, Response<T[]>, any>>;
   disabled?: boolean;
   name?: string;
+  autoFocus?: boolean;
+  ref?: any;
 }
 
 export default function AsyncDropdown<T>({
@@ -45,12 +50,15 @@ export default function AsyncDropdown<T>({
   helperText,
   createForm,
   createFormTitle = "Create New",
+  viewForm,
   multiple,
   onChange,
   endpoint,
   placeholder,
   disabled = false,
   name,
+  autoFocus = false,
+  ref,
   ...props
 }: AsyncDropdownProps<T>) {
   const [open, setOpen] = React.useState(false);
@@ -61,6 +69,11 @@ export default function AsyncDropdown<T>({
   const [modalOpen, setModalOpen] = React.useState(false);
   const handleModalOpen = () => setModalOpen(true);
   const handleModalClose = () => setModalOpen(false);
+
+  // View form modal
+  const [openViewForm, setOpenViewForm] = React.useState(false);
+  const handleOpenViewFormOpen = () => setOpenViewForm(true);
+  const handleOpenViewFormClose = () => setOpenViewForm(false);
 
   const [paginationModel, setPaginationModel] = React.useState({
     page: 0,
@@ -91,7 +104,6 @@ export default function AsyncDropdown<T>({
       setOptions([]);
     }
   };
-
   const handleOnClose = () => {
     setOpen(false);
   };
@@ -154,6 +166,9 @@ export default function AsyncDropdown<T>({
       >
         {createForm}
       </FullScreenModal>
+      <PlainModal open={openViewForm} onClose={handleOpenViewFormClose}>
+        {viewForm}
+      </PlainModal>
       {label && (
         <Typography
           variant="body2"
@@ -165,6 +180,7 @@ export default function AsyncDropdown<T>({
       )}
       <Autocomplete
         fullWidth
+        autoFocus={autoFocus}
         clearOnBlur={false}
         multiple={multiple}
         size="small"
@@ -181,7 +197,7 @@ export default function AsyncDropdown<T>({
             });
           }
         }}
-        value={value}
+        value={value ?? ""}
         defaultValue={value}
         getOptionLabel={(option) => option[dataKey] ?? ""}
         options={options}
@@ -195,7 +211,9 @@ export default function AsyncDropdown<T>({
         disabled={disabled}
         renderInput={(params) => (
           <TextField
+            ref={ref}
             {...params}
+            autoFocus={autoFocus}
             name={name}
             error={error}
             helperText={helperText}
@@ -221,6 +239,19 @@ export default function AsyncDropdown<T>({
                         onClick={handleModalOpen}
                       >
                         <AddToQueueIcon />
+                      </IconButton>
+                    </Tooltip>
+                  )}
+                  {viewForm && (
+                    <Tooltip title={createFormTitle}>
+                      <IconButton
+                        sx={{ py: 0 }}
+                        size="large"
+                        // color="secondary.main"
+                        disabled={disabled}
+                        onClick={handleOpenViewFormOpen}
+                      >
+                        <QueuePlayNextIcon />
                       </IconButton>
                     </Tooltip>
                   )}

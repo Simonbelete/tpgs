@@ -37,7 +37,7 @@ from requirements.models import Requirement
 
 
 class AnalysesViewSet(viewsets.ViewSet):
-    queryset = Chicken.objects.all()
+    # queryset = Chicken.objects.all()
     farm = None
 
     def get_farm(self, farm_id):
@@ -67,7 +67,7 @@ class AnalysesViewSet(viewsets.ViewSet):
             queryset = queryset.filter(hatchery=hatchery_id)
 
         if (house_id):
-            queryset = queryset.filter(pen__house=house_id)
+            queryset = queryset.filter(house=house_id)
 
         if (pen_id):
             queryset = queryset.filter(pen=pen_id)
@@ -87,9 +87,9 @@ class AnalysesViewSet(viewsets.ViewSet):
         query_data = self.queryset[0]
         return {
             'farm': self.farm.display_name,
-            'breed': query_data.breed.name,
+            'breed': query_data.breed.name if query_data.breed else None,
             'generation': query_data.generation,
-            'hatchery': query_data.hatchery.display_name,
+            'hatchery': query_data.hatchery.display_name if query_data.hatchery else None,
             'house': query_data.pen.house.name if query_data.pen else None,
             'pen': query_data.pen.name if query_data.pen else None,
             'sex': query_data.sex
@@ -881,7 +881,7 @@ class GrowthPerformanceViewSet(AnalysesViewSet):
                     weights) == 0 else weights[0]
 
                 avg = np.average(weights)
-                std = np.std(s)
+                std = np.std(weights)
 
                 results.append({
                     'week': week,
@@ -1201,7 +1201,6 @@ class MortalityViewSet(AnalysesViewSet):
     def list(self, request, **kwargs):
         start_week = int(self.request.GET.get('start_week', 0))
         end_week = int(self.request.GET.get('end_week', 20))
-        reduction_reason_id = int(self.request.GET.get('reduction_reason', 0))
 
         with tenant_context(self.get_farm(self.request.GET.get('farm', 0))):
             queryset = self.filter_by_directory()
@@ -1215,6 +1214,8 @@ class MortalityViewSet(AnalysesViewSet):
                 duration=duration)
 
             total_chickens = queryset.count()
+            print('-----')
+            print(total_chickens)
 
             results = []
             for week in range(start_week, end_week + 1):

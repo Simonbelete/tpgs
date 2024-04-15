@@ -435,16 +435,6 @@ export default function Form<
             justifyContent="space-between"
             alignItems="center"
           >
-            <Box>
-              <Button
-                variant="outlined"
-                color="primary"
-                size="small"
-                onClick={() => handleSubmit(onCreateOrUpdateAndNewSubmit)()}
-              >
-                Create & New
-              </Button>
-            </Box>
             <Box display={"flex"} gap={2}>
               <Button
                 variant="contained"
@@ -466,6 +456,18 @@ export default function Form<
                 Cancel
               </Button>
             </Box>
+            {!data && (
+              <Box>
+                <Button
+                  variant="outlined"
+                  color="primary"
+                  size="small"
+                  onClick={() => handleSubmit(onCreateOrUpdateAndNewSubmit)()}
+                >
+                  Create & New
+                </Button>
+              </Box>
+            )}
           </Stack>
         </Box>
       </form>

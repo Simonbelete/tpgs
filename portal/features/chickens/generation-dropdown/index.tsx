@@ -24,7 +24,7 @@ export const GenerationDropdown = ({
     <AsyncDropdown<Pick<Chicken, "generation">>
       value={value}
       disabled={disabled}
-      dataKey="name"
+      dataKey="generation"
       label={label}
       error={error}
       placeholder="Select Generation"

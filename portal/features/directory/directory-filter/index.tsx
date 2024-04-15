@@ -37,7 +37,8 @@ import {
 } from "@/services/client";
 import { useDispatch } from "react-redux";
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
-import { BreedDropdown } from "@/features/breeds";
+import { BreedDropdown, BreedForm } from "@/features/breeds";
+import _ from "lodash";
 
 export interface IndividualFilterProps {
   chicken: Chicken;
@@ -428,7 +429,7 @@ export const DirectoryFilter = ({
                 *Leaving field empty will consider all values
               </Typography>
               <Grid container spacing={2}>
-                <Grid item xs={12} md={6}>
+                <Grid item xs={12}>
                   <Controller
                     name={"farm"}
                     control={control}
@@ -448,25 +449,7 @@ export const DirectoryFilter = ({
                     )}
                   />
                 </Grid>
-                <Grid item xs={12} md={6}>
-                  <Controller
-                    name={"hatchery"}
-                    control={control}
-                    render={({
-                      field: { onChange, value },
-                      fieldState: { error },
-                    }) => (
-                      <HatcheryDropdown
-                        disabled={selectedFarm == null ? true : false}
-                        onChange={(_, data) => onChange(data)}
-                        value={value}
-                        error={!!error?.message}
-                        helperText={error?.message}
-                      />
-                    )}
-                  />
-                </Grid>
-                <Grid item xs={12} md={6}>
+                <Grid item xs={12} md={4}>
                   <Controller
                     name={"generation"}
                     control={control}
@@ -484,7 +467,47 @@ export const DirectoryFilter = ({
                     )}
                   />
                 </Grid>
-                <Grid item xs={12} md={6}>
+                <Grid item xs={12} md={4}>
+                  <Controller
+                    name={"breed"}
+                    control={control}
+                    render={({
+                      field: { onChange, value },
+                      fieldState: { error },
+                    }) => (
+                      <BreedDropdown
+                        disabled={selectedFarm == null ? true : false}
+                        onChange={(_, data) => onChange(data)}
+                        value={value}
+                        error={!!error?.message}
+                        helperText={error?.message}
+                        viewForm={
+                          // @ts-ignore
+                          <BreedForm data={value} shallowRoute={false} />
+                        }
+                      />
+                    )}
+                  />
+                </Grid>
+                <Grid item xs={12} md={4}>
+                  <Controller
+                    name={"hatchery"}
+                    control={control}
+                    render={({
+                      field: { onChange, value },
+                      fieldState: { error },
+                    }) => (
+                      <HatcheryDropdown
+                        disabled={selectedFarm == null ? true : false}
+                        onChange={(_, data) => onChange(data)}
+                        value={value}
+                        error={!!error?.message}
+                        helperText={error?.message}
+                      />
+                    )}
+                  />
+                </Grid>
+                <Grid item xs={12} md={4}>
                   <Controller
                     name={"sex"}
                     control={control}
@@ -504,7 +527,7 @@ export const DirectoryFilter = ({
                     )}
                   />
                 </Grid>
-                <Grid item xs={12} md={6}>
+                <Grid item xs={12} md={4}>
                   <Controller
                     name={"house"}
                     control={control}
@@ -522,7 +545,7 @@ export const DirectoryFilter = ({
                     )}
                   />
                 </Grid>
-                <Grid item xs={12} md={6}>
+                <Grid item xs={12} md={4}>
                   <Controller
                     name={"pen"}
                     control={control}
@@ -540,7 +563,7 @@ export const DirectoryFilter = ({
                     )}
                   />
                 </Grid>
-                <Grid item xs={12} md={6}>
+                <Grid item xs={12} md={4}>
                   <Controller
                     name={"start_week"}
                     control={control}
@@ -561,7 +584,7 @@ export const DirectoryFilter = ({
                     )}
                   />
                 </Grid>
-                <Grid item xs={12} md={6}>
+                <Grid item xs={12} md={4}>
                   <Controller
                     name={"end_week"}
                     control={control}
@@ -688,7 +711,7 @@ export const DirectoryFilter = ({
                           Generation
                         </Typography>
                         <Typography variant="caption" color="text.primary">
-                          {e.generation ? e.generation || 0 : "all"}
+                          {_.get(e.generation, "generation", "all")}
                         </Typography>
                       </Stack>
                       <Stack direction={"column"}>
@@ -880,7 +903,7 @@ export const DirectoryFilter = ({
                         Generation
                       </Typography>
                       <Typography variant="caption" color="text.primary">
-                        {e.generation ? e.generation || 0 : "all"}
+                        {_.get(e.generation, "generation", "all")}
                       </Typography>
                     </Stack>
                     <Stack direction={"column"}>
