@@ -19,13 +19,13 @@ import {
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "@/store";
 
-const FarmsHeatmapComponent = dynamic(
-  () => import("../../features/dashboard/farms-heatmap"),
-  {
-    ssr: false,
-    loading: () => <FarmsHeatmapSkeleton />,
-  }
-);
+// const FarmsHeatmapComponent = dynamic(
+//   () => import("../../features/dashboard/farms-heatmap"),
+//   {
+//     ssr: false,
+//     loading: () => <FarmsHeatmapSkeleton />,
+//   }
+// );
 
 const DashboardPage = () => {
   const { breadcrumbs } = useBreadcrumbs();
@@ -58,18 +58,18 @@ const DashboardPage = () => {
                   <Stats />
                 </Grid>
                 <Grid container item spacing={3}>
-                  <Grid item xs={6}>
+                  <Grid item xs={12} md={6}>
                     <BreedDistribution compact={true} />
                   </Grid>
-                  <Grid item xs={6}>
+                  <Grid item xs={12} md={6}>
                     <NotificationCard />
                   </Grid>
                 </Grid>
                 <Grid container item spacing={3}>
-                  <Grid item xs={8}>
+                  <Grid item xs={12} md={8}>
                     <ChickenAgeGroup compact={true} />
                   </Grid>
-                  <Grid item xs={4}>
+                  <Grid item xs={12} md={4}>
                     <GenderPercentageDistribution compact={true} />
                   </Grid>
                 </Grid>
