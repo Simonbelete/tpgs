@@ -19,7 +19,7 @@ const Stats = () => {
       <MiniStatistics
         startContent={<GroupIcon />}
         name="Users"
-        value={_.get(data?.results, "user_count", 0)}
+        value={_.get(data?.results, "total_users", 0)}
         color="#FFC00C"
       />
       <MiniStatistics
@@ -30,7 +30,7 @@ const Stats = () => {
       />
       <MiniStatistics
         startContent={<FarmIcon fill="#fff" width={"30"} height={"30"} />}
-        name="Hatchery"
+        name="Hatc / Batch"
         value={_.get(data?.results, "hatchery_count", 0)}
         color="#2DA547"
       />
