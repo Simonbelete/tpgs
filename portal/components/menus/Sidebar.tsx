@@ -539,12 +539,14 @@ const SidebarMenu = () => {
               </MenuItem>
             </SubMenu>
             <MenuItem
-              component={<Link onClick={() => toggleSidebar()} href="/eggs" />}
-              icon={<EggIcon fontSize="small" />}
-              active={RegExp("^/eggs(.*)$").test(router.pathname)}
+              component={
+                <Link onClick={() => toggleSidebar()} href="/weights" />
+              }
+              icon={<ScaleIcon width="20" height="20" fill="inherit" />}
+              active={RegExp("^/weights(.*)$").test(router.pathname)}
             >
               <Typography variant="body1" fontSize={14}>
-                Egg Production
+                Body Weight
               </Typography>
             </MenuItem>
             <MenuItem
@@ -554,6 +556,15 @@ const SidebarMenu = () => {
             >
               <Typography variant="body1" fontSize={14}>
                 Feed Intake
+              </Typography>
+            </MenuItem>
+            <MenuItem
+              component={<Link onClick={() => toggleSidebar()} href="/eggs" />}
+              icon={<EggIcon fontSize="small" />}
+              active={RegExp("^/eggs(.*)$").test(router.pathname)}
+            >
+              <Typography variant="body1" fontSize={14}>
+                Egg Production
               </Typography>
             </MenuItem>
             {/* <SubMenu
@@ -588,17 +599,6 @@ const SidebarMenu = () => {
                 </Typography>
               </MenuItem>
             </SubMenu> */}
-            <MenuItem
-              component={
-                <Link onClick={() => toggleSidebar()} href="/weights" />
-              }
-              icon={<ScaleIcon width="20" height="20" fill="inherit" />}
-              active={RegExp("^/weights(.*)$").test(router.pathname)}
-            >
-              <Typography variant="body1" fontSize={14}>
-                Body Weight
-              </Typography>
-            </MenuItem>
             <MenuItem
               component={
                 <Link onClick={() => toggleSidebar()} href="/breeds" />
