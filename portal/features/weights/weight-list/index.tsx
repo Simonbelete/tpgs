@@ -16,6 +16,11 @@ import { chickenApi } from "@/features/chickens/services";
 import { Typography } from "@mui/material";
 import Link from "next/link";
 import _ from "lodash";
+import { breedApi } from "@/features/breeds/services";
+import { reductionReasonApi } from "@/features/reduction-reason/services";
+import { userApi } from "@/features/users/services";
+import { hatcheryApi } from "@/features/hatchery/services";
+import dayjs from "dayjs";
 
 export const WeightList = () => {
   const columns: GridColDef[] = [
@@ -36,6 +41,16 @@ export const WeightList = () => {
     },
     { field: "week", headerName: "Week", flex: 1, minWidth: 150 },
     { field: "weight", headerName: "Weight (g)", flex: 1, minWidth: 150 },
+    {
+      field: "created_at",
+      headerName: "Create at",
+      valueGetter: (params) =>
+        params.row.created_at
+          ? dayjs(params.row.created_at).format(
+              process.env.NEXT_PUBLIC_DATE_FORMAT
+            )
+          : "",
+    },
   ];
 
   const beforeExportSubmit = (values: any) => {
@@ -56,6 +71,50 @@ export const WeightList = () => {
           label: "Chicken",
           dataDisplayKey: "display_name",
           endpoint: chickenApi.endpoints.getChickens,
+        },
+        chicken__generation: {
+          label: "Generation",
+          dataDisplayKey: "generation",
+          endpoint: chickenApi.endpoints.getGenerations,
+        },
+        chicken__breed: {
+          label: "Breed",
+          dataDisplayKey: "display_name",
+          endpoint: breedApi.endpoints.getBreeds,
+        },
+        chicken__hatchery: {
+          label: "Hatch / Batch",
+          endpoint: hatcheryApi.endpoints.getHatchery,
+          dataDisplayKey: "name",
+        },
+        chicken__sex: {
+          label: "Sex",
+          dataDisplayKey: "name",
+          dataValueKey: "value",
+          options: [
+            { value: "M", name: "Male" },
+            { value: "F", name: "Female" },
+          ],
+        },
+        chicken__hatch_date: {
+          label: "Hatch date",
+          dataDisplayKey: "hatch_date",
+          endpoint: chickenApi.endpoints.getHatchDates,
+        },
+        chicken__reduction_reason: {
+          label: "Reduction reason",
+          dataDisplayKey: "display_name",
+          endpoint: reductionReasonApi.endpoints.getReductionReasons,
+        },
+        chicken__reduction_date: {
+          label: "Reduction date",
+          dataDisplayKey: "reduction_date",
+          endpoint: chickenApi.endpoints.getReductionDates,
+        },
+        created_by: {
+          label: "Created By",
+          dataDisplayKey: "display_name",
+          endpoint: userApi.endpoints.getUsers,
         },
       }}
       menus={

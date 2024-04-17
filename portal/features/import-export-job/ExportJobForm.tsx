@@ -1,6 +1,6 @@
 import React, { useState, ChangeEvent, ReactNode } from "react";
 import { useSnackbar } from "notistack";
-import { Box, Button, Grid, Typography } from "@mui/material";
+import { Box, Button, Grid, Typography, Tabs, Tab } from "@mui/material";
 import { Dropdown } from "@/components/dropdowns";
 import AsyncDropdown from "@/lib/crud/components/AsyncDropdown";
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
@@ -22,6 +22,7 @@ import { houseApi } from "@/features/houses/services";
 import { penApi } from "@/features/pen/services";
 import buildQuery from "@/util/buildQuery";
 import { ChickenForm } from "../chickens";
+import { breedApi } from "../breeds/services";
 
 type ExportField = {
   endpoint?: ApiEndpointQuery<
@@ -47,23 +48,44 @@ type Res = {
   };
 };
 
-const chickenFileds: {
+const singleChickenFilterForm: {
   [key: string]: ExportField;
 } = {
   chicken: {
     endpoint: chickenApi.endpoints.getChickens,
     label: "Chicken",
     placeholder: "Select Chicken",
-    md: 6,
+    md: 12,
     xs: 12,
     dataKey: "display_name",
     ViewFormFC: ChickenForm,
+  },
+};
+
+const batchFilterForms: {
+  [key: string]: ExportField;
+} = {
+  generation: {
+    label: "Generation",
+    placeholder: "Select Generation",
+    md: 4,
+    xs: 12,
+    endpoint: chickenApi.endpoints.getGenerations,
+    dataKey: "generation",
+  },
+  breed: {
+    label: "Breed",
+    placeholder: "Select Breed",
+    md: 4,
+    xs: 12,
+    endpoint: breedApi.endpoints.getBreeds,
+    dataKey: "display_name",
   },
   hatchery: {
     endpoint: hatcheryApi.endpoints.getHatchery,
     label: "hatchery",
     placeholder: "Select Hatch / Batch",
-    md: 6,
+    md: 4,
     xs: 12,
     dataKey: "display_name",
   },
@@ -71,7 +93,7 @@ const chickenFileds: {
     endpoint: houseApi.endpoints.getHouses,
     label: "House",
     placeholder: "Select House",
-    md: 6,
+    md: 4,
     xs: 12,
     dataKey: "display_name",
   },
@@ -79,26 +101,20 @@ const chickenFileds: {
     endpoint: penApi.endpoints.getPens,
     label: "Pen",
     placeholder: "Select Pen",
-    md: 6,
+    md: 4,
     xs: 12,
     dataKey: "display_name",
-  },
-  generation: {
-    label: "Generation",
-    placeholder: "Generation",
-    md: 6,
-    xs: 12,
   },
   start_week: {
     label: "Start Week",
     placeholder: "Start Week",
-    md: 6,
+    md: 4,
     xs: 12,
   },
   end_week: {
     label: "End Week",
     placeholder: "End Week",
-    md: 6,
+    md: 4,
     xs: 12,
   },
 };
@@ -108,17 +124,17 @@ const resources: Res[] = [
   {
     name: "Export Pedigree, Body Weight, Feed Intake & Egg Production",
     resource: "ChickenRecordsetResource",
-    fields: chickenFileds,
+    fields: batchFilterForms,
   },
   {
     name: "Export Pedigree & Body Weight",
     resource: "ChickenBodyWeightExportResource",
-    fields: chickenFileds,
+    fields: batchFilterForms,
   },
   {
     name: "Export Feed conversition ratio",
     resource: "ChickenFeedFCRResource",
-    fields: chickenFileds,
+    fields: batchFilterForms,
   },
 ];
 
@@ -128,7 +144,12 @@ export const ExportJobForm = () => {
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   const router = useRouter();
 
+  const [tabValue, setTabValue] = useState(0);
   const [activeResouce, setActiveResouce] = useState<Res | null>(null);
+
+  const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
+    setTabValue(newValue);
+  };
 
   const { handleSubmit, control, setValue, getValues } = useForm<Inputs>({
     defaultValues: {
@@ -154,9 +175,10 @@ export const ExportJobForm = () => {
     const vals = {
       chicken: _.get(values.chicken, "id", null),
       chicken__hatchery: _.get(values.hatchery, "id", null),
-      chicken__pen__house: _.get(values.house, "id", null),
+      chicken__house: _.get(values.house, "id", null),
       chicken__pen: _.get(values.pen, "id", null),
       chicken__generation: _.get(values, "generation", null),
+      chicken__breed: _.get(values.breed, "id", null),
       week__gte: _.get(values, "start_week", null),
       week__lte: _.get(values, "end_week", null),
     };
@@ -173,10 +195,10 @@ export const ExportJobForm = () => {
     let query = {};
 
     switch (body.resource) {
-      case "ChickenRecordsetResource":
       case "ChickenBodyWeightExportResource":
         query = buildChickenExportResource(data);
         break;
+      case "ChickenRecordsetResource":
       case "ChickenFeedFCRResource":
         query = buildChickenRefResource(data);
         break;
@@ -205,107 +227,134 @@ export const ExportJobForm = () => {
   };
 
   return (
-    <Card title="Submit Import Job">
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <Box sx={{ width: "90%", mb: 2 }}>
-          <Typography variant="caption" mb={2}>
-            *Leaving field empty will consider all values
-          </Typography>
-        </Box>
-        <Grid container spacing={4}>
-          <Grid item xs={12}>
-            <Controller
-              name={"resource"}
-              control={control}
-              render={({
-                field: { onChange, value },
-                fieldState: { invalid, isTouched, isDirty, error },
-              }) => (
-                <Dropdown
-                  options={resources}
-                  error={!!error?.message}
-                  helperText={error?.message}
-                  onChange={(_, data) => {
-                    onChange(data);
-                    setActiveResouce(data);
-                  }}
-                  value={value ?? { name: "---", resource: "" }}
-                  dataKey="name"
-                />
-              )}
-            />
-          </Grid>
-          {activeResouce &&
-            Object.keys(activeResouce?.fields).map((key, i) => {
-              const options = activeResouce.fields[key] as ExportField;
-              console.log(options.placeholder);
-              if (options.endpoint) {
-                return (
-                  <Grid key={i} item xs={options.xs || 12} md={options.md || 6}>
-                    <Controller
-                      // @ts-ignore
-                      name={key}
-                      control={control}
-                      render={({
-                        field: { onChange, value },
-                        fieldState: { error },
-                      }) => (
-                        <AsyncDropdown
-                          label={options.label}
-                          dataKey={options?.dataKey || "name"}
-                          // @ts-ignore
-                          endpoint={options.endpoint}
-                          placeholder={options.placeholder}
-                          onChange={(_, data) => onChange(data)}
-                          value={value}
-                          error={!!error?.message}
-                          helperText={error?.message}
-                          multiple={options.multiple}
-                          disabled={options.disabled}
-                          viewForm={
-                            options.ViewFormFC && (
-                              // @ts-ignore
-                              <options.ViewFormFC
-                                data={value}
-                                shallowRoute={false}
-                              />
-                            )
-                          }
-                        />
-                      )}
-                    />
-                  </Grid>
-                );
-              } else {
-                return (
-                  <Grid key={i} item xs={options.xs || 12} md={options.md || 6}>
-                    <Controller
-                      // @ts-ignore
-                      name={key}
-                      control={control}
-                      render={({
-                        field: { onChange, value },
-                        fieldState: { error },
-                      }) => (
-                        <LabeledInput
-                          name={key}
-                          error={!!error?.message}
-                          helperText={error?.message}
-                          onChange={onChange}
-                          fullWidth
-                          size="small"
-                          value={value ?? ""}
-                          label={options.label}
-                          placeholder={options.placeholder}
-                          disabled={options.disabled}
-                        />
-                      )}
-                    />
-                  </Grid>
-                );
-              }
-            })}
-          {/* <Grid item xs={12}>
+    <>
+      <Tabs
+        value={tabValue}
+        onChange={handleTabChange}
+        indicatorColor="primary"
+        textColor="inherit"
+        sx={{ mb: 2 }}
+      >
+        <Tab label="Export single chicken data" />
+        <Tab label="Batch export" />
+      </Tabs>
+      <Card title="Submit Export Job">
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <Box sx={{ width: "90%", mb: 2 }}>
+            <Typography variant="caption" mb={2}>
+              *Leaving field empty will consider all values
+            </Typography>
+          </Box>
+          <Grid container spacing={4}>
+            <Grid item xs={12}>
+              <Controller
+                name={"resource"}
+                control={control}
+                render={({
+                  field: { onChange, value },
+                  fieldState: { invalid, isTouched, isDirty, error },
+                }) => (
+                  <Dropdown
+                    options={resources}
+                    error={!!error?.message}
+                    helperText={error?.message}
+                    onChange={(_, data) => {
+                      onChange(data);
+                      setActiveResouce(data);
+                    }}
+                    value={value ?? { name: "---", resource: "" }}
+                    dataKey="name"
+                  />
+                )}
+              />
+            </Grid>
+            {activeResouce &&
+              Object.keys(
+                tabValue == 0 ? singleChickenFilterForm : activeResouce?.fields
+              ).map((key, i) => {
+                const options = (
+                  tabValue == 0
+                    ? singleChickenFilterForm[key]
+                    : activeResouce.fields[key]
+                ) as ExportField;
+                console.log(options);
+                if (options.endpoint) {
+                  return (
+                    <Grid
+                      key={i}
+                      item
+                      xs={options.xs || 12}
+                      md={options.md || 6}
+                    >
+                      <Controller
+                        // @ts-ignore
+                        name={key}
+                        control={control}
+                        render={({
+                          field: { onChange, value },
+                          fieldState: { error },
+                        }) => (
+                          <AsyncDropdown
+                            label={options.label}
+                            dataKey={options?.dataKey || "name"}
+                            // @ts-ignore
+                            endpoint={options.endpoint}
+                            placeholder={options.placeholder}
+                            onChange={(_, data) => onChange(data)}
+                            value={value}
+                            error={!!error?.message}
+                            helperText={error?.message}
+                            multiple={options.multiple}
+                            disabled={options.disabled}
+                            viewForm={
+                              options.ViewFormFC && (
+                                // @ts-ignore
+                                <options.ViewFormFC
+                                  data={value}
+                                  shallowRoute={false}
+                                />
+                              )
+                            }
+                          />
+                        )}
+                      />
+                    </Grid>
+                  );
+                } else {
+                  return (
+                    <Grid
+                      key={i}
+                      item
+                      xs={options.xs || 12}
+                      md={options.md || 6}
+                    >
+                      <Controller
+                        // @ts-ignore
+                        name={key}
+                        control={control}
+                        render={({
+                          field: { onChange, value },
+                          fieldState: { error },
+                        }) => (
+                          <LabeledInput
+                            name={key}
+                            error={!!error?.message}
+                            helperText={error?.message}
+                            onChange={onChange}
+                            fullWidth
+                            size="small"
+                            value={value ?? ""}
+                            label={options.label}
+                            placeholder={options.placeholder}
+                            disabled={options.disabled}
+                          />
+                        )}
+                      />
+                    </Grid>
+                  );
+                }
+              })}
+            {/* <Grid item xs={12}>
             <Controller
               name={"format"}
               control={control}
@@ -328,18 +377,19 @@ export const ExportJobForm = () => {
               )}
             />
           </Grid> */}
-          <Grid item xs={12}>
-            <Button
-              variant="contained"
-              size="small"
-              disableElevation
-              type="submit"
-            >
-              Submit
-            </Button>
+            <Grid item xs={12}>
+              <Button
+                variant="contained"
+                size="small"
+                disableElevation
+                type="submit"
+              >
+                Submit
+              </Button>
+            </Grid>
           </Grid>
-        </Grid>
-      </form>
-    </Card>
+        </form>
+      </Card>
+    </>
   );
 };

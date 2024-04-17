@@ -19,6 +19,7 @@ services:
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD} 
     volumes:
       - './postgresql/db:/var/lib/postgresql/data'
+      - './postgresql/data:/mnt'
     ports:
       - '5432:5432'
   redis:

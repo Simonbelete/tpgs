@@ -11,7 +11,6 @@ class ChickenFilter(CoreFilterSet):
 
     class Meta:
         model = models.Chicken
-        fields = ['tag', 'sex', 'breed']
         fields = {
             'tag': ['exact'],
             'sex': ['in', 'exact'],

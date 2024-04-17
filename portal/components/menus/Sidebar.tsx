@@ -541,7 +541,7 @@ const SidebarMenu = () => {
             <MenuItem
               component={<Link onClick={() => toggleSidebar()} href="/eggs" />}
               icon={<EggIcon fontSize="small" />}
-              active={RegExp("^/eggs$").test(router.pathname)}
+              active={RegExp("^/eggs(.*)$").test(router.pathname)}
             >
               <Typography variant="body1" fontSize={14}>
                 Egg Production
@@ -549,8 +549,8 @@ const SidebarMenu = () => {
             </MenuItem>
             <MenuItem
               component={<Link onClick={() => toggleSidebar()} href="/feeds" />}
-              icon={<EggIcon fontSize="small" />}
-              active={RegExp("^/feeds$").test(router.pathname)}
+              icon={<SackIcon width="20" height="20" fill="inherit" />}
+              active={RegExp("^/feeds(.*)$").test(router.pathname)}
             >
               <Typography variant="body1" fontSize={14}>
                 Feed Intake
@@ -593,7 +593,7 @@ const SidebarMenu = () => {
                 <Link onClick={() => toggleSidebar()} href="/weights" />
               }
               icon={<ScaleIcon width="20" height="20" fill="inherit" />}
-              active={RegExp("^/weights$").test(router.pathname)}
+              active={RegExp("^/weights(.*)$").test(router.pathname)}
             >
               <Typography variant="body1" fontSize={14}>
                 Body Weight
@@ -604,7 +604,7 @@ const SidebarMenu = () => {
                 <Link onClick={() => toggleSidebar()} href="/breeds" />
               }
               icon={<DNAHellxIcon width="20" height="20" fill="inherit" />}
-              active={RegExp("^/breeds$").test(router.pathname)}
+              active={RegExp("^/breeds(.*)$").test(router.pathname)}
             >
               <Typography variant="body1" fontSize={14}>
                 Breeds

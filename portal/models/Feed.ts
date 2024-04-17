@@ -3,9 +3,10 @@ import Chicken from "./Chicken";
 import Formula from "./Formula";
 import Directory from "./Directory";
 import Pen from "./Pen";
+import ChickenFilter from "./ChickenFilter";
 import Hatchery from "./Hatchery";
 
-export default interface Feed extends AbstractBaseModel {
+export default interface Feed extends AbstractBaseModel, ChickenFilter {
   hatchery: number | Hatchery;
   pen: number | Pen;
   chicken: number | Chicken;

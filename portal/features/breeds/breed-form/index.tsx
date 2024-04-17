@@ -124,6 +124,7 @@ export const BreedForm = ({
                 fields={{
                   name: { label: "Name", placeholder: "Name", xs: 12, md: 12 },
                 }}
+                onCreateSuccess={handleCreated}
               />
             </Card>
           )}
