@@ -501,6 +501,7 @@ const Formulation = ({ data }: { data?: Formula }) => {
           borderColor: "#6572ffa0",
           borderRadius: 9,
           title: "Delete",
+          cursor: "pointer",
           onClick: () => deleteRow(row),
         },
       };

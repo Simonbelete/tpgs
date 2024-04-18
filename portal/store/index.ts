@@ -31,6 +31,7 @@ import { hatcheryApi } from "@/features/hatchery/services";
 
 import { rtkQueryErrorLogger } from "./middlewares/rtkQueryErrorLogger";
 import { urlQueryBuilder } from "./middlewares/urlQueryBuilder";
+import { chickenRecordSetApi } from "@/features/chicken-record-set/services/chicken_record_set";
 
 export const store = configureStore({
   reducer: {
@@ -41,27 +42,29 @@ export const store = configureStore({
     invitationFilter: invitationFilterReducer,
     selection: selectionReducer,
 
-    // // Apis
-    [houseApi.reducerPath]: houseApi.reducer,
-    [breedApi.reducerPath]: breedApi.reducer,
-    [purposeApi.reducerPath]: purposeApi.reducer,
-    [unitApi.reducerPath]: unitApi.reducer,
-    [eggApi.reducerPath]: eggApi.reducer,
-    [countryApi.reducerPath]: countryApi.reducer,
-    [cityApi.reducerPath]: cityApi.reducer,
-    [regionApi.reducerPath]: regionApi.reducer,
-    [chickenApi.reducerPath]: chickenApi.reducer,
-    [flockApi.reducerPath]: flockApi.reducer,
-    [feedApi.reducerPath]: feedApi.reducer,
-    [weightApi.reducerPath]: weightApi.reducer,
-    [nutrientGroupApi.reducerPath]: nutrientGroupApi.reducer,
-    [formulaApi.reducerPath]: formulaApi.reducer,
-    [reductionReasonApi.reducerPath]: reductionReasonApi.reducer,
-    [notificationApi.reducerPath]: notificationApi.reducer,
-    [requirementApi.reducerPath]: requirementApi.reducer,
-    [ingredientNutrientApi.reducerPath]: ingredientNutrientApi.reducer,
-    [ingredientApi.reducerPath]: ingredientApi.reducer,
-    [hatcheryApi.reducerPath]: hatcheryApi.reducer,
+    // Apis
+    [baseApi.reducerPath]: baseApi.reducer,
+
+    // [houseApi.reducerPath]: houseApi.reducer,
+    // [breedApi.reducerPath]: breedApi.reducer,
+    // [purposeApi.reducerPath]: purposeApi.reducer,
+    // [unitApi.reducerPath]: unitApi.reducer,
+    // [eggApi.reducerPath]: eggApi.reducer,
+    // [countryApi.reducerPath]: countryApi.reducer,
+    // [cityApi.reducerPath]: cityApi.reducer,
+    // [regionApi.reducerPath]: regionApi.reducer,
+    // [chickenApi.reducerPath]: chickenApi.reducer,
+    // [flockApi.reducerPath]: flockApi.reducer,
+    // [feedApi.reducerPath]: feedApi.reducer,
+    // [weightApi.reducerPath]: weightApi.reducer,
+    // [nutrientGroupApi.reducerPath]: nutrientGroupApi.reducer,
+    // [formulaApi.reducerPath]: formulaApi.reducer,
+    // [reductionReasonApi.reducerPath]: reductionReasonApi.reducer,
+    // [notificationApi.reducerPath]: notificationApi.reducer,
+    // [requirementApi.reducerPath]: requirementApi.reducer,
+    // [ingredientNutrientApi.reducerPath]: ingredientNutrientApi.reducer,
+    // [ingredientApi.reducerPath]: ingredientApi.reducer,
+    // [hatcheryApi.reducerPath]: hatcheryApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(

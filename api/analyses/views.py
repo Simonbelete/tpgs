@@ -1253,3 +1253,11 @@ class ChickenRanking(mixins.RetrieveModelMixin,
     queryset = models.ChickenRanking.objects.all()
     serializer_class = serializers.ChickenRankingSerializer
     filterset_class = filters.ChickenRankingFilter
+
+
+class ChickenRecordSet(mixins.RetrieveModelMixin,
+                     mixins.ListModelMixin,
+                     viewsets.GenericViewSet):
+    queryset = models.ChickenRecordset.objects.all()
+    serializer_class = serializers.ChickenRecordSetSerializer
+    filterset_class = filters.ChickenRecordSetFilter

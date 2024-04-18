@@ -5,5 +5,5 @@ import { clientBaseQuery } from "@/services/client";
 export const baseApi = createApi({
   baseQuery: clientBaseQuery({ baseUrl: "" }),
   endpoints: () => ({}),
-  tagTypes: ["TENANT_AWARE_LIST"],
+  tagTypes: ["TENANT_AWARE_LIST", "CHICKEN_RECORD_SET"],
 });

@@ -44,6 +44,9 @@ router.register(r'analyses/feeds', views.FeedGraphViewSet,
 router.register(r'analyses/chicken-ranking', views.ChickenRanking,
                 basename='api_analyses_chicken_ranking')
 
+router.register(r'analyses/chicken-record-set', views.ChickenRecordSet,
+                basename='api_analyses_chicken_record_set')
+
 count_router = routers.DefaultRouter()
 count_router.register(r'analyses/count', views.CountViewSet,
                       basename='api_count')

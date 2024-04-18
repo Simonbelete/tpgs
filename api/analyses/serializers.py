@@ -3,7 +3,7 @@ from rest_framework import serializers
 
 from . import models
 from chickens.models import Chicken
-from chickens.serializers import ChickenSerializer_SLUG
+from chickens.serializers import ChickenSerializer_SLUG, ChickenSerializer_GET
 
 
 class DirectoryListSerializer_GET(serializers.ModelSerializer):
@@ -28,3 +28,12 @@ class ChickenRankingSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.ChickenRanking
         fields = '__all__'
+
+
+class ChickenRecordSetSerializer(serializers.ModelSerializer):
+    chicken = ChickenSerializer_GET()
+
+    class Meta:
+        model = models.ChickenRecordset
+        fields = '__all__'
+
