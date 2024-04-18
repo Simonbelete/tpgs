@@ -34,6 +34,7 @@ import {
   ButtonCellType,
 } from "@glideapps/glide-data-grid-cells";
 import buildPage from "@/util/buildPage";
+import buildDirectoryQuery from "@/util/buildDirectoryQuery";
 
 const sexOptions = [
   { value: null, name: "---" },
@@ -181,7 +182,7 @@ const ChickenRecordSetView = () => {
 
   const [columns, setColumns] = useState<any[]>([...chickenDetailColumn]);
 
-  const { handleSubmit, control, setValue, getValues } = useForm<any>({
+  const { handleSubmit, control } = useForm<any>({
     defaultValues: {
       start_week: 0,
       end_week: 5,
@@ -331,15 +332,27 @@ const ChickenRecordSetView = () => {
     trigger({ ...buildPage(newPageModel) });
   };
 
-  const onSubmit: SubmitHandler<ChickenRecordSet> = async (data) => {
+  const onSubmit: SubmitHandler<any> = async (values) => {
     setColumns([
       ...chickenDetailColumn,
-      ...generateWeekColumns(data.start_week, data.end_week),
+      ...generateWeekColumns(values.start_week, values.end_week),
     ]);
 
-    await dispatch(chickenRecordSetApi.util.resetApiState());
+    // TODO: use invildate tages
+    await dispatch(baseApi.util.invalidateTags(["CHICKEN_RECORD_SET"]));
 
-    trigger({});
+    console.log(values);
+
+    trigger({
+      hatchery: _.get(values.hatchery, "id", null),
+      generation: _.get(values.generation, "id", null),
+      breed: _.get(values.breed, "id", null),
+      house: _.get(values.house, "id", null),
+      pen: _.get(values.pen, "id", null),
+      week_gte: _.get(values, "start_week", 0),
+      week_lte: _.get(values, "end_week", 0),
+      sex: _.get(values.sex, "value", null),
+    });
   };
 
   return (

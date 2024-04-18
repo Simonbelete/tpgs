@@ -107,7 +107,7 @@ async function refreshAccessToken(token: JWT) {
     return {
       ...token,
       accessToken: refreshedTokens.access,
-      accessTokenExpires: Date.now() + 7,
+      accessTokenExpires: new Date(Date.now() + 1000 * 60 * 60).getTime(), // 60 Minutes
       refresh: refreshedTokens.refresh ?? token.refresh, // Fall back to old refresh token
     };
   } catch (error) {
@@ -159,6 +159,8 @@ export const authOptions = {
         token.id = user.id;
         token.accessTokenExpires = Date.now() + 7;
       }
+
+      console.log(token?.accessTokenExpires);
 
       if (Date.now() < (token?.accessTokenExpires || 0)) {
         return { ...token, ...user };
