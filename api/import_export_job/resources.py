@@ -586,9 +586,9 @@ class BaseExportResource():
 class ChickenRecordsetResource(BaseChickenRecordsetResource):
     week = fields.Field(column_name='week', attribute='week')
     feed_weight = fields.Field(
-        column_name='Feed Intake', attribute='feed_weight')
+        column_name=FEED_WEIGHT, attribute='feed_weight')
     body_weight = fields.Field(
-        column_name='Body Weight', attribute='body_weight')
+        column_name=BODY_WEIGHT, attribute='body_weight')
     no_eggs = fields.Field(column_name=NO_EGGS, attribute='no_eggs')
     eggs_weight = fields.Field(
         column_name=EGGS_WEIGHT, attribute='eggs_weight')
@@ -642,6 +642,8 @@ class ChickenRecordsetResource(BaseChickenRecordsetResource):
             values=[self.fields['body_weight'].column_name, self.fields['feed_weight'].column_name,
                     self.fields['no_eggs'].column_name, self.fields['eggs_weight'].column_name],
             aggfunc='sum')
+
+        named_list_of_weeks = ["Week {0}".format(w) for w in list_of_weeks]
 
         df.columns = df.columns.swaplevel(0, 1)
         col_index = pd.MultiIndex.from_product(

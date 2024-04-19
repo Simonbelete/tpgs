@@ -191,7 +191,7 @@ const ChickenRecordSetView = () => {
 
   const generateWeekColumns = (start_week: number, end_week: number) => {
     const weekColumns = [];
-    for (let i = start_week; i < end_week; i++) {
+    for (let i = start_week; i < end_week + 1; i++) {
       weekColumns.push({
         title: "Body Weight (g)",
         id: `body_weight_${i}`,
@@ -260,7 +260,10 @@ const ChickenRecordSetView = () => {
 
         // console.log(row, data?.results.length);
 
-        if (row == _.get(data?.results, "length", -1)) {
+        if (
+          row == _.get(data?.results, "length", -1) &&
+          _.get(data?.results, "length", -1) != 0
+        ) {
           // Add Load More to the end of line
           return {
             kind: GridCellKind.Custom,
@@ -342,14 +345,14 @@ const ChickenRecordSetView = () => {
     await dispatch(chickenRecordSetApi.util.resetApiState());
 
     trigger({
-      hatchery: _.get(values.hatchery, "id", null),
-      generation: _.get(values.generation, "id", null),
-      breed: _.get(values.breed, "id", null),
-      house: _.get(values.house, "id", null),
-      pen: _.get(values.pen, "id", null),
+      chicken__hatchery: _.get(values.hatchery, "id", null),
+      chicken__generation: _.get(values.generation, "id", null),
+      chicken__breed: _.get(values.breed, "id", null),
+      chicken__house: _.get(values.house, "id", null),
+      chicken__pen: _.get(values.pen, "id", null),
       week_gte: _.get(values, "start_week", 0),
       week_lte: _.get(values, "end_week", 0),
-      sex: _.get(values.sex, "value", null),
+      chicken__sex: _.get(values.sex, "value", null),
     });
   };
 

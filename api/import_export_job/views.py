@@ -38,7 +38,10 @@ class ImportJobViewSet(viewsets.ModelViewSet):
         return Response(serializer.data)
     
     def list(self, request, *args, **kwargs):
-        queryset = models.ImportJob.objects.all().filter(farm__name=request.tenant)
+        if(request.user.is_superuser):
+            return super().list(request, *args, **kwargs)
+        
+        queryset = models.ImportJob.objects.all().filter(farm__name=request.tenant, created_by=request.user)
         queryset = self.filter_queryset(queryset)
 
         page = self.paginate_queryset(queryset)
@@ -79,7 +82,11 @@ class ExportJobViewSet(viewsets.ModelViewSet):
                             farm=farm, filter_dict=self.request.GET.dict())
     
     def list(self, request, *args, **kwargs):
-        queryset = models.ExportJob.objects.all().filter(farm__name=request.tenant)
+        if(request.user.is_superuser):
+            return super().list(request, *args, **kwargs)
+        
+        queryset = models.ExportJob.objects.all().filter(farm__name=request.tenant, created_by=request.user)            
+
         queryset = self.filter_queryset(queryset)
 
         page = self.paginate_queryset(queryset)
