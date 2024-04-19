@@ -53,7 +53,7 @@ const PrimaryNavbar = () => {
           <MenuOpenIcon />
         </IconButton>
         <div>
-          <img src="/images/ilri_logo.png" alt="ILIR CGIAR Logo" height={25} />
+          <img src="/images/ilri_logo.png" alt="ILRI CGIAR Logo" height={25} />
         </div>
         <Box sx={{ flexGrow: 1 }}></Box>
         <div>

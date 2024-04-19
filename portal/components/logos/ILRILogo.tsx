@@ -6,14 +6,14 @@ const ILRILogo = ({ size = 25 }: { size?: number }) => {
   return (
     <Stack>
       <Image
-        alt="ILIR CGIAR Logo"
+        alt="ILRI CGIAR Logo"
         src="/images/ilri_logo.png"
         width={0}
         height={0}
         sizes="100vw"
         style={{ width: "auto", height: "25px" }} // optional
       />
-      {/* <img src="/images/ilri_logo.png" alt="ILIR CGIAR Logo" height={size} /> */}
+      {/* <img src="/images/ilri_logo.png" alt="ILRI CGIAR Logo" height={size} /> */}
     </Stack>
   );
 };

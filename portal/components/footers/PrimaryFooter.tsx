@@ -14,7 +14,7 @@ const PrimaryFooter = () => {
           <Grid item xs={12} md={4}>
             <img
               src="/images/ilri-cgiar.png"
-              alt="ILIR CGIAR Logo"
+              alt="ILRI CGIAR Logo"
               height={100}
             />
           </Grid>

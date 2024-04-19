@@ -11,12 +11,10 @@ const ChickenDataViewPage = () => {
 
   return (
     <>
-      <SeoHead title="Chickens data view summary" />
+      <SeoHead title="Chickens summary" />
       <ReportingLayout
         breadcrumbs={<Breadcrumbs items={breadcrumbs} />}
-        header={
-          <Typography variant="title">Chickens data view summary</Typography>
-        }
+        header={<Typography variant="title">Chickens Summary</Typography>}
       >
         <ChickenRecordSetView />
       </ReportingLayout>
