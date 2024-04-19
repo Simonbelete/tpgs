@@ -339,9 +339,7 @@ const ChickenRecordSetView = () => {
     ]);
 
     // TODO: use invildate tages
-    await dispatch(baseApi.util.invalidateTags(["CHICKEN_RECORD_SET"]));
-
-    console.log(values);
+    await dispatch(chickenRecordSetApi.util.resetApiState());
 
     trigger({
       hatchery: _.get(values.hatchery, "id", null),
