@@ -63,7 +63,7 @@ export const ImportJobForm = () => {
       });
 
       if (response.status == 201) {
-        // router.push(`/import-job/${response.data.id}`);
+        router.push(`/import-job`);
       } else {
         enqueueSnackbar("Please select file type either csv or excel", {
           variant: "error",

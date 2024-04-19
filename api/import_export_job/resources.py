@@ -200,7 +200,7 @@ class BaseChickenRecordsetResource(BaseResource):
         attribute='chicken__dam',
         widget=widgets.ForeignKeyWidget(Chicken, field='tag'))
     reduction_date = fields.Field(
-        column_name='Cull Date', attribute='chicken__reduction_date')
+        column_name='Cull Date', attribute='chicken__reduction_date', widget=widgets.DateWidget(format="%d/%m/%Y"))
     reduction_reason = fields.Field(
         column_name='Cull Reason',
         attribute='chicken__reduction_reason',
@@ -366,10 +366,10 @@ class MasterChicken(BaseChickenResource):
         df_feed['week'] = df_feed['week'].str.replace(
             '\D+', '', regex=True)  # Remove week stirng
 
-        result = BatchFeedResource(self.import_job).import_data(
-            Dataset().load(df_feed),
-            dry_run=dry_run
-        )
+        # result = BatchFeedResource(self.import_job).import_data(
+        #     Dataset().load(df_feed),
+        #     dry_run=dry_run
+        # )
         self.add_result(result)
 
         # Load Individual Feed Intake sheet

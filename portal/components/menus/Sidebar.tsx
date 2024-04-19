@@ -482,6 +482,20 @@ const SidebarMenu = () => {
                   Cull Chicken
                 </Typography>
               </MenuItem>
+              <MenuItem
+                component={
+                  <Link
+                    onClick={() => toggleSidebar()}
+                    href="/chickens-summary"
+                  />
+                }
+                icon={<AdjustIcon fontSize="small" />}
+                active={RegExp("^/chickens-summary(.*)$").test(router.pathname)}
+              >
+                <Typography variant="body1" fontSize={14}>
+                  Chickens Summary
+                </Typography>
+              </MenuItem>
             </SubMenu>
             <MenuItem
               component={
