@@ -1,15 +1,18 @@
 import React, { useEffect } from "react";
-import { AsyncDropdown } from "@/components/dropdowns";
+import AsyncDropdown, {
+  AsyncDropdownProps,
+} from "@/lib/crud/components/AsyncDropdown";
 import { ingredientApi, useLazyGetIngredientsQuery } from "../services";
 import { Ingredient } from "@/models";
 import { IngredientForm } from "../ingredient-form";
 
-const FlockDropdown = ({
+const IngredientDropdown = ({
   value,
   error,
   onChange,
   helperText,
   multiple,
+  ...props
 }: {
   value?: any;
   error?: boolean;
@@ -26,11 +29,11 @@ const FlockDropdown = ({
       error={error}
       helperText={helperText}
       onChange={onChange}
-      createForm={<IngredientForm shallowRoute={false} />}
-      createFormTitle="Create Ingredient"
+      viewForm={<IngredientForm shallowRoute={false} />}
       endpoint={ingredientApi.endpoints.getIngredients}
+      {...props}
     />
   );
 };
 
-export default FlockDropdown;
+export default IngredientDropdown;

@@ -21,8 +21,10 @@ const IngredientSelectDialog = ({
   onClose: () => void;
   multiple?: boolean;
 }) => {
-  const [value, setValue] = useState();
+  const [value, setValue] = useState(multiple ? [] : null);
+
   const handleClose = useCallback(() => onClose(), [onClose]);
+
   const handleOnSelected = useCallback(
     () => onSelected(value),
     [onSelected, value]
@@ -35,6 +37,7 @@ const IngredientSelectDialog = ({
         <Box component="form" sx={{ display: "flex", flexWrap: "wrap" }}>
           <FormControl sx={{ m: 1, minWidth: 200, width: "100%" }}>
             <IngredientDropdown
+              value={value}
               multiple={multiple}
               onChange={(e, newValue) => setValue(newValue)}
             />
