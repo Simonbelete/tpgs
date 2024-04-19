@@ -57,8 +57,8 @@ class Ingredient(CoreModel):
     nutrients = models.ManyToManyField(
         'nutrients.Nutrient', null=True, blank=True, through=IngredientNutrient)
     # dry material
-    dm = models.PositiveIntegerField(
-        validators=PERCENTAGE_VALIDATOR, default=0)
+    dm = models.DecimalField(
+        max_digits=15, validators=PERCENTAGE_VALIDATOR, decimal_places=3, default=0)
 
     history = HistoricalRecords()
 
