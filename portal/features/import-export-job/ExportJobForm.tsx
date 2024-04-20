@@ -83,7 +83,7 @@ const batchFilterForms: {
   },
   hatchery: {
     endpoint: hatcheryApi.endpoints.getHatchery,
-    label: "hatchery",
+    label: "Hatch / Batch",
     placeholder: "Select Hatch / Batch",
     md: 4,
     xs: 12,
@@ -159,11 +159,12 @@ export const ExportJobForm = () => {
 
   const buildChickenExportResource = (values: any) => {
     const vals = {
-      chicken_id: _.get(values.chicken, "id", null),
+      chicken: _.get(values.chicken, "id", null),
+      generation: _.get(values.generation, "generation", null),
+      breed: _.get(values.breed, "id", null),
       hatchery: _.get(values.hatchery, "id", null),
       house: _.get(values.house, "id", null),
       pen: _.get(values.pen, "id", null),
-      generation: _.get(values, "generation", null),
       week__gte: _.get(values, "start_week", null),
       week__lte: _.get(values, "end_week", null),
     };
@@ -177,7 +178,7 @@ export const ExportJobForm = () => {
       chicken__hatchery: _.get(values.hatchery, "id", null),
       chicken__house: _.get(values.house, "id", null),
       chicken__pen: _.get(values.pen, "id", null),
-      chicken__generation: _.get(values, "generation", null),
+      chicken__generation: _.get(values.generation, "generation", null),
       chicken__breed: _.get(values.breed, "id", null),
       week__gte: _.get(values, "start_week", null),
       week__lte: _.get(values, "end_week", null),
@@ -213,7 +214,7 @@ export const ExportJobForm = () => {
       });
 
       if (response.status == 201) {
-        router.push(`/export-job`);
+        // router.push(`/export-job`);
       } else {
         enqueueSnackbar("Please select file type either csv or excel", {
           variant: "error",
@@ -277,7 +278,6 @@ export const ExportJobForm = () => {
                     ? singleChickenFilterForm[key]
                     : activeResouce.fields[key]
                 ) as ExportField;
-                console.log(options);
                 if (options.endpoint) {
                   return (
                     <Grid

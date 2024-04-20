@@ -49,5 +49,6 @@ export const config = {
     "/activities/:path*",
     "/qr/:path*",
     "/contact-us/:path*",
+    "/chickens-summary/:path*",
   ],
 };

@@ -615,12 +615,17 @@ class ChickenRecordsetResource(BaseChickenRecordsetResource):
             data.append(self.export_resource(obj))
 
         df = data.export('df')
+        
+        print('********')
+        print(df.shape)
 
         if (df.empty):
             raise Exception('Data is empty')
 
         list_of_weeks = np.array(df['week'].unique().tolist()).astype(int)
         list_of_weeks = np.sort(list_of_weeks).astype(str).tolist()
+
+        df.to_csv('abc')
 
         # Sum values if duplicates are found
         df = df.pivot_table(
@@ -643,6 +648,8 @@ class ChickenRecordsetResource(BaseChickenRecordsetResource):
                     self.fields['no_eggs'].column_name, self.fields['eggs_weight'].column_name],
             aggfunc='sum')
 
+        print(df.shape)
+
         named_list_of_weeks = ["Week {0}".format(w) for w in list_of_weeks]
 
         df.columns = df.columns.swaplevel(0, 1)
@@ -656,6 +663,8 @@ class ChickenRecordsetResource(BaseChickenRecordsetResource):
         df = df.reindex(col_index, axis='columns')
 
         self.after_export(queryset, data, *args, **kwargs)
+
+        print(df.shape)
 
         buffer = io.BytesIO()
         with pd.ExcelWriter(buffer) as writer:

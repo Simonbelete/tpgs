@@ -128,8 +128,7 @@ class Migration(migrations.Migration):
                         ON ee.week = ww.week AND ee.chicken_id = ww.chicken_id
                     FULL JOIN feeds_feed ff
                         ON ff.week = ww.week AND ff.chicken_id = ee.chicken_id
-                    WHERE ff.chicken_id IS NOT NULL
-                    order by ww.week, ff.week, ee.week;
+                    order by week
             """
             # """DROP VIEW chicken_recordset"""
         )

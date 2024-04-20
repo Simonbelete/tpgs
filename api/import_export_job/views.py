@@ -80,6 +80,7 @@ class ExportJobViewSet(viewsets.ModelViewSet):
         farm = Farm.objects.get(name=self.request.tenant)
         serializer.save(created_by=self.request.user,
                             farm=farm, filter_dict=self.request.GET.dict())
+        # _run_export(x)       
     
     def list(self, request, *args, **kwargs):
         if(request.user.is_superuser):
