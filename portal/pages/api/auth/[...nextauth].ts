@@ -157,10 +157,10 @@ export const authOptions = {
         token.email = user.email;
         token.name = user.name;
         token.id = user.id;
-        token.accessTokenExpires = Date.now() + 7;
+        token.accessTokenExpires = new Date(
+          Date.now() + 1000 * 60 * 60
+        ).getTime(); // 60 Minutes;
       }
-
-      console.log(token?.accessTokenExpires);
 
       if (Date.now() < (token?.accessTokenExpires || 0)) {
         return { ...token, ...user };

@@ -43,3 +43,12 @@ On Dashbaord add Total Generations in stats
 - Contribution
     - Ingredient Contributation - pie
     - Ingredient Nutrient contribuation - stacked => Done
+
+
+    Chicken summary
+    - Min Weigt
+    - Max Weight
+    - Alive Chickens
+    - Dead Chickens
+
+check all filters on directory type (export, chicken summary)

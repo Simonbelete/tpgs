@@ -199,7 +199,7 @@ export default function Filter<T>({ filters }: FilterProps<T>) {
               <Divider />
             </Grid>
             <Grid item xs={12}>
-              <Stack direction={"row"} spacing={2}>
+              <Stack direction={"row"} flexWrap={"wrap"} gap={2}>
                 <Chip
                   // label={`State: ${selector.is_active}`}
                   label={selector.is_active ? "Unarchived" : "Archived"}
