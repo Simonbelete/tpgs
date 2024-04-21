@@ -1,3 +1,4 @@
+import math
 from django.shortcuts import render
 from rest_framework import viewsets, mixins
 import django_filters
@@ -1214,8 +1215,6 @@ class MortalityViewSet(AnalysesViewSet):
                 duration=duration)
 
             total_chickens = queryset.count()
-            print('-----')
-            print(total_chickens)
 
             results = []
             for week in range(start_week, end_week + 1):
@@ -1261,3 +1260,166 @@ class ChickenRecordSet(mixins.RetrieveModelMixin,
     queryset = models.ChickenRecordset.objects.all()
     serializer_class = serializers.ChickenRecordSetSerializer
     filterset_class = filters.ChickenRecordSetFilter
+
+
+class ChickensSummary(AnalysesViewSet):
+    def list(self, request, **kwargs):
+        queryset = self.filter_by_directory(**kwargs)
+        
+        return Response({
+            'total_chickens': queryset.count(),
+            'sex': {
+               'M': queryset.filter(sex="M").count(),
+               'F': queryset.filter(sex="F").count(),
+               'Unknown': queryset.filter(sex__isnull=True).count()
+            },
+            'hatch_date': {
+                'seted': queryset.filter(hatch_date__isnull=False).count(),
+                'unseted': queryset.filter(hatch_date__isnull=True).count()
+            },
+            'pedigree': {
+                'sire_dam_seted': queryset.filter(sire__isnull=False, dam__isnull=False).count,
+                'sire_dam_unseted': queryset.filter(sire__isnull=True, dam__isnull=True).count,
+                'sire_seted': queryset.filter(sire__isnull=False, dam__isnull=True).count,
+                'dam_seted': queryset.filter(sire__isnull=True, dam__isnull=False).count,
+            },
+            'dead_chickens': queryset.filter(reduction_date__isnull=True).count()
+        })
+
+class ChickenRecordSetQuality(AnalysesViewSet):
+    """Data Quality, answers how many data has been collected in the given week"""
+    def list(self, request, **kwargs):
+        chickens_queryset = self.filter_by_directory(**kwargs)
+        queryset = models.ChickenRecordset.objects.filter(
+            chicken__in = chickens_queryset.values_list('id', flat=True)
+        )
+        
+        results = []
+        
+        for week in queryset.distinct('week').order_by('week').values_list('week', flat=True):
+            alive_in_current_week_chickens = chickens_queryset.exclude(hatch_date=None).annotate(
+                        current_date=F('hatch_date')+timedelta(weeks=week)
+                ).filter(Q(current_date__lte=F('reduction_date')) | Q(reduction_date=None)).count()
+            
+            weekly_recordset = queryset.filter(week=week)
+
+            total_chickens = chickens_queryset.count()
+            alive_chickens = alive_in_current_week_chickens.count(),
+            dead_chickens =  chickens_queryset.count() - alive_chickens
+            
+            recorded_body_weight = weekly_recordset.filter(Q(body_weight_isnull=False) | ~Q(body_weight=0))
+            missing_body_weight = total_chickens - recorded_body_weight.count()
+            body_weight_list = recorded_body_weight.values_list('body_weight', flat=True)
+            avg_body_weight = np.average(body_weight_list)
+            min_body_weight = np.min(body_weight_list)
+            max_body_weight = np.max(body_weight_list)
+            
+            recorded_feed = weekly_recordset.filter(Q(feed_intake_isnull=False) | ~Q(feed_intake=0))
+            missing_feed = total_chickens - recorded_feed.count()
+            feed_list = recorded_feed.values_list('feed_intake', flat=True)
+            avg_feed_list = np.average(feed_list)
+            min_feed_list = np.min(feed_list)
+            max_feed_list = np.max(feed_list)
+            
+            recorded_eggs =  weekly_recordset.filter(Q(no_eggs_isnull=False) | ~Q(no_eggs=0))
+            missing_eggs = total_chickens - recorded_eggs.count()
+            eggs_list = recorded_eggs.values_list('no_eggs', flat=True)
+            avg_eggs = np.average(eggs_list)
+            min_eggs = np.min(eggs_list)
+            max_eggs = np.max(eggs_list)
+            
+            recorded_eggs_weight =  weekly_recordset.filter(Q(eggs_weight_isnull=False) | ~Q(eggs_weight=0))
+            missing_eggs_weight = total_chickens - recorded_eggs_weight.count()
+            eggs_weight_list = recorded_eggs_weight.values_list('eggs_weight', flat=True)
+            avg_eggs_weight = np.average(eggs_weight_list)
+            min_eggs_weight = np.min(eggs_weight_list)
+            max_eggs_weight = np.max(eggs_weight_list)
+            
+            results.append({
+                'week': week,
+                'chickens': {
+                  'total': total_chickens,
+                  'dead': dead_chickens,
+                  'alive': alive_chickens
+                },
+                'body_weight': {
+                    'recorded': recorded_body_weight.count(),
+                    'missing': missing_body_weight,
+                    'min': min_body_weight,
+                    'max':max_body_weight,
+                    'avg': avg_body_weight,
+                },
+                'feed_intake': {
+                    'recorded': recorded_feed.count(),
+                    'missing': missing_feed,
+                    'min': min_feed_list,
+                    'max': max_feed_list,
+                    'avg': avg_feed_list,
+                },
+                'eggs': {
+                    'recorded': recorded_eggs.count(),
+                    'missing': missing_eggs,
+                    'min': min_eggs,
+                    'max': max_eggs,
+                    'avg': avg_eggs,
+                },
+                'eggs_weight': {
+                    'recorded': recorded_eggs_weight.count(),
+                    'missing': missing_eggs_weight,
+                    'min': min_eggs_weight,
+                    'max': max_eggs_weight,
+                    'avg': avg_eggs_weight,
+                }
+            })
+            
+        
+class MortalityRate(AnalysesViewSet):
+    @extend_schema(
+        parameters=ANALYSES_PARAMETERS
+    )
+    def list(self, request, **kwargs):
+        queryset = self.filter_by_directory()
+        
+        duration = ExpressionWrapper(
+            F('reduction_date') - F('hatch_date'), output_field=DurationField())
+        queryset = queryset.filter(~Q(hatch_date=None)).annotate(
+            duration=duration)
+        
+            
+        ages = queryset.exclude(duration__isnull=True).values_list('duration', flat=True)
+        min_age = math.floor(np.min(ages).days / 7)
+        max_age = math.floor(np.max(ages).days / 7) + 1
+
+        total_chickens = queryset.count()
+                
+        results = []
+        for week in range(min_age, max_age):
+            dead_chickens = queryset.filter(
+                duration__gte=timedelta(weeks=week-1),
+                duration__lte=timedelta(weeks=week)).count()
+
+            alive_chickens = queryset.exclude(
+                duration__lte=timedelta(weeks=week)).count()
+            # alive_chickens = queryset.exclude(
+            #     duration__gte=timedelta(weeks=week)).count()
+    
+            mortality = dead_chickens/total_chickens * 100 if total_chickens != 0 else 0
+            livability = alive_chickens/total_chickens * 100 if total_chickens != 0 else 0
+
+            results.append({
+                'id': uuid.uuid4(),
+                'week': week,
+                'chickens': {
+                    "total": total_chickens,
+                },
+                'mortality': {
+                    "total": dead_chickens,
+                    "rate": "{:.3f}".format(mortality),
+                },
+                'livability': {
+                    "total": alive_chickens,
+                    "rate": "{:.3f}".format(livability),
+                }
+            })
+
+        return Response({'results': results})

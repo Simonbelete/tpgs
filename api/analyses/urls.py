@@ -47,6 +47,9 @@ router.register(r'analyses/chicken-ranking', views.ChickenRanking,
 router.register(r'analyses/chicken-record-set', views.ChickenRecordSet,
                 basename='api_analyses_chicken_record_set')
 
+router.register(r'analyses/mortality-rate', views.MortalityRate,
+                basename='api_mortality_rate')
+
 count_router = routers.DefaultRouter()
 count_router.register(r'analyses/count', views.CountViewSet,
                       basename='api_count')
