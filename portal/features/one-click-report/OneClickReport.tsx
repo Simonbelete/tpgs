@@ -2,14 +2,23 @@ import React from "react";
 import { Box, Typography, Stack } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import StatusCard from "./components/StatsuCard";
-import { useLazyGetMortalityRateQuery } from "./services";
+import {
+  useLazyGetChickensRecordsetQualityQuery,
+  useLazyGetChickensSummaryQuery,
+  useLazyGetMortalityRateQuery,
+} from "./services";
 import Filter from "./Filter";
 import MortalityRate from "./MortalityRate";
 import _ from "lodash";
+import DataSummary from "./DataSummary";
 
 export const OneClickReport = () => {
+  const [chickenSummaryTrigger, { data: chickenSummary }] =
+    useLazyGetChickensSummaryQuery();
   const [mortalityRateTrigger, { data: mortalityRateData }] =
     useLazyGetMortalityRateQuery();
+  const [getQualityTrigger, { data: qualityData }] =
+    useLazyGetChickensRecordsetQualityQuery();
 
   const onSubmit = (values: any) => {
     const query = {
@@ -21,7 +30,14 @@ export const OneClickReport = () => {
       sex: _.get(values.sex, "value", null),
     };
 
+    chickenSummaryTrigger(query);
     mortalityRateTrigger(query);
+    getQualityTrigger(query);
+  };
+
+  const calcPercentage = (x: number, y: number) => {
+    if (y == 0) return 0;
+    return Number(((x / y) * 100).toFixed(1));
   };
 
   return (
@@ -36,54 +52,87 @@ export const OneClickReport = () => {
         <Stack rowGap={2} columnGap={5} direction={"row"} flexWrap={"wrap"}>
           <StatusCard
             title="Total chickens"
-            value={100}
+            value={_.get(chickenSummary, "chicken.total", "!")}
             subttile="# Chickens"
           />
           <StatusCard
             title="Alive chickens"
-            value={100}
+            value={_.get(chickenSummary, "chicken.alive", "!")}
             subttile="# Alive chickens"
-            percentage={10}
+            percentage={calcPercentage(
+              _.get(chickenSummary, "chicken.alive", 0),
+              _.get(chickenSummary, "chicken.total", 0)
+            )}
           />
           <StatusCard
             title="Dead chickens"
-            value={100}
+            value={_.get(chickenSummary, "chicken.dead", "!")}
             subttile="# Dead chickens"
-            percentage={10}
+            percentage={calcPercentage(
+              _.get(chickenSummary, "chicken.dead", 0),
+              _.get(chickenSummary, "chicken.total", 0)
+            )}
           />
           <StatusCard
             title="Male chickens"
-            value={100}
+            value={_.get(chickenSummary, "sex.M", "!")}
             subttile="# Male Chickens"
+            percentage={calcPercentage(
+              _.get(chickenSummary, "sex.M", 0),
+              _.get(chickenSummary, "chicken.total", 0)
+            )}
           />
           <StatusCard
             title="Female chickens"
-            value={100}
+            value={_.get(chickenSummary, "sex.F", "!")}
             subttile="# Female chickens"
-            percentage={10}
+            percentage={calcPercentage(
+              _.get(chickenSummary, "sex.F", 0),
+              _.get(chickenSummary, "chicken.total", 0)
+            )}
           />
           <StatusCard
             title="Unknown chickens"
-            value={100}
+            value={_.get(chickenSummary, "sex.F", "!")}
             subttile="# Unknown chickens"
-            percentage={10}
+            percentage={calcPercentage(
+              _.get(chickenSummary, "sex.Unknown", 0),
+              _.get(chickenSummary, "chicken.total", 0)
+            )}
           />
           <StatusCard
             title="Hatch Date"
-            value={"10/200"}
+            value={
+              _.get(chickenSummary, "hatch_date.seted", "!") +
+              "/" +
+              _.get(chickenSummary, "hatch_date.unseted", "!")
+            }
             subttile="# Data availability"
-            percentage={10}
+            percentage={calcPercentage(
+              _.get(chickenSummary, "hatch_date.seted", 0),
+              _.get(chickenSummary, "chicken.total", 0)
+            )}
           />
           <StatusCard
             title="Seted Parent"
-            value={"10/200"}
+            value={
+              _.get(chickenSummary, "pedigree.sire_dam_seted", "!") +
+              "/" +
+              _.get(chickenSummary, "pedigree.sire_dam_unseted", "!")
+            }
             subttile="# Data availability"
-            percentage={10}
+            percentage={calcPercentage(
+              _.get(chickenSummary, "pedigree.sire_dam_seted", 0),
+              _.get(chickenSummary, "chicken.total", 0)
+            )}
           />
         </Stack>
       </Box>
       <Box>
         <MortalityRate data={mortalityRateData} />
+      </Box>
+      <Box>
+        <DataSummary data={qualityData} />
       </Box>
     </Box>
   );

@@ -8,7 +8,7 @@ export const analyseOneClickReportApi = baseApi.injectEndpoints({
     return {
       getChickensSummary: build.query<Response<any[]>, Object>({
         query: (query?: Object) => ({
-          url: `${URL}/chickens-recordset-quality/`,
+          url: `${URL}/chickens-summary/`,
           method: "get",
           params: query,
         }),

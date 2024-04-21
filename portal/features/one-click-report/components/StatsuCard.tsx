@@ -12,7 +12,7 @@ const StatusCard = ({
   title: string;
   value: number | string;
   subttile: string;
-  percentage?: number;
+  percentage?: number | null;
   color?: string;
 }) => {
   return (
