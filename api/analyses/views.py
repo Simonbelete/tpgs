@@ -11,6 +11,9 @@ from datetime import timedelta, date, datetime
 from rest_framework.exceptions import NotFound
 import numpy as np
 import uuid
+import pandas as pd
+from sklearn.ensemble import IsolationForest
+from json import loads, dumps
 
 from . import models
 from . import serializers
@@ -1268,6 +1271,11 @@ class ChickensSummary(AnalysesViewSet):
         
         return Response({
             'total_chickens': queryset.count(),
+            'chicken': {
+                'total': queryset.count(),
+                'alive': queryset.filter(reduction_date__isnull=True).count(),
+                'dead': queryset.filter(reduction_date__isnull=False).count()
+            },
             'sex': {
                'M': queryset.filter(sex="M").count(),
                'F': queryset.filter(sex="F").count(),
@@ -1283,7 +1291,6 @@ class ChickensSummary(AnalysesViewSet):
                 'sire_seted': queryset.filter(sire__isnull=False, dam__isnull=True).count,
                 'dam_seted': queryset.filter(sire__isnull=True, dam__isnull=False).count,
             },
-            'dead_chickens': queryset.filter(reduction_date__isnull=True).count()
         })
 
 class ChickenRecordSetQuality(AnalysesViewSet):
@@ -1371,7 +1378,7 @@ class ChickenRecordSetQuality(AnalysesViewSet):
                     'avg': avg_eggs_weight,
                 }
             })
-            
+        return Response({'results': results})
         
 class MortalityRate(AnalysesViewSet):
     @extend_schema(
@@ -1387,8 +1394,11 @@ class MortalityRate(AnalysesViewSet):
         
             
         ages = queryset.exclude(duration__isnull=True).values_list('duration', flat=True)
-        min_age = math.floor(np.min(ages).days / 7)
-        max_age = math.floor(np.max(ages).days / 7) + 1
+        min_age = np.min(ages)
+        min_age = math.floor(min_age.days / 7)  if isinstance(min_age, timedelta) else 0
+
+        max_age = np.max(ages)
+        max_age = math.floor(max_age.days / 7) + 1 if isinstance(max_age, timedelta) else 0
 
         total_chickens = queryset.count()
                 
@@ -1423,3 +1433,31 @@ class MortalityRate(AnalysesViewSet):
             })
 
         return Response({'results': results})
+    
+class AnomalityBodyWeight(AnalysesViewSet):
+    @extend_schema(
+        parameters=ANALYSES_PARAMETERS
+    )
+    def list(self, request, **kwargs):
+        queryset = self.filter_by_directory()
+        weights = Weight.objects.filter(chicken__in=queryset.values_list('id', flat=True))
+        
+        df = pd.DataFrame(
+            list(weights.values('id', 'chicken__tag', 'week', 'weight'))
+        )
+        
+        for name, group in df.groupby('week'):
+            isolation_model = IsolationForest(contamination=float(0.1))
+            isolation_model.fit(group[['weight']].values)
+            IF_predictions = isolation_model.predict(group[['weight']].values)
+            group['anomalies'] = IF_predictions
+            group['scores'] = isolation_model.decision_function(
+                group[['weight']].values)
+
+            df = pd.concat([df, group])
+        
+        df = df[df['anomalies'] == -1]
+        df = df.sort_values(by=['scores'])
+        parsed = loads(df.to_json(orient="records"))
+        
+        return Response({'results': parsed})

@@ -47,8 +47,17 @@ router.register(r'analyses/chicken-ranking', views.ChickenRanking,
 router.register(r'analyses/chicken-record-set', views.ChickenRecordSet,
                 basename='api_analyses_chicken_record_set')
 
+router.register(r'analyses/chickens-summary', views.ChickensSummary,
+                basename='api_chicken_summary')
+
+router.register(r'analyses/chickens-recordset-quality', views.ChickenRecordSetQuality,
+                basename='api_chicken_recordset-quality')
+
 router.register(r'analyses/mortality-rate', views.MortalityRate,
                 basename='api_mortality_rate')
+
+router.register(r'analyses/anomality/body-weight', views.AnomalityBodyWeight,
+                basename='api_anomality_body_weight')
 
 count_router = routers.DefaultRouter()
 count_router.register(r'analyses/count', views.CountViewSet,

@@ -15,6 +15,7 @@ export { default as PieChartSkeleton } from "./PieChartSkeleton";
 export { default as SnackbarCloseButton } from "./SnackbarCloseButton";
 export { default as HtmlModal } from "./HtmlModal";
 import { default as CookieConsent } from "./CookieConsent";
+export { default as GradientCircularProgress } from "./GradientCircularProgress";
 
 export * from "./call-to-actions";
 export * from "./heros";
