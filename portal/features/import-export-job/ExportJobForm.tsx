@@ -62,7 +62,7 @@ const singleChickenFilterForm: {
   },
 };
 
-const batchFilterForms: {
+const baseChickenFilter: {
   [key: string]: ExportField;
 } = {
   generation: {
@@ -105,6 +105,12 @@ const batchFilterForms: {
     xs: 12,
     dataKey: "display_name",
   },
+};
+
+const batchFilterForms: {
+  [key: string]: ExportField;
+} = {
+  ...baseChickenFilter,
   start_week: {
     label: "Start Week",
     placeholder: "Start Week",
@@ -127,15 +133,20 @@ const resources: Res[] = [
     fields: batchFilterForms,
   },
   {
+    name: "Export Pedigree information",
+    resource: "BaseChickenResource",
+    fields: baseChickenFilter,
+  },
+  {
     name: "Export Pedigree & Body Weight",
     resource: "ChickenBodyWeightExportResource",
     fields: batchFilterForms,
   },
-  {
-    name: "Export Feed conversition ratio",
-    resource: "ChickenFeedFCRResource",
-    fields: batchFilterForms,
-  },
+  // {
+  //   name: "Export Feed conversition ratio",
+  //   resource: "ChickenFeedFCRResource",
+  //   fields: batchFilterForms,
+  // },
 ];
 
 type Inputs = Partial<ExportJob> & { resource: Res };
@@ -157,7 +168,20 @@ export const ExportJobForm = () => {
     },
   });
 
+  const buildBaseChickenResource = (values: any) => {
+    // Chicken Model
+    return {
+      id: _.get(values.chicken, "id", null),
+      generation: _.get(values.generation, "generation", null),
+      breed: _.get(values.breed, "id", null),
+      hatchery: _.get(values.hatchery, "id", null),
+      house: _.get(values.house, "id", null),
+      pen: _.get(values.pen, "id", null),
+    };
+  };
+
   const buildChickenExportResource = (values: any) => {
+    // Tables that refer Chicken model
     const vals = {
       chicken: _.get(values.chicken, "id", null),
       generation: _.get(values.generation, "generation", null),
@@ -173,6 +197,7 @@ export const ExportJobForm = () => {
   };
 
   const buildChickenRefResource = (values: any) => {
+    // ChickenRecordSet Model
     const vals = {
       chicken: _.get(values.chicken, "id", null),
       chicken__hatchery: _.get(values.hatchery, "id", null),
@@ -188,6 +213,7 @@ export const ExportJobForm = () => {
   };
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
+    console.log("abbbbb");
     const body = {
       resource: _.get(data.resource, "resource", null),
       format: "xlsx",
@@ -196,6 +222,9 @@ export const ExportJobForm = () => {
     let query = {};
 
     switch (body.resource) {
+      case "BaseChickenResource":
+        query = buildBaseChickenResource(data);
+        break;
       case "ChickenBodyWeightExportResource":
         query = buildChickenExportResource(data);
         break;
@@ -214,7 +243,7 @@ export const ExportJobForm = () => {
       });
 
       if (response.status == 201) {
-        // router.push(`/export-job`);
+        router.push(`/export-job`);
       } else {
         enqueueSnackbar("Please select file type either csv or excel", {
           variant: "error",

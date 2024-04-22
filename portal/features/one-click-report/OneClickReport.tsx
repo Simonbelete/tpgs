@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Box, Typography, Stack } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import StatusCard from "./components/StatsuCard";
@@ -11,8 +11,13 @@ import Filter from "./Filter";
 import MortalityRate from "./MortalityRate";
 import _ from "lodash";
 import DataSummary from "./DataSummary";
+import { ChickenRecordSetView } from "../chicken-record-set";
+import ExploreData from "./ExploreData";
+import SetedUnsetedDatatGraph from "./SetedUnsetedDatatGraph";
 
 export const OneClickReport = () => {
+  const [filters, setFilters] = useState<any>();
+
   const [chickenSummaryTrigger, { data: chickenSummary }] =
     useLazyGetChickensSummaryQuery();
   const [mortalityRateTrigger, { data: mortalityRateData }] =
@@ -33,6 +38,8 @@ export const OneClickReport = () => {
     chickenSummaryTrigger(query);
     mortalityRateTrigger(query);
     getQualityTrigger(query);
+
+    // setFilters(values);
   };
 
   const calcPercentage = (x: number, y: number) => {
@@ -93,7 +100,7 @@ export const OneClickReport = () => {
           />
           <StatusCard
             title="Unknown chickens"
-            value={_.get(chickenSummary, "sex.F", "!")}
+            value={_.get(chickenSummary, "sex.Unknown", "!")}
             subttile="# Unknown chickens"
             percentage={calcPercentage(
               _.get(chickenSummary, "sex.Unknown", 0),
@@ -134,6 +141,19 @@ export const OneClickReport = () => {
       <Box>
         <DataSummary data={qualityData} />
       </Box>
+      <Box>
+        <SetedUnsetedDatatGraph data={qualityData} />
+      </Box>
+      {/* <Box>
+        {filters && (
+          <ExploreData
+            filters={filters}
+            start_week={_.get(chickenSummary?.results, "min_week", 0)}
+            end_week={_.get(chickenSummary?.results, "max_week", 0)}
+            total={_.get(chickenSummary, "chicken.total", 0)}
+          />
+        )}
+      </Box> */}
     </Box>
   );
 };

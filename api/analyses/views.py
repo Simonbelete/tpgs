@@ -37,7 +37,13 @@ from formulas.models import Formula
 from ingredients.models import Ingredient
 from nutrients.models import Nutrient
 from requirements.models import Requirement
+from .util import get_alive_chickens
 
+def calc_min(val):
+    return np.min(val) if len(val) != 0 else 0
+        
+def calc_max(val):
+    return np.max(val) if len(val) != 0 else 0
 
 class AnalysesViewSet(viewsets.ViewSet):
     # queryset = Chicken.objects.all()
@@ -326,51 +332,6 @@ class EggMassViewSet(AnalysesViewSet):
             return self.get_by_chicken()
         else:
             return self.get_by_flock()
-
-
-class AverageWeight(viewsets.ViewSet):
-    def get_query(self):
-        return Feed.objects.all()
-
-    @extend_schema(
-        parameters=[
-            OpenApiParameter(
-                name='start_week', description='Start Week', location=OpenApiParameter.QUERY, required=False, type=int),
-            OpenApiParameter(
-                name='end_week', description='End Week', location=OpenApiParameter.QUERY, required=False, type=int),
-            OpenApiParameter(
-                name='sex', description='Sex', location=OpenApiParameter.QUERY, required=False, type=str),
-        ]
-    )
-    def list(self, request, **kwargs):
-        start_week = int(request.GET.get('start_week', 0))
-        end_week = int(request.GET.get('end_week', 0))
-        sex = request.GET.get('sex')
-        farm_id = kwargs['farm_id']
-        flock_id = kwargs['flock_id']
-        house_id = kwargs['house_id']
-
-        if (kwargs['farm_id'] == 'all'):
-            return Response({
-                'errors': [
-                    'farm can not be all'
-                ]
-            })
-        farm = Farm.objects.get(pk=farm_id)
-        feeds = self.get_query()
-        with tenant_context(farm):
-            if (flock_id != 'all'):
-                feeds = feeds.filter(Q(flock=flock_id) | Q(
-                    chicken__flock=kwargs['flock_id']))
-            if (house_id != 'all'):
-                feeds = feeds.filter(chicken__house=house_id)
-            if (sex and sex == 'M'):
-                feeds = feeds.filter()
-
-            flock_weight = feeds.filter(flock__isNull=False).aggregate(
-                weight_sum=Sum('weight'), )
-            weights = feeds.aggregate(avg=Avg('weight'))
-
 
 class FarmHeatMap(viewsets.ViewSet):
     def list(self, request, **kwargs):
@@ -1138,7 +1099,7 @@ class WeightGraphViewSet(AnalysesViewSet):
 
                 results = []
                 for week in range(start_week, end_week + 1):
-                    weight_avg = Weight.objects.filter(
+                    weight_avg = Weight.objects.exclude(weight=0).filter(
                         chicken__in=queryset_ids, week=week).aggregate(weight_avg=Avg('weight'))['weight_avg'] or 0
 
                     results.append({
@@ -1267,9 +1228,16 @@ class ChickenRecordSet(mixins.RetrieveModelMixin,
 class ChickensSummary(AnalysesViewSet):
     def list(self, request, **kwargs):
         queryset = self.filter_by_directory(**kwargs)
+
+        recordset = models.ChickenRecordset.objects.filter(
+            chicken__in = queryset.values_list('id', flat=True)
+        )
+        recordset = list(recordset.values_list('week', flat=True))
         
         return Response({
             'total_chickens': queryset.count(),
+            'min_week': calc_min(recordset),
+            'max_week': calc_max(recordset),
             'chicken': {
                 'total': queryset.count(),
                 'alive': queryset.filter(reduction_date__isnull=True).count(),
@@ -1296,29 +1264,21 @@ class ChickenRecordSetQuality(AnalysesViewSet):
     """Data Quality, answers how many data has been collected in the given week"""
     def list(self, request, **kwargs):
         chickens_queryset = self.filter_by_directory(**kwargs)
+        total_chickens = chickens_queryset.count()
+        
         queryset = models.ChickenRecordset.objects.filter(
             chicken__in = chickens_queryset.values_list('id', flat=True)
         )
-        
         df = pd.DataFrame(queryset.values())
         df = df.fillna(0)
-                
+        
+        if(df.shape[0] == 0):
+            return Response({'results': []})
+        
         results = []
-        
-        total_chickens = chickens_queryset.count()
-        
-          #     alive_in_current_week_chickens = chickens_queryset.exclude(hatch_date=None).annotate(
-        #                 current_date=F('hatch_date')+timedelta(weeks=week)
-        #         ).filter(Q(current_date__lte=F('reduction_date')) | Q(reduction_date=None))
-            
-        #     weekly_recordset = queryset.filter(week=week)
-
-
-        #     total_chickens = chickens_queryset.count()
-        #     alive_chickens = int(alive_in_current_week_chickens.count())
-        #     dead_chickens = int(total_chickens) - int(alive_chickens)
-        
         for week, group in df.groupby('week'):
+            alive_chickens = get_alive_chickens(chickens_queryset, week).count() # Alive chickens with current week
+            
             df_body_weight = group[group['body_weight'] != 0].copy(deep=True)
             df_body_weight['body_weight'] = df_body_weight['body_weight'].astype(float)
 
@@ -1335,10 +1295,11 @@ class ChickenRecordSetQuality(AnalysesViewSet):
                 'week': week,
                 'chicken': {
                     'total': total_chickens,
+                    'alive': alive_chickens,
                 },
                 'body_weight': {
                     'recorded': df_body_weight.shape[0],
-                    'missing': group[group['body_weight'] == 0].shape[0],
+                    'missing': alive_chickens - df_body_weight.shape[0], #group[group['body_weight'] == 0].shape[0],
                     **df_body_weight.describe()['body_weight'].fillna(0).round(3).to_dict()
                 },
                 'feed_intake': {
@@ -1372,13 +1333,7 @@ class MortalityRate(AnalysesViewSet):
         queryset = queryset.filter(~Q(hatch_date=None)).annotate(
             duration=duration)
             
-        def calc_min(val):
-            return np.min(val) if len(val) != 0 else 0
-        
-        def calc_max(val):
-            return np.max(val) if len(val) != 0 else 0
-            
-        ages = queryset.exclude(duration__isnull=True).values_list('duration', flat=True)
+        ages = list(queryset.exclude(duration__isnull=True).values_list('duration', flat=True))
         min_age = calc_min(ages)
         min_age = math.floor(min_age.days / 7)  if isinstance(min_age, timedelta) else 0
 

@@ -199,7 +199,7 @@ export default function AsyncDropdown<T>({
         }}
         value={value ?? ""}
         defaultValue={value}
-        getOptionLabel={(option) => option[dataKey] ?? ""}
+        getOptionLabel={(option) => String(option[dataKey] ?? "")}
         options={options}
         loading={isFetching}
         isOptionEqualToValue={(option, val) => option[dataKey] === val[dataKey]}

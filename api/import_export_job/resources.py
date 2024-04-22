@@ -615,9 +615,6 @@ class ChickenRecordsetResource(BaseChickenRecordsetResource):
             data.append(self.export_resource(obj))
 
         df = data.export('df')
-        
-        print('********')
-        print(df.shape)
 
         if (df.empty):
             raise Exception('Data is empty')
@@ -646,9 +643,7 @@ class ChickenRecordsetResource(BaseChickenRecordsetResource):
             columns=[self.fields['week'].column_name],
             values=[self.fields['body_weight'].column_name, self.fields['feed_weight'].column_name,
                     self.fields['no_eggs'].column_name, self.fields['eggs_weight'].column_name],
-            aggfunc='sum')
-
-        print(df.shape)
+            aggfunc='sum', fill_value=0)
 
         named_list_of_weeks = ["Week {0}".format(w) for w in list_of_weeks]
 

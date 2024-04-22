@@ -110,7 +110,7 @@ const DataSummary = ({ data }: { data: any }) => {
   return (
     <Plot
       layout={{
-        title: "Mortality",
+        title: "Boundary",
         height: 500,
         boxmode: "group",
         xaxis: {
