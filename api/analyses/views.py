@@ -1414,31 +1414,3 @@ class MortalityRate(AnalysesViewSet):
             })
 
         return Response({'results': results})
-    
-class AnomalityBodyWeight(AnalysesViewSet):
-    @extend_schema(
-        parameters=ANALYSES_PARAMETERS
-    )
-    def list(self, request, **kwargs):
-        queryset = self.filter_by_directory()
-        weights = Weight.objects.filter(chicken__in=queryset.values_list('id', flat=True))
-        
-        df = pd.DataFrame(
-            list(weights.values('id', 'chicken__tag', 'week', 'weight'))
-        )
-        
-        for name, group in df.groupby('week'):
-            isolation_model = IsolationForest(contamination=float(0.1))
-            isolation_model.fit(group[['weight']].values)
-            IF_predictions = isolation_model.predict(group[['weight']].values)
-            group['anomalies'] = IF_predictions
-            group['scores'] = isolation_model.decision_function(
-                group[['weight']].values)
-
-            df = pd.concat([df, group])
-        
-        df = df[df['anomalies'] == -1]
-        df = df.sort_values(by=['scores'])
-        parsed = loads(df.to_json(orient="records"))
-        
-        return Response({'results': parsed})

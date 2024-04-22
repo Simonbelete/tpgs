@@ -56,6 +56,7 @@ import FileUploadIcon from "@mui/icons-material/FileUpload";
 import TimelineIcon from "@mui/icons-material/Timeline";
 import QrCode2Icon from "@mui/icons-material/QrCode2";
 import QrCodeIcon from "@mui/icons-material/QrCode";
+import AdsClickIcon from "@mui/icons-material/AdsClick";
 
 function menuProps(key: string) {
   return {
@@ -853,6 +854,18 @@ const SidebarMenu = () => {
         >
           <Typography variant="body1" fontSize={14}>
             Export
+          </Typography>
+        </MenuItem>
+
+        <MenuItem
+          component={
+            <Link onClick={() => toggleSidebar()} href="/reports/one-click" />
+          }
+          icon={<AdsClickIcon fontSize="small" />}
+          active={RegExp("/reports/one-click(.*)$").test(router.pathname)}
+        >
+          <Typography variant="body1" fontSize={14}>
+            One click report
           </Typography>
         </MenuItem>
 
