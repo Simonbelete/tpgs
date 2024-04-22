@@ -1371,13 +1371,18 @@ class MortalityRate(AnalysesViewSet):
             F('reduction_date') - F('hatch_date'), output_field=DurationField())
         queryset = queryset.filter(~Q(hatch_date=None)).annotate(
             duration=duration)
+            
+        def calc_min(val):
+            return np.min(val) if len(val) != 0 else 0
         
+        def calc_max(val):
+            return np.max(val) if len(val) != 0 else 0
             
         ages = queryset.exclude(duration__isnull=True).values_list('duration', flat=True)
-        min_age = np.min(ages)
+        min_age = calc_min(ages)
         min_age = math.floor(min_age.days / 7)  if isinstance(min_age, timedelta) else 0
 
-        max_age = np.max(ages)
+        max_age = calc_max(ages)
         max_age = math.floor(max_age.days / 7) + 1 if isinstance(max_age, timedelta) else 0
 
         total_chickens = queryset.count()
