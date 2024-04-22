@@ -12,7 +12,6 @@ from rest_framework.exceptions import NotFound
 import numpy as np
 import uuid
 import pandas as pd
-from sklearn.ensemble import IsolationForest
 from json import loads, dumps
 
 from . import models

@@ -3,7 +3,6 @@ import pandas as pd
 from celery import shared_task
 from django_tenants.utils import get_tenant_model, get_tenant_domain_model
 from django_tenants.utils import schema_context
-from sklearn.ensemble import IsolationForest
 
 from feeds.models import Feed
 
@@ -19,6 +18,6 @@ def generate_breed_anomaly(x, y):
             )
             week_group = df.groupby('week')
 
-            for i, group in week_group:
-                isolation_model = IsolationForest(contamination=float(0.1))
-                isolation_model.fit(group[['weight']].values)
+            # for i, group in week_group:
+            #     isolation_model = IsolationForest(contamination=float(0.1))
+            #     isolation_model.fit(group[['weight']].values)
