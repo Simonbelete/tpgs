@@ -37,7 +37,7 @@ from formulas.models import Formula
 from ingredients.models import Ingredient
 from nutrients.models import Nutrient
 from requirements.models import Requirement
-from .util import get_alive_chickens
+from .util import get_alive_chickens, get_dead_chickens
 
 def calc_min(val):
     return np.min(val) if len(val) != 0 else 0
@@ -1329,11 +1329,12 @@ class MortalityRate(AnalysesViewSet):
         queryset = self.filter_by_directory()
         
         duration = ExpressionWrapper(
-            F('reduction_date') - F('hatch_date'), output_field=DurationField())
-        queryset = queryset.filter(~Q(hatch_date=None)).annotate(
-            duration=duration)
-            
+                F('reduction_date') - F('hatch_date'), output_field=DurationField())
+        queryset = queryset.annotate(
+                duration=duration)
+        
         ages = list(queryset.exclude(duration__isnull=True).values_list('duration', flat=True))
+        
         min_age = calc_min(ages)
         min_age = math.floor(min_age.days / 7)  if isinstance(min_age, timedelta) else 0
 
@@ -1344,14 +1345,9 @@ class MortalityRate(AnalysesViewSet):
                 
         results = []
         for week in range(min_age, max_age):
-            dead_chickens = queryset.filter(
-                duration__gte=timedelta(weeks=week-1),
-                duration__lte=timedelta(weeks=week)).count()
+            dead_chickens = get_dead_chickens(queryset, week).count()
 
-            alive_chickens = queryset.exclude(
-                duration__lte=timedelta(weeks=week)).count()
-            # alive_chickens = queryset.exclude(
-            #     duration__gte=timedelta(weeks=week)).count()
+            alive_chickens = get_alive_chickens(queryset, week).count()
     
             mortality = dead_chickens/total_chickens * 100 if total_chickens != 0 else 0
             livability = alive_chickens/total_chickens * 100 if total_chickens != 0 else 0
