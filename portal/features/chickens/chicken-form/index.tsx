@@ -35,8 +35,50 @@ import { PenForm } from "@/features/pen";
 const schema = yup.object({
   tag: yup.string().required(),
   sex: yup.object().nullable(),
-  sire: yup.object().nullable(),
-  dam: yup.object().nullable(),
+  sire: yup
+    .object()
+    .nullable()
+    .test(
+      "is-same-generation",
+      "Parent must of the same generation",
+      (value, context) => {
+        if (value == null) return true;
+
+        const { dam } = context.parent;
+        return (value as Chicken)?.generation == dam.generation;
+      }
+    ),
+  dam: yup
+    .object()
+    .nullable()
+    .test(
+      "is-same-generation",
+      "Parent must of the same generation",
+      (value, context) => {
+        if (value == null) return true;
+
+        const { dam } = context.parent;
+        return (value as Chicken)?.generation == dam.generation;
+      }
+    ),
+  generation: yup
+    .number()
+    .transform((value) => (Number.isNaN(value) ? null : value))
+    .min(0)
+    .nullable()
+    .test(
+      "is-second-generation-to-parent",
+      "Generation is not second inline to parents generation",
+      (value, context) => {
+        const { dam, sire } = context.parent;
+
+        if (dam == null || sire == null) return true;
+
+        const parents_geneation = (dam as Chicken)?.generation;
+
+        return parents_geneation == value;
+      }
+    ),
   hatchery: yup.object().nullable(),
   pen: yup.object().nullable(),
   breed: yup.object().nullable(),

@@ -21,6 +21,7 @@ class Egg(CoreModel):
 
     class Meta:
         unique_together = ['chicken', 'week']
+        ordering = ['-created_at']
 
     @property
     def display_name(self):

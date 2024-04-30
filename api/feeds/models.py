@@ -26,6 +26,10 @@ class Feed(CoreModel):
     week = models.PositiveIntegerField(validators=WEEK_VALIDATOR, default=0)
     weight = WEIGHT_IN_GRAM_FIELD
     history = HistoricalRecords()
+    
+    class Meta:
+        unique_together = ['chicken', 'week']
+        ordering = ['-created_at']
 
     @property
     def display_name(self):

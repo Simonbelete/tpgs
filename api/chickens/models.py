@@ -2,6 +2,7 @@ import math
 from django.db import models
 from simple_history.models import HistoricalRecords
 from datetime import date
+import numpy as np
 
 from core.models import CoreModel
 from pen.models import Pen
@@ -47,13 +48,18 @@ class Chicken(CoreModel):
 
     @property
     def display_name(self):
-        if(self.sex):
-            return "{tag} {sex}".format(
-            tag=self.tag,
-            sex=self.sex or ""
-            )
-        else:
-            return self.tag
+        attr = ""
+        if(self.generation): attr += "G" +str(self.generation) + "/"
+        if(self.hatchery): attr += "B" + self.hatchery.name + "/"
+        if(self.breed): attr += self.breed.name + "/"
+
+        sex =  self.sex if self.sex else ""
+        return "{0} {1}{2} {3}".format(
+            self.tag,
+            sex,
+            "({0}W)".format(self.age_in_weeks()),
+            attr
+        )
 
     @property
     def age_in_days(self):
@@ -64,9 +70,7 @@ class Chicken(CoreModel):
 
     @property
     def age_in_weeks(self):
-        if self.hatch_date == None:
-            return 0
-        return math.floor(self.age_in_days/7)
+        return self.age_in_weeks()
 
     @property
     def reduction_in_weeks(self):
@@ -89,6 +93,11 @@ class Chicken(CoreModel):
         if (self.dam):
             parents.append(self.dam.tag)
         return parents
+    
+    def age_in_weeks(self):
+        if self.hatch_date == None:
+            return 0
+        return math.floor(self.age_in_days/7)
 
     # def ancestors(self):
     #     '''Returns a list of this person's ancestors (their parents and all of

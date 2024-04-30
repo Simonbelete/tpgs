@@ -9,6 +9,7 @@ import {
   Typography,
   Stack,
   Box,
+  Alert,
 } from "@mui/material";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -26,7 +27,18 @@ type Inputs = Partial<Chicken>;
 
 const schema = yup.object({
   reduction_reason: yup.object().required(),
-  reduction_date: yup.string().required(),
+  reduction_date: yup
+    .string()
+    .required()
+    // @ts-ignore
+    .when("hatch_date", ([hatch_date]) => {
+      if (hatch_date) {
+        return yup
+          .date()
+          .min(hatch_date, "Reduction date must be after Hatch date")
+          .typeError("End Date is required");
+      }
+    }),
 });
 
 const ChickenReductionSelectDialog = ({ chicken }: { chicken: Chicken }) => {
@@ -40,6 +52,7 @@ const ChickenReductionSelectDialog = ({ chicken }: { chicken: Chicken }) => {
   const { handleSubmit, control, setError } = useForm<Inputs>({
     // @ts-ignore
     resolver: yupResolver(schema),
+    defaultValues: chicken,
   });
 
   const useCRUDHook = useCRUD({
@@ -145,48 +158,54 @@ const ChickenReductionSelectDialog = ({ chicken }: { chicken: Chicken }) => {
         <DialogTitle>Remove Chicken {chicken.name}</DialogTitle>
         <DialogContent>
           <Box component="form" sx={{ display: "flex", flexWrap: "wrap" }}>
-            <Grid container rowSpacing={4} columnSpacing={10}>
-              <Grid item xs={12}>
-                <Controller
-                  name={"reduction_reason"}
-                  control={control}
-                  render={({
-                    field: { onChange, value },
-                    fieldState: { error },
-                  }) => (
-                    <ReductionReasonDropdown
-                      onChange={(_, data) => onChange(data)}
-                      value={value ?? ""}
-                      error={!!error?.message}
-                      helperText={error?.message}
-                    />
-                  )}
-                />
+            {chicken?.hatch_date ? (
+              <Grid container rowSpacing={4} columnSpacing={10}>
+                <Grid item xs={12}>
+                  <Controller
+                    name={"reduction_reason"}
+                    control={control}
+                    render={({
+                      field: { onChange, value },
+                      fieldState: { error },
+                    }) => (
+                      <ReductionReasonDropdown
+                        onChange={(_, data) => onChange(data)}
+                        value={value ?? ""}
+                        error={!!error?.message}
+                        helperText={error?.message}
+                      />
+                    )}
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <Controller
+                    name={"reduction_date"}
+                    control={control}
+                    render={({
+                      field: { onChange, value },
+                      fieldState: { invalid, isTouched, isDirty, error },
+                    }) => (
+                      <DatePicker
+                        slotProps={{
+                          textField: {
+                            size: "small",
+                            fullWidth: true,
+                            error: !!error?.message,
+                            helperText: error?.message,
+                          },
+                        }}
+                        onChange={onChange}
+                        value={dayjs(value as string)}
+                      />
+                    )}
+                  />
+                </Grid>
               </Grid>
-              <Grid item xs={12}>
-                <Controller
-                  name={"reduction_date"}
-                  control={control}
-                  render={({
-                    field: { onChange, value },
-                    fieldState: { invalid, isTouched, isDirty, error },
-                  }) => (
-                    <DatePicker
-                      slotProps={{
-                        textField: {
-                          size: "small",
-                          fullWidth: true,
-                          error: !!error?.message,
-                          helperText: error?.message,
-                        },
-                      }}
-                      onChange={onChange}
-                      value={dayjs(value as string)}
-                    />
-                  )}
-                />
-              </Grid>
-            </Grid>
+            ) : (
+              <Alert variant="outlined" severity="error" sx={{ width: "100%" }}>
+                Please set hatch date before removing chicken
+              </Alert>
+            )}
           </Box>
         </DialogContent>
         <DialogActions>

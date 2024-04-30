@@ -12,9 +12,29 @@ const schema = yup.object({
     .number()
     .typeError("Week must be number")
     .min(0)
-    .required("Week is required"),
-  eggs: yup.number().min(0).required(),
-  weight: yup.number().optional(),
+    .required("Week is required")
+    .test(
+      "is-age-in-given-week",
+      "Given week is greater than the chicken's age",
+      (value, context) => {
+        const { chicken } = context.parent;
+
+        if (chicken?.age_in_weeks == 0) return true;
+
+        if (value > chicken?.age_in_weeks) return false;
+
+        return true;
+      }
+    ),
+  eggs: yup
+    .number()
+    .transform((value) => (Number.isNaN(value) ? null : value))
+    .min(0)
+    .required("Number of eggs is required"),
+  weight: yup
+    .number()
+    .transform((value) => (Number.isNaN(value) ? null : value))
+    .optional(),
 });
 
 export const EggForm = ({
@@ -49,9 +69,8 @@ export const EggForm = ({
         }}
         fields={{
           chicken: {
-            label: "chicken",
+            label: "Chicken",
             placeholder: "Chicken",
-            // endpoint: chickenApi.endpoints.getAliveChickens,
             endpoint: chickenApi.endpoints.getChickens,
             xs: 12,
             md: 12,

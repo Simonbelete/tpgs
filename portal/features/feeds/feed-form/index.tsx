@@ -9,14 +9,31 @@ import { formulaApi } from "@/features/formula/services";
 import _ from "lodash";
 
 const schema = yup.object({
-  chicken: yup.object().nullable(),
+  chicken: yup.object().required("Chicken tag is required"),
   formula: yup.object().nullable(),
   week: yup
     .number()
     .typeError("Week must be number")
     .min(0)
-    .required("Week is required"),
-  weight: yup.number(),
+    .required("Week is required")
+    .test(
+      "is-age-in-given-week",
+      "Given week is greater than the chicken's age",
+      (value, context) => {
+        const { chicken } = context.parent;
+
+        if (chicken?.age_in_weeks == 0) return true;
+
+        if (value > chicken?.age_in_weeks) return false;
+
+        return true;
+      }
+    ),
+  weight: yup
+    .number()
+    .transform((value) => (Number.isNaN(value) ? null : value))
+    .min(0)
+    .required("Feed Weight is required"),
 });
 
 export const FeedForm = ({
@@ -29,7 +46,7 @@ export const FeedForm = ({
   return (
     <>
       <FormLayout<Feed>
-        title="Feed Form"
+        title="Feed intake"
         id={data?.id || 0}
         data={data}
         schema={schema}
@@ -51,9 +68,8 @@ export const FeedForm = ({
         }}
         fields={{
           chicken: {
-            label: "chicken",
+            label: "Chicken",
             placeholder: "Chicken",
-            // endpoint: chickenApi.endpoints.getAliveChickens,
             endpoint: chickenApi.endpoints.getChickens,
             dataKey: "display_name",
             xs: 12,

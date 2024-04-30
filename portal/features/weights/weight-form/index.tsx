@@ -12,8 +12,25 @@ const schema = yup.object({
     .number()
     .typeError("Week must be number")
     .min(0)
-    .required("Week is required"),
-  weight: yup.number().min(0).required("Body Weight is required"),
+    .required("Week is required")
+    .test(
+      "is-age-in-given-week",
+      "Given week is greater than the chicken's age",
+      (value, context) => {
+        const { chicken } = context.parent;
+
+        if (chicken?.age_in_weeks == 0) return true;
+
+        if (value > chicken?.age_in_weeks) return false;
+
+        return true;
+      }
+    ),
+  weight: yup
+    .number()
+    .transform((value) => (Number.isNaN(value) ? null : value))
+    .min(0)
+    .required("Body Weight is required"),
 });
 
 export const WeightForm = ({
