@@ -57,8 +57,8 @@ const schema = yup.object({
       (value, context) => {
         if (value == null) return true;
 
-        const { dam } = context.parent;
-        return (value as Chicken)?.generation == dam.generation;
+        const { sire } = context.parent;
+        return (value as Chicken)?.generation == sire?.generation;
       }
     ),
   generation: yup
