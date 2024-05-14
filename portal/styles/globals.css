@@ -198,3 +198,22 @@ a:active { text-decoration: none; color: #0077AF;}
   .steps li:hover a { color: white; }
   .steps li:hover::after {border-left-color: #008a3f;}
   
+
+.stacked-bar-chart {
+  border-radius: 0px;
+  overflow: hidden;
+  /* New code below: */
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+}
+
+.stacked-bar-chart div {
+  cursor: pointer;
+  color: white;
+  font-family: sans-serif;
+  font-weight: bold;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

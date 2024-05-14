@@ -38,6 +38,9 @@ import {
   tenantInterceptor,
   instance as axiosInstance,
 } from "@/services/client";
+import FarmsOverView from "./FarmsOverview";
+import buildDirectoryQuery from "@/util/buildDirectoryQuery";
+import { useLazyGetChickensSummaryQuery } from "@/features/one-click-report/services";
 
 type Inputs = Partial<Directory>;
 
@@ -63,6 +66,10 @@ const OneClickAnalyses = () => {
   const [openFilter, setOpenFilter] = useState<boolean>(false);
   const [filters, setFilters] = useState<Inputs[]>([]);
   const [currentFarm, setcurrentFarm] = useState<Farm | null>();
+  const [summary, setSummary] = useState<any[]>([]);
+
+  const [chickenSummaryTrigger, { data: chickenSummary }] =
+    useLazyGetChickensSummaryQuery();
 
   const handleChange =
     (panel: string) => (event: React.SyntheticEvent, isExpanded: boolean) => {
@@ -82,11 +89,24 @@ const OneClickAnalyses = () => {
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     setOpenFilter(false);
     setFilters([...filters, data]);
+
+    const response = await chickenSummaryTrigger(
+      buildDirectoryQuery(data as Directory)
+    ).unwrap();
+
+    setSummary([...summary, response]);
+  };
+
+  const calcPercentage = (x: number, y: number) => {
+    if (y == 0) return 0;
+    return Number(((x / y) * 100).toFixed(1));
   };
 
   const removeFilter = (index: number) => {
     const filtered = filters.filter((e, i) => index != i);
+    const summaryFiltered = filters.filter((e, i) => index != i);
     setFilters(filtered);
+    setSummary(summaryFiltered);
     setExpanded(false);
   };
 
@@ -278,9 +298,9 @@ const OneClickAnalyses = () => {
           </Button>
         </DialogActions>
       </Dialog>
-      <Box display={"flex"} flexDirection={"column"} gap={10}>
+      <Box display={"flex"} flexDirection={"column"} gap={5}>
         <Grid container>
-          <Grid item xs={5}>
+          <Grid item xs={12} md={5}>
             <Card
               title="Filters"
               actions={
@@ -436,6 +456,9 @@ const OneClickAnalyses = () => {
             </Card>
           </Grid>
         </Grid>
+
+        <FarmsOverView data={summary} filters={filters} />
+
         <Accordion
           expanded={expanded === "panel1"}
           onChange={handleChange("panel1")}

@@ -20,9 +20,6 @@ export const instance = axios.create({
 });
 
 instance.interceptors.request.use(async (config) => {
-  console.log("METHOD")
-  console.log(config.url)
-
   if(["/farms/", "/inbox/notifications/unread_count/", "/analyses/count/", "/inbox/notifications/unread/"].includes(config.url ?? "") || config.method != "get") {
     const session = await getSession();
     if (session) {

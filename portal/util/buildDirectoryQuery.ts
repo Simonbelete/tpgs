@@ -9,8 +9,8 @@ export default function buildDirectoryQuery(directory: Directory) {
     breed: _.get(directory.breed, "id", null),
     house: _.get(directory.house, "id", null),
     pen: _.get(directory.pen, "id", null),
-    start_week: _.get(directory, "start_week", 0),
-    end_week: _.get(directory, "end_week", 0),
+    start_week: _.get(directory, "start_week", null),
+    end_week: _.get(directory, "end_week", null),
     sex: _.get(directory.sex, "value", null),
   };
 }
