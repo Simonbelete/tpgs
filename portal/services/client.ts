@@ -20,10 +20,14 @@ export const instance = axios.create({
 });
 
 instance.interceptors.request.use(async (config) => {
+  // Don not check session for GET methods
+  if(config.method == "GET") {
+    return config
+  }
+
   const session = await getSession();
   if (session) {
     config.headers.Authorization = `Bearer ${session.accessToken}`;
-    // config.headers["x-Request-Id"] = cookies.get("REQUEST_ID") ?? "public";
   }
   return config;
 });
