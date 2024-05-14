@@ -65,7 +65,7 @@ const schema = yup.object({
     .number()
     .transform((value) => (Number.isNaN(value) ? null : value))
     .min(0)
-    .nullable()
+    .required("Generation is required")
     .test(
       "is-second-generation-to-parent",
       "Generation is not second inline to parents generation",
@@ -76,7 +76,7 @@ const schema = yup.object({
 
         const parents_geneation = (dam as Chicken)?.generation;
 
-        return parents_geneation == value;
+        return parents_geneation == value - 1;
       }
     ),
   hatchery: yup.object().nullable(),
@@ -109,10 +109,6 @@ export const ChickenForm = ({
 
   const handleTabChange = (event: React.SyntheticEvent, newValue: number) =>
     setTab(newValue);
-
-  const cleanData = (values: Partial<Chicken>): Partial<Chicken> => {
-    return values;
-  };
 
   const handleCreated = (value: Chicken) => {
     setFormData(value);
