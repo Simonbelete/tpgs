@@ -17,7 +17,7 @@ from . import filters
 from .tasks import send_invitation_email
 from users.models import User
 from users.serializers import UserSerializer_GET
-
+from rest_framework.permissions import IsAuthenticated
 
 from notifications.signals import notify
 
@@ -28,6 +28,7 @@ class InvitationViewSet(viewsets.ModelViewSet):
     filterset_class = filters.InvitationFilter
     search_fields = ['email']
     ordering_fields = '__all__'
+    permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
         # TODO: set default to false for x-superuser-mode

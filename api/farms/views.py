@@ -1,5 +1,6 @@
 from rest_framework import viewsets, mixins
 from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated
 
 from . import models
 from . import serializers
@@ -12,6 +13,7 @@ class FarmViewSet(mixins.RetrieveModelMixin,
     queryset = models.Farm.objects.all()
     serializer_class = serializers.FarmSerializer_GET
     filterset_class = filters.FarmFilter
+    permission_classes = [IsAuthenticated]
 
     def perform_create(self, serializer):
         serializer.save(created_by=self.request.user)

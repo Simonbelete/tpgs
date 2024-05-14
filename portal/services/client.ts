@@ -23,7 +23,7 @@ instance.interceptors.request.use(async (config) => {
   console.log("METHOD")
   console.log(config.url)
 
-  if(config.url == "/farms/" || config.method != "get") {
+  if(["/farms/", "/inbox/notifications/unread_count/", "/analyses/count/", "/inbox/notifications/unread/"].includes(config.url ?? "") || config.method != "get") {
     const session = await getSession();
     if (session) {
       config.headers.Authorization = `Bearer ${session.accessToken}`;

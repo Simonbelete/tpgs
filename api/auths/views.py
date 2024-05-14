@@ -4,12 +4,14 @@ from rest_framework.exceptions import ValidationError
 from django.contrib.auth import password_validation
 from rest_framework.response import Response
 from rest_framework import viewsets
+from rest_framework.permissions import IsAuthenticated
 
 from . import serializers
 
 
 class ChangePasswordViewSet(viewsets.GenericViewSet):
     serializer_class = serializers.ChangePasswordSerializer
+    permission_classes = [IsAuthenticated]
 
     def clean_old_password(self, old_password):
         """

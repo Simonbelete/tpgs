@@ -13,6 +13,7 @@ import numpy as np
 import uuid
 import pandas as pd
 from json import loads, dumps
+from rest_framework.permissions import IsAuthenticated
 
 from . import models
 from . import serializers
@@ -151,6 +152,8 @@ class DirectoryListRefresh(viewsets.ViewSet):
 
 
 class CountViewSet(viewsets.ViewSet):
+    permission_classes = [IsAuthenticated]
+    
     def list(self, request, **kwargs):
         if (self.request.tenant.name == 'public'):
             return Response({

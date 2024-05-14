@@ -9,7 +9,7 @@ import { AxiosResponse } from "axios";
 import { NextPageContext } from "next";
 import clientSSR from "@/services/client_ssr";
 
-export const URL = "inbox/notifications";
+export const URL = "/inbox/notifications";
 
 export const notificationApi = baseApi.injectEndpoints({
   endpoints: (build) => {

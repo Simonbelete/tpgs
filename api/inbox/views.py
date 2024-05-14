@@ -4,12 +4,14 @@ from rest_framework.views import APIView
 from rest_framework import viewsets, mixins
 from swapper import load_model
 from django.shortcuts import get_object_or_404
+from rest_framework.permissions import IsAuthenticated
 
 from . import serializers
 
 
 class LiveAllNotificationList(mixins.ListModelMixin, mixins.RetrieveModelMixin, viewsets.GenericViewSet):
     serializer_class = serializers.NotificationSerializer_GET
+    permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
         return self.request.user.notifications.all()
@@ -17,12 +19,15 @@ class LiveAllNotificationList(mixins.ListModelMixin, mixins.RetrieveModelMixin, 
 
 class LiveUnreadNotificationList(mixins.ListModelMixin, mixins.RetrieveModelMixin, viewsets.GenericViewSet):
     serializer_class = serializers.NotificationSerializer_GET
+    permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
         return self.request.user.notifications.unread()
 
 
 class LiveAllNotificationCount(APIView):
+    permission_classes = [IsAuthenticated]
+    
     def get(self, request):
         user_is_authenticated = request.user.is_authenticated
         if not user_is_authenticated:
@@ -37,6 +42,8 @@ class LiveAllNotificationCount(APIView):
 
 
 class LiveUnreadNotificationCount(APIView):
+    permission_classes = [IsAuthenticated]
+    
     def get(self, request):
         user_is_authenticated = request.user.is_authenticated
         if not user_is_authenticated:
@@ -51,6 +58,8 @@ class LiveUnreadNotificationCount(APIView):
 
 
 class MarkAllAsRead(APIView):
+    permission_classes = [IsAuthenticated]
+    
     def post(self, request):
         try:
             request.user.notifications.mark_all_as_read()
@@ -60,6 +69,8 @@ class MarkAllAsRead(APIView):
 
 
 class MarkAsRead(viewsets.ViewSet):
+    permission_classes = [IsAuthenticated]
+    
     def create(self, request,  id=None):
         try:
             Notification = load_model('notifications', 'Notification')

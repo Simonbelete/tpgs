@@ -6,6 +6,7 @@ from django.http import FileResponse
 from rest_framework import viewsets, renderers
 from rest_framework.decorators import action
 from rest_framework.permissions import AllowAny
+from rest_framework.permissions import IsAuthenticated
 
 from . import models
 from . import serializers
@@ -20,6 +21,7 @@ class ImportJobViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.ImportJobSerializer_GET
     filterset_class = filters.ImportJobFilter
     ordering_fields = '__all__'
+    permission_classes = [IsAuthenticated]
 
     def get_serializer_class(self):
         if self.request.method == 'GET':
@@ -70,6 +72,7 @@ class ExportJobViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.ExportJobSerializer_GET
     filterset_class = filters.ExportJobFilter
     ordering_fields = '__all__'
+    permission_classes = [IsAuthenticated]
 
     def get_serializer_class(self):
         if self.request.method == 'GET':
