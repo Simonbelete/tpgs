@@ -18,7 +18,7 @@ from . import filters
 
 
 class NutrientGroupViewSet(CoreModelViewSet):
-    permission_classes = [DjangoModelPermissions]
+    # permission_classes = [DjangoModelPermissions]
     queryset = models.NutrientGroup.all.all()
     serializer_class = serializers.NutrientGroupSerializer_GET
     filterset_class = filters.NutrientGroupFilter
@@ -49,7 +49,7 @@ class NutrientGroupImport(GenericImportView):
 # Nutrient
 class NutrientViewSet(CoreModelViewSet):
     queryset = models.Nutrient.all.all()
-    permission_classes = [DjangoModelPermissions]
+    # permission_classes = [DjangoModelPermissions]
     serializer_class = serializers.NutrientSerializer_GET
     filterset_class = filters.NutrientFilter
     search_fields = ['code', 'name', 'abbreviation']

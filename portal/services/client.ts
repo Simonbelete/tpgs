@@ -20,16 +20,18 @@ export const instance = axios.create({
 });
 
 instance.interceptors.request.use(async (config) => {
-  // Don not check session for GET methods
-  if(config.method == "GET") {
-    return config
-  }
+  console.log("METHOD")
+  console.log(config.url)
 
-  const session = await getSession();
-  if (session) {
-    config.headers.Authorization = `Bearer ${session.accessToken}`;
-  }
-  return config;
+  if(config.url == "/farms/" || config.method != "get") {
+    const session = await getSession();
+    if (session) {
+      config.headers.Authorization = `Bearer ${session.accessToken}`;
+    }
+    return config;
+  } 
+
+  return config
 });
 
 export const defaultTenantInterceptor = async (

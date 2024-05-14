@@ -33,6 +33,11 @@ import { LabeledInput } from "@/components/inputs";
 import Image from "next/image";
 import _ from "lodash";
 import { yupResolver } from "@hookform/resolvers/yup";
+import {
+  defaultTenantInterceptor,
+  tenantInterceptor,
+  instance as axiosInstance,
+} from "@/services/client";
 
 type Inputs = Partial<Directory>;
 
@@ -84,6 +89,16 @@ const OneClickAnalyses = () => {
     setFilters(filtered);
     setExpanded(false);
   };
+
+  useEffect(() => {
+    if (currentFarm != null) {
+      clearErrors("farm");
+      axiosInstance.interceptors.request.eject(tenantInterceptor);
+      axiosInstance.defaults.headers["x-Request-Id"] = currentFarm.name;
+    } else {
+      setError("farm", { message: "Select a valid farm" });
+    }
+  }, [currentFarm]);
 
   return (
     <>

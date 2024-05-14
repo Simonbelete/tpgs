@@ -15,7 +15,7 @@ from . import filters
 
 class HouseViewSet(CoreModelViewSet):
     queryset = models.House.all.all()
-    permission_classes = [DjangoModelPermissions]
+    # permission_classes = [DjangoModelPermissions]
     serializer_class = serializers.HouseSerializer_GET
     filterset_class = filters.HouseFilter
     search_fields = ['name']
