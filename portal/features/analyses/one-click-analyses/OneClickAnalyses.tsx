@@ -41,6 +41,7 @@ import {
 import FarmsOverView from "./FarmsOverview";
 import buildDirectoryQuery from "@/util/buildDirectoryQuery";
 import { useLazyGetChickensSummaryQuery } from "@/features/one-click-report/services";
+import BodyWeightGraph from "./BodyWeightGraph";
 
 type Inputs = Partial<Directory>;
 
@@ -460,26 +461,21 @@ const OneClickAnalyses = () => {
         <FarmsOverView data={summary} filters={filters} />
 
         <Accordion
-          expanded={expanded === "panel1"}
-          onChange={handleChange("panel1")}
+          expanded={expanded === "BodyWeightGraph"}
+          onChange={handleChange("BodyWeightGraph")}
         >
           <AccordionSummary
             expandIcon={<ExpandMoreIcon />}
-            aria-controls="panel1bh-content"
-            id="panel1bh-header"
+            sx={{ height: "50px" }}
           >
-            <Typography sx={{ width: "33%", flexShrink: 0 }}>
-              General settings
-            </Typography>
-            <Typography sx={{ color: "text.secondary" }}>
-              I am an accordion
+            <Typography sx={{ width: "33%", flexShrink: 0, fontWeight: "500" }}>
+              Average Body Weight Graph
             </Typography>
           </AccordionSummary>
           <AccordionDetails>
-            <Typography>
-              Nulla facilisi. Phasellus sollicitudin nulla et quam mattis
-              feugiat. Aliquam eget maximus est, id dignissim quam.
-            </Typography>
+            {expanded === "BodyWeightGraph" && (
+              <BodyWeightGraph filters={filters} />
+            )}
           </AccordionDetails>
         </Accordion>
       </Box>
