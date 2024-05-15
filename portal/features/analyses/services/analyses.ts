@@ -20,6 +20,13 @@ export const analyseApi = baseApi.injectEndpoints({
           params: query,
         }),
       }),
+      getHhep: build.query<Response<any[]>, Object>({
+        query: (query?: Object) => ({
+          url: `${URL}/hdep/`,
+          method: "get",
+          params: query,
+        }),
+      }),
       getEggMass: build.query<Response<any[]>, Object>({
         query: (query?: Object) => ({
           url: `${URL}/egg-mass/`,
@@ -143,4 +150,6 @@ export const {
   useGetPedigreeQuery,
   useLazyGetPedigreeQuery,
   useLazyGetMortalityQuery,
+  useGetHhepQuery,
+  useLazyGetHhepQuery
 } = analyseApi;

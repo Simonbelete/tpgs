@@ -47,6 +47,10 @@ import buildDirectoryQuery from "@/util/buildDirectoryQuery";
 import { useLazyGetChickensSummaryQuery } from "@/features/one-click-report/services";
 import BodyWeightGraph from "./BodyWeightGraph";
 import MortalityRate from "./MortalityRate";
+import HHEP from "./HHEP";
+import HDEP from "./HDEP";
+import SingleMortalityRate from "./SingleMortalityRate";
+import directoryToLabel from "@/util/directoryToLabel";
 
 type Inputs = Partial<Directory>;
 
@@ -500,6 +504,37 @@ const OneClickAnalyses = () => {
 
         <FarmsOverView data={summary} filters={filters} />
 
+        {_.map(filters, (e, i) => (
+          <Accordion
+            key={i}
+            expanded={expanded === `SingleMortalityRate${i}`}
+            onChange={handleChange(`SingleMortalityRate${i}`)}
+          >
+            <AccordionSummary
+              expandIcon={<ExpandMoreIcon />}
+              sx={{ height: "50px" }}
+            >
+              <Typography
+                sx={{ width: "33%", flexShrink: 0, fontWeight: "500" }}
+              >
+                Mortality rate for
+              </Typography>
+              <Typography sx={{ color: "text.secondary" }}>
+                {directoryToLabel(e as Directory)}
+              </Typography>
+            </AccordionSummary>
+            <AccordionDetails>
+              {expanded === `SingleMortalityRate${i}` && (
+                <SingleMortalityRate
+                  filter={e}
+                  start_week={weekValue[0]}
+                  end_week={weekValue[1]}
+                />
+              )}
+            </AccordionDetails>
+          </Accordion>
+        ))}
+
         <Accordion
           expanded={expanded === "BodyWeightGraph"}
           onChange={handleChange("BodyWeightGraph")}
@@ -538,6 +573,52 @@ const OneClickAnalyses = () => {
           <AccordionDetails>
             {expanded === "MortalityRate" && (
               <MortalityRate
+                filters={filters}
+                start_week={weekValue[0]}
+                end_week={weekValue[1]}
+              />
+            )}
+          </AccordionDetails>
+        </Accordion>
+
+        <Accordion
+          expanded={expanded === "HHEP"}
+          onChange={handleChange("HHEP")}
+        >
+          <AccordionSummary
+            expandIcon={<ExpandMoreIcon />}
+            sx={{ height: "50px" }}
+          >
+            <Typography sx={{ width: "33%", flexShrink: 0, fontWeight: "500" }}>
+              Hen-Housed Egg Production (HHEP)
+            </Typography>
+          </AccordionSummary>
+          <AccordionDetails>
+            {expanded === "HHEP" && (
+              <HHEP
+                filters={filters}
+                start_week={weekValue[0]}
+                end_week={weekValue[1]}
+              />
+            )}
+          </AccordionDetails>
+        </Accordion>
+
+        <Accordion
+          expanded={expanded === "HHEP"}
+          onChange={handleChange("HHEP")}
+        >
+          <AccordionSummary
+            expandIcon={<ExpandMoreIcon />}
+            sx={{ height: "50px" }}
+          >
+            <Typography sx={{ width: "33%", flexShrink: 0, fontWeight: "500" }}>
+              Hen-Day Egg Production (HDEP)
+            </Typography>
+          </AccordionSummary>
+          <AccordionDetails>
+            {expanded === "HHEP" && (
+              <HDEP
                 filters={filters}
                 start_week={weekValue[0]}
                 end_week={weekValue[1]}
