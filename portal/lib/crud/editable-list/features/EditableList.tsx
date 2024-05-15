@@ -206,7 +206,7 @@ export default function EditableList<T extends AbstractBaseModel & EditMode>({
       slots={{
         toolbar: toolbar,
         noRowsOverlay: EditableTableCustomNoRowsOverlay,
-        loadingOverlay: LinearProgress,
+        // loadingOverlay: LinearProgress,
       }}
       processRowUpdate={processRowUpdate}
       slotProps={{

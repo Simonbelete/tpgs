@@ -460,7 +460,7 @@ const DataTable = ({
         disableRowSelectionOnClick
         slots={{
           noRowsOverlay: CustomNoRowsOverlay,
-          loadingOverlay: LinearProgress,
+          // loadingOverlay: LinearProgress,
         }}
         // getRowClassName={(params) =>
         //   params.indexRelativeToCurrentPage % 2 === 0 ? "even" : "odd"

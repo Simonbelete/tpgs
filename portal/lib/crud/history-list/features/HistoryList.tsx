@@ -65,7 +65,7 @@ export default function HistoryList<T>({
       disableRowSelectionOnClick
       slots={{
         noRowsOverlay: CustomNoRowsOverlay,
-        loadingOverlay: LinearProgress,
+        // loadingOverlay: LinearProgress,
       }}
       getRowId={(row: any) => row.history_id}
       pageSizeOptions={[10, 25, 50, 100]}

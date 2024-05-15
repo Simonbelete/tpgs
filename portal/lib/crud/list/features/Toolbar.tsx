@@ -41,8 +41,12 @@ export default function Toolbar({ refetch }: ToolbarProps) {
     <>
       <GridToolbarContainer sx={{ justifyContent: "space-between", mb: 1 }}>
         <Box>
-          <GridToolbarColumnsButton color="secondary" />
-          <GridToolbarDensitySelector color="secondary" />
+          <GridToolbarColumnsButton
+            slotProps={{ button: { color: "secondary" } }}
+          />
+          <GridToolbarDensitySelector
+            slotProps={{ button: { color: "secondary" } }}
+          />
         </Box>
         <Button
           color="secondary"

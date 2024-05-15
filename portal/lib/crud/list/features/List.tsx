@@ -4,6 +4,7 @@ import {
   GridRenderCellParams,
   GridValidRowModel,
   GridSortModel,
+  GridToolbar,
 } from "@mui/x-data-grid";
 import { Box, LinearProgress } from "@mui/material";
 import StripedDataGrid, {
@@ -33,6 +34,12 @@ import buildPage from "@/util/buildPage";
 import Toolbar from "./Toolbar";
 import buildSorting from "@/util/buildSorting";
 import { filterSlice } from "@/store/slices";
+
+declare module "@mui/x-data-grid" {
+  interface ToolbarPropsOverrides {
+    refetch: () => void;
+  }
+}
 
 export interface ListProps<T> {
   columns: GridColDef[];
@@ -163,7 +170,7 @@ export default function List<T>({
         slots={{
           toolbar: Toolbar,
           noRowsOverlay: CustomNoRowsOverlay,
-          loadingOverlay: LinearProgress,
+          // loadingOverlay: LinearProgress,
         }}
         slotProps={{
           toolbar: { refetch },
