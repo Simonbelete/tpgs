@@ -825,9 +825,9 @@ const SidebarMenu = () => {
 
       <Menu menuItemStyles={menuItemStyles}>
         <MenuItem
-          component={<Link onClick={() => toggleSidebar()} href="/reports" />}
+          component={<Link onClick={() => toggleSidebar()} href="/analyses" />}
           icon={<AutoGraphIcon fontSize="small" />}
-          active={RegExp("/reports(.*)$").test(router.pathname)}
+          active={RegExp("/analyses(.*)$").test(router.pathname)}
         >
           <Typography variant="body1" fontSize={14}>
             Reports
@@ -857,7 +857,7 @@ const SidebarMenu = () => {
           </Typography>
         </MenuItem>
 
-        <MenuItem
+        {/* <MenuItem
           component={
             <Link onClick={() => toggleSidebar()} href="/reports/one-click" />
           }
@@ -867,7 +867,7 @@ const SidebarMenu = () => {
           <Typography variant="body1" fontSize={14}>
             One click report
           </Typography>
-        </MenuItem>
+        </MenuItem> */}
 
         {(isSuperUser || isAdmin) && (
           <MenuItem

@@ -11,10 +11,10 @@ const AnalysesPage = () => {
 
   return (
     <>
-      <SeoHead title="Analyses" />
+      <SeoHead title="Reports" />
       <ReportingLayout
         breadcrumbs={<Breadcrumbs items={breadcrumbs} />}
-        header={<Typography variant="title">Analyses</Typography>}
+        header={<Typography variant="title">Reports</Typography>}
       >
         <OneClickAnalyses />
       </ReportingLayout>
