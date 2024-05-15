@@ -27,11 +27,21 @@ const CardBasic = ({
         boxShadow: "rgba(0, 0, 0, 0.16) 0px 1px 4px",
         background: "#fff",
         borderRadius: "6px",
+        padding: 0,
+        "&:last-child": {
+          padding: 0,
+        },
       }}
     >
-      <Grid container direction={"column"} spacing={1}>
+      <Grid container direction={"column"} spacing={0.1}>
         <Grid item xs>
-          <Stack direction={"row"} justifyContent={"space-between"}>
+          <Stack
+            pt={"8px"}
+            px={"10px"}
+            pb={0}
+            direction={"row"}
+            justifyContent={"space-between"}
+          >
             <Typography variant="body1" fontWeight={600} color="text.primary">
               {title}
             </Typography>

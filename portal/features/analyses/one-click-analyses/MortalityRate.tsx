@@ -3,7 +3,7 @@ import { Tabs, Tab, ToggleButtonGroup, ToggleButton } from "@mui/material";
 import AutoGraphIcon from "@mui/icons-material/AutoGraph";
 import TableViewIcon from "@mui/icons-material/TableView";
 import _, { filter, result } from "lodash";
-import { useLazyGetWeightAnalyseQuery } from "../services";
+import { useLazyGetMortalityQuery } from "../services";
 import buildDirectoryQuery from "@/util/buildDirectoryQuery";
 import directoryToLabel from "@/util/directoryToLabel";
 import { Directory } from "@/models";
@@ -23,8 +23,12 @@ const columns: GridColDef[] = [
     headerName: "Week",
   },
   {
-    field: "weight",
-    headerName: "Average weight (g)",
+    field: "livability",
+    headerName: "Livability (%)",
+  },
+  {
+    field: "mortality",
+    headerName: "Mortality (%)",
   },
 ];
 
@@ -33,7 +37,7 @@ const Plot = dynamic(() => import("react-plotly.js"), {
   loading: () => <BarChartSkeleton />,
 });
 
-const BodyWeightGraph = ({
+const MortalityRate = ({
   filters,
   start_week,
   end_week,
@@ -46,7 +50,7 @@ const BodyWeightGraph = ({
   const [data, setData] = useState<any[]>([]);
   const [tableData, setTableData] = useState<any[]>([]);
 
-  const [trigger, { isFetching }] = useLazyGetWeightAnalyseQuery();
+  const [trigger, { isFetching }] = useLazyGetMortalityQuery();
 
   const handleChange = (event: React.SyntheticEvent, newValue: string) => {
     setValue(newValue);
@@ -81,13 +85,14 @@ const BodyWeightGraph = ({
 
       _.forEach(res, (row, j) => {
         x.push(Number(_.get(row, "week", 0)));
-        y.push(Number(_.get(row, "weight", 0)));
+        y.push(Number(_.get(row, "mortality", 0)));
 
         resultsTable.push({
-          id: "",
+          id: _.get(row, "id", 0),
           directory: directoryToLabel(filters[i] as Directory),
           week: Number(_.get(row, "week", 0)),
-          weight: Number(_.get(row, "weight", 0)),
+          mortality: Number(_.get(row, "mortality", 0)),
+          livability: Number(_.get(row, "livability", 0)),
         });
       });
 
@@ -133,13 +138,13 @@ const BodyWeightGraph = ({
       {!isFetching && value == "graph" && (
         <Plot
           layout={{
-            title: "Body weight graph",
+            title: "Mortality",
             height: 500,
             xaxis: {
               title: "Age of birds (weeks)",
             },
             yaxis: {
-              title: "Average body weight (grams)",
+              title: "Mortality rate (%)",
             },
           }}
           config={{ responsive: true }}
@@ -149,7 +154,6 @@ const BodyWeightGraph = ({
       )}
       {!isFetching && value == "table" && (
         <EditableTable
-          getRowId={(row: any) => row.directory + row.week}
           columns={columns}
           rows={tableData ?? []}
           loading={isFetching}
@@ -157,10 +161,8 @@ const BodyWeightGraph = ({
           pageSizeOptions={[10, 25, 50, 100, 1000]}
           density="compact"
           checkboxSelection
-          // disableRowSelectionOnClick={true}
-          // disableAutosize={false}
           autosizeOptions={{
-            columns: ["directory", "week", "weight"],
+            columns: ["directory", "week", "mortality", "livability"],
             includeOutliers: true,
             includeHeaders: true,
             expand: true,
@@ -172,4 +174,4 @@ const BodyWeightGraph = ({
   );
 };
 
-export default BodyWeightGraph;
+export default MortalityRate;

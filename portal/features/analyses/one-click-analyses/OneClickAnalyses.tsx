@@ -14,6 +14,10 @@ import {
   Divider,
   DialogContent,
   DialogActions,
+  Slider,
+  CardContent,
+  Tooltip,
+  SliderValueLabelProps,
 } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { Card } from "@/components";
@@ -42,8 +46,19 @@ import FarmsOverView from "./FarmsOverview";
 import buildDirectoryQuery from "@/util/buildDirectoryQuery";
 import { useLazyGetChickensSummaryQuery } from "@/features/one-click-report/services";
 import BodyWeightGraph from "./BodyWeightGraph";
+import MortalityRate from "./MortalityRate";
 
 type Inputs = Partial<Directory>;
+
+function ValueLabelComponent(props: SliderValueLabelProps) {
+  const { children, value } = props;
+
+  return (
+    <Tooltip enterTouchDelay={0} open={true} placement="bottom" title={value}>
+      {children}
+    </Tooltip>
+  );
+}
 
 const schema = yup.object({
   farm: yup.object().required("Farm can not be all"),
@@ -68,6 +83,12 @@ const OneClickAnalyses = () => {
   const [filters, setFilters] = useState<Inputs[]>([]);
   const [currentFarm, setcurrentFarm] = useState<Farm | null>();
   const [summary, setSummary] = useState<any[]>([]);
+  const [weekValue, setWeekValue] = React.useState<number[]>([0, 10]);
+
+  const handleWeekChange = (event: Event, newValue: number | number[]) => {
+    setWeekValue(newValue as number[]);
+    setExpanded(false);
+  };
 
   const [chickenSummaryTrigger, { data: chickenSummary }] =
     useLazyGetChickensSummaryQuery();
@@ -90,6 +111,7 @@ const OneClickAnalyses = () => {
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     setOpenFilter(false);
     setFilters([...filters, data]);
+    setExpanded(false);
 
     const response = await chickenSummaryTrigger(
       buildDirectoryQuery(data as Directory)
@@ -317,7 +339,7 @@ const OneClickAnalyses = () => {
                 </>
               }
             >
-              <Box>
+              <CardContent>
                 <Stack direction={"column"} spacing={1} divider={<Divider />}>
                   {filters.map((e, i) => (
                     <Stack
@@ -453,7 +475,25 @@ const OneClickAnalyses = () => {
                     </Stack>
                   ))}
                 </Stack>
-              </Box>
+                <Typography pt={3} variant="caption" fontWeight={600} mb={1}>
+                  Week:
+                </Typography>
+                <Slider
+                  getAriaLabel={() => "Temperature range"}
+                  value={weekValue}
+                  onChange={handleWeekChange}
+                  valueLabelDisplay="auto"
+                  color="secondary"
+                  getAriaValueText={(val: number) => `${val} Week`}
+                  marks
+                  step={1}
+                  min={0}
+                  max={100}
+                  slots={{
+                    valueLabel: ValueLabelComponent,
+                  }}
+                />
+              </CardContent>
             </Card>
           </Grid>
         </Grid>
@@ -474,7 +514,34 @@ const OneClickAnalyses = () => {
           </AccordionSummary>
           <AccordionDetails>
             {expanded === "BodyWeightGraph" && (
-              <BodyWeightGraph filters={filters} />
+              <BodyWeightGraph
+                filters={filters}
+                start_week={weekValue[0]}
+                end_week={weekValue[1]}
+              />
+            )}
+          </AccordionDetails>
+        </Accordion>
+
+        <Accordion
+          expanded={expanded === "MortalityRate"}
+          onChange={handleChange("MortalityRate")}
+        >
+          <AccordionSummary
+            expandIcon={<ExpandMoreIcon />}
+            sx={{ height: "50px" }}
+          >
+            <Typography sx={{ width: "33%", flexShrink: 0, fontWeight: "500" }}>
+              Mortality Rate
+            </Typography>
+          </AccordionSummary>
+          <AccordionDetails>
+            {expanded === "MortalityRate" && (
+              <MortalityRate
+                filters={filters}
+                start_week={weekValue[0]}
+                end_week={weekValue[1]}
+              />
             )}
           </AccordionDetails>
         </Accordion>
