@@ -4,7 +4,10 @@ import {
   GridRenderCellParams,
   GridValidRowModel,
   GridSortModel,
-  GridToolbar,
+  GridPagination,
+  useGridApiContext,
+  useGridSelector,
+  gridPageCountSelector,
 } from "@mui/x-data-grid";
 import { Box, LinearProgress } from "@mui/material";
 import StripedDataGrid, {
@@ -34,6 +37,8 @@ import buildPage from "@/util/buildPage";
 import Toolbar from "./Toolbar";
 import buildSorting from "@/util/buildSorting";
 import { filterSlice } from "@/store/slices";
+import MuiPagination from "@mui/material/Pagination";
+import { TablePaginationProps } from "@mui/material/TablePagination";
 
 declare module "@mui/x-data-grid" {
   interface ToolbarPropsOverrides {
@@ -59,6 +64,31 @@ export interface ListProps<T> {
   > &
     MutationHooks<MutationDefinition<number, ClientQueyFn, any, T, any>>;
   getRowId?: (row: any) => any;
+}
+
+function Pagination({
+  page,
+  onPageChange,
+  className,
+}: Pick<TablePaginationProps, "page" | "onPageChange" | "className">) {
+  const apiRef = useGridApiContext();
+  const pageCount = useGridSelector(apiRef, gridPageCountSelector);
+
+  return (
+    <MuiPagination
+      color="primary"
+      className={className}
+      count={pageCount}
+      page={page + 1}
+      onChange={(event, newPage) => {
+        onPageChange(event as any, newPage - 1);
+      }}
+    />
+  );
+}
+
+function CustomPagination(props: any) {
+  return <GridPagination ActionsComponent={Pagination} {...props} />;
 }
 
 export default function List<T>({
@@ -151,7 +181,7 @@ export default function List<T>({
   }, []);
 
   return (
-    <>
+    <div style={{ minHeight: 400, width: "100%" }}>
       <DeleteModal
         open={deleteConfirmation}
         onClose={handleCloseDeleteConfirmation}
@@ -159,7 +189,8 @@ export default function List<T>({
       />
       <StripedDataGrid
         data-testid="data-table"
-        sx={{ background: "white", height: "100%" }}
+        sx={{ background: "white" }}
+        autoHeight={true}
         rows={(data?.results || []) as GridValidRowModel[]}
         rowCount={data?.count || 0}
         loading={isFetching}
@@ -170,6 +201,7 @@ export default function List<T>({
         slots={{
           toolbar: Toolbar,
           noRowsOverlay: CustomNoRowsOverlay,
+          pagination: CustomPagination,
           // loadingOverlay: LinearProgress,
         }}
         slotProps={{
@@ -186,6 +218,6 @@ export default function List<T>({
         sortingMode="server"
         onSortModelChange={handleSortModelChange}
       />
-    </>
+    </div>
   );
 }
