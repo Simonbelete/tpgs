@@ -5,27 +5,39 @@ import dynamic from "next/dynamic";
 import { ListLayout } from "@/layouts";
 import { useBreadcrumbs } from "@/hooks";
 import { Breadcrumbs } from "@/components";
-import { NotificationCard } from "@/features/notification";
-import {
-  FarmsHeatmapSkeleton,
-  StartFormulatingCard,
-} from "@/features/dashboard";
+import { StartFormulatingCard } from "@/features/dashboard";
 import { SeoHead } from "@/seo";
-import {
-  GenderPercentageDistribution,
-  BreedDistribution,
-  ChickenAgeGroup,
-} from "@/features/analyses";
-import { useSelector, useDispatch } from "react-redux";
+
+import { useSelector } from "react-redux";
 import { RootState } from "@/store";
 
-// const FarmsHeatmapComponent = dynamic(
-//   () => import("../../features/dashboard/farms-heatmap"),
-//   {
-//     ssr: false,
-//     loading: () => <FarmsHeatmapSkeleton />,
-//   }
-// );
+const NotificationCard = dynamic(
+  () => import("../../features/notification/notification-card"),
+  {
+    ssr: false,
+  }
+);
+
+const BreedDistribution = dynamic(
+  () => import("../../features/analyses/breed-distribution"),
+  {
+    ssr: false,
+  }
+);
+
+const GenderPercentageDistribution = dynamic(
+  () => import("../../features/analyses/gender-percentage-distribution"),
+  {
+    ssr: false,
+  }
+);
+
+const ChickenAgeGroup = dynamic(
+  () => import("../../features/analyses/chicken-age-group"),
+  {
+    ssr: false,
+  }
+);
 
 const DashboardPage = () => {
   const { breadcrumbs } = useBreadcrumbs();

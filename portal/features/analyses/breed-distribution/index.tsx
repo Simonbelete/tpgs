@@ -139,3 +139,5 @@ export const BreedDistribution = ({ compact }: { compact?: boolean }) => {
     </>
   );
 };
+
+export default BreedDistribution;

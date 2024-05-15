@@ -199,7 +199,8 @@ export default function CreatableAsyncDropdown<T>({
           const { inputValue } = params;
           // Suggest the creation of a new value
           const isExisting = options.some(
-            (option) => inputValue === option[dataKey]
+            (option) =>
+              String(inputValue).trim() === String(option[dataKey]).trim()
           );
           if (inputValue !== "" && !isExisting) {
             let newLine: any = {

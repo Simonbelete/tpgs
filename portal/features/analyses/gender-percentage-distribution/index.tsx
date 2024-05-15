@@ -149,3 +149,5 @@ export const GenderPercentageDistribution = ({
     </>
   );
 };
+
+export default GenderPercentageDistribution;

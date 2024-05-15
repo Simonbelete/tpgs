@@ -123,3 +123,5 @@ export const ChickenAgeGroup = ({ compact }: { compact?: boolean }) => {
     </>
   );
 };
+
+export default ChickenAgeGroup;
