@@ -1,7 +1,7 @@
 import React, { ChangeEventHandler, useRef, useState } from "react";
 import { Popper, Box, Paper } from "@mui/material";
 import { DayPicker } from "react-day-picker";
-import ClickAwayListener from "@mui/base/ClickAwayListener";
+import { ClickAwayListener } from "@mui/base/ClickAwayListener";
 
 const DatePicker = () => {
   const [selected, setSelected] = useState<Date>();
@@ -13,7 +13,6 @@ const DatePicker = () => {
   };
 
   const handleClickAway = () => {
-    console.log("abc");
     setAnchorEl(null);
   };
 

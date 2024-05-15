@@ -102,8 +102,7 @@ export const RequirementForm = ({
       field: "nutrient__name",
       headerName: "Name",
       filterable: false,
-      valueGetter: (params) =>
-        params.row.nutrient ? params.row.nutrient.name : "",
+      valueGetter: (value, row) => (row.nutrient ? row.nutrient.name : ""),
     },
     {
       field: "nutrient__abbreviation",
@@ -111,8 +110,8 @@ export const RequirementForm = ({
       flex: 1,
       minWidth: 50,
       filterable: false,
-      valueGetter: (params) =>
-        params.row.nutrient ? params.row.nutrient.abbreviation : "",
+      valueGetter: (value, row) =>
+        row.nutrient ? row.nutrient.abbreviation : "",
     },
     {
       field: "value",
@@ -127,8 +126,8 @@ export const RequirementForm = ({
       headerName: "Unit",
       flex: 1,
       filterable: false,
-      valueGetter: (params) =>
-        _.get(params.row.nutrient, "unit.name", params.row.nutrient.unit),
+      valueGetter: (value, row) =>
+        _.get(row.nutrient, "unit.name", row.nutrient.unit),
     },
   ];
 

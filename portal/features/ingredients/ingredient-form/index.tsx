@@ -111,16 +111,15 @@ export const IngredientForm = ({
       headerName: "Name",
       flex: 1,
       minWidth: 100,
-      valueGetter: (params) =>
-        params.row.nutrient ? params.row.nutrient.name : "",
+      valueGetter: (value, row) => (row.nutrient ? row.nutrient.name : ""),
     },
     {
       field: "abbreviation",
       headerName: "Abbreviation",
       flex: 1,
       minWidth: 150,
-      valueGetter: (params) =>
-        params.row.nutrient ? params.row.nutrient.abbreviation : "",
+      valueGetter: (value, row) =>
+        row.nutrient ? row.nutrient.abbreviation : "",
     },
     {
       field: "value",
@@ -135,7 +134,7 @@ export const IngredientForm = ({
       headerName: "Unit",
       flex: 1,
       minWidth: 150,
-      valueGetter: (params) => _.get(params.row.nutrient, "unit.name", ""),
+      valueGetter: (value, row) => _.get(row.nutrient, "unit.name", ""),
     },
   ];
 

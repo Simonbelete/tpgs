@@ -12,14 +12,14 @@ const columns: GridColDef[] = [
     headerName: "Unit From",
     flex: 1,
     minWidth: 150,
-    valueGetter: (params) => params.row.unit_to.name ?? "",
+    valueGetter: (value, row) => row.unit_to.name ?? "",
   },
   {
     field: "unit_to",
     headerName: "Unit To",
     flex: 1,
     minWidth: 150,
-    valueGetter: (params) => params.row.unit_to.name ?? "",
+    valueGetter: (value, row) => row.unit_to.name ?? "",
   },
   { field: "factor", headerName: "Factor", flex: 1, minWidth: 150 },
 ];

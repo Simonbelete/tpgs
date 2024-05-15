@@ -1,7 +1,7 @@
 import React, { ChangeEventHandler, useRef, useState } from "react";
 import { Popper, Box, Paper } from "@mui/material";
 import { DatePicker } from "@mui/x-date-pickers";
-import ClickAwayListener from "@mui/base/ClickAwayListener";
+import { ClickAwayListener } from "@mui/base/ClickAwayListener";
 
 const YearPicker = () => {
   const [selected, setSelected] = useState<Date>();

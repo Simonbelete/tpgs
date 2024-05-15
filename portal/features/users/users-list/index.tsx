@@ -87,9 +87,9 @@ export const UserList = () => {
       headerName: "Last Login",
       flex: 1,
       minWidth: 150,
-      valueGetter: (params) =>
-        params.row.last_login
-          ? dayjs(params.row.last_login).format(
+      valueGetter: (value, row) =>
+        row.last_login
+          ? dayjs(row.last_login).format(
               process.env.NEXT_PUBLIC_DATETIME_FORMAT
             )
           : "",

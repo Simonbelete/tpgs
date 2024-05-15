@@ -13,8 +13,6 @@ export const HDEPGuidelineHistoryList = ({ data }: { data: HDEPGuideline }) => {
       headerName: "Breed",
       flex: 1,
       minWidth: 150,
-      valueGetter: (params) =>
-        params.row.nutrient_group ? params.row.nutrient_group.name : "",
       renderCell: (params: GridRenderCellParams<any>) => {
         if (params.row.breed == null) return <></>;
         return (

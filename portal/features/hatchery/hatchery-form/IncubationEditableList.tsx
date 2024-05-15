@@ -39,13 +39,13 @@ const IncubationEditableList = ({ data }: { data: Hatchery }) => {
       field: "egg__week",
       headerName: "Week",
       filterable: false,
-      valueGetter: (params) => (params.row.egg ? params.row.egg.week : ""),
+      valueGetter: (value, row) => (row.egg ? row.egg.week : ""),
     },
     {
       field: "egg__eggs",
       headerName: "No of eggs",
       filterable: false,
-      valueGetter: (params) => (params.row.egg ? params.row.egg.eggs : ""),
+      valueGetter: (value, row) => (row.egg ? row.egg.eggs : ""),
     },
     {
       field: "no_egg",

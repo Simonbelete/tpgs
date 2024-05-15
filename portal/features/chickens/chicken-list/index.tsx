@@ -84,11 +84,9 @@ export const ChickenList = () => {
     {
       field: "hatch_date",
       headerName: "Hatch Date",
-      valueGetter: (params) =>
-        params.row.hatch_date
-          ? dayjs(params.row.hatch_date).format(
-              process.env.NEXT_PUBLIC_DATE_FORMAT
-            )
+      valueGetter: (value, row) =>
+        row.hatch_date
+          ? dayjs(row.hatch_date).format(process.env.NEXT_PUBLIC_DATE_FORMAT)
           : "",
     },
     { field: "color", headerName: "color" },
@@ -109,9 +107,9 @@ export const ChickenList = () => {
     {
       field: "reduction_date",
       headerName: "Mortality",
-      valueGetter: (params) =>
-        params.row.reduction_date
-          ? dayjs(params.row.reduction_date).format(
+      valueGetter: (value, row) =>
+        row.reduction_date
+          ? dayjs(row.reduction_date).format(
               process.env.NEXT_PUBLIC_DATE_FORMAT
             )
           : "",
@@ -119,11 +117,9 @@ export const ChickenList = () => {
     {
       field: "created_at",
       headerName: "Create at",
-      valueGetter: (params) =>
-        params.row.created_at
-          ? dayjs(params.row.created_at).format(
-              process.env.NEXT_PUBLIC_DATE_FORMAT
-            )
+      valueGetter: (value, row) =>
+        row.created_at
+          ? dayjs(row.created_at).format(process.env.NEXT_PUBLIC_DATE_FORMAT)
           : "",
     },
   ];

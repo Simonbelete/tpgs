@@ -24,11 +24,9 @@ const columns: GridColDef[] = [
     headerName: "Action Date",
     flex: 1,
     minWidth: 150,
-    valueGetter: (params) =>
-      params.row.history_date
-        ? dayjs(params.row.history_date).format(
-            process.env.NEXT_PUBLIC_DATE_FORMAT
-          )
+    valueGetter: (value, row) =>
+      row.history_date
+        ? dayjs(row.history_date).format(process.env.NEXT_PUBLIC_DATE_FORMAT)
         : "",
   },
   {

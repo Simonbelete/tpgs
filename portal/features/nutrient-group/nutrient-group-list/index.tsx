@@ -24,11 +24,9 @@ export const NutrientGroupList = () => {
       headerName: "Create at",
       flex: 1,
       minWidth: 150,
-      valueGetter: (params) =>
-        params.row.created_at
-          ? dayjs(params.row.created_at).format(
-              process.env.NEXT_PUBLIC_DATE_FORMAT
-            )
+      valueGetter: (value, row) =>
+        row.created_at
+          ? dayjs(row.created_at).format(process.env.NEXT_PUBLIC_DATE_FORMAT)
           : "",
     },
   ];

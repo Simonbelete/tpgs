@@ -23,8 +23,6 @@ export const IncubationList = () => {
       headerName: "Hatch",
       flex: 1,
       minWidth: 150,
-      valueGetter: (params) =>
-        params.row.nutrient_group ? params.row.nutrient_group.name : "",
       renderCell: (params: GridRenderCellParams<any>) => {
         if (params.row.hatchery == null) return <></>;
         return (
@@ -40,11 +38,9 @@ export const IncubationList = () => {
       field: "date_time",
       headerName: "Date",
       flex: 1,
-      valueGetter: (params) =>
-        params.row.created_at
-          ? dayjs(params.row.date_time).format(
-              process.env.NEXT_PUBLIC_DATETIME_FORMAT
-            )
+      valueGetter: (value, row) =>
+        row.created_at
+          ? dayjs(row.date_time).format(process.env.NEXT_PUBLIC_DATETIME_FORMAT)
           : "",
     },
     {

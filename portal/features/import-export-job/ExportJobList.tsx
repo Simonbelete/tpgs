@@ -58,9 +58,9 @@ export const ExportJobList = () => {
     {
       field: "processing_initiated",
       headerName: "Processing Inititated",
-      valueGetter: (params) =>
-        params.row.processing_initiated
-          ? dayjs(params.row.processing_initiated).format(
+      valueGetter: (value, row) =>
+        row.processing_initiated
+          ? dayjs(row.processing_initiated).format(
               process.env.NEXT_PUBLIC_API_DATETIME_FORMAT
             )
           : "",

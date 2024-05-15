@@ -54,16 +54,15 @@ export const FormulaRequirementForm = ({ data }: { data?: Formula }) => {
       headerName: "Name",
       flex: 1,
       minWidth: 100,
-      valueGetter: (params) =>
-        params.row.nutrient ? params.row.nutrient.name : "",
+      valueGetter: (value, row) => (row.nutrient ? row.nutrient.name : ""),
     },
     {
       field: "abbreviation",
       headerName: "Abbreviation",
       flex: 1,
       minWidth: 150,
-      valueGetter: (params) =>
-        params.row.nutrient ? params.row.nutrient.abbreviation : "",
+      valueGetter: (value, row) =>
+        row.nutrient ? row.nutrient.abbreviation : "",
     },
     {
       field: "value",
@@ -77,10 +76,10 @@ export const FormulaRequirementForm = ({ data }: { data?: Formula }) => {
       headerName: "Unit",
       flex: 1,
       minWidth: 150,
-      valueGetter: (params) =>
-        params.row.nutrient.unit.display_name
-          ? params.row.nutrient.unit.display_name
-          : params.row.nutrient.unit,
+      valueGetter: (value, row) =>
+        row.nutrient.unit.display_name
+          ? row.nutrient.unit.display_name
+          : row.nutrient.unit,
     },
   ];
 

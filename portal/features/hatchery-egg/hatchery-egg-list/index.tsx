@@ -59,11 +59,9 @@ export const CandlingList = () => {
       field: "canndle_date",
       headerName: "Canndle Date",
       flex: 1,
-      valueGetter: (params) =>
-        params.row.date_time
-          ? dayjs(params.row.date_time).format(
-              process.env.NEXT_PUBLIC_DATE_FORMAT
-            )
+      valueGetter: (value, row) =>
+        row.date_time
+          ? dayjs(row.date_time).format(process.env.NEXT_PUBLIC_DATE_FORMAT)
           : "",
     },
     {

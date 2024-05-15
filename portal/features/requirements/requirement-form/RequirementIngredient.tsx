@@ -49,8 +49,7 @@ const RequirementIngredientForm = ({ data }: { data: Requirement }) => {
       headerName: "Name",
       flex: 1,
       filterable: false,
-      valueGetter: (params) =>
-        params.row.ingredient ? params.row.ingredient.name : "",
+      valueGetter: (value, row) => (row.ingredient ? row.ingredient.name : ""),
     },
     {
       field: "min",

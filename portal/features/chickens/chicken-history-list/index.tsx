@@ -15,8 +15,8 @@ export const ChickenHistoryList = ({ data }: { data: Chicken }) => {
       headerName: "House",
       flex: 1,
       minWidth: 150,
-      valueGetter: (params) =>
-        params.row.nutrient_group ? params.row.nutrient_group.name : "",
+      valueGetter: (value, row) =>
+        row.nutrient_group ? row.nutrient_group.name : "",
       renderCell: (params: GridRenderCellParams<any>) => {
         if (params.row.house == null) return <></>;
         return (

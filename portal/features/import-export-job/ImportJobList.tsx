@@ -39,9 +39,9 @@ export const ImportJobList = () => {
       headerName: "Processing Inititated",
       flex: 1,
       minWidth: 150,
-      valueGetter: (params) =>
-        params.row.processing_initiated
-          ? dayjs(params.row.processing_initiated).format(
+      valueGetter: (value, row) =>
+        row.processing_initiated
+          ? dayjs(row.processing_initiated).format(
               process.env.NEXT_PUBLIC_API_DATETIME_FORMAT
             )
           : "",
@@ -52,9 +52,9 @@ export const ImportJobList = () => {
       headerName: "Uploaded on",
       flex: 1,
       minWidth: 150,
-      valueGetter: (params) =>
-        params.row.uploaded_on
-          ? dayjs(params.row.uploaded_on).format(
+      valueGetter: (value, row) =>
+        row.uploaded_on
+          ? dayjs(row.uploaded_on).format(
               process.env.NEXT_PUBLIC_API_DATETIME_FORMAT
             )
           : "",

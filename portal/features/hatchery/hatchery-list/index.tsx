@@ -55,11 +55,9 @@ export const HatcheryList = () => {
       field: "hatch_date",
       headerName: "Hatch Date",
       flex: 1,
-      valueGetter: (params) =>
-        params.row.hatch_date
-          ? dayjs(params.row.hatch_date).format(
-              process.env.NEXT_PUBLIC_DATE_FORMAT
-            )
+      valueGetter: (value, row) =>
+        row.hatch_date
+          ? dayjs(row.hatch_date).format(process.env.NEXT_PUBLIC_DATE_FORMAT)
           : "",
     },
     {
@@ -67,11 +65,9 @@ export const HatcheryList = () => {
       headerName: "Create at",
       flex: 1,
       minWidth: 150,
-      valueGetter: (params) =>
-        params.row.created_at
-          ? dayjs(params.row.created_at).format(
-              process.env.NEXT_PUBLIC_DATE_FORMAT
-            )
+      valueGetter: (value, row) =>
+        row.created_at
+          ? dayjs(row.created_at).format(process.env.NEXT_PUBLIC_DATE_FORMAT)
           : "",
     },
   ];

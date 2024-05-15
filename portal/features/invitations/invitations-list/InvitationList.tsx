@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import {
   GridRowsProp,
   GridColDef,
-  GridRenderCellParams
+  GridRenderCellParams,
 } from "@mui/x-data-grid";
 import { Chip, Typography, Stack } from "@mui/material";
 import Link from "next/link";
@@ -11,8 +11,12 @@ import { Invitation } from "@/models";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store";
 import _ from "lodash";
-import dayjs from 'dayjs';
-import { useGetInvitationsQuery, useDeleteInvitationMutation, useResendInvitationEmailMutation } from "../services";
+import dayjs from "dayjs";
+import {
+  useGetInvitationsQuery,
+  useDeleteInvitationMutation,
+  useResendInvitationEmailMutation,
+} from "../services";
 import buildQuery from "@/util/buildQuery";
 import buildPage from "@/util/buildPage";
 import { useSnackbar } from "notistack";
@@ -40,19 +44,25 @@ const columns: GridColDef[] = [
     flex: 1,
     minWidth: 150,
   },
-  { 
-    field: "sent_date", 
-    headerName: "Invitation date", 
-    flex: 1, minWidth: 150,
-    valueGetter: (params) =>
-      params.row.sent_date ? dayjs(params.row.sent_date).format(process.env.NEXT_PUBLIC_DATE_FORMAT) : "",
+  {
+    field: "sent_date",
+    headerName: "Invitation date",
+    flex: 1,
+    minWidth: 150,
+    valueGetter: (value, row) =>
+      row.sent_date
+        ? dayjs(row.sent_date).format(process.env.NEXT_PUBLIC_DATE_FORMAT)
+        : "",
   },
-  { 
-    field: "expire_date", 
-    headerName: "Expire Date", 
-    flex: 1, minWidth: 150,
-    valueGetter: (params) =>
-      params.row.expire_date ? dayjs(params.row.expire_date).format(process.env.NEXT_PUBLIC_DATE_FORMAT) : "",
+  {
+    field: "expire_date",
+    headerName: "Expire Date",
+    flex: 1,
+    minWidth: 150,
+    valueGetter: (value, row) =>
+      row.expire_date
+        ? dayjs(row.expire_date).format(process.env.NEXT_PUBLIC_DATE_FORMAT)
+        : "",
   },
   {
     field: "farms",
@@ -77,13 +87,32 @@ const columns: GridColDef[] = [
     minWidth: 150,
     renderCell: (params: GridRenderCellParams<any>) => {
       if (params.row.accepted) {
-        return <Chip label="Accepted" color="success" variant="outlined" size="small" />;
+        return (
+          <Chip
+            label="Accepted"
+            color="success"
+            variant="outlined"
+            size="small"
+          />
+        );
       } else if (params.row.accepted == false) {
-        return <Chip label="Not Accepted" color="error" variant="outlined" size="small" />;
+        return (
+          <Chip
+            label="Not Accepted"
+            color="error"
+            variant="outlined"
+            size="small"
+          />
+        );
       } else
-      return (
-        <Chip label="Pending" color="warning" variant="outlined" size="small" />
-      );
+        return (
+          <Chip
+            label="Pending"
+            color="warning"
+            variant="outlined"
+            size="small"
+          />
+        );
     },
   },
 ];
@@ -95,25 +124,28 @@ const InvitationList = () => {
     page: 0,
     pageSize: 10,
   });
-  
-  const { data, isLoading, refetch } = useGetInvitationsQuery(
-    {
-      ...buildPage(paginationModel),
-      ...buildQuery({'accepted': selector.filters['accepted']}, 'value')
-    }
-  ); 
-  const [resendEmail, resendResult] = useResendInvitationEmailMutation();
-  
-  const [deleteInvitation, deleteResult ] = useDeleteInvitationMutation();
 
-  const handleDelete = async (id: number) => await deleteInvitation(id).then(() => refetch())
+  const { data, isLoading, refetch } = useGetInvitationsQuery({
+    ...buildPage(paginationModel),
+    ...buildQuery({ accepted: selector.filters["accepted"] }, "value"),
+  });
+  const [resendEmail, resendResult] = useResendInvitationEmailMutation();
+
+  const [deleteInvitation, deleteResult] = useDeleteInvitationMutation();
+
+  const handleDelete = async (id: number) =>
+    await deleteInvitation(id).then(() => refetch());
 
   const handleResendEmail = async (id: number) => await resendEmail(id);
 
   useEffect(() => {
-    if(resendResult.isSuccess) enqueueSnackbar("Email will be send", {variant: "info"})
-    if(resendResult.isError) enqueueSnackbar("Failed to send email, please try again", {variant: "error"})
-  }, [resendResult])
+    if (resendResult.isSuccess)
+      enqueueSnackbar("Email will be send", { variant: "info" });
+    if (resendResult.isError)
+      enqueueSnackbar("Failed to send email, please try again", {
+        variant: "error",
+      });
+  }, [resendResult]);
 
   return (
     <DataTable

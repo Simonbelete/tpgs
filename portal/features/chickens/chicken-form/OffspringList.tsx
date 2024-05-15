@@ -73,11 +73,9 @@ const columns: GridColDef[] = [
     field: "reduction_date",
     headerName: "Mortality",
     flex: 1,
-    valueGetter: (params) =>
-      params.row.reduction_date
-        ? dayjs(params.row.reduction_date).format(
-            process.env.NEXT_PUBLIC_DATE_FORMAT
-          )
+    valueGetter: (value, row) =>
+      row.reduction_date
+        ? dayjs(row.reduction_date).format(process.env.NEXT_PUBLIC_DATE_FORMAT)
         : "",
   },
 ];

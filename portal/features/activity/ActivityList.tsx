@@ -65,7 +65,7 @@ const columns: GridColDef[] = [
     field: "user",
     headerName: "User",
     flex: 1,
-    valueGetter: (params) => params.row.user.display_name,
+    valueGetter: (value, row) => row.user.display_name,
   },
   {
     field: "action_time",
