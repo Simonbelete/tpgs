@@ -7,16 +7,16 @@ export default function (data: Directory) {
     name += (data.farm as any).name;
   }
 
-  if (data.hatchery) {
-    name += " / " + (data.hatchery as any).name;
-  }
-
   if (data.generation) {
-    name += "/ G" + _.get(data.generation, "generation", "all");
+    name += " / G" + _.get(data.generation, "generation", "all");
   }
 
   if (data.breed) {
     name += " / " + (data.breed as any).name;
+  }
+
+  if (data.hatchery) {
+    name += " / B" + (data.hatchery as any).name;
   }
 
   if (data.house) {

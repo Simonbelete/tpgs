@@ -1161,6 +1161,7 @@ class FeedGraphViewSet(AnalysesViewSet):
                 return Response({'results': results})
 
 
+# TODO: remove
 class MortalityViewSet(AnalysesViewSet):
     @extend_schema(
         parameters=ANALYSES_PARAMETERS
@@ -1191,12 +1192,6 @@ class MortalityViewSet(AnalysesViewSet):
                 alive_chickens = queryset.exclude(
                     duration__gte=timedelta(weeks=week)).count()
                 dead_chickens = current_queryset.count()
-
-                # if reduction_reason_id == 0:
-                #     dead_chickens = current_queryset.filter(
-                #         reduction_reason=reduction_reason_id).count()
-                # else:
-                #     dead_chickens = current_queryset.count()
 
                 mortality = dead_chickens/total_chickens * 100 if total_chickens != 0 else 0
                 livability = alive_chickens/total_chickens * 100 if total_chickens != 0 else 0
@@ -1268,8 +1263,12 @@ class ChickenRecordSetQuality(AnalysesViewSet):
     def list(self, request, **kwargs):
         chickens_queryset = self.filter_by_directory(**kwargs)
         total_chickens = chickens_queryset.count()
+        start_week = int(self.request.GET.get('start_week', 0))
+        end_week = int(self.request.GET.get('end_week', 0))
         
         queryset = models.ChickenRecordset.objects.filter(
+            week__gte = start_week,
+            week__lte = end_week,
             chicken__in = chickens_queryset.values_list('id', flat=True)
         )
         df = pd.DataFrame(queryset.values())
@@ -1330,6 +1329,8 @@ class MortalityRate(AnalysesViewSet):
     )
     def list(self, request, **kwargs):
         queryset = self.filter_by_directory()
+        start_week = int(self.request.GET.get('start_week', 0))
+        end_week = int(self.request.GET.get('end_week', 0))
         
         duration = ExpressionWrapper(
                 F('reduction_date') - F('hatch_date'), output_field=DurationField())
@@ -1338,16 +1339,16 @@ class MortalityRate(AnalysesViewSet):
         
         ages = list(queryset.exclude(duration__isnull=True).values_list('duration', flat=True))
         
-        min_age = calc_min(ages)
-        min_age = math.floor(min_age.days / 7)  if isinstance(min_age, timedelta) else 0
+        # min_age = calc_min(ages)
+        # min_age = math.floor(min_age.days / 7)  if isinstance(min_age, timedelta) else 0
 
-        max_age = calc_max(ages)
-        max_age = math.floor(max_age.days / 7) + 1 if isinstance(max_age, timedelta) else 0
+        # max_age = calc_max(ages)
+        # max_age = math.floor(max_age.days / 7) + 1 if isinstance(max_age, timedelta) else 0
 
         total_chickens = queryset.count()
                 
         results = []
-        for week in range(min_age, max_age):
+        for week in range(start_week, end_week + 1):
             dead_chickens = get_dead_chickens(queryset, week).count()
 
             alive_chickens = get_alive_chickens(queryset, week).count()

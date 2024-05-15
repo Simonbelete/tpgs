@@ -50,7 +50,11 @@ import MortalityRate from "./MortalityRate";
 import HHEP from "./HHEP";
 import HDEP from "./HDEP";
 import SingleMortalityRate from "./SingleMortalityRate";
+import GrowthPreformance from "./GrowthPreformance";
 import directoryToLabel from "@/util/directoryToLabel";
+import FeedIntakeGraph from "./FeedIntakeGraph";
+import WeeklyDataCollectionGraph from "./WeeklyDataCollectionGraph";
+import MinandMax from "./MinandMax";
 
 type Inputs = Partial<Directory>;
 
@@ -325,7 +329,7 @@ const OneClickAnalyses = () => {
           </Button>
         </DialogActions>
       </Dialog>
-      <Box display={"flex"} flexDirection={"column"} gap={5}>
+      <Box display={"flex"} flexDirection={"column"} gap={4}>
         <Grid container>
           <Grid item xs={12} md={5}>
             <Card
@@ -419,7 +423,7 @@ const OneClickAnalyses = () => {
                               fontSize={"0.67rem"}
                               color="text.secondary"
                             >
-                              Hatchery
+                              Batch
                             </Typography>
                             <Typography variant="caption" color="text.primary">
                               {e.hatchery
@@ -505,34 +509,63 @@ const OneClickAnalyses = () => {
         <FarmsOverView data={summary} filters={filters} />
 
         {_.map(filters, (e, i) => (
-          <Accordion
-            key={i}
-            expanded={expanded === `SingleMortalityRate${i}`}
-            onChange={handleChange(`SingleMortalityRate${i}`)}
-          >
-            <AccordionSummary
-              expandIcon={<ExpandMoreIcon />}
-              sx={{ height: "50px" }}
+          <Box key={i} display={"flex"} flexDirection={"column"} gap={2}>
+            <Accordion
+              expanded={expanded === `SingleMortalityRate${i}`}
+              onChange={handleChange(`SingleMortalityRate${i}`)}
             >
-              <Typography
-                sx={{ width: "33%", flexShrink: 0, fontWeight: "500" }}
+              <AccordionSummary
+                expandIcon={<ExpandMoreIcon />}
+                sx={{ height: "50px" }}
               >
-                Mortality rate for
-              </Typography>
-              <Typography sx={{ color: "text.secondary" }}>
-                {directoryToLabel(e as Directory)}
-              </Typography>
-            </AccordionSummary>
-            <AccordionDetails>
-              {expanded === `SingleMortalityRate${i}` && (
-                <SingleMortalityRate
-                  filter={e}
-                  start_week={weekValue[0]}
-                  end_week={weekValue[1]}
-                />
-              )}
-            </AccordionDetails>
-          </Accordion>
+                <Typography
+                  sx={{ width: "33%", flexShrink: 0, fontWeight: "500" }}
+                >
+                  Mortality rate for
+                </Typography>
+                <Typography sx={{ color: "text.secondary" }}>
+                  {directoryToLabel(e as Directory)}
+                </Typography>
+              </AccordionSummary>
+              <AccordionDetails>
+                {expanded === `SingleMortalityRate${i}` && (
+                  <SingleMortalityRate
+                    filter={e}
+                    start_week={weekValue[0]}
+                    end_week={weekValue[1]}
+                  />
+                )}
+              </AccordionDetails>
+            </Accordion>
+
+            <Accordion
+              expanded={expanded === `WeeklyDataCollectionGraph${i}`}
+              onChange={handleChange(`WeeklyDataCollectionGraph${i}`)}
+            >
+              <AccordionSummary
+                expandIcon={<ExpandMoreIcon />}
+                sx={{ height: "50px" }}
+              >
+                <Typography
+                  sx={{ width: "33%", flexShrink: 0, fontWeight: "500" }}
+                >
+                  Weekly data collection report
+                </Typography>
+                <Typography sx={{ color: "text.secondary" }}>
+                  {directoryToLabel(e as Directory)}
+                </Typography>
+              </AccordionSummary>
+              <AccordionDetails>
+                {expanded === `WeeklyDataCollectionGraph${i}` && (
+                  <WeeklyDataCollectionGraph
+                    filter={e}
+                    start_week={weekValue[0]}
+                    end_week={weekValue[1]}
+                  />
+                )}
+              </AccordionDetails>
+            </Accordion>
+          </Box>
         ))}
 
         <Accordion
@@ -550,6 +583,52 @@ const OneClickAnalyses = () => {
           <AccordionDetails>
             {expanded === "BodyWeightGraph" && (
               <BodyWeightGraph
+                filters={filters}
+                start_week={weekValue[0]}
+                end_week={weekValue[1]}
+              />
+            )}
+          </AccordionDetails>
+        </Accordion>
+
+        <Accordion
+          expanded={expanded === "GrowthPreformance"}
+          onChange={handleChange("GrowthPreformance")}
+        >
+          <AccordionSummary
+            expandIcon={<ExpandMoreIcon />}
+            sx={{ height: "50px" }}
+          >
+            <Typography sx={{ width: "33%", flexShrink: 0, fontWeight: "500" }}>
+              Growth preformance
+            </Typography>
+          </AccordionSummary>
+          <AccordionDetails>
+            {expanded === "GrowthPreformance" && (
+              <GrowthPreformance
+                filters={filters}
+                start_week={weekValue[0]}
+                end_week={weekValue[1]}
+              />
+            )}
+          </AccordionDetails>
+        </Accordion>
+
+        <Accordion
+          expanded={expanded === "FeedIntakeGraph"}
+          onChange={handleChange("FeedIntakeGraph")}
+        >
+          <AccordionSummary
+            expandIcon={<ExpandMoreIcon />}
+            sx={{ height: "50px" }}
+          >
+            <Typography sx={{ width: "33%", flexShrink: 0, fontWeight: "500" }}>
+              Feed intake graph
+            </Typography>
+          </AccordionSummary>
+          <AccordionDetails>
+            {expanded === "FeedIntakeGraph" && (
+              <FeedIntakeGraph
                 filters={filters}
                 start_week={weekValue[0]}
                 end_week={weekValue[1]}
@@ -605,8 +684,8 @@ const OneClickAnalyses = () => {
         </Accordion>
 
         <Accordion
-          expanded={expanded === "HHEP"}
-          onChange={handleChange("HHEP")}
+          expanded={expanded === "HDEP"}
+          onChange={handleChange("HDEP")}
         >
           <AccordionSummary
             expandIcon={<ExpandMoreIcon />}
@@ -617,8 +696,104 @@ const OneClickAnalyses = () => {
             </Typography>
           </AccordionSummary>
           <AccordionDetails>
-            {expanded === "HHEP" && (
+            {expanded === "HDEP" && (
               <HDEP
+                filters={filters}
+                start_week={weekValue[0]}
+                end_week={weekValue[1]}
+              />
+            )}
+          </AccordionDetails>
+        </Accordion>
+
+        <Accordion
+          expanded={expanded === "MinandMaxBodyWeight"}
+          onChange={handleChange("MinandMaxBodyWeight")}
+        >
+          <AccordionSummary
+            expandIcon={<ExpandMoreIcon />}
+            sx={{ height: "50px" }}
+          >
+            <Typography sx={{ width: "33%", flexShrink: 0, fontWeight: "500" }}>
+              Body weight distributions
+            </Typography>
+          </AccordionSummary>
+          <AccordionDetails>
+            {expanded === "MinandMaxBodyWeight" && (
+              <MinandMax
+                field_name="body_weight"
+                filters={filters}
+                start_week={weekValue[0]}
+                end_week={weekValue[1]}
+              />
+            )}
+          </AccordionDetails>
+        </Accordion>
+
+        <Accordion
+          expanded={expanded === "MinandMaxFeedIntake"}
+          onChange={handleChange("MinandMaxFeedIntake")}
+        >
+          <AccordionSummary
+            expandIcon={<ExpandMoreIcon />}
+            sx={{ height: "50px" }}
+          >
+            <Typography sx={{ width: "33%", flexShrink: 0, fontWeight: "500" }}>
+              Feed intake distributions
+            </Typography>
+          </AccordionSummary>
+          <AccordionDetails>
+            {expanded === "MinandMaxFeedIntake" && (
+              <MinandMax
+                field_name="feed_intake"
+                filters={filters}
+                start_week={weekValue[0]}
+                end_week={weekValue[1]}
+              />
+            )}
+          </AccordionDetails>
+        </Accordion>
+
+        <Accordion
+          expanded={expanded === "MinandMaxEggs"}
+          onChange={handleChange("MinandMaxEggs")}
+        >
+          <AccordionSummary
+            expandIcon={<ExpandMoreIcon />}
+            sx={{ height: "50px" }}
+          >
+            <Typography sx={{ width: "33%", flexShrink: 0, fontWeight: "500" }}>
+              No of eggs distributions
+            </Typography>
+          </AccordionSummary>
+          <AccordionDetails>
+            {expanded === "MinandMaxEggs" && (
+              <MinandMax
+                field_name="eggs"
+                filters={filters}
+                start_week={weekValue[0]}
+                end_week={weekValue[1]}
+              />
+            )}
+          </AccordionDetails>
+        </Accordion>
+
+        <Accordion
+          expanded={expanded === "MinandMaxEggsWeight"}
+          onChange={handleChange("MinandMaxEggsWeight")}
+        >
+          <AccordionSummary
+            expandIcon={<ExpandMoreIcon />}
+            sx={{ height: "50px" }}
+          >
+            <Typography sx={{ width: "33%", flexShrink: 0, fontWeight: "500" }}>
+              Eggs weight distributions
+            </Typography>
+          </AccordionSummary>
+          <AccordionDetails>
+            {expanded === "MinandMaxEggsWeight" && (
+              <MinandMax
+                field_name="eggs_weight"
                 filters={filters}
                 start_week={weekValue[0]}
                 end_week={weekValue[1]}
