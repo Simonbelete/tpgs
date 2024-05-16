@@ -155,7 +155,7 @@ export const ExportJobForm = () => {
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   const router = useRouter();
 
-  const [tabValue, setTabValue] = useState(0);
+  const [tabValue, setTabValue] = useState(1);
   const [activeResouce, setActiveResouce] = useState<Res | null>(null);
 
   const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
@@ -213,7 +213,6 @@ export const ExportJobForm = () => {
   };
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
-    console.log("abbbbb");
     const body = {
       resource: _.get(data.resource, "resource", null),
       format: "xlsx",
@@ -243,7 +242,7 @@ export const ExportJobForm = () => {
       });
 
       if (response.status == 201) {
-        router.push(`/export-job`);
+        // router.push(`/export-job`);
       } else {
         enqueueSnackbar("Please select file type either csv or excel", {
           variant: "error",
@@ -258,7 +257,7 @@ export const ExportJobForm = () => {
 
   return (
     <>
-      <Tabs
+      {/* <Tabs
         value={tabValue}
         onChange={handleTabChange}
         indicatorColor="primary"
@@ -267,7 +266,7 @@ export const ExportJobForm = () => {
       >
         <Tab label="Export single chicken data" />
         <Tab label="Batch export" />
-      </Tabs>
+      </Tabs> */}
       <Card title="Submit Export Job">
         <form onSubmit={handleSubmit(onSubmit)}>
           <Box sx={{ width: "90%", mb: 2 }}>

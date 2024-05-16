@@ -622,8 +622,17 @@ class ChickenRecordsetResource(BaseChickenRecordsetResource):
         list_of_weeks = np.array(df['week'].unique().tolist()).astype(int)
         list_of_weeks = np.sort(list_of_weeks).astype(str).tolist()
 
-        df.to_csv('abc')
+        print(df.shape)
+        # Fill empty or NaN with zero, so the row is not lost when pivoting table
+        # df[self.fields['body_weight'].column_name] = df[self.fields['body_weight'].column_name].apply(pd.to_numeric).fillna(0)
+        # df[self.fields['feed_weight'].column_name] = df[self.fields['feed_weight'].column_name].apply(pd.to_numeric).fillna(0)
+        # df[self.fields['no_eggs'].column_name] = df[self.fields['no_eggs'].column_name].apply(pd.to_numeric).fillna(0)
+        # df[self.fields['eggs_weight'].column_name] = df[self.fields['eggs_weight'].column_name].apply(pd.to_numeric).fillna(0)
 
+        print(df.dtypes)
+        
+        df.to_csv('abc')
+    
         # Sum values if duplicates are found
         df = df.pivot_table(
             index=[
