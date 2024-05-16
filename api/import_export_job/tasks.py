@@ -96,7 +96,7 @@ def _run_export(instance):
 
         path = default_storage.save(
             settings.MEDIA_ROOT + "/exportdata/" + filename,
-            ContentFile(dataset.xlsx))
+            ContentFile(dataset.csv))
 
         instance.file = path
         instance.job_status = 'DONE'

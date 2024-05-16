@@ -242,7 +242,7 @@ export const ExportJobForm = () => {
       });
 
       if (response.status == 201) {
-        // router.push(`/export-job`);
+        router.push(`/export-job`);
       } else {
         enqueueSnackbar("Please select file type either csv or excel", {
           variant: "error",

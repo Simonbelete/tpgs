@@ -102,7 +102,7 @@ class BaseChickenResource(BaseResource):
         attribute='dam',
         widget=widgets.ForeignKeyWidget(Chicken, field='tag'))
     reduction_date = fields.Field(
-        column_name='Cull Date', attribute='reduction_date')
+        column_name='Cull Date', attribute='reduction_date', widget=widgets.DateWidget(format="%d/%m/%Y"))
     reduction_reason = fields.Field(
         column_name='Cull Reason',
         attribute='reduction_reason',
@@ -133,7 +133,7 @@ class BaseChickenResource(BaseResource):
         model = Chicken
         import_id_fields = ['tag']
         exclude = ['id']
-        fields = ['tag', 'hatch_date', 'sex',
+        fields = ['hatch_date', 'sex', 'tag', 
                   'breed', 'generation', 'hatchery', 'pen', 'sire', 'dam', 'reduction_date', 'reduction_reason', 'color']
 
     def _drop_empty_row(self, df, col_name):
@@ -622,17 +622,12 @@ class ChickenRecordsetResource(BaseChickenRecordsetResource):
         list_of_weeks = np.array(df['week'].unique().tolist()).astype(int)
         list_of_weeks = np.sort(list_of_weeks).astype(str).tolist()
 
-        print(df.shape)
         # Fill empty or NaN with zero, so the row is not lost when pivoting table
         # df[self.fields['body_weight'].column_name] = df[self.fields['body_weight'].column_name].apply(pd.to_numeric).fillna(0)
         # df[self.fields['feed_weight'].column_name] = df[self.fields['feed_weight'].column_name].apply(pd.to_numeric).fillna(0)
         # df[self.fields['no_eggs'].column_name] = df[self.fields['no_eggs'].column_name].apply(pd.to_numeric).fillna(0)
         # df[self.fields['eggs_weight'].column_name] = df[self.fields['eggs_weight'].column_name].apply(pd.to_numeric).fillna(0)
 
-        print(df.dtypes)
-        
-        df.to_csv('abc')
-    
         # Sum values if duplicates are found
         df = df.pivot_table(
             index=[
@@ -667,8 +662,6 @@ class ChickenRecordsetResource(BaseChickenRecordsetResource):
         df = df.reindex(col_index, axis='columns')
 
         self.after_export(queryset, data, *args, **kwargs)
-
-        print(df.shape)
 
         buffer = io.BytesIO()
         with pd.ExcelWriter(buffer) as writer:
