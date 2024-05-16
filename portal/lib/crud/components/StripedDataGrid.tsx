@@ -6,6 +6,11 @@ import { alpha, styled } from "@mui/material/styles";
 const ODD_OPACITY = 0.2;
 
 const StripedDataGrid = styled(DataGrid)(({ theme }) => ({
+  ["* p"]: {
+    height: "100%",
+    display: "flex",
+    alignItems: "center",
+  },
   [`& .${gridClasses.row}.even`]: {
     backgroundColor: theme.palette.grey[200],
     "&:hover, &.Mui-hovered": {

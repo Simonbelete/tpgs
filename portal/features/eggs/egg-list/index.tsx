@@ -48,13 +48,13 @@ export const EggList = () => {
         );
       },
     },
-    // { field: "week", headerName: "Week" },
-    // { field: "weight", headerName: "Egg Weight (g)" },
-    // { field: "eggs", headerName: "Total eggs" },
-    // {
-    //   field: "hatchery_eggs",
-    //   headerName: "Hatchery eggs",
-    // },
+    { field: "week", headerName: "Week" },
+    { field: "weight", headerName: "Egg Weight (g)" },
+    { field: "eggs", headerName: "Total eggs" },
+    {
+      field: "hatchery_eggs",
+      headerName: "Hatchery eggs",
+    },
     {
       field: "created_at",
       headerName: "Create at",
