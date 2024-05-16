@@ -25,7 +25,7 @@ instance.interceptors.request.use(async (config) => {
       "/analyses/count/", 
       "/inbox/notifications/unread/",
       "/export/jobs/",
-      '/import/jobs'
+      '/import/jobs/'
     ].includes(config.url ?? "") || config.method != "get") {
     const session = await getSession();
     if (session) {

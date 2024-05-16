@@ -3,6 +3,7 @@ from django.db import models
 from simple_history.models import HistoricalRecords
 from datetime import date
 import numpy as np
+from rest_framework.exceptions import ValidationError
 
 from core.models import CoreModel
 from pen.models import Pen
@@ -98,16 +99,49 @@ class Chicken(CoreModel):
         if self.hatch_date == None:
             return 0
         return math.floor(self.age_in_days/7)
+    
+    def save(self,  *args, **kwargs) -> None:
+        self.full_clean()
+        return super().save(*args, **kwargs)
+    
+    def full_clean(self, exclude=None, validate_unique=True):
+        super().full_clean(exclude, validate_unique)
 
-    # def ancestors(self):
-    #     '''Returns a list of this person's ancestors (their parents and all of
-    #     their parents' ancestors).'''
-    #      if self.mother:
-    #         yield self.mother
-    #         yield from self.mother.ancestors()
-    #     if self.father:
-    #         yield self.father
-    #         yield from self.father.ancestors()
+        if(not self.generation):
+            raise ValidationError({
+                'generation': ['Generation is required']
+            })
+            
+        if(not self.breed):
+            raise ValidationError({
+                'breed': ['Breed is required']
+            })
+            
+        if(not self.hatch_date):
+            raise ValidationError({
+                'hatch_date': ['Hatch date is required']
+            })
+            
+        if(self.generation < 0):
+            raise ValidationError({
+                'generation': ['Generation cannot be negitive']
+            })
+
+        # Check if sire & dam are the same generation
+        if(self.sire and self.dam):
+            if(self.sire.generation != self.dam.generation):
+                raise ValidationError({
+                        'sire': ["Generation not matching with Dam"],
+                        'dam': ["Generation not matching with Sire"]
+                    }
+                )
+                
+        if(self.reduction_date):
+            if(self.reduction_date < self.hatch_date):
+                 raise ValidationError({
+                        'reduction_date': ["Reduction date canot be lower than the Hatch date"]
+                    }
+                )
 
 
 class Pedigree(models.Model):

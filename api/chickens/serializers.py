@@ -18,9 +18,17 @@ class ChickenSerializer_SLUG(serializers.ModelSerializer):
         fields = ['id', 'display_name', 'tag']
 
 
+# Temp for validation
+class ChickenSerializerValidation_SLUG(serializers.ModelSerializer):
+    class Meta:
+        model = models.Chicken
+        fields = ['id', 'display_name', 'tag', 'generation', 'breed']
+
+
+
 class ChickenSerializer_GET(serializers.ModelSerializer):
-    sire = ChickenSerializer_SLUG()
-    dam = ChickenSerializer_SLUG()
+    sire = ChickenSerializerValidation_SLUG()
+    dam = ChickenSerializerValidation_SLUG()
     hatchery = HatcherySerializer_SLUG()
     pen = PenSerializer_SLUG()
     house = HouseSerializer_SLUG()
@@ -34,23 +42,15 @@ class ChickenSerializer_GET(serializers.ModelSerializer):
 
 
 class ChickenSerializer_POST(serializers.ModelSerializer):
-    def validate(self, attrs):
-        if(attrs['generation'] < 0):
-            raise ValidationError({
-                'generation': ['Generation cannot be negitive']
-            })
-        return attrs
-    
     class Meta:
         model = models.Chicken
-        fields = ['id', 'display_name', 'tag', 'sex', 'sire', 'dam', 'hatchery', 'pen', 'hatch_date', 'is_active',
+        fields = ['id', 'display_name', 'tag', 'sex', 'sire', 'dam', 'hatchery', 'pen', 'hatch_date', 'is_active', 'breed',
                   'reduction_date', 'reduction_reason', 'generation', 'color']
         extra_kwargs = {
             'generation': {'required': True},
             'breed': {'required': True},
             'hatch_date': {'required': True}
         }
-
 
 class ChickenHistorySerializer(serializers.ModelSerializer):
     history_user = UserSerializer_GET()
