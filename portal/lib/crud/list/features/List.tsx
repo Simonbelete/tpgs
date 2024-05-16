@@ -127,7 +127,7 @@ export default function List<T>({
 
   const settingColumn: GridColDef = {
     field: "Actions",
-    flex: 1,
+    // flex: 1,
     minWidth: 200,
     headerAlign: "center",
     align: "center",
@@ -218,6 +218,11 @@ export default function List<T>({
         sortingMode="server"
         onSortModelChange={handleSortModelChange}
         autosizeOnMount={true}
+        autosizeOptions={{
+          includeOutliers: true,
+          includeHeaders: false,
+          expand: true,
+        }}
       />
     </div>
   );

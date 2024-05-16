@@ -32,7 +32,15 @@ export const EggList = () => {
       renderCell: (params: GridRenderCellParams<any>) => {
         if (params.row.chicken == null) return <></>;
         return (
-          <Typography color={"link.primary"} variant="body2">
+          <Typography
+            sx={{
+              height: "100%",
+              display: "flex",
+              alignItems: "center",
+            }}
+            color={"link.primary"}
+            variant="body2"
+          >
             <Link href={`/chickens/${params.row.chicken.id}`}>
               {params.row.chicken.display_name}
             </Link>
@@ -40,13 +48,13 @@ export const EggList = () => {
         );
       },
     },
-    { field: "week", headerName: "Week" },
-    { field: "weight", headerName: "Egg Weight (g)" },
-    { field: "eggs", headerName: "Total eggs" },
-    {
-      field: "hatchery_eggs",
-      headerName: "Hatchery eggs",
-    },
+    // { field: "week", headerName: "Week" },
+    // { field: "weight", headerName: "Egg Weight (g)" },
+    // { field: "eggs", headerName: "Total eggs" },
+    // {
+    //   field: "hatchery_eggs",
+    //   headerName: "Hatchery eggs",
+    // },
     {
       field: "created_at",
       headerName: "Create at",
