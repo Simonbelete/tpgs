@@ -143,7 +143,6 @@ class Chicken(CoreModel):
                     }
                 )
 
-
 class Pedigree(models.Model):
     source = models.ForeignKey(
         Chicken, on_delete=models.CASCADE, related_name="pedigree_source")

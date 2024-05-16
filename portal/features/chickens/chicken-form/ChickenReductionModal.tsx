@@ -27,18 +27,19 @@ type Inputs = Partial<Chicken>;
 
 const schema = yup.object({
   reduction_reason: yup.object().required(),
+  reduction_reason: yup.object().required(),
   reduction_date: yup
     .string()
-    .required()
-    // @ts-ignore
-    .when("hatch_date", ([hatch_date]) => {
-      if (hatch_date) {
-        return yup
-          .date()
-          .min(hatch_date, "Reduction date must be after Hatch date")
-          .typeError("End Date is required");
+    .required("Date is required")
+    .test(
+      "is-above-hatch-date",
+      "Reduction date must be after Hatch date",
+      (value, context) => {
+        const { hatch_date } = context.parent;
+
+        return value > hatch_date;
       }
-    }),
+    ),
 });
 
 const ChickenReductionSelectDialog = ({ chicken }: { chicken: Chicken }) => {

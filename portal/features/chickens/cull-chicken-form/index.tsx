@@ -18,8 +18,25 @@ import { useRouter } from "next/router";
 type Inputs = Partial<Chicken> & { chicken: Chicken };
 
 const schema = yup.object({
+  chicken: yup
+    .object()
+    .required("Chicken is required")
+    .test("have-hatch-date", "Chicken have no hatch date", (value, context) => {
+      return (value as any)?.hatch_date == null;
+    }),
   reduction_reason: yup.object().required(),
-  reduction_date: yup.string().required(),
+  reduction_date: yup
+    .string()
+    .required("Date is required")
+    .test(
+      "is-above-hatch-date",
+      "Reduction date must be after Hatch date",
+      (value, context) => {
+        const { hatch_date } = context.parent;
+
+        return value > hatch_date;
+      }
+    ),
 });
 
 export const CullChickenForm = ({
@@ -116,6 +133,7 @@ export const CullChickenForm = ({
                   fieldState: { invalid, isTouched, isDirty, error },
                 }) => (
                   <DatePicker
+                    maxDate={dayjs()}
                     slotProps={{
                       textField: {
                         size: "small",
