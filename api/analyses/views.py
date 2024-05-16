@@ -1373,3 +1373,25 @@ class MortalityRate(AnalysesViewSet):
             })
 
         return Response({'results': results})
+    
+
+class ChickenDataClean(mixins.RetrieveModelMixin,
+                     mixins.ListModelMixin,
+                     viewsets.GenericViewSet):
+    """ Incomplte data list"""
+    queryset = models.Chicken.objects.all()
+    serializer_class = serializers.ChickenSerializer_GET
+    
+    def get_queryset(self):
+        queryset = self.queryset
+        
+        queryset = queryset.filter(
+            Q(generation__isnull = True) |
+            Q(generation__lt=0) |
+            Q(breed__isnull=True) |
+            Q(hatch_date__isnull =True) |
+            (Q(generation__gt=0) & (Q(sire__isnull=True) | Q(dam__isnull=True))) |
+            (Q(reduction_date__isnull=False) & Q(reduction_date__lt=F('hatch_date')))
+        )
+        
+        return queryset

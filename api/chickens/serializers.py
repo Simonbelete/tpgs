@@ -9,6 +9,7 @@ from houses.serializers import HouseSerializer_SLUG
 from reduction_reason.models import ReductionReason
 from breeds.serializers import BreedSerializer_SLUG
 from reduction_reason.serializers import ReductionReasonSerializer_SLUG
+from rest_framework.exceptions import ValidationError
 
 
 class ChickenSerializer_SLUG(serializers.ModelSerializer):
@@ -33,10 +34,22 @@ class ChickenSerializer_GET(serializers.ModelSerializer):
 
 
 class ChickenSerializer_POST(serializers.ModelSerializer):
+    def validate(self, attrs):
+        if(attrs['generation'] < 0):
+            raise ValidationError({
+                'generation': ['Generation cannot be negitive']
+            })
+        return attrs
+    
     class Meta:
         model = models.Chicken
         fields = ['id', 'display_name', 'tag', 'sex', 'sire', 'dam', 'hatchery', 'pen', 'hatch_date', 'is_active',
                   'reduction_date', 'reduction_reason', 'generation', 'color']
+        extra_kwargs = {
+            'generation': {'required': True},
+            'breed': {'required': True},
+            'hatch_date': {'required': True}
+        }
 
 
 class ChickenHistorySerializer(serializers.ModelSerializer):

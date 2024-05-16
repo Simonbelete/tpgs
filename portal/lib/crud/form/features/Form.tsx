@@ -342,6 +342,7 @@ export default function Form<
                           {options.label}
                         </Typography>
                         <DatePicker
+                          maxDate={dayjs()}
                           slotProps={{
                             textField: {
                               size: "small",

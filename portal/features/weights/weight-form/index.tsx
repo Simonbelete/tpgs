@@ -70,10 +70,10 @@ export const WeightForm = ({
             xs: 12,
             md: 12,
             dataKey: "display_name",
-            creatable: {
-              field: "tag",
-              endpoint: chickenApi.endpoints.createChicken,
-            },
+            // creatable: {
+            //   field: "tag",
+            //   endpoint: chickenApi.endpoints.createChicken,
+            // },
             viewForm: ChickenForm,
           },
           week: {

@@ -217,6 +217,7 @@ export default function List<T>({
         onPaginationModelChange={setPaginationModel}
         sortingMode="server"
         onSortModelChange={handleSortModelChange}
+        autosizeOnMount={true}
       />
     </div>
   );

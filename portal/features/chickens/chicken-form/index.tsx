@@ -40,12 +40,12 @@ const schema = yup.object({
     .nullable()
     .test(
       "is-same-generation",
-      "Parent must of the same generation",
+      "Parent must be of the same generation",
       (value, context) => {
         if (value == null) return true;
 
         const { dam } = context.parent;
-        return (value as Chicken)?.generation == dam.generation;
+        return (value as Chicken)?.generation == dam?.generation;
       }
     ),
   dam: yup
@@ -53,7 +53,7 @@ const schema = yup.object({
     .nullable()
     .test(
       "is-same-generation",
-      "Parent must of the same generation",
+      "Parent must be of the same generation",
       (value, context) => {
         if (value == null) return true;
 
@@ -81,7 +81,8 @@ const schema = yup.object({
     ),
   hatchery: yup.object().nullable(),
   pen: yup.object().nullable(),
-  breed: yup.object().nullable(),
+  breed: yup.object().required("Breed is required"),
+  hatch_date: yup.string().required("Hatch date is required"),
 });
 
 const sexOptions = [
@@ -242,6 +243,36 @@ export const ChickenForm = ({
                       xs: 12,
                       md: 6,
                     },
+                    hatch_date: {
+                      label: "Hatch Date",
+                      placeholder: "Hatch Date",
+                      type: "date",
+                      xs: 12,
+                      md: 6,
+                    },
+                    breed: {
+                      label: "Breed",
+                      placeholder: "Select Breed",
+                      endpoint: breedApi.endpoints.getBreeds,
+                      xs: 12,
+                      md: 6,
+                      viewForm: BreedForm,
+                    },
+                    generation: {
+                      label: "Generation",
+                      placeholder: "Generation",
+                      xs: 12,
+                      md: 6,
+                      type: "number",
+                    },
+                    hatchery: {
+                      label: "Hatch / Batch",
+                      placeholder: "Select Hatchery",
+                      endpoint: hatcheryApi.endpoints.getStage1Hatchery,
+                      xs: 12,
+                      md: 6,
+                      viewForm: HatcheryForm,
+                    },
                     sire: {
                       label: "Sire",
                       placeholder: "Select Sire",
@@ -254,6 +285,7 @@ export const ChickenForm = ({
                       dataKey: "display_name",
                       xs: 12,
                       md: 6,
+                      viewForm: ChickenForm,
                     },
                     dam: {
                       label: "Dam",
@@ -267,21 +299,7 @@ export const ChickenForm = ({
                       dataKey: "display_name",
                       xs: 12,
                       md: 6,
-                    },
-                    hatchery: {
-                      label: "Hatch / Batch",
-                      placeholder: "Select Hatchery",
-                      endpoint: hatcheryApi.endpoints.getStage1Hatchery,
-                      xs: 12,
-                      md: 6,
-                      viewForm: HatcheryForm,
-                    },
-                    hatch_date: {
-                      label: "Hatch Date",
-                      placeholder: "Hatch Date",
-                      type: "date",
-                      xs: 12,
-                      md: 6,
+                      viewForm: ChickenForm,
                     },
                     house: {
                       label: "House",
@@ -299,21 +317,7 @@ export const ChickenForm = ({
                       md: 6,
                       viewForm: PenForm,
                     },
-                    breed: {
-                      label: "breed",
-                      placeholder: "Select Breed",
-                      endpoint: breedApi.endpoints.getBreeds,
-                      xs: 12,
-                      md: 6,
-                      viewForm: BreedForm,
-                    },
-                    generation: {
-                      label: "Generation",
-                      placeholder: "Generation",
-                      xs: 12,
-                      md: 6,
-                      type: "number",
-                    },
+
                     color: {
                       label: "Color",
                       placeholder: "Color",

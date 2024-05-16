@@ -5,14 +5,15 @@ import { CloseOutlined } from "@mui/icons-material";
 const style = {
   position: "absolute" as "absolute",
   top: "50%",
-  left: "55%",
+  left: { xs: "50%", md: "55%" },
   transform: "translate(-50%, -50%)",
-  width: "60%",
+  width: { xs: "80%", md: "60%" },
   bgcolor: "background.paper",
   // border: "1px solid #000",
   boxShadow: 24,
   p: 4,
   height: "auto",
+  maxHeight: "80%",
   overflow: "scroll",
 };
 
@@ -36,7 +37,7 @@ export default function BasicModal({
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
     >
-      <Box sx={{ ...style, width: width }}>
+      <Box sx={{ ...style }}>
         <Box
           sx={{
             display: "flex",
