@@ -670,6 +670,7 @@ class ChickenRecordsetResource(BaseChickenRecordsetResource):
 
         # Custom Exports
         self.xlsx = buffer.read()
+        self.csv = buffer.read()
 
         return self
 
