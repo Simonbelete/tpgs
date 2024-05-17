@@ -1,5 +1,7 @@
 
 from rest_framework import serializers
+from rest_framework.exceptions import ValidationError
+from django.conf import settings
 
 from . import models
 from users.serializers import UserSerializer_GET
@@ -9,7 +11,12 @@ from houses.serializers import HouseSerializer_SLUG
 from reduction_reason.models import ReductionReason
 from breeds.serializers import BreedSerializer_SLUG
 from reduction_reason.serializers import ReductionReasonSerializer_SLUG
-from rest_framework.exceptions import ValidationError
+
+
+class CullChickensSerializer(serializers.Serializer):
+    chickens = serializers.PrimaryKeyRelatedField(queryset=models.Chicken.objects.all(), many=True)
+    reduction_date = serializers.DateField(format=settings.DATE_FORMAT)
+    reduction_reason = serializers.PrimaryKeyRelatedField(queryset=ReductionReason.objects.all(), read_only=False)
 
 
 class ChickenSerializer_SLUG(serializers.ModelSerializer):

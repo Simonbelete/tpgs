@@ -84,6 +84,8 @@ export const SelectionForm = () => {
     pageSize: 10,
   });
   const [filter, setFilter] = useState<Inputs | null>(null);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [unselectedChickens, setUnSelectedChickens] = useState<number[]>([]);
 
   const [trigger, { data, isFetching }] = useLazyGetChickensRecordSetQuery();
   const [updateChicken, updateResult] = useUpdateChickenMutation();
@@ -135,15 +137,18 @@ export const SelectionForm = () => {
       field: "selection",
       headerName: "Selection",
       renderCell(params) {
-        return (
-          <Box>
-            <Checkbox
-              onChange={() => handleCull(params?.row)}
-              defaultChecked={params?.row?.reduction_date ? false : true}
-              size="small"
-            />
-          </Box>
-        );
+        if (params?.row?.chicken.reduction_date) {
+          return <></>;
+        } else
+          return (
+            <Box>
+              <Checkbox
+                onChange={() => handleCull(params?.row)}
+                defaultChecked
+                size="small"
+              />
+            </Box>
+          );
       },
     },
   ];
@@ -175,7 +180,7 @@ export const SelectionForm = () => {
         });
       }
     },
-    []
+    [filter, paginationModel]
   );
 
   useEffect(() => {
@@ -414,7 +419,7 @@ export const SelectionForm = () => {
               disableElevation
               size="small"
             >
-              Submit
+              Filter
             </Button>
           </Box>
         </form>

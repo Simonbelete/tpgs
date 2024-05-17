@@ -7,6 +7,10 @@ from rest_framework.exceptions import NotFound
 from django.db import connection
 from drf_spectacular.utils import extend_schema, OpenApiParameter
 from django.db.models import F
+from rest_framework.views import APIView
+from drf_spectacular.utils import extend_schema, OpenApiParameter, OpenApiExample
+from rest_framework import generics
+from rest_framework.permissions import AllowAny
 
 from core.views import (
     HistoryViewSet,
@@ -24,7 +28,6 @@ from feeds.models import Feed
 from weights.models import Weight
 from eggs.models import Egg
 from chickens.models import Chicken
-
 
 class ChickenViewSet(CoreModelViewSet):
     queryset = models.Chicken.all.all()
@@ -283,3 +286,33 @@ class ChickenGridViewSet(viewsets.ViewSet):
         except Exception as ex:
             print(ex)
             return Response({'error': str(ex)}, status=500)
+
+
+class CullChickens(mixins.CreateModelMixin,viewsets.GenericViewSet):
+    """ Bulk cull chickens """
+    serializer_class = serializers.CullChickensSerializer
+    permission_classes = [AllowAny]
+
+
+    def create(self, request, *args, **kwargs):        
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+    
+        reduction_date = serializer.validated_data.get('reduction_date')
+        reduction_reason = serializer.validated_data.get('reduction_reason')
+        
+        for id in request.data['chickens']:
+            try:
+                chicken = Chicken.objects.get(pk=id)
+                chicken.reduction_date=reduction_date
+                chicken.reduction_reason=reduction_reason
+
+                chicken.save()
+            except Exception as ex:
+                return Response({'error': str(ex),
+                                 'id': id}, status=500)
+            
+            
+        return Response({}, status=201)
+        
+    
