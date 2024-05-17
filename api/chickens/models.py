@@ -105,7 +105,7 @@ class Chicken(CoreModel):
         return super().save(*args, **kwargs)
     
     def full_clean(self, exclude=None, validate_unique=True):
-        super().full_clean(exclude, validate_unique)
+        super().full_clean(['created_by'], validate_unique)
 
         if(not self.generation):
             raise ValidationError({
