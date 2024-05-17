@@ -27,7 +27,6 @@ type Inputs = Partial<Chicken>;
 
 const schema = yup.object({
   reduction_reason: yup.object().required(),
-  reduction_reason: yup.object().required(),
   reduction_date: yup
     .string()
     .required("Date is required")

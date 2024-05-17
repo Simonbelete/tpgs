@@ -5,7 +5,7 @@ import { ChickenRanking } from "@/models";
 export const chickenRecordSetApi = baseApi.injectEndpoints({
   endpoints: (build) => {
     return {
-      getChickensRecordSet: build.query<Response<ChickenRanking[]>, Object>({
+      getChickensRecordSetMerged: build.query<Response<ChickenRanking[]>, Object>({
         query: (query?: Object) => ({
           url: `/analyses/chicken-record-set`,
           method: "get",
@@ -22,6 +22,13 @@ export const chickenRecordSetApi = baseApi.injectEndpoints({
         },
         providesTags: ["CHICKEN_RECORD_SET"],
       }),
+      getChickensRecordSet: build.query<Response<ChickenRanking[]>, Object>({
+        query: (query?: Object) => ({
+          url: `/analyses/chicken-record-set/`,
+          method: "get",
+          params: query,
+        })
+      }),
     };
   },
   overrideExisting: false,
@@ -30,4 +37,6 @@ export const chickenRecordSetApi = baseApi.injectEndpoints({
 export const {
   useGetChickensRecordSetQuery,
   useLazyGetChickensRecordSetQuery,
+  useGetChickensRecordSetMergedQuery,
+  useLazyGetChickensRecordSetMergedQuery
 } = chickenRecordSetApi;

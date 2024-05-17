@@ -76,7 +76,7 @@ class Chicken(CoreModel):
     @property
     def reduction_in_weeks(self):
         if not self.hatch_date or not self.reduction_date:
-            return 0
+            return None
         return math.floor((self.reduction_date - self.hatch_date).days / 7)
 
     def offspring(self):

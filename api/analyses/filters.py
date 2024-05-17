@@ -19,6 +19,7 @@ class ChickenRecordSetFilter(filters.FilterSet):
     class Meta:
         model = models.ChickenRecordset
         fields = {
+            'week': ['exact'],
             'chicken': ['in', 'exact'],
             'chicken__breed': ['in', 'exact'],
             'chicken__house': ['in', 'exact'],
