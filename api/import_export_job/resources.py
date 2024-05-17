@@ -66,8 +66,8 @@ class BaseResource(resources.ModelResource):
         self.results.append(result)
 
 
-class BaseChickenResource(BaseResource):
-    tag = fields.Field(column_name=TAG_COLUMN_NAME, attribute='tag')
+class BaseChickenResource(resources.ModelResource):
+    tag = fields.Field(column_name='ID (Wing Tag)', attribute='tag', widget=widgets.NumberWidget())
     hatch_date = fields.Field(column_name="Hatch Date", attribute="hatch_date",
                               widget=widgets.DateWidget(format="%d/%m/%Y"))
     sex = fields.Field(column_name='Sex', attribute='sex')
@@ -670,8 +670,7 @@ class ChickenRecordsetResource(BaseChickenRecordsetResource):
 
         # Custom Exports
         self.xlsx = buffer.read()
-        self.csv = buffer.read()
-
+        
         return self
 
     class Meta:
