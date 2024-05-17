@@ -117,19 +117,26 @@ class Migration(migrations.Migration):
             """
                 CREATE OR REPLACE VIEW chicken_recordset AS
                     SELECT row_number() OVER () AS id,
-                        cc.id AS chicken_id,
-                        ww.week AS ww_week, ff.week AS ff_week, ee.week AS ee_week,
-                        coalesce(COALESCE(COALESCE(ww.week, ff.week), ee.week), 0) AS week,
-                        ww.id AS body_weight_id, ww.weight AS body_weight,
-                        ee.id AS egg_id, ee.eggs AS no_eggs, ee.weight AS eggs_weight,
-                        ff.id AS feed_id, ff.weight AS feed_weight
-                    FROM weights_weight ww
-                    FULL JOIN eggs_egg ee
-                        ON ee.week = ww.week AND ee.chicken_id = ww.chicken_id
-                    FULL JOIN feeds_feed ff
-                        ON ff.week = ww.week AND ff.chicken_id = ee.chicken_id
-                    full outer  join chickens_chicken cc
-                       on cc.id = ww.chicken_id
+                        cc.id AS chicken_id, COALESCE(jj.week, 0) as week,
+                        jj.feed_weight, jj.body_weight,
+                        jj.no_eggs, jj.eggs_weight
+                        FROM 
+                        (
+                            SELECT 
+                                COALESCE(COALESCE(ww.chicken_id, ff.chicken_id), ee.chicken_id) AS chicken_id,
+                                ww.week AS ww_week, ff.week AS ff_week, ee.week AS ee_week,
+                                coalesce(COALESCE(COALESCE(ww.week, ff.week), ee.week), 0) AS week,
+                                ww.id AS body_weight_id, ww.weight AS body_weight,
+                                ee.id AS egg_id, ee.eggs AS no_eggs, ee.weight AS eggs_weight,
+                                ff.id AS feed_id, ff.weight AS feed_weight
+                            FROM weights_weight ww
+                            FULL JOIN eggs_egg ee
+                                ON ee.week = ww.week AND ee.chicken_id = ww.chicken_id
+                            FULL JOIN feeds_feed ff
+                                ON ff.week = ww.week AND ff.chicken_id = ee.chicken_id
+                        ) jj
+                    FULL JOIN chickens_chicken cc
+                       on cc.id = jj.chicken_id
                     order by week;
             """
             # """DROP VIEW chicken_recordset"""

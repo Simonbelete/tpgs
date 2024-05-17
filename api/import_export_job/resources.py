@@ -609,24 +609,25 @@ class ChickenRecordsetResource(BaseChickenRecordsetResource):
             queryset = self.get_queryset()
         queryset = self.filter_export(queryset, *args, **kwargs)
         headers = self.get_export_headers()
-        data = tablib.Dataset(headers=headers)
+        # data = tablib.Dataset(headers=headers)
+
+        results = []
 
         for obj in self.iter_queryset(queryset):
-            data.append(self.export_resource(obj))
+            results.append(self.export_resource(obj))
 
-        df = data.export('df')
-
+        df = pd.DataFrame(results, columns=headers)
+        
+        df[self.fields['body_weight'].column_name] = df[self.fields['body_weight'].column_name].apply(pd.to_numeric)
+        df[self.fields['feed_weight'].column_name] = df[self.fields['feed_weight'].column_name].apply(pd.to_numeric)
+        df[self.fields['no_eggs'].column_name] = df[self.fields['no_eggs'].column_name].apply(pd.to_numeric)
+        df[self.fields['eggs_weight'].column_name] = df[self.fields['eggs_weight'].column_name].apply(pd.to_numeric)
+        
         if (df.empty):
             raise Exception('Data is empty')
 
         list_of_weeks = np.array(df['week'].unique().tolist()).astype(int)
         list_of_weeks = np.sort(list_of_weeks).astype(str).tolist()
-
-        # Fill empty or NaN with zero, so the row is not lost when pivoting table
-        # df[self.fields['body_weight'].column_name] = df[self.fields['body_weight'].column_name].apply(pd.to_numeric).fillna(0)
-        # df[self.fields['feed_weight'].column_name] = df[self.fields['feed_weight'].column_name].apply(pd.to_numeric).fillna(0)
-        # df[self.fields['no_eggs'].column_name] = df[self.fields['no_eggs'].column_name].apply(pd.to_numeric).fillna(0)
-        # df[self.fields['eggs_weight'].column_name] = df[self.fields['eggs_weight'].column_name].apply(pd.to_numeric).fillna(0)
 
         # Sum values if duplicates are found
         df = df.pivot_table(
@@ -659,10 +660,9 @@ class ChickenRecordsetResource(BaseChickenRecordsetResource):
                  self.fields['no_eggs'].column_name, self.fields['eggs_weight'].column_name]
             ]
         )
+        
         df = df.reindex(col_index, axis='columns')
-
-        self.after_export(queryset, data, *args, **kwargs)
-
+        
         buffer = io.BytesIO()
         with pd.ExcelWriter(buffer) as writer:
             df.to_excel(writer)
