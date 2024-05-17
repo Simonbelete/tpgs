@@ -16,6 +16,7 @@ from django_tenants.utils import tenant_context
 from farms.models import Farm
 import numpy as np
 import warnings
+from rest_framework import viewsets, mixins
 
 from core.serializers import UploadSerializer
 
@@ -164,7 +165,9 @@ class ModelFilterViewSet(viewsets.ModelViewSet):
         return Response(serializer.data)
 
 
-class SummaryViewSet(viewsets.ViewSet):
+class SummaryViewSet(mixins.RetrieveModelMixin,
+                     mixins.ListModelMixin,
+                     viewsets.GenericViewSet):
     def get_query(self):
         return NotImplementedError('Queryset must be implement')
 
