@@ -1,7 +1,7 @@
 import React from "react";
 import { Box, Grid, Typography } from "@mui/material";
 import { useGetStagesQuery } from "@/features/stage/services";
-import LightTooltip from "@/features/selection/selection-form/components/LightTooltip";
+// import LightTooltip from "@/features/selection/selection-form/components/LightTooltip";
 import { Chicken } from "@/models";
 import _ from "lodash";
 
@@ -21,16 +21,16 @@ export const ChickenStages = ({ data }: { data: Chicken }) => {
               }
             >
               <a href="#" title="">
-                <LightTooltip title={`Step ${e.order} ${e.name}`}>
-                  <Box>
-                    <Typography variant="subtitle2" sx={{ fontWeight: 700 }}>
-                      Step {e.order}
-                    </Typography>
-                    <Typography variant="caption" noWrap>
-                      {e.name}
-                    </Typography>
-                  </Box>
-                </LightTooltip>
+                {/* <LightTooltip title={`Step ${e.order} ${e.name}`}> */}
+                <Box>
+                  <Typography variant="subtitle2" sx={{ fontWeight: 700 }}>
+                    Step {e.order}
+                  </Typography>
+                  <Typography variant="caption" noWrap>
+                    {e.name}
+                  </Typography>
+                </Box>
+                {/* </LightTooltip> */}
               </a>
             </li>
           ))}

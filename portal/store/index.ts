@@ -5,7 +5,6 @@ import { onBoardingReducer } from "@/features/onboarding";
 import { SettingReducer } from "@/features/settings";
 import { invitationFilterReducer } from "@/features/invitations";
 import { filterReducer } from "./slices";
-import { selectionReducer } from "@/features/selection";
 
 import { baseApi } from "@/services/baseApi";
 import { houseApi } from "@/features/houses/services";
@@ -40,7 +39,6 @@ export const store = configureStore({
     onBoarding: onBoardingReducer,
     setting: SettingReducer,
     invitationFilter: invitationFilterReducer,
-    selection: selectionReducer,
 
     // Apis
     [baseApi.reducerPath]: baseApi.reducer,
