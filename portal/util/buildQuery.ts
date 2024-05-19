@@ -16,7 +16,7 @@ export default (data: any, dataValueKey?: string): Object => {
 
       // NULL Filter
       const nullFilterIndex = _.find(data[key], (f) => _.has(f, '__isnull'))
-      if(nullFilterIndex != -1) result[`${key}__isnull`] = true;
+      if(nullFilterIndex != undefined) result[`${key}__isnull`] = true;
     }else {
       result[key] = data[key]
     }

@@ -13,19 +13,19 @@ class ChickenFilter(CoreFilterSet):
         model = models.Chicken
         fields = {
             'tag': ['exact'],
-            'sex': ['in', 'exact'],
-            'hatch_date': ['in', 'exact'],
-            'sire': ['in', 'exact'],
-            'dam': ['in', 'exact'],
-            'hatchery': ['in', 'exact'],
-            'house': ['in', 'exact'],
-            'pen': ['in', 'exact'],
+            'sex': ['in', 'exact', 'isnull'],
+            'hatch_date': ['in', 'exact', 'isnull'],
+            'sire': ['in', 'exact', 'isnull'],
+            'dam': ['in', 'exact', 'isnull'],
+            'hatchery': ['in', 'exact', 'isnull'],
+            'house': ['in', 'exact', 'isnull'],
+            'pen': ['in', 'exact', 'isnull'],
             'pen__house': ['in', 'exact'],
-            'breed': ['in', 'exact'],
-            'reduction_date': ['in', 'exact'],
-            'reduction_reason': ['in', 'exact'],
-            'color': ['in', 'exact'],
-            'generation': ['in', 'exact'] 
+            'breed': ['in', 'exact', 'isnull'],
+            'reduction_date': ['in', 'exact', 'isnull'],
+            'reduction_reason': ['in', 'exact', 'isnull'],
+            'color': ['in', 'exact', 'isnull'],
+            'generation': ['in', 'exact', 'isnull'] 
         }
 
 

@@ -277,7 +277,7 @@ export const ChickenForm = ({
                     },
                     hatchery: {
                       label: "Hatch / Batch",
-                      placeholder: "Select Hatchery",
+                      placeholder: "Select Hatch / Batch",
                       endpoint: hatcheryApi.endpoints.getStage1Hatchery,
                       xs: 12,
                       md: 6,

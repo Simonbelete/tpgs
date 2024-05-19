@@ -27,7 +27,7 @@ export const ChickenList = () => {
     { field: "generation", headerName: "Generation" },
     {
       field: "hatcher",
-      headerName: "Hatch / Batch",
+      headerName: "Batch",
       renderCell: (params: GridRenderCellParams<any>) => {
         if (params.row.hatchery == null) return <></>;
         return (
@@ -91,8 +91,8 @@ export const ChickenList = () => {
     },
     { field: "color", headerName: "color" },
     {
-      field: "Reduction reason",
-      headerName: "reduction_reason",
+      field: "reduction_reason",
+      headerName: "Reduction reason",
       renderCell: (params: GridRenderCellParams<any>) => {
         if (params.row.reduction_reason == null) return <></>;
         return (
@@ -184,6 +184,16 @@ export const ChickenList = () => {
           label: "Reduction date",
           dataDisplayKey: "reduction_date",
           endpoint: chickenApi.endpoints.getReductionDates,
+        },
+        sire: {
+          label: "Sire",
+          dataDisplayKey: "display_name",
+          endpoint: chickenApi.endpoints.getMaleChickens,
+        },
+        dam: {
+          label: "Dam",
+          dataDisplayKey: "display_name",
+          endpoint: chickenApi.endpoints.getFeMaleChickens,
         },
         created_by: {
           label: "Created By",

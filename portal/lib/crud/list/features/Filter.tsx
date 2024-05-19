@@ -219,7 +219,9 @@ export default function Filter<T>({ filters }: FilterProps<T>) {
                           return (
                             <Chip
                               key={j}
-                              label={`${key}: Null`}
+                              variant="outlined"
+                              color="error"
+                              label={`${key}: --NULL--`}
                               size="small"
                               onDelete={() =>
                                 dispatch(
