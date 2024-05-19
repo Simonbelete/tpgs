@@ -119,7 +119,8 @@ class CoreModelViewSet(viewsets.ModelViewSet):
         self.log_change(self.request, new_object, change_message)
 
     def perform_destroy(self, instance):
-        deleted_object = instance.delete()
+        deleted_object = instance
+        instance.delete()
         change_message = [{
             "deleted": {
                 "name":  str(self.queryset.model.__name__),
