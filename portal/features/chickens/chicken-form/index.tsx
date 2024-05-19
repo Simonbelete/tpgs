@@ -37,7 +37,12 @@ const schema = yup.object({
   sex: yup.object().nullable(),
   sire: yup
     .object()
-    .nullable()
+    .when("generation", {
+      is: (val: number) => val >= 1,
+      then: (schema) =>
+        schema.required("Sire can not be empty for generation above 0"),
+      otherwise: (schema) => schema.nullable(),
+    })
     .test(
       "is-same-generation",
       "Parent must be of the same generation",
@@ -50,7 +55,12 @@ const schema = yup.object({
     ),
   dam: yup
     .object()
-    .nullable()
+    .when("generation", {
+      is: (val: number) => val >= 1,
+      then: (schema) =>
+        schema.required("Dam can not be empty for generation above 0"),
+      otherwise: (schema) => schema.nullable(),
+    })
     .test(
       "is-same-generation",
       "Parent must be of the same generation",

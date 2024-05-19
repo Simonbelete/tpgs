@@ -106,11 +106,6 @@ class Chicken(CoreModel):
     
     def full_clean(self, exclude=None, validate_unique=True):
         super().full_clean(['created_by'], validate_unique)
-
-        if(not self.generation):
-            raise ValidationError({
-                'generation': ['Generation is required']
-            })
             
         if(not self.breed):
             raise ValidationError({
