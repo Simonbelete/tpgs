@@ -56,6 +56,9 @@ router.register(r'analyses/mortality-rate', views.MortalityRate,
 router.register(r'analyses/chicken-data-clean', views.ChickenDataClean,
                 basename='api_mortality_rate')
 
+router.register(r'analyses/age-distribution', views.AgeDistributionViewSet,
+                basename='api_age_distribution')
+
 count_router = routers.DefaultRouter()
 count_router.register(r'analyses/count', views.CountViewSet,
                       basename='api_count')

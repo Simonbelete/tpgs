@@ -28,4 +28,3 @@ class ChickenRecordSetSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.ChickenRecordset
         fields = '__all__'
-

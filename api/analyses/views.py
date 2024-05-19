@@ -3,7 +3,7 @@ from django.shortcuts import render
 from rest_framework import viewsets, mixins
 import django_filters
 from rest_framework.response import Response
-from django.db.models import Count, Sum, Avg, F, Q, ExpressionWrapper, DecimalField, IntegerField, DurationField
+from django.db.models import Count, Sum, Avg, F, Q, ExpressionWrapper, Case, When, DurationField, DateField
 from django_tenants.utils import tenant_context
 from drf_spectacular.utils import extend_schema, OpenApiParameter
 from django.db import connection
@@ -14,6 +14,7 @@ import uuid
 import pandas as pd
 from json import loads, dumps
 from rest_framework.permissions import IsAuthenticated
+from datetime import date
 
 from . import models
 from . import serializers
@@ -768,6 +769,37 @@ class GenderDistributionViewSet(AnalysesViewSet):
                 'total_female_count': queryset.filter(sex="F").count(),
                 'total_other_count': queryset.filter(Q(sex__isnull=True) | Q(sex__exact="")).count()
             }})
+
+class AgeDistributionViewSet(AnalysesViewSet):
+    @extend_schema(
+        parameters=ANALYSES_PARAMETERS
+    )
+    def list(self, request, **kwargs):
+        with tenant_context(self.get_farm(self.request.GET.get('farm', 0))):
+            queryset = self.filter_by_directory()
+            queryset = queryset.annotate(total_count=Count('hatch_date'))
+
+            reduction_date_case = Case(
+                When(reduction_date__isnull=False, then=F('reduction_date')),
+                When(reduction_date__isnull=True, then=date.today())
+            )
+
+            duration = ExpressionWrapper(
+                date.today() - F('hatch_date'), output_field=DateField())
+            queryset = queryset.annotate(
+                reduction_date_case=reduction_date_case,
+                age=duration)
+
+            
+            results = []
+            for q in queryset.iterator():
+                results.append({
+                    'total_count': q.total_count,
+                    'age_in_days': q.age.days,
+                    'age_in_weeks': math.floor(q.age.days / 7),
+                })
+    
+            return Response({'results': results})
 
 
 # TODO: set pagination
