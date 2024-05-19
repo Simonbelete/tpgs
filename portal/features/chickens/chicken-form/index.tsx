@@ -287,11 +287,11 @@ export const ChickenForm = ({
                       label: "Sire",
                       placeholder: "Select Sire",
                       endpoint: chickenApi.endpoints.getMaleChickens,
-                      creatable: {
-                        field: "tag",
-                        endpoint: chickenApi.endpoints.createChicken,
-                        defaults: { sex: "M" },
-                      },
+                      // creatable: {
+                      //   field: "tag",
+                      //   endpoint: chickenApi.endpoints.createChicken,
+                      //   defaults: { sex: "M" },
+                      // },
                       dataKey: "display_name",
                       xs: 12,
                       md: 6,
@@ -301,11 +301,11 @@ export const ChickenForm = ({
                       label: "Dam",
                       placeholder: "Select Dam",
                       endpoint: chickenApi.endpoints.getFeMaleChickens,
-                      creatable: {
-                        field: "tag",
-                        endpoint: chickenApi.endpoints.createChicken,
-                        defaults: { sex: "F" },
-                      },
+                      // creatable: {
+                      //   field: "tag",
+                      //   endpoint: chickenApi.endpoints.createChicken,
+                      //   defaults: { sex: "F" },
+                      // },
                       dataKey: "display_name",
                       xs: 12,
                       md: 6,

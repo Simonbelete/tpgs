@@ -151,6 +151,7 @@ export const ChickenList = () => {
           dataDisplayKey: "name",
           dataValueKey: "value",
           options: [
+            { __isnull: true, value: true, name: "--NULL--" },
             { value: "M", name: "Male" },
             { value: "F", name: "Female" },
           ],
