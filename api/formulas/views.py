@@ -468,7 +468,7 @@ class SolveViewSet(viewsets.ViewSet):
         df_req.set_index('nutrient', inplace=True)
         df_req = df_req.reindex(df.columns.values, fill_value=0)
 
-        c = -df_1['ingredient__price'].to_numpy()
+        c = df_1['ingredient__price'].to_numpy()
 
         # # Row -> Nutrients, Col -> Ingredient * Nutrient Value
         A = [df[i].values for i in df.columns]
@@ -479,8 +479,11 @@ class SolveViewSet(viewsets.ViewSet):
         between = 0.2  # +|- 10%
         b = df_req['value'].values
         # b = np.divide(b, 100)
-        b_min = [(i - (i * between)) * -1 for i in b]
-        b_max = [i + (i * between) for i in b]
+        # b_max = [i + (i * between) for i in b] # x + y < b
+        # b_min = [(i - (i * between)) * -1 for i in b] # x + y > b
+
+        b_max = b
+        b_min = -b
         b = np.concatenate([b_max, b_min])
 
         A_eq = [np.ones(len(df.index))]
@@ -495,8 +498,8 @@ class SolveViewSet(viewsets.ViewSet):
         print(A)
         print(b)
 
-        results = linprog(c=c, A_ub=A, b_ub=b, A_eq=A_eq,
-                          b_eq=b_eq, bounds=bounds, method='simplex')
+        results = linprog(c=c, A_ub=A, b_ub=b,
+                             method='simplex')
 
         print(results)
 

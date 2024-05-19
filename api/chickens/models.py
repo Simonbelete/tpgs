@@ -126,6 +126,15 @@ class Chicken(CoreModel):
             raise ValidationError({
                 'generation': ['Generation cannot be negitive']
             })
+    
+        # Check if sire and dam are seted if the generation is above 0
+        if(self.generation >= 1 and (not self.sire or not self.dam)):
+            raise ValidationError({
+                'generation': ['Specify Sire & Dam for this generation'],
+                'sire': ['Sire & Dam cannot be null for generation above 0'],
+                'dam': ['Sire & Dam cannot be null for generation above 0']
+            })
+    
 
         # Check if sire & dam are the same generation
         if(self.sire and self.dam):

@@ -52,3 +52,36 @@ On Dashbaord add Total Generations in stats
     - Dead Chickens
 
 check all filters on directory type (export, chicken summary)
+
+
+
+library(lme4GS)
+library(pedigreemm)
+library(lme4)
+
+data <- read.csv('/home/admin-user/Documents/jupyter/data/pre_weight_gain.csv')
+
+data$sex[data$sex == 'M'] <- 1
+data$sex[data$sex == 'F'] <- 0
+data$sex[data$sex == ''] <- -1
+data$wwg[is.na(data$wwg)] <- 0
+
+p1 <- new("pedigree",
+          sire = as.integer(as.list(data)$sire),
+          dam  = as.integer(as.list(data)$dam),
+          label = as.character(as.list(data)$calves))
+
+AFull <- getA(p1)
+row_len <- length(data$calves)
+A <- matrix(AFull, row_len, row_len)
+rownames(A) <- colnames(A)<-rownames(AFull)
+
+# Animal id
+AID <-as.character(data$calves)
+modelData <- data.frame(y=data$wwg, sex=data$sex, ped=AID)
+
+random <- list(ped=list(K=A))
+fmGA <- lmerUvcov(y ~ sex + (1|ped), data=modelData, Uvcov=random)
+
+
+summary(fmGA)
