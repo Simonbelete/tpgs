@@ -50,26 +50,9 @@ class DirectoryList(models.Model):
                                                      hatchery=self.hatchery_name)
 
 
-class ChickenRanking(models.Model):
-    id = models.BigIntegerField(primary_key=True)
-    chicken = models.ForeignKey('chickens.Chicken', on_delete=models.CASCADE)
-    feed_weight_total = models.DecimalField(max_digits=19, decimal_places=3)
-    feed_weight_avg = models.DecimalField(max_digits=19, decimal_places=3)
-    body_weight_total = models.DecimalField(max_digits=19, decimal_places=3)
-    body_weight_avg = models.DecimalField(max_digits=19, decimal_places=3)
-    egg_number_total = models.DecimalField(max_digits=19, decimal_places=3)
-    egg_number_avg = models.DecimalField(max_digits=19, decimal_places=3)
-    egg_weight_total = models.DecimalField(max_digits=19, decimal_places=3)
-    egg_weight_avg = models.DecimalField(max_digits=19, decimal_places=3)
-
-    class Meta:
-        managed = False
-        db_table = 'chicken_ranking'
-
-
 class ChickenRecordset(models.Model):
     id = models.BigIntegerField(primary_key=True)
-    chicken = models.ForeignKey(Chicken, on_delete=models.CASCADE)
+    chicken = models.ForeignKey(Chicken, on_delete=models.DO_NOTHING)
     week = models.PositiveIntegerField(validators=WEEK_VALIDATOR, default=0)
     feed_weight = models.DecimalField(
         max_digits=16, decimal_places=3, null=True, blank=True, default=0)

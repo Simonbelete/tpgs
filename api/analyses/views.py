@@ -1205,15 +1205,7 @@ class MortalityViewSet(AnalysesViewSet):
                 })
 
             return Response({'results': results})
-
-
-class ChickenRanking(mixins.RetrieveModelMixin,
-                     mixins.ListModelMixin,
-                     viewsets.GenericViewSet):
-    queryset = models.ChickenRanking.objects.all()
-    serializer_class = serializers.ChickenRankingSerializer
-    filterset_class = filters.ChickenRankingFilter
-
+        
 
 class ChickenRecordSet(mixins.RetrieveModelMixin,
                      mixins.ListModelMixin,

@@ -41,9 +41,6 @@ router.register(r'analyses/weights', views.WeightGraphViewSet,
 router.register(r'analyses/feeds', views.FeedGraphViewSet,
                 basename='api_analyses_feeds')
 
-router.register(r'analyses/chicken-ranking', views.ChickenRanking,
-                basename='api_analyses_chicken_ranking')
-
 router.register(r'analyses/chicken-record-set', views.ChickenRecordSet,
                 basename='api_analyses_chicken_record_set')
 

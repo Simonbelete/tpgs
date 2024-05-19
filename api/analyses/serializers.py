@@ -22,14 +22,6 @@ class PedigreeSerializer(serializers.ModelSerializer):
         fields = ['id', 'tag', 'sex', 'parents']
 
 
-class ChickenRankingSerializer(serializers.ModelSerializer):
-    chicken = ChickenSerializer_SLUG()
-
-    class Meta:
-        model = models.ChickenRanking
-        fields = '__all__'
-
-
 class ChickenRecordSetSerializer(serializers.ModelSerializer):
     chicken = ChickenSerializer_GET()
 

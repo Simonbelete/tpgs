@@ -211,9 +211,10 @@ export default function CheckboxDropdown<T>({
           </li>
           {isLoading && <LinearProgress />}
 
-          {/* @ts-ifnore */}
+          {/* @ts-ignore */}
           <MenuItem
             key={"isnull"}
+            // @ts-ignore
             value={{ __isnull: true }}
             sx={{ paddingLeft: "6px" }}
             onKeyDown={(e) => e.stopPropagation()}
