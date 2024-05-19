@@ -211,6 +211,35 @@ export default function CheckboxDropdown<T>({
           </li>
           {isLoading && <LinearProgress />}
 
+          {/* @ts-ifnore */}
+          <MenuItem
+            key={"isnull"}
+            value={{ __isnull: true }}
+            sx={{ paddingLeft: "6px" }}
+            onKeyDown={(e) => e.stopPropagation()}
+          >
+            <Checkbox
+              checked={
+                Array.isArray(selected) &&
+                selected.some((d: any) => d["__isnull"] == true)
+              }
+              size="small"
+              sx={{
+                paddingTop: 0,
+                paddingBottom: 0,
+                paddingRight: "15px",
+              }}
+            />
+            <ListItemText
+              disableTypography
+              primary={
+                <Typography variant="body2" fontSize={14}>
+                  --NULL--
+                </Typography>
+              }
+            />
+          </MenuItem>
+
           {options &&
             options.map((e: any, key: any) => (
               // @ts-ignore

@@ -201,7 +201,6 @@ export default function Filter<T>({ filters }: FilterProps<T>) {
             <Grid item xs={12}>
               <Stack direction={"row"} flexWrap={"wrap"} gap={2}>
                 <Chip
-                  // label={`State: ${selector.is_active}`}
                   label={selector.is_active ? "Unarchived" : "Archived"}
                   size="small"
                 />
@@ -215,23 +214,44 @@ export default function Filter<T>({ filters }: FilterProps<T>) {
                     );
 
                     return (selector.filters[key] || []).map(
-                      (e: any, j: any) => (
-                        <Chip
-                          key={j}
-                          label={`${key}: ${e[dataDisplayKey]}`}
-                          size="small"
-                          onDelete={() =>
-                            dispatch(
-                              filterSlice.actions.popFilter({
-                                key: key,
-                                value: e,
-                              })
-                            )
-                          }
-                        />
-                      )
+                      (e: any, j: any) => {
+                        if (_.has(e, "__isnull")) {
+                          return (
+                            <Chip
+                              key={j}
+                              label={`${key}: Null`}
+                              size="small"
+                              onDelete={() =>
+                                dispatch(
+                                  filterSlice.actions.popFilter({
+                                    key: key,
+                                    value: e,
+                                  })
+                                )
+                              }
+                            />
+                          );
+                        } else {
+                          return (
+                            <Chip
+                              key={j}
+                              label={`${key}: ${e[dataDisplayKey]}`}
+                              size="small"
+                              onDelete={() =>
+                                dispatch(
+                                  filterSlice.actions.popFilter({
+                                    key: key,
+                                    value: e,
+                                  })
+                                )
+                              }
+                            />
+                          );
+                        }
+                      }
                     );
                   }
+                  // For Archive and UnArchive
                   return (
                     <Chip
                       key={i}
