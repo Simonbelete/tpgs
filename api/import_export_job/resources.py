@@ -123,10 +123,13 @@ class BaseChickenResource(BaseResource):
         if(hatch_date == None): return None
         
         hatch_date = datetime.strptime(hatch_date, format).date()
-
-        if(not isinstance(reduction_date, date)):
-            reduction_date = hatch_date + timedelta(weeks=reduction_date)
-            
+        
+        try:
+            widget=widgets.DateWidget(format="%d/%m/%Y")
+            reduction_date = widget.clean(reduction_date)
+        except:
+            reduction_date = hatch_date + timedelta(weeks=int(reduction_date))
+                    
         row['Cull Date'] = reduction_date
 
     class Meta:

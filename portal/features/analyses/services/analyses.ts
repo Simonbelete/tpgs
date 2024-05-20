@@ -6,6 +6,13 @@ export const URL = "/analyses";
 export const analyseApi = baseApi.injectEndpoints({
   endpoints: (build) => {
     return {
+      ageDistribution: build.query<Response<any[]>, Object>({
+        query: (query?: Object) => ({
+          url: `${URL}/age-distribution/`,
+          method: "get",
+          params: query,
+        }),
+      }),
       getEggProduction: build.query<Response<any[]>, Object>({
         query: (query?: Object) => ({
           url: `${URL}/egg-production/`,
@@ -124,6 +131,8 @@ export const analyseApi = baseApi.injectEndpoints({
 });
 
 export const {
+  useAgeDistributionQuery,
+  useLazyAgeDistributionQuery,
   useGetEggProductionQuery,
   useLazyGetEggProductionQuery,
   useGetHdepQuery,
