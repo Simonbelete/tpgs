@@ -776,8 +776,11 @@ class AgeDistributionViewSet(AnalysesViewSet):
     )
     def list(self, request, **kwargs):
         with tenant_context(self.get_farm(self.request.GET.get('farm', 0))):
-            queryset = self.filter_by_directory()
-            queryset = queryset.annotate(total_count=Count('hatch_date'))
+            chickens_queryset = self.filter_by_directory()
+            queryset = chickens_queryset
+            queryset = queryset.annotate(
+                total_count=Count('hatch_date')
+            )
 
             reduction_date_case = Case(
                 When(reduction_date__isnull=False, then=F('reduction_date')),
@@ -785,11 +788,16 @@ class AgeDistributionViewSet(AnalysesViewSet):
             )
 
             duration = ExpressionWrapper(
-                date.today() - F('hatch_date'), output_field=DateField())
+                F('reduction_date_case') - F('hatch_date'), output_field=DateField())
             queryset = queryset.annotate(
                 reduction_date_case=reduction_date_case,
                 age=duration)
 
+            duration_range = ExpressionWrapper(
+                F('reduction_date_case') - F('hatch_date'), output_field=DurationField())
+            chickens_queryset = chickens_queryset.annotate(
+                reduction_date_case=reduction_date_case,
+                age=duration_range)
             
             results = []
             for q in queryset.iterator():
@@ -797,6 +805,11 @@ class AgeDistributionViewSet(AnalysesViewSet):
                     'total_count': q.total_count,
                     'age_in_days': q.age.days,
                     'age_in_weeks': math.floor(q.age.days / 7),
+                    'sex': {
+                        'M': chickens_queryset.filter(age=timedelta(days=q.age.days),sex="M").count(),
+                        'F': chickens_queryset.filter(age=timedelta(days=q.age.days),sex="F").count(),
+                        'Unknown': chickens_queryset.filter(age=timedelta(days=q.age.days), sex__isnull=True).count()
+                    },
                 })
     
             return Response({'results': results})
