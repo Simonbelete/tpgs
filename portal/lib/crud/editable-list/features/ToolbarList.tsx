@@ -62,9 +62,14 @@ export default function TollbarList<T extends AbstractBaseModel & EditMode>({
     pageSize: 10,
   });
 
-  const [query, setQuery] = useState(getQuery);
+  const [query, setQuery] = useState<any>(getQuery);
 
-  const updateQuery = (q: Object) => setQuery({ ...getQuery, ...q });
+  const updateQuery = (q: Object) =>
+    setQuery({ ...getQuery, query: { ...query.query, ...q } });
+
+  useEffect(() => {
+    console.log(query);
+  }, [query]);
 
   const { data, isLoading, isFetching, refetch } = getEndpoint.useQuery(query);
 

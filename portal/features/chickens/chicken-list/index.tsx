@@ -22,7 +22,17 @@ import { userApi } from "@/features/users/services";
 
 export const ChickenList = () => {
   const columns: GridColDef[] = [
-    { field: "tag", headerName: "Tag" },
+    {
+      field: "tag",
+      headerName: "Tag",
+      renderCell: (params: GridRenderCellParams<any>) => {
+        return (
+          <Typography color={"link.primary"} variant="body2">
+            <Link href={`/chickens/${params.row.id}`}>{params.row.tag}</Link>
+          </Typography>
+        );
+      },
+    },
     { field: "sex", headerName: "Sex" },
     { field: "generation", headerName: "Generation" },
     {

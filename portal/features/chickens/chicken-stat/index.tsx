@@ -4,6 +4,7 @@ import { Box, Grid } from "@mui/material";
 import { TextCard } from "@/components/card";
 
 export const ChickenStat = ({ data }: { data: Chicken }) => {
+  console.log(data);
   return (
     <Box>
       <Grid container gap={5}>
@@ -15,7 +16,7 @@ export const ChickenStat = ({ data }: { data: Chicken }) => {
           />
         </Grid>
         <Grid item xs={3} md={3}>
-          <TextCard title="Generation" value={`${data.generation || "-"}`} />
+          <TextCard title="Generation" value={`${data.generation}`} />
         </Grid>
       </Grid>
     </Box>

@@ -178,11 +178,6 @@ export const ChickenForm = ({
           value={tab}
           onChange={handleTabChange}
           aria-label="basic tabs example"
-          // sx={{
-          //   [`& .${tabsClasses.scrollButtons}`]: {
-          //     "&.Mui-disabled": { opacity: 0.3 },
-          //   },
-          // }}
           variant="scrollable"
           scrollButtons="auto"
         >

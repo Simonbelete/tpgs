@@ -777,11 +777,9 @@ class AgeDistributionViewSet(AnalysesViewSet):
     def list(self, request, **kwargs):
         with tenant_context(self.get_farm(self.request.GET.get('farm', 0))):
             chickens_queryset = self.filter_by_directory()
-            queryset = chickens_queryset
+            
+            queryset = chickens_queryset.filter(hatch_date__isnull=False)
             queryset = queryset.order_by('-hatch_date').distinct('hatch_date')
-
-            print('------------------')
-            print(queryset.count())
 
             reduction_date_case = Case(
                 When(reduction_date__isnull=False, then=F('reduction_date')),

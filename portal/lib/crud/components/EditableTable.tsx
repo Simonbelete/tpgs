@@ -12,9 +12,10 @@ import { alpha, styled } from "@mui/material/styles";
 import { red } from "@mui/material/colors";
 
 const StripedDataGrid = styled(DataGrid)(({ theme }) => ({
-  [`& .${gridClasses.columnHeaderTitle}`]: {
-    fontWeight: 600,
-    // fontSize: "16px",
+  ["* p"]: {
+    height: "100%",
+    display: "flex",
+    alignItems: "center",
   },
   [`& .${gridClasses["cell--editable"]}`]: {
     borderColor: "rgb(224, 224, 224)",

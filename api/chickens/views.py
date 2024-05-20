@@ -142,6 +142,8 @@ class ChickenAncestorViewSet(viewsets.GenericViewSet):
 
 class SiblingsViewSet(viewsets.GenericViewSet):
     serializer_class = serializers.ChickenSerializer_GET
+    search_fields = ['tag']
+    ordering_fields = '__all__'
 
     def get_queryset(self):
         try:

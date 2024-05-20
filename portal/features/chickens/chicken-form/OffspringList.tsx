@@ -19,12 +19,24 @@ import { chickenApi } from "../services";
 import dayjs from "dayjs";
 
 const columns: GridColDef[] = [
-  { field: "tag", headerName: "Tag", flex: 1 },
+  {
+    field: "tag",
+    headerName: "Tag",
+    minWidth: 200,
+    renderCell: (params: GridRenderCellParams<any>) => {
+      return (
+        <Typography color={"link.primary"} variant="body2">
+          <Link target="_blank" href={`/chickens/${params.row.id}`}>
+            {params.row.display_name}
+          </Link>
+        </Typography>
+      );
+    },
+  },
   {
     field: "breed",
     headerName: "Breed",
-    flex: 1,
-    minWidth: 150,
+
     renderCell: (params: GridRenderCellParams<any>) => {
       if (params.row.breed == null) return <></>;
       return (
@@ -39,8 +51,6 @@ const columns: GridColDef[] = [
   {
     field: "pen",
     headerName: "Pen",
-    flex: 1,
-    minWidth: 150,
     renderCell: (params: GridRenderCellParams<any>) => {
       if (params.row.pen == null) return <></>;
       return (
@@ -55,9 +65,7 @@ const columns: GridColDef[] = [
   { field: "sex", headerName: "Tag", flex: 1 },
   {
     field: "hatcher",
-    headerName: "Hatcher",
-    flex: 1,
-    minWidth: 150,
+    headerName: "Batch",
     renderCell: (params: GridRenderCellParams<any>) => {
       if (params.row.hatchery == null) return <></>;
       return (
@@ -72,7 +80,6 @@ const columns: GridColDef[] = [
   {
     field: "reduction_date",
     headerName: "Mortality",
-    flex: 1,
     valueGetter: (value, row) =>
       row.reduction_date
         ? dayjs(row.reduction_date).format(process.env.NEXT_PUBLIC_DATE_FORMAT)
