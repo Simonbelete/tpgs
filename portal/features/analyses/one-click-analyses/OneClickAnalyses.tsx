@@ -55,6 +55,7 @@ import directoryToLabel from "@/util/directoryToLabel";
 import FeedIntakeGraph from "./FeedIntakeGraph";
 import WeeklyDataCollectionGraph from "./WeeklyDataCollectionGraph";
 import MinandMax from "./MinandMax";
+import SingleAgeDistribution from "./SingleAgeDistribuation";
 
 type Inputs = Partial<Directory>;
 
@@ -510,6 +511,34 @@ const OneClickAnalyses = () => {
 
         {_.map(filters, (e, i) => (
           <Box key={i} display={"flex"} flexDirection={"column"} gap={2}>
+            <Accordion
+              expanded={expanded === `SingleAgeDistribution${i}`}
+              onChange={handleChange(`SingleAgeDistribution${i}`)}
+            >
+              <AccordionSummary
+                expandIcon={<ExpandMoreIcon />}
+                sx={{ height: "50px" }}
+              >
+                <Typography
+                  sx={{ width: "33%", flexShrink: 0, fontWeight: "500" }}
+                >
+                  Age distribution
+                </Typography>
+                <Typography sx={{ color: "text.secondary" }}>
+                  {directoryToLabel(e as Directory)}
+                </Typography>
+              </AccordionSummary>
+              <AccordionDetails>
+                {expanded === `SingleAgeDistribution${i}` && (
+                  <SingleAgeDistribution
+                    filter={e}
+                    start_week={weekValue[0]}
+                    end_week={weekValue[1]}
+                  />
+                )}
+              </AccordionDetails>
+            </Accordion>
+
             <Accordion
               expanded={expanded === `SingleMortalityRate${i}`}
               onChange={handleChange(`SingleMortalityRate${i}`)}

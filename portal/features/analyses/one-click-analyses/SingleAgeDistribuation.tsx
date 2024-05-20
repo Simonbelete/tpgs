@@ -3,7 +3,7 @@ import { Tabs, Tab, ToggleButtonGroup, ToggleButton } from "@mui/material";
 import AutoGraphIcon from "@mui/icons-material/AutoGraph";
 import TableViewIcon from "@mui/icons-material/TableView";
 import _, { filter, result } from "lodash";
-import { useLazyGetMortalityRateQuery } from "@/features/one-click-report/services";
+import { useLazyAgeDistributionQuery } from "../services";
 import buildDirectoryQuery from "@/util/buildDirectoryQuery";
 import directoryToLabel from "@/util/directoryToLabel";
 import { Directory } from "@/models";
@@ -38,6 +38,10 @@ const columns: GridColDef[] = [
     field: "sex_unknown",
     headerName: "Unknown (#)",
   },
+  {
+    field: "total_count",
+    headerName: "Total (#)",
+  },
 ];
 
 const Plot = dynamic(() => import("react-plotly.js"), {
@@ -58,7 +62,7 @@ const SingleAgeDistribution = ({
   const [data, setData] = useState<any[]>([]);
   const [tableData, setTableData] = useState<any[]>([]);
 
-  const [trigger, { isFetching }] = useLazyGetMortalityRateQuery();
+  const [trigger, { isFetching }] = useLazyAgeDistributionQuery();
 
   const handleChange = (event: React.SyntheticEvent, newValue: string) => {
     setValue(newValue);
@@ -75,8 +79,6 @@ const SingleAgeDistribution = ({
 
     const query = {
       ...buildDirectoryQuery(filter),
-      start_week: start_week,
-      end_week: end_week,
     };
 
     const response = await trigger(query);
@@ -84,25 +86,30 @@ const SingleAgeDistribution = ({
     const results: any = [];
     const resultsTable: any = [];
 
-    const x: any = response.data?.results.map((e: any) => e.week);
+    const x: any = response.data?.results.map(
+      (e: any) => `Week ${e.age_in_weeks}`
+    );
 
     let traceMale: number[] = [];
     let traceFemale: number[] = [];
     let traceUnknown: number[] = [];
 
+    let traceTotal: number[] = [];
+
     _.forEach(response.data?.results, (e, i) => {
       const row = e;
 
-      const total_count: number = Number(_.get(row, "total_count", 0));
       const age_in_days: number = Number(_.get(row, "age_in_days", 0));
       const age_in_weeks: number = Number(_.get(row, "age_in_weeks", 0));
       const sex_male: number = Number(_.get(row, "sex.M", 0));
       const sex_female: number = Number(_.get(row, "sex.F", 0));
       const sex_unknown: number = Number(_.get(row, "sex.Unknown", 0));
+      const total_count: number = sex_male + sex_female + sex_unknown;
 
       traceMale.push(sex_male);
       traceFemale.push(sex_female);
       traceUnknown.push(sex_unknown);
+      traceTotal.push(total_count);
 
       resultsTable.push({
         total_count: total_count,
@@ -117,21 +124,30 @@ const SingleAgeDistribution = ({
     setData([
       {
         x: x,
+        y: traceTotal,
+        name: "Total",
+        type: "scatter",
+      },
+      {
+        x: x,
         y: traceMale,
         name: "Male",
         type: "bar",
+        // marker: { color: "#DC595F" },
       },
       {
         x: x,
         y: traceFemale,
         name: "Female",
         type: "bar",
+        // marker: { color: "#EB8D1D" },
       },
       {
         x: x,
         y: traceUnknown,
         name: "Unknown",
         type: "bar",
+        // marker: { color: "#5379A9" },
       },
     ]);
     setTableData(resultsTable);
@@ -172,7 +188,6 @@ const SingleAgeDistribution = ({
             barmode: "stack",
             xaxis: {
               title: "Age in week",
-              dtick: 1,
             },
             yaxis: {
               title: "No of chickens",
@@ -185,6 +200,7 @@ const SingleAgeDistribution = ({
       )}
       {!isFetching && value == "table" && (
         <EditableTable
+          getRowId={(row: any) => row.age_in_days}
           columns={columns}
           rows={tableData ?? []}
           loading={isFetching}
@@ -200,6 +216,7 @@ const SingleAgeDistribution = ({
               "sex_male",
               "sex_female",
               "sex_unknown",
+              "total_count",
             ],
             includeOutliers: true,
             includeHeaders: true,
