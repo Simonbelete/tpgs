@@ -2,6 +2,7 @@ from django.db import models
 from simple_history.models import HistoricalRecords
 from core.validators import WEEK_VALIDATOR
 from django.db.models import Q
+from rest_framework.exceptions import ValidationError
 
 from core.models import CoreModel
 from core.fields import WEIGHT_IN_GRAM_FIELD
@@ -65,3 +66,15 @@ class Feed(CoreModel):
             return self.weight / total_no_chickens if total_no_chickens != 0 else 0
         else:
             return 0
+
+    def save(self,  *args, **kwargs) -> None:
+        self.full_clean()
+        return super().save(*args, **kwargs)
+    
+    def full_clean(self, exclude=None, validate_unique=True):
+        super().full_clean(['created_by'], validate_unique)
+            
+        if(self.week > self.chicken.age_in_weeks):
+             raise ValidationError({
+                'week': ["Given week is greater than the chicken's age"]
+            })
