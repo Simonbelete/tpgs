@@ -139,6 +139,7 @@ class Chicken(CoreModel):
                         'dam': ["Generation not matching with Sire"]
                     }
                 )
+            # Check Sex
                 
         if(self.reduction_date):
             if(self.reduction_date < self.hatch_date):
