@@ -64,7 +64,7 @@ class BaseResource(resources.ModelResource):
 
     def add_result(self, result):
         self.results.append(result)
-
+        
 
 class BaseChickenResource(BaseResource):
     tag = fields.Field(column_name='ID (Wing Tag)', attribute='tag', widget=widgets.NumberWidget())
@@ -110,7 +110,7 @@ class BaseChickenResource(BaseResource):
 
     def after_read_file(self, df):
         return df.replace(np.nan, None)
-
+    
     def before_import_row(self, row, row_number=None, **kwargs):
         if not "Cull Date" in row: return None
         
@@ -227,7 +227,9 @@ class BaseChickenRecordsetResource(BaseResource):
 
 
 class AllChickenDataImportResource(BaseChickenResource):
-    """Chicken + Feed + Weight + Egg"""
+    """Chicken + Feed + Weight + Egg.
+        Jump data if the chicken is dead in the given week
+    """
     def melt_to_rows(self, df, tags, col_name, week_columns=[], level='type', value_name=None):
         """_summary_
 
@@ -483,7 +485,16 @@ class _WeightResource(BaseResource):
         import_id_fields = ['chicken', 'week']
         exclude = ['id']
         fields = ['chicken', 'week', 'weight']
-
+        
+    def skip_row(self, instance, original, row, import_validation_errors=None):
+        if(super().skip_row(instance, original, row, import_validation_errors)):
+            return True
+        else:
+            # Check if chicken's age match with the current data and skip
+            if(int(instance.week) > instance.chicken.age_in_weeks()):
+                return True
+            else:
+                return False
 
 
 class _FeedResource(BaseResource):
@@ -499,6 +510,16 @@ class _FeedResource(BaseResource):
         import_id_fields = ['chicken', 'week']
         exclude = ['id']
         fields = ['chicken', 'week', 'weight']
+        
+    def skip_row(self, instance, original, row, import_validation_errors=None):
+        if(super().skip_row(instance, original, row, import_validation_errors)):
+            return True
+        else:
+            # Check if chicken's age match with the current data and skip
+            if(int(instance.week) > instance.chicken.age_in_weeks()):
+                return True
+            else:
+                return False
 
 
 class _EggResource(BaseResource):
@@ -515,6 +536,16 @@ class _EggResource(BaseResource):
         import_id_fields = ['chicken', 'week']
         exclude = ['id']
         fields = ['chicken', 'week', 'eggs', 'weight']
+    
+    def skip_row(self, instance, original, row, import_validation_errors=None):
+        if(super().skip_row(instance, original, row, import_validation_errors)):
+            return True
+        else:
+            # Check if chicken's age match with the current data and skip
+            if(int(instance.week) > instance.chicken.age_in_weeks()):
+                return True
+            else:
+                return False
 
 
 class BreedResource(BaseResource):
