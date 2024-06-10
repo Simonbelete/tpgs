@@ -171,6 +171,15 @@ class BaseChickenResource(BaseResource):
         self.add_result(result)
         
 
+class ChickenPedigreeById(BaseChickenResource):
+    id = fields.Field(column_name='ID', attribute='id', widget=widgets.NumberWidget())
+    class Meta:
+        model = Chicken
+        import_id_fields = ['id']
+        fields = ['id', 'hatch_date', 'sex', 'tag', 
+                  'breed', 'generation', 'hatchery', 'pen', 'sire', 'dam', 'reduction_date', 'reduction_reason', 'color']
+
+
 class BaseChickenRecordsetResource(BaseResource):
     tag = fields.Field(column_name=TAG_COLUMN_NAME, attribute='chicken__tag')
     hatch_date = fields.Field(column_name="Hatch Date", attribute="chicken__hatch_date",

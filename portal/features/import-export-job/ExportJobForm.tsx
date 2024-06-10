@@ -142,6 +142,11 @@ const resources: Res[] = [
     resource: "ChickenBodyWeightExportResource",
     fields: batchFilterForms,
   },
+  {
+    name: "Export Pedigree (unique id)",
+    resource: "ChickenPedigreeById",
+    fields: batchFilterForms,
+  },
   // {
   //   name: "Export Feed conversition ratio",
   //   resource: "ChickenFeedFCRResource",
@@ -222,6 +227,7 @@ export const ExportJobForm = () => {
 
     switch (body.resource) {
       case "BaseChickenResource":
+      case "ChickenPedigreeById":
         query = buildBaseChickenResource(data);
         break;
       case "ChickenBodyWeightExportResource":

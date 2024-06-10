@@ -20,6 +20,7 @@ const resources = [
   },
   { name: "Import Body Weight", resource: "ChickenWeightResource" },
   { name: "Import Pedigree", resource: "BaseChickenResource" },
+  { name: "Import Pedigree (unique id)", resource: "ChickenPedigreeById" },
   // { name: "Import Egg Production", resource: "ChickenEgg" },
   // { name: "Chicken Detail", resource: "ChickenDetailResource" },
   // { name: "Import Chicken Body Weights", resource: "ChickenWeightResource" },
