@@ -64,6 +64,7 @@ def run_import_job(pk):
             # import_job.errors += "Import error %s" % e + "\n"
             import_job.errors += "Import error " + "\n"
             import_job.job_status = 'ERROR'
+            import_job.report = str(e)
             import_job.save()
             return
 

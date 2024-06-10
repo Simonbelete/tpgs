@@ -19,18 +19,19 @@ class Weight(CoreModel):
         unique_together = ['chicken', 'week']
         ordering = ['-created_at']
 
-    @property
-    def display_name(self):
-        return "{0} W{1}".format(self.chicken.tag, self.week)
-    
     def save(self,  *args, **kwargs) -> None:
         self.full_clean()
         return super().save(*args, **kwargs)
-    
+        
     def full_clean(self, exclude=None, validate_unique=True):
         super().full_clean(['created_by'], validate_unique)
-            
-        if(self.week > self.chicken.age_in_weeks):
-             raise ValidationError({
+
+        if(self.week > self.chicken.age_in_weeks()):
+            raise ValidationError({
+                'chicken': ["Given week is greater than the chicken's age"],
                 'week': ["Given week is greater than the chicken's age"]
             })
+
+    @property
+    def display_name(self):
+        return "{0} W{1}".format(self.chicken.tag, self.week)

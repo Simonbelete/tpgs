@@ -22,6 +22,19 @@ class Egg(CoreModel):
     class Meta:
         unique_together = ['chicken', 'week']
         ordering = ['-created_at']
+        
+    def save(self,  *args, **kwargs) -> None:
+        self.full_clean()
+        return super().save(*args, **kwargs)
+        
+    def full_clean(self, exclude=None, validate_unique=True):
+        super().full_clean(exclude, validate_unique)
+        
+        if(self.week > self.chicken.age_in_weeks):
+            raise ValidationError({
+                'chicken': ["Given week is greater than the chicken's age"],
+                'week': ["Given week is greater than the chicken's age"]
+            })
 
     @property
     def display_name(self):
