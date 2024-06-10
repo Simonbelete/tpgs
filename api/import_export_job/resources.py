@@ -479,6 +479,13 @@ class _WeightResource(BaseResource):
         widget=widgets.ForeignKeyWidget(Chicken, field='tag'))
     week = fields.Field(column_name=WEEK, attribute='week')
     weight = fields.Field(column_name=BODY_WEIGHT, attribute='weight')
+    delete = fields.Field(widget=widgets.BooleanWidget(), default=0)
+    
+    def for_delete(self, row, instance):
+        try:
+            return self.fields['delete'].clean(row)
+        except:
+            return False
     
     class Meta:
         model = Weight
@@ -493,6 +500,9 @@ class _WeightResource(BaseResource):
             # Check if chicken's age match with the current data and skip
             if(int(instance.week) > instance.chicken.age_in_weeks()):
                 return True
+            elif(instance.weight <= 0):
+                # Skip if value is zero
+                return True
             else:
                 return False
 
@@ -504,6 +514,13 @@ class _FeedResource(BaseResource):
         widget=widgets.ForeignKeyWidget(Chicken, field='tag'))
     week = fields.Field(column_name=WEEK, attribute='week')
     weight = fields.Field(column_name=FEED_WEIGHT, attribute='weight')
+    delete = fields.Field(widget=widgets.BooleanWidget(), default=0)
+    
+    def for_delete(self, row, instance):
+        try:
+            return self.fields['delete'].clean(row)
+        except:
+            return False
 
     class Meta:
         model = Feed
@@ -518,6 +535,9 @@ class _FeedResource(BaseResource):
             # Check if chicken's age match with the current data and skip
             if(int(instance.week) > instance.chicken.age_in_weeks()):
                 return True
+            elif(instance.weight <= 0):
+                # Skip if value is zero
+                return True
             else:
                 return False
 
@@ -530,6 +550,13 @@ class _EggResource(BaseResource):
     week = fields.Field(column_name=WEEK, attribute='week')
     eggs = fields.Field(column_name=NO_EGGS, attribute='eggs')
     weight = fields.Field(column_name=EGGS_WEIGHT, attribute='weight')
+    delete = fields.Field(widget=widgets.BooleanWidget(), default=0)
+    
+    def for_delete(self, row, instance):
+        try:
+            return self.fields['delete'].clean(row)
+        except:
+            return False
 
     class Meta:
         model = Egg
@@ -543,6 +570,9 @@ class _EggResource(BaseResource):
         else:
             # Check if chicken's age match with the current data and skip
             if(int(instance.week) > instance.chicken.age_in_weeks()):
+                return True
+            elif(instance.eggs <= 0):
+                # Skip if value is zero
                 return True
             else:
                 return False
