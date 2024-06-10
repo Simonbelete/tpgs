@@ -20,29 +20,31 @@ export const instance = axios.create({
 });
 
 instance.interceptors.request.use(async (config) => {
-  // Without session for every request
-  // if(["/farms/", 
-  //     "/inbox/notifications/unread_count/", 
-  //     "/analyses/count/", 
-  //     "/inbox/notifications/unread/",
-  //     "/export/jobs/",
-  //     '/import/jobs/',
-  //     "/invitations/",
-  //   ].includes(config.url ?? "") || config.method != "get") {
-  //   const session = await getSession();
-  //   if (session) {
-  //     config.headers.Authorization = `Bearer ${session.accessToken}`;
-  //   }
-  //   return config;
-  // } 
+  console.log(config.url)
+  // Without session
+  if(["/farms/", 
+      "/inbox/notifications/unread_count/", 
+      "/analyses/count/", 
+      "/inbox/notifications/unread/",
+      "/export/jobs/",
+      '/import/jobs/',
+      "/invitations/",
+      "/users/",
+    ].includes(config.url ?? "") || config.method != "get") {
+    const session = await getSession();
+    if (session) {
+      config.headers.Authorization = `Bearer ${session.accessToken}`;
+    }
+    return config;
+  } 
 
-  // return config
+  return config
 
-  const session = await getSession();
-  if (session) {
-    config.headers.Authorization = `Bearer ${session.accessToken}`;
-  }
-  return config;
+  // const session = await getSession();
+  // if (session) {
+  //   config.headers.Authorization = `Bearer ${session.accessToken}`;
+  // }
+  // return config;
 });
 
 export const defaultTenantInterceptor = async (
