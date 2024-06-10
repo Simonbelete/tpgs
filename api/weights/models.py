@@ -22,7 +22,7 @@ class Weight(CoreModel):
     def save(self,  *args, **kwargs) -> None:
         self.full_clean()
         return super().save(*args, **kwargs)
-        
+    
     def full_clean(self, exclude=None, validate_unique=True):
         super().full_clean(['created_by'], validate_unique)
 

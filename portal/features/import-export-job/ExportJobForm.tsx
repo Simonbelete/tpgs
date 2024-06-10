@@ -128,23 +128,23 @@ const batchFilterForms: {
 const resources: Res[] = [
   { name: "---", resource: "", fields: {} },
   {
-    name: "Export Pedigree, Body Weight, Feed Intake & Egg Production",
-    resource: "ChickenRecordsetResource",
-    fields: batchFilterForms,
-  },
-  {
-    name: "Export Pedigree information",
+    name: "Export Pedigree information - TAG as unique id",
     resource: "BaseChickenResource",
     fields: baseChickenFilter,
   },
   {
-    name: "Export Pedigree & Body Weight",
-    resource: "ChickenBodyWeightExportResource",
+    name: "Export Pedigree - ID as unique id",
+    resource: "ChickenPedigreeById",
     fields: batchFilterForms,
   },
   {
-    name: "Export Pedigree (unique id)",
-    resource: "ChickenPedigreeById",
+    name: "Export Pedigree, Body Weight, Feed Intake & Egg Production - Weekly",
+    resource: "ChickenRecordsetResource",
+    fields: batchFilterForms,
+  },
+  {
+    name: "Export Pedigree & Body Weight - Weekly",
+    resource: "ChickenBodyWeightExportResource",
     fields: batchFilterForms,
   },
   // {

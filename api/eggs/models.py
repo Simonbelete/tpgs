@@ -30,7 +30,7 @@ class Egg(CoreModel):
     def full_clean(self, exclude=None, validate_unique=True):
         super().full_clean(exclude, validate_unique)
         
-        if(self.week > self.chicken.age_in_weeks):
+        if(self.week > self.chicken.age_in_weeks()):
             raise ValidationError({
                 'chicken': ["Given week is greater than the chicken's age"],
                 'week': ["Given week is greater than the chicken's age"]
@@ -57,15 +57,3 @@ class Egg(CoreModel):
             egg_set_sum=Sum('no_eggs'))['egg_set_sum'] or 0
         hatchery_eggs = hatchery_eggs if hatchery_eggs else 0
         return (self.eggs or 0) - hatchery_eggs
-
-    def save(self,  *args, **kwargs) -> None:
-        self.full_clean()
-        return super().save(*args, **kwargs)
-    
-    def full_clean(self, exclude=None, validate_unique=True):
-        super().full_clean(['created_by'], validate_unique)
-            
-        if(self.week > self.chicken.age_in_weeks):
-             raise ValidationError({
-                'week': ["Given week is greater than the chicken's age"]
-            })

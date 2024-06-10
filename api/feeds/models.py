@@ -39,7 +39,7 @@ class Feed(CoreModel):
     def full_clean(self, exclude=None, validate_unique=True):
         super().full_clean(exclude, validate_unique)
         
-        if(self.week > self.chicken.age_in_weeks):
+        if(self.week > self.chicken.age_in_weeks()):
             raise ValidationError({
                 'chicken': ["Given week is greater than the chicken's age"],
                 'week': ["Given week is greater than the chicken's age"]
