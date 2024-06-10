@@ -35,6 +35,16 @@ class Egg(CoreModel):
                 'chicken': ["Given week is greater than the chicken's age"],
                 'week': ["Given week is greater than the chicken's age"]
             })
+            
+        if(self.chicken.sex != 'F'):
+            raise ValidationError({
+                'sex': ["Sex must be female"],
+            })
+              
+        if(self.eggs < 1):
+            raise ValidationError({
+                'eggs': ["Must be greater than 0"],
+            })
 
     @property
     def display_name(self):

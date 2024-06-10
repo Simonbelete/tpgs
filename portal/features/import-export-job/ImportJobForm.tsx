@@ -15,19 +15,30 @@ import { useRouter } from "next/router";
 const resources = [
   { name: "---", resource: "" },
   {
-    name: "Import Pedigree, Body Weight, Feed Intake & Egg Production",
+    name: "Import Pedigree, Body Weight, Feed Intake & Egg Production (Weekly)",
     resource: "AllChickenDataImportResource",
   },
-  { name: "Import Body Weight", resource: "ChickenWeightResource" },
-  { name: "Import Pedigree", resource: "BaseChickenResource" },
-  { name: "Import Pedigree (unique id)", resource: "ChickenPedigreeById" },
-  // { name: "Import Egg Production", resource: "ChickenEgg" },
-  // { name: "Chicken Detail", resource: "ChickenDetailResource" },
-  // { name: "Import Chicken Body Weights", resource: "ChickenWeightResource" },
-  // { name: "Import Chicken Feed Intake", resource: "ChickenFeedResource" },
-  // { name: "Import Chicken Egg Production", resource: "EggResource" },
-  // { name: "Breeds", resource: "BreedResource" },
-  // { name: "Import Hatch(Batch)", resource: "HatcheryResource" },
+  {
+    name: "Import Pedigree information (TAG as unique id)",
+    resource: "BaseChickenResource",
+  },
+  {
+    name: "Import Pedigree (ID as unique id)",
+    resource: "ChickenPedigreeById",
+  },
+  { name: "Import Body Weight (Weekly)", resource: "ChickenWeightResource" },
+  {
+    name: "Import Body Weight (List)",
+    resource: "_WeightResource",
+  },
+  {
+    name: "Import Feed Intake (List)",
+    resource: "_FeedResource",
+  },
+  {
+    name: "Import Egg Production (List)",
+    resource: "_EggResource",
+  },
 ];
 
 type Inputs = Partial<ImportJob>;
@@ -39,6 +50,7 @@ const schema = yup.object({
 export const ImportJobForm = () => {
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   const router = useRouter();
+  const [fileValue, setFileValue] = useState<File | null>();
 
   const { handleSubmit, control, setValue, getValues } = useForm<Inputs>({
     // @ts-ignore
@@ -92,6 +104,7 @@ export const ImportJobForm = () => {
         return;
       }
       setValue("file", file);
+      setFileValue(file);
     }
   };
 
@@ -111,7 +124,7 @@ export const ImportJobForm = () => {
                   onChange={handleFileUpload}
                 />
               </Button>
-              <Typography>{_.get(getValues("file"), "name", "")}</Typography>
+              <Typography>{_.get(fileValue, "name", "")}</Typography>
             </Stack>
           </Grid>
           <Grid item xs={12}>
