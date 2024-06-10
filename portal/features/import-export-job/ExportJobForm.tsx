@@ -250,6 +250,9 @@ export const ExportJobForm = () => {
         break;
       case "ChickenRecordsetResource":
       case "ChickenFeedFCRResource":
+      case "_WeightResource":
+      case "_FeedResource":
+      case "_EggResource":
         query = buildChickenRefResource(data);
         break;
     }
