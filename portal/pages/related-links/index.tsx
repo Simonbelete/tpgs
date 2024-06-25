@@ -49,6 +49,7 @@ const RelatedLinks = () => {
   const [links, setLinks] = useState<any>({});
 
   useEffect(() => {
+    // @ts-ignore
     let x = Object.groupBy(technicalReports, ({ category }) => category);
 
     setLinks(x);
@@ -181,7 +182,7 @@ const RelatedLinks = () => {
             }}
           >
             {(publications || []).map((e: any, i: any) => (
-              <li>
+              <li key={i}>
                 <div
                   style={{
                     overflow: "scroll",
@@ -205,7 +206,7 @@ const RelatedLinks = () => {
               }}
             >
               {(brochures || []).map((e: any, i: any) => (
-                <li>
+                <li key={i}>
                   <div
                     style={{
                       overflow: "scroll",
