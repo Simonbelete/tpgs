@@ -32,6 +32,7 @@ import trainingModules from "@/data/trainingModules.json";
 import brochures from "@/data/brochures.json";
 import { Inter } from "next/font/google";
 
+// @ts-ignore
 const links = Object.groupBy(technicalReports, ({ category }) => category);
 
 const LinkTitle = ({ children }: { children: string | ReactElement }) => {
