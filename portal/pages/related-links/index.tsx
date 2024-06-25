@@ -32,6 +32,8 @@ import trainingModules from "@/data/trainingModules.json";
 import brochures from "@/data/brochures.json";
 import { Inter } from "next/font/google";
 
+const links = Object.groupBy(technicalReports, ({ category }) => category);
+
 const LinkTitle = ({ children }: { children: string | ReactElement }) => {
   return (
     <>
@@ -45,15 +47,6 @@ const LinkTitle = ({ children }: { children: string | ReactElement }) => {
 
 const RelatedLinks = () => {
   const theme = useTheme();
-
-  const [links, setLinks] = useState<any>({});
-
-  useEffect(() => {
-    // @ts-ignore
-    let x = Object.groupBy(technicalReports, ({ category }) => category);
-
-    setLinks(x);
-  }, []);
 
   return (
     <>
@@ -146,7 +139,7 @@ const RelatedLinks = () => {
                     fontSize: "14px",
                   }}
                 >
-                  {links[key].map((e: any, j: any) => (
+                  {links[key]?.map((e: any, j: any) => (
                     <li style={{ marginBottom: "10px" }} key={j}>
                       <a href={e.link}>{e.title}</a>
                     </li>
