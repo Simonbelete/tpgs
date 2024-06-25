@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Grid, Typography, Stack, Link } from "@mui/material";
+import { Box, Grid, Typography, Stack, Link, Divider } from "@mui/material";
 import { ILRILogo } from "../logos";
 import PhoneIcon from "@mui/icons-material/Phone";
 import MarkunreadMailboxIcon from "@mui/icons-material/MarkunreadMailbox";
@@ -113,6 +113,35 @@ const PrimaryFooter = () => {
             </Stack>
           </Grid>
         </Grid>
+      </Box>
+
+      <Box sx={{ pb: 3, display: "flex", justifyContent: "center" }}>
+        <Stack
+          direction="row"
+          divider={<Divider orientation="vertical" />}
+          spacing={2}
+          justifyContent="center"
+        >
+          <Link href="/" style={{ color: "#ffff" }}>
+            Home
+          </Link>
+          <Link href="/login" style={{ color: "#ffff" }}>
+            Login
+          </Link>
+          <Link href="/sign-up" style={{ color: "#ffff" }}>
+            Sign-up
+          </Link>
+          <Link href="/related-links" style={{ color: "#ffff" }}>
+            Links
+          </Link>
+        </Stack>
+      </Box>
+
+      <Divider />
+      <Box sx={{ pb: 3, display: "flex", justifyContent: "center" }}>
+        <Link href="https://www.ilri.org/ilri-privacy-statement">
+          <Typography variant="caption">Privacy policy</Typography>
+        </Link>
       </Box>
     </>
   );
