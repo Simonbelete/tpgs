@@ -31,6 +31,9 @@ class Weight(CoreModel):
                 'chicken': ["Given week is greater than the chicken's age"],
                 'week': ["Given week is greater than the chicken's age"]
             })
+            
+        # Cast fields
+        self.weight = round(self.weight, 3)
 
     @property
     def display_name(self):

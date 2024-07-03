@@ -35,6 +35,11 @@ WEEK = 'Week'
 BODY_WEIGHT = 'Body Weight (g)'
 FEED_WEIGHT = 'Feed Intake'
 
+class WeightWidget(widgets.DecimalWidget):
+    def clean(self, value, row=None, **kwargs):
+      val = super().clean(value, row=row, **kwargs)
+      return round(val, 3)
+
 # Import Resource
 class BaseResource(resources.ModelResource):
     def after_read_file(self, df):
@@ -478,7 +483,7 @@ class _WeightResource(BaseResource):
         attribute='chicken',
         widget=widgets.ForeignKeyWidget(Chicken, field='tag'))
     week = fields.Field(column_name=WEEK, attribute='week')
-    weight = fields.Field(column_name=BODY_WEIGHT, attribute='weight')
+    weight = fields.Field(column_name=BODY_WEIGHT, attribute='weight', widget=WeightWidget())
     delete = fields.Field(widget=widgets.BooleanWidget(), default=0)
     
     def for_delete(self, row, instance):
@@ -513,7 +518,7 @@ class _FeedResource(BaseResource):
         attribute='chicken',
         widget=widgets.ForeignKeyWidget(Chicken, field='tag'))
     week = fields.Field(column_name=WEEK, attribute='week')
-    weight = fields.Field(column_name=FEED_WEIGHT, attribute='weight')
+    weight = fields.Field(column_name=FEED_WEIGHT, attribute='weight', widget=WeightWidget())
     delete = fields.Field(widget=widgets.BooleanWidget(), default=0)
     
     def for_delete(self, row, instance):
@@ -549,7 +554,7 @@ class _EggResource(BaseResource):
         widget=widgets.ForeignKeyWidget(Chicken, field='tag'))
     week = fields.Field(column_name=WEEK, attribute='week')
     eggs = fields.Field(column_name=NO_EGGS, attribute='eggs')
-    weight = fields.Field(column_name=EGGS_WEIGHT, attribute='weight')
+    weight = fields.Field(column_name=EGGS_WEIGHT, attribute='weight', widget=WeightWidget())
     delete = fields.Field(widget=widgets.BooleanWidget(), default=0)
     
     def for_delete(self, row, instance):
