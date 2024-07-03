@@ -531,7 +531,7 @@ class _FeedResource(BaseResource):
     def skip_row(self, instance, original, row, import_validation_errors=None):
         if(super().skip_row(instance, original, row, import_validation_errors)):
             return True
-        else:
+        else:       
             # Check if chicken's age match with the current data and skip
             if(int(instance.week) > instance.chicken.age_in_weeks()):
                 return True
