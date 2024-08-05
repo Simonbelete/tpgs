@@ -85,3 +85,39 @@ fmGA <- lmerUvcov(y ~ sex + (1|ped), data=modelData, Uvcov=random)
 
 
 summary(fmGA)
+
+
+
+# New v2
+Unit
+
+Animal Type
+
+Groups
+    - Group #1
+        - Animal Type
+        - Generation
+        - Batch
+        - Location
+    - Group #2
+
+Animal
+    - Animal #1 (Group #1)
+    - Animal #2 (Group #2)
+    - Animal #3 (Group #1)
+
+Attribute Types (periodically collected data)
+    - Body Weight (Unit)
+    - Egg number
+    - Egg weight
+    - Feed intake
+
+Animals' attribute
+    Start Date - End date, Collected location(GPS), value, remark - Attribute Type
+    - Day 1(July 31 2024) - 300g - Body weight
+    - Day 2
+
+
+
+Migration convert week to exact day
+Offline support
