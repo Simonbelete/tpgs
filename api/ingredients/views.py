@@ -1,6 +1,7 @@
 from rest_framework.response import Response
 from rest_framework.exceptions import NotFound
 from rest_framework import viewsets
+from rest_framework.permissions import DjangoModelPermissions, IsAuthenticated
 
 from core.views import (
     HistoryViewSet,
@@ -24,6 +25,7 @@ class IngredientTypeViewSet(CoreModelViewSet):
     filterset_class = filters.IngredientTypeFilter
     search_fields = ['name']
     ordering_fields = '__all__'
+    permission_classes = [DjangoModelPermissions, IsAuthenticated]
 
     def get_serializer_class(self):
         if self.request.method in ['POST', 'PUT', 'PATCH']:
@@ -63,6 +65,7 @@ class IngredientViewSet(CoreModelViewSet):
     filterset_class = filters.IngredientFilter
     search_fields = ['name', 'code']
     ordering_fields = '__all__'
+    permission_classes = [DjangoModelPermissions, IsAuthenticated]
 
     def get_serializer_class(self):
         if self.request.method in ['POST', 'PATCH']:
@@ -119,6 +122,7 @@ class IngredientNutrientViewSet(CoreModelViewSet):
     filterset_class = filters.IngredientNutrientFilter
     ordering_fields = '__all__'
     serializer_class = serializers.IngredientNutrientSerializer_GET
+    permission_classes = [DjangoModelPermissions, IsAuthenticated]
 
     def get_queryset(self):
         if ('ingredient_pk' in self.kwargs):

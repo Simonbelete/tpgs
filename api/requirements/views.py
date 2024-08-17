@@ -10,6 +10,7 @@ from import_export import resources
 import pandas as pd
 from rest_framework.exceptions import NotFound
 from rest_framework.response import Response
+from rest_framework.permissions import DjangoModelPermissions, IsAuthenticated
 
 from core.views import (
     HistoryViewSet,
@@ -31,6 +32,7 @@ class RequirementViewSet(CoreModelViewSet):
     filterset_class = filters.RequirementFilter
     search_fields = ['name']
     ordering_fields = '__all__'
+    permission_classes = [DjangoModelPermissions, IsAuthenticated]
 
     def get_serializer_class(self):
         if self.request.method == 'GET':
@@ -66,6 +68,7 @@ class RequirementNutrientViewSet(CoreModelViewSet):
     ordering_fields = ['nutrient__name',
                        'nutrient__abbreviation', 'nutrient__unit', 'value']
     search_fields = ['nutrient__name', 'nutrient__abbreviation', 'value']
+    permission_classes = [DjangoModelPermissions, IsAuthenticated]
 
     def get_queryset(self):
         if ('requirement_pk' in self.kwargs):
@@ -137,6 +140,7 @@ class RequirementIngredientViewSet(CoreModelViewSet):
     filterset_class = filters.RequirementIngredientFilter
     ordering_fields = 'all'
     search_fields = ['ingredient__name']
+    permission_classes = [DjangoModelPermissions, IsAuthenticated]
 
     def get_queryset(self):
         if ('requirement_pk' in self.kwargs):

@@ -1,4 +1,4 @@
-from rest_framework.permissions import DjangoModelPermissions
+from rest_framework.permissions import DjangoModelPermissions, IsAuthenticated
 from rest_framework import viewsets
 
 from core.views import (
@@ -18,7 +18,7 @@ from . import filters
 
 
 class NutrientGroupViewSet(CoreModelViewSet):
-    # permission_classes = [DjangoModelPermissions]
+    permission_classes = [DjangoModelPermissions, IsAuthenticated]
     queryset = models.NutrientGroup.all.all()
     serializer_class = serializers.NutrientGroupSerializer_GET
     filterset_class = filters.NutrientGroupFilter
@@ -49,7 +49,7 @@ class NutrientGroupImport(GenericImportView):
 # Nutrient
 class NutrientViewSet(CoreModelViewSet):
     queryset = models.Nutrient.all.all()
-    # permission_classes = [DjangoModelPermissions]
+    permission_classes = [DjangoModelPermissions, IsAuthenticated]
     serializer_class = serializers.NutrientSerializer_GET
     filterset_class = filters.NutrientFilter
     search_fields = ['code', 'name', 'abbreviation']
