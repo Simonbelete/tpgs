@@ -1256,6 +1256,7 @@ class ChickenRecordSet(mixins.RetrieveModelMixin,
     queryset = models.ChickenRecordset.objects.all()
     serializer_class = serializers.ChickenRecordSetSerializer
     filterset_class = filters.ChickenRecordSetFilter
+    permission_classes = [IsAuthenticated]
 
 
 class ChickensSummary(AnalysesViewSet):
@@ -1416,6 +1417,7 @@ class ChickenDataClean(mixins.RetrieveModelMixin,
     """ Incomplte data list"""
     queryset = models.Chicken.objects.all()
     serializer_class = serializers.ChickenSerializer_GET
+    permission_classes = [IsAuthenticated]
     
     def get_queryset(self):
         queryset = self.queryset

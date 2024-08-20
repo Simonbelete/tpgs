@@ -11,6 +11,7 @@ from rest_framework.views import APIView
 from drf_spectacular.utils import extend_schema, OpenApiParameter, OpenApiExample
 from rest_framework import generics
 from rest_framework.permissions import AllowAny
+from rest_framework.permissions import IsAuthenticated
 
 from core.views import (
     HistoryViewSet,
@@ -108,6 +109,7 @@ class ChickenFeedExport(GenericExportView):
 
 class ChickenOffspringViewSet(viewsets.GenericViewSet):
     serializer_class = serializers.ChickenSerializer_GET
+    permission_classes = [IsAuthenticated]
     
     def list(self, request, id=None, **kwargs):
         id = self.kwargs['id']
@@ -125,6 +127,7 @@ class ChickenOffspringViewSet(viewsets.GenericViewSet):
 
 class ChickenAncestorViewSet(viewsets.GenericViewSet):
     serializer_class = serializers.ChickenSerializer_GET
+    permission_classes = [IsAuthenticated]
 
     def list(self, request, id=None, **kwargs):
         id = self.kwargs['id']
@@ -144,6 +147,7 @@ class SiblingsViewSet(viewsets.GenericViewSet):
     serializer_class = serializers.ChickenSerializer_GET
     search_fields = ['tag']
     ordering_fields = '__all__'
+    permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
         try:
@@ -173,6 +177,8 @@ class SiblingsViewSet(viewsets.GenericViewSet):
 # unique
 class ChickenUniqueViewSet(viewsets.GenericViewSet, mixins.ListModelMixin):
     serializer_class = serializers.ChickenUniqueSerializer_GET
+    permission_classes = [IsAuthenticated]
+    
     @extend_schema(
         parameters=[OpenApiParameter(
         name='field',
