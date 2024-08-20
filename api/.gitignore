@@ -2,6 +2,8 @@ ilri_pfm_api/google-services.json
 service-account-file.json
 db.sqlite3
 
+static/
+
 # *.csv
 # *.xlsx
 apidata/
