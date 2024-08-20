@@ -17,7 +17,6 @@ from . import filters
 
 class BreedViewSet(CoreModelViewSet):
     queryset = models.Breed.objects.all()
-    # permission_classes = [DjangoModelPermissions]
     serializer_class = serializers.BreedSerializer_GET
     filterset_class = filters.BreedFilter
     search_fields = ['name']

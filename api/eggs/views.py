@@ -25,7 +25,6 @@ from . import serializers
 from . import admin
 from . import filters
 from users.models import User
-from rest_framework.permissions import DjangoModelPermissionsOrAnonReadOnly
 
 
 class EggViewSet(CoreModelViewSet):
@@ -34,7 +33,6 @@ class EggViewSet(CoreModelViewSet):
     filterset_class = filters.EggFilter
     search_fields = ['chicken__tag', 'week']
     ordering_fields = '__all__'
-    permission_classes = [DjangoModelPermissionsOrAnonReadOnly]
 
     def get_serializer_class(self):
         if self.request.method in ['POST', 'PATCH']:
