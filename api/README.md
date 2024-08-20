@@ -12,6 +12,7 @@ eg 9999.999
 3. ```python manage.py loaddata fixtures/*.json```
 4. ```python manage.py create_groups```
 5. ```python manage.py cities_light```
+6. ```python3 manage.py collectstatic```
 
 
 ## Testing

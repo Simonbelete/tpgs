@@ -50,6 +50,7 @@ def calc_max(val):
 class AnalysesViewSet(viewsets.ViewSet):
     # queryset = Chicken.objects.all()
     farm = None
+    permission_classes = [IsAuthenticated]
 
     def get_farm(self, farm_id):
         try:

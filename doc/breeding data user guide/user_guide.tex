@@ -1,0 +1,73 @@
+\documentclass[a4paper,12pt]{article}
+
+\usepackage{graphicx}
+\usepackage[usenames,dvipsnames]{xcolor}
+\usepackage{tcolorbox}
+\usepackage{tabularx}
+\usepackage{array}
+\usepackage{colortbl}
+\tcbuselibrary{skins}
+\usepackage{tablefootnote}
+\usepackage[a4paper, total={6.5in, 8in}]{geometry}
+\usepackage[backend=biber,style=numeric,citestyle=authortitle-ibid]{biblatex}
+\usepackage{qrcode}
+\usepackage{environ}
+\usepackage{xcolor}
+\usepackage[tikz]{bclogo}
+\usepackage{tikz}
+\usetikzlibrary{calc}
+\usepackage[colorlinks=true,linkcolor=blue]{hyperref}
+\usepackage[utf8]{inputenc}
+
+% Steps
+\usepackage{enumitem}
+\newlist{steps}{enumerate}{1}
+\setlist[steps, 1]{label = Step \arabic*:}
+
+\newcolumntype{Y}{>{\raggedleft\arraybackslash}X}
+
+\tcbset{tab1/.style={fonttitle=\bfseries\large,fontupper=\normalsize\sffamily,
+colback=yellow!10!white,colframe=red!75!black,colbacktitle=Salmon!40!white,
+coltitle=black,center title,freelance,frame code={
+\foreach \n in {north east,north west,south east,south west}
+{\path [fill=red!75!black] (interior.\n) circle (3mm); };},}}
+
+\tcbset{tab2/.style={enhanced,fonttitle=\bfseries,fontupper=\normalsize\sffamily,
+colback=yellow!10!white,colframe=red!50!black,colbacktitle=Salmon!40!white,
+coltitle=black,center title}}
+
+\newcounter{stepcounter}
+
+\begin{document}
+\begin{titlepage}
+    \centering 
+    \vfill
+    \includegraphics[width=10cm]{ilri_logo.png}
+    \vfill 
+    {\bfseries\Large
+        USER GUIDE\\
+        FOR\\
+        FEED FORMULATION APPLICATION\\
+        \vskip2cm
+    }   
+    
+    \vfill 
+    \vfill 
+    \vspace{50pt}
+    \textbf{A comprehensive user manual for Feed Formulation App\\
+			Addis Ababa, ETHIOPIA\\
+			Version 1.0\\
+			26/12/2023
+		}
+    
+    \vfill
+\end{titlepage}
+
+\newpage
+
+\tableofcontents
+\newpage
+
+\pagenumbering{arabic}
+
+\end{document}
