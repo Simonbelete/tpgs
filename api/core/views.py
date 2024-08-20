@@ -17,6 +17,7 @@ from farms.models import Farm
 import numpy as np
 import warnings
 from rest_framework import viewsets, mixins
+from rest_framework.permissions import IsAuthenticated
 
 from core.serializers import UploadSerializer
 
@@ -169,6 +170,7 @@ class ModelFilterViewSet(viewsets.ModelViewSet):
 class SummaryViewSet(mixins.RetrieveModelMixin,
                      mixins.ListModelMixin,
                      viewsets.GenericViewSet):
+    permission_classes = [IsAuthenticated]
     def get_query(self):
         return NotImplementedError('Queryset must be implement')
 
