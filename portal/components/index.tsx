@@ -22,3 +22,4 @@ export * from "./heros";
 export * from "./menus";
 export * from "./navbars";
 export * from "./card";
+export * from "./tpgs-videos";

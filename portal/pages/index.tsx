@@ -16,6 +16,7 @@ import {
   PrimaryHero,
   AppIntro,
   AppsDescription,
+  TpgsVideos,
 } from "@/components";
 import { ILRILogo } from "@/components/logos";
 import { ReactElement } from "react";
@@ -79,6 +80,9 @@ function Home() {
         </Box>
         <Box sx={{ height: 50 }} />
         <AppIntro />
+        <Box sx={{ height: 50 }} />
+
+        <TpgsVideos />
         <Box sx={{ height: 50 }} />
 
         <SignUpNowCTA />
