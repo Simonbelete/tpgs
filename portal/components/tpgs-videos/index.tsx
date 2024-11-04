@@ -26,7 +26,7 @@ export const TpgsVideos = () => {
         <Grid item xs={12}>
           <Box my="auto">
             <Typography variant="h4" component="h4">
-              TPGS CONSULT AND UNDERTAKINGS
+              TPGS CONCEPT AND UNDERSTANDING
             </Typography>
             {/* <Typography
               variant="subtitle1"
