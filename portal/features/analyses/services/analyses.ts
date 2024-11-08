@@ -22,14 +22,14 @@ export const analyseApi = baseApi.injectEndpoints({
       }),
       getHdep: build.query<Response<any[]>, Object>({
         query: (query?: Object) => ({
-          url: `${URL}/hhep/`,
+          url: `${URL}/hdep/`,
           method: "get",
           params: query,
         }),
       }),
       getHhep: build.query<Response<any[]>, Object>({
         query: (query?: Object) => ({
-          url: `${URL}/hdep/`,
+          url: `${URL}/hhep/`,
           method: "get",
           params: query,
         }),
