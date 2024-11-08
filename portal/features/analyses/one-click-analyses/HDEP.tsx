@@ -3,7 +3,7 @@ import { Tabs, Tab, ToggleButtonGroup, ToggleButton } from "@mui/material";
 import AutoGraphIcon from "@mui/icons-material/AutoGraph";
 import TableViewIcon from "@mui/icons-material/TableView";
 import _, { filter, result } from "lodash";
-import { useLazyGetHhepQuery } from "../services";
+import { useLazyGetHdepQuery } from "../services";
 import buildDirectoryQuery from "@/util/buildDirectoryQuery";
 import directoryToLabel from "@/util/directoryToLabel";
 import { Directory } from "@/models";
@@ -54,7 +54,7 @@ const HDEP = ({
   const [data, setData] = useState<any[]>([]);
   const [tableData, setTableData] = useState<any[]>([]);
 
-  const [trigger, { isFetching }] = useLazyGetHhepQuery();
+  const [trigger, { isFetching }] = useLazyGetHdepQuery();
 
   const handleChange = (event: React.SyntheticEvent, newValue: string) => {
     setValue(newValue);
