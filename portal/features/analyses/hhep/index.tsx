@@ -4,7 +4,7 @@ import {
   IndividualFilterProps,
   GuidelineFilterProps,
 } from "@/features/directory";
-import { useLazyGetHdepQuery } from "../services";
+import { useLazyGetHhepQuery } from "../services";
 import dynamic from "next/dynamic";
 import { BarChartSkeleton } from "@/components";
 import { Box } from "@mui/material";
@@ -28,7 +28,7 @@ interface GraphProps {
 export const HHEPAnalyses = () => {
   const [data, setData] = useState<any[]>([]);
 
-  const [trigger] = useLazyGetHdepQuery();
+  const [trigger] = useLazyGetHhepQuery();
 
   const [hhepTrigger] = useLazyGetHHEPGuidelineOfBreedQuery();
 
@@ -51,7 +51,7 @@ export const HHEPAnalyses = () => {
     if (response.results) {
       for (let val in response.results) {
         chartData.x.push(Number(response.results[val]["week"]) || 0);
-        chartData.y.push(Number(response.results[val]["hdep"]) || 0);
+        chartData.y.push(Number(response.results[val]["hhep"]) || 0);
       }
       setData([...data, chartData]);
     }
