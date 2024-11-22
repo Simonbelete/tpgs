@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2023.11.12)  30 JAN 2024 10:48
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2024.5.18)  20 NOV 2024 11:10
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1075,24 +1075,24 @@ LaTeX Warning: Label `fig:nutrient_edit_page' multiply defined.
 ))
 \openout1 = `user_guide.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 43.
-LaTeX Font Info:    ... okay on input line 43.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 43.
-LaTeX Font Info:    ... okay on input line 43.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 43.
-LaTeX Font Info:    ... okay on input line 43.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 43.
-LaTeX Font Info:    ... okay on input line 43.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 43.
-LaTeX Font Info:    ... okay on input line 43.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 43.
-LaTeX Font Info:    ... okay on input line 43.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 43.
-LaTeX Font Info:    ... okay on input line 43.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 43.
-LaTeX Font Info:    ... okay on input line 43.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 43.
-LaTeX Font Info:    ... okay on input line 43.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 44.
+LaTeX Font Info:    ... okay on input line 44.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 44.
+LaTeX Font Info:    ... okay on input line 44.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 44.
+LaTeX Font Info:    ... okay on input line 44.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 44.
+LaTeX Font Info:    ... okay on input line 44.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 44.
+LaTeX Font Info:    ... okay on input line 44.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 44.
+LaTeX Font Info:    ... okay on input line 44.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 44.
+LaTeX Font Info:    ... okay on input line 44.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 44.
+LaTeX Font Info:    ... okay on input line 44.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 44.
+LaTeX Font Info:    ... okay on input line 44.
  (/usr/share/texlive/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
 \scratchcounter=\count467
@@ -1163,9 +1163,9 @@ Package biblatex Info: Trying to load bibliographic data...
 Package biblatex Info: ... file 'user_guide.bbl' found.
 
 (./user_guide.bbl)
-Package biblatex Info: Reference section=0 on input line 43.
-Package biblatex Info: Reference segment=0 on input line 43.
-Package hyperref Info: Link coloring ON on input line 43.
+Package biblatex Info: Reference section=0 on input line 44.
+Package biblatex Info: Reference segment=0 on input line 44.
+Package hyperref Info: Link coloring ON on input line 44.
 
 (/usr/share/texlive/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2021-04-02 v2.47 Cross-referencing by name of section
@@ -1178,53 +1178,53 @@ Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
 )
 \c@section@level=\count473
 )
-LaTeX Info: Redefining \ref on input line 43.
-LaTeX Info: Redefining \pageref on input line 43.
-LaTeX Info: Redefining \nameref on input line 43.
+LaTeX Info: Redefining \ref on input line 44.
+LaTeX Info: Redefining \pageref on input line 44.
+LaTeX Info: Redefining \nameref on input line 44.
 
 (./user_guide.out) (./user_guide.out)
 \@outlinefile=\write5
 \openout5 = `user_guide.out'.
 
-<ilri_logo.png, id=171, 1381.16pt x 409.53pt>
+<ilri_logo.png, id=256, 1381.16pt x 409.53pt>
 File: ilri_logo.png Graphic file (type png)
 <use ilri_logo.png>
-Package pdftex.def Info: ilri_logo.png  used on input line 47.
+Package pdftex.def Info: ilri_logo.png  used on input line 48.
 (pdftex.def)             Requested size: 284.52756pt x 84.36037pt.
  [1
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map} <./ilri_logo.png>] (./user_
 guide.toc
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <12> on input line 5.
+(Font)              <12> on input line 15.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <8> on input line 5.
+(Font)              <8> on input line 15.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <6> on input line 5.
+(Font)              <6> on input line 15.
 pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has 
 been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.62 ...13.2}Archive Records}{23}{subsection.13.2}
+l.54 ...rline {14}Forgot Password}{28}{section.14}
                                                   % [1])
 \tf@toc=\write6
 \openout6 = `user_guide.toc'.
 
  [2]
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <7> on input line 90.
+(Font)              <7> on input line 91.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <5> on input line 90.
+(Font)              <5> on input line 91.
 pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has 
 been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.92 \include{glossary}
+l.93 \include{glossary}
                         [1]
 \openout2 = `glossary.aux'.
 
  (./glossary.tex)
-Overfull \hbox (94.84735pt too wide) in paragraph at lines 2--92
+Overfull \hbox (94.84735pt too wide) in paragraph at lines 2--93
 [] 
  []
 
@@ -1232,7 +1232,7 @@ pdfTeX warning (ext4): destination with the same identifier (name{page.2}) has
 been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.92 \include{glossary}
+l.93 \include{glossary}
                         [2
 
 ]
@@ -1248,11 +1248,68 @@ File: bc-lampe.mps Graphic file (type mps)
 [3
 
 
-]
+] [4] [5]
+
+Package hyperref Warning: Difference (2) between bookmark levels is greater 
+(hyperref)                than one, level fixed on input line 218.
+
+[6]
+Overfull \hbox (2.19234pt too wide) in paragraph at lines 247--250
+[]\OT1/cmr/m/n/12 Apps sup-port sus-tain-able prac-tices by rec-om-mend-
+ []
+
+[7] [8] [9] [10] [11]
+Overfull \hbox (1.24289pt too wide) in paragraph at lines 429--432
+[]\OT1/cmr/m/n/12 Sodium and chlo-ride are of-ten pro-vided through salt (NaCl)
+, which
+ []
+
+[12]
+Overfull \hbox (24.93091pt too wide) in paragraph at lines 461--463
+[]\OT1/cmr/m/n/12 This group in-cludes thi-amine, ri-boflavin, niacin, pan-toth
+enic acid,pyridoxine,
+ []
+
+
+Overfull \hbox (0.97444pt too wide) in paragraph at lines 461--463
+\OT1/cmr/m/n/12 bi-otin, folic acid, and vi-ta-min B12. B vi-ta-mins are es-sen
+-tial for en-ergy metabolism,
+ []
+
+[13] [14]
+
+LaTeX Warning: No positions in optional float specifier.
+               Default added (so using `tbp') on input line 496.
+
+
+LaTeX Warning: Float too large for page by 63.43983pt on input line 556.
+
+[15] [16]
+
+LaTeX Warning: No positions in optional float specifier.
+               Default added (so using `tbp') on input line 563.
+
+
+LaTeX Warning: Float too large for page by 34.83981pt on input line 655.
+
+[17] [18]
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+[19]
+
+LaTeX Warning: Text page 20 contains only floats.
+
+[20]
+
+LaTeX Warning: No positions in optional float specifier.
+               Default added (so using `tbp') on input line 740.
+
+[21] [22]
 \openout2 = `ingredient.aux'.
 
  (./ingredient.tex
-<screenshots/ingredient_list_page.png, id=241, 1927.2pt x 1204.5pt>
+<screenshots/ingredient_list_page.png, id=443, 1927.2pt x 1204.5pt>
 File: screenshots/ingredient_list_page.png Graphic file (type png)
 <use screenshots/ingredient_list_page.png>
 Package pdftex.def Info: screenshots/ingredient_list_page.png  used on input li
@@ -1260,10 +1317,10 @@ ne 7.
 (pdftex.def)             Requested size: 426.79134pt x 266.73683pt.
 
 
-LaTeX Warning: Hyper reference `fig:ingredient_list_page' on page 4 undefined o
-n input line 15.
+LaTeX Warning: Hyper reference `fig:ingredient_list_page' on page 23 undefined 
+on input line 15.
 
-<screenshots/ingredient_edit_page.png, id=243, 1927.2pt x 1204.5pt>
+<screenshots/ingredient_edit_page.png, id=445, 1927.2pt x 1204.5pt>
 File: screenshots/ingredient_edit_page.png Graphic file (type png)
 <use screenshots/ingredient_edit_page.png>
 Package pdftex.def Info: screenshots/ingredient_edit_page.png  used on input li
@@ -1272,14 +1329,14 @@ ne 17.
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-) [4
+) [23
 
- <./screenshots/ingredient_list_page.png>] [5 <./screenshots/ingredient_edit_pa
-ge.png>]
+ <./screenshots/ingredient_list_page.png>] [24 <./screenshots/ingredient_edit_p
+age.png>]
 \openout2 = `sign_up.aux'.
 
  (./sign_up.tex
-<screenshots/sign_up_page.png, id=268, 1927.2pt x 1090.0725pt>
+<screenshots/sign_up_page.png, id=470, 1927.2pt x 1090.0725pt>
 File: screenshots/sign_up_page.png Graphic file (type png)
 <use screenshots/sign_up_page.png>
 Package pdftex.def Info: screenshots/sign_up_page.png  used on input line 10.
@@ -1287,7 +1344,7 @@ Package pdftex.def Info: screenshots/sign_up_page.png  used on input line 10.
 File: bc-lampe.mps Graphic file (type mps)
  [MP to PDF]
 (/usr/share/texlive/texmf-dist/tex/latex/bclogo/bc-lampe.mps)
-<screenshots/verify_invitation_page.png, id=271, 1927.2pt x 1090.0725pt>
+<screenshots/verify_invitation_page.png, id=473, 1927.2pt x 1090.0725pt>
 File: screenshots/verify_invitation_page.png Graphic file (type png)
 <use screenshots/verify_invitation_page.png>
 Package pdftex.def Info: screenshots/verify_invitation_page.png  used on input 
@@ -1297,21 +1354,21 @@ line 24.
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-[6
+[25
 
 
 
- <./screenshots/sign_up_page.png>] [7 <./screenshots/verify_invitation_page.png
->]
+ <./screenshots/sign_up_page.png>] [26 <./screenshots/verify_invitation_page.pn
+g>]
 \openout2 = `login.aux'.
 
  (./login.tex
-<screenshots/login_page.png, id=288, 1927.2pt x 1090.0725pt>
+<screenshots/login_page.png, id=490, 1927.2pt x 1090.0725pt>
 File: screenshots/login_page.png Graphic file (type png)
 <use screenshots/login_page.png>
 Package pdftex.def Info: screenshots/login_page.png  used on input line 3.
 (pdftex.def)             Requested size: 426.79134pt x 241.39684pt.
-) [8
+) [27
 
 
 
@@ -1319,14 +1376,13 @@ Package pdftex.def Info: screenshots/login_page.png  used on input line 3.
 \openout2 = `forgot_password.aux'.
 
  (./forgot_password.tex
-<screenshots/forgot_password_page.png, id=295, 1927.2pt x 1090.0725pt>
+<screenshots/forgot_password_page.png, id=497, 1927.2pt x 1090.0725pt>
 File: screenshots/forgot_password_page.png Graphic file (type png)
 <use screenshots/forgot_password_page.png>
 Package pdftex.def Info: screenshots/forgot_password_page.png  used on input li
 ne 4.
 (pdftex.def)             Requested size: 426.79134pt x 241.39684pt.
-)
-[9
+) [28
 
 
 
@@ -1334,12 +1390,12 @@ ne 4.
 \openout2 = `dashboard_menu.aux'.
 
  (./dashboard_menu.tex
-<screenshots/dashboard_page.png, id=303, 1927.2pt x 1204.5pt>
+<screenshots/dashboard_page.png, id=506, 1927.2pt x 1204.5pt>
 File: screenshots/dashboard_page.png Graphic file (type png)
 <use screenshots/dashboard_page.png>
 Package pdftex.def Info: screenshots/dashboard_page.png  used on input line 3.
 (pdftex.def)             Requested size: 426.79134pt x 266.73683pt.
-) [10
+) [29
 
 
 
@@ -1347,27 +1403,26 @@ Package pdftex.def Info: screenshots/dashboard_page.png  used on input line 3.
 \openout2 = `farm.aux'.
 
  (./farm.tex
-<screenshots/farm_page.png, id=311, 1927.2pt x 1204.5pt>
+<screenshots/farm_page.png, id=513, 1927.2pt x 1204.5pt>
 File: screenshots/farm_page.png Graphic file (type png)
 <use screenshots/farm_page.png>
 Package pdftex.def Info: screenshots/farm_page.png  used on input line 4.
 (pdftex.def)             Requested size: 426.79134pt x 266.73683pt.
-) [11
+) [30
 
 
 
  <./screenshots/farm_page.png>]
 \openout2 = `ration_formulation.aux'.
 
-
 (./ration_formulation.tex
-<screenshots/ration_formulation_page.png, id=318, 1927.2pt x 1204.5pt>
+<screenshots/ration_formulation_page.png, id=520, 1927.2pt x 1204.5pt>
 File: screenshots/ration_formulation_page.png Graphic file (type png)
 <use screenshots/ration_formulation_page.png>
 Package pdftex.def Info: screenshots/ration_formulation_page.png  used on input
  line 7.
 (pdftex.def)             Requested size: 426.79134pt x 266.73683pt.
-<screenshots/load_requirement.png, id=319, 962.59625pt x 661.47125pt>
+<screenshots/load_requirement.png, id=521, 962.59625pt x 661.47125pt>
 File: screenshots/load_requirement.png Graphic file (type png)
 <use screenshots/load_requirement.png>
 Package pdftex.def Info: screenshots/load_requirement.png  used on input line 1
@@ -1377,7 +1432,7 @@ Package pdftex.def Info: screenshots/load_requirement.png  used on input line 1
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-<screenshots/select_ingredients.png, id=320, 921.4425pt x 714.67pt>
+<screenshots/select_ingredients.png, id=522, 921.4425pt x 714.67pt>
 File: screenshots/select_ingredients.png Graphic file (type png)
 <use screenshots/select_ingredients.png>
 Package pdftex.def Info: screenshots/select_ingredients.png  used on input line
@@ -1386,21 +1441,21 @@ Package pdftex.def Info: screenshots/select_ingredients.png  used on input line
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-) [12
+) [31
 
 
 
- <./screenshots/ration_formulation_page.png>] [13 <./screenshots/load_requireme
-nt.png>] [14 <./screenshots/select_ingredients.png>]
+ <./screenshots/ration_formulation_page.png>] [32 <./screenshots/load_requireme
+nt.png>] [33 <./screenshots/select_ingredients.png>]
 \openout2 = `unit.aux'.
 
  (./unit.tex
-<screenshots/unit_list_page.png, id=348, 1927.2pt x 1204.5pt>
+<screenshots/unit_list_page.png, id=549, 1927.2pt x 1204.5pt>
 File: screenshots/unit_list_page.png Graphic file (type png)
 <use screenshots/unit_list_page.png>
 Package pdftex.def Info: screenshots/unit_list_page.png  used on input line 7.
 (pdftex.def)             Requested size: 426.79134pt x 266.73683pt.
-<screenshots/unit_create_page.png, id=351, 1927.2pt x 1204.5pt>
+<screenshots/unit_create_page.png, id=552, 1927.2pt x 1204.5pt>
 File: screenshots/unit_create_page.png Graphic file (type png)
 <use screenshots/unit_create_page.png>
 Package pdftex.def Info: screenshots/unit_create_page.png  used on input line 2
@@ -1410,7 +1465,7 @@ Package pdftex.def Info: screenshots/unit_create_page.png  used on input line 2
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-<screenshots/unit_edit_page.png, id=358, 1927.2pt x 1204.5pt>
+<screenshots/unit_edit_page.png, id=559, 1927.2pt x 1204.5pt>
 File: screenshots/unit_edit_page.png Graphic file (type png)
 <use screenshots/unit_edit_page.png>
 Package pdftex.def Info: screenshots/unit_edit_page.png  used on input line 30.
@@ -1419,7 +1474,7 @@ Package pdftex.def Info: screenshots/unit_edit_page.png  used on input line 30.
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-[15
+[34
 
 
 
@@ -1433,18 +1488,18 @@ Package pdftex.def Info: screenshots/unit_edit_page.png  used on input line 45.
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-) [16 <./screenshots/unit_create_page.png>] [17 <./screenshots/unit_edit_page.p
-ng>] [18]
+) [35 <./screenshots/unit_create_page.png>] [36 <./screenshots/unit_edit_page.p
+ng>] [37]
 \openout2 = `nutrient_group.aux'.
 
  (./nutrient_group.tex
-<screenshots/nutrient_group_list_page.png, id=394, 1927.2pt x 1204.5pt>
+<screenshots/nutrient_group_list_page.png, id=596, 1927.2pt x 1204.5pt>
 File: screenshots/nutrient_group_list_page.png Graphic file (type png)
 <use screenshots/nutrient_group_list_page.png>
 Package pdftex.def Info: screenshots/nutrient_group_list_page.png  used on inpu
 t line 7.
 (pdftex.def)             Requested size: 426.79134pt x 266.73683pt.
-<screenshots/nutrient_group_create_page.png, id=397, 1927.2pt x 1204.5pt>
+<screenshots/nutrient_group_create_page.png, id=599, 1927.2pt x 1204.5pt>
 File: screenshots/nutrient_group_create_page.png Graphic file (type png)
 <use screenshots/nutrient_group_create_page.png>
 Package pdftex.def Info: screenshots/nutrient_group_create_page.png  used on in
@@ -1454,7 +1509,7 @@ put line 20.
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-<screenshots/nutrient_group_edit_page.png, id=404, 1927.2pt x 1204.5pt>
+<screenshots/nutrient_group_edit_page.png, id=606, 1927.2pt x 1204.5pt>
 File: screenshots/nutrient_group_edit_page.png Graphic file (type png)
 <use screenshots/nutrient_group_edit_page.png>
 Package pdftex.def Info: screenshots/nutrient_group_edit_page.png  used on inpu
@@ -1463,7 +1518,7 @@ t line 30.
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-[19
+[38
 
 
 
@@ -1477,18 +1532,18 @@ t line 45.
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-) [20 <./screenshots/nutrient_group_create_page.png>] [21 <./screenshots/nutrie
-nt_group_edit_page.png>] [22]
+) [39 <./screenshots/nutrient_group_create_page.png>] [40 <./screenshots/nutrie
+nt_group_edit_page.png>] [41]
 \openout2 = `nutrient.aux'.
 
  (./nutrient.tex
-<screenshots/nutrient_list_page.png, id=441, 1927.2pt x 1204.5pt>
+<screenshots/nutrient_list_page.png, id=642, 1927.2pt x 1204.5pt>
 File: screenshots/nutrient_list_page.png Graphic file (type png)
 <use screenshots/nutrient_list_page.png>
 Package pdftex.def Info: screenshots/nutrient_list_page.png  used on input line
  7.
 (pdftex.def)             Requested size: 426.79134pt x 266.73683pt.
-<screenshots/nutrient_create_page.png, id=444, 1927.2pt x 1204.5pt>
+<screenshots/nutrient_create_page.png, id=645, 1927.2pt x 1204.5pt>
 File: screenshots/nutrient_create_page.png Graphic file (type png)
 <use screenshots/nutrient_create_page.png>
 Package pdftex.def Info: screenshots/nutrient_create_page.png  used on input li
@@ -1498,7 +1553,7 @@ ne 20.
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-<screenshots/nutrient_edit_page.png, id=451, 1927.2pt x 1204.5pt>
+<screenshots/nutrient_edit_page.png, id=652, 1927.2pt x 1204.5pt>
 File: screenshots/nutrient_edit_page.png Graphic file (type png)
 <use screenshots/nutrient_edit_page.png>
 Package pdftex.def Info: screenshots/nutrient_edit_page.png  used on input line
@@ -1507,7 +1562,7 @@ Package pdftex.def Info: screenshots/nutrient_edit_page.png  used on input line
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-[23
+[42
 
 
 
@@ -1521,11 +1576,11 @@ Package pdftex.def Info: screenshots/nutrient_edit_page.png  used on input line
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-) [24 <./screenshots/nutrient_create_page.png>] [25 <./screenshots/nutrient_edi
-t_page.png>] [26] [27
+) [43 <./screenshots/nutrient_create_page.png>] [44 <./screenshots/nutrient_edi
+t_page.png>] [45] [46
 
 
-] [28] (./user_guide.aux (./glossary.aux)
+] [47] [48] [49] (./user_guide.aux (./glossary.aux)
 <Reading QR code for "https://tpgs.ilri.org/?qrcode=true" at level 3-M from aux
  file.>
 (./ingredient.aux) (./sign_up.aux) (./login.aux) (./forgot_password.aux)
@@ -1538,31 +1593,30 @@ LaTeX Warning: There were undefined references.
 LaTeX Warning: There were multiply-defined labels.
 
 Package rerunfilecheck Info: File `user_guide.out' has not changed.
-(rerunfilecheck)             Checksum: F1E0C74D2B21EBDD44D8ACD8D7F0BFE4;4643.
+(rerunfilecheck)             Checksum: D75CE8B09CF688B85D492003FED9D0FF;9451.
 Package logreq Info: Writing requests to 'user_guide.run.xml'.
 \openout1 = `user_guide.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 34386 strings out of 478287
- 687289 string characters out of 5849288
- 1463694 words of memory out of 5000000
- 51868 multiletter control sequences out of 15000+600000
- 475978 words of font info for 50 fonts, out of 8000000 for 9000
+ 34487 strings out of 478287
+ 688411 string characters out of 5849289
+ 1463691 words of memory out of 5000000
+ 51893 multiletter control sequences out of 15000+600000
+ 475498 words of font info for 48 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  88i,16n,93p,1155b,1416s stack positions out of 5000i,500n,10000p,200000b,80000s
-</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></us
-r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmcsc10.pfb></usr/sha
-re/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texl
-ive/texmf-dist/fonts/type1/public/amsfonts/cm/cmss12.pfb></usr/share/texlive/te
-xmf-dist/fonts/type1/public/amsfonts/cm/cmssbx10.pfb></usr/share/texlive/texmf-
-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb></usr/share/texlive/texmf-dist/f
-onts/type1/public/amsfonts/cm/cmti8.pfb></usr/share/texlive/texmf-dist/fonts/ty
-pe1/public/amsfonts/cm/cmtt12.pfb>
-Output written on user_guide.pdf (31 pages, 1994181 bytes).
+{/usr/share/texmf/fonts/enc/dvips/cm-super/cm-super-ts1.enc}</usr/share/texli
+ve/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/share/texlive/tex
+mf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texlive/texmf-dist
+/fonts/type1/public/amsfonts/cm/cmss12.pfb></usr/share/texlive/texmf-dist/fonts
+/type1/public/amsfonts/cm/cmssbx10.pfb></usr/share/texlive/texmf-dist/fonts/typ
+e1/public/amsfonts/cm/cmti8.pfb></usr/share/texmf/fonts/type1/public/cm-super/s
+frm1200.pfb>
+Output written on user_guide.pdf (52 pages, 2011083 bytes).
 PDF statistics:
- 566 PDF objects out of 1000 (max. 8388607)
- 453 compressed objects within 5 object streams
- 129 named destinations out of 1000 (max. 500000)
- 494 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 803 PDF objects out of 1000 (max. 8388607)
+ 671 compressed objects within 7 object streams
+ 207 named destinations out of 1000 (max. 500000)
+ 662 words of extra memory for PDF output out of 10000 (max. 10000000)
 

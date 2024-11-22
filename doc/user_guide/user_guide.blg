@@ -1,15 +1,18 @@
 [0] Config.pm:307> INFO - This is Biber 2.17
 [0] Config.pm:310> INFO - Logfile is 'user_guide.blg'
-[68] biber:340> INFO - === Tue Jan 30, 2024, 10:48:13
-[78] Biber.pm:418> INFO - Reading 'user_guide.bcf'
-[125] Biber.pm:972> INFO - Found 1 citekeys in bib section 0
-[136] Biber.pm:4383> INFO - Processing section 0
-[145] Biber.pm:4574> INFO - Looking for bibtex file 'cite.bib' for section 0
-[145] bibtex.pm:1713> INFO - LaTeX decoding ...
-[147] bibtex.pm:1518> INFO - Found BibTeX data source 'cite.bib'
-[177] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'variable = shifted' with 'variable = non-ignorable'
-[177] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'normalization = NFD' with 'normalization = prenormalized'
-[177] Biber.pm:4203> INFO - Sorting list 'nty/global//global/global' of type 'entry' with template 'nty' and locale 'en-US'
-[178] Biber.pm:4209> INFO - No sort tailoring available for locale 'en-US'
-[182] bbl.pm:654> INFO - Writing 'user_guide.bbl' with encoding 'UTF-8'
-[183] bbl.pm:757> INFO - Output to user_guide.bbl
+[55] biber:340> INFO - === Wed Nov 20, 2024, 10:57:47
+[64] Biber.pm:418> INFO - Reading 'user_guide.bcf'
+[115] Biber.pm:969> INFO - Using all citekeys in bib section 0
+[125] Biber.pm:4383> INFO - Processing section 0
+[132] Biber.pm:4574> INFO - Looking for bibtex file 'cite.bib' for section 0
+[132] bibtex.pm:1713> INFO - LaTeX decoding ...
+[135] bibtex.pm:1518> INFO - Found BibTeX data source 'cite.bib'
+[168] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'normalization = NFD' with 'normalization = prenormalized'
+[168] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'variable = shifted' with 'variable = non-ignorable'
+[169] Biber.pm:4203> INFO - Sorting list 'nty/global//global/global' of type 'entry' with template 'nty' and locale 'en-US'
+[169] Biber.pm:4209> INFO - No sort tailoring available for locale 'en-US'
+[173] bbl.pm:654> INFO - Writing 'user_guide.bbl' with encoding 'UTF-8'
+[175] bbl.pm:757> INFO - Output to user_guide.bbl
+[175] Biber.pm:130> WARN - Duplicate entry key: 'latex2e' in file 'cite.bib', skipping ...
+[175] Biber.pm:130> WARN - Duplicate entry key: 'latex2e' in file 'cite.bib', skipping ...
+[175] Biber.pm:132> INFO - WARNINGS: 2

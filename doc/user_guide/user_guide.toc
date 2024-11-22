@@ -1,73 +1,108 @@
 \contentsline {section}{\numberline {1}Legend}{1}{section.1}%
 \contentsline {section}{\numberline {2}Glossary}{2}{section.2}%
 \contentsline {section}{\numberline {3}Introduction}{3}{section.3}%
-\contentsline {section}{\numberline {4}Ingredient}{4}{section.4}%
-\contentsline {subsection}{\numberline {4.1}View Ingredient List}{4}{subsection.4.1}%
-\contentsline {paragraph}{1.}{4}{section*.2}%
-\contentsline {paragraph}{1.}{4}{section*.3}%
-\contentsline {subsection}{\numberline {4.2}Create new Nutrient }{4}{subsection.4.2}%
-\contentsline {paragraph}{1.}{4}{section*.4}%
-\contentsline {paragraph}{1.}{4}{section*.5}%
-\contentsline {paragraph}{1.}{4}{section*.6}%
-\contentsline {paragraph}{1.}{4}{section*.7}%
-\contentsline {paragraph}{1.}{5}{section*.8}%
-\contentsline {section}{\numberline {5}Sign Up}{6}{section.5}%
-\contentsline {paragraph}{1.}{6}{section*.9}%
-\contentsline {paragraph}{2.}{6}{section*.10}%
-\contentsline {paragraph}{3.}{6}{section*.11}%
-\contentsline {section}{\numberline {6}Login}{8}{section.6}%
-\contentsline {section}{\numberline {7}Forgot Password}{9}{section.7}%
-\contentsline {subsection}{\numberline {7.1}Reset password before logged in}{9}{subsection.7.1}%
-\contentsline {subsection}{\numberline {7.2}Reset password after logged in}{9}{subsection.7.2}%
-\contentsline {section}{\numberline {8}First View}{10}{section.8}%
-\contentsline {section}{\numberline {9}Manage Farm}{11}{section.9}%
-\contentsline {section}{\numberline {10}How to formulate a ration}{12}{section.10}%
-\contentsline {subsection}{\numberline {10.1}View Nutrient List}{12}{subsection.10.1}%
-\contentsline {paragraph}{1.}{12}{section*.12}%
-\contentsline {paragraph}{1.}{12}{section*.13}%
-\contentsline {paragraph}{1.}{12}{section*.14}%
-\contentsline {paragraph}{1.}{12}{section*.15}%
-\contentsline {paragraph}{1.}{12}{section*.16}%
-\contentsline {paragraph}{1.}{12}{section*.17}%
-\contentsline {paragraph}{1.}{13}{section*.18}%
-\contentsline {section}{\numberline {11}Unit}{15}{section.11}%
-\contentsline {subsection}{\numberline {11.1}View Unit List}{15}{subsection.11.1}%
-\contentsline {paragraph}{1.}{15}{section*.19}%
-\contentsline {subsection}{\numberline {11.2}Archive Records}{15}{subsection.11.2}%
-\contentsline {paragraph}{1.}{15}{section*.20}%
-\contentsline {subsection}{\numberline {11.3}Create new Unit}{15}{subsection.11.3}%
-\contentsline {paragraph}{1.}{15}{section*.21}%
-\contentsline {subsection}{\numberline {11.4}Edit Unit}{15}{subsection.11.4}%
-\contentsline {paragraph}{1.}{15}{section*.22}%
-\contentsline {subsection}{\numberline {11.5}Delete Unit}{16}{subsection.11.5}%
-\contentsline {paragraph}{1.}{16}{section*.23}%
-\contentsline {paragraph}{1.}{16}{section*.24}%
-\contentsline {paragraph}{1.}{16}{section*.25}%
-\contentsline {section}{\numberline {12}Nutrient Groups}{19}{section.12}%
-\contentsline {subsection}{\numberline {12.1}View Nutrient Group List}{19}{subsection.12.1}%
-\contentsline {paragraph}{1.}{19}{section*.26}%
-\contentsline {subsection}{\numberline {12.2}Archive Records}{19}{subsection.12.2}%
-\contentsline {paragraph}{1.}{19}{section*.27}%
-\contentsline {subsection}{\numberline {12.3}Create new Nutrient Group}{19}{subsection.12.3}%
-\contentsline {paragraph}{1.}{19}{section*.28}%
-\contentsline {subsection}{\numberline {12.4}Edit Nutrient Group}{19}{subsection.12.4}%
-\contentsline {paragraph}{1.}{19}{section*.29}%
-\contentsline {subsection}{\numberline {12.5}Delete Nutrient Group}{20}{subsection.12.5}%
-\contentsline {paragraph}{1.}{20}{section*.30}%
-\contentsline {paragraph}{1.}{20}{section*.31}%
-\contentsline {paragraph}{1.}{20}{section*.32}%
-\contentsline {section}{\numberline {13}Nutrient}{23}{section.13}%
-\contentsline {subsection}{\numberline {13.1}View Nutrient List}{23}{subsection.13.1}%
-\contentsline {paragraph}{1.}{23}{section*.33}%
-\contentsline {subsection}{\numberline {13.2}Archive Records}{23}{subsection.13.2}%
-\contentsline {paragraph}{1.}{23}{section*.34}%
-\contentsline {subsection}{\numberline {13.3}Create new Nutrient }{23}{subsection.13.3}%
-\contentsline {paragraph}{1.}{23}{section*.35}%
-\contentsline {subsection}{\numberline {13.4}Edit Nutrient }{23}{subsection.13.4}%
-\contentsline {paragraph}{1.}{23}{section*.36}%
-\contentsline {subsection}{\numberline {13.5}Delete Nutrient }{24}{subsection.13.5}%
-\contentsline {paragraph}{1.}{24}{section*.37}%
-\contentsline {paragraph}{1.}{24}{section*.38}%
-\contentsline {paragraph}{1.}{24}{section*.39}%
-\contentsline {section}{\numberline {14}Contact Info}{27}{section.14}%
-\contentsline {section}{\numberline {15}Reference}{28}{section.15}%
+\contentsline {section}{\numberline {4}Feed Formulation in Poultry Farming}{4}{section.4}%
+\contentsline {section}{\numberline {5}Poultry Nutrients and Their Functions}{5}{section.5}%
+\contentsline {paragraph}{Proteins and Amino Acids}{5}{section*.2}%
+\contentsline {paragraph}{Carbohydrates}{5}{section*.3}%
+\contentsline {paragraph}{Fats (Lipids)}{5}{section*.4}%
+\contentsline {paragraph}{Vitamins}{5}{section*.5}%
+\contentsline {paragraph}{Minerals}{5}{section*.6}%
+\contentsline {paragraph}{Water}{6}{section*.7}%
+\contentsline {paragraph}{Fiber}{6}{section*.8}%
+\contentsline {paragraph}{Antioxidants}{6}{section*.9}%
+\contentsline {paragraph}{Enzymes}{6}{section*.10}%
+\contentsline {subsubsection}{\numberline {5.0.1}Nutrient Balancing}{6}{subsubsection.5.0.1}%
+\contentsline {section}{\numberline {6}The Role of Feed Formulation Apps}{7}{section.6}%
+\contentsline {subsection}{\numberline {6.1}Flexibility and Sustainability in Feed Formulation}{7}{subsection.6.1}%
+\contentsline {subsection}{\numberline {6.2}Affordable and Sustainable Feeding Solutions}{8}{subsection.6.2}%
+\contentsline {section}{\numberline {7}Protein Requirements in Poultry Nutrition}{9}{section.7}%
+\contentsline {subsection}{\numberline {7.1}Protein components}{9}{subsection.7.1}%
+\contentsline {paragraph}{Essential Amino Acids:}{9}{section*.11}%
+\contentsline {paragraph}{Multiple Protein Sources:}{9}{section*.12}%
+\contentsline {paragraph}{Limiting Amino Acids:}{9}{section*.13}%
+\contentsline {paragraph}{Anti-Nutritional Factors (ANFs):}{10}{section*.14}%
+\contentsline {paragraph}{Fish Meal Consideration:}{10}{section*.15}%
+\contentsline {subsection}{\numberline {7.2}Common Protein Sources in Poultry Diets}{10}{subsection.7.2}%
+\contentsline {section}{\numberline {8}Fatty acid requirement in poultry}{11}{section.8}%
+\contentsline {subsection}{\numberline {8.1}Fatty acid considerations}{11}{subsection.8.1}%
+\contentsline {section}{\numberline {9}Mineral Requirements in Poultry Diets}{12}{section.9}%
+\contentsline {subsection}{\numberline {9.1}Minerals considerations}{12}{subsection.9.1}%
+\contentsline {subsection}{\numberline {9.2}Common Sources of Macrominerals}{12}{subsection.9.2}%
+\contentsline {subsection}{\numberline {9.3}Mineral Premixes for Microminerals}{13}{subsection.9.3}%
+\contentsline {subsection}{\numberline {9.4}Categories of Vitamins in Poultry Nutrition}{13}{subsection.9.4}%
+\contentsline {section}{\numberline {10}Common Poultry Feed Ingredients and Their Recommended Inclusion Levels}{15}{section.10}%
+\contentsline {subsection}{\numberline {10.1}Animal Protein Sources}{15}{subsection.10.1}%
+\contentsline {subsection}{\numberline {10.2}Plant Protein Sources}{17}{subsection.10.2}%
+\contentsline {subsection}{\numberline {10.3}Energy Sources}{19}{subsection.10.3}%
+\contentsline {subsection}{\numberline {10.4}Minerals and Additives}{21}{subsection.10.4}%
+\contentsline {section}{\numberline {11}Ingredient}{23}{section.11}%
+\contentsline {subsection}{\numberline {11.1}View Ingredient List}{23}{subsection.11.1}%
+\contentsline {paragraph}{1.}{23}{section*.16}%
+\contentsline {paragraph}{1.}{23}{section*.17}%
+\contentsline {subsection}{\numberline {11.2}Create new Nutrient }{23}{subsection.11.2}%
+\contentsline {paragraph}{1.}{23}{section*.18}%
+\contentsline {paragraph}{1.}{23}{section*.19}%
+\contentsline {paragraph}{1.}{23}{section*.20}%
+\contentsline {paragraph}{1.}{23}{section*.21}%
+\contentsline {paragraph}{1.}{24}{section*.22}%
+\contentsline {section}{\numberline {12}Sign Up}{25}{section.12}%
+\contentsline {paragraph}{1.}{25}{section*.23}%
+\contentsline {paragraph}{2.}{25}{section*.24}%
+\contentsline {paragraph}{3.}{25}{section*.25}%
+\contentsline {section}{\numberline {13}Login}{27}{section.13}%
+\contentsline {section}{\numberline {14}Forgot Password}{28}{section.14}%
+\contentsline {subsection}{\numberline {14.1}Reset password before logged in}{28}{subsection.14.1}%
+\contentsline {subsection}{\numberline {14.2}Reset password after logged in}{28}{subsection.14.2}%
+\contentsline {section}{\numberline {15}First View}{29}{section.15}%
+\contentsline {section}{\numberline {16}Manage Farm}{30}{section.16}%
+\contentsline {section}{\numberline {17}How to formulate a ration}{31}{section.17}%
+\contentsline {subsection}{\numberline {17.1}View Nutrient List}{31}{subsection.17.1}%
+\contentsline {paragraph}{1.}{31}{section*.26}%
+\contentsline {paragraph}{1.}{31}{section*.27}%
+\contentsline {paragraph}{1.}{31}{section*.28}%
+\contentsline {paragraph}{1.}{31}{section*.29}%
+\contentsline {paragraph}{1.}{31}{section*.30}%
+\contentsline {paragraph}{1.}{31}{section*.31}%
+\contentsline {paragraph}{1.}{32}{section*.32}%
+\contentsline {section}{\numberline {18}Unit}{34}{section.18}%
+\contentsline {subsection}{\numberline {18.1}View Unit List}{34}{subsection.18.1}%
+\contentsline {paragraph}{1.}{34}{section*.33}%
+\contentsline {subsection}{\numberline {18.2}Archive Records}{34}{subsection.18.2}%
+\contentsline {paragraph}{1.}{34}{section*.34}%
+\contentsline {subsection}{\numberline {18.3}Create new Unit}{34}{subsection.18.3}%
+\contentsline {paragraph}{1.}{34}{section*.35}%
+\contentsline {subsection}{\numberline {18.4}Edit Unit}{34}{subsection.18.4}%
+\contentsline {paragraph}{1.}{34}{section*.36}%
+\contentsline {subsection}{\numberline {18.5}Delete Unit}{35}{subsection.18.5}%
+\contentsline {paragraph}{1.}{35}{section*.37}%
+\contentsline {paragraph}{1.}{35}{section*.38}%
+\contentsline {paragraph}{1.}{35}{section*.39}%
+\contentsline {section}{\numberline {19}Nutrient Groups}{38}{section.19}%
+\contentsline {subsection}{\numberline {19.1}View Nutrient Group List}{38}{subsection.19.1}%
+\contentsline {paragraph}{1.}{38}{section*.40}%
+\contentsline {subsection}{\numberline {19.2}Archive Records}{38}{subsection.19.2}%
+\contentsline {paragraph}{1.}{38}{section*.41}%
+\contentsline {subsection}{\numberline {19.3}Create new Nutrient Group}{38}{subsection.19.3}%
+\contentsline {paragraph}{1.}{38}{section*.42}%
+\contentsline {subsection}{\numberline {19.4}Edit Nutrient Group}{38}{subsection.19.4}%
+\contentsline {paragraph}{1.}{38}{section*.43}%
+\contentsline {subsection}{\numberline {19.5}Delete Nutrient Group}{39}{subsection.19.5}%
+\contentsline {paragraph}{1.}{39}{section*.44}%
+\contentsline {paragraph}{1.}{39}{section*.45}%
+\contentsline {paragraph}{1.}{39}{section*.46}%
+\contentsline {section}{\numberline {20}Nutrient}{42}{section.20}%
+\contentsline {subsection}{\numberline {20.1}View Nutrient List}{42}{subsection.20.1}%
+\contentsline {paragraph}{1.}{42}{section*.47}%
+\contentsline {subsection}{\numberline {20.2}Archive Records}{42}{subsection.20.2}%
+\contentsline {paragraph}{1.}{42}{section*.48}%
+\contentsline {subsection}{\numberline {20.3}Create new Nutrient }{42}{subsection.20.3}%
+\contentsline {paragraph}{1.}{42}{section*.49}%
+\contentsline {subsection}{\numberline {20.4}Edit Nutrient }{42}{subsection.20.4}%
+\contentsline {paragraph}{1.}{42}{section*.50}%
+\contentsline {subsection}{\numberline {20.5}Delete Nutrient }{43}{subsection.20.5}%
+\contentsline {paragraph}{1.}{43}{section*.51}%
+\contentsline {paragraph}{1.}{43}{section*.52}%
+\contentsline {paragraph}{1.}{43}{section*.53}%
+\contentsline {section}{\numberline {21}Contact Info}{46}{section.21}%
+\contentsline {section}{\numberline {22}Reference}{47}{section.22}%

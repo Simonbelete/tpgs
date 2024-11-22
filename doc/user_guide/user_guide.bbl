@@ -19,6 +19,59 @@
 
 \refsection{0}
   \datalist[entry]{nty/global//global/global}
+    \entry{latex2e}{book}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=d21de57d7f5112742eb1a657cf6c80d0}{%
+           family={De\bibnamedelima Blas\bibnamedelima C.},
+           familyi={D\bibinitperiod\bibinitdelim B\bibinitperiod\bibinitdelim C\bibinitperiod},
+           given={Mateos\bibnamedelimb G.\bibnamedelimi G.},
+           giveni={M\bibinitperiod\bibinitdelim G\bibinitperiod\bibinitdelim G\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{d21de57d7f5112742eb1a657cf6c80d0}
+      \strng{fullhash}{d21de57d7f5112742eb1a657cf6c80d0}
+      \strng{bibnamehash}{d21de57d7f5112742eb1a657cf6c80d0}
+      \strng{authorbibnamehash}{d21de57d7f5112742eb1a657cf6c80d0}
+      \strng{authornamehash}{d21de57d7f5112742eb1a657cf6c80d0}
+      \strng{authorfullhash}{d21de57d7f5112742eb1a657cf6c80d0}
+      \field{sortinit}{D}
+      \field{sortinithash}{6f385f66841fb5e82009dc833c761848}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Feed Formulation for Poultry and Other Livestock.}
+      \field{year}{2010}
+      \true{nocite}
+    \endentry
+    \entry{knuthwebsite}{online}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=1dd533466eb3313074d496394d319407}{%
+           family={Knuth},
+           familyi={K\bibinitperiod},
+           given={Donald},
+           giveni={D\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{1dd533466eb3313074d496394d319407}
+      \strng{fullhash}{1dd533466eb3313074d496394d319407}
+      \strng{bibnamehash}{1dd533466eb3313074d496394d319407}
+      \strng{authorbibnamehash}{1dd533466eb3313074d496394d319407}
+      \strng{authornamehash}{1dd533466eb3313074d496394d319407}
+      \strng{authorfullhash}{1dd533466eb3313074d496394d319407}
+      \field{sortinit}{K}
+      \field{sortinithash}{c02bf6bff1c488450c352b40f5d853ab}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{addendum}{(accessed: 01.09.2016)}
+      \field{title}{Knuth: Computers and Typesetting}
+      \true{nocite}
+      \verb{urlraw}
+      \verb http://www-cs-faculty.stanford.edu/~uno/abcde.html
+      \endverb
+      \verb{url}
+      \verb http://www-cs-faculty.stanford.edu/~uno/abcde.html
+      \endverb
+      \keyw{latex,knuth}
+    \endentry
     \entry{enwiki:1178208071}{misc}{}
       \name{author}{1}{}{%
         {{un=0,uniquepart=base,hash=b6aea1a416c89509a7df1cbb69249cb6}{%
